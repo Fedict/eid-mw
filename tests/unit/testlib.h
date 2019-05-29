@@ -3,6 +3,7 @@
 
 #include <assert.h>
 #include <stdio.h>
+#include <stdbool.h>
 
 #define TEST_RV_SKIP 77		// defined by automake
 #define TEST_RV_FAIL 1
@@ -56,6 +57,20 @@ static const ckrv_mod m_p11_nocard[] = {
 	{CKR_DEVICE_REMOVED, TEST_RV_OK},
 };
 
+typedef enum {
+	NOTHING_FOUND,
+	VELLEMAN_FOUND,
+	SYSTEM_FOUND,
+} reading_pos;
+
+struct rpos {
+	reading_pos pos;
+	size_t offset;
+	bool is_complete;
+};
+
+struct rpos skip_uninteresting(char *line);
+
 #define check_rv_late(func) { int retval = ckrv_decode(rv, func, 0, NULL); if(EIDT_UNLIKELY(retval != TEST_RV_OK)) { printf("not ok\n"); C_Finalize(NULL_PTR); my_assert(retval != TEST_RV_FAIL); return retval; }}
 #define check_rv(call) check_rv_action(call, 0, NULL)
 #define check_rv_action(call, count, mods) { CK_RV rv = call; int retval = ckrv_decode(rv, #call, count, mods); if(EIDT_UNLIKELY(retval != TEST_RV_OK)) { printf("not ok\n"); C_Finalize(NULL_PTR); my_assert(retval != TEST_RV_FAIL); return retval; }}
@@ -83,6 +98,10 @@ CK_BBOOL is_manual_robot(void);
 CK_BBOOL can_confirm(void);
 CK_BBOOL have_pin(void);
 CK_BBOOL can_enter_pin(CK_SLOT_ID slot);
+CK_BBOOL open_robot(char* envvar);
+CK_BBOOL open_reader_robot(char* envvar);
+void robot_cmd(char cmd, CK_BBOOL check_result);
+void reader_cmd(char cmd, CK_BBOOL check_result);
 void robot_remove_card(void);
 void robot_remove_card_delayed(void);
 void robot_insert_card(void);
@@ -97,6 +116,22 @@ void robot_remove_reader(void);
 void robot_remove_reader_delayed(void);
 void robot_insert_reader(void);
 void robot_remove_card_delayed(void);
+
+enum robot_type {
+	ROBOT_NONE,
+	ROBOT_MECHANICAL_TURK,
+	ROBOT_AUTO,
+	ROBOT_AUTO_2,
+};
+
+enum dialogs_type {
+	DIALOGS_AVOID,
+	DIALOGS_NOPIN,
+	DIALOGS_OK,
+};
+
+extern enum robot_type robot_type;
+extern enum dialogs_type dialogs_type;
 
 /* Helper functions to not have to repeat common operations all the time */
 int find_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR slot);

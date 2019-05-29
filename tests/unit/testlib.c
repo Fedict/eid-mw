@@ -41,19 +41,6 @@
 #include <config.h>
 #endif
 
-#ifdef HAVE_TERMIOS_H
-#include <sys/select.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/ioctl.h>
-#include <fcntl.h>
-#include <termios.h>
-#ifndef O_EXLOCK
-// Needed on macOS
-#define O_EXLOCK 0
-#endif
-#endif
-
 #ifdef WIN32
 char *strndup(const char *s, size_t n) {
 	char *rv = calloc(n + 1, 1);
@@ -69,18 +56,6 @@ extern _TCHAR* eid_robot_style;
 extern _TCHAR* eid_dialogs_style;
 extern _TCHAR* eid_builtin_reader;
 #endif
-
-typedef enum {
-	NOTHING_FOUND,
-	VELLEMAN_FOUND,
-	SYSTEM_FOUND,
-} reading_pos;
-
-struct rpos {
-	reading_pos pos;
-	size_t offset;
-	bool is_complete;
-};
 
 struct banners {
 	char* banner;
@@ -140,22 +115,9 @@ struct rpos skip_uninteresting(char* line) {
 	return rv;
 }
 
-enum {
-	ROBOT_NONE,
-	ROBOT_MECHANICAL_TURK,
-	ROBOT_AUTO,
-	ROBOT_AUTO_2,
-} robot_type;
+enum robot_type robot_type;
+enum dialogs_type dialogs_type;
 
-enum {
-	DIALOGS_AVOID,
-	DIALOGS_NOPIN,
-	DIALOGS_OK,
-} dialogs_type;
-
-int robot_dev = 0;
-int robot_unit = 0;
-int reader_dev = 0;
 bool have_builtin_reader = false;
 
 int verify_null_func(CK_UTF8CHAR* string, size_t length, int expect, char* msg) {
@@ -181,171 +143,6 @@ int verify_null_func(CK_UTF8CHAR* string, size_t length, int expect, char* msg) 
 	return TEST_RV_OK;
 }
 
-#ifdef HAVE_TERMIOS_H
-static bool robot_has_data(int fd, int delay_secs) {
-	struct timeval tv;
-
-	fd_set rb;
-	FD_ZERO(&rb);
-	FD_SET(fd, &rb);
-	tv.tv_sec = delay_secs;
-	tv.tv_usec = 0;
-	select(fd+1, &rb, NULL, NULL, &tv);
-	return FD_ISSET(fd, &rb) ? true : false;
-}
-
-CK_BBOOL init_robot(int fd, char type_char) {
-	struct termios ios;
-	char line[80];
-	int len = 0;
-	struct rpos rp;
-
-	if(fd < 0) {
-		perror("open card robot");
-		return CK_FALSE;
-	}
-	if(ioctl(fd, TIOCEXCL) == -1) {
-		perror("ioctl TIOCEXCL");
-		return CK_FALSE;
-	}
-	if(fcntl(fd, F_SETFL, 0) == -1) {
-		perror("clearing O_NONBLOCK");
-		return CK_FALSE;
-	}
-	tcgetattr(fd, &ios);
-	cfsetispeed(&ios, B9600);
-	cfsetospeed(&ios, B9600);
-	ios.c_cflag &= ~PARENB & ~CSTOPB & ~CSIZE;
-	ios.c_cflag |= CLOCAL | CREAD | CS8 | CRTSCTS;
-	ios.c_lflag |= ICANON;
-	tcsetattr(fd, TCSANOW, &ios);
-	tcflow(fd, TCOON);
-
-	bool written = false;
-	while(!written) {
-		if(write(fd, "R", 1) == -1) {
-			if(errno != EAGAIN) {
-				perror("write");
-				return CK_FALSE;
-			}
-		} else {
-			written = true;
-		}
-	}
-
-	len = 0;
-	do {
-		ssize_t read_len = read(fd, line+len, sizeof(line) - len);
-		if(read_len < 0) {
-			if(errno == EAGAIN) {
-				usleep(20);
-				continue;
-			} else {
-				perror("Could not read robot");
-				return CK_FALSE;
-			}
-		}
-		len += read_len;
-		line[len]=0;
-		if(robot_type == ROBOT_AUTO) {
-			if(strncmp(line, "READY.", len < 6 ? len : 6)) {
-				fprintf(stderr, "Robot not found: received %s from serial line, expecting \"READY.\\n\"\n", line);
-				return CK_FALSE;
-			}
-		} else {
-			rp = skip_uninteresting(line);
-			if(rp.pos < SYSTEM_FOUND || !rp.is_complete) {
-				continue;
-			}
-			if(strlen(line) == rp.offset) {
-				written = false;
-				while(!written) {
-					if(write(fd, "t", 1) == -1) {
-						if(errno != EAGAIN) {
-							perror("write");
-							return CK_FALSE;
-						} else {
-							usleep(20);
-						}
-					} else {
-						written = true;
-					}
-				}
-				continue;
-			}
-			if(line[rp.offset] != 'T') {
-				fprintf(stderr, "Robot not found: received %s from serial line, expecting \"T\"\n", line);
-				return CK_FALSE;
-			}
-			if((len - rp.offset) > 4 && line[rp.offset + 1] == 'B') {
-				if(robot_unit != 0) {
-					if(line[rp.offset + 2] - 0x30 != robot_unit) {
-						fprintf(stderr, "Robot does not match: card and USB devices not the same\n");
-						return CK_FALSE;
-					}
-				}
-				robot_unit = line[rp.offset + 2] - 0x30;
-				if(line[rp.offset + 4] != type_char) {
-					fprintf(stderr, "Robot does not match: wrong robot type found\n");
-					return CK_FALSE;
-				}
-			}
-		}
-	} while(line[len-1] != '\n' || rp.pos < SYSTEM_FOUND || !rp.is_complete || rp.offset == strlen(line));
-
-	return CK_TRUE;
-}
-
-CK_BBOOL open_robot(char* envvar) {
-	char* dev;
-
-	switch(robot_type) {
-	case ROBOT_AUTO:
-		if(strlen(envvar) == strlen("fedict")) {
-			dev = strdup("/dev/ttyACM0");
-		} else {
-			dev = strdup(envvar + strlen("fedict") + 1);
-		}
-		break;
-	case ROBOT_AUTO_2:
-		if(strlen(envvar) == strlen("zetes")) {
-			dev = strdup("/dev/ttyACM0");
-		} else {
-			char *p;
-			dev = strdup(strchr(envvar, ':') + 1);
-			if((p = strchr(dev, ':')) != NULL) {
-				*p = '\0';
-			}
-		}
-		break;
-	default:
-		fprintf(stderr, "E: can't open the robot when it's not there!\n");
-		return CK_FALSE;
-	}
-	printf("opening card robot at %s\n", dev);
-	robot_dev = open(dev, O_RDWR | O_NOCTTY | O_EXLOCK | O_NONBLOCK);
-	free(dev);
-	return init_robot(robot_dev, 'C');
-}
-
-CK_BBOOL open_reader_robot(char* envvar) {
-	char* dev;
-
-	if(robot_type != ROBOT_AUTO_2) {
-		fprintf(stderr, "E: no reader robot connected!\n");
-		return CK_FALSE;
-	}
-	if(strlen(envvar) == strlen("zetes")) {
-		dev = "/dev/ttyACM1";
-	} else {
-		dev = strrchr(envvar, ':') + 1;
-	}
-	printf("opening reader robot at %s\n", dev);
-	reader_dev = open(dev, O_RDWR | O_NOCTTY | O_NONBLOCK);
-	return init_robot(reader_dev, 'U');
-}
-#endif
-
 CK_BBOOL have_robot() {
 #ifdef WIN32
 	char* envvar = eid_robot_style;
@@ -357,28 +154,12 @@ CK_BBOOL have_robot() {
 		return CK_FALSE;
 	}
 	if(!strncmp(envvar, "fedict", strlen("fedict"))) {
-#ifdef HAVE_TERMIOS_H
 		robot_type = ROBOT_AUTO;
-		if(robot_dev <= 0) {
-			return open_robot(envvar);
-		}
-		return CK_TRUE;
-#else
-		fprintf(stderr, "E: cannot initiate fedict robot without serial port support!\n");
-		return CK_FALSE;
-#endif
+		return open_robot(envvar);
 	}
 	if(!strncmp(envvar, "zetes", strlen("zetes"))) {
-#ifdef HAVE_TERMIOS_H
 		robot_type = ROBOT_AUTO_2;
-		if(robot_dev <= 0) {
-			return open_robot(envvar);
-		}
-		return CK_TRUE;
-#else
-		fprintf(stderr, "E: cannot initiate Zetes robot without serial port support!\n");
-		return CK_FALSE;
-#endif
+		return open_robot(envvar);
 	}
 	if(!strcmp(envvar, "manual")) {
 		robot_type = ROBOT_MECHANICAL_TURK;
@@ -409,14 +190,7 @@ CK_BBOOL have_reader_robot(void) {
 			case ROBOT_MECHANICAL_TURK:
 				return CK_TRUE;
 			case ROBOT_AUTO_2:
-#ifdef HAVE_TERMIOS_H
-				if(reader_dev <= 0) {
-					return open_reader_robot(envvar_rbt);
-				}
-				return CK_TRUE;
-#else
-				fprintf(stderr, "E: Cannot talk to robots without serial port support!\n");
-#endif
+				return open_reader_robot(envvar_rbt);
 		}
 	}
 	return CK_FALSE;
@@ -508,75 +282,75 @@ typedef struct {
 #define ADD_CKRV(ckrv, defaultrv) decodes[ckrv].rvname = #ckrv; decodes[ckrv].result = defaultrv
 
 int ckrv_decode(CK_RV rv, char* fc, int count, const ckrv_mod* mods) {
-    static ckrvdecode *decodes;
+	static ckrvdecode *decodes;
 	int i;
 	int retval;
 
 	printf("function %d: \"%s\": ", fc_counter++, fc);
 
-    if(!decodes) {
-        decodes = (ckrvdecode*)calloc(CKR_FUNCTION_REJECTED + 1, sizeof(ckrvdecode));
-        ADD_CKRV(CKR_ARGUMENTS_BAD, TEST_RV_FAIL);
-        ADD_CKRV(CKR_ATTRIBUTE_TYPE_INVALID, TEST_RV_FAIL);
-        ADD_CKRV(CKR_ATTRIBUTE_VALUE_INVALID, TEST_RV_FAIL);
-        ADD_CKRV(CKR_BUFFER_TOO_SMALL, TEST_RV_FAIL);
-        ADD_CKRV(CKR_CANT_LOCK, TEST_RV_FAIL);
-        ADD_CKRV(CKR_CRYPTOKI_ALREADY_INITIALIZED, TEST_RV_FAIL);
-        ADD_CKRV(CKR_CRYPTOKI_NOT_INITIALIZED, TEST_RV_FAIL);
-        ADD_CKRV(CKR_DEVICE_ERROR, TEST_RV_FAIL);
-        ADD_CKRV(CKR_DEVICE_MEMORY, TEST_RV_FAIL);
-        ADD_CKRV(CKR_DEVICE_REMOVED, TEST_RV_FAIL);
-        ADD_CKRV(CKR_FUNCTION_CANCELED, TEST_RV_FAIL);
-        ADD_CKRV(CKR_FUNCTION_FAILED, TEST_RV_FAIL);
-        ADD_CKRV(CKR_FUNCTION_NOT_SUPPORTED, TEST_RV_SKIP);
-        ADD_CKRV(CKR_GENERAL_ERROR, TEST_RV_FAIL);
-        ADD_CKRV(CKR_HOST_MEMORY, TEST_RV_FAIL);
-        ADD_CKRV(CKR_KEY_HANDLE_INVALID, TEST_RV_FAIL);
-        ADD_CKRV(CKR_KEY_TYPE_INCONSISTENT, TEST_RV_FAIL);
-        ADD_CKRV(CKR_MECHANISM_INVALID, TEST_RV_FAIL);
-        ADD_CKRV(CKR_NEED_TO_CREATE_THREADS, TEST_RV_FAIL);
-        ADD_CKRV(CKR_NO_EVENT, TEST_RV_FAIL);
-        ADD_CKRV(CKR_OK, TEST_RV_OK);
-        ADD_CKRV(CKR_OPERATION_NOT_INITIALIZED, TEST_RV_FAIL);
-        ADD_CKRV(CKR_OPERATION_ACTIVE, TEST_RV_FAIL);
-        ADD_CKRV(CKR_PIN_EXPIRED, TEST_RV_FAIL);
-        ADD_CKRV(CKR_PIN_INCORRECT, TEST_RV_FAIL);
-        ADD_CKRV(CKR_PIN_LOCKED, TEST_RV_FAIL);
-        ADD_CKRV(CKR_SESSION_CLOSED, TEST_RV_FAIL);
-        ADD_CKRV(CKR_SESSION_COUNT, TEST_RV_FAIL);
-        ADD_CKRV(CKR_SESSION_HANDLE_INVALID, TEST_RV_FAIL);
-        ADD_CKRV(CKR_SESSION_PARALLEL_NOT_SUPPORTED, TEST_RV_FAIL);
-        ADD_CKRV(CKR_SESSION_READ_WRITE_SO_EXISTS, TEST_RV_FAIL);
-        ADD_CKRV(CKR_SESSION_READ_ONLY_EXISTS, TEST_RV_FAIL);
-        ADD_CKRV(CKR_SLOT_ID_INVALID, TEST_RV_FAIL);
-        ADD_CKRV(CKR_TOKEN_NOT_PRESENT, TEST_RV_FAIL);
-        ADD_CKRV(CKR_TOKEN_NOT_RECOGNIZED, TEST_RV_FAIL);
-        ADD_CKRV(CKR_TOKEN_WRITE_PROTECTED, TEST_RV_FAIL);
-        ADD_CKRV(CKR_USER_ALREADY_LOGGED_IN, TEST_RV_FAIL);
-        ADD_CKRV(CKR_USER_ANOTHER_ALREADY_LOGGED_IN, TEST_RV_FAIL);
-        ADD_CKRV(CKR_USER_PIN_NOT_INITIALIZED, TEST_RV_FAIL);
-        ADD_CKRV(CKR_USER_TOO_MANY_TYPES, TEST_RV_FAIL);
-        ADD_CKRV(CKR_USER_TYPE_INVALID, TEST_RV_FAIL);
-        ADD_CKRV(CKR_USER_NOT_LOGGED_IN, TEST_RV_FAIL);
-        ADD_CKRV(CKR_KEY_FUNCTION_NOT_PERMITTED, TEST_RV_FAIL);
-        ADD_CKRV(CKR_OBJECT_HANDLE_INVALID, TEST_RV_FAIL);
-    }
-    
-    int toreturn = -1;
+	if(!decodes) {
+		decodes = (ckrvdecode*)calloc(CKR_FUNCTION_REJECTED + 1, sizeof(ckrvdecode));
+		ADD_CKRV(CKR_ARGUMENTS_BAD, TEST_RV_FAIL);
+		ADD_CKRV(CKR_ATTRIBUTE_TYPE_INVALID, TEST_RV_FAIL);
+		ADD_CKRV(CKR_ATTRIBUTE_VALUE_INVALID, TEST_RV_FAIL);
+		ADD_CKRV(CKR_BUFFER_TOO_SMALL, TEST_RV_FAIL);
+		ADD_CKRV(CKR_CANT_LOCK, TEST_RV_FAIL);
+		ADD_CKRV(CKR_CRYPTOKI_ALREADY_INITIALIZED, TEST_RV_FAIL);
+		ADD_CKRV(CKR_CRYPTOKI_NOT_INITIALIZED, TEST_RV_FAIL);
+		ADD_CKRV(CKR_DEVICE_ERROR, TEST_RV_FAIL);
+		ADD_CKRV(CKR_DEVICE_MEMORY, TEST_RV_FAIL);
+		ADD_CKRV(CKR_DEVICE_REMOVED, TEST_RV_FAIL);
+		ADD_CKRV(CKR_FUNCTION_CANCELED, TEST_RV_FAIL);
+		ADD_CKRV(CKR_FUNCTION_FAILED, TEST_RV_FAIL);
+		ADD_CKRV(CKR_FUNCTION_NOT_SUPPORTED, TEST_RV_SKIP);
+		ADD_CKRV(CKR_GENERAL_ERROR, TEST_RV_FAIL);
+		ADD_CKRV(CKR_HOST_MEMORY, TEST_RV_FAIL);
+		ADD_CKRV(CKR_KEY_HANDLE_INVALID, TEST_RV_FAIL);
+		ADD_CKRV(CKR_KEY_TYPE_INCONSISTENT, TEST_RV_FAIL);
+		ADD_CKRV(CKR_MECHANISM_INVALID, TEST_RV_FAIL);
+		ADD_CKRV(CKR_NEED_TO_CREATE_THREADS, TEST_RV_FAIL);
+		ADD_CKRV(CKR_NO_EVENT, TEST_RV_FAIL);
+		ADD_CKRV(CKR_OK, TEST_RV_OK);
+		ADD_CKRV(CKR_OPERATION_NOT_INITIALIZED, TEST_RV_FAIL);
+		ADD_CKRV(CKR_OPERATION_ACTIVE, TEST_RV_FAIL);
+		ADD_CKRV(CKR_PIN_EXPIRED, TEST_RV_FAIL);
+		ADD_CKRV(CKR_PIN_INCORRECT, TEST_RV_FAIL);
+		ADD_CKRV(CKR_PIN_LOCKED, TEST_RV_FAIL);
+		ADD_CKRV(CKR_SESSION_CLOSED, TEST_RV_FAIL);
+		ADD_CKRV(CKR_SESSION_COUNT, TEST_RV_FAIL);
+		ADD_CKRV(CKR_SESSION_HANDLE_INVALID, TEST_RV_FAIL);
+		ADD_CKRV(CKR_SESSION_PARALLEL_NOT_SUPPORTED, TEST_RV_FAIL);
+		ADD_CKRV(CKR_SESSION_READ_WRITE_SO_EXISTS, TEST_RV_FAIL);
+		ADD_CKRV(CKR_SESSION_READ_ONLY_EXISTS, TEST_RV_FAIL);
+		ADD_CKRV(CKR_SLOT_ID_INVALID, TEST_RV_FAIL);
+		ADD_CKRV(CKR_TOKEN_NOT_PRESENT, TEST_RV_FAIL);
+		ADD_CKRV(CKR_TOKEN_NOT_RECOGNIZED, TEST_RV_FAIL);
+		ADD_CKRV(CKR_TOKEN_WRITE_PROTECTED, TEST_RV_FAIL);
+		ADD_CKRV(CKR_USER_ALREADY_LOGGED_IN, TEST_RV_FAIL);
+		ADD_CKRV(CKR_USER_ANOTHER_ALREADY_LOGGED_IN, TEST_RV_FAIL);
+		ADD_CKRV(CKR_USER_PIN_NOT_INITIALIZED, TEST_RV_FAIL);
+		ADD_CKRV(CKR_USER_TOO_MANY_TYPES, TEST_RV_FAIL);
+		ADD_CKRV(CKR_USER_TYPE_INVALID, TEST_RV_FAIL);
+		ADD_CKRV(CKR_USER_NOT_LOGGED_IN, TEST_RV_FAIL);
+		ADD_CKRV(CKR_KEY_FUNCTION_NOT_PERMITTED, TEST_RV_FAIL);
+		ADD_CKRV(CKR_OBJECT_HANDLE_INVALID, TEST_RV_FAIL);
+	}
+	
+	int toreturn = -1;
 
 	for(i=0; i<count; i++) {
 		CK_RV modrv = mods[i].rv;
 
 		assert(modrv <= CKR_FUNCTION_REJECTED);
 		assert(decodes[modrv].rvname != NULL);
-        if(modrv == rv) {
-            toreturn = mods[i].retval;
-        }
+		if(modrv == rv) {
+			toreturn = mods[i].retval;
+		}
 	}
 
 	if(decodes[rv].rvname != NULL) {
 		printf("%s\n", decodes[rv].rvname);
-        retval = toreturn > -1 ? toreturn : decodes[rv].result;
+		retval = toreturn > -1 ? toreturn : decodes[rv].result;
 	} else {
 		printf("unknown CK_RV %#08lx\n", rv);
 		retval = TEST_RV_FAIL;
@@ -609,66 +383,6 @@ char* ckm_to_charp(CK_MECHANISM_TYPE mech) {
 		default:
 			return "Unknown mechanism";
 	}
-}
-
-void robot_cmd_l(int dev, char cmd, CK_BBOOL check_result, char *which) {
-#ifdef HAVE_TERMIOS_H
-	struct expect {
-		char command;
-		char* result;
-		bool wait;
-	} expected[] = {
-		{ 'i', "inserted", true },
-		{ 'e', "ejected", false },
-		{ 'p', "parked", false },
-	};
-	int len = 0;
-	char line[80];
-	unsigned int i;
-
-	while(robot_has_data(dev, 0)) {
-		read(dev, line, sizeof line);
-	}
-	printf("sending command %c to %s robot...\n", cmd, which);
-	write(dev, &cmd, 1);
-	if(!check_result) {
-		printf("\tdone, not waiting\n");
-		return;
-	}
-	do {
-		if(!robot_has_data(dev, 5)) {
-			fprintf(stderr, "No reply from robot after 5 seconds\n");
-			exit(EXIT_FAILURE);
-		}
-		len += read(dev, line+len, 79);
-		line[len]='\0';
-	} while(line[len-1] != '\n');
-	for(i=0; i<sizeof(expected) / sizeof(struct expect); i++) {
-		if(expected[i].command == cmd) {
-			if(strncmp(expected[i].result, line, strlen(expected[i].result))) {
-				fprintf(stderr, "Robot handling failed: expected %s, received %s\n", expected[i].result, line);
-				exit(TEST_RV_SKIP);
-			}
-			if(expected[i].wait) {
-				sleep(2);
-			} else {
-				usleep(200);
-			}
-			printf("\tok\n");
-			return;
-		}
-	}
-#else
-	return;
-#endif
-}
-
-void robot_cmd(char cmd, CK_BBOOL check_result) {
-	return robot_cmd_l(robot_dev, cmd, check_result, "card");
-}
-
-void reader_cmd(char cmd, CK_BBOOL check_result) {
-	return robot_cmd_l(reader_dev, cmd, check_result, "reader");
 }
 
 void robot_insert_card() {
