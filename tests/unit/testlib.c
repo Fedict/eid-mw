@@ -71,11 +71,7 @@ static struct banners banners[] = {
 struct rpos skip_uninteresting(char* line) {
 	size_t len;
 	int i;
-#ifdef WIN32
-	char *firstline = _strdup(line);
-#else
 	char *firstline = strdup(line);
-#endif
 	bool finished = false;
 	struct rpos rv = {NOTHING_FOUND, 0, false};
 
