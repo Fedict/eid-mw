@@ -70,7 +70,7 @@ void robot_cmd_l(int dev, char cmd, CK_BBOOL check_result, char *which) {
 			fprintf(stderr, "No reply from robot after 5 seconds\n");
 			exit(EXIT_FAILURE);
 		}
-		len += read(dev, line+len, 79);
+		len += read(dev, line+len, 79 - len);
 		line[len]='\0';
 	} while(line[len-1] != '\n');
 	for(i=0; i<sizeof(expected) / sizeof(struct expect); i++) {
