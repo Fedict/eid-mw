@@ -52,7 +52,7 @@ build:srpm:
     - rpmbuild --define "revision $VERSHORT" -bs $HOME/rpmbuild/SPECS/eid-mw.spec
   after_script:
     - mkdir -p products/srpm/
-    - cp $HOME/rpmbuild/SRPMS/eid-mw-*.fc29.src.rpm products/srpm/
+    - cp $HOME/rpmbuild/SRPMS/eid-mw-*.src.rpm products/srpm/
   artifacts:
     paths:
       - products/srpm
@@ -220,7 +220,7 @@ extra:deb-64:
     - if [ ! -z "$ACNG" ]; then for i in $(grep mirrorlist /etc/mock/$DIST-$DVER-$ARCH.cfg | cut -d'=' -f2-); do sed -i -e "s,mirrorlist=$i,baseurl=$(curl $i|grep http://|while read a; do echo -n $a' '; done; echo ',')" /etc/mock/$DIST-$DVER-$ARCH.cfg; done; fi
     - VERSHORT=$(git describe --dirty | sed -e 's/-/./g')
   script:
-    - http_proxy="$ACNG" mock --old-chroot --verbose -r $DIST-$DVER-$ARCH --rebuild products/srpm/eid-mw-*.fc29.src.rpm --define "revision $VERSHORT"
+    - http_proxy="$ACNG" mock --old-chroot --verbose -r $DIST-$DVER-$ARCH --rebuild products/srpm/eid-mw-*.src.rpm --define "revision $VERSHORT"
   after_script:
     - mkdir -p products/$DIST-$DVER-$ARCH
     - cp /var/lib/mock/$DIST-$DVER-$ARCH/result/eid*rpm products/$DIST-$DVER-$ARCH/
@@ -302,7 +302,7 @@ extra:fed-64:
   before_script:
     - VERSHORT=$(git describe --dirty | sed -e 's/-/./g')
   script:
-    - http_proxy="$ACNG" build --no-checks --clean -debug --dist sl$DVER --repo $REPOURL --define "revision $VERSHORT" products/srpm/eid-mw-*.fc29.src.rpm
+    - http_proxy="$ACNG" build --no-checks --clean -debug --dist sl$DVER --repo $REPOURL --define "revision $VERSHORT" products/srpm/eid-mw-*.src.rpm
   after_script:
     - mkdir -p products/$DIST-$DVER-$ARCH
     - mv /var/tmp/build-root/home/abuild/rpmbuild/RPMS/*/*rpm products/$DIST-$DVER-$ARCH/
