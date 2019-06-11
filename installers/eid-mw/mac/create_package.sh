@@ -236,16 +236,16 @@ productbuild --distribution "$RELEASE_DIR/Distribution.txt" --resources "$RESOUR
 #####################################################################
 
 if [ $SIGN_BUILD -eq 1 ];then
-  productsign --sign "Developer ID Installer" $PKG_NAME $PKGSIGNED_NAME
+  productsign --timestamp --sign "Developer ID Installer" $PKG_NAME $PKGSIGNED_NAME
   hdiutil create -fs "HFS+" -srcfolder $PKGSIGNED_NAME -volname "${VOL_NAME}" $DMG_NAME
 
-  productsign --sign "Developer ID Installer" "beidbuild.pkg" "beidbuild-signed.pkg"
+  productsign --timestamp --sign "Developer ID Installer" "beidbuild.pkg" "beidbuild-signed.pkg"
   hdiutil create -fs "HFS+" -srcfolder "beidbuild-signed.pkg" -volname "beidbuild${REL_VERSION}" "beidbuild${REL_VERSION}.dmg"
 
-  productsign --sign "Developer ID Installer" "beidtokend.pkg" "beidtokend-signed.pkg"
+  productsign --timestamp --sign "Developer ID Installer" "beidtokend.pkg" "beidtokend-signed.pkg"
   hdiutil create -fs "HFS+" -srcfolder "beidtokend-signed.pkg" -volname "beidtokend ${REL_VERSION}" "beidtokend ${REL_VERSION}.dmg"
 
-  productsign --sign "Developer ID Installer" "BEIDToken.pkg" "BEIDToken-signed.pkg"
+  productsign --timestamp --sign "Developer ID Installer" "BEIDToken.pkg" "BEIDToken-signed.pkg"
   hdiutil create -fs "HFS+" -srcfolder "BEIDToken-signed.pkg" -volname "BEIDToken${REL_VERSION}" "BEIDToken${REL_VERSION}.dmg"
 
   exit 1
