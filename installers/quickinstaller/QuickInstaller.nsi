@@ -256,22 +256,25 @@ ${DisableX64FSRedirection}
 	${If} $versionMajor == 6
 	${AndIf} $versionMinor == 1
 		;windows 7
-		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a  "$INSTDIR\Drivers\XP-WIN8\ACR38U\a38usb.inf"'
-		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a  "$INSTDIR\Drivers\XP-WIN7\OmniKey3121\cxbu0wdm.inf"'
-		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a  "$INSTDIR\Drivers\XP-WIN7\SCR331\scr3xx.inf"'
-		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a  "$INSTDIR\Drivers\XP-WIN7\VascoDP509\usbccid.inf"'
+		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\Drivers\XP-WIN8\ACR38U\a38usb.inf"'
+		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\Drivers\XP-WIN7\OmniKey3121\cxbu0wdm.inf"'
+		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\Drivers\XP-WIN7\SCR331\scr3xx.inf"'
+		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\Drivers\XP-WIN7\VascoDP509\usbccid.inf"'
 		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\Drivers\XP-WIN7\SPR532\Spr332.inf"'
+		nsExec::ExecToLog '"$SYSDIR\Robocopy.exe" "$INSTDIR\Drivers\XP-WIN8\beidmdrv" "$INSTDIR\Drivers\WINALL\beidmdrv" beidmdrv.cat'
 	${EndIf}
 		
 	${If} $versionMajor == 6
-	${AndIf} $versionMinor == 2 
+	${AndIf} $versionMinor == 2
 		;windows 8
+		nsExec::ExecToLog '"$SYSDIR\Robocopy.exe" "$INSTDIR\Drivers\XP-WIN8\beidmdrv" "$INSTDIR\Drivers\WINALL\beidmdrv" beidmdrv.cat'
 		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\Drivers\XP-WIN8\ACR38U\a38usb.inf"'
 	${EndIf}
 	
 	${If} $versionMajor == 6
-	${AndIf} $versionMinor == 3 
+	${AndIf} $versionMinor == 3
 		;windows 8.1
+		nsExec::ExecToLog '"$SYSDIR\Robocopy.exe" "$INSTDIR\Drivers\XP-WIN8\beidmdrv" "$INSTDIR\Drivers\WINALL\beidmdrv" beidmdrv.cat'
 		nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\Drivers\XP-WIN8\ACR38U\a38usb.inf"'
 	${EndIf}
 	;driver to install on all OS's

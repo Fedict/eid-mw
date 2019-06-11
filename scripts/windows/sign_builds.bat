@@ -1,63 +1,41 @@
 :: set all path variables
 :: ======================
-@call "%~dp0.\SetPaths.bat"
+call "%~dp0.\SetPaths.bat"
 @if %ERRORLEVEL%==1 goto paths_failed
 
 :: get eidmw version
 :: =================
-@call "%~dp0.\set_eidmw_version.cmd"
-
-set OUR_CURRENT_PATH="%cd%"
-@echo OUR_CURRENT_PATH = %OUR_CURRENT_PATH% 
-
-set MDRVINSTALLPATH=%~dp0..\..\installers\quickinstaller\Drivers\WINALL
-set MDRVCERTPATH=%~dp0..\..\cardcomm\minidriver\makemsi
-
-:: Create catalog
-:: create the MSI installers
-:: =========================
-@del "%MDRVINSTALLPATH%\beidmdrv\beidmdrv.cat"
-%INF2CAT_PATH%\inf2cat.exe /driver:%MDRVINSTALLPATH%\beidmdrv\ /os:XP_X86,XP_X64,Vista_X86,Vista_X64,7_X86,7_X64
-@if "%ERRORLEVEL%" == "1" goto inf2cat_failed
-
-:: sign minidriver driver dll's and cat file
-:: =========================================
-
-@echo MDRVINSTALLPATH = %MDRVINSTALLPATH% 
-@echo [INFO] Sign the minidriver catalog
-::"%SIGNTOOL_PATH%\signtool" sign /ac "%MDRVINSTALLPATH%\GlobalSign Root CA.crt" /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%MDRVINSTALLPATH%\beidmdrv\beidmdrv.cat"
-"%SIGNTOOL_PATH%\signtool" sign /as /fd SHA256 /ac "%MDRVCERTPATH%\MSCV-GlobalSign Root CA.cer" /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%MDRVINSTALLPATH%\beidmdrv\beidmdrv.cat"
-@echo [INFO] Sign the minidriver 32bit dll
-"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%MDRVINSTALLPATH%\beidmdrv\beidmdrv32.dll"
-@echo [INFO] Sign the minidriver 64bit dll
-"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%MDRVINSTALLPATH%\beidmdrv\beidmdrv64.dll"
-
-@if "%ERRORLEVEL%" == "1" goto signtool_failed
+call "%~dp0.\set_eidmw_version.cmd"
 
 
-@cd "%MDRVINSTALLPATH%"
-del /q beidmdrv.zip
-:: zip the minidriver folder
-powershell.exe -nologo -noprofile -command "Compress-Archive -Path .\beidmdrv\* -CompressionLevel Optimal -DestinationPath ./beidmdrv.zip"
-move %~dp0..\..\installers\quickinstaller\Drivers\WINALL\beidmdrv.zip %~dp0
+:: sign the minidriver 
+:: ===================
+call "%~dp0.\sign_minidriver.bat"
+@if "%ERRORLEVEL%" == "1" goto minidriver_failed
 
-@cd "%OUR_CURRENT_PATH%"
+
+:: sign the minidriver cabinet
+:: ===========================
+call "%~dp0.\sign_minidriver_cab.bat"
+@if "%ERRORLEVEL%" == "1" goto minidriver_cabinet_failed
+
 
 :: sign pkcs11
 :: ===========
-
 @echo [INFO] Sign the pkcs11 dll, 32bit
-"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\cardcomm\VS_2017\Binaries\Win32_Release\beidpkcs11.dll"
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\cardcomm\pkcs11\VS_2017\Binaries\Win32_Release\beidpkcs11.dll"
 @echo [INFO] Sign the pkcs11_ff dll, 32bit
-"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\cardcomm\VS_2017\Binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll"
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\cardcomm\pkcs11\VS_2017\Binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll"
 @echo [INFO] Sign the pkcs11 dll, 64bit
-"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\cardcomm\VS_2017\Binaries\x64_Release\beidpkcs11.dll"
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\cardcomm\pkcs11\VS_2017\Binaries\x64_Release\beidpkcs11.dll"
 @echo [INFO] Sign the pkcs11_ff dll, 64bit
-"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\cardcomm\VS_2017\Binaries\x64_PKCS11_FF_Release\beid_ff_pkcs11.dll"
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\cardcomm\pkcs11\VS_2017\Binaries\x64_PKCS11_FF_Release\beid_ff_pkcs11.dll"
 
 
 :: create the MSI installers
 :: =========================
+set OUR_CURRENT_PATH="%cd%"
+@echo OUR_CURRENT_PATH = %OUR_CURRENT_PATH% 
 
 ::need current dir to be pointing at the one of the wxs files, or light.exe can't find the paths
 @cd %~dp0..\..\installers\eid-mw\Windows
@@ -67,9 +45,9 @@ move %~dp0..\..\installers\quickinstaller\Drivers\WINALL\beidmdrv.zip %~dp0
 ::sign the 32bit msi
 @echo [INFO] sign 32 bit msi installer
 ::signtool fails at dual-signing msi's at the moment
-::"%SIGNTOOL_PATH%\signtool" sign /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi"
+::"%SIGNTOOL_PATH%\signtool" sign /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi"
 :: /as
-"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi"
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi"
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
 @echo [INFO] copy 32 bit msi installer
 copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi %~dp0
@@ -79,9 +57,9 @@ copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi %~dp0
 ::sign the 64bit msi
 @echo [INFO] sign 64 bit msi installer
 ::signtool fails at dual-signing msi's at the moment
-::"%SIGNTOOL_PATH%\signtool" sign /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_64.msi"
+::"%SIGNTOOL_PATH%\signtool" sign /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_64.msi"
 :: /as
-"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_64.msi"
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_64.msi"
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
 @echo [INFO] copy 64 bit msi installer
 copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_64.msi %~dp0
@@ -90,8 +68,9 @@ copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_64.msi %~dp0
 @cd %~dp0..\..\installers\eid-viewer\Windows
 
 @echo [INFO] Sign the eID Viewer executable
-"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\Release\eIDViewer.exe"
-"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\Release\eIDViewerBackend.dll"
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\Release\eIDViewer.exe"
+@echo [INFO] Sign the eID Viewer backend library
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\Release\eIDViewerBackend.dll"
 @if %ERRORLEVEL%==1 goto signtool_failed
 
 @echo [INFO] create eID Viewer msi installer
@@ -99,7 +78,7 @@ copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_64.msi %~dp0
 @if %ERRORLEVEL%==1 goto end_resetpath_with_error
 
 @echo [INFO] sign eID Viewer msi installer
-"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\installers\eid-viewer\Windows\bin\BeidViewer.msi"
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\installers\eid-viewer\Windows\bin\BeidViewer.msi"
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
 @echo [INFO] copy 64 bit msi installer
 copy %~dp0..\..\installers\eid-viewer\Windows\bin\BeidViewer.msi %~dp0
@@ -119,14 +98,16 @@ copy %~dp0..\..\installers\eid-viewer\Windows\bin\BeidViewer.msi %~dp0
 
 :: sign the nsis installer
 :: =======================
-@echo [INFO] sign nsis installer
-"%SIGNTOOL_PATH%\signtool" sign /n "FedICT" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%~dp0..\..\installers\quickinstaller\Belgium eID-QuickInstaller %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe"
-"%SIGNTOOL_PATH%\signtool" sign /as /fd SHA256 /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\installers\quickinstaller\Belgium eID-QuickInstaller %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe"
+@echo [INFO] sign nsis installer by signing a SHA1 hash of it
+"%SIGNTOOL_PATH%\signtool" sign /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%~dp0..\..\installers\quickinstaller\Belgium eID-QuickInstaller %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe"
+@echo [INFO] add a SHA256 signature to nsis installer
+"%SIGNTOOL_PATH%\signtool" sign /as /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\installers\quickinstaller\Belgium eID-QuickInstaller %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe"
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
 
-@echo [INFO] sign nsis viewer installer
-"%SIGNTOOL_PATH%\signtool" sign /n "FedICT" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%~dp0..\..\installers\quickinstaller\Belgium eID Viewer Installer %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe"
-"%SIGNTOOL_PATH%\signtool" sign /as /fd SHA256 /s MY /n "Fedict" /sha1 "2259EF223A51E91964D7F4695706091194E018BB" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\installers\quickinstaller\Belgium eID Viewer Installer %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe"
+@echo [INFO] sign nsis viewer installer by signing a SHA1 hash of it
+"%SIGNTOOL_PATH%\signtool" sign /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%~dp0..\..\installers\quickinstaller\Belgium eID Viewer Installer %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe"
+@echo [INFO] add a SHA256 signature to nsis viewer installer
+"%SIGNTOOL_PATH%\signtool" sign /as /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\installers\quickinstaller\Belgium eID Viewer Installer %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe"
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
 
 @echo [INFO] copy nsis installer
@@ -137,6 +118,14 @@ goto end_resetpath
 
 :msbuild_failed
 @echo [ERR ] msbuild failed
+@goto err
+
+:minidriver_failed
+@echo [ERR ] signing minidriver failed
+@goto err
+
+:minidriver_cabinet_failed
+@echo [ERR ] signing minidriver cabinet failed
 @goto err
 
 :inf2cat_failed_failed

@@ -18,6 +18,8 @@
 @set SEARCH_WIX_PATH=C:\Program Files (x86)\WiX Toolset v3.11\bin
 @set SEARCH_NSIS_PATH=C:\Program Files (x86)\NSIS
 @set SEARCH_NSIS_PATH_2=C:\Program Files\NSIS
+
+@set BEID_SEARCH_PATHS_SET=1
 ::end of search paths
 
 

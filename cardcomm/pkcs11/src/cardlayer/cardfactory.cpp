@@ -273,7 +273,7 @@ namespace eIDMW
 
 			// If the card is still not recognized here, then it may as well
 			// be an badly inserted card, so we'll throw the exception that we
-			// caught in the beginnin of this function
+			// caught in the beginning of this function
 			if (poCard == NULL)
 				throw CMWEXCEPTION(lErrCode);
 		}

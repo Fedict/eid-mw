@@ -136,13 +136,8 @@ namespace eIDMW
 					status = CARD_NOT_PRESENT;
 			} else
 			{
-#ifndef __APPLE__
-				if (m_poCard->Status())
-				{
-#else
 				if (m_poContext->m_oPCSC.Status(m_csReader))
 				{
-#endif
 					status = CARD_STILL_PRESENT;
 				} else
 				{

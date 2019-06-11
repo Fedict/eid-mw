@@ -34,7 +34,7 @@ not for you; in that case, we instead recommend you download it from the
 
 ### Code from a source package, or code you just bootstrapped as above
 
-#### GNU/Linux
+#### GNU/Linux ####
 
 Make sure you have the development packages for the following libraries
 installed:
@@ -73,15 +73,27 @@ Pin dialogs can be disabled eg for applications that have their own dialogs:
 
     ./configure --enable-dialogs=no # the default is yes
 
-#### OS X
 
-Just open the project in Xcode (6 or above) and hit "start"
+#### macOS ####
 
-#### Windows:
+To build the eID middleware (CTKToken + pkcs#11) and its installer: run the buildscript located at eid-mw\scripts\mac\make-mac.sh
+To build the eID Viewer and its installer: run the buildscript located at eid-mw\scripts\mac\make-viewer.sh
 
-Just open the project in Visual Studio (2012 or above)
+The xcode project for the CTKToken is located in eid-mw\cardcomm\ctkToken
+The xcode project for pkcs#11 and the eID Viewer is located in the top directory eid-mw
 
-#### Firefox
+
+#### Windows ####
+
+Run the buildscript located at eid-mw\scripts\windows\build_all.bat
+This script will generate some version dependant files that are used in the Visual Studio projects
+It will also build the middleware and viewer, as well as their installers
+
+The eID Middleware Visual Studio solution (2017) is located in eid-mw\VS_2017
+The eID Viewer Visual Studio solution (2017) is located in eid-mw\plugins_tools\eid-viewer\Windows\VS_2017
+
+
+#### Firefox ####
 
 To use the Belgian eID in Firefox, we recommend the Firefox extension to handle configuration automatically. 
 The extension will be installed on Linux and OSX. The default install locations:

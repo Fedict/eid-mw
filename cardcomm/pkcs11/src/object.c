@@ -465,7 +465,7 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 				if( (pSlot->ulCardDataCached & CACHED_DATA_TYPE_CARDDATA) == 0){
 					ret = cal_get_card_data(pSession->hslot);
 					if (ret != 0){
-						log_trace(WHERE, "E: cal_read_ID_files() returned %d", ret);
+						log_trace(WHERE, "E: cal_get_card_data() returned %d", ret);
 						goto cleanup;
 					}
 				}
@@ -483,7 +483,7 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 				//cache and parse only the carddata
 				ret = cal_get_card_data(pSession->hslot);
 				if (ret != 0){
-					log_trace(WHERE, "E: cal_read_ID_files() returned %d", ret);
+					log_trace(WHERE, "E: cal_get_card_data returned %d", ret);
 					goto cleanup;
 				}
 				break;
@@ -491,7 +491,7 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 				//cache and parse only the requested file type
 				ret = cal_read_ID_files(pSession->hslot,filesToCacheFlag);
 				if (ret != 0){
-					log_trace(WHERE, "E: cal_read_ID_files() returned %d", ret);
+					log_trace(WHERE, "E: cal_read_ID_files returned %d", ret);
 					goto cleanup;
 				}
 			}
