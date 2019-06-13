@@ -37,6 +37,8 @@ set MDRVCERTPATH=%~dp0..\..\cardcomm\minidriver\makemsi
 @echo [INFO] Sign the minidriver catalog
 "%SIGNTOOL_PATH%\signtool" sign /as /fd SHA256 /ac "%MDRVCERTPATH%\MSCV-GlobalSign Root CA.cer" /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%MDRVINSTALLPATH%\beidmdrv\beidmdrv.cat"
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
+copy "%~dp0..\..\installers\quickinstaller\Drivers\WINALL\beidmdrv\beidmdrv.cat" "%~dp0..\..\installers\quickinstaller\Drivers\XP-WIN8\beidmdrv\"
+
 
 @cd "%MDRVINSTALLPATH%"
 
