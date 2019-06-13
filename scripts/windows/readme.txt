@@ -10,7 +10,7 @@ For the creation of the minidriver cat file (from the inf file)
 For the test signing of the cat file
 https://docs.microsoft.com/en-us/windows-hardware/drivers/download-the-wdk
 
-3) NSIS (version used is 2.46)
+3) NSIS (version used is 3.04)
 For the creation of the quick installers
 http://nsis.sourceforge.net/Download
 
