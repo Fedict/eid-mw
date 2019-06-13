@@ -90,7 +90,6 @@ struct rpos skip_uninteresting(char* line) {
 			}
 		}
 		if(!finished) {
-			finished = true;
 			for(i=0; i<sizeof(banners) / sizeof(banners[0]); i++) {
 				char *pos = strstr(banners[i].banner, firstline);
 				if(pos != NULL) {
