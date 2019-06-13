@@ -73,10 +73,17 @@ namespace eIDViewer
 
         public void ShowPINVerifiedOKCallback(string message)
         {
-            ResourceManager rm = new ResourceManager("eIDViewer.Resources.ApplicationStringResources",
-                    Assembly.GetExecutingAssembly());
-            CultureInfo culture = Thread.CurrentThread.CurrentCulture;
-            System.Windows.MessageBox.Show(rm.GetString(message, culture));
+            try
+            {
+                ResourceManager rm = new ResourceManager("eIDViewer.Resources.ApplicationStringResources",
+                        Assembly.GetExecutingAssembly());
+                CultureInfo culture = Thread.CurrentThread.CurrentCulture;
+                System.Windows.MessageBox.Show(rm.GetString(message, culture));
+            }
+            catch (Exception e)
+            {
+                this.WriteLog("Exception in function ShowPINVerifiedOKCallback: " + e.Message + "\n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+            }
         }
 
         public void pincodeVerifiedSucces(string message)
@@ -179,51 +186,58 @@ namespace eIDViewer
         {
             int chainLen = 3;
 
-            if(leafCertificate.Equals(RN_cert))
+            try
             {
-                chainLen = 2;
-            }
-            //chain length should be 3
-            //allow cross-signed belgium rootCA
-            //if (buildChain.ChainElements.Count != chainLen)
-            //{
-            //    this.logText += "certificate chain is bigger then 3, did the webtrusted Belgian rootCA entered the chain? \n";
-            //    return false;
-            //}
-            //check if entire chain .NET just build is the one on the eID Card
-            if (buildChain.ChainElements[0].Certificate.Thumbprint != leafCertificate.Thumbprint)
-            {
-                //leaf cert in the verified chain is not the one on the eID Card
-                this.WriteLog("certificate chain not build correctly, leafCertificate in Windows store differs from the one on eID card \n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
-                return false;
-            }
-            if (chainLen == 2)
-            {
-                if (!buildChain.ChainElements[1].Certificate.GetPublicKey().SequenceEqual(rootCA_cert.GetPublicKey()))
-                {
-                    //root cert in the verified chain has different public key then the one on the eID Card
-                    this.WriteLog("certificate chain not build correctly, RootCA in Windows store has different public key then the one on the eID Card \n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
-                    return false;
-                }
-            }
-            //check if entire chain .NET just build is the one on the eID Card
-            else
-            {
-                if (buildChain.ChainElements[1].Certificate.Thumbprint != intermediateCA_cert.Thumbprint)
-                {
-                    //intermediateCA cert  in the verified chain is not the one on the eID Card
-                    this.WriteLog("certificate chain not build correctly, intermediateCA in Windows store differs from the one on eID card \n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
-                    return false;
-                }
-                //check if root cert in the verified chain has different public key then the one on the eID Card
-                if (!buildChain.ChainElements[2].Certificate.GetPublicKey().SequenceEqual(rootCA_cert.GetPublicKey()))
-                {
-                    //root cert in the verified chain has different public key then the one on the eID Card
-                    this.WriteLog("certificate chain not build correctly, RootCA in Windows store has different public key then the one on the eID Card \n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
-                    return false;
-                }
-            }
 
+                if (leafCertificate.Equals(RN_cert))
+                {
+                    chainLen = 2;
+                }
+                //chain length should be 3
+                //allow cross-signed belgium rootCA
+                //if (buildChain.ChainElements.Count != chainLen)
+                //{
+                //    this.logText += "certificate chain is bigger then 3, did the webtrusted Belgian rootCA entered the chain? \n";
+                //    return false;
+                //}
+                //check if entire chain .NET just build is the one on the eID Card
+                if (buildChain.ChainElements[0].Certificate.Thumbprint != leafCertificate.Thumbprint)
+                {
+                    //leaf cert in the verified chain is not the one on the eID Card
+                    this.WriteLog("certificate chain not build correctly, leafCertificate in Windows store differs from the one on eID card \n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+                    return false;
+                }
+                if (chainLen == 2)
+                {
+                    if (!buildChain.ChainElements[1].Certificate.GetPublicKey().SequenceEqual(rootCA_cert.GetPublicKey()))
+                    {
+                        //root cert in the verified chain has different public key then the one on the eID Card
+                        this.WriteLog("certificate chain not build correctly, RootCA in Windows store has different public key then the one on the eID Card \n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+                        return false;
+                    }
+                }
+                //check if entire chain .NET just build is the one on the eID Card
+                else
+                {
+                    if (buildChain.ChainElements[1].Certificate.Thumbprint != intermediateCA_cert.Thumbprint)
+                    {
+                        //intermediateCA cert  in the verified chain is not the one on the eID Card
+                        this.WriteLog("certificate chain not build correctly, intermediateCA in Windows store differs from the one on eID card \n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+                        return false;
+                    }
+                    //check if root cert in the verified chain has different public key then the one on the eID Card
+                    if (!buildChain.ChainElements[2].Certificate.GetPublicKey().SequenceEqual(rootCA_cert.GetPublicKey()))
+                    {
+                        //root cert in the verified chain has different public key then the one on the eID Card
+                        this.WriteLog("certificate chain not build correctly, RootCA in Windows store has different public key then the one on the eID Card \n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+                        return false;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                this.WriteLog("Exception in function CheckChain: " + e.Message + "\n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+            }
             return true;
         }
 
@@ -662,81 +676,89 @@ namespace eIDViewer
             }
         }
 
-        private void StoreCertificate (ref CertViewModel theCertViewModel, ref X509Certificate2 theX509Certificate)
+        private void StoreCertificate(ref CertViewModel theCertViewModel, ref X509Certificate2 theX509Certificate)
         {
-            theCertViewModel.Cert = theX509Certificate;
-            theCertViewModel.CertValidfrom = theX509Certificate.GetEffectiveDateString();
-            theCertViewModel.CertValidUntill = theX509Certificate.GetExpirationDateString();
-            theCertViewModel.CertVisibility = Visibility.Visible;
-            theCertViewModel.CertTrust = "Not checked";
-            theCertViewModel.CertSubject = theX509Certificate.Subject.Replace(',', '\n');
-            theCertViewModel.CertLabel = theX509Certificate.SubjectName.Name;
-            string subjectName = theX509Certificate.SubjectName.Name;
-            // This search returns the substring between two strings, so 
-            // the first index is moved to the character just after the first string.
-            Int32 first = subjectName.IndexOf("CN=") + "CN=".Length;
-            if(first < 1)
+            try
             {
-                //no CN field found, just clear the certlabel
-                theCertViewModel.CertLabel = "";
-            }
-            else
-            {
-                Int32 last = subjectName.IndexOf(",", first);
-                if(last == -1)
+
+                theCertViewModel.Cert = theX509Certificate;
+                theCertViewModel.CertValidfrom = theX509Certificate.GetEffectiveDateString();
+                theCertViewModel.CertValidUntill = theX509Certificate.GetExpirationDateString();
+                theCertViewModel.CertVisibility = Visibility.Visible;
+                theCertViewModel.CertTrust = "Not checked";
+                theCertViewModel.CertSubject = theX509Certificate.Subject.Replace(',', '\n');
+                theCertViewModel.CertLabel = theX509Certificate.SubjectName.Name;
+                string subjectName = theX509Certificate.SubjectName.Name;
+                // This search returns the substring between two strings, so 
+                // the first index is moved to the character just after the first string.
+                Int32 first = subjectName.IndexOf("CN=") + "CN=".Length;
+                if (first < 1)
                 {
-                    last = subjectName.Length - 1;
+                    //no CN field found, just clear the certlabel
+                    theCertViewModel.CertLabel = "";
                 }
-                theCertViewModel.CertLabel = subjectName.Substring(first, last - first);
+                else
+                {
+                    Int32 last = subjectName.IndexOf(",", first);
+                    if (last == -1)
+                    {
+                        last = subjectName.Length - 1;
+                    }
+                    theCertViewModel.CertLabel = subjectName.Substring(first, last - first);
+                }
+
+                theCertViewModel.CertNotifyPropertyChanged("CertLabel");
+
+                foreach (X509Extension extension in theX509Certificate.Extensions)
+                {
+                    //Console.WriteLine(extension.Oid.FriendlyName + "(" + extension.Oid.Value + ")");
+                    if (extension.Oid.Value == "2.5.29.15")//OID_KEY_USAGE
+                    {
+                        theCertViewModel.CertUsage = "";
+                        X509KeyUsageExtension ext = (X509KeyUsageExtension)extension;
+
+                        if (ext.KeyUsages.HasFlag(X509KeyUsageFlags.DigitalSignature))
+                        {
+                            theCertViewModel.CertUsage += "DigitalSignature ";
+                        }
+                        if (ext.KeyUsages.HasFlag(X509KeyUsageFlags.NonRepudiation))
+                        {
+                            theCertViewModel.CertUsage += "NonRepudiation ";
+                        }
+                        if (ext.KeyUsages.HasFlag(X509KeyUsageFlags.KeyCertSign))
+                        {
+                            theCertViewModel.CertUsage += "KeyCertSign ";
+                        }
+                        if (ext.KeyUsages.HasFlag(X509KeyUsageFlags.DataEncipherment))
+                        {
+                            theCertViewModel.CertUsage += "DataEncipherment ";
+                        }
+                        if (ext.KeyUsages.HasFlag(X509KeyUsageFlags.DecipherOnly))
+                        {
+                            theCertViewModel.CertUsage += "DecipherOnly ";
+                        }
+                        if (ext.KeyUsages.HasFlag(X509KeyUsageFlags.EncipherOnly))
+                        {
+                            theCertViewModel.CertUsage += "EncipherOnly ";
+                        }
+                        if (ext.KeyUsages.HasFlag(X509KeyUsageFlags.KeyAgreement))
+                        {
+                            theCertViewModel.CertUsage += "KeyAgreement ";
+                        }
+                        if (ext.KeyUsages.HasFlag(X509KeyUsageFlags.KeyEncipherment))
+                        {
+                            theCertViewModel.CertUsage += "KeyEncipherment ";
+                        }
+                        if (ext.KeyUsages == (X509KeyUsageFlags.None))
+                        {
+                            theCertViewModel.CertUsage += "No key usage parameters ";
+                        }
+                    }
+                }
             }
-
-            theCertViewModel.CertNotifyPropertyChanged("CertLabel");
-
-            foreach (X509Extension extension in theX509Certificate.Extensions)
+            catch (Exception e)
             {
-                //Console.WriteLine(extension.Oid.FriendlyName + "(" + extension.Oid.Value + ")");
-                if (extension.Oid.Value == "2.5.29.15")//OID_KEY_USAGE
-                    {
-                    theCertViewModel.CertUsage = "";
-                    X509KeyUsageExtension ext = (X509KeyUsageExtension)extension;
-
-                    if (ext.KeyUsages.HasFlag(X509KeyUsageFlags.DigitalSignature))
-                    {
-                        theCertViewModel.CertUsage += "DigitalSignature ";
-                    }
-                    if (ext.KeyUsages.HasFlag(X509KeyUsageFlags.NonRepudiation))
-                    {
-                        theCertViewModel.CertUsage += "NonRepudiation ";
-                    }
-                    if (ext.KeyUsages.HasFlag(X509KeyUsageFlags.KeyCertSign))
-                    {
-                        theCertViewModel.CertUsage += "KeyCertSign ";
-                    }
-                    if (ext.KeyUsages.HasFlag(X509KeyUsageFlags.DataEncipherment))
-                    {
-                        theCertViewModel.CertUsage += "DataEncipherment ";
-                    }
-                    if (ext.KeyUsages.HasFlag(X509KeyUsageFlags.DecipherOnly))
-                    {
-                        theCertViewModel.CertUsage += "DecipherOnly ";
-                    }
-                    if (ext.KeyUsages.HasFlag(X509KeyUsageFlags.EncipherOnly))
-                    {
-                        theCertViewModel.CertUsage += "EncipherOnly ";
-                    }
-                    if (ext.KeyUsages.HasFlag(X509KeyUsageFlags.KeyAgreement))
-                    {
-                        theCertViewModel.CertUsage += "KeyAgreement ";
-                    }
-                    if (ext.KeyUsages.HasFlag(X509KeyUsageFlags.KeyEncipherment))
-                    {
-                        theCertViewModel.CertUsage += "KeyEncipherment ";
-                    }
-                    if (ext.KeyUsages == (X509KeyUsageFlags.None))
-                    {
-                        theCertViewModel.CertUsage += "No key usage parameters ";
-                    }
-                }
+                this.WriteLog("Exception in function StoreCertificate: " + e.Message + "\n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
             }
         }
 

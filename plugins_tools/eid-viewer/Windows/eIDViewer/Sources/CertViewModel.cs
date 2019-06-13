@@ -116,12 +116,19 @@ namespace eIDViewer
         {
             get
             {
-                if (_DetailInfoCommand == null)
+                try
                 {
-                    _DetailInfoCommand = new RelayCommand((o) =>
+                    if (_DetailInfoCommand == null)
                     {
-                        System.Security.Cryptography.X509Certificates.X509Certificate2UI.DisplayCertificate(Cert);
-                    });
+                        _DetailInfoCommand = new RelayCommand((o) =>
+                        {
+                            System.Security.Cryptography.X509Certificates.X509Certificate2UI.DisplayCertificate(Cert);
+                        });
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: Could not get certificate details. Error message: " + ex.Message);
                 }
                 return _DetailInfoCommand;
             }
