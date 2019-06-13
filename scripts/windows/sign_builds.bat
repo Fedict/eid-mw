@@ -14,6 +14,11 @@ call "%~dp0.\sign_minidriver.bat"
 @if "%ERRORLEVEL%" == "1" goto minidriver_failed
 
 
+:: package the minidriver 
+:: ======================
+call "%~dp0.\package_minidriver.bat"
+
+
 :: sign pkcs11
 :: ===========
 @echo [INFO] Sign the pkcs11 dll, 32bit
