@@ -14,6 +14,11 @@ call "%~dp0.\set_eidmw_version.cmd"
 :: and by now replaced by the attestation signed minidriver (which we will package)
 
 
+:: package the minidriver 
+:: ======================
+call "%~dp0.\package_minidriver.bat"
+
+
 :: sign pkcs11
 :: ===========
 @echo [INFO] Sign the pkcs11 dll, 32bit
