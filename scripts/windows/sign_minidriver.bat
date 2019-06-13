@@ -15,11 +15,12 @@ set OUR_CURRENT_PATH="%cd%"
 set MDRVINSTALLPATH=%~dp0..\..\installers\quickinstaller\Drivers\WINALL
 set MDRVCERTPATH=%~dp0..\..\cardcomm\minidriver\makemsi
 
-:: Create catalog
-:: ==============
+:: Create catalog for win10 attestation signature
+:: ==============================================
 @del "%MDRVINSTALLPATH%\beidmdrv\beidmdrv.cat"
 "%INF2CAT_PATH%\inf2cat.exe" /driver:%MDRVINSTALLPATH%\beidmdrv\ /os:XP_X86,XP_X64,Vista_X86,Vista_X64,7_X86,7_X64
 @if "%ERRORLEVEL%" == "1" goto inf2cat_failed
+copy "%~dp0..\..\installers\quickinstaller\Drivers\WINALL\beidmdrv\beidmdrv.cat" "%~dp0..\..\installers\quickinstaller\Drivers\XP-WIN8\beidmdrv\"
 
 :: sign minidriver dll's
 :: =====================
