@@ -101,42 +101,56 @@ namespace eIDViewer
         //void(*readers_changed)(unsigned long nreaders, slotdesc* slots)
         public static void Init()
         {
-            eid_vwr_set_cbfuncs(mynewsrc, mystringdata,
-                mybindata, mylog, mynewstate, mypinopresult, myReadersChanged);
+            try
+            {
+                eid_vwr_set_cbfuncs(mynewsrc, mystringdata,
+                    mybindata, mylog, mynewstate, mypinopresult, myReadersChanged);
 
-            theData.cardreader_icon = new BitmapImage(new Uri("Resources/Images/state_noreaders.png", UriKind.Relative));
-            /*
-            //fill in the functions reference struct
-            eIDViewerBackend.mCSCbStruct.theCbNewSrc = eIDViewerBackend.CSCbNewSrc;
-            eIDViewerBackend.mCSCbStruct.theCbNewStringData = eIDViewerBackend.CSCbNewStringData;
-            eIDViewerBackend.mCSCbStruct.theCbnewbindata = eIDViewerBackend.CSCbnewbindata;
-            eIDViewerBackend.mCSCbStruct.theCbLog = eIDViewerBackend.CSCblog;
-            eIDViewerBackend.mCSCbStruct.theCbLogv = null;
-            eIDViewerBackend.mCSCbStruct.theCbnewstate = eIDViewerBackend.CSCbnewstate;
-            eIDViewerBackend.mCSCbStruct.theCbpinopResult = eIDViewerBackend.CSCbpinopResult;
+                theData.cardreader_icon = new BitmapImage(new Uri("Resources/Images/state_noreaders.png", UriKind.Relative));
+                /*
+                //fill in the functions reference struct
+                eIDViewerBackend.mCSCbStruct.theCbNewSrc = eIDViewerBackend.CSCbNewSrc;
+                eIDViewerBackend.mCSCbStruct.theCbNewStringData = eIDViewerBackend.CSCbNewStringData;
+                eIDViewerBackend.mCSCbStruct.theCbnewbindata = eIDViewerBackend.CSCbnewbindata;
+                eIDViewerBackend.mCSCbStruct.theCbLog = eIDViewerBackend.CSCblog;
+                eIDViewerBackend.mCSCbStruct.theCbLogv = null;
+                eIDViewerBackend.mCSCbStruct.theCbnewstate = eIDViewerBackend.CSCbnewstate;
+                eIDViewerBackend.mCSCbStruct.theCbpinopResult = eIDViewerBackend.CSCbpinopResult;
 
-            var managedItem = (MMTPConxNack)Marshal.PtrToStructure(pointer,typeof(MMTPConxNack));
+                var managedItem = (MMTPConxNack)Marshal.PtrToStructure(pointer,typeof(MMTPConxNack));
 
-            eid_vwr_createcallbacks(ref mCSCbStruct);*/
+                eid_vwr_createcallbacks(ref mCSCbStruct);*/
+            }
+            catch (Exception e)
+            {
+                theData.WriteLog("AdjustIconImage encountered an error " + e.ToString() + "\n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+            }
         }
 
         private static void AdjustIconImage(string fileName)
         {
-            if (App.Current.Dispatcher != null)
+            try
             {
-                if (App.Current.Dispatcher.CheckAccess())
+                if (App.Current.Dispatcher != null)
                 {
-                    theData.cardreader_icon = new BitmapImage(new Uri(fileName, UriKind.Relative));
+                    if (App.Current.Dispatcher.CheckAccess())
+                    {
+                        theData.cardreader_icon = new BitmapImage(new Uri(fileName, UriKind.Relative));
+                    }
+                    else
+                    {
+                        App.Current.Dispatcher.BeginInvoke(
+                          DispatcherPriority.Background,
+                          new Action(() =>
+                          {
+                              theData.cardreader_icon = new BitmapImage(new Uri(fileName, UriKind.Relative));
+                          }));
+                    }
                 }
-                else
-                {
-                    App.Current.Dispatcher.BeginInvoke(
-                      DispatcherPriority.Background,
-                      new Action(() =>
-                      {
-                          theData.cardreader_icon = new BitmapImage(new Uri(fileName, UriKind.Relative));
-                      }));
-                }
+            }
+            catch (Exception e)
+            {
+                theData.WriteLog("AdjustIconImage encountered an error " + e.ToString() + "\n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
             }
         }
 
@@ -298,41 +312,49 @@ namespace eIDViewer
 
         private static void CbReadersChanged(UInt32 nreaders, IntPtr slotList)
         {
-            int structSize = Marshal.SizeOf(typeof(eid_slotdesc));
-            Console.WriteLine(structSize);
 
-            ConcurrentQueue<ReadersMenuViewModel> tempReadersList = new ConcurrentQueue<ReadersMenuViewModel>();
-            // theData.readersList = new ConcurrentQueue<ReadersMenuViewModel>();
-
-            if(nreaders == 0)
+            try
             {
-                theData.WriteLog("No card readers detected\n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
-            }
+                int structSize = Marshal.SizeOf(typeof(eid_slotdesc));
+                ConcurrentQueue<ReadersMenuViewModel> tempReadersList = new ConcurrentQueue<ReadersMenuViewModel>();
 
-            for (int i = 0; i < nreaders; i++)
+                Console.WriteLine(structSize);
+                // theData.readersList = new ConcurrentQueue<ReadersMenuViewModel>();
+
+                if (nreaders == 0)
+                {
+                    theData.WriteLog("No card readers detected\n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
+                }
+
+                for (int i = 0; i < nreaders; i++)
+                {
+                    IntPtr data = new IntPtr(slotList.ToInt64() + structSize * i);
+                    eid_slotdesc slotDesc = (eid_slotdesc)Marshal.PtrToStructure(data, typeof(eid_slotdesc));
+
+                    if (slotDesc.description == null)
+                    {
+                        theData.WriteLog("CbReadersChanged called without a reader description\n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
+                        break;
+                    }
+
+                    theData.WriteLog("Reader slotnr  " + slotDesc.slot.ToString() + "\n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
+                    theData.WriteLog("Reader name  " + slotDesc.description.ToString() + "\n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
+
+                    if (!slotDesc.description.Equals("\\\\?PnP?\\Notification"))
+                    {
+                        tempReadersList.Enqueue(new ReadersMenuViewModel(slotDesc.description, slotDesc.slot));
+                    }
+                    else if (nreaders == 1)
+                    {
+                        tempReadersList.Enqueue(new ReadersMenuViewModel(" ", 0));
+                    }
+                }
+                theData.readersList = tempReadersList;
+            }
+            catch (Exception e)
             {
-                IntPtr data = new IntPtr(slotList.ToInt64() + structSize * i);
-                eid_slotdesc slotDesc = (eid_slotdesc)Marshal.PtrToStructure(data, typeof(eid_slotdesc));
-
-                if(slotDesc.description == null)
-                {
-                    theData.WriteLog("CbReadersChanged called without a reader description\n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
-                    break;
-                }
-
-                theData.WriteLog("Reader slotnr  " + slotDesc.slot.ToString() + "\n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
-                theData.WriteLog("Reader name  " + slotDesc.description.ToString() + "\n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
-
-                if (!slotDesc.description.Equals("\\\\?PnP?\\Notification"))
-                {
-                    tempReadersList.Enqueue(new ReadersMenuViewModel(slotDesc.description, slotDesc.slot));
-                }
-                else if (nreaders == 1)
-                {
-                    tempReadersList.Enqueue(new ReadersMenuViewModel(" ", 0));
-                }
+                theData.WriteLog("CbReadersChanged encountered an error " + e.ToString() + "\n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
             }
-            theData.readersList = tempReadersList;
         }
 
         public static void DoPinop(eid_vwr_pinops pinop)

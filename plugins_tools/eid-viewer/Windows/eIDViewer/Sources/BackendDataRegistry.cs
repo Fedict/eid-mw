@@ -79,51 +79,58 @@ namespace eIDViewer
 
         public void GetViewerLogLevel()
         {
-            string readValue = ReadRegistryStringValue("SOFTWARE\\BEID\\logging", "eidviewer_log_level", null);
-            if (readValue != null)
+            try
             {
-                if (readValue.Equals("Error", StringComparison.OrdinalIgnoreCase))
+                string readValue = ReadRegistryStringValue("SOFTWARE\\BEID\\logging", "eidviewer_log_level", null);
+                if (readValue != null)
                 {
-                    this.log_level = eid_vwr_loglevel.EID_VWR_LOG_ERROR;
-                    this.log_level_index = 0;
-                }
-                else if (readValue.Equals("Warning", StringComparison.OrdinalIgnoreCase))
-                {
-                    this.log_level = eid_vwr_loglevel.EID_VWR_LOG_COARSE;
-                    this.log_level_index = 1;
-                }
-                else if (readValue.Equals("Info", StringComparison.OrdinalIgnoreCase))
-                {
-                    this.log_level = eid_vwr_loglevel.EID_VWR_LOG_NORMAL;
-                    this.log_level_index = 2;
-                }
-                else if (readValue.Equals("Debug", StringComparison.OrdinalIgnoreCase))
-                {
-                    this.log_level = eid_vwr_loglevel.EID_VWR_LOG_DETAIL;
-                    this.log_level_index = 3;
-                }
-                else
-                {
+                    if (readValue.Equals("Error", StringComparison.OrdinalIgnoreCase))
+                    {
+                        this.log_level = eid_vwr_loglevel.EID_VWR_LOG_ERROR;
+                        this.log_level_index = 0;
+                    }
+                    else if (readValue.Equals("Warning", StringComparison.OrdinalIgnoreCase))
+                    {
+                        this.log_level = eid_vwr_loglevel.EID_VWR_LOG_COARSE;
+                        this.log_level_index = 1;
+                    }
+                    else if (readValue.Equals("Info", StringComparison.OrdinalIgnoreCase))
+                    {
+                        this.log_level = eid_vwr_loglevel.EID_VWR_LOG_NORMAL;
+                        this.log_level_index = 2;
+                    }
+                    else if (readValue.Equals("Debug", StringComparison.OrdinalIgnoreCase))
+                    {
+                        this.log_level = eid_vwr_loglevel.EID_VWR_LOG_DETAIL;
+                        this.log_level_index = 3;
+                    }
+                    else
+                    {
                     //set log_level to something <= warning so we are sure the next messages get logged.
                     this.log_level = eid_vwr_loglevel.EID_VWR_LOG_NORMAL;
-                    this.WriteLog("unknown eidviewer_log_level setting identifier found in registry: " + readValue + "\n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
-                    this.WriteLog("Known values are: Error, Warning, Info, Debug\n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
+                        this.WriteLog("unknown eidviewer_log_level setting identifier found in registry: " + readValue + "\n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
+                        this.WriteLog("Known values are: Error, Warning, Info, Debug\n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
                     this.WriteLog("switching viewer log level to the default setting \"Error\"\n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
-                    this.log_level = eid_vwr_loglevel.EID_VWR_LOG_ERROR;
+                        this.log_level = eid_vwr_loglevel.EID_VWR_LOG_ERROR;
                     this.log_level_index = 0;
                     //also try to write it into the registry
                     StoreViewerLogLevel("Error");
+                    }
                 }
-            }
-            else
-            {
+                else
+                {
                 //set log_level to something <= warning so we are sure the next messages get logged.
                 this.log_level = eid_vwr_loglevel.EID_VWR_LOG_NORMAL;
                 this.WriteLog("no viewer log level setting found in registry, using the default \"Error\" \n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
-                this.log_level = eid_vwr_loglevel.EID_VWR_LOG_ERROR;
+                    this.log_level = eid_vwr_loglevel.EID_VWR_LOG_ERROR;
                 this.log_level_index = 0;
                 //also try to write it into the registry
                 StoreViewerLogLevel("Error");
+                }
+            }
+            catch (Exception e)
+            {
+                this.WriteLog("Exception in function GetViewerLogLevel: " + e.Message, eid_vwr_loglevel.EID_VWR_LOG_ERROR);
             }
         }
 

@@ -193,7 +193,14 @@ namespace eIDViewer
 
         private void CopyLogToClipboard_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.Clipboard.SetText(theBackendData.logText);
+            try
+            {
+                System.Windows.Clipboard.SetText(theBackendData.logText);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: Copy log to clipboard failed. Error message: " + ex.Message);
+            }
         }
 
         private void PincodeTest_Click(object sender, RoutedEventArgs e)
@@ -210,15 +217,17 @@ namespace eIDViewer
         {
             //Stream myStream = null;
             String filename = null;
-            OpenFileDialog myOpenFileDialog = new OpenFileDialog();
 
-            myOpenFileDialog.Filter = "eid files (*.eid)|*.eid|All files (*.*)|*.*";
-            myOpenFileDialog.FilterIndex = 1;
-
-            if (myOpenFileDialog.ShowDialog() == true)
+            try
             {
-                try
+                OpenFileDialog myOpenFileDialog = new OpenFileDialog();
+
+                myOpenFileDialog.Filter = "eid files (*.eid)|*.eid|All files (*.*)|*.*";
+                myOpenFileDialog.FilterIndex = 1;
+
+                if (myOpenFileDialog.ShowDialog() == true)
                 {
+
                     if ((filename = myOpenFileDialog.FileName) != null)
                     {
                         //close previous file
@@ -237,14 +246,13 @@ namespace eIDViewer
                              {
                                  bytesRead = myStream.Read(buffer, 0, length - bytesRead);
                              } while (bytesRead > 0);
-
                          }
                      }*/
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error: Could not read file from disk. Error message: " + ex.Message);
-                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: Could not read file from disk. Error message: " + ex.Message);
             }
         }
         private void MenuItemSaveAs_Click(object sender, RoutedEventArgs e)
@@ -252,18 +260,20 @@ namespace eIDViewer
             //We allow choosing the file to save to already before the card has been fully read
             //(for time saving purposes)
             String filename = null;
-            SaveFileDialog mySaveFileDialog = new SaveFileDialog();
 
-            mySaveFileDialog.Filter = "eid files (*.eid)|*.eid|All files (*.*)|*.*";
-            mySaveFileDialog.FilterIndex = 1;
-
-            if (mySaveFileDialog.ShowDialog() == true)
+            try
             {
-                try
+                SaveFileDialog mySaveFileDialog = new SaveFileDialog();
+
+                mySaveFileDialog.Filter = "eid files (*.eid)|*.eid|All files (*.*)|*.*";
+                mySaveFileDialog.FilterIndex = 1;
+
+                if (mySaveFileDialog.ShowDialog() == true)
                 {
+
                     if ((filename = mySaveFileDialog.FileName) != null)
                     {
-                        if(theBackendData.eid_data_ready == true)
+                        if (theBackendData.eid_data_ready == true)
                         {
                             eIDViewer.NativeMethods.SaveXML(filename);
                         }
@@ -272,11 +282,12 @@ namespace eIDViewer
                             MessageBox.Show("Error: Data not ready yet, file not saved ");
                         }
                     }
+
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error: Could not save file to disk. Error message: " + ex.Message);
-                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: Could not save file to disk. Error message: " + ex.Message);
             }
         }
 
@@ -290,17 +301,30 @@ namespace eIDViewer
         private void TextBlockCertificate_GotFocus(object sender, RoutedEventArgs e)
         {
             TextBlock certText = sender as TextBlock;
-
         }
 
         private void TestSiteMenu_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://eid.belgium.be");
+            try
+            {
+                System.Diagnostics.Process.Start("https://eid.belgium.be");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: Could not start a browser to visit https://eid.belgium.be" + ex.Message);
+            }
         }
 
         private void FAQMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://eid.belgium.be");
+            try
+            {
+                System.Diagnostics.Process.Start("https://eid.belgium.be");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: Could not start a browser to visit https://eid.belgium.be" + ex.Message);
+            }
         }
 
         private void AboutMenuItem_Click(object sender, RoutedEventArgs e)
@@ -322,26 +346,33 @@ namespace eIDViewer
             PrintWindow thePrintWindow = new PrintWindow();
             PrintDialog dialog = new PrintDialog();
 
-            if (dialog.ShowDialog() != true)
-                return;
+            try
+            {
+                if (dialog.ShowDialog() != true)
+                    return;
 
-            System.Printing.PrintCapabilities capabilities = dialog.PrintQueue.GetPrintCapabilities(dialog.PrintTicket);
+                System.Printing.PrintCapabilities capabilities = dialog.PrintQueue.GetPrintCapabilities(dialog.PrintTicket);
 
-            Point printMargin = new Point(capabilities.PageImageableArea.OriginWidth, capabilities.PageImageableArea.OriginHeight);
-            Size printSize = new Size(capabilities.PageImageableArea.ExtentWidth, capabilities.PageImageableArea.ExtentHeight);
+                Point printMargin = new Point(capabilities.PageImageableArea.OriginWidth, capabilities.PageImageableArea.OriginHeight);
+                Size printSize = new Size(capabilities.PageImageableArea.ExtentWidth, capabilities.PageImageableArea.ExtentHeight);
 
+                theBackendData.WriteLog("capabilities.PageImageableArea.OriginWidth = " + capabilities.PageImageableArea.OriginWidth + "\n", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
+                theBackendData.WriteLog("capabilities.PageImageableArea.OriginHeight = " + capabilities.PageImageableArea.OriginHeight + "\n", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
+                theBackendData.WriteLog("capabilities.PageImageableArea.ExtentWidth = " + capabilities.PageImageableArea.ExtentWidth + "\n", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
+                theBackendData.WriteLog("capabilities.PageImageableArea.ExtentHeight = " + capabilities.PageImageableArea.ExtentHeight + "\n", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
 
-            theBackendData.WriteLog("capabilities.PageImageableArea.OriginWidth = " + capabilities.PageImageableArea.OriginWidth, eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
-            theBackendData.WriteLog("capabilities.PageImageableArea.OriginHeight = " + capabilities.PageImageableArea.OriginHeight, eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
-            theBackendData.WriteLog("capabilities.PageImageableArea.ExtentWidth = " + capabilities.PageImageableArea.ExtentWidth, eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
-            theBackendData.WriteLog("capabilities.PageImageableArea.ExtentHeight = " + capabilities.PageImageableArea.ExtentHeight, eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
+                //Size printSize = new Size(dialog.PrintableAreaWidth, dialog.PrintableAreaHeight);
+                //thePrintWindow.printWindowGrid.Measure(printSize);
+                thePrintWindow.printWindowGrid.Arrange(new Rect(printMargin, printSize));
 
-            //Size printSize = new Size(dialog.PrintableAreaWidth, dialog.PrintableAreaHeight);
-            //thePrintWindow.printWindowGrid.Measure(printSize);
-            thePrintWindow.printWindowGrid.Arrange(new Rect(printMargin, printSize));
-
-            dialog.PrintVisual(thePrintWindow.printWindowGrid, "Printing");
-            thePrintWindow.Close();
+                dialog.PrintVisual(thePrintWindow.printWindowGrid, "Printing");
+                thePrintWindow.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+                thePrintWindow.Close();
+            }
         }
 
         private void ValidateNowButton_Click(object sender, RoutedEventArgs e)
@@ -352,34 +383,49 @@ namespace eIDViewer
         public static string Utf8ToString(IntPtr nativeUtf8)
         {
             int len = 0;
-            while (Marshal.ReadByte(nativeUtf8, len) != 0)
+            try
             {
-                len++;
+                while (Marshal.ReadByte(nativeUtf8, len) != 0)
+                {
+                    len++;
+                }
+                byte[] buffer = new byte[len];
+                Marshal.Copy(nativeUtf8, buffer, 0, buffer.Length);
+                return Encoding.UTF8.GetString(buffer);
             }
-            byte[] buffer = new byte[len];
-            Marshal.Copy(nativeUtf8, buffer, 0, buffer.Length);
-            return Encoding.UTF8.GetString(buffer);
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: converting utf8 to string failed" + ex.Message);
+                return "";
+            }
         }
 
         private void eIDPictureDnD(object sender, MouseEventArgs e)
         {
-            if (e.Source.GetType().Name.Equals("Image"))
+            try
             {
-                if ((theBackendData.eid_backend_state == eid_vwr_states.STATE_FILE_WAIT) || (theBackendData.eid_backend_state == eid_vwr_states.STATE_TOKEN_IDLE))
+                if (e.Source.GetType().Name.Equals("Image"))
                 {
-                    Image item = (Image)e.Source;
-
-                    //STATE_FILE or STATE_TOKEN_WAIT
-                    if (item != null)
+                    if ((theBackendData.eid_backend_state == eid_vwr_states.STATE_FILE_WAIT) || (theBackendData.eid_backend_state == eid_vwr_states.STATE_TOKEN_IDLE))
                     {
-                        IntPtr intptrXML = eIDViewer.NativeMethods.GetXMLForm();
-                        string XMLForm = Utf8ToString(intptrXML);
+                        Image item = (Image)e.Source;
 
-                        DataObject dataObject = new DataObject();
-                        dataObject.SetData(DataFormats.StringFormat, XMLForm.ToString());
-                        DragDrop.DoDragDrop(item, dataObject, DragDropEffects.Copy);
+                        //STATE_FILE or STATE_TOKEN_WAIT
+                        if (item != null)
+                        {
+                            IntPtr intptrXML = eIDViewer.NativeMethods.GetXMLForm();
+                            string XMLForm = Utf8ToString(intptrXML);
+
+                            DataObject dataObject = new DataObject();
+                            dataObject.SetData(DataFormats.StringFormat, XMLForm.ToString());
+                            DragDrop.DoDragDrop(item, dataObject, DragDropEffects.Copy);
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: Drag and Drop failed" + ex.Message);
             }
         }
 
