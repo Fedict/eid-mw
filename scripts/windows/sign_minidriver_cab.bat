@@ -5,9 +5,6 @@ call "%~dp0.\SetPaths.bat"
 @if %ERRORLEVEL%==1 goto paths_failed
 
 :searchpaths_set
-:: get eidmw version
-:: =================
-::@call "%~dp0.\set_eidmw_version.cmd"
 
 set OUR_CURRENT_PATH="%cd%"
 @echo OUR_CURRENT_PATH = %OUR_CURRENT_PATH% 
@@ -15,8 +12,15 @@ set OUR_CURRENT_PATH="%cd%"
 ::set MDRVINSTALLPATH=%~dp0..\..\installers\quickinstaller\Drivers\WINALL
 set MDRVCERTPATH=%~dp0..\..\cardcomm\minidriver\makemsi
 
+:: sign the minidriver 
+:: ===================
+@echo [INFO] Calling script to sign the minidriver files
+call "%~dp0.\sign_minidriver.bat"
+@if "%ERRORLEVEL%" == "1" goto sign_minidriver_failed
+
 :: Create minidriver cabinet file
 :: ==============================
+@echo [INFO] Creating minidriver cabinet file
 MakeCab /f ".\beidmdrv.dff"
 
 :: Sign cab file
@@ -31,6 +35,9 @@ MakeCab /f ".\beidmdrv.dff"
 @cd "%OUR_CURRENT_PATH%"
 goto end
 
+:sign_minidriver_failed
+@echo [ERR ] sign_minidriver failed
+@goto err
 
 :signtool_failed
 @echo [ERR ] signtool failed

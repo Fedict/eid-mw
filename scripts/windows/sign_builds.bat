@@ -10,14 +10,13 @@ call "%~dp0.\set_eidmw_version.cmd"
 
 :: sign the minidriver 
 :: ===================
-call "%~dp0.\sign_minidriver.bat"
-@if "%ERRORLEVEL%" == "1" goto minidriver_failed
+:: Do not re-sign the minidriver, it should be signed already by running the sign_minidriver_cab.bat,
+:: and by now replaced by the attestation signed minidriver (which we will package)
 
 
-:: sign the minidriver cabinet
-:: ===========================
-call "%~dp0.\sign_minidriver_cab.bat"
-@if "%ERRORLEVEL%" == "1" goto minidriver_cabinet_failed
+:: package the minidriver 
+:: ======================
+call "%~dp0.\package_minidriver.bat"
 
 
 :: sign pkcs11
