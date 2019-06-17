@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
    LastUpgradeVersion = "1010"
-   version = "1.3">
+   version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES">
@@ -87,5 +87,23 @@
    <ArchiveAction
       buildConfiguration = "Release"
       revealArchiveInOrganizer = "YES">
+      <PostActions>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "Run Script"
+               scriptText = "# Type a script or drag a script file from your workspace to insert its path.&#10;EXPORT_PATH=&quot;/Users/frederik/Documents&quot;&#10;# &quot;$TEMP_DIR/Export&quot;&#10;APP_PATH=&quot;$EXPORT_PATH/$PRODUCT_NAME.app&quot;&#10;ZIP_PATH=&quot;$EXPORT_PATH/$PRODUCT_NAME.zip&quot;&#10;&#10;/usr/bin/xcodebuild -exportArchive -archivePath &quot;$ARCHIVE_PATH&quot; -exportOptionsPlist &quot;$SRCROOT/ExportOptions.plist&quot; -exportPath &quot;$EXPORT_PATH&quot;&#10;&#10;/usr/bin/ditto -c -k --keepParent &quot;$APP_PATH&quot; &quot;$ZIP_PATH&quot;&#10;&#10;# As a convenience, open the export folder in Finder.&#10;/usr/bin/open &quot;$EXPORT_PATH&quot;&#10;">
+               <EnvironmentBuildable>
+                  <BuildableReference
+                     BuildableIdentifier = "primary"
+                     BlueprintIdentifier = "2F3883971CF46C6E00F114A7"
+                     BuildableName = "BEIDToken.app"
+                     BlueprintName = "BEIDTokenApp"
+                     ReferencedContainer = "container:BEIDToken.xcodeproj">
+                  </BuildableReference>
+               </EnvironmentBuildable>
+            </ActionContent>
+         </ExecutionAction>
+      </PostActions>
    </ArchiveAction>
 </Scheme>
