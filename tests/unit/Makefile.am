@@ -8,7 +8,7 @@ CLEANFILES=foto.jpg
 
 COMMON_LIB = $(top_builddir)/cardcomm/pkcs11/src/libbeidpkcs11.la libtestlib.la
 noinst_LTLIBRARIES = libtestlib.la
-libtestlib_la_SOURCES = testlib.h testlib.c serialport_posix.c
+libtestlib_la_SOURCES = testlib.h testlib.c serial_linux.c serial_io.h
 
 AM_CFLAGS = -I$(top_srcdir)/doc/sdk/include/v240 -I$(top_srcdir)/plugins_tools/util @FUZZING@
 if NO_DIALOGS
