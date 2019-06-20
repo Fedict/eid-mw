@@ -15,5 +15,6 @@ void serial_free_line(char *line);
 bool serial_writec(Serial *port, char c);
 bool serial_has_data(Serial *port);
 void serial_clear(Serial *port);
+void sr_wait(unsigned int millis);
 
 #endif

@@ -102,6 +102,10 @@ CK_BBOOL init_robot(Serial *port, char type) {
 	serial_writec(port, 'R');
 	do {
 		buf = serial_read_line(port);
+		if(!buf) {
+			sr_wait(200);
+			continue;
+		}
 		if(robot_type == ROBOT_AUTO && !strncmp(buf, "READY.", 6)) {
 			finished = true;
 		}
@@ -456,9 +460,9 @@ void robot_cmd_l(Serial *port, char cmd, bool check_result, char *which) {
 				exit(TEST_RV_SKIP);
 			}
 			if(expected[i].wait) {
-				sleep(2);
+				sr_wait(2000);
 			} else {
-				usleep(200);
+				sr_wait(200);
 			}
 			printf("\tok\n");
 			return;

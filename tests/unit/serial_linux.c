@@ -121,3 +121,7 @@ void serial_clear(Serial *port) {
 bool serial_writec(Serial *port, char c) {
 	write(port->fd, &c, 1);
 }
+
+void sr_wait(unsigned int millis) {
+	usleep(millis * 1000);
+}
