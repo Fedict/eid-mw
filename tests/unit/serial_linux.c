@@ -81,7 +81,7 @@ char *serial_read_line(Serial *port) {
 	if(!port->data_len) {
 		port->data_start = 0;
 	} else {
-		size_t len = strcspn(port->buf, "\r\n");
+		size_t len = strcspn(port->buf + port->data_start, "\r\n");
 		if(len == 0) {
 			port->data_len--;
 			port->data_start++;
