@@ -166,10 +166,14 @@ CK_BBOOL open_robot(char *envvar) {
 			fprintf(stderr, "E: can't open robots that don't exist\n");
 			return CK_FALSE;
 	}
-	printf("opening card robot at %s\n", dev);
-	robot_port = serial_open(dev);
-	free(dev);
-	return init_robot(robot_port, 'C');
+	if(!robot_port) {
+		printf("opening card robot at %s\n", dev);
+		robot_port = serial_open(dev);
+		free(dev);
+		return init_robot(robot_port, 'C');
+	} else {
+		return (robot_port > 0) ? CK_TRUE : CK_FALSE;
+	}
 }
 
 CK_BBOOL open_reader_robot(char *envvar) {
@@ -184,9 +188,13 @@ CK_BBOOL open_reader_robot(char *envvar) {
 	} else {
 		dev = strrchr(envvar, ':') + 1;
 	}
-	printf("opening reader robot at %s\n", dev);
-	reader_port = serial_open(dev);
-	return init_robot(reader_port, 'U');
+	if(!reader_port) {
+		printf("opening reader robot at %s\n", dev);
+		reader_port = serial_open(dev);
+		return init_robot(reader_port, 'U');
+	} else {
+		return (reader_port > 0) ? CK_TRUE : CK_FALSE;
+	}
 }
 
 CK_BBOOL have_robot() {
