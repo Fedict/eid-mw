@@ -130,7 +130,7 @@ CK_BBOOL init_robot(Serial *port, char type) {
 				return CK_FALSE;
 			}
 		}
-		robot_unit = buf[2] = 0x30;
+		robot_unit = buf[2] - 0x30;
 		if(buf[4] != type) {
 			fprintf(stderr, "Robot does not match: wrong robot type found\n");
 			return CK_FALSE;
