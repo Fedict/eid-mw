@@ -120,7 +120,7 @@ void serial_clear(Serial *port) {
 }
 
 bool serial_writec(Serial *port, char c) {
-	write(port->fd, &c, 1);
+	return (write(port->fd, &c, 1) == 1) ? true : false;
 }
 
 void sr_wait(unsigned int millis) {
