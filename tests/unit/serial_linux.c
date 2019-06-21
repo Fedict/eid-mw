@@ -99,7 +99,7 @@ char *serial_read_line(Serial *port) {
 		perror("read");
 		return NULL;
 	}
-	port->buf[port->data_start + port->data_len + len + 1] = '\0';
+	port->buf[port->data_start + port->data_len + len] = '\0';
 	port->data_len += len;
 	return serial_read_line(port);
 }
