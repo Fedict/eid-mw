@@ -88,9 +88,10 @@ char *serial_read_line(Serial *port) {
 			return serial_read_line(port);
 		}
 		if(len < port->data_len) {
+			char *ptr = port->buf + port->data_start;
 			port->data_len -= len + 1;
 			port->data_start += len + 1;
-			return strndup(port->buf + port->data_start, len);
+			return strndup(ptr, len);
 		}
 	}
 	ssize_t len = read(port->fd, port->buf + port->data_start + port->data_len, sizeof(port->buf) - port->data_start - port->data_len - 1);
