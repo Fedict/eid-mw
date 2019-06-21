@@ -90,6 +90,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\serial_io.h" />
     <ClInclude Include="..\testlib.h" />
     <ClInclude Include="logtest.h" />
     <ClInclude Include="stdafx.h" />
@@ -112,7 +113,7 @@
     <ClCompile Include="..\readdata.c" />
     <ClCompile Include="..\readdata_limited.c" />
     <ClCompile Include="..\readdata_sequence.c" />
-    <ClCompile Include="..\serialport_windows.c" />
+    <ClCompile Include="..\serial_windows.c" />
     <ClCompile Include="..\sessioninfo.c" />
     <ClCompile Include="..\sessions.c" />
     <ClCompile Include="..\sessions_nocard.c" />
