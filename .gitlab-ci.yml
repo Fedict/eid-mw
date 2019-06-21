@@ -3,6 +3,7 @@ stages:
  - source
  - source-package
  - binary-package
+ - robots
  - build-repository
  - sync
 
@@ -356,6 +357,16 @@ build:windows:
   tags:
   - windows
   allow_failure: true
+robot:windows:
+  stage: robots
+  dependencies:
+  - build:windows
+  before_script:
+  - cd scripts\windows
+  - build_testsuite.bat
+  script:
+  - cd tests\unit\windows\Release
+  - pkcs11_tests.exe
 ####################################################################
 # Stage "build-repository": copy binaries into a repository layout #
 ####################################################################
