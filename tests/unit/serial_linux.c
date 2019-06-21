@@ -36,7 +36,7 @@ Serial* serial_open(char *portname) {
 		return NULL;
 	}
 
-	rv->fd = open(portname, O_RDWR | O_NOCTTY | O_NONBLOCK);
+	rv->fd = open(portname, O_RDWR | O_NOCTTY);
 
 	struct termios ios;
 	if(rv->fd < 0) {
