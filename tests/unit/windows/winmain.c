@@ -155,6 +155,9 @@ int	_tmain(int argc, _TCHAR* argv[]){
 		i++;
 	}
 
+	int success = 0;
+	int failed = 0;
+	int skipped = 0;
 
 	//testlog(LVL_NOLEVEL,"\n\n_______________________________________________\n");
 	for (i = 0; i < nrofTests; i++)
@@ -166,12 +169,15 @@ int	_tmain(int argc, _TCHAR* argv[]){
 		}
 		switch(eIDTests[i].result) {
 			case TEST_RV_OK:
+				success++;
 				testlog(LVL_NOLEVEL,"OK\n");
 				break;
 			case TEST_RV_SKIP:
+				skipped++;
 				testlog(LVL_NOLEVEL, "SKIPPED\n");
 				break;
 			case TEST_RV_FAIL:
+				failed++;
 				testlog(LVL_NOLEVEL, "FAILED\n");
 				break;
 		}
@@ -201,6 +207,7 @@ int	_tmain(int argc, _TCHAR* argv[]){
 		//testlog(LVL_NOLEVEL,"\n_______________________________________________\n");
 	}
 
+	printf("Totals: successful %d, skipped %d, failed %d\n", success, skipped, failed);
 	duration = clock() - startTime;
 
 	msecDuration = (duration * 1000) / CLOCKS_PER_SEC;
@@ -241,4 +248,6 @@ int	_tmain(int argc, _TCHAR* argv[]){
 	testlog(LVL_NOLEVEL,"\n===============================================\n");
 
 	endLog();
+
+	return failed;
 }

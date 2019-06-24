@@ -36,7 +36,7 @@ Serial* serial_open(char *portname) {
 		return NULL;
 	}
 
-	rv->fd = open(portname, O_RDWR | O_NOCTTY | O_NONBLOCK);
+	rv->fd = open(portname, O_RDWR | O_NOCTTY);
 
 	struct termios ios;
 	if(rv->fd < 0) {
@@ -81,16 +81,17 @@ char *serial_read_line(Serial *port) {
 	if(!port->data_len) {
 		port->data_start = 0;
 	} else {
-		size_t len = strcspn(port->buf, "\r\n");
+		size_t len = strcspn(port->buf + port->data_start, "\r\n");
 		if(len == 0) {
 			port->data_len--;
 			port->data_start++;
 			return serial_read_line(port);
 		}
 		if(len < port->data_len) {
+			char *ptr = port->buf + port->data_start;
 			port->data_len -= len + 1;
 			port->data_start += len + 1;
-			return strndup(port->buf + port->data_start, len);
+			return strndup(ptr, len);
 		}
 	}
 	ssize_t len = read(port->fd, port->buf + port->data_start + port->data_len, sizeof(port->buf) - port->data_start - port->data_len - 1);
@@ -98,7 +99,7 @@ char *serial_read_line(Serial *port) {
 		perror("read");
 		return NULL;
 	}
-	port->buf[port->data_start + port->data_len + len + 1] = '\0';
+	port->buf[port->data_start + port->data_len + len] = '\0';
 	port->data_len += len;
 	return serial_read_line(port);
 }
@@ -119,7 +120,7 @@ void serial_clear(Serial *port) {
 }
 
 bool serial_writec(Serial *port, char c) {
-	write(port->fd, &c, 1);
+	return (write(port->fd, &c, 1) == 1) ? true : false;
 }
 
 void sr_wait(unsigned int millis) {
