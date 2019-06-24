@@ -127,6 +127,7 @@ build:deb10-32:
     CODE: buster
     SHORT: deb10
     ARCH: i386
+  allow_failure: true
 build:deb10-64:
   <<: *build-deb
   variables:
@@ -134,6 +135,7 @@ build:deb10-64:
     CODE: buster
     SHORT: deb10
     ARCH: amd64
+  allow_failure: true
 build:sid-32:
   <<: *build-deb
   variables:
@@ -141,6 +143,7 @@ build:sid-32:
     CODE: sid
     SHORT: sid
     ARCH: i386
+  allow_failure: true
 build:sid-64:
   <<: *build-deb
   variables:
@@ -148,6 +151,7 @@ build:sid-64:
     CODE: sid
     SHORT: sid
     ARCH: amd64
+  allow_failure: true
 build:xenial-32:
   <<: *build-deb
   variables:
