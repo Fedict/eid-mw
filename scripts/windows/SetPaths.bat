@@ -1,6 +1,8 @@
 ::Define search paths here
 @set SEARCH_BEID_DIR_MSBUILD=C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin
-@set SEARCH_BEID_DIR_MSBUILD_2=C:\Program Files (x86)\MSBuild\14.0\Bin
+@set SEARCH_BEID_DIR_MSBUILD_2=C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin
+@set SEARCH_BEID_DIR_MSBUILD_3=C:\Program Files (x86)\MSBuild\14.0\Bin
+
 ::@set SEARCH_SIGNTOOL_PATH=C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Bin
 @set SEARCH_SIGNTOOL_PATH=C:\Program Files (x86)\Windows Kits\10\bin\10.0.17763.0\x86
 @set SEARCH_SIGNTOOL_PATH_2=C:\Program Files (x86)\Windows Kits\8.1\bin\x64
@@ -47,6 +49,12 @@
 @for %%i in (%FILE_TO_FIND%) do @if not exist "%BEID_DIR_MSBUILD%\%%~i" set FILE_NOT_FOUND=%%~i
 @if "%FILE_NOT_FOUND%"=="" goto found_msbuild
 @echo        Not found in "%BEID_DIR_MSBUILD_2%"
+
+@set BEID_DIR_MSBUILD=%SEARCH_BEID_DIR_MSBUILD_3%
+@set FILE_NOT_FOUND=
+@for %%i in (%FILE_TO_FIND%) do @if not exist "%BEID_DIR_MSBUILD%\%%~i" set FILE_NOT_FOUND=%%~i
+@if "%FILE_NOT_FOUND%"=="" goto found_msbuild
+@echo        Not found in "%BEID_DIR_MSBUILD_3%"
 
 @echo [ERROR] %FILE_TO_FIND% could not be found
 @echo         If the path is different from %SEARCH_BEID_DIR_MSBUILD%
