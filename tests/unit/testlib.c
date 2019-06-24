@@ -20,14 +20,17 @@
 //#define _CRT_SECURE_NO_WARNINGS
 #ifdef WIN32
 #include <win32.h>
+#pragma pack(push, cryptoki, 1)
+#include "pkcs11.h"
+#pragma pack(pop, cryptoki)
 #include <stdio.h>
 #include <stdint.h>
 #include <tchar.h>
 #else
 #include <unix.h>
 #include <unistd.h>
-#endif
 #include <pkcs11.h>
+#endif
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>

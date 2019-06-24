@@ -19,13 +19,16 @@
 **************************************************************************** */
 #ifdef WIN32
 #include <win32.h>
+#pragma pack(push, cryptoki, 1)
+#include "pkcs11.h"
+#pragma pack(pop, cryptoki)
 #else
 #include <unix.h>
+#include <pkcs11.h>
 #endif
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
-#include <pkcs11.h>
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
