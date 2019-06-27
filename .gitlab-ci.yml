@@ -363,6 +363,9 @@ build:windows:
   allow_failure: true
 robot:windows:
   stage: robots
+  tags:
+  - robot
+  - windows
   dependencies:
   - build:windows
   before_script:
@@ -371,6 +374,24 @@ robot:windows:
   script:
   - cd tests\unit\windows\Release
   - pkcs11_tests.exe
+  allow_failure: true
+robot:linux:
+  stage: robots
+  variables:
+    EID_ROBOT_STYLE: zetes:/dev/CARD:/dev/USB
+    EID_DIALOGS_STYLE: nopin
+  dependencies:
+  tags:
+  - robot
+  - docker
+  before_script:
+  - if [ ! -z "$ACNG" ]; then sed -i -e "s,http://,$ACNG," /etc/apt/sources.list; else echo "no proxy configured"; fi
+  - apt-get update
+  - apt-get -y install --no-install-recommends autoconf automake libtool libassuan-dev libgpg-error-dev libpcsclite-dev libp11-kit-dev libgtk-3-dev libssl-dev libxml2-dev libcurl4-openssl-dev libproxy-dev plantuml zip gettext build-essential g++ git graphviz
+  script:
+  - ./configure --libexecdir=$(pwd)/scripts/linux/hackbin --disable-pinentry
+  - make -j $(nproc) check
+  allow_failure: true
 ####################################################################
 # Stage "build-repository": copy binaries into a repository layout #
 ####################################################################
