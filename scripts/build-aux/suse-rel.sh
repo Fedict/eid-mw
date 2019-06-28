@@ -36,9 +36,13 @@ do
 			for i in products/$dist-$vers-$arch/*
 			do
 				targetfile=/srv/repo/repo/rpm/$TARGET/${DISTNAMES[$dist]}/$vers/RPMS/$arch/$(basename $i)
-				echo "$i => $targetfile"
-				cp $i $targetfile
-				rpmsign --resign --key-id=$GPG_TEST_KEY_ID $targetfile
+				if [ "$(basename $i)" != '*' -a "$(basename $targetfile)" != '*' ]; then
+					echo "$i => $targetfile"
+					cp $i $targetfile
+					rpmsign --resign --key-id=$GPG_TEST_KEY_ID $targetfile
+				else
+					echo "ignoring empty directories"
+				fi
 			done
 		done
 		createrepo /srv/repo/repo/rpm/$TARGET/$dist/$vers
