@@ -39,8 +39,7 @@
 
 #include "testlib.h"
 
-
-#if HAVE_JPEGLIB
+#if HAVE_JPEGLIB || defined(__APPLE__)
 #include <jpeglib.h>
 
 enum weights {
