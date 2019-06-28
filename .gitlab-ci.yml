@@ -361,6 +361,17 @@ build:windows:
   tags:
   - windows
   allow_failure: true
+build:macos:
+  stage: binary-package
+  variables:
+  dependencies:
+  script:
+  - cd scripts/mac
+  - ./make-mac.sh
+  - ./make-viewer.sh
+  tags:
+  - macos
+  allow_failure: true
 robot:windows:
   stage: robots
   tags:
@@ -374,6 +385,22 @@ robot:windows:
   script:
   - cd tests\unit\windows\Release
   - pkcs11_tests.exe
+  allow_failure: true
+robot:macos:
+  stage: robots
+  variables:
+    EID_ROBOT_STYLE: $EID_ROBOT_STYLE_MACOS
+    EID_DIALOGS_STYLE: nopin
+    DYLD_LIBRARY_PATH: $CI_BUILDS_DIR/$CI_PROJECT_DIR/build/Release
+  tags:
+  - robot
+  - macos
+  dependencies:
+  - build:macos
+  before_script:
+  - xcodebuild -project beidmw.xcodeproj -target testsuite -configuration Release
+  script:
+  - ./testsuite
   allow_failure: true
 robot:linux:
   stage: robots
