@@ -40,7 +40,7 @@ Serial* serial_open(char *portname) {
 
 	struct termios ios;
 	if(rv->fd < 0) {
-		perror("open card robot");
+		perror("open robot");
 		free(rv);
 		return NULL;
 	}
