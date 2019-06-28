@@ -115,6 +115,7 @@
 		6CAFE1D921DF86E40078C7E2 /* pkcs11t.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CAFE1D621DF86E40078C7E2 /* pkcs11t.h */; };
 		6CAFE1DA21DF86E40078C7E2 /* pkcs11f.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CAFE1D721DF86E40078C7E2 /* pkcs11f.h */; };
 		6CAFE1DC21DF889B0078C7E2 /* unix.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CAFE1DB21DF889B0078C7E2 /* unix.h */; };
+		6CBD45C922C609760078C7E2 /* serial_macos.c in Sources */ = {isa = PBXBuildFile; fileRef = 6CBD45C822C609760078C7E2 /* serial_macos.c */; };
 		6CD1B8C421A5A6470005F6E9 /* state_error.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CD1B8C221A5A6470005F6E9 /* state_error.png */; };
 		6CD1B8C521A5A6470005F6E9 /* state_noreaders.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CD1B8C321A5A6470005F6E9 /* state_noreaders.png */; };
 		6CD1B8C621A5A6510005F6E9 /* certificate_bad.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CD1B8BD21A5A61A0005F6E9 /* certificate_bad.png */; };
@@ -451,6 +452,7 @@
 		6CAFE1D621DF86E40078C7E2 /* pkcs11t.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pkcs11t.h; sourceTree = "<group>"; };
 		6CAFE1D721DF86E40078C7E2 /* pkcs11f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pkcs11f.h; sourceTree = "<group>"; };
 		6CAFE1DB21DF889B0078C7E2 /* unix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unix.h; sourceTree = "<group>"; };
+		6CBD45C822C609760078C7E2 /* serial_macos.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = serial_macos.c; path = tests/unit/serial_macos.c; sourceTree = "<group>"; };
 		6CD1B8BD21A5A61A0005F6E9 /* certificate_bad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = certificate_bad.png; path = "plugins_tools/eid-viewer/resources/certificate_bad.png"; sourceTree = SOURCE_ROOT; };
 		6CD1B8BF21A5A61A0005F6E9 /* certificate_large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = certificate_large.png; path = "plugins_tools/eid-viewer/resources/certificate_large.png"; sourceTree = SOURCE_ROOT; };
 		6CD1B8C021A5A61A0005F6E9 /* certificate_checked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = certificate_checked.png; path = "plugins_tools/eid-viewer/resources/certificate_checked.png"; sourceTree = SOURCE_ROOT; };
@@ -815,6 +817,7 @@
 				65EABAEE1C621F3D00034337 /* labels.h */,
 				65EABAEF1C621F3D00034337 /* utftranslate.h */,
 				6CDC503C220858980078C7E2 /* readdata_limited.c */,
+				6CBD45C822C609760078C7E2 /* serial_macos.c */,
 				65F3F0211BE236680073F2A3 /* readdata_sequence.c */,
 				8B8B71581B74CCA300D8910E /* sign_state.c */,
 				8B07D1011B21CEB80033CD62 /* wrong_init.c */,
@@ -1498,6 +1501,7 @@
 				6536232E19A7E92B00D46ECB /* mechlist.c in Sources */,
 				6536233A19A7E92B00D46ECB /* threads.c in Sources */,
 				6536232519A7E92B00D46ECB /* decode_photo.c in Sources */,
+				6CBD45C922C609760078C7E2 /* serial_macos.c in Sources */,
 				8B8B71591B74CCA300D8910E /* sign_state.c in Sources */,
 				6536233D19A7E93A00D46ECB /* main.c in Sources */,
 				6536233519A7E92B00D46ECB /* sign.c in Sources */,
