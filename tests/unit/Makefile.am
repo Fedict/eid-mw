@@ -6,7 +6,7 @@ check_PROGRAMS = $(TESTS)
 
 CLEANFILES=foto.jpg
 
-COMMON_LIB = $(top_builddir)/cardcomm/pkcs11/src/libbeidpkcs11.la libtestlib.la
+COMMON_LIB = libtestlib.la $(top_builddir)/cardcomm/pkcs11/src/libbeidpkcs11.la
 noinst_LTLIBRARIES = libtestlib.la
 libtestlib_la_SOURCES = testlib.h testlib.c serial_linux.c serial_io.h
 
