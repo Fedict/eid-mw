@@ -1,4 +1,4 @@
-TESTS = init_finalize wrong_init fork_init double_init getinfo funclist slotlist slotinfo tkinfo slotevent mechlist mechinfo sessions sessions_nocard sessioninfo login login_state nonsensible objects readdata readdata_limited readdata_sequence digest threads sign sign_state ordering
+TESTS = eject_card init_finalize wrong_init fork_init double_init getinfo funclist slotlist slotinfo tkinfo slotevent mechlist mechinfo sessions sessions_nocard sessioninfo login login_state nonsensible objects readdata readdata_limited readdata_sequence digest threads sign sign_state ordering
 if JPEG
 TESTS += decode_photo
 endif
@@ -14,6 +14,9 @@ AM_CFLAGS = -I$(top_srcdir)/doc/sdk/include/v240 -I$(top_srcdir)/plugins_tools/u
 if NO_DIALOGS
 AM_CFLAGS += -DNO_DIALOGS
 endif
+
+eject_card_SOURCES = eject.c
+eject_card_LDADD = $(COMMON_LIB)
 
 init_finalize_SOURCES = init_finalize.c
 init_finalize_LDADD = $(COMMON_LIB)

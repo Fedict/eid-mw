@@ -157,5 +157,6 @@ int decode_photo(void);
 int ordering(void);
 int wrong_init(void);
 int login_state(void);
+int eject(void);
 
 #endif
