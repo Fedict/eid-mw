@@ -2,12 +2,9 @@
 <component type="addon">
   <id>be.belgium.eid.eidmw</id>
   <name>Belgian electronic ID software</name>
-  <name lang="nl">Belgische electronische ID-software</name>
   <summary>The eID middleware for using your Belgian electronic ID card in various pieces of software</summary>
-  <summary lang="nl">De eID-middleware voor het gebruik van uw Belgische electronische identitieskaart in verschillende software-pakketten</summary>
   <project_license>LGPL-3.0+</project_license>
   <developer_name>Belgian Federal Government</developer_name>
-  <developer_name lang="nl">Belgische federale overheid</developer_name>
   <description>
     <p>The eID software allows you to use yoru electronic identity card in various applications, such as:</p>
     <ul>
@@ -18,21 +15,5 @@
     </ul>
     <p>This package contains the PKCS#11 module, a software module for
     using external cryptographic aids, such as the eID.</p>
-  </description>
-  <description lang="nl">
-    <p>De eID software laat u toe om uw electronische identiteitskaart te gebruiken in verschillende toepassingen, zoals:</p>
-    <ul>
-      <li>Browsers: Mozilla Firefox en Google Chrome</li>
-      <li>e-mail programma's: Mozilla Thunderbird, Evolution</li>
-      <li>Office-suites: LibreOffice, OpenOffice</li>
-      <li>En alle andere bibliotheken of toepassingen die het gebruik van
-      PKCS#11-modules toelaten.</li>
-    </ul>
-    <p>Dit pakket bevat de PKCS#11-module, een software-module voor het
-    aanspreken van externe cryptografische hulpmiddelen, zoals de eID.</p>
-    <extends>google-chrome.desktop</extends>
-    <extends>libreoffice-writer.desktop</extends>
-    <extends>org.gnome.Evolution.desktop</extends>
-    <extends>thunderbird.desktop</extends>
   </description>
 </component>
