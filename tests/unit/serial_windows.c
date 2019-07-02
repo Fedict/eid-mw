@@ -122,9 +122,12 @@ bool serial_writec(Serial *port, char c) {
 }
 
 bool serial_has_data(Serial *port) {
-	DWORD events = 0;
-	WaitCommEvent(port->port, &events, NULL);
-	if (events & EV_RXCHAR) {
+	COMSTAT status;
+	DWORD errors;
+	if (!ClearCommError(port->port, &errors, &status)) {
+		return false;
+	}
+	if (status.cbInQue > 0) {
 		return true;
 	}
 	return false;
