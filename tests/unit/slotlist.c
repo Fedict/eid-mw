@@ -44,6 +44,9 @@ TEST_FUNC(slotlist) {
 
 	check_rv_long(C_GetSlotList(CK_FALSE, NULL_PTR, NULL_PTR), m_p11_badarg);
 
+	if (have_reader_robot()) {
+		robot_insert_reader();
+	}
     check_rv_long(C_GetSlotList(CK_FALSE, NULL_PTR, &count), m);
     printf("slots found: %lu\n", count);
 
