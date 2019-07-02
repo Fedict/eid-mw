@@ -106,6 +106,9 @@ void serial_clear(Serial *port) {
 			perror("read");
 			exit(EXIT_FAILURE);
 		}
+		if (!performed) {
+			return;
+		}
 	}
 	port->data_len = port->data_start = 0;
 }
