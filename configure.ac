@@ -33,7 +33,7 @@ AC_CHECK_HEADERS([fcntl.h float.h limits.h netinet/in.h stdlib.h string.h sys/fi
 
 AM_GNU_GETTEXT([external])
 
-AC_ARG_ENABLE([pinentry],AS_HELP_STRING([--enable-pinentry],[Use pinentry for dialogs, rather than home-grown dialog boxes (requires libassuan)]),[assuan=$enableval],[assuan=detect])
+AC_ARG_ENABLE([pinentry],AS_HELP_STRING([--disable-pinentry],[When enabled, uses pinentry for dialogs, rather than home-grown dialog boxes (requires libassuan)]),[assuan=$enableval],[assuan=detect])
 if test x"$assuan" != x"no"
 then
 	AM_PATH_LIBASSUAN(2,[ASSUAN=y],[ASSUAN=n])
