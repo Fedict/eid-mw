@@ -85,7 +85,7 @@ char *serial_read_line(Serial *port) {
 		}
 	}
 	DWORD performed;
-	if (!(ReadFile(port->port, port->buf + port->data_start, sizeof(port->buf) - port->data_start, &performed, NULL))) {
+	if (!(ReadFile(port->port, port->buf + port->data_start + port->data_len, sizeof(port->buf) - port->data_start, &performed, NULL))) {
 		fprintf(stderr, "could not read from serial port; error = %d\n", GetLastError());
 		return NULL;
 	}
