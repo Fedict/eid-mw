@@ -471,7 +471,11 @@ void robot_cmd_l(Serial *port, char cmd, bool check_result, char *which) {
 				exit(TEST_RV_SKIP);
 			}
 			if(expected[i].wait) {
+#ifndef WIN32
 				sr_wait(2000);
+#else
+				sr_wait(5000);
+#endif
 			} else {
 				sr_wait(200);
 			}
