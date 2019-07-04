@@ -615,7 +615,8 @@ int find_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR slot) {
 	ckrv_mod m[] = { { CKR_BUFFER_TOO_SMALL, TEST_RV_OK } };
 	CK_SESSION_HANDLE session;
 
-	if(have_reader_robot()) {
+	check_rv_long(C_GetSlotList(CK_FALSE, NULL_PTR, &count), m);
+	if(count == 0 && have_reader_robot()) {
 		robot_insert_reader();
 	}
 	check_rv_long(C_GetSlotList(with_token, NULL_PTR, &count), m);
