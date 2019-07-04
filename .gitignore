@@ -79,3 +79,12 @@ beidpkcs11.sdf
 /installers/eid-mw/Windows/1031
 /plugins_tools/eid-viewer/Windows/eIDViewer/Resources/Certs
 /plugins_tools/eid-viewer/Windows/eIDViewer/Resources/Images
+/CppProperties.json
+*.db
+*.lock
+*.ide
+*.ide-shm
+*.ide-wal
+*.opendb
+*.ipch
+*.user
