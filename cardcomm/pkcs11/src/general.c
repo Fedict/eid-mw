@@ -510,7 +510,7 @@ CK_RV C_WaitForSlotEvent(CK_FLAGS flags,   /* blocking/nonblocking flag */
 
 {
 	CK_RV ret = CKR_OK;
-#ifndef __APPLE__
+#ifdef WIN32
 	int h;
 	P11_SLOT *p11Slot = NULL;
 	int i = 0;
@@ -545,7 +545,7 @@ CK_RV C_WaitForSlotEvent(CK_FLAGS flags,   /* blocking/nonblocking flag */
 	 * until you remove the card. 
 	 * So we might have to return "not supported" in which case Ff 1.5 defaults
 	 * to polling in the main thread, like before. */
-#ifdef __APPLE__
+#ifndef WIN32
 	CLEANUP(CKR_FUNCTION_NOT_SUPPORTED);
 #else
 
@@ -597,7 +597,7 @@ CK_RV C_WaitForSlotEvent(CK_FLAGS flags,   /* blocking/nonblocking flag */
 
 	if (ret == CKR_OK)
 		*pSlot = h;
-#endif // !__APPLE__
+#endif // WIN32
     
 cleanup:
 	if(locked == CK_TRUE)
