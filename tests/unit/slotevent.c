@@ -57,6 +57,7 @@ TEST_FUNC(slotevent) {
 
 	robot_remove_card();
 
+	check_rv(C_WaitForSlotEvent(CKF_DONT_BLOCK, &slot, NULL_PTR));
 	check_rv_long(C_WaitForSlotEvent(CKF_DONT_BLOCK, &slot, NULL_PTR), no_event);
 
 	if((ret = find_slot(CK_TRUE, &slot)) != TEST_RV_OK) {
