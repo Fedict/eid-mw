@@ -92,20 +92,6 @@ build:srpm:
   except:
     variables:
     - $EXTRADIST
-build:deb8-32:
-  <<: *build-deb
-  variables:
-    DIST: debian
-    CODE: jessie
-    SHORT: deb8
-    ARCH: i386
-build:deb8-64:
-  <<: *build-deb
-  variables:
-    DIST: debian
-    CODE: jessie
-    SHORT: deb8
-    ARCH: amd64
 build:deb9-32:
   <<: *build-deb
   variables:
@@ -424,14 +410,12 @@ robot:linux:
 ####################################################################
 inject-debs:
   dependencies:
-    - build:deb8-32
     - build:deb9-32
     - build:deb10-32
     - build:sid-32
     - build:xenial-32
     - build:bionic-32
     - build:disco-32
-    - build:deb8-64
     - build:deb9-64
     - build:deb10-64
     - build:sid-64
