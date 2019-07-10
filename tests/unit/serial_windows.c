@@ -18,7 +18,7 @@ struct tstserial {
 };
 
 Serial* serial_open(char *portname) {
-	Serial *rv = calloc(sizeof(rv), 1);
+	Serial *rv = calloc(sizeof(Serial), 1);
 	DCB dcb;
 	COMMTIMEOUTS timeouts;
 	int len;
