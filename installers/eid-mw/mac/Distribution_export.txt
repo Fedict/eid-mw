@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<installer-gui-script minSpecVersion="2">
+    <title>eID Middleware</title>
+    <options hostArchitectures="i386"/>
+    <options customize="never" rootVolumeOnly="true"/>
+    <script>
+      <![CDATA[
+	function macos_after_elcapitan() {
+	 system.log('system OS version ' + system.version.ProductVersion + ' detected');
+	 if((system.compareVersions(system.version.ProductVersion, '10.12')) >= 0)
+	 {
+	  return true;
+	 }
+	 else
+	 {
+	  return false;
+	 }
+	}
+      ]]>
+    </script>
+    <readme file="ReadMe.rtf"/>
+    <license file="license.rtf"/>
+    <background file="eid.png" scaling="proportional" alignment="bottomleft" mime-type="image/png"/>
+    <allowed-os-versions>
+        <os-version min="10.12.0" />
+    </allowed-os-versions>    
+    <options customize="never" require-scripts="false"/>
+    <choices-outline>
+        <line choice="eid.belgium.be"/>
+	<line choice="beidtoken"/>
+    </choices-outline>
+    <choice id="eid.belgium.be" visible="false">
+        <pkg-ref id="eid.belgium.be"/>
+    </choice>
+    <choice id="beidtoken" visible="false" selected="macos_after_elcapitan()">
+        <pkg-ref id="beidtoken"/>
+    </choice>
+
+    <pkg-ref id="eid.belgium.be" onConclusion="none">beidbuild.pkg</pkg-ref>
+    <pkg-ref id="beidtoken" onConclusion="none">BEIDToken.pkg</pkg-ref>
+</installer-gui-script>
