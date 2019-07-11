@@ -6,6 +6,10 @@ set -e
 #get the release number
 source "$(pwd)/../../../scripts/mac/set_eidmw_version.sh"
 
+#get the notarizer's account name
+#create the bash file set_eidmw_username.sh to define:
+#AC_USERNAME="dev.account@firm.be" 
+source "$(pwd)/../../../scripts/mac/set_eidmw_username.sh"
 
 #####################################################################
 ################## eIDMW installer name defines ###########
@@ -165,7 +169,9 @@ productsign --timestamp --sign "Developer ID Installer" $PKG_NAME $PKGSIGNED_NAM
 hdiutil create -fs "HFS+" -format UDBZ -srcfolder $PKGSIGNED_NAME -volname "${VOL_NAME}" $DMG_NAME
 
 #notarize the quick installer
-/usr/bin/xcrun altool --notarize-app --primary-bundle-id "be.eid.QuickInstaller.dmg" --username "@keychain:altooluser" --password "@keychain:altool" --file "$DMG_NAME"
+/usr/bin/xcrun altool --notarize-app --primary-bundle-id "be.eid.QuickInstaller.dmg" --username "AC_USERNAME" --password "@keychain:altool" --file "$DMG_NAME"
+xcrun altool --notarization-history 0 -u "$AC_USERNAME" -p "@keychain:altool"
+
 
 #staple the notarization package to the DMG.
 /usr/bin/xcrun stapler staple -v "$DMG_NAME"
