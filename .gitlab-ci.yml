@@ -319,20 +319,11 @@ build:suse-15.1:
     DIST: opensuse
     DVER: "15.1"
     ARCH: x86_64
-extra:suse-32:
+extra:suse:
   <<: *build-suse-base
   variables:
     DIST: $EXTRADIST
     DVER: $EXTRAVER
-    REPOURL: $EXTRAURL
-    ARCH: x86_64
-  when: manual
-extra:suse-64:
-  <<: *build-suse-base
-  variables:
-    DIST: $EXTRADIST
-    DVER: $EXTRAVER
-    REPOURL: $EXTRAURL
     ARCH: x86_64
   when: manual
 build:windows:
@@ -512,7 +503,7 @@ inject-suse:
 add:suse:
   when: manual
   dependencies:
-  - extra:suse-64
+  - extra:suse
   stage: build-repository
   tags:
   - repobuilder
