@@ -42,7 +42,7 @@ build:srpm:
     - docker
   image: fedora:latest
   before_script:
-    - http_proxy=$ACNG dnf -y install rpm-build git rpmdevtools
+    - dnf -y install rpm-build git rpmdevtools
     - rpmdev-setuptree
     - VER=$(scripts/build-aux/genver.sh)
     - VERSHORT=$(git describe --dirty | sed -e 's/-/./g')
@@ -206,12 +206,10 @@ extra:deb-64:
     - docker
   image: fedora:latest
   before_script:
-    - if [ ! -z "$ACNG" ]; then sed -i -e '/metalink/d;s/^#baseurl/baseurl/' /etc/yum.repos.d/*.repo; fi
-    - http_proxy="$ACNG" dnf -y install mock git
-    - if [ ! -z "$ACNG" ]; then for i in $(grep mirrorlist /etc/mock/$DIST-$DVER-$ARCH.cfg | cut -d'=' -f2-); do sed -i -e "s,mirrorlist=$i,baseurl=$(curl $i|grep http://|while read a; do echo -n $a' '; done; echo ',')" /etc/mock/$DIST-$DVER-$ARCH.cfg; done; fi
+    - dnf -y install mock git
     - VERSHORT=$(git describe --dirty | sed -e 's/-/./g')
   script:
-    - http_proxy="$ACNG" mock --old-chroot --verbose -r $DIST-$DVER-$ARCH --rebuild products/srpm/eid-mw-*.src.rpm --define "revision $VERSHORT"
+    - mock --old-chroot --verbose -r $DIST-$DVER-$ARCH --rebuild products/srpm/eid-mw-*.src.rpm --define "revision $VERSHORT"
   after_script:
     - mkdir -p products/$DIST-$DVER-$ARCH
     - cp /var/lib/mock/$DIST-$DVER-$ARCH/result/eid*rpm products/$DIST-$DVER-$ARCH/
