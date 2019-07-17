@@ -561,6 +561,38 @@ void robot_remove_card_delayed() {
 	}
 }
 
+void robot_remove_reader_delayed() {
+	assert(have_reader_robot() != CK_FALSE);
+
+	switch(robot_type) {
+		case ROBOT_AUTO_2:
+			reader_cmd('E', false);
+			break;
+		case ROBOT_MECHANICAL_TURK:
+			printf("Please wait a moment and remove the reader...\n");
+			break;
+		default:
+			// should not happen
+			assert(1 == 0);
+	}
+}
+
+void robot_insert_reader_delayed() {
+	assert(have_reader_robot() != CK_FALSE);
+
+	switch(robot_type) {
+		case ROBOT_AUTO_2:
+			reader_cmd('I', false);
+			break;
+		case ROBOT_MECHANICAL_TURK:
+			printf("Please wait a moment and insert the reader...\n");
+			break;
+		default:
+			// should not happen
+			assert(1 == 0);
+	}
+}
+
 void robot_insert_reader() {
 	assert(have_reader_robot() != CK_FALSE);
 

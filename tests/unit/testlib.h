@@ -99,7 +99,9 @@ void robot_remove_card_delayed(void);
 void robot_insert_card(void);
 void robot_insert_card_delayed(void);
 void robot_remove_reader(void);
+void robot_remove_reader_delayed(void);
 void robot_insert_reader(void);
+void robot_insert_reader_delayed(void);
 void hex_dump(char *data, CK_ULONG length);
 
 /* Functions to work with reader robots */
