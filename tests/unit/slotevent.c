@@ -35,10 +35,6 @@ TEST_FUNC(slotevent) {
 	CK_SLOT_ID slot;
 	int ret;
 	CK_RV rv;
-	ckrv_mod no_event[] = {
-		{CKR_OK, TEST_RV_FAIL},
-		{CKR_NO_EVENT, TEST_RV_OK},
-	};
 
 	if(!have_robot()) {
 		printf("Need ability to remove token to perform this test\n");
@@ -77,8 +73,6 @@ TEST_FUNC(slotevent) {
 
 	robot_insert_card_delayed();
 	check_rv(C_WaitForSlotEvent(0, &slot, NULL_PTR));
-
-	check_rv_long(C_WaitForSlotEvent(CKF_DONT_BLOCK, &slot, NULL_PTR), no_event);
 
 	robot_remove_card();
 	check_rv(C_WaitForSlotEvent(CKF_DONT_BLOCK, &slot, NULL_PTR));
