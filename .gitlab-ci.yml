@@ -390,6 +390,18 @@ robot:linux:
   - ./configure --libexecdir=$(pwd)/scripts/linux/hackbin --disable-pinentry
   - make -j $(nproc) check
   allow_failure: true
+repro:debian:
+  stage: validate
+  tags:
+  - docker
+  image: debian:buster
+  dependencies:
+  - build:deb10-64
+  before_script:
+  - apt-get update
+  - apt-get -y install reprotest diffoscope
+  script:
+  - reprotest . products/deb/*deb10*changes
 ####################################################################
 # Stage "build-repository": copy binaries into a repository layout #
 ####################################################################
