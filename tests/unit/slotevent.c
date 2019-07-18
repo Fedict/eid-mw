@@ -89,8 +89,11 @@ TEST_FUNC(slotevent) {
 		goto end;
 	}
 
-	robot_remove_reader_delayed();
-	check_rv(C_WaitForSlotEvent(0, &slot, NULL_PTR));
+	robot_remove_reader();
+	do {
+		rv = C_WaitForSlotEvent(CKF_DONT_BLOCK, &slot, NULL_PTR);
+	} while(rv == CKR_NO_EVENT);
+	check_rv_late("C_WaitForSlotEvent(CKF_DONT_BLOCK, &slot, NULL_PTR)");
 end:
 	check_rv(C_Finalize(NULL_PTR));
 	return TEST_RV_OK;
