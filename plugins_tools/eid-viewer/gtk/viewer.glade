@@ -370,6 +370,9 @@
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Name:</property>
+                            <accessibility>
+                              <relation type="label-for" target="surname"/>
+                            </accessibility>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -386,6 +389,9 @@
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Given names:</property>
+                            <accessibility>
+                              <relation type="label-for" target="firstnames"/>
+                            </accessibility>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -402,6 +408,9 @@
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Place of birth:</property>
+                            <accessibility>
+                              <relation type="label-for" target="location_of_birth"/>
+                            </accessibility>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -418,6 +427,9 @@
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Date of birth:</property>
+                            <accessibility>
+                              <relation type="label-for" target="date_of_birth"/>
+                            </accessibility>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -434,6 +446,9 @@
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Sex:</property>
+                            <accessibility>
+                              <relation type="label-for" target="gender"/>
+                            </accessibility>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -450,6 +465,9 @@
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">National number:</property>
+                            <accessibility>
+                              <relation type="label-for" target="national_number"/>
+                            </accessibility>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -466,6 +484,9 @@
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Municipality:</property>
+                            <accessibility>
+                              <relation type="label-for" target="address_municipality"/>
+                            </accessibility>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -482,6 +503,9 @@
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Postal code:</property>
+                            <accessibility>
+                              <relation type="label-for" target="address_zip"/>
+                            </accessibility>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -498,6 +522,9 @@
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Street:</property>
+                            <accessibility>
+                              <relation type="label-for" target="address_street_and_number"/>
+                            </accessibility>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -528,6 +555,9 @@
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Special status:</property>
+                            <accessibility>
+                              <relation type="label-for" target="special_status"/>
+                            </accessibility>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -544,6 +574,9 @@
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Title:</property>
+                            <accessibility>
+                              <relation type="label-for" target="nobility"/>
+                            </accessibility>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -560,6 +593,9 @@
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Nationality:</property>
+                            <accessibility>
+                              <relation type="label-for" target="nationality"/>
+                            </accessibility>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -785,6 +821,11 @@
                                 <property name="sensitive">False</property>
                                 <property name="can_focus">False</property>
                                 <property name="stock">gtk-file</property>
+                                <child internal-child="accessible">
+                                  <object class="AtkObject" id="photo-atkobject">
+                                    <property name="AtkObject::accessible-description" translatable="yes">On-card photo of the holder</property>
+                                  </object>
+                                </child>
                               </object>
                             </child>
                           </object>
@@ -842,6 +883,9 @@
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Date and country of protection:</property>
+                            <accessibility>
+                              <relation type="label-for" target="date_and_country_of_protection"/>
+                            </accessibility>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -857,6 +901,9 @@
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Employer's VAT number (1):</property>
+                            <accessibility>
+                              <relation type="label-for" target="employer_vat_1"/>
+                            </accessibility>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -888,6 +935,9 @@
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Employer's VAT number (2):</property>
+                            <accessibility>
+                              <relation type="label-for" target="employer_vat_2"/>
+                            </accessibility>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -935,6 +985,9 @@
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Work permit mention:</property>
+                            <accessibility>
+                              <relation type="label-for" target="work_permit_mention"/>
+                            </accessibility>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -966,6 +1019,9 @@
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Regional file number:</property>
+                            <accessibility>
+                              <relation type="label-for" target="regional_file_number"/>
+                            </accessibility>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -981,6 +1037,9 @@
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Member of family:</property>
+                            <accessibility>
+                              <relation type="label-for" target="member_of_family"/>
+                            </accessibility>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -1012,6 +1071,9 @@
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Organization:</property>
+                            <accessibility>
+                              <relation type="label-for" target="special_organization"/>
+                            </accessibility>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -1027,6 +1089,9 @@
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Duplicata:</property>
+                            <accessibility>
+                              <relation type="label-for" target="duplicata"/>
+                            </accessibility>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -1161,6 +1226,9 @@
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Card number:</property>
+                            <accessibility>
+                              <relation type="label-for" target="card_number"/>
+                            </accessibility>
                           </object>
                           <packing>
                             <property name="x_options">GTK_FILL</property>
@@ -1173,6 +1241,9 @@
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Place of issue:</property>
+                            <accessibility>
+                              <relation type="label-for" target="issuing_municipality"/>
+                            </accessibility>
                           </object>
                           <packing>
                             <property name="top_attach">1</property>
@@ -1187,6 +1258,9 @@
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Chip number:</property>
+                            <accessibility>
+                              <relation type="label-for" target="chip_number"/>
+                            </accessibility>
                           </object>
                           <packing>
                             <property name="top_attach">2</property>
@@ -1201,6 +1275,9 @@
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Valid from:</property>
+                            <accessibility>
+                              <relation type="label-for" target="validity_begin_date"/>
+                            </accessibility>
                           </object>
                           <packing>
                             <property name="top_attach">3</property>
@@ -1215,6 +1292,9 @@
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label" translatable="yes">Valid until:</property>
+                            <accessibility>
+                              <relation type="label-for" target="validity_end_date"/>
+                            </accessibility>
                           </object>
                           <packing>
                             <property name="top_attach">4</property>
@@ -1424,6 +1504,11 @@
                         <child internal-child="selection">
                           <object class="GtkTreeSelection" id="treeview-selection1"/>
                         </child>
+                        <child internal-child="accessible">
+                          <object class="AtkObject" id="tv_cert-atkobject">
+                            <property name="AtkObject::accessible-description" translatable="yes">Contains a hierarchical view of the certificates on the card</property>
+                          </object>
+                        </child>
                       </object>
                     </child>
                   </object>
@@ -1544,6 +1629,9 @@
                                 <property name="can_focus">False</property>
                                 <property name="halign">start</property>
                                 <property name="label" translatable="yes">Valid from:</property>
+                                <accessibility>
+                                  <relation type="label-for" target="certvalfromval"/>
+                                </accessibility>
                               </object>
                               <packing>
                                 <property name="left_attach">1</property>
@@ -1560,6 +1648,9 @@
                                 <property name="can_focus">False</property>
                                 <property name="halign">start</property>
                                 <property name="label" translatable="yes">Valid until:</property>
+                                <accessibility>
+                                  <relation type="label-for" target="certvaltilval"/>
+                                </accessibility>
                               </object>
                               <packing>
                                 <property name="left_attach">1</property>
@@ -1576,6 +1667,9 @@
                                 <property name="can_focus">False</property>
                                 <property name="halign">start</property>
                                 <property name="label" translatable="yes">Usage:</property>
+                                <accessibility>
+                                  <relation type="label-for" target="certuseval"/>
+                                </accessibility>
                               </object>
                               <packing>
                                 <property name="left_attach">1</property>
@@ -1592,6 +1686,9 @@
                                 <property name="can_focus">False</property>
                                 <property name="halign">start</property>
                                 <property name="label" translatable="yes">Trust:</property>
+                                <accessibility>
+                                  <relation type="label-for" target="certtrustval"/>
+                                </accessibility>
                               </object>
                               <packing>
                                 <property name="left_attach">1</property>
@@ -1727,6 +1824,11 @@
                             <property name="receives_default">False</property>
                             <property name="xalign">0</property>
                             <property name="draw_indicator">True</property>
+                            <child internal-child="accessible">
+                              <object class="AtkObject" id="validate_always-atkobject">
+                                <property name="AtkObject::accessible-description" translatable="yes">Enable this to disable the "Validate now" button and always validate certificates as soon as the card is read.</property>
+                              </object>
+                            </child>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -1742,6 +1844,11 @@
                             <property name="sensitive">False</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
+                            <child internal-child="accessible">
+                              <object class="AtkObject" id="validate_now-atkobject">
+                                <property name="AtkObject::accessible-description" translatable="yes">Immediately checks validity of all certificates on the card</property>
+                              </object>
+                            </child>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -1836,6 +1943,11 @@
                           <item>NORMAL</item>
                           <item>COARSE</item>
                         </items>
+                        <child internal-child="accessible">
+                          <object class="AtkObject" id="loglvl-atkobject">
+                            <property name="AtkObject::accessible-description" translatable="yes">Filter the log entries</property>
+                          </object>
+                        </child>
                       </object>
                       <packing>
                         <property name="expand">False</property>
