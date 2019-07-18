@@ -3,7 +3,7 @@ stages:
  - source
  - source-package
  - binary-package
- - robots
+ - validate
  - build-repository
  - sync
 
@@ -344,7 +344,7 @@ build:macos:
   - macos
   allow_failure: true
 robot:windows:
-  stage: robots
+  stage: validate
   tags:
   - robot
   - windows
@@ -358,7 +358,7 @@ robot:windows:
   - pkcs11_tests.exe
   allow_failure: true
 robot:macos:
-  stage: robots
+  stage: validate
   variables:
     EID_ROBOT_STYLE: $EID_ROBOT_STYLE_MACOS
     EID_DIALOGS_STYLE: nopin
@@ -374,7 +374,7 @@ robot:macos:
   - ./testsuite
   allow_failure: true
 robot:linux:
-  stage: robots
+  stage: validate
   variables:
     EID_ROBOT_STYLE: zetes:/dev/CARD:/dev/USB
     EID_DIALOGS_STYLE: nopin
