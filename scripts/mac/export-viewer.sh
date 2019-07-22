@@ -32,9 +32,10 @@ hdiutil convert tmp-eidviewer.dmg -format UDBZ -o "$EIDVIEWER_DMG"
 
 
 #notarize the eIDViewer installer
-/usr/bin/xcrun altool --notarize-app --primary-bundle-id "be.eid.ViewerInstaller.dmg" --username "AC_USERNAME" --password "@keychain:altool" --file "$EIDVIEWER_DMG"
+/usr/bin/xcrun altool --notarize-app --primary-bundle-id "be.eid.ViewerInstaller.dmg" --username "$AC_USERNAME" --password "@keychain:altool" --file "$EIDVIEWER_DMG"
 xcrun altool --notarization-history 0 -u "$AC_USERNAME" -p "@keychain:altool"
 
+sleep 20
 
 #staple the notarization package to the DMG.
 /usr/bin/xcrun stapler staple -v "$EIDVIEWER_DMG"
