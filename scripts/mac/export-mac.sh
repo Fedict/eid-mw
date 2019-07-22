@@ -18,17 +18,17 @@ chmod +x ./create_package.sh
 
 pushd ../../..
 echo "creating beidpkcs11"
-xcodebuild -project beidmw.xcodeproj -scheme "beidpkcs11" -configuration $MAC_BUILD_CONFIG clean archive
+xcodebuild -project beidmw.xcodeproj -scheme "beidpkcs11" -configuration Release clean archive
 popd
 
 pushd "../../../cardcomm/ctkToken"
-xcodebuild -project "BEIDToken.xcodeproj" -scheme "BEIDTokenApp" -configuration $MAC_BUILD_CONFIG clean archive
+xcodebuild -project "BEIDToken.xcodeproj" -scheme "BEIDTokenApp" -configuration Release clean archive
 popd
 
 #-----------------------------------------
 # create the pkg files
 #-----------------------------------------
 echo "creating the beid package..."
-sudo ./create_package.sh
+sudo ./create_export_package.sh
 
 echo "[Info ] Done..."
