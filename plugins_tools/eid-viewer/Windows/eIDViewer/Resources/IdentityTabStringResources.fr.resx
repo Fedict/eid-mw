@@ -246,4 +246,7 @@ BCE de l’employeur (2):</value>
   <data name="WorkPermitMentionLabel" xml:space="preserve">
     <value>Accès au marché du travail:</value>
   </data>
+  <data name="Photo" xml:space="preserve">
+    <value>photo</value>
+  </data>
 </root>
