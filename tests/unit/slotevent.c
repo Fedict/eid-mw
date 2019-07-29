@@ -35,6 +35,10 @@ TEST_FUNC(slotevent) {
 	CK_SLOT_ID slot;
 	int ret;
 	CK_RV rv;
+	ckrv_mod m_robot_removed[] = {
+		{ CKR_DEVICE_ERROR, TEST_RV_OK },
+		{ CKR_NO_EVENT, TEST_RV_FAIL },
+	};
 
 	if(!have_robot()) {
 		printf("Need ability to remove token to perform this test\n");
@@ -82,7 +86,7 @@ TEST_FUNC(slotevent) {
 	do {
 		rv = C_WaitForSlotEvent(CKF_DONT_BLOCK, &slot, NULL_PTR);
 	} while(rv == CKR_NO_EVENT);
-	check_rv_late("C_WaitForSlotEvent(CKF_DONT_BLOCK, &slot, NULL_PTR)");
+	check_rv_late_long("C_WaitForSlotEvent(CKF_DONT_BLOCK, &slot, NULL_PTR)", m_robot_removed);
 
 	if(!have_reader_robot()) {
 		printf("Need ability to remove card reader to do the rest of this test\n");
