@@ -14,14 +14,14 @@
 :: build viewer
 :: ============
 @echo [INFO] Building PKCS11_FF Win32"
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:clean /property:Configuration=PKCS11_FF_Release /Property:Platform=Win32 "%~dp0..\..\VS_2017\beid.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:clean /property:Configuration=PKCS11_FF_Release /Property:Platform=Win32 "%~dp0..\..\VS_2017\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:build /property:Configuration=PKCS11_FF_Release /Property:Platform=Win32 "%~dp0..\..\VS_2017\beid.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:build /property:Configuration=PKCS11_FF_Release /Property:Platform=Win32 "%~dp0..\..\VS_2017\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
 @echo [INFO] Building eIDViewer Win32"
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:clean /property:Configuration=Release /Property:Platform=Win32 "%~dp0..\..\plugins_tools\eid-viewer\Windows\VS_2017\eIDViewer.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:clean /property:Configuration=Release /Property:Platform=Win32 "%~dp0..\..\plugins_tools\eid-viewer\Windows\VS_2017\eIDViewer.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:build /property:Configuration=Release /Property:Platform=Win32 "%~dp0..\..\plugins_tools\eid-viewer\Windows\VS_2017\eIDViewer.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:build /property:Configuration=Release /Property:Platform=Win32 "%~dp0..\..\plugins_tools\eid-viewer\Windows\VS_2017\eIDViewer.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
 
 
