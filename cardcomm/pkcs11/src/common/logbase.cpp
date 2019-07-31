@@ -543,13 +543,18 @@ namespace eIDMW
 		std::wstring src;
 		src = root_filename;
 		src += L"0.log";
+		int removed;
 
 #ifdef WIN32
-		_wremove(src.c_str());
+		removed = _wremove(src.c_str());
 #else
-		remove(utilStringNarrow(src).c_str());
+		removed = remove(utilStringNarrow(src).c_str());
 #endif
 
+		if(removed != 0) {
+			// file could not be removed, abort
+			return;
+		}
 		std::wstring dest;
 		wchar_t isrc[5];
 		wchar_t idest[5];
