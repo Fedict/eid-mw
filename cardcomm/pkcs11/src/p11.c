@@ -129,7 +129,7 @@ CK_RV p11_get_free_session(CK_SESSION_HANDLE_PTR phSession, P11_SESSION **ppSess
 			gpSessions = gpSessions_realloc;
 		}
 
-		memset(&gpSessions[index], 0, diff);
+		memset((void*)(&gpSessions[index]), 0, diff);
 		nSessions += SESSION_TAB_STEP_SIZE;
 	}
 
@@ -310,7 +310,7 @@ CK_RV p11_new_slot_object(P11_SLOT *pSlot, CK_ULONG *phObject)
 			return(CKR_HOST_MEMORY);
 		}
 
-		memset(&(pSlot->pobjects[index])/* + size*/, 0, diff);
+		memset((void*)(&(pSlot->pobjects[index])), 0, diff);
 		pSlot->nobjects += OBJECT_TAB_STEP_SIZE;
 	}
 
