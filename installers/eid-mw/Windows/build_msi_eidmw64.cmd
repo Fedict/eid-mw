@@ -9,6 +9,7 @@
 :: create the language specific msi's
 :: ==================================
 
+@echo build_msi_eidmw64.cmd
 @echo [INFO] Making the nl-nl version
 
 "%BEID_DIR_WIX%\candle.exe" -v -dLang=nl -out obj\Product64.wixobj -arch x64 -ext "%BEID_DIR_WIX%\WixUtilExtension.dll" -ext "%BEID_DIR_WIX%\WixUIExtension.dll" "%~dp0\Product64.wxs"
