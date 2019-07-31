@@ -403,7 +403,7 @@ repro:debian:
   - apt-get -y install reprotest diffoscope equivs devscripts
   - mk-build-deps -r -i -t "apt-get -y -o Debug::pkgProblemResolver=yes --no-install-recommends"
   script:
-  - reprotest . products/deb/*deb10*changes
+  - reprotest $(pwd)
 ####################################################################
 # Stage "build-repository": copy binaries into a repository layout #
 ####################################################################
