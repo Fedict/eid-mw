@@ -46,6 +46,7 @@ Serial* serial_open(char *portname) {
 	}
 	if(ioctl(rv->fd, TIOCEXCL) == -1) {
 		perror("ioctl TIOCEXCL");
+		free(rv);
 		return NULL;
 	}
 	tcgetattr(rv->fd, &ios);
