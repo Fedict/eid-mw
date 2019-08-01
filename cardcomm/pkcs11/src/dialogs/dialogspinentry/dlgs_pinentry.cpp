@@ -120,7 +120,8 @@ static DlgRet setup_dialog(char* title, char* desc, const wchar_t *csPinName, bo
 	while((loc = strchr(s, '\n'))) {
 		*loc = '\0';
 		snprintf(t, sizeof t, "%s%%0A%s", s, loc+1);
-		strncpy(s, t, sizeof s);
+		strncpy(s, t, (sizeof s) - 1);
+		s[sizeof s] = '\0';
 	}
 	if((r = assuan_transact(ctx, s, NULL, NULL, NULL, NULL, NULL, NULL))) {
 		MWLOG(LEV_ERROR, MOD_DLG, L"Could not set description: %s", gpg_strerror(r));
