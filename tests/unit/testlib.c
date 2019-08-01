@@ -146,6 +146,10 @@ CK_BBOOL init_robot(Serial *port, char type) {
 CK_BBOOL open_robot(char *envvar) {
 	char *dev;
 
+	if(robot_port) {
+		return (robot_port > 0) ? CK_TRUE : CK_FALSE;
+	}
+
 	switch(robot_type) {
 		case ROBOT_AUTO:
 			if(strlen(envvar) == strlen("fedict")) {
@@ -169,14 +173,10 @@ CK_BBOOL open_robot(char *envvar) {
 			fprintf(stderr, "E: can't open robots that don't exist\n");
 			return CK_FALSE;
 	}
-	if(!robot_port) {
-		printf("opening card robot at %s\n", dev);
-		robot_port = serial_open(dev);
-		free(dev);
-		return init_robot(robot_port, 'C');
-	} else {
-		return (robot_port > 0) ? CK_TRUE : CK_FALSE;
-	}
+	printf("opening card robot at %s\n", dev);
+	robot_port = serial_open(dev);
+	free(dev);
+	return init_robot(robot_port, 'C');
 }
 
 CK_BBOOL open_reader_robot(char *envvar) {
