@@ -151,6 +151,8 @@ TEST_FUNC(threads) {
 	}
 
 	pthread_mutex_lock(&condmutex);
+#undef CHECK_RV_DEALLOC
+#define CHECK_RV_DEALLOC pthread_mutex_unlock(&condmutex)
 
 	printf("Spawning a thread:\n");
 	pthread_create(&thread, NULL, thread_func, NULL);
@@ -166,6 +168,8 @@ TEST_FUNC(threads) {
 	printf("Signaling thread again\n");
 	pthread_cond_signal(&cond);
 	pthread_mutex_unlock(&condmutex);
+#undef CHECK_RV_DEALLOC
+#define CHECK_RV_DEALLOC
 	pthread_join(thread, NULL);
 	printf("Thread finished\n");
 
