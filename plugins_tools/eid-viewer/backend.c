@@ -100,10 +100,12 @@ static EID_CHAR* format_string(const EID_CHAR* format, va_list ap) {
 		strnewsize = EID_VSNPRINTF(str, strsize, format, apc);
 		va_end(apc);
 		strsize = strnewsize + 1;
-		str = (EID_CHAR*)realloc(str, strsize * sizeof(EID_CHAR));
-		if(!str) {
+		EID_CHAR* newstr = (EID_CHAR*)realloc(str, strsize * sizeof(EID_CHAR));
+		if(!newstr) {
+			free(str);
 			return NULL;
 		}
+		str = newstr;
 		va_copy(apc, ap);
 		strnewsize = EID_VSNPRINTF(str, strsize, format, apc);
 		va_end(apc);
