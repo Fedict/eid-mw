@@ -671,6 +671,11 @@ int find_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR slot) {
 #define CHECK_RV_DEALLOC free(list)
 	check_rv_late("C_GetSlotList");
 
+	if(!count) {
+		free(list);
+		return TEST_RV_SKIP;
+	}
+
 	i = 0;
 	if(with_token) {
 		do {
