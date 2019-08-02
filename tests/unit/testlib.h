@@ -63,10 +63,11 @@ typedef enum {
 	SYSTEM_FOUND,
 } reading_pos;
 
-#define check_rv_late(func) { int retval = ckrv_decode(rv, func, 0, NULL); if(EIDT_UNLIKELY(retval != TEST_RV_OK)) { printf("not ok\n"); C_Finalize(NULL_PTR); my_assert(retval != TEST_RV_FAIL); return retval; }}
-#define check_rv_late_long(func, mods) { int c = sizeof(mods) / sizeof(ckrv_mod); int retval = ckrv_decode(rv, func, c, (mods)); if(EIDT_UNLIKELY(retval != TEST_RV_OK)) { printf("not ok\n"); C_Finalize(NULL_PTR); my_assert(retval != TEST_RV_FAIL); return retval; }}
+#define CHECK_RV_DEALLOC
+#define check_rv_late(func) { int retval = ckrv_decode(rv, func, 0, NULL); if(EIDT_UNLIKELY(retval != TEST_RV_OK)) { printf("not ok\n"); C_Finalize(NULL_PTR); my_assert(retval != TEST_RV_FAIL); CHECK_RV_DEALLOC; return retval; }}
+#define check_rv_late_long(func, mods) { int c = sizeof(mods) / sizeof(ckrv_mod); int retval = ckrv_decode(rv, func, c, (mods)); if(EIDT_UNLIKELY(retval != TEST_RV_OK)) { printf("not ok\n"); C_Finalize(NULL_PTR); my_assert(retval != TEST_RV_FAIL); CHECK_RV_DEALLOC; return retval; }}
 #define check_rv(call) check_rv_action(call, 0, NULL)
-#define check_rv_action(call, count, mods) { CK_RV rv = call; int retval = ckrv_decode(rv, #call, count, mods); if(EIDT_UNLIKELY(retval != TEST_RV_OK)) { printf("not ok\n"); C_Finalize(NULL_PTR); my_assert(retval != TEST_RV_FAIL); return retval; }}
+#define check_rv_action(call, count, mods) { CK_RV rv = call; int retval = ckrv_decode(rv, #call, count, mods); if(EIDT_UNLIKELY(retval != TEST_RV_OK)) { printf("not ok\n"); C_Finalize(NULL_PTR); my_assert(retval != TEST_RV_FAIL); CHECK_RV_DEALLOC; return retval; }}
 #define check_rv_long(call, mods) { int c = sizeof(mods) / sizeof(ckrv_mod); check_rv_action(call, c, mods); }
 
 int ckrv_decode(CK_RV rv, char *fc, int count, const ckrv_mod *);
