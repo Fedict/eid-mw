@@ -226,7 +226,7 @@ CK_RV p11_close_all_sessions(CK_SLOT_ID slotID)
 	pSlot = p11_get_slot(slotID);
 	if (pSlot == NULL)
 	{
-		log_trace(WHERE, "E: Invalid slot (%d)", slotID);
+		log_trace(WHERE, "E: Invalid slot (%lu)", slotID);
 		ret = CKR_SLOT_ID_INVALID;
 		goto cleanup;
 	}
@@ -374,7 +374,7 @@ CK_RV p11_set_attribute_value(CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_A
 			pAttr->pValue = malloc(len);
 			if (pAttr->pValue == NULL)
 			{
-				log_trace(WHERE, "E: allocation error for attribute value (len=%d)", len);
+				log_trace(WHERE, "E: allocation error for attribute value (len=%lu)", len);
 				return(CKR_HOST_MEMORY);
 			}
 
@@ -468,7 +468,7 @@ CK_RV p11_add_slot_object(P11_SLOT *pSlot, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG 
 	ret = p11_copy_object(pTemplate, ulCount, pObject->pAttr);
 	if (ret)
 	{
-		log_trace(WHERE, "E: p11_copy_object() returned %d", ret);
+		log_trace(WHERE, "E: p11_copy_object() returned %lu", ret);
 		goto cleanup;
 	}
 
@@ -476,7 +476,7 @@ CK_RV p11_add_slot_object(P11_SLOT *pSlot, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG 
 	ret = p11_set_attribute_value(pObject->pAttr, ulCount, CKA_TOKEN, (CK_VOID_PTR) &bToken, sizeof(CK_BBOOL));
 	if (ret)
 	{
-		log_trace(WHERE, "E: p11_set_attribute_value(CKA_TOKEN) returned %d", ret);
+		log_trace(WHERE, "E: p11_set_attribute_value(CKA_TOKEN) returned %lu", ret);
 		goto cleanup;
 	}
 
@@ -484,7 +484,7 @@ CK_RV p11_add_slot_object(P11_SLOT *pSlot, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG 
 	ret = p11_set_attribute_value(pObject->pAttr, ulCount, CKA_CLASS, (CK_VOID_PTR) &type, sizeof(CK_ULONG));
 	if (ret)
 	{
-		log_trace(WHERE, "E: p11_set_attribute_value(CKA_CLASS) returned %d", ret);
+		log_trace(WHERE, "E: p11_set_attribute_value(CKA_CLASS) returned %lu", ret);
 		goto cleanup;
 	}
 
@@ -492,7 +492,7 @@ CK_RV p11_add_slot_object(P11_SLOT *pSlot, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG 
 	ret = p11_set_attribute_value(pObject->pAttr, ulCount, CKA_ID, (CK_VOID_PTR) &id, sizeof(CK_ULONG));
 	if (ret)
 	{
-		log_trace(WHERE, "E: p11_set_attribute_value(CKA_ID) returned %d", ret);
+		log_trace(WHERE, "E: p11_set_attribute_value(CKA_ID) returned %lu", ret);
 		goto cleanup;
 	}
 
@@ -500,7 +500,7 @@ CK_RV p11_add_slot_object(P11_SLOT *pSlot, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG 
 	ret = p11_set_attribute_value(pObject->pAttr, ulCount, CKA_PRIVATE, (CK_VOID_PTR) &bPrivate, sizeof(CK_BBOOL));
 	if (ret)
 	{
-		log_trace(WHERE, "E: p11_set_attribute_value(CKA_PRIVATE) returned %d", ret);
+		log_trace(WHERE, "E: p11_set_attribute_value(CKA_PRIVATE) returned %lu", ret);
 		goto cleanup;
 	}
 
@@ -550,7 +550,7 @@ CK_RV p11_add_slot_ID_object(P11_SLOT *pSlot, CK_ATTRIBUTE_PTR pTemplate, CK_ULO
 	ret = p11_copy_object(pTemplate, ulCount, pObject->pAttr);
 	if (ret)
 	{
-		log_trace(WHERE, "E: p11_copy_object() returned %d", ret);
+		log_trace(WHERE, "E: p11_copy_object() returned %lu", ret);
 		goto cleanup;
 	}
 
@@ -558,7 +558,7 @@ CK_RV p11_add_slot_ID_object(P11_SLOT *pSlot, CK_ATTRIBUTE_PTR pTemplate, CK_ULO
 	ret = p11_set_attribute_value(pObject->pAttr, ulCount, CKA_TOKEN, (CK_VOID_PTR) &bToken, sizeof(CK_BBOOL));
 	if (ret)
 	{
-		log_trace(WHERE, "E: p11_set_attribute_value(CKA_TOKEN) returned %d", ret);
+		log_trace(WHERE, "E: p11_set_attribute_value(CKA_TOKEN) returned %lu", ret);
 		goto cleanup;
 	}
 
@@ -566,7 +566,7 @@ CK_RV p11_add_slot_ID_object(P11_SLOT *pSlot, CK_ATTRIBUTE_PTR pTemplate, CK_ULO
 	ret = p11_set_attribute_value(pObject->pAttr, ulCount, CKA_CLASS, (CK_VOID_PTR) &type, sizeof(CK_ULONG));
 	if (ret)
 	{
-		log_trace(WHERE, "E: p11_set_attribute_value(CKA_CLASS) returned %d", ret);
+		log_trace(WHERE, "E: p11_set_attribute_value(CKA_CLASS) returned %lu", ret);
 		goto cleanup;
 	}
 
@@ -574,7 +574,7 @@ CK_RV p11_add_slot_ID_object(P11_SLOT *pSlot, CK_ATTRIBUTE_PTR pTemplate, CK_ULO
 	ret = p11_set_attribute_value(pObject->pAttr, ulCount, CKA_PRIVATE, (CK_VOID_PTR) &bPrivate, sizeof(CK_BBOOL));
 	if (ret)
 	{
-		log_trace(WHERE, "E: p11_set_attribute_value(CKA_PRIVATE) returned %d", ret);
+		log_trace(WHERE, "E: p11_set_attribute_value(CKA_PRIVATE) returned %lu", ret);
 		goto cleanup;
 	}
 
@@ -582,7 +582,7 @@ CK_RV p11_add_slot_ID_object(P11_SLOT *pSlot, CK_ATTRIBUTE_PTR pTemplate, CK_ULO
 	ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_LABEL, plabel, labelLen);
 	if (ret)
 	{
-		log_trace(WHERE, "E: p11_set_attribute_value(CKA_LABEL) returned %d", ret);
+		log_trace(WHERE, "E: p11_set_attribute_value(CKA_LABEL) returned %lu", ret);
 		goto cleanup;
 	}
 
@@ -590,7 +590,7 @@ CK_RV p11_add_slot_ID_object(P11_SLOT *pSlot, CK_ATTRIBUTE_PTR pTemplate, CK_ULO
 	ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_VALUE, pvalue, valueLen);
 	if (ret)
 	{
-		log_trace(WHERE, "E: p11_set_attribute_value(CKA_VALUE) returned %d", ret);
+		log_trace(WHERE, "E: p11_set_attribute_value(CKA_VALUE) returned %lu", ret);
 		goto cleanup;
 	}
 
@@ -598,7 +598,7 @@ CK_RV p11_add_slot_ID_object(P11_SLOT *pSlot, CK_ATTRIBUTE_PTR pTemplate, CK_ULO
 	ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_VALUE_LEN, &valueLen, sizeof(CK_ULONG));
 	if (ret)
 	{
-		log_trace(WHERE, "E: p11_set_attribute_value(CKA_VALUE_LEN) returned %d", ret);
+		log_trace(WHERE, "E: p11_set_attribute_value(CKA_VALUE_LEN) returned %lu", ret);
 		goto cleanup;
 	}
 
@@ -606,7 +606,7 @@ CK_RV p11_add_slot_ID_object(P11_SLOT *pSlot, CK_ATTRIBUTE_PTR pTemplate, CK_ULO
 	ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_OBJECT_ID, pobjectID, objectIDLen);
 	if (ret)
 	{
-		log_trace(WHERE, "E: p11_set_attribute_value(CKA_OBJECT_ID) returned %d", ret);
+		log_trace(WHERE, "E: p11_set_attribute_value(CKA_OBJECT_ID) returned %lu", ret);
 		goto cleanup;
 	}
 

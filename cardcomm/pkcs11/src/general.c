@@ -107,7 +107,7 @@ CK_RV C_Initialize(CK_VOID_PTR pReserved)
 	}
 
 cleanup:
-	log_trace(WHERE, "I: leave, ret = %i",ret);
+	log_trace(WHERE, "I: leave, ret = %ld",ret);
 	if (ret != CKR_OK) {
 		p11_set_init(initial_state);
 	}
@@ -152,7 +152,7 @@ CK_RV C_Finalize(CK_VOID_PTR pReserved)
 	p11_set_init(BEIDP11_NOT_INITIALIZED);
 	// util_clean_lock(&logmutex);
 	log_trace(WHERE, "I: p11_free_lock()");
-	log_trace(WHERE, "I: leave, ret = %i",ret);
+	log_trace(WHERE, "I: leave, ret = %lu",ret);
 	return ret;
 }
 #undef WHERE
@@ -182,7 +182,7 @@ CK_RV C_GetInfo(CK_INFO_PTR pInfo)
 	pInfo->libraryVersion.minor = 0;
 
 cleanup:
-	log_trace(WHERE, "I: leave, ret = %i",ret);
+	log_trace(WHERE, "I: leave, ret = %lu",ret);
 	return ret;
 }       
 #undef WHERE
@@ -302,7 +302,7 @@ CK_RV C_GetSlotList(CK_BBOOL       tokenPresent,  /* only slots with token prese
 cleanup:   
 	log_trace(WHERE, "I: p11_unlock()");
 	p11_unlock();
-	log_trace(WHERE, "I: leave, ret = %i",ret);
+	log_trace(WHERE, "I: leave, ret = %lu",ret);
 	return ret;
 }
 #undef WHERE
@@ -327,7 +327,7 @@ CK_RV C_GetSlotInfo(CK_SLOT_ID slotID, CK_SLOT_INFO_PTR pInfo)
 	p11_lock();
 
 	if (++l < LOG_MAX_REC)  
-		log_trace(WHERE, "S: C_GetSlotInfo(slot %d)", slotID);
+		log_trace(WHERE, "S: C_GetSlotInfo(slot %lu)", slotID);
 
 	if (pInfo == NULL_PTR) 
 	{
@@ -338,7 +338,7 @@ CK_RV C_GetSlotInfo(CK_SLOT_ID slotID, CK_SLOT_INFO_PTR pInfo)
 	slot = p11_get_slot(slotID);
 	if (slot == NULL)
 	{
-		log_trace(WHERE, "E: p11_get_slot(%d) returns null", slotID);
+		log_trace(WHERE, "E: p11_get_slot(%lu) returns null", slotID);
 		CLEANUP(CKR_SLOT_ID_INVALID);
 	}
 
@@ -371,7 +371,7 @@ CK_RV C_GetSlotInfo(CK_SLOT_ID slotID, CK_SLOT_INFO_PTR pInfo)
 
 cleanup:
 	p11_unlock();
-	log_trace(WHERE, "I: leave, ret = %i",ret);
+	log_trace(WHERE, "I: leave, ret = %lu",ret);
 	return ret;
 }
 #undef WHERE
@@ -392,7 +392,7 @@ CK_RV C_GetTokenInfo(CK_SLOT_ID slotID, CK_TOKEN_INFO_PTR pInfo)
 
 	p11_lock();
 
-	log_trace(WHERE, "S: C_GetTokenInfo(slot %d)", slotID);
+	log_trace(WHERE, "S: C_GetTokenInfo(slot %ld)", slotID);
 	if (pInfo == NULL_PTR) 
 	{
 		log_trace(WHERE, "E: pInfo = NULL");
@@ -408,7 +408,7 @@ CK_RV C_GetTokenInfo(CK_SLOT_ID slotID, CK_TOKEN_INFO_PTR pInfo)
 
 cleanup:        
 	p11_unlock();
-	log_trace(WHERE, "I: leave, ret = %i",ret);
+	log_trace(WHERE, "I: leave, ret = %lu",ret);
 	return ret;
 }
 #undef WHERE
@@ -431,19 +431,19 @@ CK_RV C_GetMechanismList(CK_SLOT_ID slotID,
 
 	p11_lock();
 
-	log_trace(WHERE, "S: C_GetMechanismList(slot %d)", slotID);
+	log_trace(WHERE, "S: C_GetMechanismList(slot %lu)", slotID);
 
 	ret = cal_get_mechanism_list(slotID, pMechanismList,pulCount);
 	if (ret != CKR_OK)
 	{
-		log_trace(WHERE, "E: cal_get_mechanism_list(slotid=%d) returns %s", slotID, log_map_error(ret));
+		log_trace(WHERE, "E: cal_get_mechanism_list(slotid=%lu) returns %s", slotID, log_map_error(ret));
 		goto cleanup;
 	}
 
 cleanup:
 
 	p11_unlock();
-	log_trace(WHERE, "I: leave, ret = %i",ret);
+	log_trace(WHERE, "I: leave, ret = %lu",ret);
 	return ret;
 }
 #undef WHERE
@@ -465,7 +465,7 @@ CK_RV C_GetMechanismInfo(CK_SLOT_ID slotID,
 
 	p11_lock();
 
-	log_trace(WHERE, "S: C_GetMechanismInfo(slot %d)", slotID);
+	log_trace(WHERE, "S: C_GetMechanismInfo(slot %lu)", slotID);
 
 	if (pInfo == NULL_PTR)
 	{
@@ -475,13 +475,13 @@ CK_RV C_GetMechanismInfo(CK_SLOT_ID slotID,
 	ret = cal_get_mechanism_info(slotID, type, pInfo);
 	if (ret != CKR_OK)
 	{
-		log_trace(WHERE, "E: p11_get_mechanism_info(slotid=%d) returns %d", slotID, ret);
+		log_trace(WHERE, "E: p11_get_mechanism_info(slotid=%lu) returns %lu", slotID, ret);
 		goto cleanup;
 	}
 
 cleanup:        
 	p11_unlock();
-	log_trace(WHERE, "I: leave, ret = %i",ret);
+	log_trace(WHERE, "I: leave, ret = %lu",ret);
 	return ret;
 }
 #undef WHERE
@@ -497,7 +497,7 @@ CK_RV C_InitToken(CK_SLOT_ID slotID,
 	CK_CHAR_PTR pLabel)
 {
 	log_trace(WHERE, "I: CKR_FUNCTION_NOT_SUPPORTED");
-	log_trace(WHERE, "S: C_InitToken(slot %d)", slotID);
+	log_trace(WHERE, "S: C_InitToken(slot %lu)", slotID);
 	return (CKR_FUNCTION_NOT_SUPPORTED);
 }
 #undef WHERE
@@ -539,7 +539,7 @@ CK_RV C_WaitForSlotEvent(CK_FLAGS flags,   /* blocking/nonblocking flag */
 
 	locked = CK_TRUE;
 
-	log_trace(WHERE, "S: C_WaitForSlotEvent(flags = 0x%0x)", flags);
+	log_trace(WHERE, "S: C_WaitForSlotEvent(flags = 0x%0lx)", flags);
 
 	/* Doesn't seem to work on Linux: if you insert a card then Mozilla freezes
 	 * until you remove the card. 
@@ -603,7 +603,7 @@ cleanup:
 	if(locked == CK_TRUE)
 		p11_unlock();
 
-	log_trace(WHERE, "I: leave, ret = %i",ret);
+	log_trace(WHERE, "I: leave, ret = %lu",ret);
 	return ret;
 }
 #undef WHERE

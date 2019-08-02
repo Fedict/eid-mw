@@ -43,19 +43,19 @@ CK_RV C_DigestInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 
    p11_lock();
 
-	 log_trace(WHERE, "I: enter, hSession = %i",hSession);
+	 log_trace(WHERE, "I: enter, hSession = %lu",hSession);
 
    ret = p11_get_session(hSession, &pSession);
    if (ret)
       {
-      log_trace(WHERE, "E: Invalid session handle (%d)", hSession);
+      log_trace(WHERE, "E: Invalid session handle (%lu)", hSession);
       goto cleanup;
       }
 
    //is there an active digest operation for this session
    if (pSession->Operation[P11_OPERATION_DIGEST].active)
       {
-      log_trace(WHERE, "W: Session %d: digest operation allready exists", hSession);
+      log_trace(WHERE, "W: Session %lu: digest operation allready exists", hSession);
       ret = CKR_OPERATION_ACTIVE;
       goto cleanup;
       }
@@ -84,7 +84,7 @@ CK_RV C_DigestInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 
 cleanup:
    p11_unlock();
-	 log_trace(WHERE, "I: leave, ret = 0x%08x",ret);
+	 log_trace(WHERE, "I: leave, ret = 0x%08lx",ret);
    return ret;
 }
 #undef WHERE
@@ -111,19 +111,19 @@ CK_RV C_Digest(CK_SESSION_HANDLE hSession,     /* the session's handle */
 
    p11_lock();
 
-	 log_trace(WHERE, "I: enter, hSession = %i",hSession);
+	 log_trace(WHERE, "I: enter, hSession = %lu",hSession);
 
    ret = p11_get_session(hSession, &pSession);
    if (ret)
       {
-      log_trace(WHERE, "E: Invalid session handle (%d)", hSession);
+      log_trace(WHERE, "E: Invalid session handle (%lu)", hSession);
       goto cleanup;
       }
 
    //is there an active search operation for this session
    if ((pSession->Operation[P11_OPERATION_DIGEST].active) == 0)
       {
-      log_trace(WHERE, "E: Session %d: no digest operation initialized", hSession);
+      log_trace(WHERE, "E: Session %lu: no digest operation initialized", hSession);
       ret = CKR_OPERATION_NOT_INITIALIZED;
       goto cleanup;
       }
@@ -175,7 +175,7 @@ CK_RV C_Digest(CK_SESSION_HANDLE hSession,     /* the session's handle */
 
 cleanup:
    p11_unlock();
-	 log_trace(WHERE, "I: leave, ret = 0x%08x",ret);
+	 log_trace(WHERE, "I: leave, ret = 0x%08lx",ret);
 
 return ret;
 }
@@ -205,14 +205,14 @@ CK_RV C_DigestUpdate(CK_SESSION_HANDLE hSession,  /* the session's handle */
    ret = p11_get_session(hSession, &pSession);
    if (ret)
       {
-      log_trace(WHERE, "E: Invalid session handle (%d)", hSession);
+      log_trace(WHERE, "E: Invalid session handle (%lu)", hSession);
       goto cleanup;
       }
 
    //is there an active search operation for this session
    if (pSession->Operation[P11_OPERATION_DIGEST].active == 0)
       {
-      log_trace(WHERE, "E: Session %d: no digest operation initialized", hSession);
+      log_trace(WHERE, "E: Session %lu: no digest operation initialized", hSession);
       ret = CKR_OPERATION_NOT_INITIALIZED;
       goto cleanup;
       }
@@ -235,7 +235,7 @@ CK_RV C_DigestUpdate(CK_SESSION_HANDLE hSession,  /* the session's handle */
 
 cleanup:
    p11_unlock();
-	 log_trace(WHERE, "I: leave, ret = 0x%08x",ret);
+	 log_trace(WHERE, "I: leave, ret = 0x%08lx",ret);
 
 return ret;
 }
@@ -270,7 +270,7 @@ CK_RV C_DigestFinal(CK_SESSION_HANDLE hSession,     /* the session's handle */
 
    p11_lock();
 
-	 log_trace(WHERE, "I: enter, hSession = %i, pDigest=%p",hSession,pDigest);
+	 log_trace(WHERE, "I: enter, hSession = %lu, pDigest=%p",hSession,pDigest);
 
    ret = p11_get_session(hSession, &pSession);
    if (ret)
@@ -325,7 +325,7 @@ CK_RV C_DigestFinal(CK_SESSION_HANDLE hSession,     /* the session's handle */
 
 cleanup:
    p11_unlock();
-	 log_trace(WHERE, "I: leave, ret = 0x%08x",ret);
+	 log_trace(WHERE, "I: leave, ret = 0x%08lx",ret);
 
 return ret;
 }
@@ -375,7 +375,7 @@ CK_RV C_SignInit(CK_SESSION_HANDLE hSession,    /* the session's handle */
    //is there an active sign operation for this session
    if (pSession->Operation[P11_OPERATION_SIGN].active)
       {
-      log_trace(WHERE, "W: Session %d: sign operation allready exists", hSession);
+      log_trace(WHERE, "W: Session %lu: sign operation allready exists", hSession);
       ret = CKR_OPERATION_ACTIVE;
       goto cleanup;
       }
@@ -411,7 +411,7 @@ CK_RV C_SignInit(CK_SESSION_HANDLE hSession,    /* the session's handle */
 		ret = cal_get_mechanism_list(pSession->hslot, pMechanismsSupported, &ulSupportedMechLen);
 		if (ret != CKR_OK)
    {
-			log_trace(WHERE, "E: cal_get_mechanism_list(slotid=%d) returns %s", pSession->hslot, log_map_error(ret));
+			log_trace(WHERE, "E: cal_get_mechanism_list(slotid=%lu) returns %s", pSession->hslot, log_map_error(ret));
 			goto cleanup;
    }
 
@@ -422,7 +422,7 @@ CK_RV C_SignInit(CK_SESSION_HANDLE hSession,    /* the session's handle */
 			ret = cal_get_mechanism_list(pSession->hslot, pMechanismsSupported, &ulSupportedMechLen);
 			if (ret != CKR_OK)
 			{
-				log_trace(WHERE, "E: cal_get_mechanism_list(slotid=%d) returns %s", pSession->hslot, log_map_error(ret));
+				log_trace(WHERE, "E: cal_get_mechanism_list(slotid=%lu) returns %s", pSession->hslot, log_map_error(ret));
 				free(pMechanismsSupported);
 				goto cleanup;
 			}
@@ -553,7 +553,7 @@ CK_RV C_SignInit(CK_SESSION_HANDLE hSession,    /* the session's handle */
 
 cleanup:       
    p11_unlock();
-	 log_trace(WHERE, "I: leave, ret = 0x%08x",ret);
+	 log_trace(WHERE, "I: leave, ret = 0x%08lx",ret);
 
 return ret;
 }
@@ -588,14 +588,14 @@ CK_RV C_Sign(CK_SESSION_HANDLE hSession,        /* the session's handle */
    ret = p11_get_session(hSession, &pSession);
    if (ret)
       {
-      log_trace(WHERE, "E: Invalid session handle (%d)", hSession);
+      log_trace(WHERE, "E: Invalid session handle (%lu)", hSession);
       goto cleanup;
       }
 
    //is there an active search operation for this session
    if (pSession->Operation[P11_OPERATION_SIGN].active == 0)
       {
-      log_trace(WHERE, "E: Session %d: no sign operation initialized", hSession);
+      log_trace(WHERE, "E: Session %lu: no sign operation initialized", hSession);
       ret = CKR_OPERATION_NOT_INITIALIZED;
       goto cleanup;
       }
@@ -678,7 +678,7 @@ cleanup:
    if (pDigest)
       free(pDigest);
    p11_unlock();
-	 log_trace(WHERE, "I: leave, ret = 0x%08x",ret);
+	 log_trace(WHERE, "I: leave, ret = 0x%08lx",ret);
 return ret;
 }
 #undef WHERE
@@ -707,14 +707,14 @@ CK_RV C_SignUpdate(CK_SESSION_HANDLE hSession,  /* the session's handle */
    ret = p11_get_session(hSession, &pSession);
    if (ret)
       {
-      log_trace(WHERE, "E: Invalid session handle (%d)", hSession);
+      log_trace(WHERE, "E: Invalid session handle (%lu)", hSession);
       goto cleanup;
       }
 
    //is there an active search operation for this session
    if (pSession->Operation[P11_OPERATION_SIGN].active == 0)
       {
-      log_trace(WHERE, "E: Session %d: no sign operation initialized", hSession);
+      log_trace(WHERE, "E: Session %lu: no sign operation initialized", hSession);
       ret = CKR_OPERATION_NOT_INITIALIZED;
       goto cleanup;
       }
@@ -765,7 +765,7 @@ CK_RV C_SignUpdate(CK_SESSION_HANDLE hSession,  /* the session's handle */
 cleanup:
 
    p11_unlock();
-	 log_trace(WHERE, "I: leave, ret = 0x%08x",ret);
+	 log_trace(WHERE, "I: leave, ret = 0x%08lx",ret);
 return ret;
 }
 #undef WHERE
@@ -796,14 +796,14 @@ CK_RV C_SignFinal(CK_SESSION_HANDLE hSession,        /* the session's handle */
    ret = p11_get_session(hSession, &pSession);
    if (ret)
       {
-      log_trace(WHERE, "E: Invalid session handle (%d)", hSession);      
+      log_trace(WHERE, "E: Invalid session handle (%lu)", hSession);      
       goto cleanup;
       }
 
    //is there an active search operation for this session
    if (pSession->Operation[P11_OPERATION_SIGN].active == 0)
       {
-      log_trace(WHERE, "E: Session %d: no sign operation initialized", hSession);
+      log_trace(WHERE, "E: Session %lu: no sign operation initialized", hSession);
       ret = CKR_OPERATION_NOT_INITIALIZED;
       goto cleanup;
       }
@@ -875,7 +875,7 @@ cleanup:
       free(pDigest);
 
    p11_unlock();
-	 log_trace(WHERE, "I: leave, ret = 0x%08x",ret);
+	 log_trace(WHERE, "I: leave, ret = 0x%08lx",ret);
 
 return ret;
 }

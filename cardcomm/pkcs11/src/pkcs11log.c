@@ -437,7 +437,7 @@ void log_template(const char *string, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG count
   if (!log_level_approved(string))
 		return;
 
-  log_trace(string, "I:size = %d", count);
+  log_trace(string, "I:size = %lu", count);
 
   if ((pTemplate == NULL) || (count == 0))
      return;

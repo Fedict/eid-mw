@@ -121,7 +121,7 @@ CK_RV C_GetAttributeValue(CK_SESSION_HANDLE hSession,   /* the session's handle 
 	ret = p11_get_session(hSession, &pSession);
 	if (ret)
 	{
-		log_trace(WHERE, "E: Invalid session handle (%d)", hSession);
+		log_trace(WHERE, "E: Invalid session handle (%lu)", hSession);
 		goto cleanup;
 	}
 
@@ -136,7 +136,7 @@ CK_RV C_GetAttributeValue(CK_SESSION_HANDLE hSession,   /* the session's handle 
 	pObject = p11_get_slot_object(pSlot, hObject);
 	if (pObject == NULL)
 	{
-		log_trace(WHERE, "E: slot %d: object %d does not exist", pSession->hslot, hObject);
+		log_trace(WHERE, "E: slot %lu: object %lu does not exist", pSession->hslot, hObject);
 		ret = CKR_OBJECT_HANDLE_INVALID;
 		goto cleanup;
 	}
@@ -147,7 +147,7 @@ CK_RV C_GetAttributeValue(CK_SESSION_HANDLE hSession,   /* the session's handle 
 		ret = cal_read_object(pSession->hslot, pObject);
 		if (ret != 0)
 		{
-			log_trace(WHERE, "E: p11_read_object() returned %d", ret);
+			log_trace(WHERE, "E: p11_read_object() returned %lu", ret);
 			goto cleanup;
 		}
 	}
@@ -176,7 +176,7 @@ CK_RV C_GetAttributeValue(CK_SESSION_HANDLE hSession,   /* the session's handle 
 		if (status != CKR_OK)
 		{
 			log_template("E: C_GetAttributeValue status != CKR_OK", &pTemplate[j], 1);
-			log_trace(WHERE, "E: p11_get_attribute_value (object=%d) returned %s", hObject, log_map_error(status));
+			log_trace(WHERE, "E: p11_get_attribute_value (object=%lu) returned %s", hObject, log_map_error(status));
 			pTemplate[j].ulValueLen = (CK_ULONG) -1;
 			ret = status;
 			continue;
@@ -272,7 +272,7 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 	pSlot = p11_get_slot(pSession->hslot);
 	if (pSlot == NULL)
 	{
-		log_trace(WHERE, "E: p11_get_slot(%d) returns null", pSession->hslot);
+		log_trace(WHERE, "E: p11_get_slot(%lu) returns null", pSession->hslot);
 		ret = CKR_SLOT_ID_INVALID;
 		goto cleanup;
 	}
@@ -301,7 +301,7 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 			//CKO_SECRET_KEY is not supported but for SUN-PKCS11 we allow a search that will result in 0 objects
 			if ( (*pclass != CKO_CERTIFICATE) && (*pclass != CKO_PRIVATE_KEY) && (*pclass != CKO_PUBLIC_KEY) && (*pclass != CKO_SECRET_KEY) && (*pclass != CKO_DATA))
 			{
-				log_trace(WHERE, "I: CKA_CLASS (%0x) not supported by this PKCS11 module", *pclass);
+				log_trace(WHERE, "I: CKA_CLASS (%0lx) not supported by this PKCS11 module", *pclass);
 				ret = CKR_ATTRIBUTE_VALUE_INVALID;
 				goto cleanup;
 			}
@@ -340,7 +340,7 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 	//is there an active search operation for this session
 	if (pSession->Operation[P11_OPERATION_FIND].active)
 	{
-		log_trace(WHERE, "W: Session %d: search operation allready exists", hSession);
+		log_trace(WHERE, "W: Session %lu: search operation allready exists", hSession);
 		ret = CKR_OPERATION_ACTIVE;
 		goto cleanup;
 	}
@@ -436,7 +436,7 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 		ret = p11_copy_object(pTemplate, ulCount, pData->pSearch);
 		if (ret)
 		{
-			log_trace(WHERE, "E: p11_copy_object() returned %d", ret);
+			log_trace(WHERE, "E: p11_copy_object() returned %lu", ret);
 			goto cleanup;
 		}
 	}
@@ -547,14 +547,14 @@ CK_RV C_FindObjects(CK_SESSION_HANDLE    hSession,          /* the session's han
 
 	p11_lock();
 
-	log_trace(WHERE, "S: p11_get_session(session %d) enter", hSession);
+	log_trace(WHERE, "S: p11_get_session(session %lu) enter", hSession);
 
 	ret = p11_get_session(hSession, &pSession);
-	log_trace(WHERE, "S: p11_get_session(session %d) leave", hSession);
+	log_trace(WHERE, "S: p11_get_session(session %lu) leave", hSession);
 	if (pSession == NULL || ret != CKR_OK)
 		// if (ret)
 	{
-		log_trace(WHERE, "E: Invalid session handle (%d)", hSession);
+		log_trace(WHERE, "E: Invalid session handle (%lu)", hSession);
 		goto cleanup;
 	}
 
@@ -569,7 +569,7 @@ CK_RV C_FindObjects(CK_SESSION_HANDLE    hSession,          /* the session's han
 	pData = (P11_FIND_DATA *) pSession->Operation[P11_OPERATION_FIND].pData;
 	if (pData == NULL)
 	{
-		log_trace(WHERE, "E: Session (%d): search data not initialized correctly", hSession);
+		log_trace(WHERE, "E: Session (%lu): search data not initialized correctly", hSession);
 		ret = CKR_OPERATION_NOT_INITIALIZED;
 		goto cleanup;
 	}
@@ -608,7 +608,7 @@ CK_RV C_FindObjects(CK_SESSION_HANDLE    hSession,          /* the session's han
 	pSlot = p11_get_slot(pSession->hslot);
 	if (pSlot == NULL)
 	{
-		log_trace(WHERE, "E: p11_get_slot(%d) returns null", pSession->hslot);
+		log_trace(WHERE, "E: p11_get_slot(%lu) returns null", pSession->hslot);
 		ret = CKR_SLOT_ID_INVALID;
 		goto cleanup;
 	}
@@ -674,13 +674,13 @@ CK_RV C_FindObjects(CK_SESSION_HANDLE    hSession,          /* the session's han
 
 		if (match)
 		{
-			log_trace(WHERE, "I: Slot %d: Object %d matches", pSession->hslot, h);
+			log_trace(WHERE, "I: Slot %lu: Object %lu matches", pSession->hslot, h);
 			//put handle to object in list
 			phObject[*pulObjectCount] = (CK_OBJECT_HANDLE) h;
 			*pulObjectCount +=1;
 		}
 		else
-			log_trace(WHERE, "I: Slot %d: Object %d no match with search template", pSession->hslot, h);
+			log_trace(WHERE, "I: Slot %lu: Object %lu no match with search template", pSession->hslot, h);
 	}
 
 	ret = CKR_OK;
@@ -712,7 +712,7 @@ CK_RV C_FindObjectsFinal(CK_SESSION_HANDLE hSession) /* the session's handle */
 
 	p11_lock();
 
-	log_trace(WHERE, "S: C_FindObjectsFinal(session %d)", hSession);
+	log_trace(WHERE, "S: C_FindObjectsFinal(session %lu)", hSession);
 
 	ret = p11_get_session(hSession, &pSession);
 	if (pSession == NULL || ret != CKR_OK)

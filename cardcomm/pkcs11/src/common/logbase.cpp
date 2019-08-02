@@ -527,7 +527,7 @@ namespace eIDMW
 			if (!find)
 			{
 				renameFiles(root_filename.c_str());
-				swprintf_s(index, 5, L"%d", m_filenr - 1);
+				swprintf_s(index, 5, L"%ld", m_filenr - 1);
 			}
 		}
 
@@ -886,7 +886,7 @@ namespace eIDMW
 			if (isFileMixingGroups())
 			{
 				fwprintf_s(m_f,
-					   L"%ls - %ld - %ls: ...ERROR: This file could not be opened. %ld logging line(s) are missing...\n",
+					   L"%ls - %d - %ls: ...ERROR: This file could not be opened. %ld logging line(s) are missing...\n",
 					   timestamp.c_str(),
 					   CThread::getCurrentPid(),
 					   m_group.c_str(),
@@ -894,7 +894,7 @@ namespace eIDMW
 			} else
 			{
 				fwprintf_s(m_f,
-					   L"%ls - %ld: ...ERROR: This file could not be opened. %ld logging line(s) are missing...\n",
+					   L"%ls - %d: ...ERROR: This file could not be opened. %ld logging line(s) are missing...\n",
 					   timestamp.c_str(),
 					   CThread::getCurrentPid(),
 					   lPreviousOpenFailed);
@@ -905,7 +905,7 @@ namespace eIDMW
 		{
 			if (line > 0 && wcslen(file) > 0)
 				fwprintf_s(m_f,
-					   L"%ls - %ld|%ld - %ls - %ls -'%ls'-line=%d: ",
+					   L"%ls - %d|%ld - %ls - %ls -'%ls'-line=%d: ",
 					   timestamp.c_str(),
 					   CThread::getCurrentPid(),
 					   CThread::getCurrentThreadId(),
@@ -913,7 +913,7 @@ namespace eIDMW
 					   file, line);
 			else
 				fwprintf_s(m_f,
-					   L"%ls - %ld|%ld - %ls - %ls: ",
+					   L"%ls - %d|%ld - %ls - %ls: ",
 					   timestamp.c_str(),
 					   CThread::getCurrentPid(),
 					   CThread::getCurrentThreadId(),
@@ -922,13 +922,13 @@ namespace eIDMW
 		{
 			if (line > 0 && wcslen(file) > 0)
 				fwprintf_s(m_f,
-					   L"%ls - %ld|%ld - %ls -'%ls'-line=%d: ",
+					   L"%ls - %d|%ld - %ls -'%ls'-line=%d: ",
 					   timestamp.c_str(),
 					   CThread::getCurrentPid(),
 					   CThread::getCurrentThreadId(),
 					   getLevel(level), file, line);
 			else
-				fwprintf_s(m_f, L"%ls - %ld|%ld - %ls: ",
+				fwprintf_s(m_f, L"%ls - %d|%ld - %ls: ",
 					   timestamp.c_str(),
 					   CThread::getCurrentPid(),
 					   CThread::getCurrentThreadId(),

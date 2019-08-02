@@ -145,7 +145,7 @@ CK_RV cal_init()
 	memset(gpSlot, 0, sizeof(gpSlot));
 	ret = cal_init_slots();
 	if (ret)
-		log_trace(WHERE, "E: p11_init_slots() returns %d", ret);
+		log_trace(WHERE, "E: p11_init_slots() returns %lu", ret);
 
 	return (ret);
 }
@@ -291,7 +291,7 @@ CK_RV cal_get_token_info(CK_SLOT_ID hSlot, CK_TOKEN_INFO_PTR pInfo)
 	pSlot = p11_get_slot(hSlot);
 	if (pSlot == NULL)
 	{
-		log_trace(WHERE, "E: Invalid slot (%d)", hSlot);
+		log_trace(WHERE, "E: Invalid slot (%lu)", hSlot);
 		return (CKR_SLOT_ID_INVALID);
 	}
 
@@ -392,7 +392,7 @@ CK_RV cal_get_mechanism_list(CK_SLOT_ID hSlot,
 	pSlot = p11_get_slot(hSlot);
 	if (pSlot == NULL)
 	{
-		log_trace(WHERE, "E: Invalid slot (%d)", hSlot);
+		log_trace(WHERE, "E: Invalid slot (%lu)", hSlot);
 		return (CKR_SLOT_ID_INVALID);
 	}
 
@@ -637,7 +637,7 @@ CK_RV cal_get_mechanism_info(CK_SLOT_ID hSlot, CK_MECHANISM_TYPE type,
 
 				if (pSlot == NULL)
 				{
-					log_trace(WHERE, "E: Invalid slot(%d)", hSlot);
+					log_trace(WHERE, "E: Invalid slot(%lu)", hSlot);
 					return (CKR_SLOT_ID_INVALID);
 				}
 				std::string szReader = pSlot->name;
@@ -696,7 +696,7 @@ CK_RV cal_connect(CK_SLOT_ID hSlot)
 	pSlot = p11_get_slot(hSlot);
 	if (pSlot == NULL)
 	{
-		log_trace(WHERE, "E: Invalid slot (%d)", hSlot);
+		log_trace(WHERE, "E: Invalid slot (%lu)", hSlot);
 		return (CKR_SLOT_ID_INVALID);
 	}
 
@@ -720,7 +720,7 @@ CK_RV cal_disconnect(CK_SLOT_ID hSlot)
 	pSlot = p11_get_slot(hSlot);
 	if (pSlot == NULL)
 	{
-		log_trace(WHERE, "E: Invalid slot (%d)", hSlot);
+		log_trace(WHERE, "E: Invalid slot (%lu)", hSlot);
 		return (CKR_SLOT_ID_INVALID);
 	}
 
@@ -1015,7 +1015,7 @@ CK_RV cal_logon(CK_SLOT_ID hSlot, size_t l_pin, CK_CHAR_PTR pin,
 	pSlot = p11_get_slot(hSlot);
 	if (pSlot == NULL)
 	{
-		log_trace(WHERE, "E: Invalid slot (%d)", hSlot);
+		log_trace(WHERE, "E: Invalid slot (%lu)", hSlot);
 		return (CKR_SLOT_ID_INVALID);
 	}
 
@@ -1068,7 +1068,7 @@ CK_RV cal_logout(CK_SLOT_ID hSlot)
 	pSlot = p11_get_slot(hSlot);
 	if (pSlot == NULL)
 	{
-		log_trace(WHERE, "E: Invalid slot (%d)", hSlot);
+		log_trace(WHERE, "E: Invalid slot (%lu)", hSlot);
 		return (CKR_SLOT_ID_INVALID);
 	}
 	
@@ -1112,7 +1112,7 @@ CK_RV cal_change_pin(CK_SLOT_ID hSlot, CK_ULONG pinref, CK_ULONG l_oldpin, CK_CH
 	pSlot = p11_get_slot(hSlot);
 	if (pSlot == NULL)
 	{
-		log_trace(WHERE, "E: Invalid slot (%d)", hSlot);
+		log_trace(WHERE, "E: Invalid slot (%lu)", hSlot);
 		return (CKR_SLOT_ID_INVALID);
 	}
 
@@ -1186,7 +1186,7 @@ CK_RV cal_get_card_data(CK_SLOT_ID hSlot)
 	pSlot = p11_get_slot(hSlot);
 	if (pSlot == NULL)
 	{
-		log_trace(WHERE, "E: Invalid slot (%d)", hSlot);
+		log_trace(WHERE, "E: Invalid slot (%lu)", hSlot);
 		return (CKR_SLOT_ID_INVALID);
 	}
 
@@ -1604,7 +1604,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 	pSlot = p11_get_slot(hSlot);
 	if (pSlot == NULL)
 	{
-		log_trace(WHERE, "E: Invalid slot (%d)", hSlot);
+		log_trace(WHERE, "E: Invalid slot (%lu)", hSlot);
 		return (CKR_SLOT_ID_INVALID);
 	}
 
@@ -1896,7 +1896,7 @@ CK_RV cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT * pObject)
 	pSlot = p11_get_slot(hSlot);
 	if (pSlot == NULL)
 	{
-		log_trace(WHERE, "E: Invalid slot (%d)", hSlot);
+		log_trace(WHERE, "E: Invalid slot (%lu)", hSlot);
 		return (CKR_SLOT_ID_INVALID);
 	}
 
@@ -2238,7 +2238,7 @@ CK_RV cal_sign(CK_SLOT_ID hSlot, P11_SIGN_DATA * pSignData, unsigned char *in,
 	pSlot = p11_get_slot(hSlot);
 	if (pSlot == NULL)
 	{
-		log_trace(WHERE, "E: Invalid slot (%d)", hSlot);
+		log_trace(WHERE, "E: Invalid slot (%lu)", hSlot);
 		return (CKR_SLOT_ID_INVALID);
 	}
 	std::string szReader = pSlot->name;
@@ -2413,7 +2413,7 @@ CK_RV cal_update_token(CK_SLOT_ID hSlot, int *pStatus, int bPresenceOnly)
 	pSlot = p11_get_slot(hSlot);
 	if (pSlot == NULL)
 	{
-		log_trace(WHERE, "E: Invalid slot (%d)", hSlot);
+		log_trace(WHERE, "E: Invalid slot (%lu)", hSlot);
 		return (CKR_SLOT_ID_INVALID);
 	}
 
@@ -2650,7 +2650,7 @@ CK_RV cal_refresh_readers()
 	}
 	catch(CMWException &e)
 	{
-		log_trace(WHERE, "E: CMWException exception thrown: ox%8x", e.GetError());
+		log_trace(WHERE, "E: CMWException exception thrown: 0x%8lx", e.GetError());
 		return (cal_translate_error(WHERE, e.GetError()));
 	}
 	catch( ...)
@@ -2663,7 +2663,7 @@ CK_RV cal_refresh_readers()
 	memset(gpSlot, 0, sizeof(gpSlot));
 	ret = cal_init_slots();
 	if (ret)
-		log_trace(WHERE, "E: p11_init_slots() returns %d", ret);
+		log_trace(WHERE, "E: p11_init_slots() returns %lu", ret);
 
 	return (ret);
 }
@@ -2672,7 +2672,7 @@ CK_RV cal_refresh_readers()
 
 CK_RV cal_translate_error(const char *WHERE, long err)
 {
-	log_trace(WHERE, "E: MiddlewareException thrown: 0x%0x", err);
+	log_trace(WHERE, "E: MiddlewareException thrown: 0x%0lx", err);
 
 	switch (err)
 	{
@@ -3038,7 +3038,7 @@ CK_RV cal_wait_for_the_slot_event(int block)
 		{
 			p11_lock();
 		}
-		log_trace(WHERE, "E: CMWException exception thrown ox%0x", e.GetError());
+		log_trace(WHERE, "E: CMWException exception thrown 0x%0lx", e.GetError());
 		CLEANUP(cal_translate_error(WHERE, e.GetError()));
 	}
 	catch( ...)

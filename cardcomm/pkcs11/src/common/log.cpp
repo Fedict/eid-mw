@@ -146,7 +146,7 @@ namespace eIDMW
 			if (theException.GetLine() == 0)
 			{
 				log.write(MapLevel(level),
-					  L"Exception 0x%0x thrown",
+					  L"Exception 0x%0lx thrown",
 					  theException.GetError());
 			} else
 			{
@@ -155,7 +155,7 @@ namespace eIDMW
 				log.write(MapLevel(level), line,
 					  utilStringWiden(theException.
 							  GetFile()).c_str(),
-					  L"Exception 0x%0x thrown",
+					  L"Exception 0x%0lx thrown",
 					  theException.GetError());
 			}
 		}

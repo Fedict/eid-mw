@@ -50,7 +50,7 @@ CK_RV C_OpenSession(CK_SLOT_ID            slotID,        /* the slot's ID */
 
 	p11_lock();
 
-	log_trace(WHERE, "S: C_OpenSession (slot %d)", slotID);
+	log_trace(WHERE, "S: C_OpenSession (slot %lu)", slotID);
 
 	if (!(flags & CKF_SERIAL_SESSION)) 
 	{
@@ -68,7 +68,7 @@ CK_RV C_OpenSession(CK_SLOT_ID            slotID,        /* the slot's ID */
 	pSlot = p11_get_slot(slotID);
 	if (pSlot == NULL)
 	{
-		log_trace(WHERE, "E: p11_get_slot(%d) returns null", slotID);
+		log_trace(WHERE, "E: p11_get_slot(%lu) returns null", slotID);
 		ret = CKR_SLOT_ID_INVALID;
 		goto cleanup;
 	}
@@ -86,7 +86,7 @@ CK_RV C_OpenSession(CK_SLOT_ID            slotID,        /* the slot's ID */
 	ret = p11_get_free_session(phSession, &pSession);
 	if (ret != CKR_OK)
 	{
-		log_trace(WHERE, "E: p11_get_free_session() returns %d", ret);
+		log_trace(WHERE, "E: p11_get_free_session() returns %lu", ret);
 		goto cleanup;
 	}
 
@@ -94,7 +94,7 @@ CK_RV C_OpenSession(CK_SLOT_ID            slotID,        /* the slot's ID */
 	ret = cal_connect(slotID);
 	if (ret != CKR_OK)
 	{
-		log_trace(WHERE, "E: cal_connect(slot %d) failed", slotID);
+		log_trace(WHERE, "E: cal_connect(slot %lu) failed", slotID);
 		//release session so it can be reused
 		pSession->inuse = 0;
 		goto cleanup;
@@ -111,11 +111,11 @@ CK_RV C_OpenSession(CK_SLOT_ID            slotID,        /* the slot's ID */
 	/* keep the nr of sessions for this slot */
 	pSlot->nsessions++;
 
-	log_trace(WHERE, "S: Open session (slot %d: hsession = %d )", slotID, *phSession);
+	log_trace(WHERE, "S: Open session (slot %lu: hsession = %lu )", slotID, *phSession);
 
 cleanup:
 	p11_unlock();
-	log_trace(WHERE, "I: leave, ret = %i",ret);
+	log_trace(WHERE, "I: leave, ret = %lu",ret);
 	return ret;
 }
 #undef WHERE
@@ -138,14 +138,14 @@ CK_RV C_CloseSession(CK_SESSION_HANDLE hSession)
 
 	p11_lock();
 
-	log_trace(WHERE, "S: C_CloseSession (session %d)", hSession);
+	log_trace(WHERE, "S: C_CloseSession (session %lu)", hSession);
 
 	//get session, of pSession is found, regardless the ret value, we can clean it up
 	p11_get_session(hSession, &pSession);
 	if (pSession == NULL)
 	{
 		ret = CKR_SESSION_HANDLE_INVALID;
-		log_trace(WHERE, "E: Invalid session handle (%d)", hSession);
+		log_trace(WHERE, "E: Invalid session handle (%lu)", hSession);
 		goto cleanup;
 	}
 
@@ -153,7 +153,7 @@ CK_RV C_CloseSession(CK_SESSION_HANDLE hSession)
 	pSlot = p11_get_slot(pSession->hslot);
 	if (pSlot == NULL)
 	{
-		log_trace(WHERE, "W: Invalid slot (%d) for session (%d)", pSession->hslot, hSession);
+		log_trace(WHERE, "W: Invalid slot (%lu) for session (%lu)", pSession->hslot, hSession);
 		ret = CKR_OK;
 	}
 	else
@@ -163,7 +163,7 @@ CK_RV C_CloseSession(CK_SESSION_HANDLE hSession)
 
 cleanup:
 	p11_unlock();
-	log_trace(WHERE, "I: leave, ret = %i",ret);
+	log_trace(WHERE, "I: leave, ret = %lu",ret);
 	return ret;
 }
 #undef WHERE
@@ -185,12 +185,12 @@ CK_RV C_CloseAllSessions(CK_SLOT_ID slotID) /* the token's slot */
 
 	p11_lock();
 
-	log_trace(WHERE, "S: C_CloseAllSessions(slot %d)", slotID);
+	log_trace(WHERE, "S: C_CloseAllSessions(slot %lu)", slotID);
 
 	ret = p11_close_all_sessions(slotID);
 
 	p11_unlock();
-	log_trace(WHERE, "I: leave, ret = %i",ret);
+	log_trace(WHERE, "I: leave, ret = %lu",ret);
 	return ret;
 }
 #undef WHERE
@@ -215,7 +215,7 @@ CK_RV C_GetSessionInfo(CK_SESSION_HANDLE hSession,  /* the session's handle */
 
 	p11_lock();
 
-	log_trace(WHERE, "S: C_GetSessionInfo(session %d)", hSession);
+	log_trace(WHERE, "S: C_GetSessionInfo(session %lu)", hSession);
 
 	if (pInfo == NULL_PTR) 
 	{
@@ -226,7 +226,7 @@ CK_RV C_GetSessionInfo(CK_SESSION_HANDLE hSession,  /* the session's handle */
 	ret = p11_get_session(hSession, &pSession);
 	if (ret)
 	{
-		log_trace(WHERE, "E: Invalid session handle (%d) (%s)", hSession, log_map_error(ret));
+		log_trace(WHERE, "E: Invalid session handle (%lu) (%s)", hSession, log_map_error(ret));
 		goto cleanup;
 	}
 
@@ -237,7 +237,7 @@ CK_RV C_GetSessionInfo(CK_SESSION_HANDLE hSession,  /* the session's handle */
 	pSlot = p11_get_slot(pSession->hslot);
 	if (pSlot == NULL)
 	{
-		log_trace(WHERE, "E: slot not found for session %d", hSession);
+		log_trace(WHERE, "E: slot not found for session %lu", hSession);
 		ret = CKR_SESSION_HANDLE_INVALID;
 		goto cleanup;
 	}
@@ -267,7 +267,7 @@ CK_RV C_GetSessionInfo(CK_SESSION_HANDLE hSession,  /* the session's handle */
 
 cleanup:
 	p11_unlock();
-	log_trace(WHERE, "I: leave, ret = %i",ret);
+	log_trace(WHERE, "I: leave, ret = %lu",ret);
 	return ret;
 }
 #undef WHERE 
@@ -278,7 +278,7 @@ CK_RV C_GetOperationState(CK_SESSION_HANDLE hSession,             /* the session
 	CK_BYTE_PTR       pOperationState,      /* location receiving state */
 	CK_ULONG_PTR      pulOperationStateLen) /* location receiving state length */
 {
-	log_trace(WHERE, "S: C_GetOperationState(sesssion %d)", hSession);
+	log_trace(WHERE, "S: C_GetOperationState(sesssion %lu)", hSession);
 	return CKR_FUNCTION_NOT_SUPPORTED;
 }
 #undef WHERE
@@ -292,7 +292,7 @@ CK_RV C_SetOperationState(CK_SESSION_HANDLE hSession,            /* the session'
 	CK_OBJECT_HANDLE hEncryptionKey,       /* handle of en/decryption key */
 	CK_OBJECT_HANDLE hAuthenticationKey)   /* handle of sign/verify key */
 {
-	log_trace(WHERE, "S: C_SetOperationState(session %d)", hSession);
+	log_trace(WHERE, "S: C_SetOperationState(session %lu)", hSession);
 	return CKR_FUNCTION_NOT_SUPPORTED;
 }
 #undef WHERE
@@ -322,7 +322,7 @@ CK_RV C_Login(CK_SESSION_HANDLE hSession,  /* the session's handle */
 
 	memset(&tokeninfo, 0, sizeof(CK_TOKEN_INFO));
 
-	log_trace(WHERE, "S: Login (session %d)", hSession);
+	log_trace(WHERE, "S: Login (session %lu)", hSession);
 
 	if (userType != CKU_USER && userType != CKU_SO)
 	{
@@ -333,14 +333,14 @@ CK_RV C_Login(CK_SESSION_HANDLE hSession,  /* the session's handle */
 	ret = p11_get_session(hSession, &pSession);
 	if (ret)
 	{
-		log_trace(WHERE, "E: Invalid session handle (%d)", hSession);
+		log_trace(WHERE, "E: Invalid session handle (%lu)", hSession);
 		goto cleanup;
 	}
 
 	pSlot = p11_get_slot(pSession->hslot);
 	if (pSlot == NULL)
 	{
-		log_trace(WHERE, "E: Slot not found for session %d", hSession);
+		log_trace(WHERE, "E: Slot not found for session %lu", hSession);
 		ret = CKR_SESSION_HANDLE_INVALID;
 		goto cleanup;
 	}
@@ -374,7 +374,7 @@ CK_RV C_Login(CK_SESSION_HANDLE hSession,  /* the session's handle */
 
 cleanup:
 	p11_unlock();
-	log_trace(WHERE, "I: leave, ret = %i",ret);
+	log_trace(WHERE, "I: leave, ret = %lu",ret);
 	return ret;
 }
 #undef WHERE
@@ -397,19 +397,19 @@ CK_RV C_Logout(CK_SESSION_HANDLE hSession) /* the session's handle */
 
 	p11_lock();
 
-	log_trace(WHERE, "S: Logout (session %d)", hSession);
+	log_trace(WHERE, "S: Logout (session %lu)", hSession);
 
 	ret = p11_get_session(hSession, &pSession);
 	if (ret)
 	{
-		log_trace(WHERE, "E: Invalid session handle (%d)", hSession);
+		log_trace(WHERE, "E: Invalid session handle (%lu)", hSession);
 		goto cleanup;
 	}
 
 	pSlot = p11_get_slot(pSession->hslot);
 	if (pSlot == NULL)
 	{
-		log_trace(WHERE, "E: Slot not found for session %d", hSession);
+		log_trace(WHERE, "E: Slot not found for session %lu", hSession);
 		ret = CKR_SESSION_HANDLE_INVALID;
 		goto cleanup;
 	}
@@ -428,7 +428,7 @@ CK_RV C_Logout(CK_SESSION_HANDLE hSession) /* the session's handle */
 
 cleanup:
 	p11_unlock();
-	log_trace(WHERE, "I: leave, ret = %i",ret);
+	log_trace(WHERE, "I: leave, ret = %lu",ret);
 	return ret;
 }
 #undef WHERE
@@ -441,7 +441,7 @@ CK_RV C_InitPIN(CK_SESSION_HANDLE hSession,
 	CK_CHAR_PTR pPin,
 	CK_ULONG ulPinLen)
 {
-	log_trace(WHERE, "S: C_InitPIN (session %d)", hSession);
+	log_trace(WHERE, "S: C_InitPIN (session %lu)", hSession);
 	return (CKR_FUNCTION_NOT_SUPPORTED);
 }
 #undef WHERE
@@ -466,19 +466,19 @@ CK_RV C_SetPIN(CK_SESSION_HANDLE hSession,
 
 	p11_lock();
 
-	log_trace(WHERE, "S: C_SetPIN(session %d)", hSession);
+	log_trace(WHERE, "S: C_SetPIN(session %lu)", hSession);
 
 	ret = p11_get_session(hSession, &pSession);
 	if (ret)
 	{
-		log_trace(WHERE, "E: Invalid session handle (%d)", hSession);
+		log_trace(WHERE, "E: Invalid session handle (%lu)", hSession);
 		goto cleanup;
 	}
 
 	ret = cal_change_pin(pSession->hslot, BEID_PIN_AUTH, ulOldLen, pOldPin, ulNewLen, pNewPin);
 cleanup:
 	p11_unlock();
-	log_trace(WHERE, "I: leave, ret = %i",ret);
+	log_trace(WHERE, "I: leave, ret = %lu",ret);
 	return ret;
 }
 #undef WHERE
