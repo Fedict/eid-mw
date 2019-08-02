@@ -221,6 +221,7 @@ void eid_vwr_p11_to_ui(const EID_CHAR* label, const void* value, int len) {
 		str = malloc(label_len);
 		EID_SNPRINTF(str, label_len, TEXT("%s_raw"), label);
 		be_newbindata(str, value, len);
+		free(str);
 	} else if(is_string(label)) {
 		be_newstringdata(label, (const EID_CHAR*)value);
 	} else {
