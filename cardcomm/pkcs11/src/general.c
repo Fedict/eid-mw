@@ -402,7 +402,7 @@ CK_RV C_GetTokenInfo(CK_SLOT_ID slotID, CK_TOKEN_INFO_PTR pInfo)
 	ret = cal_get_token_info(slotID, pInfo);
 	if (ret != CKR_OK)
 	{
-		log_trace(WHERE, "E: p11_get_token_info returns %d", ret);
+		log_trace(WHERE, "E: p11_get_token_info returns %lu", ret);
 		goto cleanup;
 	}
 

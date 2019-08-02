@@ -116,7 +116,7 @@ CK_RV C_GetAttributeValue(CK_SESSION_HANDLE hSession,   /* the session's handle 
 
 	p11_lock();
 
-	log_trace(WHERE, "S: C_GetAttributeValue(hObject=%d)",hObject);
+	log_trace(WHERE, "S: C_GetAttributeValue(hObject=%lu)",hObject);
 
 	ret = p11_get_session(hSession, &pSession);
 	if (ret)
@@ -128,7 +128,7 @@ CK_RV C_GetAttributeValue(CK_SESSION_HANDLE hSession,   /* the session's handle 
 	pSlot = p11_get_slot(pSession->hslot);
 	if (pSlot == NULL)
 	{
-		log_trace(WHERE, "E: p11_get_slot(%d) returns null", pSession->hslot);
+		log_trace(WHERE, "E: p11_get_slot(%lu) returns null", pSession->hslot);
 		ret = CKR_SLOT_ID_INVALID;
 		goto cleanup;
 	}
@@ -248,7 +248,7 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 
 	p11_lock();
 
-	log_trace(WHERE, "S: C_FindObjectsInit(session %d)", hSession);
+	log_trace(WHERE, "S: C_FindObjectsInit(session %lu)", hSession);
 	if (ulCount == 0)
 		log_trace(WHERE, "I: empty template => search all objects");
 	else
@@ -262,7 +262,7 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 	}
 	if (ret)
 	{
-		log_trace(WHERE, "E: Invalid session (%d) (%s)", hSession, log_map_error(ret));
+		log_trace(WHERE, "E: Invalid session (%lu) (%s)", hSession, log_map_error(ret));
 		//if (ret == CKR_DEVICE_REMOVED)
 		//ret = CKR_SESSION_HANDLE_INVALID;
 		//ret = CKR_FUNCTION_FAILED;
@@ -465,7 +465,7 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 				if( (pSlot->ulCardDataCached & CACHED_DATA_TYPE_CARDDATA) == 0){
 					ret = cal_get_card_data(pSession->hslot);
 					if (ret != 0){
-						log_trace(WHERE, "E: cal_read_ID_files() returned %d", ret);
+						log_trace(WHERE, "E: cal_read_ID_files() returned %lu", ret);
 						goto cleanup;
 					}
 				}
@@ -473,7 +473,7 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 				while(counter < flagsToCheckListLen){
 					ret = cal_read_ID_files(pSession->hslot,flagsToCheckList[counter]);
 					if (ret != 0){
-						log_trace(WHERE, "E: cal_read_ID_files() returned %d", ret);
+						log_trace(WHERE, "E: cal_read_ID_files() returned %lu", ret);
 						goto cleanup;
 					}
 					counter++;
@@ -483,7 +483,7 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 				//cache and parse only the carddata
 				ret = cal_get_card_data(pSession->hslot);
 				if (ret != 0){
-					log_trace(WHERE, "E: cal_read_ID_files() returned %d", ret);
+					log_trace(WHERE, "E: cal_read_ID_files() returned %lu", ret);
 					goto cleanup;
 				}
 				break;
@@ -491,7 +491,7 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 				//cache and parse only the requested file type
 				ret = cal_read_ID_files(pSession->hslot,filesToCacheFlag);
 				if (ret != 0){
-					log_trace(WHERE, "E: cal_read_ID_files() returned %d", ret);
+					log_trace(WHERE, "E: cal_read_ID_files() returned %lu", ret);
 					goto cleanup;
 				}
 			}
@@ -719,7 +719,7 @@ CK_RV C_FindObjectsFinal(CK_SESSION_HANDLE hSession) /* the session's handle */
 		//omit error card removed here since FireFox has a problem with it.
 		// if (ret)
 	{
-		log_trace(WHERE, "E: Invalid session handle (%d)", hSession);
+		log_trace(WHERE, "E: Invalid session handle (%lu)", hSession);
 		goto cleanup;
 	}
 

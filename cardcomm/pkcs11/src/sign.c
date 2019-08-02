@@ -275,14 +275,14 @@ CK_RV C_DigestFinal(CK_SESSION_HANDLE hSession,     /* the session's handle */
    ret = p11_get_session(hSession, &pSession);
    if (ret)
       {
-      log_trace(WHERE, "E: Invalid session handle (%d)", hSession);
+      log_trace(WHERE, "E: Invalid session handle (%lu)", hSession);
       goto cleanup;
       }
 
    //is there an active search operation for this session
    if (pSession->Operation[P11_OPERATION_DIGEST].active == 0)
       {
-      log_trace(WHERE, "E: Session %d: no digest operation initialized", hSession);
+      log_trace(WHERE, "E: Session %lu: no digest operation initialized", hSession);
       ret = CKR_OPERATION_NOT_INITIALIZED;
       goto cleanup;
       }
@@ -368,7 +368,7 @@ CK_RV C_SignInit(CK_SESSION_HANDLE hSession,    /* the session's handle */
    ret = p11_get_session(hSession, &pSession);
    if (ret)
       {
-      log_trace(WHERE, "E: Invalid session handle (%d)", hSession);
+      log_trace(WHERE, "E: Invalid session handle (%lu)", hSession);
       goto cleanup;
       }
 
@@ -383,7 +383,7 @@ CK_RV C_SignInit(CK_SESSION_HANDLE hSession,    /* the session's handle */
    pSlot = p11_get_slot(pSession->hslot);
    if (pSlot == NULL)
       {
-      log_trace(WHERE, "E: Slot not found for session %d", hSession);
+      log_trace(WHERE, "E: Slot not found for session %lu", hSession);
       ret = CKR_SESSION_HANDLE_INVALID;
       goto cleanup;
       }
