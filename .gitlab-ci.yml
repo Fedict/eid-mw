@@ -404,6 +404,18 @@ repro:debian:
   - mk-build-deps -r -i -t "apt-get -y -o Debug::pkgProblemResolver=yes --no-install-recommends"
   script:
   - reprotest $(pwd)
+check:scan-build:
+  stage: validate
+  tags:
+    - docker
+  image: debian:stable
+  before_script:
+  - apt-get update
+  - apt-get -y install --no-install-recommends clang-tools autoconf automake libtool libassuan-dev libgpg-error-dev libpcsclite-dev libp11-kit-dev libgtk-3-dev libssl-dev libxml2-dev libcurl4-openssl-dev libproxy-dev plantuml zip gettext build-essential git g++ graphviz curl
+  - autoreconf -f -i
+  script:
+  - ./configure
+  - scan-build make
 ####################################################################
 # Stage "build-repository": copy binaries into a repository layout #
 ####################################################################
