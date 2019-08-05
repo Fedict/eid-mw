@@ -86,7 +86,7 @@ TEST_FUNC(slotevent) {
 	do {
 		rv = C_WaitForSlotEvent(CKF_DONT_BLOCK, &slot, NULL_PTR);
 	} while(rv == CKR_NO_EVENT);
-	check_rv_late_long("C_WaitForSlotEvent(CKF_DONT_BLOCK, &slot, NULL_PTR)", m_robot_removed);
+	check_rv_late("C_WaitForSlotEvent(CKF_DONT_BLOCK, &slot, NULL_PTR)");
 
 	if(!have_reader_robot()) {
 		printf("Need ability to remove card reader to do the rest of this test\n");
@@ -97,7 +97,7 @@ TEST_FUNC(slotevent) {
 	do {
 		rv = C_WaitForSlotEvent(CKF_DONT_BLOCK, &slot, NULL_PTR);
 	} while(rv == CKR_NO_EVENT);
-	check_rv_late("C_WaitForSlotEvent(CKF_DONT_BLOCK, &slot, NULL_PTR)");
+	check_rv_late_long("C_WaitForSlotEvent(CKF_DONT_BLOCK, &slot, NULL_PTR)", m_robot_removed);
 end:
 	check_rv(C_Finalize(NULL_PTR));
 	return TEST_RV_OK;
