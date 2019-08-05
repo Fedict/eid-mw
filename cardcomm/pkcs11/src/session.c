@@ -77,7 +77,7 @@ CK_RV C_OpenSession(CK_SLOT_ID            slotID,        /* the slot's ID */
 	/* RO session when SO session exists is not allowed */
 	if ( !(flags & CKF_RW_SESSION) && (pSlot->login_type == CKU_SO) && (pSlot->logged_in == CK_TRUE))
 	{
-		log_trace(WHERE, "E: R/W Session exists for slot %d", slotID);
+		log_trace(WHERE, "E: R/W Session exists for slot %lu", slotID);
 		ret = CKR_SESSION_READ_WRITE_SO_EXISTS;
 		goto cleanup;
 	}
