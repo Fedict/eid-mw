@@ -162,6 +162,10 @@ int test_key(char* label, CK_SESSION_HANDLE session, CK_SLOT_ID slot) {
 
 	check_rv(C_SignInit(session, &mech, privatekey));
 
+#undef CHECK_RV_DEALLOC
+#define CHECK_RV_DEALLOC
+	free(mechlist);
+
 	check_rv(C_Sign(session, data, sizeof(data), NULL, &sig_len));
 	sig = malloc(sig_len);
 	check_rv(C_Sign(session, data, sizeof(data), sig, &sig_len));
@@ -235,8 +239,6 @@ int test_key(char* label, CK_SESSION_HANDLE session, CK_SLOT_ID slot) {
 #else
 	return TEST_RV_OK;
 #endif
-#undef CHECK_RV_DEALLOC
-#define CHECK_RV_DEALLOC
 }
 
 TEST_FUNC(sign) {
