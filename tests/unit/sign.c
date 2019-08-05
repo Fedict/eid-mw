@@ -140,8 +140,8 @@ int test_key(char* label, CK_SESSION_HANDLE session, CK_SLOT_ID slot) {
 
 	check_rv(C_GetMechanismList(slot, NULL_PTR, &count));
 	mechlist = malloc(sizeof(CK_MECHANISM_TYPE) * count);
-#undef CHECK_RV_DEALLOCATE
-#define CHECK_RV_DEALLOCATE free(mechlist)
+#undef CHECK_RV_DEALLOC
+#define CHECK_RV_DEALLOC free(mechlist)
 
 	check_rv(C_GetMechanismList(slot, mechlist, &count));
 
