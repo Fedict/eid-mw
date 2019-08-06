@@ -90,6 +90,8 @@ mkdir -p "$INSTALL_SCRIPTS_DIR"
 mkdir -p "$MOZ_PKCS11_MANIFEST_DIR"
 
 #copy all files that should be part of the installer:
+
+codesign --timestamp --force --sign "Developer ID Application" -v ../../../release/libbeidpkcs11.$REL_VERSION.dylib
 cp ../../../release/libbeidpkcs11.$REL_VERSION.dylib $PKCS11_INST_DIR
 #copy pkcs11 bundle
 cp -R ./Packages/beid-pkcs11.bundle $PKCS11_INST_DIR
