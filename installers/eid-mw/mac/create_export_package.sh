@@ -42,7 +42,7 @@ ROOT_BEIDTOKEN_DIR="$EXPORT_BEIDTOKEN_DIR/root"
 #BEIDToken inst dir, where our BEIDToken app will be installed
 BEIDTOKEN_INST_DIR="$ROOT_BEIDTOKEN_DIR/Applications"
 
-BEIDTOKEN_PATH="$(pwd)/../../../cardcomm/ctkToken/export/BEIDToken.app"
+BEIDTOKEN_PATH="$(pwd)/../../../export/BEIDToken.app"
 
 #BEIDToken.plist path
 BEIDTOKEN_PLIST_PATH="$(pwd)/BEIDToken.plist"
