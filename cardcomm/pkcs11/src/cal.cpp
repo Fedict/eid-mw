@@ -2492,37 +2492,6 @@ CK_RV cal_update_token(CK_SLOT_ID hSlot, int *pStatus, int bPresenceOnly)
 #undef WHERE
 
 
-/*
-#define WHERE "cal_wait_for_slot_event()"
-CK_RV cal_wait_for_slot_event(int block)
-{
-CK_RV ret = CKR_OK;
-
-try
-{
-if (block){
-oReadersInfo->CheckTheReaderEvents(TIMEOUT_INFINITE);
-}
-else{
-oReadersInfo->CheckTheReaderEvents(0);
-}
-}
-catch (CMWException e)
-{
-CLEANUP(cal_translate_error(WHERE, e.GetError()));
-}
-catch (...)
-{
-log_trace(WHERE, "E: unkown exception thrown");
-CLEANUP(CKR_FUNCTION_FAILED);
-}
-cleanup:
-
-return(ret);
-}
-#undef WHERE
-*/
-
 #define WHERE "cal_get_slot_changes()"
 CK_RV cal_get_slot_changes(int *ph)
 {
