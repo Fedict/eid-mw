@@ -18,7 +18,7 @@ chmod +x ./create_package.sh
 
 pushd ../../..
 echo "creating beidpkcs11"
-xcodebuild -project beidmw.xcodeproj -scheme "beidpkcs11" -configuration Release clean archive
+xcodebuild -project beidmw.xcodeproj -target "beidpkcs11" -configuration Release clean build
 popd
 
 pushd "../../../cardcomm/ctkToken"
