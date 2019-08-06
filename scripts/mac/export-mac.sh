@@ -10,7 +10,7 @@ cd $(dirname $0)/../../installers/eid-mw/mac
 # make sure scripts are executable
 #-----------------------------------------
 CURRDIR=`pwd`
-chmod +x ./create_package.sh
+chmod +x ./create_export_package.sh
 
 #-----------------------------------------
 # build the eID MW
