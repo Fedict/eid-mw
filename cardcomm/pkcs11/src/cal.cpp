@@ -2558,6 +2558,8 @@ CK_RV cal_get_slot_changes(int *ph)
 		log_trace(WHERE, "E: unkown exception thrown");
 		return (CKR_FUNCTION_FAILED);
 	}
+	if(ret == CKR_OK) 
+		oReadersInfo->ClearChanged(*ph);
 	return ret;
 }
 

@@ -50,7 +50,14 @@ namespace eIDMW
 		if (ulIndex >= m_ulReaderCount)
 			throw CMWEXCEPTION(EIDMW_ERR_PARAM_RANGE);
 
-		return (m_tInfos[ulIndex].ulEventState != m_tInfos[ulIndex].ulCurrentState);
+		return (m_tInfos[ulIndex].bIsChanged || (m_tInfos[ulIndex].ulEventState != m_tInfos[ulIndex].ulCurrentState));
+	}
+	void CReadersInfo::ClearChanged(unsigned long reader)
+	{
+		if (reader >= m_ulReaderCount)
+			throw CMWEXCEPTION(EIDMW_ERR_PARAM_RANGE);
+
+		m_tInfos[reader].bIsChanged = false;
 	}
 
 	bool CReadersInfo::CardPresent(unsigned long ulIndex)
@@ -126,6 +133,9 @@ namespace eIDMW
 		{
 			m_tInfos[i].ulCurrentState = m_tInfos[i].ulEventState;
 			m_tInfos[i].ulEventState = txReaderStates[i].dwEventState & ~SCARD_STATE_CHANGED;
+			if (txReaderStates[i].dwEventState & SCARD_STATE_CHANGED) {
+				m_tInfos[i].bIsChanged = true;
+			}
 		}
 
 		return true;

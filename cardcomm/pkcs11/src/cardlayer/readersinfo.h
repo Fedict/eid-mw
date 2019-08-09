@@ -78,6 +78,7 @@ public:
 		void SetFirstTime(bool firstTime);
 
 		bool SameList(CReadersInfo * newReadersInfo);
+		void ClearChanged(unsigned long reader);
 
 private:
 		CReadersInfo(const CByteArray & oReaders);

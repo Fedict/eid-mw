@@ -95,6 +95,7 @@ namespace eIDMW
 		std::string csReader;
 		unsigned long ulCurrentState;	// the state when we last checked
 		unsigned long ulEventState;	// the state after the new check
+		bool bIsChanged;
 	} tReaderInfo;
 
 	class CPCSC
