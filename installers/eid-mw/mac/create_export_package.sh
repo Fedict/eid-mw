@@ -60,6 +60,7 @@ PKG_NAME="$REL_NAME.pkg"
 PKGSIGNED_NAME="${REL_NAME}-signed.pkg"
 VOL_NAME="${REL_NAME}-${REL_VERSION}"
 DMG_NAME="${REL_NAME}-${REL_VERSION}.dmg"
+DMG_BACKUP_NAME="${REL_NAME}-${REL_VERSION}-backup.dmg"
 
 PKG_NAME_DIAG="$REL_NAME_DIAG.pkg"
 PKGSIGNED_NAME_DIAG="${REL_NAME_DIAG}-signed.pkg"
@@ -172,11 +173,19 @@ hdiutil create -fs "HFS+" -format UDBZ -srcfolder $PKGSIGNED_NAME -volname "${VO
 
 #notarize the quick installer
 /usr/bin/xcrun altool --notarize-app --primary-bundle-id "be.eid.QuickInstaller.dmg" --username "$AC_USERNAME" --password "@keychain:altool" --file "$DMG_NAME"
-xcrun altool --notarization-history 0 -u "$AC_USERNAME" -p "@keychain:altool"
+/usr/bin/xcrun altool --notarization-history 0 -u "$AC_USERNAME" -p "@keychain:altool"
 
+#create a backup copy, in case the stapling goes wrong
+cp -R "$DMG_NAME"  "$DMG_BACKUP_NAME"
+
+#wait 2 minutes to give the notarization service some time to make the ticket available online (otherwise stapling will fail)
+sleep 2m
 
 #staple the notarization package to the DMG.
 /usr/bin/xcrun stapler staple -v "$DMG_NAME"
+
+#copy the stapled disk image to the Mac scripts folder
+cp -R "$DMG_NAME" "$(pwd)/../../../../../scripts/mac/"
 
 #  productsign --timestamp --sign "Developer ID Installer" "beidbuild.pkg" "beidbuild-signed.pkg"
 #  hdiutil create -fs "HFS+" -format UDBZ -srcfolder "beidbuild-signed.pkg" -volname "beidbuild${REL_VERSION}" "beidbuild${REL_VERSION}.dmg"
@@ -184,7 +193,7 @@ xcrun altool --notarization-history 0 -u "$AC_USERNAME" -p "@keychain:altool"
 #  productsign --timestamp --sign "Developer ID Installer" "BEIDToken.pkg" "BEIDToken-signed.pkg"
 #  hdiutil create -fs "HFS+" -format UDBZ -srcfolder "BEIDToken-signed.pkg" -volname "BEIDToken${REL_VERSION}" "BEIDToken${REL_VERSION}.dmg"
 
-  exit 1
+exit 1
 
 
 popd
