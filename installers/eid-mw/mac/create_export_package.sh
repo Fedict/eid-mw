@@ -15,13 +15,13 @@ source "$(pwd)/../../../scripts/mac/set_eidmw_username.sh"
 ################## eIDMW installer name defines ###########
 #installer name defines
 #release dir, where all the beidbuild files to be released will be placed
-EXPORT_DIR="$(pwd)/exports/export_eidmw"
+RELEASE_DIR="$(pwd)/exports/export_eidmw"
 #root dir, for files that are to be installed by the pkg
-ROOT_DIR="$EXPORT_DIR/root"
+ROOT_DIR="$RELEASE_DIR/root"
 #resources dir, for files that are to be kept inside the pkg
-RESOURCES_DIR="$EXPORT_DIR/resources"
+RESOURCES_DIR="$RELEASE_DIR/resources"
 #install scripts dir, where the install scripts are that will be executed by the package
-INSTALL_SCRIPTS_DIR="$EXPORT_DIR/install_scripts"
+INSTALL_SCRIPTS_DIR="$RELEASE_DIR/install_scripts"
 
 #pkcs11_inst dir, where our pkcs11 lib will be placed
 PKCS11_INST_DIR="$ROOT_DIR/usr/local/lib"
@@ -35,9 +35,9 @@ BEIDCARD_DIR="$ROOT_DIR/Library/Belgium Identity Card"
 ################## BEIDToken installer name defines ###########
 #BEIDToken installer name defines
 #release dir, where all the BEIDToken files to be released will be placed
-EXPORT_BEIDTOKEN_DIR="$(pwd)/exports/export_BEIDToken"
+RELEASE_BEIDTOKEN_DIR="$(pwd)/exports/export_BEIDToken"
 #root dir, for files that are to be installed by the pkg
-ROOT_BEIDTOKEN_DIR="$EXPORT_BEIDTOKEN_DIR/root"
+ROOT_BEIDTOKEN_DIR="$RELEASE_BEIDTOKEN_DIR/root"
 
 #BEIDToken inst dir, where our BEIDToken app will be installed
 BEIDTOKEN_INST_DIR="$ROOT_BEIDTOKEN_DIR/Applications"
@@ -48,7 +48,7 @@ BEIDTOKEN_PATH="$(pwd)/../../../export/BEIDToken.app"
 BEIDTOKEN_PLIST_PATH="$(pwd)/BEIDToken.plist"
 
 #install scripts dir, where the install scripts are that will be executed by the package
-BEIDTOKEN_INSTALL_SCRIPTS_DIR="$EXPORT_BEIDTOKEN_DIR/install_scripts"
+BEIDTOKEN_INSTALL_SCRIPTS_DIR="$RELEASE_BEIDTOKEN_DIR/install_scripts"
 #####################################################################
 
 #base name of the package
@@ -68,8 +68,8 @@ VOL_NAME_DIAG="${REL_NAME_DIAG}-${REL_VERSION}"
 DMG_NAME_DIAG="${REL_NAME_DIAG}-${REL_VERSION}.dmg"
 
 #cleanup previous build
-if test -e "$EXPORT_DIR"; then
- rm -rdf "$EXPORT_DIR"
+if test -e "$RELEASE_DIR"; then
+ rm -rdf "$RELEASE_DIR"
 fi
 #if test -e beidbuild.pkg; then
 # rm beidbuild.pkg
@@ -127,14 +127,14 @@ cp "$(pwd)/../../../scripts/mac/set_eidmw_version.sh" "$INSTALL_SCRIPTS_DIR"
 cp -R ./install_scripts/* "$INSTALL_SCRIPTS_DIR"
 
 #copy distribution file
-cp ./Distribution_export.txt "$EXPORT_DIR"
+cp ./Distribution_export.txt "$RELEASE_DIR"
 
 #####################################################################
 echo "********** prepare BEIDToken.pkg **********"
 
 #cleanup
-if test -e "$EXPORT_BEIDTOKEN_DIR"; then
- rm -rdf "$EXPORT_BEIDTOKEN_DIR"
+if test -e "$RELEASE_BEIDTOKEN_DIR"; then
+ rm -rdf "$RELEASE_BEIDTOKEN_DIR"
 fi
 
 #create installer dirs
@@ -155,7 +155,7 @@ echo "********** generate $PKG_NAME and $DMG_NAME **********"
 #chgrp    wheel  "$ROOT_DIR/usr/local/lib"
 
 #build the packages in the export dir
-pushd $EXPORT_DIR
+pushd $RELEASE_DIR
 
 Echo "********** building and signing beidbuild.pkg **********"
 pkgbuild --root "$ROOT_DIR" --scripts "$INSTALL_SCRIPTS_DIR" --identifier be.eid.middleware --version $REL_VERSION --install-location / beidbuild-unsigned.pkg
@@ -166,7 +166,7 @@ pkgbuild --root "$ROOT_BEIDTOKEN_DIR" --scripts "$BEIDTOKEN_INSTALL_SCRIPTS_DIR"
 productsign --timestamp --sign "Developer ID Installer" "BEIDToken-unsigned.pkg" "BEIDToken.pkg"
 
 Echo "********** building $PKG_NAME **********"
-productbuild --distribution "$EXPORT_DIR/Distribution_export.txt" --resources "$RESOURCES_DIR" $PKG_NAME
+productbuild --distribution "$RELEASE_DIR/Distribution_export.txt" --resources "$RESOURCES_DIR" $PKG_NAME
 
 #####################################################################
 #Using HFS+ as fs, as OS X 10.11 (El Capitan) does not yet support APFS
