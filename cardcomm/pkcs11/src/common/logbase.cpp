@@ -497,6 +497,11 @@ namespace eIDMW
 				m_filenr = 2;
 
 			std::wstring file;
+#ifdef WIN32
+			struct _stat results;
+#else
+			struct stat results;
+#endif
 			bool find = false;
 
 			for (int i = 0; i < m_filenr; i++)
@@ -553,12 +558,6 @@ namespace eIDMW
 		std::wstring dest;
 		wchar_t isrc[5];
 		wchar_t idest[5];
-
-#ifdef WIN32
-		struct _stat results;
-#else
-		struct stat results;
-#endif
 
 		//For all file until m_filenr-1
 		// 1 become 0
