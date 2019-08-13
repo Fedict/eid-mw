@@ -572,6 +572,8 @@ namespace eIDMW
 		//m_filenr-1 become m_filenr-2
 		for (int i = 0; i < m_filenr; i++)
 		{
+			int ret;
+
 			swprintf_s(isrc, 5, L"%d", i + 1);
 			swprintf_s(idest, 5, L"%d", i);
 
@@ -580,25 +582,23 @@ namespace eIDMW
 			src += isrc;
 			src += L".log";
 
-#ifdef WIN32
-			if (_wstat(src.c_str(), &results) != 0)
-				break;
-#else
-			if (stat(utilStringNarrow(src).c_str(), &results) !=
-			    0)
-				break;
-#endif
 			dest = root_filename;
 			dest += idest;
 			dest += L".log";
 
 			//Rename of the file
 #ifdef WIN32
-			_wrename(src.c_str(), dest.c_str());
+			ret = _wrename(src.c_str(), dest.c_str());
 #else
-			rename(utilStringNarrow(src).c_str(),
+			ret = rename(utilStringNarrow(src).c_str(),
 			       utilStringNarrow(dest).c_str());
 #endif
+			if(ret < 0) {
+				if(errno == ENOENT) {
+					break;
+				}
+				continue;
+			}
 		}
 	}
 
