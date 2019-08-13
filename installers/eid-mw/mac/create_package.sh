@@ -51,9 +51,9 @@ BEIDTOKEN_INST_DIR="$ROOT_BEIDTOKEN_DIR/Applications"
 #BEIDToken path
 if [ "$MAC_BUILD_CONFIG" = "Debug" ]
 then
-	BEIDTOKEN_PATH="$(pwd)/../../../cardcomm/ctktoken/$MAC_BUILD_CONFIG/BEIDTokenApp.app"
+	BEIDTOKEN_PATH="$(pwd)/../../../cardcomm/ctktoken/build/$MAC_BUILD_CONFIG/BEIDTokenApp.app"
 else
-	BEIDTOKEN_PATH="$(pwd)/../../../cardcomm/ctktoken/$MAC_BUILD_CONFIG/BEIDToken.app"
+	BEIDTOKEN_PATH="$(pwd)/../../../cardcomm/ctktoken/build/$MAC_BUILD_CONFIG/BEIDToken.app"
 fi
 
 #BEIDToken.plist path
@@ -63,29 +63,8 @@ BEIDTOKEN_PLIST_PATH="$(pwd)/BEIDToken.plist"
 BEIDTOKEN_INSTALL_SCRIPTS_DIR="$RELEASE_BEIDTOKEN_DIR/install_scripts"
 #####################################################################
 
-#####################################################################
-################## TokenD installer name defines ###########
-#Tokend installer name defines
-#release dir, where all the Tokend files to be released will be placed
-RELEASE_TOKEND_DIR="$(pwd)/release_TokenD"
-#root dir, for files that are to be installed by the pkg
-ROOT_TOKEND_DIR="$RELEASE_TOKEND_DIR/root"
-
-#tokenD dir, where the BEID.tokenD will be placed
-TOKEND_INST_DIR="$ROOT_TOKEND_DIR/Library/Security/tokend"
-
-#install scripts dir, where the install scripts are that will be executed by the package
-TOKEND_INSTALL_SCRIPTS_DIR="$RELEASE_TOKEND_DIR/install_scripts"
-#####################################################################
-
-
 #base name of the package
 REL_NAME="eID-Quickinstaller"
-REL_NAME_DIAG="beid_diagnostic"
-#version number of the package
-#REL_VERSION_TMP=$(cat ../../../common/src/beidversions.h | grep BEID_PRODUCT_VERSION)
-#REL_VERSION=$(expr "$REL_VERSION_TMP" : '.*\([0-9].[0-9].[0-9]\).*')
-#REL_VERSION="$4.1.10"
 
 PKCS11_BUNDLE="beid-pkcs11.bundle"
 BUILD_NR=$(git rev-list --count HEAD)
@@ -101,7 +80,6 @@ DMG_NAME_DIAG="${REL_NAME_DIAG}-${REL_VERSION}.dmg"
 
 #cleanup previous build
 
-#cleanup() {
 if test -e "$RELEASE_DIR"; then
  rm -rdf "$RELEASE_DIR"
 fi
@@ -111,11 +89,8 @@ fi
 if test -e $PKG_NAME; then
  rm $PKG_NAME
 fi
-#}
 
 #leave created dir there for now
-#trap cleanup EXIT
-
 
 #####################################################################
 echo "********** prepare beidbuild.pkg **********"
@@ -162,11 +137,7 @@ cp "$(pwd)/../../../scripts/mac/set_eidmw_version.sh" "$INSTALL_SCRIPTS_DIR"
 cp -R ./install_scripts/* "$INSTALL_SCRIPTS_DIR"
 
 #copy distribution file
-cp ./Distribution.txt "$RELEASE_DIR"
-
-#copy drivers
-cp -R ./drivers/* "$RELEASE_DIR"
-
+cp ./Distribution_export.txt "$RELEASE_DIR"
 
 #####################################################################
 echo "********** prepare BEIDToken.pkg **********"
@@ -187,72 +158,44 @@ cp -R ./install_scripts_BEIDToken/* "$BEIDTOKEN_INSTALL_SCRIPTS_DIR"
 cp -R "$BEIDTOKEN_PATH"  "$BEIDTOKEN_INST_DIR"/BEIDToken.app
 
 #####################################################################
-echo "********** prepare BEIDTokenD.pkg **********"
-
-#cleanup
-if test -e "$RELEASE_TOKEND_DIR"; then
- rm -rdf "$RELEASE_TOKEND_DIR"
-fi
-
-#create installer dirs
-mkdir -p "$TOKEND_INST_DIR"
-mkdir -p "$TOKEND_INSTALL_SCRIPTS_DIR"
-
-#copy install scripts
-cp -R ./install_scripts_TokenD/* "$TOKEND_INSTALL_SCRIPTS_DIR"
-
-#copy BEID.tokend
-cp -R ../../../cardcomm/tokend/BEID_Lion.tokend "$TOKEND_INST_DIR/BEID.tokend"
-
-#####################################################################
-
 
 echo "********** generate $PKG_NAME and $DMG_NAME **********"
 
-#chmod g+w $ROOT_DIR/$INST_DIR
-#chmod g+w $ROOT_DIR/$INST_DIR/lib
-#chmod a-x $ROOT_DIR/$INST_DIR/etc/beid.conf
-#chmod a-x $ROOT_DIR/$INST_DIR/lib/beid-pkcs11.bundle/Contents/Info.plist
-#chmod a-x $ROOT_DIR/$INST_DIR/lib/beid-pkcs11.bundle/Contents/PkgInfo
 chgrp    wheel  "$ROOT_DIR/usr"
 chgrp    wheel  "$ROOT_DIR/usr/local"
 chgrp    wheel  "$ROOT_DIR/usr/local/lib"
-chgrp -R admin  "$TOKEND_INST_DIR/BEID.tokend"
 
 #build the packages in the release dir
 pushd $RELEASE_DIR
-#pkgbuild --analyze --root "$ROOT_DIR" beidbuild.plist
 
 pkgbuild --root "$ROOT_DIR" --scripts "$INSTALL_SCRIPTS_DIR" --identifier be.eid.middleware --version $REL_VERSION --install-location / beidbuild.pkg
 
-pkgbuild --root "$ROOT_TOKEND_DIR" --scripts "$TOKEND_INSTALL_SCRIPTS_DIR" --identifier be.eid.tokend --version $REL_VERSION --install-location / beidtokend.pkg
-
 pkgbuild --root "$ROOT_BEIDTOKEN_DIR" --scripts "$BEIDTOKEN_INSTALL_SCRIPTS_DIR" --component-plist "$BEIDTOKEN_PLIST_PATH" --identifier be.eid.BEIDtoken.app --version $REL_VERSION --install-location / BEIDToken.pkg
 
-productbuild --distribution "$RELEASE_DIR/Distribution.txt" --resources "$RESOURCES_DIR" $PKG_NAME
+productbuild --distribution "$RELEASE_DIR/Distribution_export.txt" --resources "$RESOURCES_DIR" $PKG_NAME
 
 #####################################################################
 #Using HFS+ as fs, as OS X 10.11 (El Capitan) does not yet support APFS
 #####################################################################
 
 if [ $SIGN_BUILD -eq 1 ];then
-  productsign --timestamp --sign "Developer ID Installer" $PKG_NAME $PKGSIGNED_NAME
-  hdiutil create -fs "HFS+" -srcfolder $PKGSIGNED_NAME -volname "${VOL_NAME}" $DMG_NAME
 
-  productsign --timestamp --sign "Developer ID Installer" "beidbuild.pkg" "beidbuild-signed.pkg"
-  hdiutil create -fs "HFS+" -srcfolder "beidbuild-signed.pkg" -volname "beidbuild${REL_VERSION}" "beidbuild${REL_VERSION}.dmg"
+  hdiutil create -fs "HFS+" -srcfolder $PKG_NAME -volname "${VOL_NAME}" $DMG_NAME
 
-  productsign --timestamp --sign "Developer ID Installer" "beidtokend.pkg" "beidtokend-signed.pkg"
-  hdiutil create -fs "HFS+" -srcfolder "beidtokend-signed.pkg" -volname "beidtokend ${REL_VERSION}" "beidtokend ${REL_VERSION}.dmg"
+# signing with Mac Developer: ambiguity on some systems where multiple Mac Developer accounts are present, so skip signing for now
+#  codesign --timestamp --force -o runtime --sign "Mac Developer" -v $DMG_NAME
 
-  productsign --timestamp --sign "Developer ID Installer" "BEIDToken.pkg" "BEIDToken-signed.pkg"
-  hdiutil create -fs "HFS+" -srcfolder "BEIDToken-signed.pkg" -volname "BEIDToken${REL_VERSION}" "BEIDToken${REL_VERSION}.dmg"
+  hdiutil create -fs "HFS+" -srcfolder "beidbuild.pkg" -volname "beidbuild${REL_VERSION}" "beidbuild${REL_VERSION}.dmg"
+#  codesign --timestamp --force -o runtime --sign "Mac Developer" -v "beidbuild${REL_VERSION}.dmg"
+
+  hdiutil create -fs "HFS+" -srcfolder "BEIDToken.pkg" -volname "BEIDToken${REL_VERSION}" "BEIDToken${REL_VERSION}.dmg"
+#  codesign --timestamp --force -o runtime --sign "Mac Developer" -v "BEIDToken ${REL_VERSION}.dmg"
 
   exit 1
 else
   hdiutil create -fs "HFS+" -srcfolder $PKG_NAME -volname "${VOL_NAME}" $DMG_NAME
   hdiutil create -fs "HFS+" -srcfolder "beidbuild.pkg" -volname "beidbuild${REL_VERSION}" "beidbuild${REL_VERSION}.dmg"
-  hdiutil create -fs "HFS+" -srcfolder "beidtokend.pkg" -volname "beidtokend${REL_VERSION}" "beidtokend${REL_VERSION}.dmg"
+
   hdiutil create -fs "HFS+" -srcfolder "BEIDToken.pkg" -volname "BEIDToken${REL_VERSION}" "BEIDToken${REL_VERSION}.dmg"
 fi
 
