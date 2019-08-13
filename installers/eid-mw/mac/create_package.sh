@@ -18,7 +18,7 @@ source "$(pwd)/../../../scripts/mac/set_eidmw_version.sh"
 
 ####################################################################
 ######### specific release defines (for test builds) ###############
-PKCS11_DYLIB_PATH="$(pwd)../../../$MAC_BUILD_CONFIG/libbeidpkcs11.$REL_VERSION.dylib"
+PKCS11_DYLIB_PATH="$(pwd)/../../../$MAC_BUILD_CONFIG/libbeidpkcs11.$REL_VERSION.dylib"
 #BEIDToken path
 if [ "$MAC_BUILD_CONFIG" = "Debug" ]
 then
