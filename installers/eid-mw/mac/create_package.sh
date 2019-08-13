@@ -16,6 +16,17 @@ SIGN_BUILD=${SIGN_BUILD:-1}
 #get the release number
 source "$(pwd)/../../../scripts/mac/set_eidmw_version.sh"
 
+####################################################################
+######### specific release defines (for test builds) ###############
+PKCS11_DYLIB_PATH="$(pwd)../../../$MAC_BUILD_CONFIG/libbeidpkcs11.$REL_VERSION.dylib"
+#BEIDToken path
+if [ "$MAC_BUILD_CONFIG" = "Debug" ]
+then
+	BEIDTOKEN_PATH="$(pwd)/../../../cardcomm/ctktoken/build/$MAC_BUILD_CONFIG/BEIDTokenApp.app"
+else
+	BEIDTOKEN_PATH="$(pwd)/../../../cardcomm/ctktoken/build/$MAC_BUILD_CONFIG/BEIDToken.app"
+fi
+#####################################################################
 
 #####################################################################
 ################## eIDMW installer name defines ###########
@@ -49,12 +60,7 @@ ROOT_BEIDTOKEN_DIR="$RELEASE_BEIDTOKEN_DIR/root"
 BEIDTOKEN_INST_DIR="$ROOT_BEIDTOKEN_DIR/Applications"
 
 #BEIDToken path
-if [ "$MAC_BUILD_CONFIG" = "Debug" ]
-then
-	BEIDTOKEN_PATH="$(pwd)/../../../cardcomm/ctktoken/build/$MAC_BUILD_CONFIG/BEIDTokenApp.app"
-else
-	BEIDTOKEN_PATH="$(pwd)/../../../cardcomm/ctktoken/build/$MAC_BUILD_CONFIG/BEIDToken.app"
-fi
+#BEIDTOKEN_PATH should be already defined by calling script
 
 #BEIDToken.plist path
 BEIDTOKEN_PLIST_PATH="$(pwd)/BEIDToken.plist"
@@ -103,7 +109,7 @@ mkdir -p "$INSTALL_SCRIPTS_DIR"
 mkdir -p "$MOZ_PKCS11_MANIFEST_DIR"
 
 #copy all files that should be part of the installer:
-cp ../../../$MAC_BUILD_CONFIG/libbeidpkcs11.$REL_VERSION.dylib $PKCS11_INST_DIR
+cp $PKCS11_DYLIB_PATH $PKCS11_INST_DIR
 #copy pkcs11 bundle
 cp -R ./Packages/beid-pkcs11.bundle $PKCS11_INST_DIR
 #make relative symbolic link from bundle to the dylib
