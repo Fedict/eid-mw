@@ -31,6 +31,7 @@
 - (IBAction)selectManualReader:(NSMenuItem*)sender;
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender;
 - (IBAction)closeDetail:(id)sender;
+- (BOOL)application:(NSApplication*)sender openFile:(nonnull NSString *)filename;
 
 @property CertificateStore *certstore;
 @property NSDictionary *bindict;
@@ -72,6 +73,10 @@
 
 @implementation AppDelegate
 -(BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender {
+	return YES;
+}
+- (BOOL)application:(NSApplication*)sender openFile:(nonnull NSString *)filename {
+	[eIDOSLayerBackend deserialize:[NSURL URLWithString:filename]];
 	return YES;
 }
 - (void)log:(NSString *)line withLevel:(eIDLogLevel)level {
