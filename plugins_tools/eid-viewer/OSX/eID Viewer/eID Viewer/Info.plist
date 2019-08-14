@@ -55,6 +55,8 @@
 			<array>
 				<string>public.xml</string>
 			</array>
+			<key>UTTypeDescription</key>
+			<string>eID Viewer data</string>
 			<key>UTTypeIdentifier</key>
 			<string>be.fedict.eid.eidviewer</string>
 			<key>UTTypeTagSpecification</key>
