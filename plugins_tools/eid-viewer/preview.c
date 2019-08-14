@@ -50,3 +50,10 @@ out:
 	}
 	return p;
 }
+
+void eid_vwr_release_preview(struct eid_vwr_preview* prv) {
+	if(prv->have_data) {
+		free(prv->imagedata);
+	}
+	free(prv);
+}

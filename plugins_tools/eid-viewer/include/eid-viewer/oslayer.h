@@ -293,7 +293,14 @@ DllExport struct eid_vwr_ui_callbacks *eid_vwr_cbstruct(void);
 DllExport struct eid_vwr_preview *eid_vwr_get_preview(const EID_CHAR *
 						      filename);
 
-/** 
+/** \brief Release the data returned by eid_vwr_get_preview()
+  *
+  * This function drops the preview data allocated by eid_vwr_get_preview.
+  * \param prv The preview data to release
+  */
+DllExport void eid_vwr_release_preview(struct eid_vwr_preview *prv);
+
+/**
   * \brief Check if there is an event to be handled.
   *
   * Will handle one event and then return. Useful if an event loop

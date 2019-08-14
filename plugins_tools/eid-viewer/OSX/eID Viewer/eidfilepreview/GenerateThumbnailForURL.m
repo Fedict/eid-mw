@@ -32,6 +32,7 @@ OSStatus GenerateThumbnailForURL(void *thisInterface, QLThumbnailRequestRef thum
 		QLThumbnailRequestSetImageWithData(thumbnail, dat, NULL);
 		NSLog(@"ok");
 		CFRelease(dat);
+		eid_vwr_release_preview(prev);
 	}
 	return noErr;
 }

@@ -31,6 +31,7 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 		QLPreviewRequestSetDataRepresentation(preview, dat, kUTTypeImage, nil);
 		NSLog(@"ok");
 		CFRelease(dat);
+		eid_vwr_release_preview(prev);
 	}
 	return noErr;
 }
