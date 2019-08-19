@@ -2,11 +2,27 @@ language: cpp
 sudo: required
 os:
   - linux
+  - osx
 compiler:
   - clang
   - gcc
 matrix:
   fast_finish: true
-before_install:
-  - sudo bash .travis/before_install
-script: .travis/build
+addons:
+  apt:
+    packages:
+    - autotools-dev
+    - libgtk2.0-dev
+    - libpcsclite-dev
+    - libtool
+    - automake
+    - autoconf
+    - libcurl4-openssl-dev
+    - libxml2-dev
+    - libproxy-dev
+    - pkg-config
+    - libp11-kit-dev
+    - libassuan-dev
+    - libgpg-error-dev
+before_script:
+  - autoreconf -f -i
