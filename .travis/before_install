@@ -5,7 +5,6 @@ set -x
 
 case $(uname -s) in
 	Linux)
-		add-apt-repository -y ppa:wouter-debian/new4trusty
 		apt-get update
 		apt-get install -y autotools-dev libgtk2.0-dev libpcsclite-dev libtool automake autoconf libcurl4-openssl-dev libxml2-dev libproxy-dev pkg-config libp11-kit-dev pkg-config libassuan-dev libgpg-error-dev
 	;;
