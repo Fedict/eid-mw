@@ -39,9 +39,6 @@ static void newstate(enum eid_vwr_states new_state) {
 					pthread_cond_signal(&cnd);
 					break;
 				}
-			} else {
-				robot_remove_card();
-				sleep(1);
 			}
 			printf("opening " SRCDIR "/67.06.30-296.59.eid\n");
 			eid_vwr_be_deserialize(SRCDIR "/67.06.30-296.59.eid");
@@ -66,6 +63,10 @@ static void newstate(enum eid_vwr_states new_state) {
 TEST_FUNC(deserialize) {
 	struct eid_vwr_ui_callbacks* cb;
 
+	if(have_robot()) {
+		robot_remove_card();
+		sleep(1);
+	}
 	cb = createcbs();
 	verbose_assert(cb != NULL);
 	nsd = cb->newstringdata;
