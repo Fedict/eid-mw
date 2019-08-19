@@ -9,3 +9,5 @@ endif
 
 xpipackage:
 	$(MAKE) -C plugins_tools/xpi xpipackage
+
+test: check
