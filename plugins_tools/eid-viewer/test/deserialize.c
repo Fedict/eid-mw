@@ -41,6 +41,7 @@ static void newstate(enum eid_vwr_states new_state) {
 				}
 			} else {
 				robot_remove_card();
+				sleep(1);
 			}
 			printf("opening " SRCDIR "/67.06.30-296.59.eid\n");
 			eid_vwr_be_deserialize(SRCDIR "/67.06.30-296.59.eid");
