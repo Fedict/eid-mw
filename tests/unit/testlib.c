@@ -452,7 +452,6 @@ void robot_cmd_l(Serial *port, char cmd, bool check_result, char *which) {
 		{ 'e', "ejected", false },
 		{ 'p', "parked", false },
 	};
-	int len = 0;
 	char *line;
 	unsigned int i;
 
