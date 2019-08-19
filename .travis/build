@@ -9,7 +9,7 @@ case $(uname -s) in
 	Darwin)
 		cd $(dirname $0)/..
 		./scripts/mac/make-mac.sh | xcpretty
-		xcodebuild -project beidmw.xcodeproj -target testsuite -configuration Release | xcpretty
+		xcodebuild -project beidmw.xcodeproj -target testsuite -configuration Release  CODE_SIGN_IDENTITY='' CODE_SIGNING_REQUIRED=NO | xcpretty
 		./scripts/mac/make-viewer.sh | xcpretty
 		cd Release
 		DYLD_LIBRARY_PATH=$(pwd) ./testsuite
