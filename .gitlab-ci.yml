@@ -419,7 +419,7 @@ check:scan-build:
   artifacts:
     when: on_failure
     paths:
-    - products
+    - public
 ####################################################################
 # Stage "build-repository": copy binaries into a repository layout #
 ####################################################################
