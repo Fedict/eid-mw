@@ -2,10 +2,17 @@
 
 set -e
 
+SIGN_BUILD=${SIGN_BUILD:-1}
+
 if [ -z "$MAC_BUILD_CONFIG" ]
 then
 	MAC_BUILD_CONFIG=Release
 	echo "running Release Build"
+fi
+
+if [ $SIGN_BUILD -ne 0 ]
+then
+	SIGNOPTS='CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED="NO" CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"'
 fi
 
 echo "MAC_BUILD_CONFIG is $MAC_BUILD_CONFIG"
@@ -25,13 +32,13 @@ chmod +x ./create_package.sh
 
 pushd ../../..
 echo "cleaning former project..."
-xcodebuild -project beidmw.xcodeproj -target beidpkcs11 -configuration $MAC_BUILD_CONFIG clean
-xcodebuild -project beidmw.xcodeproj -target beidpkcs11 -configuration $MAC_BUILD_CONFIG
+xcodebuild $SIGNOPTS -project beidmw.xcodeproj -target beidpkcs11 -configuration $MAC_BUILD_CONFIG clean
+xcodebuild $SIGNOPTS -project beidmw.xcodeproj -target beidpkcs11 -configuration $MAC_BUILD_CONFIG
 popd
 
 pushd "../../../cardcomm/ctkToken"
-xcodebuild -project "BEIDToken.xcodeproj" -configuration $MAC_BUILD_CONFIG clean
-xcodebuild -project "BEIDToken.xcodeproj" -target "BEIDTokenApp" -configuration $MAC_BUILD_CONFIG
+xcodebuild $SIGNOPTS -project "BEIDToken.xcodeproj" -configuration $MAC_BUILD_CONFIG clean
+xcodebuild $SIGNOPTS -project "BEIDToken.xcodeproj" -target "BEIDTokenApp" -configuration $MAC_BUILD_CONFIG
 popd
 
 #-----------------------------------------

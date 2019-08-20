@@ -2,6 +2,13 @@
 
 set -e
 
+SIGN_BUILD=${SIGN_BUILD:-1}
+
+if [ $SIGN_BUILD -ne 0 ]
+then
+	SIGNOPTS='CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED="NO" CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"'
+fi
+
 pushd $(dirname $0)
 
 source set_eidmw_version.sh
@@ -17,7 +24,7 @@ rm -f "eID Viewer-$REL_VERSION.dmg"
 
 Echo "********** archive and export (in post-archive script) eID Viewer **********"
 pushd "../../"
-xcodebuild -project "beidmw.xcodeproj" -scheme "eID Viewer" -configuration Release clean archive
+xcodebuild $SIGNOPTS -project "beidmw.xcodeproj" -scheme "eID Viewer" -configuration Release clean archive
 popd
 
 

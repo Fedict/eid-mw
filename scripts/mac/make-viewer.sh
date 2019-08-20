@@ -2,9 +2,16 @@
 
 set -e
 
+SIGN_BUILD=${SIGN_BUILD:-1}
+
 if [ -z "$MAC_BUILD_CONFIG" ]
 then
 	MAC_BUILD_CONFIG=Release
+fi
+
+if [ $SIGN_BUILD -ne 0 ]
+then
+	SIGNOPTS='CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED="NO" CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"'
 fi
 
 pushd $(dirname $0)
@@ -17,8 +24,8 @@ rm -f tmp-eidviewer.dmg
 rm -f "eID Viewer-$REL_VERSION.dmg"
 
 pushd "../../"
-xcodebuild -project "beidmw.xcodeproj" -target "eID Viewer" -configuration $MAC_BUILD_CONFIG clean
-xcodebuild -project "beidmw.xcodeproj" -target "eID Viewer" -configuration $MAC_BUILD_CONFIG
+xcodebuild $SIGNOPTS -project "beidmw.xcodeproj" -target "eID Viewer" -configuration $MAC_BUILD_CONFIG clean
+xcodebuild $SIGNOPTS -project "beidmw.xcodeproj" -target "eID Viewer" -configuration $MAC_BUILD_CONFIG
 popd
 
 hdiutil create -srcdir release-viewer -volname "eID Viewer" -fs HFS+ -fsargs "-c c=64,a=16,e=16" -format UDRW -size 100m "tmp-eidviewer.dmg"

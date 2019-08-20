@@ -7,6 +7,7 @@ set -o pipefail
 
 case $(uname -s) in
 	Darwin)
+		export SIGN_BUILD=0
 		cd $(dirname $0)/..
 		./scripts/mac/make-mac.sh | xcpretty
 		xcodebuild -project beidmw.xcodeproj -target testsuite -configuration Release  CODE_SIGN_IDENTITY='' CODE_SIGNING_REQUIRED=NO | xcpretty
