@@ -664,7 +664,8 @@ int find_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR slot) {
 	}
 
 	do {
-		check_rv_long(C_GetSlotList(with_token, list, &count), m);
+		rv = C_GetSlotList(with_token, list, &count);
+		check_rv_late_long("C_GetSlotList", m);
 		list = (CK_SLOT_ID_PTR)realloc(list, sizeof(CK_SLOT_ID) * count);
 	} while(rv == CKR_BUFFER_TOO_SMALL);
 #undef CHECK_RV_DEALLOC
