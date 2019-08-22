@@ -670,7 +670,7 @@ int find_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR slot) {
 #define CHECK_RV_DEALLOC free(list)
 	check_rv_late("C_GetSlotList");
 
-	verbose_assert(count == 0 || list != NULL)
+	verbose_assert((count == 0 && list == NULL) || (count != 0 && list != NULL))
 
 	if(!count) {
 		free(list);
