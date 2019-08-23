@@ -404,6 +404,7 @@ repro:debian:
   - mk-build-deps -r -i -t "apt-get -y -o Debug::pkgProblemResolver=yes --no-install-recommends"
   script:
   - reprotest $(pwd)
+  allow_failure: true
 check:scan-build:
   stage: validate
   tags:
