@@ -206,8 +206,9 @@ extra:deb-64:
   before_script:
     - dnf -y install mock git
     - VERSHORT=$(git describe --dirty | sed -e 's/-/./g')
+    - groupadd mock
   script:
-    - mock --old-chroot --verbose -r $DIST-$DVER-$ARCH --rebuild products/srpm/eid-mw-*.src.rpm --define "revision $VERSHORT"
+    - mock --verbose -r $DIST-$DVER-$ARCH --rebuild products/srpm/eid-mw-*.src.rpm --define "revision $VERSHORT"
   after_script:
     - mkdir -p products/$DIST-$DVER-$ARCH
     - cp /var/lib/mock/$DIST-$DVER-$ARCH/result/eid*rpm products/$DIST-$DVER-$ARCH/
