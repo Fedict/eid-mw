@@ -1,4 +1,5 @@
 :: creates the version files used by NSIS, Wix and MSBuild
+setlocal disabledelayedexpansion
 
 :: retrieve the version numbers
 @call "%~dp0.\set_eidmw_version.cmd"
@@ -224,3 +225,5 @@ set ASSEMBLYINFO_PATH="%~dp0..\..\plugins_tools\eid-viewer\Windows\eIDViewer\Sou
 @echo         }>> %ASSEMBLYINFO_PATH%
 @echo     }>> %ASSEMBLYINFO_PATH%
 @echo }>> %ASSEMBLYINFO_PATH%
+
+endlocal
