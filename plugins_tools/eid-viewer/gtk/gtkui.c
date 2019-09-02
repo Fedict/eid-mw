@@ -380,7 +380,7 @@ static gboolean readers_changed_real(gpointer user_data) {
 		return FALSE;
 	}
 	gtk_widget_set_sensitive(GTK_WIDGET(automatic), TRUE);
-	items = malloc(sizeof(GtkWidget*) * info->nreaders + 1);
+	items = malloc(sizeof(GtkWidget*) * (info->nreaders + 1));
 	for(i=0; i<info->nreaders; i++) {
 		items[i] = gtk_radio_menu_item_new_with_label_from_widget(automatic, (char*)info->slots[i].description);
 		gtk_menu_shell_append(menu, items[i]);
