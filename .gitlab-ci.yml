@@ -325,7 +325,7 @@ extra:suse:
 build:windows:
   stage: binary-package
   variables:
-  dependencies:
+  dependencies: []
   script:
   - cd scripts\windows
   - build_all.bat
@@ -338,7 +338,7 @@ build:windows:
 build:macos:
   stage: binary-package
   variables:
-  dependencies:
+  dependencies: []
   script:
   - cd scripts/mac
   - ./make-mac.sh
