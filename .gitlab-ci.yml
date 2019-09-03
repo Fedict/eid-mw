@@ -334,7 +334,9 @@ build:windows:
   allow_failure: true
   artifacts:
     when: on_success
-    untracked: true
+    paths:
+    - scripts/windows/*.exe
+    - scripts/windows/*.msi
 build:macos:
   stage: binary-package
   variables:
