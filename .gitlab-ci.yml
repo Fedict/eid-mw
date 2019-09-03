@@ -332,6 +332,9 @@ build:windows:
   tags:
   - windows
   allow_failure: true
+  artifacts:
+    when: on_success
+    untracked: true
 build:macos:
   stage: binary-package
   variables:
@@ -343,6 +346,9 @@ build:macos:
   tags:
   - macos
   allow_failure: true
+  artifacts:
+    when: on_success
+    untracked: true
 robot:windows:
   stage: validate
   tags:
