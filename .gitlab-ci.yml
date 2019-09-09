@@ -333,6 +333,8 @@ build:macos:
   - cd scripts/mac
   - ./make-mac.sh
   - ./make-viewer.sh
+  after_script:
+  - sudo chown -R $USER installers/eid-mw/mac/release
   tags:
   - macos
   allow_failure: true
