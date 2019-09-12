@@ -399,10 +399,10 @@ repro:debian:
   before_script:
   - if [ ! -z "$ACNG" ]; then sed -i -e "s,http://,$ACNG/," /etc/apt/sources.list; else echo "no proxy configured"; fi
   - apt-get update
-  - apt-get -y install reprotest diffoscope equivs devscripts
+  - apt-get -y install reprotest diffoscope equivs devscripts faketime disorderfs sudo
   - mk-build-deps -r -i -t "apt-get -y -o Debug::pkgProblemResolver=yes --no-install-recommends"
   script:
-  - reprotest $(pwd)
+  - reprotest .
   allow_failure: true
 check:scan-build:
   stage: tests
