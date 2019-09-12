@@ -394,8 +394,7 @@ repro:debian:
   tags:
   - docker
   image: debian:buster
-  dependencies:
-  - build:deb10-64
+  dependencies: []
   before_script:
   - if [ ! -z "$ACNG" ]; then sed -i -e "s,http://,$ACNG/," /etc/apt/sources.list; else echo "no proxy configured"; fi
   - apt-get update
