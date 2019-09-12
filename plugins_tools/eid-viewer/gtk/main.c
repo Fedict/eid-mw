@@ -118,7 +118,7 @@ static void newstate(enum eid_vwr_states s) {
 		case STATE_TOKEN:
 			uistatus(TRUE, _("Card available"));
 			return;
-		case STATE_TOKEN_WAIT:
+		case STATE_TOKEN_IDLE:
 			uistatus(FALSE, "");
 			g_object_set_threaded(print, "sensitive", (void*)TRUE, NULL);
 			g_object_set_threaded(save, "sensitive", (void*)TRUE, NULL);

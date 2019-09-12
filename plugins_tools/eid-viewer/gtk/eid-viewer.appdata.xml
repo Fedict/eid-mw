@@ -4,7 +4,7 @@
   <metadata_license>MIT</metadata_license>
   <project_license>GPL-3.0+</project_license>
   <name>eID Viewer</name>
-  <name lang="nl">eID Kaart Lezer</name>
+  <name lang="nl">eID Kaartlezer</name>
   <name lang="fr">Lecteur de Carte eID</name>
   <summary>Display and administer your eID card</summary>
   <summary lang="nl">Weergeven en beheren van uw eID kaart</summary>
@@ -18,7 +18,7 @@
     electronic ID card. Additionally, it also allows you to verify if
     the certificates (and by extension, the card) are still valid, as
     well as check and/or change your PIN code.</p>
-    <p xml:lang="nl">De eID Kaart Lezer staat u toe om de gegevens op
+    <p xml:lang="nl">De eID Kaartlezer staat u toe om de gegevens op
     een Belgische identiteitskaart te bekijken. Daarnaast laat het u ook
     toe om te controleren of de certificaten (en daardoor ook de kaart
     zelf) nog geldig zijn, en ook om de PIN-code te verifiëren en/of

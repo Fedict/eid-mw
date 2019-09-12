@@ -8,7 +8,7 @@ cat > eid-viewer.desktop <<EOF
 Encoding=UTF-8
 Name=eID Viewer
 Comment=Display and administer your eID card
-Name[nl]=eID Kaart Lezer
+Name[nl]=eID Kaartlezer
 Comment[nl]=Weergeven en beheren van uw eID kaart
 Name[fr]=Lecteur de Carte eID
 Comment[fr]=Affichage et gestion de votre carte eID
