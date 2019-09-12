@@ -1,6 +1,7 @@
 ---
 stages:
  - source
+ - tests
  - source-package
  - binary-package
  - validate
@@ -372,11 +373,11 @@ robot:macos:
   - ./testsuite
   allow_failure: true
 robot:linux:
-  stage: validate
+  stage: tests
   variables:
     EID_ROBOT_STYLE: zetes:/dev/CARD:/dev/USB
     EID_DIALOGS_STYLE: nopin
-  dependencies:
+  dependencies: []
   tags:
   - robot
   - docker
@@ -389,7 +390,7 @@ robot:linux:
   - make -j $(nproc) check
   allow_failure: true
 repro:debian:
-  stage: validate
+  stage: tests
   tags:
   - docker
   image: debian:buster
@@ -404,7 +405,7 @@ repro:debian:
   - reprotest $(pwd)
   allow_failure: true
 check:scan-build:
-  stage: validate
+  stage: tests
   tags:
     - docker
   image: debian:stable
