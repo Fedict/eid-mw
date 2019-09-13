@@ -1,3 +1,4 @@
+---
 .robot:windows:
   tags:
   - robot
@@ -15,10 +16,13 @@
   script:
   - cd %WINDOWS_BASEDIR%\scripts\windows
   - build_all.bat
+  after_script:
+  - md products\windows
+  - xcopy %WINDOWS_BASEDIR%\scripts\windows\*.exe products\windows
+  - xcopy %WINDOWS_BASEDIR%\scripts\windows\*.msi products\windows
   tags:
   - windows
   artifacts:
     when: on_success
     paths:
-    - %WINDOWS_BASEDIR%\scripts\windows\*.exe
-    - %WINDOWS_BASEDIR%\scripts\windows\*.msi
+    - products\windows
