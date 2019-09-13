@@ -1,0 +1,34 @@
+.robot:macos:
+  variables:
+    EID_ROBOT_STYLE: $EID_ROBOT_STYLE_MACOS
+    EID_DIALOGS_STYLE: nopin
+    DYLD_LIBRARY_PATH: $CI_BUILDS_DIR/$CI_PROJECT_DIR/$MACOS_BASEDIR/build/Release
+  tags:
+  - robot
+  - macos
+  dependencies:
+  - build:macos
+  before_script:
+  - pushd $MACOS_BASEDIR
+  - xcodebuild -project beidmw.xcodeproj -target testsuite -configuration Release
+  - popd
+  script:
+  - pushd $MACOS_BASEDIR
+  - ./testsuite
+  - popd
+  allow_failure: true
+
+.build-macos:
+  dependencies: []
+  script:
+  - cd $MACOS_BASEDIR/scripts/mac
+  - ./make-mac.sh
+  - ./make-viewer.sh
+  after_script:
+  - sudo chown -R $USER $MACOS_BASEDIR/installers/eid-mw/mac/release
+  tags:
+  - macos
+  allow_failure: true
+  artifacts:
+    when: on_success
+    untracked: true

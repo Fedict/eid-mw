@@ -1,0 +1,24 @@
+.robot:windows:
+  tags:
+  - robot
+  - windows
+  before_script:
+  - cd %CI_BUILDS_DIR%\%CI_PROJECT_DIR%\%WINDOWS_BASEDIR%\scripts\windows
+  - build_testsuite.bat
+  script:
+  - cd %CI_BUILDS_DIR%\%CI_PROJECT_DIR%\%WINDOWS_BASEDIR%\tests\unit\windows\Release
+  - pkcs11_tests.exe
+  allow_failure: true
+
+.build-windows:
+  dependencies: []
+  script:
+  - cd %WINDOWS_BASEDIR%\scripts\windows
+  - build_all.bat
+  tags:
+  - windows
+  artifacts:
+    when: on_success
+    paths:
+    - %WINDOWS_BASEDIR%\scripts\windows\*.exe
+    - %WINDOWS_BASEDIR%\scripts\windows\*.msi

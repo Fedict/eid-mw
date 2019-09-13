@@ -1,7 +1,4 @@
 ---
-include:
-- local: .ci/build-configs.yml
-
 stages:
 - tests
 - source-package
@@ -10,134 +7,49 @@ stages:
 - build-repository
 - publish
 
+include:
+- local: .ci/build-configs.yml
+- local: .ci/builds-linux.yml
+- local: .ci/builds-windows.yml
+- local: .ci/builds-macos.yml
+
+variables:
+  LINUX_BASEDIR: .
+  WINDOWS_BASEDIR: .
+  MACOS_BASEDIR: .
+
 ##########################################################################################################
 # Stage "tests": run a test battery before doing all the hard work (i.e., try to find any problems ASAP) #
 ##########################################################################################################
 test:distcheck:
   stage: tests
-  tags:
-  - docker
-  image: debian:testing
-  before_script:
-  - if [ ! -z "$ACNG" ]; then sed -i -e "s,http://,$ACNG/," /etc/apt/sources.list; else echo "no proxy configured"; fi
-  - apt-get update
-  - apt-get -y install --no-install-recommends autoconf automake libtool libpcsclite-dev libp11-kit-dev libgtk-3-dev libassuan-dev libgpg-error-dev libssl-dev libxml2-dev libcurl4-openssl-dev libproxy-dev plantuml zip gettext build-essential g++ git graphviz
-  - autoreconf -f -i
-  script:
-  - ./configure
-  - make -j $(nproc) distcheck
-  after_script:
-  - mkdir -p products/source
-  - cp eid-mw-*.tar.gz eid-mw-*.zip products/source/
-  artifacts:
-    when:
-      on_success
-    paths:
-    - products/source
+  extends: .distcheck
 test:robot:linux:
   stage: tests
-  variables:
-    EID_ROBOT_STYLE: zetes:/dev/CARD:/dev/USB
-    EID_DIALOGS_STYLE: nopin
-  dependencies: []
-  tags:
-  - robot
-  - docker
-  before_script:
-  - if [ ! -z "$ACNG" ]; then sed -i -e "s,http://,$ACNG," /etc/apt/sources.list; else echo "no proxy configured"; fi
-  - apt-get update
-  - apt-get -y install --no-install-recommends autoconf automake libtool libassuan-dev libgpg-error-dev libpcsclite-dev libp11-kit-dev libgtk-3-dev libssl-dev libxml2-dev libcurl4-openssl-dev libproxy-dev plantuml zip gettext build-essential g++ git graphviz
-  script:
-  - ./configure --libexecdir=$(pwd)/scripts/linux/hackbin --disable-pinentry
-  - make -j $(nproc) check
-  allow_failure: true
+  extends: .robot:linux
 test:repro:debian:
   stage: tests
-  tags:
-  - docker
-  image: debian:buster
-  dependencies: []
-  before_script:
-  - if [ ! -z "$ACNG" ]; then sed -i -e "s,http://,$ACNG/," /etc/apt/sources.list; else echo "no proxy configured"; fi
-  - apt-get update
-  - apt-get -y install reprotest diffoscope equivs devscripts faketime disorderfs sudo
-  - mk-build-deps -r -i -t "apt-get -y -o Debug::pkgProblemResolver=yes --no-install-recommends"
-  script:
-  - reprotest .
-  allow_failure: true
+  extends: .repro:debian
 test:scan-build:
   stage: tests
-  tags:
-    - docker
-  image: debian:stable
-  before_script:
-  - if [ ! -z "$ACNG" ]; then sed -i -e "s,http://,$ACNG/," /etc/apt/sources.list; else echo "no proxy configured"; fi
-  - apt-get update
-  - apt-get -y install --no-install-recommends clang-tools autoconf automake libtool libassuan-dev libgpg-error-dev libpcsclite-dev libp11-kit-dev libgtk-3-dev libssl-dev libxml2-dev libcurl4-openssl-dev libproxy-dev plantuml zip gettext build-essential git g++ graphviz curl
-  - autoreconf -f -i
-  - ./configure
-  script:
-  - scan-build --status-bugs -o public make -j $(nproc)
-  artifacts:
-    when: on_failure
-    paths:
-    - public
+  extends: .scan-build
 #################################################
 # Stage "source-package": build source packages #
 #################################################
 src:srpm:
   stage: source-package
-  tags:
-    - docker
-  image: fedora:latest
-  before_script:
-    - dnf -y install rpm-build git rpmdevtools
-    - rpmdev-setuptree
-    - VER=$(scripts/build-aux/genver.sh)
-    - VERSHORT=$(git describe --dirty | sed -e 's/-/./g')
-    - mv products/source/eid-mw-$VER.tar.gz $HOME/rpmbuild/SOURCES/
-    - tar --extract --file=$HOME/rpmbuild/SOURCES/eid-mw-$VER.tar.gz -C $HOME/rpmbuild/SPECS/ --strip-components=2 eid-mw-$VER/rpm/eid-mw.spec
-    - tar --extract --file=$HOME/rpmbuild/SOURCES/eid-mw-$VER.tar.gz -C $HOME/rpmbuild/SOURCES/ --strip-components=2 eid-mw-$VER/rpm/baselibs.conf
-  script:
-    - rpmbuild --define "revision $VERSHORT" -bs $HOME/rpmbuild/SPECS/eid-mw.spec
-  after_script:
-    - mkdir -p products/srpm/
-    - cp $HOME/rpmbuild/SRPMS/eid-mw-*.src.rpm products/srpm/
-  artifacts:
-    paths:
-      - products/srpm
+  extends: .srpm
 
 ##############################################################
 # Stage "binary-package": build binaries and binary packages #
 ##############################################################
 ## Debian-based distributions
-.build-deb-base: &build-deb
+.build-deb: &build-deb
+  extends: .build-deb-base
   dependencies:
     - test:distcheck
-  before_script:
-    - mkdir build
-    - cd build && tar xvf ../products/source/eid-mw-*.tar.gz --strip-components=1
-    - ../scripts/build-aux/deb-cl.pl debian/changelog
   stage: binary-package
-  script:
-    - TARGET=continuous
-    - if [ $CANDIDATEBRANCH = $CI_COMMIT_REF_NAME ]; then TARGET=candidate; fi
-    - if [ ! -z "$CI_COMMIT_TAG" ]; then TARGET=candidate; fi
-    - if [ $ARCH = "i386" ]; then DASHA="-A -s"; else DASHA=""; fi
-    - sbuild -n $DASHA -d $TARGET-$CODE -c $CODE-$ARCH-sbuild --arch=$ARCH
-  after_script:
-    - mkdir -p products/deb/
-    - dcmd mv *ges products/deb/
-  artifacts:
-    paths:
-      - products/deb
-    when:
-      on_success
-  tags:
-    - sbuild
-  only:
-    variables:
-    - $CODE
+
 build:deb_oldstable_32:
   <<: *build-deb
   variables:
@@ -224,31 +136,13 @@ build:ubuntu_stable_64:
     CODE: $UBUNTU_STABLE_CODE
     SHORT: u$UBUNTU_STABLE_VERSION
     ARCH: amd64
+
 # Fedora-based distributions
-.build-fed-base: &build-fed
+.build-fed: &build-fed
+  extends: .build-fed-base
   dependencies:
     - src:srpm
   stage: binary-package
-  retry: 2
-  tags:
-    - docker
-  image: fedora:latest
-  before_script:
-    - dnf -y install mock git
-    - VERSHORT=$(git describe --dirty | sed -e 's/-/./g')
-  script:
-    - mock --old-chroot --verbose -r $DIST-$DVER-$ARCH --rebuild products/srpm/eid-mw-*.src.rpm --define "revision $VERSHORT"
-  after_script:
-    - mkdir -p products/$DIST-$DVER-$ARCH
-    - cp /var/lib/mock/$DIST-$DVER-$ARCH/result/eid*rpm products/$DIST-$DVER-$ARCH/
-  artifacts:
-    paths:
-      - products/$DIST-$DVER-$ARCH
-    when:
-      on_success
-  only:
-    variables:
-    - $DVER
 build:fedora_oldstable_32:
   <<: *build-fed
   variables:
@@ -285,30 +179,13 @@ build:centos_stable_64:
     DIST: epel
     DVER: $CENTOS_STABLE_VERSION
     ARCH: x86_64
+
 # openSUSE-based distributions
-.build-suse-base: &build-suse
+.build-suse: &build-suse
+  extends: .build-suse-base
   dependencies:
     - src:srpm
   stage: binary-package
-  retry: 2
-  tags:
-    - docker
-  image: wouterverhelst/obs-build:latest
-  before_script:
-    - VERSHORT=$(git describe --dirty | sed -e 's/-/./g')
-  script:
-    - http_proxy="$ACNG" build --no-checks --clean -debug --dist sl$DVER --repo http://download.opensuse.org/distribution/leap/$DVER/repo/oss --define "revision $VERSHORT" products/srpm/eid-mw-*.src.rpm
-  after_script:
-    - mkdir -p products/$DIST-$DVER-$ARCH
-    - mv /var/tmp/build-root/home/abuild/rpmbuild/RPMS/*/*rpm products/$DIST-$DVER-$ARCH/
-  artifacts:
-    paths:
-      - products/$DIST-$DVER-$ARCH
-    when:
-      on_success
-  only:
-    variables:
-    - $DVER
 build:suse_oldstable:
   <<: *build-suse
   variables:
@@ -321,52 +198,26 @@ build:suse_stable:
     DIST: opensuse
     DVER: $OPENSUSE_STABLE_VERSION
     ARCH: x86_64
+
+# Windows
 build:windows:
   stage: binary-package
-  variables:
-  dependencies: []
-  script:
-  - cd scripts\windows
-  - build_all.bat
-  tags:
-  - windows
-  artifacts:
-    when: on_success
-    paths:
-    - scripts/windows/*.exe
-    - scripts/windows/*.msi
+  extends: .windows-basedir
+
+# macOS
 build:macos:
   stage: binary-package
-  variables:
-  dependencies: []
-  script:
-  - cd scripts/mac
-  - ./make-mac.sh
-  - ./make-viewer.sh
-  after_script:
-  - sudo chown -R $USER installers/eid-mw/mac/release
-  tags:
-  - macos
-  allow_failure: true
-  artifacts:
-    when: on_success
-    untracked: true
+  extends: .build-macos
+
 validate:robot:windows:
   stage: validate
-  tags:
-  - robot
-  - windows
+  extends: .robot:windows
   dependencies:
   - build:windows
-  before_script:
-  - cd scripts\windows
-  - build_testsuite.bat
-  script:
-  - cd tests\unit\windows\Release
-  - pkcs11_tests.exe
-  allow_failure: true
+
 validate:robot:macos:
   stage: validate
+  extends: .robot:macos
   variables:
     EID_ROBOT_STYLE: $EID_ROBOT_STYLE_MACOS
     EID_DIALOGS_STYLE: nopin
@@ -381,6 +232,7 @@ validate:robot:macos:
   script:
   - ./testsuite
   allow_failure: true
+
 ####################################################################
 # Stage "build-repository": copy binaries into a repository layout #
 ####################################################################
@@ -399,19 +251,13 @@ repo:inject-debs:
     - build:ubuntu_lts_64
     - build:ubuntu_stable_64
   stage: build-repository
-  tags:
-    - repobuilder
-  before_script:
-    - dcmd mv products/deb/*ges /srv/repo/reprepro/incoming
-  script:
-    - cd /srv/repo/reprepro && reprepro processincoming incoming
-  variables:
-    GIT_STRATEGY: none
+  extends: .inject-debs
   only:
     variables:
     - $CI_COMMIT_REF_NAME == "master"
     - $CI_COMMIT_REF_NAME == $CANDIDATEBRANCH
     - $CI_COMMIT_TAG
+
 repo:inject-fed:
   only:
     variables:
@@ -429,13 +275,8 @@ repo:inject-fed:
     - build:centos_oldstable_64
     - build:centos_stable_64
   stage: build-repository
-  tags:
-    - repobuilder
-  script:
-    - export TARGET=continuous
-    - if [ $CANDIDATEBRANCH = $CI_COMMIT_REF_NAME ]; then TARGET=candidate; fi
-    - if [ ! -z "$CI_COMMIT_TAG" ]; then TARGET=candidate; fi
-    - bash -x scripts/build-aux/fed-rel.sh
+  extends: .inject-fed
+
 repo:inject-suse:
   only:
     variables:
@@ -449,22 +290,9 @@ repo:inject-suse:
     - build:suse_oldstable
     - build:suse_stable
   stage: build-repository
-  tags:
-    - repobuilder
-  script:
-    - export TARGET=continuous
-    - if [ $CANDIDATEBRANCH = $CI_COMMIT_REF_NAME ]; then TARGET=candidate; fi
-    - if [ ! -z "$CI_COMMIT_TAG" ]; then TARGET=candidate; fi
-    - bash -x scripts/build-aux/suse-rel.sh
+  extends: .inject-suse
 repo:inject-source:
   dependencies:
   - test:distcheck
   stage: build-repository
-  tags:
-  - repobuilder
-  script:
-  - SOURCETGZ=products/source/eid-mw-*.tar.gz
-  - SOURCEZIP=products/source/eid-mw-*.zip
-  - cp $SOURCETGZ $SOURCEZIP /srv/dist/eid-mw/continuous/sources/
-  - cd /srv/dist/eid-mw/continuous/sources
-  - gpg --yes --batch --passphrase "" --default-key $GPG_TEST_KEY_ID --no-tty -b --armor $(basename $SOURCETGZ)
+  extends: .inject-source
