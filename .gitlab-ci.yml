@@ -202,7 +202,7 @@ build:suse_stable:
 # Windows
 build:windows:
   stage: binary-package
-  extends: .windows-basedir
+  extends: .build-windows
 
 # macOS
 build:macos:
