@@ -1,43 +1,91 @@
 ---
-stages:
- - source
- - tests
- - source-package
- - binary-package
- - validate
- - build-repository
- - sync
+include:
+- local: .ci/build-configs.yml
 
-################################################
-# Stage "source": build source, run test suite #
-################################################
-build:source:
-  variables:
-    GIT_STRATEGY: clone
-  stage: source
+stages:
+- tests
+- source-package
+- binary-package
+- validate
+- build-repository
+- publish
+
+##########################################################################################################
+# Stage "tests": run a test battery before doing all the hard work (i.e., try to find any problems ASAP) #
+##########################################################################################################
+test:distcheck:
+  stage: tests
   tags:
-    - docker
+  - docker
   image: debian:testing
   before_script:
-    - if [ ! -z "$ACNG" ]; then sed -i -e "s,http://,$ACNG/," /etc/apt/sources.list; else echo "no proxy configured"; fi
-    - apt-get update
-    - apt-get -y install --no-install-recommends autoconf automake libtool libpcsclite-dev libp11-kit-dev libgtk-3-dev libassuan-dev libgpg-error-dev libssl-dev libxml2-dev libcurl4-openssl-dev libproxy-dev plantuml zip gettext build-essential g++ git graphviz
+  - if [ ! -z "$ACNG" ]; then sed -i -e "s,http://,$ACNG/," /etc/apt/sources.list; else echo "no proxy configured"; fi
+  - apt-get update
+  - apt-get -y install --no-install-recommends autoconf automake libtool libpcsclite-dev libp11-kit-dev libgtk-3-dev libassuan-dev libgpg-error-dev libssl-dev libxml2-dev libcurl4-openssl-dev libproxy-dev plantuml zip gettext build-essential g++ git graphviz
+  - autoreconf -f -i
   script:
-    - autoreconf -f -i
-    - ./configure
-    - make -j $(nproc) distcheck
+  - ./configure
+  - make -j $(nproc) distcheck
   after_script:
-    - mkdir -p products/source
-    - cp eid-mw-*.tar.gz eid-mw-*.zip products/source/
+  - mkdir -p products/source
+  - cp eid-mw-*.tar.gz eid-mw-*.zip products/source/
   artifacts:
     when:
       on_success
     paths:
-      - products/source
+    - products/source
+test:robot:linux:
+  stage: tests
+  variables:
+    EID_ROBOT_STYLE: zetes:/dev/CARD:/dev/USB
+    EID_DIALOGS_STYLE: nopin
+  dependencies: []
+  tags:
+  - robot
+  - docker
+  before_script:
+  - if [ ! -z "$ACNG" ]; then sed -i -e "s,http://,$ACNG," /etc/apt/sources.list; else echo "no proxy configured"; fi
+  - apt-get update
+  - apt-get -y install --no-install-recommends autoconf automake libtool libassuan-dev libgpg-error-dev libpcsclite-dev libp11-kit-dev libgtk-3-dev libssl-dev libxml2-dev libcurl4-openssl-dev libproxy-dev plantuml zip gettext build-essential g++ git graphviz
+  script:
+  - ./configure --libexecdir=$(pwd)/scripts/linux/hackbin --disable-pinentry
+  - make -j $(nproc) check
+  allow_failure: true
+test:repro:debian:
+  stage: tests
+  tags:
+  - docker
+  image: debian:buster
+  dependencies: []
+  before_script:
+  - if [ ! -z "$ACNG" ]; then sed -i -e "s,http://,$ACNG/," /etc/apt/sources.list; else echo "no proxy configured"; fi
+  - apt-get update
+  - apt-get -y install reprotest diffoscope equivs devscripts faketime disorderfs sudo
+  - mk-build-deps -r -i -t "apt-get -y -o Debug::pkgProblemResolver=yes --no-install-recommends"
+  script:
+  - reprotest .
+  allow_failure: true
+test:scan-build:
+  stage: tests
+  tags:
+    - docker
+  image: debian:stable
+  before_script:
+  - if [ ! -z "$ACNG" ]; then sed -i -e "s,http://,$ACNG/," /etc/apt/sources.list; else echo "no proxy configured"; fi
+  - apt-get update
+  - apt-get -y install --no-install-recommends clang-tools autoconf automake libtool libassuan-dev libgpg-error-dev libpcsclite-dev libp11-kit-dev libgtk-3-dev libssl-dev libxml2-dev libcurl4-openssl-dev libproxy-dev plantuml zip gettext build-essential git g++ graphviz curl
+  - autoreconf -f -i
+  - ./configure
+  script:
+  - scan-build --status-bugs -o public make -j $(nproc)
+  artifacts:
+    when: on_failure
+    paths:
+    - public
 #################################################
 # Stage "source-package": build source packages #
 #################################################
-build:srpm:
+src:srpm:
   stage: source-package
   tags:
     - docker
@@ -58,14 +106,14 @@ build:srpm:
   artifacts:
     paths:
       - products/srpm
+
 ##############################################################
 # Stage "binary-package": build binaries and binary packages #
 ##############################################################
-
 ## Debian-based distributions
-.build-deb-base: &build-deb-base
+.build-deb-base: &build-deb
   dependencies:
-    - build:source
+    - test:distcheck
   before_script:
     - mkdir build
     - cd build && tar xvf ../products/source/eid-mw-*.tar.gz --strip-components=1
@@ -80,7 +128,6 @@ build:srpm:
   after_script:
     - mkdir -p products/deb/
     - dcmd mv *ges products/deb/
-  image: tianon/sbuild
   artifacts:
     paths:
       - products/deb
@@ -88,38 +135,36 @@ build:srpm:
       on_success
   tags:
     - sbuild
-.build-deb: &build-deb
-  <<: *build-deb-base
-  except:
+  only:
     variables:
-    - $EXTRADIST
-build:deb9-32:
+    - $CODE
+build:deb_oldstable_32:
   <<: *build-deb
   variables:
     DIST: debian
-    CODE: stretch
-    SHORT: deb9
+    CODE: $DEBIAN_OLDSTABLE_CODE
+    SHORT: deb$DEBIAN_OLDSTABLE_VERSION
     ARCH: i386
-build:deb9-64:
+build:deb_oldstable_64:
   <<: *build-deb
   variables:
     DIST: debian
-    CODE: stretch
-    SHORT: deb9
+    CODE: $DEBIAN_OLDSTABLE_CODE
+    SHORT: deb$DEBIAN_OLDSTABLE_VERSION
     ARCH: amd64
-build:deb10-32:
+build:deb_stable_32:
   <<: *build-deb
   variables:
     DIST: debian
-    CODE: buster
-    SHORT: deb10
+    CODE: $DEBIAN_STABLE_CODE
+    SHORT: deb$DEBIAN_STABLE_VERSION
     ARCH: i386
-build:deb10-64:
+build:deb_stable_64:
   <<: *build-deb
   variables:
     DIST: debian
-    CODE: buster
-    SHORT: deb10
+    CODE: $DEBIAN_STABLE_CODE
+    SHORT: deb$DEBIAN_STABLE_VERSION
     ARCH: amd64
 build:sid-32:
   <<: *build-deb
@@ -137,68 +182,52 @@ build:sid-64:
     SHORT: sid
     ARCH: amd64
   allow_failure: true
-build:xenial-32:
+build:ubuntu_oldlts_32:
   <<: *build-deb
   variables:
     DIST: ubuntu
-    CODE: xenial
-    SHORT: u1604
+    CODE: $UBUNTU_OLDLTS_CODE
+    SHORT: u$UBUNTU_OLDLTS_VERSION
     ARCH: i386
-build:xenial-64:
+build:ubuntu_oldlts_64:
   <<: *build-deb
   variables:
     DIST: ubuntu
-    CODE: xenial
-    SHORT: u1604
+    CODE: $UBUNTU_OLDLTS_CODE
+    SHORT: u$UBUNTU_OLDLTS_VERSION
     ARCH: amd64
-build:bionic-32:
+build:ubuntu_lts_32:
   <<: *build-deb
   variables:
     DIST: ubuntu
-    CODE: bionic
-    SHORT: u1804
+    CODE: $UBUNTU_LTS_CODE
+    SHORT: u$UBUNTU_LTS_VERSION
     ARCH: i386
-build:bionic-64:
+build:ubuntu_lts_64:
   <<: *build-deb
   variables:
     DIST: ubuntu
-    CODE: bionic
-    SHORT: u1804
+    CODE: $UBUNTU_LTS_CODE
+    SHORT: u$UBUNTU_LTS_VERSION
     ARCH: amd64
-build:disco-32:
+build:ubuntu_stable_32:
   <<: *build-deb
   variables:
     DIST: ubuntu
-    CODE: disco
-    SHORT: u1904
+    CODE: $UBUNTU_STABLE_CODE
+    SHORT: u$UBUNTU_STABLE_VERSION
     ARCH: i386
-build:disco-64:
+build:ubuntu_stable_64:
   <<: *build-deb
   variables:
     DIST: ubuntu
-    CODE: disco
-    SHORT: u1904
+    CODE: $UBUNTU_STABLE_CODE
+    SHORT: u$UBUNTU_STABLE_VERSION
     ARCH: amd64
-extra:deb-32:
-  <<: *build-deb-base
-  variables:
-    DIST: $EXTRADIST
-    CODE: $EXTRACODE
-    SHORT: $EXTRASHORT
-    ARCH: i386
-  when: manual
-extra:deb-64:
-  <<: *build-deb-base
-  variables:
-    DIST: $EXTRADIST
-    CODE: $EXTRACODE
-    SHORT: $EXTRASHORT
-    ARCH: amd64
-  when: manual
 # Fedora-based distributions
-.build-fed-base: &build-fed-base
+.build-fed-base: &build-fed
   dependencies:
-    - build:srpm
+    - src:srpm
   stage: binary-package
   retry: 2
   tags:
@@ -217,59 +246,49 @@ extra:deb-64:
       - products/$DIST-$DVER-$ARCH
     when:
       on_success
-.build-fed: &build-fed
-  <<: *build-fed-base
-  except:
+  only:
     variables:
-    - $EXTRADIST
-build:fedora-29-32:
+    - $DVER
+build:fedora_oldstable_32:
   <<: *build-fed
   variables:
     DIST: fedora
-    DVER: 29
+    DVER: $FEDORA_OLDSTABLE_VERSION
     ARCH: i386
-build:fedora-30-32:
+build:fedora_oldstable_64:
   <<: *build-fed
   variables:
     DIST: fedora
-    DVER: 30
+    DVER: $FEDORA_OLDSTABLE_VERSION
+    ARCH: x86_64
+build:fedora_stable_32:
+  <<: *build-fed
+  variables:
+    DIST: fedora
+    DVER: $FEDORA_STABLE_VERSION
     ARCH: i386
-build:fedora-29-64:
+build:fedora_stable_64:
   <<: *build-fed
   variables:
     DIST: fedora
-    DVER: 29
+    DVER: $FEDORA_STABLE_VERSION
     ARCH: x86_64
-build:fedora-30-64:
-  <<: *build-fed
-  variables:
-    DIST: fedora
-    DVER: 30
-    ARCH: x86_64
-build:centos-7-64:
+build:centos_oldstable_64:
   <<: *build-fed
   variables:
     DIST: epel
-    DVER: 7
+    DVER: $CENTOS_OLDSTABLE_VERSION
     ARCH: x86_64
-extra:fed-32:
-  <<: *build-fed-base
+build:centos_stable_64:
+  <<: *build-fed
   variables:
-    DIST: $EXTRADIST
-    DVER: $EXTRAVER
-    ARCH: i386
-  when: manual
-extra:fed-64:
-  <<: *build-fed-base
-  variables:
-    DIST: $EXTRADIST
-    DVER: $EXTRAVER
+    DIST: epel
+    DVER: $CENTOS_STABLE_VERSION
     ARCH: x86_64
-  when: manual
 # openSUSE-based distributions
-.build-suse-base: &build-suse-base
+.build-suse-base: &build-suse
   dependencies:
-    - build:srpm
+    - src:srpm
   stage: binary-package
   retry: 2
   tags:
@@ -287,30 +306,21 @@ extra:fed-64:
       - products/$DIST-$DVER-$ARCH
     when:
       on_success
-.build-suse: &build-suse
-  <<: *build-suse-base
-  except:
+  only:
     variables:
-    - $EXTRADIST
-build:suse-15.0:
+    - $DVER
+build:suse_oldstable:
   <<: *build-suse
   variables:
     DIST: opensuse
-    DVER: "15.0"
+    DVER: $OPENSUSE_OLDSTABLE_VERSION
     ARCH: x86_64
-build:suse-15.1:
-  <<: *build-suse-base
+build:suse_stable:
+  <<: *build-suse
   variables:
     DIST: opensuse
-    DVER: "15.1"
+    DVER: $OPENSUSE_STABLE_VERSION
     ARCH: x86_64
-extra:suse:
-  <<: *build-suse-base
-  variables:
-    DIST: $EXTRADIST
-    DVER: $EXTRAVER
-    ARCH: x86_64
-  when: manual
 build:windows:
   stage: binary-package
   variables:
@@ -320,7 +330,6 @@ build:windows:
   - build_all.bat
   tags:
   - windows
-  allow_failure: true
   artifacts:
     when: on_success
     paths:
@@ -342,7 +351,7 @@ build:macos:
   artifacts:
     when: on_success
     untracked: true
-robot:windows:
+validate:robot:windows:
   stage: validate
   tags:
   - robot
@@ -356,7 +365,7 @@ robot:windows:
   - cd tests\unit\windows\Release
   - pkcs11_tests.exe
   allow_failure: true
-robot:macos:
+validate:robot:macos:
   stage: validate
   variables:
     EID_ROBOT_STYLE: $EID_ROBOT_STYLE_MACOS
@@ -372,71 +381,23 @@ robot:macos:
   script:
   - ./testsuite
   allow_failure: true
-robot:linux:
-  stage: tests
-  variables:
-    EID_ROBOT_STYLE: zetes:/dev/CARD:/dev/USB
-    EID_DIALOGS_STYLE: nopin
-  dependencies: []
-  tags:
-  - robot
-  - docker
-  before_script:
-  - if [ ! -z "$ACNG" ]; then sed -i -e "s,http://,$ACNG," /etc/apt/sources.list; else echo "no proxy configured"; fi
-  - apt-get update
-  - apt-get -y install --no-install-recommends autoconf automake libtool libassuan-dev libgpg-error-dev libpcsclite-dev libp11-kit-dev libgtk-3-dev libssl-dev libxml2-dev libcurl4-openssl-dev libproxy-dev plantuml zip gettext build-essential g++ git graphviz
-  script:
-  - ./configure --libexecdir=$(pwd)/scripts/linux/hackbin --disable-pinentry
-  - make -j $(nproc) check
-  allow_failure: true
-repro:debian:
-  stage: tests
-  tags:
-  - docker
-  image: debian:buster
-  dependencies: []
-  before_script:
-  - if [ ! -z "$ACNG" ]; then sed -i -e "s,http://,$ACNG/," /etc/apt/sources.list; else echo "no proxy configured"; fi
-  - apt-get update
-  - apt-get -y install reprotest diffoscope equivs devscripts faketime disorderfs sudo
-  - mk-build-deps -r -i -t "apt-get -y -o Debug::pkgProblemResolver=yes --no-install-recommends"
-  script:
-  - reprotest .
-  allow_failure: true
-check:scan-build:
-  stage: tests
-  tags:
-    - docker
-  image: debian:stable
-  before_script:
-  - if [ ! -z "$ACNG" ]; then sed -i -e "s,http://,$ACNG/," /etc/apt/sources.list; else echo "no proxy configured"; fi
-  - apt-get update
-  - apt-get -y install --no-install-recommends clang-tools autoconf automake libtool libassuan-dev libgpg-error-dev libpcsclite-dev libp11-kit-dev libgtk-3-dev libssl-dev libxml2-dev libcurl4-openssl-dev libproxy-dev plantuml zip gettext build-essential git g++ graphviz curl
-  - autoreconf -f -i
-  - ./configure
-  script:
-  - scan-build --status-bugs -o public make -j $(nproc)
-  artifacts:
-    when: on_failure
-    paths:
-    - public
 ####################################################################
 # Stage "build-repository": copy binaries into a repository layout #
 ####################################################################
-inject-debs:
+repo:inject-debs:
   dependencies:
-    - build:deb9-32
-    - build:deb10-32
+    - build:deb_oldstable_32
+    - build:deb_stable_32
     - build:sid-32
-    - build:xenial-32
-    - build:bionic-32
-    - build:disco-32
-    - build:deb9-64
-    - build:deb10-64
+    - build:ubuntu_oldlts_32
+    - build:ubuntu_lts_32
+    - build:ubuntu_stable_32
+    - build:deb_oldstable_64
+    - build:deb_stable_64
     - build:sid-64
-    - build:xenial-64
-    - build:bionic-64
-    - build:disco-64
+    - build:ubuntu_oldlts_64
+    - build:ubuntu_lts_64
+    - build:ubuntu_stable_64
   stage: build-repository
   tags:
     - repobuilder
@@ -451,24 +412,7 @@ inject-debs:
     - $CI_COMMIT_REF_NAME == "master"
     - $CI_COMMIT_REF_NAME == $CANDIDATEBRANCH
     - $CI_COMMIT_TAG
-  except:
-    variables:
-    - $EXTRADIST
-add:debs:
-  when: manual
-  dependencies:
-  - extra:deb-32
-  - extra:deb-64
-  stage: build-repository
-  tags:
-  - repobuilder
-  before_script:
-  - dcmd mv products/deb/*ges /srv/repo/reprepro/incoming
-  script:
-  - cd /srv/repo/reprepro && reprepro processincoming incoming
-  variables:
-    GIT_STRATEGY: none
-inject-fed:
+repo:inject-fed:
   only:
     variables:
     - $CI_COMMIT_REF_NAME == "master"
@@ -478,11 +422,12 @@ inject-fed:
     variables:
     - $EXTRADIST
   dependencies:
-    - build:fedora-29-32
-    - build:fedora-29-64
-    - build:fedora-30-32
-    - build:fedora-30-64
-    - build:centos-7-64
+    - build:fedora_oldstable_32
+    - build:fedora_oldstable_64
+    - build:fedora_stable_32
+    - build:fedora_stable_64
+    - build:centos_oldstable_64
+    - build:centos_stable_64
   stage: build-repository
   tags:
     - repobuilder
@@ -491,20 +436,7 @@ inject-fed:
     - if [ $CANDIDATEBRANCH = $CI_COMMIT_REF_NAME ]; then TARGET=candidate; fi
     - if [ ! -z "$CI_COMMIT_TAG" ]; then TARGET=candidate; fi
     - bash -x scripts/build-aux/fed-rel.sh
-add:fedora:
-  when: manual
-  dependencies:
-  - extra:fed-32
-  - extra:fed-64
-  stage: build-repository
-  tags:
-  - repobuilder
-  script:
-  - export TARGET=continuous
-  - if [ "$CANDIDATEBRANCH" = "$CI_COMMIT_REF_NAME" ]; then TARGET=candidate; fi
-  - if [ ! -z "$CI_COMMIT_TAG" ]; then TARGET=candidate; fi
-  - bash -x scripts/build-aux/fed-rel.sh extra
-inject-suse:
+repo:inject-suse:
   only:
     variables:
     - $CI_COMMIT_REF_NAME == "master"
@@ -514,8 +446,8 @@ inject-suse:
     variables:
     - $EXTRADIST
   dependencies:
-    - build:suse-15.0
-    - build:suse-15.1
+    - build:suse_oldstable
+    - build:suse_stable
   stage: build-repository
   tags:
     - repobuilder
@@ -524,22 +456,9 @@ inject-suse:
     - if [ $CANDIDATEBRANCH = $CI_COMMIT_REF_NAME ]; then TARGET=candidate; fi
     - if [ ! -z "$CI_COMMIT_TAG" ]; then TARGET=candidate; fi
     - bash -x scripts/build-aux/suse-rel.sh
-add:suse:
-  when: manual
+repo:inject-source:
   dependencies:
-  - extra:suse
-  stage: build-repository
-  tags:
-  - repobuilder
-  script:
-  - export TARGET=continuous
-  - if [ "$CANDIDATEBRANCH" = "$CI_COMMIT_REF_NAME" ]; then TARGET=candidate; fi
-  - if [ ! -z "$CI_COMMIT_TAG" ]; then TARGET=candidate; fi
-  - bash -x scripts/build-aux/suse-rel.sh extra
-
-inject-source:
-  dependencies:
-  - build:source
+  - test:distcheck
   stage: build-repository
   tags:
   - repobuilder
