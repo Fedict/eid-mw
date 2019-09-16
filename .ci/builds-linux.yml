@@ -111,7 +111,7 @@
   before_script:
   - mkdir build
   - cd build && tar xvf ../products/source/eid-mw-*.tar.gz --strip-components=1
-  - ../products/source/build-aux/deb-cl.pl debian/changelog
+  - ../products/source/deb-cl.pl debian/changelog
   script:
   - TARGET=continuous
   - if [ $CANDIDATEBRANCH = $CI_COMMIT_REF_NAME ]; then TARGET=candidate; fi
