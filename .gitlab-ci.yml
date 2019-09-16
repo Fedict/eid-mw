@@ -264,9 +264,6 @@ repo:inject-fed:
     - $CI_COMMIT_REF_NAME == "master"
     - $CI_COMMIT_REF_NAME == $CANDIDATEBRANCH
     - $CI_COMMIT_TAG
-  except:
-    variables:
-    - $EXTRADIST
   dependencies:
     - build:fedora_oldstable_32
     - build:fedora_oldstable_64
@@ -283,14 +280,12 @@ repo:inject-suse:
     - $CI_COMMIT_REF_NAME == "master"
     - $CI_COMMIT_REF_NAME == $CANDIDATEBRANCH
     - $CI_COMMIT_TAG
-  except:
-    variables:
-    - $EXTRADIST
   dependencies:
     - build:suse_oldstable
     - build:suse_stable
   stage: build-repository
   extends: .inject-suse
+
 repo:inject-source:
   dependencies:
   - test:distcheck
