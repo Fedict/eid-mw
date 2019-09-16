@@ -92,7 +92,7 @@
   - dnf -y install rpm-build git rpmdevtools
   - rpmdev-setuptree
   - VER=$(cat products/source/version)
-  - VERSHORT=$(git describe --dirty | sed -e 's/-/./g')
+  - VERSHORT=${VER#*-}
   - mv products/source/eid-mw-$VER.tar.gz $HOME/rpmbuild/SOURCES/
   - tar --extract --file=$HOME/rpmbuild/SOURCES/eid-mw-$VER.tar.gz -C $HOME/rpmbuild/SPECS/ --strip-components=2 eid-mw-$VER/rpm/eid-mw.spec
   - tar --extract --file=$HOME/rpmbuild/SOURCES/eid-mw-$VER.tar.gz -C $HOME/rpmbuild/SOURCES/ --strip-components=2 eid-mw-$VER/rpm/baselibs.conf
