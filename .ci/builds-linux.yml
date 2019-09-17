@@ -110,7 +110,8 @@
     GIT_STRATEGY: none
   before_script:
   - mkdir -p build
-  - cd build && tar xvf ../products/source/eid-mw-*.tar.gz --strip-components=1
+  - VER=$(cat products/source/version)
+  - cd build && tar xvf ../products/source/eid-mw-${VER}.tar.gz --strip-components=1
   - ../products/source/deb-cl.pl debian/changelog
   script:
   - TARGET=continuous
@@ -215,8 +216,9 @@
   tags:
   - repobuilder
   script:
-  - SOURCETGZ=products/source/eid-mw-*.tar.gz
-  - SOURCEZIP=products/source/eid-mw-*.zip
+  - VER=$(cat products/source/version)
+  - SOURCETGZ=products/source/eid-mw-${VER}.tar.gz
+  - SOURCEZIP=products/source/eid-mw-${VER}.zip
   - cp $SOURCETGZ $SOURCEZIP /srv/dist/eid-mw/continuous/sources/
   - cd /srv/dist/eid-mw/continuous/sources
   - gpg --yes --batch --passphrase "" --default-key $GPG_TEST_KEY_ID --no-tty -b --armor $(basename $SOURCETGZ)
