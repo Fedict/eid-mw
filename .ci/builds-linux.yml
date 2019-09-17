@@ -109,7 +109,7 @@
   variables:
     GIT_STRATEGY: none
   before_script:
-  - mkdir build
+  - mkdir -p build
   - cd build && tar xvf ../products/source/eid-mw-*.tar.gz --strip-components=1
   - ../products/source/deb-cl.pl debian/changelog
   script:
