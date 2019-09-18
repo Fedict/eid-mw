@@ -101,6 +101,7 @@
   after_script:
   - mkdir -p products/srpm/
   - cp $HOME/rpmbuild/SRPMS/eid-mw-*.src.rpm products/srpm/
+  - cp products/source/version products/srpm/
   artifacts:
     paths:
     - products/srpm
@@ -142,7 +143,7 @@
     GIT_STRATEGY: none
   before_script:
   - dnf -y install mock git
-  - VER=$(cat products/source/version)
+  - VER=$(cat products/srpm/version)
   - VERSHORT=${VER#*-}
   script:
   - mock --old-chroot --verbose -r $DIST-$DVER-$ARCH --rebuild products/srpm/eid-mw-*.src.rpm --define "revision $VERSHORT"
