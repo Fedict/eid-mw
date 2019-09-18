@@ -18,7 +18,6 @@
   - mkdir -p products/source
   - cp $LINUX_BASEDIR/eid-mw-*.tar.gz $LINUX_BASEDIR/eid-mw-*.zip products/source/
   - cp $LINUX_BASEDIR/.version products/source/version
-  - cp $LINUX_BASEDIR/scripts/build-aux/deb-cl.pl products/source/
   artifacts:
     when:
       on_success
@@ -107,13 +106,10 @@
     - products/srpm
 
 .build-deb-base:
-  variables:
-    GIT_STRATEGY: none
   before_script:
   - mkdir -p build
-  - VER=$(cat products/source/version)
   - cd build && tar xvf ../products/source/eid-mw-${VER}.tar.gz --strip-components=1
-  - ../products/source/deb-cl.pl debian/changelog
+  - ../scripts/build-aux/deb-cl.pl debian/changelog
   script:
   - TARGET=continuous
   - if [ $CANDIDATEBRANCH = $CI_COMMIT_REF_NAME ]; then TARGET=candidate; fi
