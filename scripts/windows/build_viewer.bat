@@ -42,22 +42,39 @@ copy %~dp0..\..\installers\eid-viewer\Windows\bin\beidViewer.msi %~dp0
 
 :: create the NSIS installer
 :: =========================
-
 @echo [INFO] Make nsis installer
 "%NSIS_PATH%\makensis.exe" "%~dp0..\..\installers\quickinstaller\eIDViewerInstaller.nsi"
 @if %ERRORLEVEL%==1 goto makensis_failed
 
+:: create the NSIS launcher
+:: =========================
+@echo [INFO] Make nsis viewer launcher
+"%NSIS_PATH%\makensis.exe" "%~dp0..\..\installers\quickinstaller\eIDViewerLauncher.nsi"
+@if %ERRORLEVEL%==1 goto makensis_failed
+
+
 :: sign the NSIS installer
 :: =======================
-
 @echo [INFO] Sign nsis viewer installer
 "%SIGNTOOL_PATH%\signtool" sign /a /n "ZetesTestCert" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%~dp0..\..\installers\quickinstaller\Belgium eID Viewer Installer %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe"
 @if %ERRORLEVEL%==1 goto signtool_failed
+
+:: sign the nsis launcher
+:: =======================
+@echo [INFO] sign nsis viewer launcher
+"%SIGNTOOL_PATH%\signtool" sign /a /n "ZetesTestCert" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%~dp0..\..\installers\quickinstaller\Belgium eID Viewer Launcher %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe"
+@if %ERRORLEVEL%==1 goto signtool_failed
+
 
 :: copy the NSIS installer
 :: =======================
 @echo [INFO] copy nsis installer
 copy "%~dp0..\..\installers\quickinstaller\Belgium eID Viewer Installer %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe" %~dp0
+
+:: copy the NSIS launcher
+:: ======================
+@echo [INFO] copy nsis launcher
+copy "%~dp0..\..\installers\quickinstaller\Belgium eID Viewer Launcher %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe" %~dp0
 goto end_resetpath
 
 :msbuild_failed
