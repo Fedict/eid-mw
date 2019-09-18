@@ -795,8 +795,7 @@ namespace eIDViewer
 
         public void StoreStringData(string label, string data)
         {
-            progress_info = "reading data";
-            progress += 1;
+
             if (String.Equals(label, "firstnames", StringComparison.Ordinal))
             { firstName = data; }
             else if (String.Equals(label, "surname", StringComparison.Ordinal))
@@ -877,81 +876,81 @@ namespace eIDViewer
                     photoFile = new byte[datalen];
                     data.CopyTo(photoFile, 0);
                     photo = LoadImage(data);
-                    progress_info = "reading photo";
+                    progress_info = "read photo";
                     progress += 4;
                 }
                 else if (String.Equals(label, "photo_hash", StringComparison.Ordinal))
                 {
                     photo_hash = new byte[datalen];
                     data.CopyTo(photo_hash, 0);
-                    progress_info = "reading the identity data file";
+                    progress_info = "read the identity data file";
                     progress += 4;
                 }
                 else if (String.Equals(label, "DATA_FILE", StringComparison.Ordinal))
                 {
                    dataFile = new byte[datalen];
                    data.CopyTo(dataFile,0);
-                   progress_info = "reading the identity data file";
+                   progress_info = "read the identity data file";
                    progress += 4;                         
                 }
                 else if (String.Equals(label, "ADDRESS_FILE", StringComparison.Ordinal))
                 {
                     addressFile = new byte[datalen];
                     data.CopyTo(addressFile, 0);
-                    progress_info = "reading the address file";
+                    progress_info = "read the address file";
                     progress += 2;
                 }
                 else if (String.Equals(label, "SIGN_DATA_FILE", StringComparison.Ordinal))
                 {
                     dataSignFile = new byte[datalen];
                     data.CopyTo(dataSignFile, 0);
-                    progress_info = "reading the signature of the identity file";
+                    progress_info = "read the signature of the identity file";
                     progress += 1;
                 }
                 else if (String.Equals(label, "SIGN_ADDRESS_FILE", StringComparison.Ordinal))
                 {
                     addressSignFile = new byte[datalen];
                     data.CopyTo(addressSignFile, 0);
-                    progress_info = "reading the signature of the address file";
+                    progress_info = "read the signature of the address file";
                     progress += 1;
                 }
                 else if (String.Equals(label, "chip_number", StringComparison.Ordinal))
                 { //chip_number = BitConverter.ToString(data);
-                    progress_info = "reading chip_number";
+                    progress_info = "read chip_number";
                     chip_number = String.Concat(Array.ConvertAll(data, x => x.ToString("X2")));
                     progress += 1;
                 }
                 else if (String.Equals(label, "Authentication", StringComparison.Ordinal))
                 {
-                    progress_info = "reading authentication certificate";
+                    progress_info = "read authentication certificate";
                     authentication_cert = new X509Certificate2(data);
                     StoreCertificate( ref authCertViewModel, ref authentication_cert);
                     progress += 6;
                 }
                 else if (String.Equals(label, "Signature", StringComparison.Ordinal))
                 {
-                    progress_info = "reading signature certificate";
+                    progress_info = "read signature certificate";
                     signature_cert = new X509Certificate2(data);
                     StoreCertificate(ref signCertViewModel, ref signature_cert);
                     progress += 6;
                 }
                 else if (String.Equals(label, "Root", StringComparison.Ordinal))
                 {
-                    progress_info = "reading root certificate";
+                    progress_info = "read root certificate";
                     rootCA_cert = new X509Certificate2(data);
                     StoreCertificate(ref rootCAViewModel, ref rootCA_cert);
                     progress += 6;
                 }
                 else if (String.Equals(label, "CA", StringComparison.Ordinal))
                 {
-                    progress_info = "reading intermediate certificate";
+                    progress_info = "read intermediate certificate";
                     intermediateCA_cert = new X509Certificate2(data);
                     StoreCertificate(ref intermediateCAViewModel, ref intermediateCA_cert);
                     progress += 6;
                 }
                 else if (String.Equals(label, "CERT_RN_FILE", StringComparison.Ordinal))
                 {
-                    progress_info = "reading RN certificate";
+                    progress_info = "read RN certificate";
                     RN_cert = new X509Certificate2(data);
                     StoreCertificate(ref RNCertViewModel, ref RN_cert);
                     progress += 6;
