@@ -6,7 +6,6 @@
   services:
   - docker:dind
   variables:
-    DOCKER_HOST: tcp://docker:2375
     IMAGE_TAG: $CI_REGISTRY_IMAGE/$CI_JOB_NAME:$CI_COMMIT_REF_SLUG
   only:
     changes:
