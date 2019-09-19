@@ -107,9 +107,7 @@
 
 .build-deb-base:
   before_script:
-  - mkdir -p build
-  - cd build && tar xvf ../products/source/eid-mw-${VER}.tar.gz --strip-components=1
-  - ../scripts/build-aux/deb-cl.pl debian/changelog
+  - scripts/build-aux/deb-cl.pl debian/changelog
   - download-debuerrotype-tarball.sh $CODE $ARCH
   script:
   - TARGET=continuous
