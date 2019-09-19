@@ -1,6 +1,8 @@
 .docker-base: &docker-base
   stage: docker
   image: docker:stable
+  tags:
+  - docker
   services:
   - docker:dind
   variables:
