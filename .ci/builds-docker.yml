@@ -21,3 +21,9 @@
 
 suse-build:
   <<: *docker-base
+
+fed-build:
+  <<: *docker-base
+
+deb-build:
+  <<: *docker-base

@@ -1,7 +1,7 @@
 .distcheck:
   tags:
   - docker
-  image: debian:testing
+  image: $CI_REGISTRY_IMAGE/deb-build:$CI_COMMIT_REF_SLUG
   before_script:
   - if [ ! -z "$ACNG" ]; then sed -i -e "s,http://,$ACNG/," /etc/apt/sources.list; else echo "no proxy configured"; fi
   - apt-get update
@@ -49,7 +49,7 @@
 .repro:debian:
   tags:
   - docker
-  image: debian:buster
+  image: $CI_REGISTRY_IMAGE/deb-repro:$CI_COMMIT_REF_SLUG
   dependencies: []
   before_script:
   - if [ ! -z "$ACNG" ]; then sed -i -e "s,http://,$ACNG/," /etc/apt/sources.list; else echo "no proxy configured"; fi
@@ -63,7 +63,7 @@
 .scan-build:
   tags:
     - docker
-  image: debian:stable
+  image: $CI_REGISTRY_IMAGE/deb-scan-build:$CI_COMMIT_REF_SLUG
   before_script:
   - if [ ! -z "$ACNG" ]; then sed -i -e "s,http://,$ACNG/," /etc/apt/sources.list; else echo "no proxy configured"; fi
   - apt-get update
@@ -86,7 +86,7 @@
     GIT_STRATEGY: none
   tags:
     - docker
-  image: fedora:latest
+  image: $CI_REGISTRY_IMAGE/fed-build:$CI_COMMIT_REF_SLUG
   before_script:
   - dnf -y install rpm-build git rpmdevtools
   - rpmdev-setuptree
@@ -135,7 +135,7 @@
   retry: 2
   tags:
   - docker
-  image: fedora:latest
+  image: $CI_REPOSITORY_IMAGE/fed-build:$CI_COMMIT_REF_SLUG
   variables:
     GIT_STRATEGY: none
   before_script:
