@@ -1,5 +1,6 @@
 ---
 stages:
+- docker
 - tests
 - source-package
 - binary-package
@@ -12,6 +13,7 @@ include:
 - local: .ci/builds-linux.yml
 - local: .ci/builds-windows.yml
 - local: .ci/builds-macos.yml
+- local: .ci/builds-docker.yml
 
 variables:
   LINUX_BASEDIR: .
