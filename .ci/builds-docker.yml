@@ -27,3 +27,9 @@ fed-build:
 
 deb-build:
   <<: *docker-base
+
+deb-repro:
+  <<: *docker-base
+
+deb-scan-build:
+  <<: *docker-base
