@@ -164,7 +164,7 @@
   retry: 2
   tags:
     - docker
-  image: wouterverhelst/obs-build:latest
+  image: $CI_REGISTRY_IMAGE/suse-build:$CI_COMMIT_REF_SLUG
   before_script:
     - pushd $LINUX_BASEDIR
     - VERSHORT=$(git describe --dirty | sed -e 's/-/./g')
