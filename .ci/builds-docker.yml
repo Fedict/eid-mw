@@ -8,17 +8,15 @@
   variables:
     DOCKER_HOST: tcp://docker:2375
     DOCKER_DRIVER: overlay2
-    IMAGE_TAG: $CI_REGISTRY_IMAGE/$BASEDIR:$CI_COMMIT_REF_SLUG
+    IMAGE_TAG: $CI_REGISTRY_IMAGE/$CI_JOB_NAME:$CI_COMMIT_REF_SLUG
   only:
     changes:
-    - .ci/dockerfiles/$BASEDIR
+    - .ci/dockerfiles/$CI_JOB_NAME
     - .ci/builds-docker.yml
   script:
-  - cd .ci/dockerfiles/$BASEDIR
+  - cd .ci/dockerfiles/$CI_JOB_NAME
   - docker build --pull -t $IMAGE_TAG .
   - docker push $IMAGE_TAG
 
-docker-suse-build:
+suse-build:
   <<: *docker-base
-  variables:
-    BASEDIR: suse-build
