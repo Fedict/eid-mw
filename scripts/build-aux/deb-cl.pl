@@ -18,9 +18,9 @@ my $date = undef;
 if(defined($ARGV[1])) {
 	$date=$ARGV[1];
 }
-my $version = undef
+my $version = undef;
 if(defined($ARGV[2])) {
-	$ver=$ARGV[2];
+	$version=$ARGV[2];
 }
 
 $c->load($changefile);
