@@ -119,11 +119,11 @@
   - COMMITDATE=$(cat products/source/date)
   - scripts/build-aux/deb-cl.pl debian/changelog $COMMITDATE $VER
   - download-debuerreotype-tarball.sh $CODE $ARCH
-  script:
   - TARGET=continuous
   - if [ $CANDIDATEBRANCH = $CI_COMMIT_REF_NAME ]; then TARGET=candidate; fi
   - if [ ! -z "$CI_COMMIT_TAG" ]; then TARGET=candidate; fi
   - if [ $ARCH = "i386" ]; then DASHA="-A -s"; else DASHA=""; fi
+  script:
   - sbuild -n $DASHA -d $TARGET-$CODE -c $CODE-$ARCH-sbuild --arch=$ARCH
   after_script:
   - mkdir -p products/deb/
