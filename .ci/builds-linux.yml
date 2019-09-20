@@ -138,7 +138,7 @@
       on_success
   tags:
   - docker
-  image: tianon/sbuild
+  image: $CI_REGISTRY_IMAGE/deb-sbuild:$CI_COMMIT_REF_SLUG
   except:
     variables:
     - $CODE == null

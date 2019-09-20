@@ -35,3 +35,6 @@ deb-repro:
 
 deb-scan-build:
   <<: *docker-base
+
+deb-sbuild:
+  <<: *docker-base
