@@ -1,4 +1,5 @@
 .docker-base: &docker-base
+  retry: 1
   stage: docker
   image: docker:stable
   tags:
