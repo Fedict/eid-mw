@@ -118,7 +118,7 @@
   - VERSHORT=${VER#*-}
   - COMMITDATE=$(cat products/source/date)
   - scripts/build-aux/deb-cl.pl debian/changelog $COMMITDATE $VER
-  - download-debuerrotype-tarball.sh $CODE $ARCH
+  - download-debuerreotype-tarball.sh $CODE $ARCH
   script:
   - TARGET=continuous
   - if [ $CANDIDATEBRANCH = $CI_COMMIT_REF_NAME ]; then TARGET=candidate; fi
