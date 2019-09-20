@@ -18,6 +18,10 @@
   - mkdir -p products/source
   - cp $LINUX_BASEDIR/eid-mw-*.tar.gz $LINUX_BASEDIR/eid-mw-*.zip products/source/
   - cp $LINUX_BASEDIR/.version products/source/version
+  - pushd $LINUX_BASEDIR
+  - COMMIT_DATE=$(git log --date=rfc HEAD^..HEAD|grep ^Date|cut -d ' ' -f 2-|sed -e 's/^\s*//')
+  - popd
+  - echo $COMMIT_DATE > products/source/date
   artifacts:
     when:
       on_success
@@ -107,8 +111,13 @@
     - products/srpm
 
 .build-deb-base:
+  variables:
+    GIT_STRATEGY: none
   before_script:
-  - scripts/build-aux/deb-cl.pl debian/changelog
+  - VER=$(cat products/source/version)
+  - VERSHORT=${VER#*-}
+  - COMMITDATE=$(cat products/source/date)
+  - scripts/build-aux/deb-cl.pl debian/changelog $COMMITDATE $VER
   - download-debuerrotype-tarball.sh $CODE $ARCH
   script:
   - TARGET=continuous

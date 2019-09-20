@@ -18,6 +18,10 @@ my $date = undef;
 if(defined($ARGV[1])) {
 	$date=$ARGV[1];
 }
+my $version = undef
+if(defined($ARGV[2])) {
+	$ver=$ARGV[2];
+}
 
 $c->load($changefile);
 print "before:\n-------\n";
@@ -37,10 +41,12 @@ if(!defined($date)) {
 	}
 	close GIT;
 }
-open my $vers, dirname($0) . "/genver.sh|";
-my $version = <$vers>;
-close $vers;
-chomp $version;
+if(!defined($version)) {
+	open my $vers, dirname($0) . "/genver.sh|";
+	$version = <$vers>;
+	close $vers;
+	chomp $version;
+}
 $entry->{header} = "eid-mw ($version-0" . $ENV{SHORT} . "-1) " . $ENV{TARGET} . "-" . $ENV{CODE} . "; urgency=low";
 $entry->{changes} = ["  * Snapshot release"];
 $entry->{trailer} = " -- $author  $date";
