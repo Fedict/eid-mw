@@ -10,6 +10,7 @@
   only:
     changes:
     - .ci/dockerfiles/$CI_JOB_NAME/**
+    - .ci/builds-docker.yml
     - .ci/build-configs.yml
   before_script:
   - docker info
