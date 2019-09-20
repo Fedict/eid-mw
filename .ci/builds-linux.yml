@@ -18,6 +18,7 @@
   - mkdir -p products/source
   - cp $LINUX_BASEDIR/eid-mw-*.tar.gz $LINUX_BASEDIR/eid-mw-*.zip products/source/
   - cp $LINUX_BASEDIR/.version products/source/version
+  - cp $LINUX_BASEDIR/scripts/build-aux/deb-cl.pl products/source/
   - pushd $LINUX_BASEDIR
   - COMMIT_DATE=$(git log --date=rfc HEAD^..HEAD|grep ^Date|cut -d ' ' -f 2-|sed -e 's/^\s*//')
   - popd
@@ -117,7 +118,7 @@
   - VER=$(cat products/source/version)
   - VERSHORT=${VER#*-}
   - COMMITDATE=$(cat products/source/date)
-  - scripts/build-aux/deb-cl.pl debian/changelog $COMMITDATE $VER
+  - ../products/source/deb-cl.pl debian/changelog $COMMITDATE $VER
   - download-debuerreotype-tarball.sh $CODE $ARCH
   - TARGET=continuous
   - if [ $CANDIDATEBRANCH = $CI_COMMIT_REF_NAME ]; then TARGET=candidate; fi
