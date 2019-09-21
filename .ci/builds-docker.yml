@@ -10,14 +10,14 @@
     IMAGE_TAG: $CI_REGISTRY_IMAGE/$CI_JOB_NAME:$CI_COMMIT_REF_SLUG
   only:
     changes:
-    - .ci/dockerfiles/$CI_JOB_NAME/**
-    - .ci/builds-docker.yml
-    - .ci/build-configs.yml
+    - $LINUX_BASEDIR/.ci/dockerfiles/$CI_JOB_NAME/**/*
+    - $LINUX_BASEDIR/.ci/builds-docker.yml
+    - $LINUX_BASEDIR/.ci/build-configs.yml
   before_script:
   - docker info
   - docker pull $IMAGE_TAG || true
   script:
-  - cd .ci/dockerfiles/$CI_JOB_NAME
+  - cd $LINUX_BASEDI/.ci/dockerfiles/$CI_JOB_NAME
   - docker build --pull --cache-from $IMAGE_TAG -t $IMAGE_TAG .
   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   - docker push $IMAGE_TAG
