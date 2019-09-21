@@ -120,7 +120,7 @@
   - COMMITDATE=$(cat products/source/date)
   - mkdir -p build
   - cd build && tar xvf ../products/source/eid-mw-${VER}.tar.gz --strip-components=1
-  - download-debuerreotype-tarball.sh $CODE $ARCH
+  - setup-chroot.sh $CODE $ARCH $DIST
   - export TARGET=continuous
   - if [ $CANDIDATEBRANCH = $CI_COMMIT_REF_NAME ]; then TARGET=candidate; fi
   - if [ ! -z "$CI_COMMIT_TAG" ]; then TARGET=candidate; fi
