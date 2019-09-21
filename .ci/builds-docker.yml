@@ -8,11 +8,6 @@
   - docker:dind
   variables:
     IMAGE_TAG: $CI_REGISTRY_IMAGE/$CI_JOB_NAME:$CI_COMMIT_REF_SLUG
-  only:
-    changes:
-    - $LINUX_BASEDIR/.ci/dockerfiles/$CI_JOB_NAME/**/*
-    - $LINUX_BASEDIR/.ci/builds-docker.yml
-    - $LINUX_BASEDIR/.ci/build-configs.yml
   before_script:
   - docker info
   - docker pull $IMAGE_TAG || true
@@ -24,18 +19,48 @@
 
 suse-build:
   <<: *docker-base
+  only:
+    changes:
+    - .ci/dockerfiles/suse-build/**/*
+    - .ci/builds-docker.yml
+    - .ci/build-configs.yml
 
 fed-build:
   <<: *docker-base
+  only:
+    changes:
+    - .ci/dockerfiles/fed-build/**/*
+    - .ci/builds-docker.yml
+    - .ci/build-configs.yml
 
 deb-build:
   <<: *docker-base
+  only:
+    changes:
+    - .ci/dockerfiles/deb-build/**/*
+    - .ci/builds-docker.yml
+    - .ci/build-configs.yml
 
 deb-repro:
   <<: *docker-base
+  only:
+    changes:
+    - .ci/dockerfiles/deb-repro/**/*
+    - .ci/builds-docker.yml
+    - .ci/build-configs.yml
 
 deb-scan-build:
   <<: *docker-base
+  only:
+    changes:
+    - .ci/dockerfiles/deb-scan-build/**/*
+    - .ci/builds-docker.yml
+    - .ci/build-configs.yml
 
 deb-sbuild:
   <<: *docker-base
+  only:
+    changes:
+    - .ci/dockerfiles/deb-sbuild/**/*
+    - .ci/builds-docker.yml
+    - .ci/build-configs.yml
