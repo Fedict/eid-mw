@@ -14,4 +14,8 @@ case $DIST in
 		mkdir -p /srv/chroot
 		sbuild-createchroot --arch=$ARCH $CODE /srv/chroot/$CODE https://archive.ubuntu.com/ubuntu
 	;;
+	*)
+		echo "E: unknown dist: $DIST" >&2
+		exit 1
+	;;
 esac
