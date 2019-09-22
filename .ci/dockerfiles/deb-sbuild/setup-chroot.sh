@@ -3,9 +3,20 @@
 set -e
 set -x
 
-CODE=shift
-ARCH=shift
-DIST=shift
+if [ -z "$CODE" ] && [ ! -z "$1" ]
+then
+	CODE=$1
+fi
+shift
+if [ -z "$ARCH" ] && [ ! -z "$1" ]
+then
+	ARCH=$1
+fi
+shift
+if [ -z "$DIST" ] && [ ! -z "$1" ]
+then
+	DIST=shift
+fi
 case $DIST in
 	debian)
 		/usr/local/bin/download-debuerreotype-tarball.sh $CODE $ARCH
