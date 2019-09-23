@@ -74,7 +74,7 @@ BEIDCARD_DIR="$ROOT_DIR/Library/Belgium Identity Card"
 ################## BEIDToken installer name defines ###########
 #BEIDToken installer name defines
 #release dir, where all the BEIDToken files to be released will be placed
-RELEASE_BEIDTOKEN_DIR is defined above, depending on build configuration
+#RELEASE_BEIDTOKEN_DIR is defined above, depending on build configuration
 #root dir, for files that are to be installed by the pkg
 ROOT_BEIDTOKEN_DIR="$RELEASE_BEIDTOKEN_DIR/root"
 
