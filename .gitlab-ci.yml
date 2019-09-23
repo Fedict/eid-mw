@@ -52,7 +52,7 @@ deb-repro:
   only:
     changes:
     - .ci/dockerfiles/deb-repro/**/
-    - .ci/repros-docker.yml
+    - .ci/builds-docker.yml
     - .ci/build-configs.yml
 
 deb-scan-build:
@@ -60,7 +60,7 @@ deb-scan-build:
   only:
     changes:
     - .ci/dockerfiles/deb-scan-build/**/
-    - .ci/scan-builds-docker.yml
+    - .ci/builds-docker.yml
     - .ci/build-configs.yml
 
 deb-sbuild:
@@ -68,7 +68,7 @@ deb-sbuild:
   only:
     changes:
     - .ci/dockerfiles/deb-sbuild/**/
-    - .ci/sbuilds-docker.yml
+    - .ci/builds-docker.yml
     - .ci/build-configs.yml
 
 ##########################################################################################################
