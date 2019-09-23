@@ -1,4 +1,4 @@
-.docker-base: &docker-base
+.docker-base:
   retry: 1
   stage: docker
   image: docker:stable
@@ -16,51 +16,3 @@
   - docker build --pull --cache-from $IMAGE_TAG -t $IMAGE_TAG .
   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   - docker push $IMAGE_TAG
-
-suse-build:
-  <<: *docker-base
-  only:
-    changes:
-    - .ci/dockerfiles/suse-build/**/*
-    - .ci/builds-docker.yml
-    - .ci/build-configs.yml
-
-fed-build:
-  <<: *docker-base
-  only:
-    changes:
-    - .ci/dockerfiles/fed-build/**/*
-    - .ci/builds-docker.yml
-    - .ci/build-configs.yml
-
-deb-build:
-  <<: *docker-base
-  only:
-    changes:
-    - .ci/dockerfiles/deb-build/**/*
-    - .ci/builds-docker.yml
-    - .ci/build-configs.yml
-
-deb-repro:
-  <<: *docker-base
-  only:
-    changes:
-    - .ci/dockerfiles/deb-repro/**/*
-    - .ci/builds-docker.yml
-    - .ci/build-configs.yml
-
-deb-scan-build:
-  <<: *docker-base
-  only:
-    changes:
-    - .ci/dockerfiles/deb-scan-build/**/*
-    - .ci/builds-docker.yml
-    - .ci/build-configs.yml
-
-deb-sbuild:
-  <<: *docker-base
-  only:
-    changes:
-    - .ci/dockerfiles/deb-sbuild/**/*
-    - .ci/builds-docker.yml
-    - .ci/build-configs.yml

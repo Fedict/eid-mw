@@ -20,6 +20,57 @@ variables:
   WINDOWS_BASEDIR: .
   MACOS_BASEDIR: .
 
+#######################################
+# Stage "docker": build docker images #
+#######################################
+suse-build:
+  extends: .docker-base
+  only:
+    changes:
+    - .ci/dockerfiles/suse-build/**/
+    - .ci/builds-docker.yml
+    - .ci/build-configs.yml
+
+fed-build:
+  extends: .docker-base
+  only:
+    changes:
+    - .ci/dockerfiles/fed-build/**/
+    - .ci/builds-docker.yml
+    - .ci/build-configs.yml
+
+deb-build:
+  extends: .docker-base
+  only:
+    changes:
+    - .ci/dockerfiles/deb-build/**/
+    - .ci/builds-docker.yml
+    - .ci/build-configs.yml
+
+deb-repro:
+  extends: .docker-base
+  only:
+    changes:
+    - .ci/dockerfiles/deb-repro/**/
+    - .ci/repros-docker.yml
+    - .ci/build-configs.yml
+
+deb-scan-build:
+  extends: .docker-base
+  only:
+    changes:
+    - .ci/dockerfiles/deb-scan-build/**/
+    - .ci/scan-builds-docker.yml
+    - .ci/build-configs.yml
+
+deb-sbuild:
+  extends: .docker-base
+  only:
+    changes:
+    - .ci/dockerfiles/deb-sbuild/**/
+    - .ci/sbuilds-docker.yml
+    - .ci/build-configs.yml
+
 ##########################################################################################################
 # Stage "tests": run a test battery before doing all the hard work (i.e., try to find any problems ASAP) #
 ##########################################################################################################
