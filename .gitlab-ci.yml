@@ -77,9 +77,17 @@ deb-sbuild:
 test:distcheck:
   stage: tests
   extends: .distcheck
+  cache:
+    key: $CI_COMMIT_REF_SLUG:build
+    untracked: true
+
 test:robot:linux:
   stage: tests
   extends: .robot:linux
+  cache:
+    key: $CI_COMMIT_REF_SLUG:build
+    untracked: true
+
 test:repro:debian:
   stage: tests
   extends: .repro:debian
