@@ -139,10 +139,6 @@
   tags:
   - docker
   image: $CI_REGISTRY_IMAGE/deb-sbuild:$CI_COMMIT_REF_SLUG
-  only:
-    variables:
-    - $CODE != null
-    - $CODE != ""
 
 .build-fed-base:
   retry: 2
@@ -165,10 +161,6 @@
     - products/$DIST-$DVER-$ARCH
     when:
       on_success
-  only:
-    variables:
-    - $DVER != null
-    - $DVER != ""
 
 .build-suse-base:
   dependencies:
@@ -192,10 +184,6 @@
       - products/$DIST-$DVER-$ARCH
     when:
       on_success
-  only:
-    variables:
-    - $DVER != null
-    - $DVER != ""
 
 .inject-debs:
   tags:

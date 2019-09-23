@@ -118,6 +118,9 @@ build:deb_oldstable_32:
     CODE: $DEBIAN_OLDSTABLE_CODE
     SHORT: deb$DEBIAN_OLDSTABLE_VERSION
     ARCH: i386
+  only:
+    variables:
+    - $DEBIAN_OLDSTABLE_CODE
 build:deb_oldstable_64:
   <<: *build-deb
   variables:
@@ -125,6 +128,9 @@ build:deb_oldstable_64:
     CODE: $DEBIAN_OLDSTABLE_CODE
     SHORT: deb$DEBIAN_OLDSTABLE_VERSION
     ARCH: amd64
+  only:
+    variables:
+    - $DEBIAN_OLDSTABLE_CODE
 build:deb_stable_32:
   <<: *build-deb
   variables:
@@ -132,6 +138,9 @@ build:deb_stable_32:
     CODE: $DEBIAN_STABLE_CODE
     SHORT: deb$DEBIAN_STABLE_VERSION
     ARCH: i386
+  only:
+    variables:
+    - $DEBIAN_STABLE_CODE
 build:deb_stable_64:
   <<: *build-deb
   variables:
@@ -139,6 +148,9 @@ build:deb_stable_64:
     CODE: $DEBIAN_STABLE_CODE
     SHORT: deb$DEBIAN_STABLE_VERSION
     ARCH: amd64
+  only:
+    variables:
+    - $DEBIAN_STABLE_CODE
 build:sid-32:
   <<: *build-deb
   variables:
@@ -162,6 +174,9 @@ build:ubuntu_oldlts_32:
     CODE: $UBUNTU_OLDLTS_CODE
     SHORT: u$UBUNTU_OLDLTS_VERSION
     ARCH: i386
+  only:
+    variables:
+    - $UBUNTU_OLDLTS_CODE
 build:ubuntu_oldlts_64:
   <<: *build-deb
   variables:
@@ -169,6 +184,9 @@ build:ubuntu_oldlts_64:
     CODE: $UBUNTU_OLDLTS_CODE
     SHORT: u$UBUNTU_OLDLTS_VERSION
     ARCH: amd64
+  only:
+    variables:
+    - $UBUNTU_OLDLTS_CODE
 build:ubuntu_lts_32:
   <<: *build-deb
   variables:
@@ -176,6 +194,9 @@ build:ubuntu_lts_32:
     CODE: $UBUNTU_LTS_CODE
     SHORT: u$UBUNTU_LTS_VERSION
     ARCH: i386
+  only:
+    variables:
+    - $UBUNTU_LTS_CODE
 build:ubuntu_lts_64:
   <<: *build-deb
   variables:
@@ -183,6 +204,9 @@ build:ubuntu_lts_64:
     CODE: $UBUNTU_LTS_CODE
     SHORT: u$UBUNTU_LTS_VERSION
     ARCH: amd64
+  only:
+    variables:
+    - $UBUNTU_LTS_CODE
 build:ubuntu_stable_32:
   <<: *build-deb
   variables:
@@ -190,6 +214,9 @@ build:ubuntu_stable_32:
     CODE: $UBUNTU_STABLE_CODE
     SHORT: u$UBUNTU_STABLE_VERSION
     ARCH: i386
+  only:
+    variables:
+    - $UBUNTU_STABLE_CODE
 build:ubuntu_stable_64:
   <<: *build-deb
   variables:
@@ -197,6 +224,9 @@ build:ubuntu_stable_64:
     CODE: $UBUNTU_STABLE_CODE
     SHORT: u$UBUNTU_STABLE_VERSION
     ARCH: amd64
+  only:
+    variables:
+    - $UBUNTU_STABLE_CODE
 
 # Fedora-based distributions
 .build-fed: &build-fed
@@ -210,36 +240,54 @@ build:fedora_oldstable_32:
     DIST: fedora
     DVER: $FEDORA_OLDSTABLE_VERSION
     ARCH: i386
+  only:
+    variables:
+    - $FEDORA_OLDSTABLE_VERSION
 build:fedora_oldstable_64:
   <<: *build-fed
   variables:
     DIST: fedora
     DVER: $FEDORA_OLDSTABLE_VERSION
     ARCH: x86_64
+  only:
+    variables:
+    - $FEDORA_OLDSTABLE_VERSION
 build:fedora_stable_32:
   <<: *build-fed
   variables:
     DIST: fedora
     DVER: $FEDORA_STABLE_VERSION
     ARCH: i386
+  only:
+    variables:
+    - $FEDORA_STABLE_VERSION
 build:fedora_stable_64:
   <<: *build-fed
   variables:
     DIST: fedora
     DVER: $FEDORA_STABLE_VERSION
     ARCH: x86_64
+  only:
+    variables:
+    - $FEDORA_STABLE_VERSION
 build:centos_oldstable_64:
   <<: *build-fed
   variables:
     DIST: epel
     DVER: $CENTOS_OLDSTABLE_VERSION
     ARCH: x86_64
+  only:
+    variables:
+    - $CENTOS_OLDSTABLE_VERSION
 build:centos_stable_64:
   <<: *build-fed
   variables:
     DIST: epel
     DVER: $CENTOS_STABLE_VERSION
     ARCH: x86_64
+  only:
+    variables:
+    - $CENTOS_STABLE_VERSION
 
 # openSUSE-based distributions
 .build-suse: &build-suse
@@ -253,12 +301,18 @@ build:suse_oldstable:
     DIST: opensuse
     DVER: $OPENSUSE_OLDSTABLE_VERSION
     ARCH: x86_64
+  only:
+    variables:
+    - $OPENSUSE_OLDSTABLE_VERSION
 build:suse_stable:
   <<: *build-suse
   variables:
     DIST: opensuse
     DVER: $OPENSUSE_STABLE_VERSION
     ARCH: x86_64
+  only:
+    variables:
+    - $OPENSUSE_STABLE_VERSION
 
 # Windows
 build:windows:
