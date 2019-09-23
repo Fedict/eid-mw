@@ -318,17 +318,26 @@ build:suse_stable:
 build:windows:
   stage: binary-package
   extends: .build-windows
+  cache:
+    untracked: true
+    key: "windows:$CI_COMMIT_REF_SLUG"
 
 # macOS
 build:macos:
   stage: binary-package
   extends: .build-macos
+  cache:
+    untracked: true
+    key: "macos:$CI_COMMIT_REF_SLUG"
 
 validate:robot:windows:
   stage: validate
   extends: .robot:windows
   dependencies:
   - build:windows
+  cache:
+    untracked: true
+    key: "windows:$CI_COMMIT_REF_SLUG"
 
 validate:robot:macos:
   stage: validate
@@ -347,6 +356,9 @@ validate:robot:macos:
   script:
   - ./testsuite
   allow_failure: true
+  cache:
+    untracked: true
+    key: "macos:$CI_COMMIT_REF_SLUG"
 
 ####################################################################
 # Stage "build-repository": copy binaries into a repository layout #
