@@ -23,7 +23,7 @@ case $DIST in
 	;;
 	ubuntu)
 		mkdir -p /srv/chroot
-		sbuild-createchroot --arch=$ARCH $CODE /srv/chroot/$CODE https://archive.ubuntu.com/ubuntu /usr/share/debootstrap/scripts/gutsy
+		sbuild-createchroot --arch=$ARCH $CODE /srv/chroot/$CODE http://archive.ubuntu.com/ubuntu /usr/share/debootstrap/scripts/gutsy
 	;;
 	*)
 		echo "E: unknown dist: $DIST" >&2

@@ -27,7 +27,7 @@ suse-build:
   extends: .docker-base
   only:
     changes:
-    - .ci/dockerfiles/suse-build/**/
+    - .ci/dockerfiles/suse-build/**/*
     - .ci/builds-docker.yml
     - .ci/build-configs.yml
 
@@ -35,7 +35,7 @@ fed-build:
   extends: .docker-base
   only:
     changes:
-    - .ci/dockerfiles/fed-build/**/
+    - .ci/dockerfiles/fed-build/**/*
     - .ci/builds-docker.yml
     - .ci/build-configs.yml
 
@@ -43,7 +43,7 @@ deb-build:
   extends: .docker-base
   only:
     changes:
-    - .ci/dockerfiles/deb-build/**/
+    - .ci/dockerfiles/deb-build/**/*
     - .ci/builds-docker.yml
     - .ci/build-configs.yml
 
@@ -51,7 +51,7 @@ deb-repro:
   extends: .docker-base
   only:
     changes:
-    - .ci/dockerfiles/deb-repro/**/
+    - .ci/dockerfiles/deb-repro/**/*
     - .ci/builds-docker.yml
     - .ci/build-configs.yml
 
@@ -59,7 +59,7 @@ deb-scan-build:
   extends: .docker-base
   only:
     changes:
-    - .ci/dockerfiles/deb-scan-build/**/
+    - .ci/dockerfiles/deb-scan-build/**/*
     - .ci/builds-docker.yml
     - .ci/build-configs.yml
 
@@ -67,7 +67,7 @@ deb-sbuild:
   extends: .docker-base
   only:
     changes:
-    - .ci/dockerfiles/deb-sbuild/**/
+    - .ci/dockerfiles/deb-sbuild/**/*
     - .ci/builds-docker.yml
     - .ci/build-configs.yml
 
