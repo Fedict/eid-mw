@@ -1,3 +1,4 @@
+---
 .docker-base:
   retry: 1
   stage: docker
@@ -16,3 +17,4 @@
   - docker build --pull --cache-from $IMAGE_TAG -t $IMAGE_TAG .
   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   - docker push $IMAGE_TAG
+
