@@ -33,17 +33,20 @@ do
 		for arch in ${VERARCHS[$vers]}
 		do
 			mkdir -p /srv/repo/repo/rpm/$TARGET/${DISTNAMES[$dist]}/$vers/RPMS/$arch
-			for i in products/$dist-$vers-$arch/*
-			do
-				targetfile=/srv/repo/repo/rpm/$TARGET/${DISTNAMES[$dist]}/$vers/RPMS/$arch/$(basename $i)
-				if [ "$(basename $i)" != '*' -a "$(basename $targetfile)" != '*' ]; then
-					echo "$i => $targetfile"
-					cp $i $targetfile
-					rpmsign --resign --key-id=$GPG_TEST_KEY_ID $targetfile
-				else
-					echo "ignoring empty directories"
-				fi
-			done
+			if [ -d products/$dist-$vers-$arch ]
+			then
+				for i in products/$dist-$vers-$arch/*
+				do
+					targetfile=/srv/repo/repo/rpm/$TARGET/${DISTNAMES[$dist]}/$vers/RPMS/$arch/$(basename $i)
+					if [ "$(basename $i)" != '*' -a "$(basename $targetfile)" != '*' ]; then
+						echo "$i => $targetfile"
+						cp $i $targetfile
+						rpmsign --resign --key-id=$GPG_TEST_KEY_ID $targetfile
+					else
+						echo "ignoring empty directories"
+					fi
+				done
+			fi
 		done
 		createrepo /srv/repo/repo/rpm/$TARGET/$dist/$vers
 		(cd /srv/repo/repo/rpm/$TARGET/$dist/$vers/repodata && gpg --yes --batch --passphrase "" --default-key $GPG_TEST_KEY_ID --no-tty -b --armor repomd.xml)

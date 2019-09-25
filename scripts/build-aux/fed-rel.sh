@@ -33,13 +33,16 @@ do
 		for arch in ${VERARCHS[$vers]}
 		do
 			mkdir -p /srv/repo/repo/rpm/$TARGET/${DISTNAMES[$dist]}/$vers/RPMS/$arch
-			for i in products/$dist-$vers-$arch/*
-			do
-				targetfile=/srv/repo/repo/rpm/$TARGET/${DISTNAMES[$dist]}/$vers/RPMS/$arch/$(basename $i)
-				echo "$i => $targetfile"
-				cp $i $targetfile
-				rpmsign --resign --key-id=$GPG_TEST_KEY_ID $targetfile
-			done
+			if [ -d products/$dist-$vers-$arch ]
+			then
+				for i in products/$dist-$vers-$arch/*
+				do
+					targetfile=/srv/repo/repo/rpm/$TARGET/${DISTNAMES[$dist]}/$vers/RPMS/$arch/$(basename $i)
+					echo "$i => $targetfile"
+					cp $i $targetfile
+					rpmsign --resign --key-id=$GPG_TEST_KEY_ID $targetfile
+				done
+			fi
 		done
 		createrepo /srv/repo/repo/rpm/$TARGET/${DISTNAMES[$dist]}/$vers
 	done
