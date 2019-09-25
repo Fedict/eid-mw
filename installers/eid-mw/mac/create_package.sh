@@ -227,7 +227,7 @@ if [ $EIDMW_SIGN_BUILD -eq 1 ];then
 fi
 
 Echo "********** creating the installer dmg package with Mac Developer **********"
-hdiutil create -fs "HFS+" -format UDBZ -srcfolder $PKGS_NAME -volname "${VOL_NAME}" $DMG_NAME
+hdiutil create -fs "HFS+" -format UDBZ -srcfolder $PKG_NAME -volname "${VOL_NAME}" $DMG_NAME
 if [ $EIDMW_SIGN_BUILD -eq 1 ];then
   Echo "********** signing $PKG_NAME with Mac Developer **********"
   codesign --timestamp --force -o runtime --sign "Mac Developer" -v $DMG_NAME
