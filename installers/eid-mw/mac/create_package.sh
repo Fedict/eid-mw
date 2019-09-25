@@ -190,9 +190,9 @@ cp -R "$BEIDTOKEN_PATH"  "$BEIDTOKEN_INST_DIR"/BEIDToken.app
 
 
 #####################################################################
-The preparations for creating the packages have been completed
-(i.e. placing all files in the wanted directory structure)
-Now we'll build and sign the packages
+#The preparations for creating the packages have been completed
+#(i.e. placing all files in the wanted directory structure)
+#Now we'll build and sign the packages
 
 #For the DMG:
 #Using HFS+ as fs, as OS X 10.11 (El Capitan) does not yet support APFS
