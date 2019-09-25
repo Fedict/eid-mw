@@ -107,7 +107,7 @@ DMG_NAME_DIAG="${REL_NAME_DIAG}-${REL_VERSION}.dmg"
 
 #cleanup previous build
 if test -e "$RELEASE_DIR"; then
- rm -rdf "$RELEASE_DIR"
+ sudo rm -rdf "$RELEASE_DIR"
 fi
 
 #leave created dir there for now
@@ -172,7 +172,7 @@ echo "********** prepare BEIDToken.pkg **********"
 
 #cleanup
 if test -e "$RELEASE_BEIDTOKEN_DIR"; then
- rm -rdf "$RELEASE_BEIDTOKEN_DIR"
+ sudo rm -rdf "$RELEASE_BEIDTOKEN_DIR"
 fi
 
 #create installer dirs
