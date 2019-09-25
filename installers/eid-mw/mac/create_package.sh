@@ -208,33 +208,30 @@ pushd $RELEASE_DIR
 Echo "********** building beidbuild.pkg **********"
 pkgbuild --root "$ROOT_DIR" --scripts "$INSTALL_SCRIPTS_DIR" --identifier be.eid.middleware --version $REL_VERSION --install-location / beidbuild.pkg
 if [ $EIDMW_SIGN_BUILD -eq 1 ];then
-	Echo "********** signing beidbuild.pkg with Mac Developer **********"
-	codesign --timestamp --force -o runtime --sign "Mac Developer" -v "beidbuild.pkg"
+  Echo "********** signing beidbuild.pkg with Mac Developer **********"
+  codesign --timestamp --force -o runtime --sign "Mac Developer" -v "beidbuild.pkg"
 fi
 
 Echo "********** building BEIDToken.pkg **********"
 pkgbuild --root "$ROOT_BEIDTOKEN_DIR" --scripts "$BEIDTOKEN_INSTALL_SCRIPTS_DIR" --component-plist "$BEIDTOKEN_PLIST_PATH" --identifier be.eid.BEIDtoken.app --version $REL_VERSION --install-location / BEIDToken.pkg
 if [ $EIDMW_SIGN_BUILD -eq 1 ];then
-	Echo "********** signing BEIDToken.pkg with Mac Developer **********"
-	codesign --timestamp --force -o runtime --sign "Mac Developer" -v "BEIDToken.pkg"
+  Echo "********** signing BEIDToken.pkg with Mac Developer **********"
+  codesign --timestamp --force -o runtime --sign "Mac Developer" -v "BEIDToken.pkg"
 fi
 
 Echo "********** building $PKG_NAME **********"
 productbuild --distribution "$RELEASE_DIR/Distribution_export.txt" --resources "$RESOURCES_DIR" $PKG_NAME
-
-
-
 if [ $EIDMW_SIGN_BUILD -eq 1 ];then
-
-Echo "********** signing the package with Mac Developer **********"
-  hdiutil create -fs "HFS+" -format UDBZ -srcfolder $PKGSIGNED_NAME -volname "${VOL_NAME}" $DMG_NAME
-
-# signing with Mac Developer: ambiguity on some systems where multiple Mac Developer accounts are present, so skip signing for now
-# codesign --timestamp --force -o runtime --sign "Mac Developer" -v $DMG_NAME
-
-  exit 1
-else
-  hdiutil create -fs "HFS+" -srcfolder $PKG_NAME -volname "${VOL_NAME}" $DMG_NAME
+  Echo "********** signing $PKG_NAME with Mac Developer **********"
+  codesign --timestamp --force -o runtime --sign "Mac Developer" -v $PKG_NAME
 fi
+
+Echo "********** creating the installer dmg package with Mac Developer **********"
+hdiutil create -fs "HFS+" -format UDBZ -srcfolder $PKGS_NAME -volname "${VOL_NAME}" $DMG_NAME
+if [ $EIDMW_SIGN_BUILD -eq 1 ];then
+  Echo "********** signing $PKG_NAME with Mac Developer **********"
+  codesign --timestamp --force -o runtime --sign "Mac Developer" -v $DMG_NAME
+fi
+
 
 popd
