@@ -203,35 +203,82 @@ echo "********** building packages **********"
 #build the packages in the RELEASE_DIR
 pushd $RELEASE_DIR
 
+if [ "$EIDMW_BUILD_CONFIG" = "Export" ]
+then
+  Echo "********** building and signing beidbuild.pkg **********"
+  pkgbuild --root "$ROOT_DIR" --scripts "$INSTALL_SCRIPTS_DIR" --identifier be.eid.middleware --version $REL_VERSION --install-location / beidbuild-unsigned.pkg
+  productsign --timestamp --sign "Developer ID Installer" "beidbuild-unsigned.pkg" "beidbuild.pkg"
+
+  Echo "********** building and signing BEIDToken.pkg **********"
+  pkgbuild --root "$ROOT_BEIDTOKEN_DIR" --scripts "$BEIDTOKEN_INSTALL_SCRIPTS_DIR" --component-plist "$BEIDTOKEN_PLIST_PATH" --identifier be.eid.BEIDtoken.app --version $REL_VERSION --install-location / BEIDToken-unsigned.pkg
+  productsign --timestamp --sign "Developer ID Installer" "BEIDToken-unsigned.pkg" "BEIDToken.pkg"
+
+  Echo "********** building $PKG_NAME **********"
+  productbuild --distribution "$RELEASE_DIR/Distribution_export.txt" --resources "$RESOURCES_DIR" $PKG_NAME
+
+  #####################################################################
+  #Using HFS+ as fs, as OS X 10.11 (El Capitan) does not yet support APFS
+  #Using UDIF bzip2-compressed disk image for notarization
+  #####################################################################
+
+  Echo "********** signing the package with Developer ID Installer **********"
+  productsign --timestamp --sign "Developer ID Installer" $PKG_NAME $PKGSIGNED_NAME
+  hdiutil create -fs "HFS+" -format UDBZ -srcfolder $PKGSIGNED_NAME -volname "${VOL_NAME}" $DMG_NAME
+
+  Echo "********** signing the disk image with Developer ID Application **********"
+  codesign --timestamp --force -o runtime --sign "Developer ID Application" -v $DMG_NAME
 
 
-Echo "********** building beidbuild.pkg **********"
-pkgbuild --root "$ROOT_DIR" --scripts "$INSTALL_SCRIPTS_DIR" --identifier be.eid.middleware --version $REL_VERSION --install-location / beidbuild.pkg
-if [ $EIDMW_SIGN_BUILD -eq 1 ];then
-  Echo "********** signing beidbuild.pkg with Mac Developer **********"
-  codesign --timestamp --force -o runtime --sign "Mac Developer" -v "beidbuild.pkg"
+  Echo "********** notarize the quick installer **********"
+  /usr/bin/xcrun altool --notarize-app --primary-bundle-id "be.eid.QuickInstaller.dmg" --username "$AC_USERNAME" --password "@keychain:altool" --file "$DMG_NAME"
+
+
+  #create a backup copy, in case the stapling goes wrong
+  cp -R "$DMG_NAME"  "$DMG_BACKUP_NAME"
+
+  Echo "********** waiting 20 sec **********"
+  #wait 20 seconds to give the notarization service some time to make the ticket available online (otherwise stapling will fail)
+  sleep 20
+
+  Echo "********** check notarization history **********"
+  /usr/bin/xcrun altool --notarization-history 0 -u "$AC_USERNAME" -p "@keychain:altool"
+
+
+  #staple the notarization package to the DMG.
+  /usr/bin/xcrun stapler staple -v "$DMG_NAME"
+
+  #copy the stapled disk image to the Mac scripts folder
+  cp -R "$DMG_NAME" "$(pwd)/../../../../../scripts/mac/"
+
+else
+
+  Echo "********** building beidbuild.pkg **********"
+  pkgbuild --root "$ROOT_DIR" --scripts "$INSTALL_SCRIPTS_DIR" --identifier be.eid.middleware --version $REL_VERSION --install-location / beidbuild.pkg
+  if [ $EIDMW_SIGN_BUILD -eq 1 ];then
+    Echo "********** signing beidbuild.pkg with Mac Developer **********"
+    codesign --timestamp --force -o runtime --sign "Mac Developer" -v "beidbuild.pkg"
+  fi
+
+  Echo "********** building BEIDToken.pkg **********"
+  pkgbuild --root "$ROOT_BEIDTOKEN_DIR" --scripts "$BEIDTOKEN_INSTALL_SCRIPTS_DIR" --component-plist "$BEIDTOKEN_PLIST_PATH" --identifier be.eid.BEIDtoken.app --version $REL_VERSION --install-location / BEIDToken.pkg
+  if [ $EIDMW_SIGN_BUILD -eq 1 ];then
+    Echo "********** signing BEIDToken.pkg with Mac Developer **********"
+    codesign --timestamp --force -o runtime --sign "Mac Developer" -v "BEIDToken.pkg"
+  fi
+
+  Echo "********** building $PKG_NAME **********"
+  productbuild --distribution "$RELEASE_DIR/Distribution_export.txt" --resources "$RESOURCES_DIR" $PKG_NAME
+  if [ $EIDMW_SIGN_BUILD -eq 1 ];then
+    Echo "********** signing $PKG_NAME with Mac Developer **********"
+    codesign --timestamp --force -o runtime --sign "Mac Developer" -v $PKG_NAME
+  fi
+
+  Echo "********** creating the installer dmg package with Mac Developer **********"
+  hdiutil create -fs "HFS+" -format UDBZ -srcfolder $PKG_NAME -volname "${VOL_NAME}" $DMG_NAME
+  if [ $EIDMW_SIGN_BUILD -eq 1 ];then
+    Echo "********** signing $PKG_NAME with Mac Developer **********"
+    codesign --timestamp --force -o runtime --sign "Mac Developer" -v $DMG_NAME
+  fi
 fi
-
-Echo "********** building BEIDToken.pkg **********"
-pkgbuild --root "$ROOT_BEIDTOKEN_DIR" --scripts "$BEIDTOKEN_INSTALL_SCRIPTS_DIR" --component-plist "$BEIDTOKEN_PLIST_PATH" --identifier be.eid.BEIDtoken.app --version $REL_VERSION --install-location / BEIDToken.pkg
-if [ $EIDMW_SIGN_BUILD -eq 1 ];then
-  Echo "********** signing BEIDToken.pkg with Mac Developer **********"
-  codesign --timestamp --force -o runtime --sign "Mac Developer" -v "BEIDToken.pkg"
-fi
-
-Echo "********** building $PKG_NAME **********"
-productbuild --distribution "$RELEASE_DIR/Distribution_export.txt" --resources "$RESOURCES_DIR" $PKG_NAME
-if [ $EIDMW_SIGN_BUILD -eq 1 ];then
-  Echo "********** signing $PKG_NAME with Mac Developer **********"
-  codesign --timestamp --force -o runtime --sign "Mac Developer" -v $PKG_NAME
-fi
-
-Echo "********** creating the installer dmg package with Mac Developer **********"
-hdiutil create -fs "HFS+" -format UDBZ -srcfolder $PKG_NAME -volname "${VOL_NAME}" $DMG_NAME
-if [ $EIDMW_SIGN_BUILD -eq 1 ];then
-  Echo "********** signing $PKG_NAME with Mac Developer **********"
-  codesign --timestamp --force -o runtime --sign "Mac Developer" -v $DMG_NAME
-fi
-
 
 popd

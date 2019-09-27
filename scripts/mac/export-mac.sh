@@ -11,7 +11,7 @@ cd $(dirname $0)/../../installers/eid-mw/mac
 # make sure scripts are executable
 #-----------------------------------------
 CURRDIR=`pwd`
-chmod +x ./create_export_package.sh
+chmod +x ./create_package.sh
 
 #-----------------------------------------
 # build the eID MW
@@ -30,6 +30,6 @@ popd
 # create the pkg files
 #-----------------------------------------
 echo "creating the beid package..."
-source ./create_export_package.sh
+source ./create_package.sh
 
 echo "[Info ] Done..."
