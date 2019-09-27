@@ -10,27 +10,15 @@ declare -A VERARCHS
 
 DISTS=(fedora epel)
 
-DISTVERS=([fedora]="30 29" [epel]="6 7")
+DISTVERS=([fedora]="$FEDORA_OLDSTABLE_VERSION $FEDORA_STABLE_VERSION" [epel]="$CENTOS_OLDSTABLE_VERSION $CENTOS_STABLE_VERSION")
 DISTNAMES=([fedora]="fedora" [epel]="el")
-VERARCHS=([6]="i386 x86_64" [7]="x86_64" [30]="i386 x86_64" [29]="i386 x86_64")
-
-if [ ! -z "$1" ]
-then
-	if [ -z "$EXTRADIST" -o -z "$EXTRAVER" ]
-	then
-		echo "E: extra packages but EXTRADIST or EXTRAVER is not set" >&2
-		exit 1
-	fi
-	DISTS=($1)
-	DISTVERS[$1]=$EXTRAVER
-	VERARCHS[$1]="x86_64 i386"
-fi
+DISTARCHS=([fedora]="i386 x86_64" [epel]="x86_64")
 
 for dist in $DISTS
 do
 	for vers in ${DISTVERS[$dist]}
 	do
-		for arch in ${VERARCHS[$vers]}
+		for arch in ${DISTARCHS[$dist]}
 		do
 			mkdir -p /srv/repo/repo/rpm/$TARGET/${DISTNAMES[$dist]}/$vers/RPMS/$arch
 			if [ -d products/$dist-$vers-$arch ]
