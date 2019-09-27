@@ -1390,7 +1390,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Change the fixed dependency path of our pkcs11 module in BeidView to a runpath\n\ncd \"${CONFIGURATION_BUILD_DIR}\"/\"${CONTENTS_FOLDER_PATH}\"\ninstall_name_tool -change /usr/local/lib/libbeidpkcs11.4.4.16.dylib \"@rpath/libbeidpkcs11.4.4.16.dylib\" \"BeidView\"\n";
+			shellScript = "# Change the fixed dependency path of our pkcs11 module in BeidView to a runpath\n\ncd \"${CONFIGURATION_BUILD_DIR}\"/\"${CONTENTS_FOLDER_PATH}\"\ninstall_name_tool -change /usr/local/lib/libbeidpkcs11.4.4.20.dylib \"@rpath/libbeidpkcs11.4.4.20.dylib\" \"BeidView\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
