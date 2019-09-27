@@ -2,37 +2,59 @@
 
 set -e
 
-if [ -z "$MAC_BUILD_CONFIG" ]
-then
-	MAC_BUILD_CONFIG=Release
-fi
+#this script prepares and creates the installer packages for the eid middleware releases.
+#it should be called from one of the shells that first build the related binaries and set some variables already.
 
-#set SIGN_BUILD=0 in the environment to not sign the .pkg files:
-# SIGN_BUILD=0 ./create_package.sh
-#or
-# SIGN_BUILD=0 ./make-mac.sh
-SIGN_BUILD=${SIGN_BUILD:-1}
+#we define a default config (unsigned release) here, 
+#in case (for testing the package making) a package will be made without rebuilding the binaries.
+if [ -z "$EIDMW_BUILD_CONFIG" ]
+then
+	EIDMW_BUILD_CONFIG=Release
+	EIDMW_SIGN_BUILD=0
+fi
+echo "EIDMW_BUILD_CONFIG is $EIDMW_BUILD_CONFIG"
 
 #get the release number
 source "$(pwd)/../../../scripts/mac/set_eidmw_version.sh"
 
-####################################################################
-######### specific release defines (for test builds) ###############
-PKCS11_DYLIB_PATH="$(pwd)/../../../$MAC_BUILD_CONFIG/libbeidpkcs11.$REL_VERSION.dylib"
-#BEIDToken path
-if [ "$MAC_BUILD_CONFIG" = "Debug" ]
-then
-	BEIDTOKEN_PATH="$(pwd)/../../../cardcomm/ctktoken/build/$MAC_BUILD_CONFIG/BEIDTokenApp.app"
-else
-	BEIDTOKEN_PATH="$(pwd)/../../../cardcomm/ctktoken/build/$MAC_BUILD_CONFIG/BEIDToken.app"
-fi
-#####################################################################
 
-#####################################################################
+
+if [ "$EIDMW_BUILD_CONFIG" = "Export" ]
+then
+	#when creating the installers packages that will be released to the public (export config),
+	#we need to run tools that require a mac dev account and PW
+	#the password need to be stored in the keychain, named "altool"
+	#the account name should be stored in "set_eidmw_username.sh"
+
+	#get the notarizer's account name
+	#create the bash file set_eidmw_username.sh to define:
+	#AC_USERNAME="dev.account@firm.be" 
+	source "$(pwd)/../../../scripts/mac/set_eidmw_username.sh"
+	#release dir, where all the beidbuild files to be released will be placed
+	RELEASE_DIR="$(pwd)/exports/export_eidmw"
+	#release dir, where all the BEIDToken files to be released will be placed
+	RELEASE_BEIDTOKEN_DIR="$(pwd)/exports/export_BEIDToken"
+	#BEIDToken.app path, where this script will find the exported BEIDToken.app
+	BEIDTOKEN_PATH="$(pwd)/../../../export/BEIDToken.app"
+else
+	#release dir, where all the beidbuild files to be released will be placed
+	RELEASE_DIR="$(pwd)/release"
+	#release dir, where all the BEIDToken files to be released will be placed
+	RELEASE_BEIDTOKEN_DIR="$(pwd)/release_BEIDToken"
+	PKCS11_DYLIB_PATH="$(pwd)/../../../$EIDMW_BUILD_CONFIG/libbeidpkcs11.$REL_VERSION.dylib"
+	#BEIDToken path
+	if [ "$EIDMW_BUILD_CONFIG" = "Debug" ]
+	then
+		BEIDTOKEN_PATH="$(pwd)/../../../cardcomm/ctktoken/build/$EIDMW_BUILD_CONFIG/BEIDTokenApp.app"
+	else
+		BEIDTOKEN_PATH="$(pwd)/../../../cardcomm/ctktoken/build/$EIDMW_BUILD_CONFIG/BEIDToken.app"	
+	fi
+fi
+
 ################## eIDMW installer name defines ###########
 #installer name defines
 #release dir, where all the beidbuild files to be released will be placed
-RELEASE_DIR="$(pwd)/release"
+#RELEASE_DIR is defined above, depending on build configuration
 #root dir, for files that are to be installed by the pkg
 ROOT_DIR="$RELEASE_DIR/root"
 #resources dir, for files that are to be kept inside the pkg
@@ -52,7 +74,7 @@ BEIDCARD_DIR="$ROOT_DIR/Library/Belgium Identity Card"
 ################## BEIDToken installer name defines ###########
 #BEIDToken installer name defines
 #release dir, where all the BEIDToken files to be released will be placed
-RELEASE_BEIDTOKEN_DIR="$(pwd)/release_BEIDToken"
+RELEASE_BEIDTOKEN_DIR is defined above, depending on build configuration
 #root dir, for files that are to be installed by the pkg
 ROOT_BEIDTOKEN_DIR="$RELEASE_BEIDTOKEN_DIR/root"
 
@@ -60,8 +82,7 @@ ROOT_BEIDTOKEN_DIR="$RELEASE_BEIDTOKEN_DIR/root"
 BEIDTOKEN_INST_DIR="$ROOT_BEIDTOKEN_DIR/Applications"
 
 #BEIDToken path
-#BEIDTOKEN_PATH should be already defined by calling script
-
+#BEIDTOKEN_PATH should be already defined
 #BEIDToken.plist path
 BEIDTOKEN_PLIST_PATH="$(pwd)/BEIDToken.plist"
 
@@ -78,22 +99,15 @@ PKG_NAME="$REL_NAME.pkg"
 PKGSIGNED_NAME="${REL_NAME}-signed.pkg"
 VOL_NAME="${REL_NAME}-${REL_VERSION}"
 DMG_NAME="${REL_NAME}-${REL_VERSION}.dmg"
-
+DMG_BACKUP_NAME="${REL_NAME}-${REL_VERSION}-backup.dmg"
 PKG_NAME_DIAG="$REL_NAME_DIAG.pkg"
 PKGSIGNED_NAME_DIAG="${REL_NAME_DIAG}-signed.pkg"
 VOL_NAME_DIAG="${REL_NAME_DIAG}-${REL_VERSION}"
 DMG_NAME_DIAG="${REL_NAME_DIAG}-${REL_VERSION}.dmg"
 
 #cleanup previous build
-
 if test -e "$RELEASE_DIR"; then
  rm -rdf "$RELEASE_DIR"
-fi
-if test -e beidbuild.pkg; then
- rm beidbuild.pkg
-fi
-if test -e $PKG_NAME; then
- rm $PKG_NAME
 fi
 
 #leave created dir there for now
@@ -109,7 +123,15 @@ mkdir -p "$INSTALL_SCRIPTS_DIR"
 mkdir -p "$MOZ_PKCS11_MANIFEST_DIR"
 
 #copy all files that should be part of the installer:
-cp $PKCS11_DYLIB_PATH $PKCS11_INST_DIR
+#in case of an export, also sign the pkcs11 library
+#the other binaries should already been signed when archiving in xcode
+if [ "$EIDMW_BUILD_CONFIG" = "Export" ]
+then
+	codesign --timestamp --force -o runtime --sign "Developer ID Application" -v ../../../release/libbeidpkcs11.$REL_VERSION.dylib
+	cp ../../../release/libbeidpkcs11.$REL_VERSION.dylib $PKCS11_INST_DIR
+else
+	cp $PKCS11_DYLIB_PATH $PKCS11_INST_DIR
+fi
 #copy pkcs11 bundle
 cp -R ./Packages/beid-pkcs11.bundle $PKCS11_INST_DIR
 #make relative symbolic link from bundle to the dylib
@@ -163,46 +185,56 @@ cp -R ./install_scripts_BEIDToken/* "$BEIDTOKEN_INSTALL_SCRIPTS_DIR"
 #copy eid token app
 cp -R "$BEIDTOKEN_PATH"  "$BEIDTOKEN_INST_DIR"/BEIDToken.app
 
+
+
+
+
 #####################################################################
+The preparations for creating the packages have been completed
+(i.e. placing all files in the wanted directory structure)
+Now we'll build and sign the packages
 
-echo "********** generate $PKG_NAME and $DMG_NAME **********"
+#For the DMG:
+#Using HFS+ as fs, as OS X 10.11 (El Capitan) does not yet support APFS
+#Using UDIF bzip2-compressed disk image for notarization
+#####################################################################
+echo "********** building packages **********"
 
-chgrp    wheel  "$ROOT_DIR/usr"
-chgrp    wheel  "$ROOT_DIR/usr/local"
-chgrp    wheel  "$ROOT_DIR/usr/local/lib"
-
-#build the packages in the release dir
+#build the packages in the RELEASE_DIR
 pushd $RELEASE_DIR
 
+
+
+Echo "********** building beidbuild.pkg **********"
 pkgbuild --root "$ROOT_DIR" --scripts "$INSTALL_SCRIPTS_DIR" --identifier be.eid.middleware --version $REL_VERSION --install-location / beidbuild.pkg
+if [ $EIDMW_SIGN_BUILD -eq 1 ];then
+	Echo "********** signing beidbuild.pkg with Mac Developer **********"
+	codesign --timestamp --force -o runtime --sign "Mac Developer" -v "beidbuild.pkg"
+fi
 
+Echo "********** building BEIDToken.pkg **********"
 pkgbuild --root "$ROOT_BEIDTOKEN_DIR" --scripts "$BEIDTOKEN_INSTALL_SCRIPTS_DIR" --component-plist "$BEIDTOKEN_PLIST_PATH" --identifier be.eid.BEIDtoken.app --version $REL_VERSION --install-location / BEIDToken.pkg
+if [ $EIDMW_SIGN_BUILD -eq 1 ];then
+	Echo "********** signing BEIDToken.pkg with Mac Developer **********"
+	codesign --timestamp --force -o runtime --sign "Mac Developer" -v "BEIDToken.pkg"
+fi
 
+Echo "********** building $PKG_NAME **********"
 productbuild --distribution "$RELEASE_DIR/Distribution_export.txt" --resources "$RESOURCES_DIR" $PKG_NAME
 
-#####################################################################
-#Using HFS+ as fs, as OS X 10.11 (El Capitan) does not yet support APFS
-#####################################################################
 
-if [ $SIGN_BUILD -eq 1 ];then
 
-  hdiutil create -fs "HFS+" -srcfolder $PKG_NAME -volname "${VOL_NAME}" $DMG_NAME
+if [ $EIDMW_SIGN_BUILD -eq 1 ];then
+
+Echo "********** signing the package with Mac Developer **********"
+  hdiutil create -fs "HFS+" -format UDBZ -srcfolder $PKGSIGNED_NAME -volname "${VOL_NAME}" $DMG_NAME
 
 # signing with Mac Developer: ambiguity on some systems where multiple Mac Developer accounts are present, so skip signing for now
-#  codesign --timestamp --force -o runtime --sign "Mac Developer" -v $DMG_NAME
-
-  hdiutil create -fs "HFS+" -srcfolder "beidbuild.pkg" -volname "beidbuild${REL_VERSION}" "beidbuild${REL_VERSION}.dmg"
-#  codesign --timestamp --force -o runtime --sign "Mac Developer" -v "beidbuild${REL_VERSION}.dmg"
-
-  hdiutil create -fs "HFS+" -srcfolder "BEIDToken.pkg" -volname "BEIDToken${REL_VERSION}" "BEIDToken${REL_VERSION}.dmg"
-#  codesign --timestamp --force -o runtime --sign "Mac Developer" -v "BEIDToken ${REL_VERSION}.dmg"
+# codesign --timestamp --force -o runtime --sign "Mac Developer" -v $DMG_NAME
 
   exit 1
 else
   hdiutil create -fs "HFS+" -srcfolder $PKG_NAME -volname "${VOL_NAME}" $DMG_NAME
-  hdiutil create -fs "HFS+" -srcfolder "beidbuild.pkg" -volname "beidbuild${REL_VERSION}" "beidbuild${REL_VERSION}.dmg"
-
-  hdiutil create -fs "HFS+" -srcfolder "BEIDToken.pkg" -volname "BEIDToken${REL_VERSION}" "BEIDToken${REL_VERSION}.dmg"
 fi
 
 popd

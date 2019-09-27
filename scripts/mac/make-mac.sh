@@ -2,13 +2,24 @@
 
 set -e
 
-if [ -z "$MAC_BUILD_CONFIG" ]
+if [ -z "$EIDMW_BUILD_CONFIG" ]
 then
-	MAC_BUILD_CONFIG=Release
+	EIDMW_BUILD_CONFIG=Release
 	echo "running Release Build"
 fi
+#set EIDMW_SIGN_BUILD=0 in the environment to not sign the .pkg files:
+# EIDMW_SIGN_BUILD=0 ./create_package.sh
+#or
+# EIDMW_SIGN_BUILD=0 ./make-mac.sh
+EIDMW_SIGN_BUILD=${EIDMW_SIGN_BUILD:-1}
+if [ -z "$EIDMW_SIGN_BUILD" ]
+then
+	EIDMW_SIGN_BUILD=1
+	echo "will be signing Release Build"
+fi
 
-echo "MAC_BUILD_CONFIG is $MAC_BUILD_CONFIG"
+
+echo "EIDMW_BUILD_CONFIG is $EIDMW_BUILD_CONFIG"
 
 # Go to the mac installers directory
 cd $(dirname $0)/../../installers/eid-mw/mac
@@ -16,7 +27,6 @@ cd $(dirname $0)/../../installers/eid-mw/mac
 #-----------------------------------------
 # make sure scripts are executable
 #-----------------------------------------
-CURRDIR=`pwd`
 chmod +x ./create_package.sh
 
 #-----------------------------------------
@@ -25,19 +35,19 @@ chmod +x ./create_package.sh
 
 pushd ../../..
 echo "cleaning former project..."
-xcodebuild -project beidmw.xcodeproj -target beidpkcs11 -configuration $MAC_BUILD_CONFIG clean
-xcodebuild -project beidmw.xcodeproj -target beidpkcs11 -configuration $MAC_BUILD_CONFIG
+xcodebuild -project beidmw.xcodeproj -target beidpkcs11 -configuration $EIDMW_BUILD_CONFIG clean
+xcodebuild -project beidmw.xcodeproj -target beidpkcs11 -configuration $EIDMW_BUILD_CONFIG
 popd
 
 pushd "../../../cardcomm/ctkToken"
-xcodebuild -project "BEIDToken.xcodeproj" -configuration $MAC_BUILD_CONFIG clean
-xcodebuild -project "BEIDToken.xcodeproj" -target "BEIDTokenApp" -configuration $MAC_BUILD_CONFIG
+xcodebuild -project "BEIDToken.xcodeproj" -configuration $EIDMW_BUILD_CONFIG clean
+xcodebuild -project "BEIDToken.xcodeproj" -target "BEIDTokenApp" -configuration $EIDMW_BUILD_CONFIG
 popd
 
 #-----------------------------------------
 # create the pkg files
 #-----------------------------------------
 echo "creating the beid package..."
-sudo SIGN_BUILD=$SIGN_BUILD MAC_BUILD_CONFIG=$MAC_BUILD_CONFIG ./create_package.sh
+source ./create_package.sh
 
 echo "[Info ] Done..."

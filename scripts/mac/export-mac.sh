@@ -2,6 +2,7 @@
 
 set -e
 
+EIDMW_BUILD_CONFIG=Export
 
 # Go to the mac installers directory
 cd $(dirname $0)/../../installers/eid-mw/mac
@@ -29,6 +30,6 @@ popd
 # create the pkg files
 #-----------------------------------------
 echo "creating the beid package..."
-sudo ./create_export_package.sh
+source ./create_export_package.sh
 
 echo "[Info ] Done..."
