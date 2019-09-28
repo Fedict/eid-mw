@@ -18,7 +18,7 @@ for dist in $DISTS
 do
 	for vers in ${DISTVERS[$dist]}
 	do
-		for arch in ${DISTARCHS[$vers]}
+		for arch in ${DISTARCHS[$dist]}
 		do
 			mkdir -p /srv/repo/repo/rpm/$TARGET/${DISTNAMES[$dist]}/$vers/RPMS/$arch
 			if [ -d products/$dist-$vers-$arch ]
