@@ -11,6 +11,8 @@ fi
 # EIDMW_SIGN_BUILD=0 ./create_package.sh
 #or
 # EIDMW_SIGN_BUILD=0 ./make-mac.sh
+
+#if signing setting is not set yet, set it to 1 (sign)
 EIDMW_SIGN_BUILD=${EIDMW_SIGN_BUILD:-1}
 if [ "$EIDMW_SIGN_BUILD" -eq 1 ]
 then
