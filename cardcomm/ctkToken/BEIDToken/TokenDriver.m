@@ -20,7 +20,7 @@
     
     for ( i = 0 ; i < atrBytes.length ; i++)
     {
-        os_log_error(OS_LOG_DEFAULT, "%d: 0x%x ",i, dataBytes[i]);
+        os_log_info(OS_LOG_DEFAULT, "%d: 0x%x ",i, dataBytes[i]);
     }
 #endif
     if (![atrBytes isEqualToData:eIDCardATR] ){
@@ -28,7 +28,7 @@
         return nil;
     }
 //Keep this log message
-    os_log_error(OS_LOG_DEFAULT, "BEID attaching tokendriver");
+    os_log(OS_LOG_DEFAULT, "BEID attaching tokendriver");
     return [[BEIDToken alloc] initWithSmartCard:smartCard AID:AID BEIDDriver:self error:error];
 }
 

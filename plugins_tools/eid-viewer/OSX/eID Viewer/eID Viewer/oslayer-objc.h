@@ -41,7 +41,7 @@ typedef NS_ENUM(NSInteger, eIDState)
 	eIDStateTokenWait = STATE_TOKEN_WAIT,
 	eIDStateTokenID = STATE_TOKEN_ID,
 	eIDStateTokenCerts = STATE_TOKEN_CERTS,
-        eIDStateTokenIdle = STATE_TOKEN_IDLE,
+	eIDStateTokenIdle = STATE_TOKEN_IDLE,
 	eIDStateTokenPinop = STATE_TOKEN_PINOP,
 	eIDStateTokenSerialize = STATE_TOKEN_SERIALIZE,
 	eIDStateTokenError = STATE_TOKEN_ERROR,

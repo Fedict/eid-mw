@@ -59,7 +59,7 @@
     //select certificate file:
     //the length of the data serves as Lc field of the APDU
 #ifdef DEBUG
-    os_log_error(OS_LOG_DEFAULT, "BEID selectFile called");
+    os_log_info(OS_LOG_DEFAULT, "BEID selectFile called");
 #endif
     //select authentication certificate
     NSData *data = [NSData dataWithBytes:absFileId length:len];
@@ -82,7 +82,7 @@
     //select certificate file:
     //the length of the data serves as Lc field of the APDU
 #ifdef DEBUG
-    os_log_error(OS_LOG_DEFAULT, "BEID selectRelFile called");
+    os_log_info(OS_LOG_DEFAULT, "BEID selectRelFile called");
 #endif
     //select authentication certificate
     NSData *data = [NSData dataWithBytes:relFileId length:len];
@@ -102,7 +102,7 @@
 - (nullable NSData *)readBinary:(TKSmartCard *)smartCard error:(NSError **)error
 {
 #ifdef DEBUG
-    os_log_error(OS_LOG_DEFAULT, "BEID readBinary called");
+    os_log_info(OS_LOG_DEFAULT, "BEID readBinary called");
 #endif
     // Attempt to read 250 bytes
     UInt16 sw = 0;
@@ -111,16 +111,16 @@
     
     NSData *replyData = [smartCard sendIns:0xB0 p1:0x00 p2:0x00 data:nil le:@250 sw:&sw error:error];
 #ifdef DEBUG
-    os_log_error(OS_LOG_DEFAULT, "BEID readBinary returned %lu bytes; SW=0x%x",(unsigned long)replyData.length, sw);
+    os_log_debug(OS_LOG_DEFAULT, "BEID readBinary returned %lu bytes; SW=0x%x",(unsigned long)replyData.length, sw);
 #endif
     
     if (replyData != nil) {
 #ifdef DEBUG
-        os_log_error(OS_LOG_DEFAULT,"replyData = %@", replyData);
+        os_log(OS_LOG_DEFAULT,"readBinary replyData = %@", replyData);
 #endif
         while ((replyData.length > 0) && (sw = 0x9000)) {
 #ifdef DEBUG
-            os_log_error(OS_LOG_DEFAULT, "BEID readBinary returned %lu bytes; SW=0x%x",(unsigned long)replyData.length, sw);
+            os_log_debug(OS_LOG_DEFAULT, "BEID readBinary returned %lu bytes; SW=0x%x",(unsigned long)replyData.length, sw);
 #endif
             offset += replyData.length;
             if(fileData.length == 0){
@@ -133,11 +133,11 @@
             if(replyData.length == 250)
             {
 #ifdef DEBUG
-                os_log_error(OS_LOG_DEFAULT, "BEID readBinary reading with offset p1 = %x p2 = %x",(offset&0xFF00)>>8, offset&0x00FF);
+                os_log_debug(OS_LOG_DEFAULT, "BEID readBinary reading with offset p1 = %x p2 = %x",(offset&0xFF00)>>8, offset&0x00FF);
 #endif
                 replyData = [smartCard sendIns:0xB0 p1:(offset&0xFF00)>>8 p2:offset&0x00FF data:nil le:@250 sw:&sw error:error];
 #ifdef DEBUG
-                os_log_error(OS_LOG_DEFAULT, "BEID readBinary fileData length is %lu bytes",(unsigned long)fileData.length);
+                os_log_debug(OS_LOG_DEFAULT, "BEID readBinary fileData length is %lu bytes",(unsigned long)fileData.length);
 #endif
 
                 if (replyData == nil) {
@@ -154,13 +154,13 @@
     if ( (sw&0xFF00) == 0x6100 || (sw&0xFF00) == 0x6c00 ){
          //we asked for an incorrect length of data, the correct length to ask for resides in SW2
 #ifdef DEBUG
-        os_log_error(OS_LOG_DEFAULT, "_BEID readBinary returned %lu bytes; SW=0x%x; offset = %hu",(unsigned long)replyData.length, sw, offset);
+        os_log_debug(OS_LOG_DEFAULT, "_BEID readBinary returned %lu bytes; SW=0x%x; offset = %hu",(unsigned long)replyData.length, sw, offset);
 #endif
         NSNumber *sw2 = [NSNumber numberWithInt:(sw & 0xFF)];
         replyData = [smartCard sendIns:0xB0 p1:(offset&0xFF00)>>8 p2:offset&0x00FF data:nil le:sw2 sw:&sw error:error];
         if (replyData != nil) {
 #ifdef DEBUG
-            os_log_error(OS_LOG_DEFAULT, "-_BEID readBinary returned %lu bytes; SW=0x%x",(unsigned long)replyData.length, sw);
+            os_log_debug(OS_LOG_DEFAULT, "-_BEID readBinary returned %lu bytes; SW=0x%x",(unsigned long)replyData.length, sw);
 #endif
             if(fileData.length == 0){
                 fileData = [replyData mutableCopy];
@@ -171,7 +171,7 @@
         }
     }
 #ifdef DEBUG
-    os_log_error(OS_LOG_DEFAULT, "__BEID readBinary returned %lu bytes; SW=0x%x",(unsigned long)fileData.length, sw);
+    os_log_debug(OS_LOG_DEFAULT, "__BEID readBinary returned %lu bytes; SW=0x%x",(unsigned long)fileData.length, sw);
 #endif
     return fileData;
 }
@@ -180,7 +180,7 @@
 
     // Read authentication certificate
 #ifdef DEBUG
-    os_log_error(OS_LOG_DEFAULT, "BEID dataOfCertificate called with certificateObjectID 0x%xl",certificateObjectID);
+    os_log_info(OS_LOG_DEFAULT, "BEID dataOfCertificate called with certificateObjectID 0x%xl",certificateObjectID);
 #endif
     __block NSData *certificateData;
     __block NSData *realCertificateData;
@@ -225,7 +225,7 @@
             
             unsigned int realCertLength = (256 * CertBytes[2]) + CertBytes[3] + 4;
 #ifdef DEBUG
-            os_log_error(OS_LOG_DEFAULT, "realCertLength = %d",realCertLength);
+            os_log_info(OS_LOG_DEFAULT, "realCertLength = %d",realCertLength);
 #endif
             if (realCertLength <= certificateData.length)
             {
@@ -239,7 +239,7 @@
                 return NO;
             }
 #ifdef DEBUG
-            os_log_error(OS_LOG_DEFAULT, "realCertificateData has length = %lu",(unsigned long)realCertificateData.length);
+            os_log_info(OS_LOG_DEFAULT, "realCertificateData has length = %lu",(unsigned long)realCertificateData.length);
 #endif
         }
         else {
@@ -260,7 +260,7 @@
 - (BOOL)populateIdentityFromSmartCard:(TKSmartCard *)smartCard into:(NSMutableArray<TKTokenKeychainItem *> *)items certificateTag:(UInt16)certificateTag name:(NSString *)certificateName keyTag:(UInt16)keyTag name:(NSString *)keyName sign:(BOOL)sign keyManagement:(BOOL)keyManagement alwaysAuthenticate:(BOOL)alwaysAuthenticate error:(NSError **)error {
     // Read certificate data.
 #ifdef DEBUG
-    os_log_error(OS_LOG_DEFAULT, "BEID populateIdentityFromSmartCard called");
+    os_log_info(OS_LOG_DEFAULT, "BEID populateIdentityFromSmartCard called");
 #endif
     TKTokenObjectID certificateID = @(certificateTag) ;//[TKBERTLVRecord dataForTag:certificateTag];
     NSData *certificateData = [self dataOfCertificate:certificateTag smartCard:smartCard error:error];
@@ -301,7 +301,7 @@
             return NO;
         }
 #ifdef DEBUG
-        os_log_error(OS_LOG_DEFAULT, "BEID populateIdentityFromSmartCard created keyItem");
+        os_log_info(OS_LOG_DEFAULT, "BEID populateIdentityFromSmartCard created keyItem");
 #endif
         [keyItem setName:keyName];
         
@@ -328,7 +328,7 @@
     }
     [items addObject:certificateItem];
 #ifdef DEBUG
-    os_log_error(OS_LOG_DEFAULT, "BEID populateIdentityFromSmartCard leave success");
+    os_log_debug(OS_LOG_DEFAULT, "BEID populateIdentityFromSmartCard leave success");
 #endif
     return YES;
 }
@@ -337,7 +337,7 @@
     // Read and parse Card Holder Unique Identifier.
     // get card serial number and store it in instanceID
 #ifdef DEBUG
-    os_log_error(OS_LOG_DEFAULT, "BEID initWithSmartCard called");
+    os_log_info(OS_LOG_DEFAULT, "BEID initWithSmartCard called");
 #endif
     __block NSString* instanceID;
     
@@ -374,8 +374,8 @@
         
         instanceID = [@"BEID-" stringByAppendingString:stringBuffer];
 #ifdef DEBUG
-        //os_log_error(OS_LOG_DEFAULT, "instanceID = %@",instanceID);
-        NSLog(@"instanceID = %@",instanceID);
+        os_log_debug(OS_LOG_DEFAULT, "instanceID = %@",instanceID);
+        //NSLog(@"instanceID = %@",instanceID);
 #endif
         retVAL = true;
         return retVAL;
@@ -393,7 +393,8 @@
                 ![self populateIdentityFromSmartCard:smartCard into:items certificateTag:0x503B name:NSLocalizedString(@"BEID_ROOTCA_CERT", nil) keyTag:0 name:NSLocalizedString(@"NO_KEY", nil) sign:NO keyManagement:NO alwaysAuthenticate:NO error:error]
                 )
             {
-                NSLog(@"super initWithSmartCard:smartCard failed");
+                os_log_error(OS_LOG_DEFAULT, "super initWithSmartCard:smartCard failed");
+                //NSLog(@"super initWithSmartCard:smartCard failed");
                 return nil;
             }
             
@@ -406,14 +407,14 @@
 
 - (TKTokenSession *)token:(TKToken *)token createSessionWithError:(NSError * _Nullable __autoreleasing *)error {
 #ifdef DEBUG
-    os_log_error(OS_LOG_DEFAULT, "BEID createSessionWithError called");
+    os_log_info(OS_LOG_DEFAULT, "BEID createSessionWithError called");
 #endif
     return [[BEIDTokenSession alloc] initWithToken:self];
 }
 
 - (void)token:(TKToken *)token terminateSession:(TKTokenSession *)session{
 #ifdef DEBUG
-    os_log_error(OS_LOG_DEFAULT, "BEID terminateSession called");
+    os_log_info(OS_LOG_DEFAULT, "BEID terminateSession called");
 #endif
 }
 

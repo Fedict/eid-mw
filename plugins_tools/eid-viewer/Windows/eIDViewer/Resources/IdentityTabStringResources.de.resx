@@ -246,4 +246,7 @@ ZDU-Nummer des Arbeitgebers (2):</value>
   <data name="WorkPermitMentionLabel" xml:space="preserve">
     <value>Zugang zum Arbeitsmarkt:</value>
   </data>
+  <data name="Photo" xml:space="preserve">
+    <value>foto</value>
+  </data>
 </root>

@@ -1,7 +1,0 @@
-#!/bin/bash
-## Remove BEID.tokend if it already exists
-if test -e /Library/Security/tokend/BEID.tokend; then
-	rm -rf /Library/Security/tokend/BEID.tokend
-fi
-
-echo "preinstall BEIDtokenD succeeded"

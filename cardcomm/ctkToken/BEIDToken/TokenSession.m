@@ -12,7 +12,7 @@
 
 - (instancetype)initWithSession:(BEIDTokenSession *)session {
 #ifdef DEBUG
-    os_log_error(OS_LOG_DEFAULT, "BEID initWithSession called");
+    os_log_info(OS_LOG_DEFAULT, "BEID initWithSession called");
 #endif
     if (self = [super init]) {
         _session = session;
@@ -40,7 +40,7 @@
 */
         //self.PINByteOffset=5;
 #ifdef DEBUG
-         os_log_error(OS_LOG_DEFAULT, "BEID new TEST 18");
+         os_log_info(OS_LOG_DEFAULT, "BEID new TEST 18");
 #endif
  
         BOOL (^verifySecurePIN)(NSError**) = ^(NSError** error) {
@@ -91,7 +91,7 @@
                 
                 
 #ifdef DEBUG
-                os_log_error(OS_LOG_DEFAULT, "Enter the PIN on the pinpad");
+                os_log_info(OS_LOG_DEFAULT, "Enter the PIN on the pinpad");
 #endif
                [userInter runWithReply:^(BOOL success, NSError *error)
                  {
@@ -127,7 +127,8 @@
                 dispatch_time_t  waitTime = dispatch_time(DISPATCH_TIME_NOW,  300000000000);
                 dispatch_semaphore_wait(sema ,waitTime);
 #ifdef DEBUG
-                NSLog(@"PIN handled by reader");
+                os_log_info(OS_LOG_DEFAULT, "PIN handled by reader");
+                //NSLog(@"PIN handled by reader");
 #endif
                 //some secure PIN pad readers support both secure and on PC PIN entries
                 //when secure failed, try on PC as backup
@@ -408,6 +409,7 @@
         os_log_error(OS_LOG_DEFAULT, "BEID selectKey success");
         os_log_error(OS_LOG_DEFAULT, "BEID authenticatedKeyForObjectID BEIDAuthStateUnauthorized, setting keyItem = nil");
 #endif
+        //TODO: move to the (succes == NO section)
         if (error != nil) {
             *error = [NSError errorWithDomain:TKErrorDomain code:TKErrorCodeAuthenticationNeeded userInfo:nil];
             os_log_error(OS_LOG_DEFAULT, "BEID authenticatedKeyForObjectID failed with error %@",[*error localizedDescription]);

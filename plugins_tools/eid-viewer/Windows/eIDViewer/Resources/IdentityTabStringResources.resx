@@ -246,4 +246,7 @@ CBE number (2):</value>
   <data name="WorkPermitMentionLabel" xml:space="preserve">
     <value>Access to the labour market:</value>
   </data>
+  <data name="Photo" xml:space="preserve">
+    <value>photo</value>
+  </data>
 </root>

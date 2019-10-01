@@ -1,9 +1,0 @@
-#!/bin/bash
-
-echo $MWVER
-
-if test -e "/Library/Belgium Identity Card"; then
-	mv "/Library/Belgium Identity Card/eID Middleware.app" "/Library/Belgium Identity Card/eID Info.app"
-fi
-
-echo "postinstall eID Info succeeded"

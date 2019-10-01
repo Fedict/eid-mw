@@ -53,19 +53,13 @@ set MDRVCERTPATH=%~dp0..\..\cardcomm\minidriver\makemsi
 "%NSIS_PATH%\makensis.exe" "%~dp0..\..\installers\quickinstaller\eIDViewerInstaller.nsi"
 @if "%ERRORLEVEL%" == "1" goto nsis_failed
 
-:: create the NSIS launcher
-:: =========================
+:: create the NSIS viewer launcher
+:: ===============================
 @echo [INFO] Make nsis viewer launcher
 "%NSIS_PATH%\makensis.exe" "%~dp0..\..\installers\quickinstaller\eIDViewerLauncher.nsi"
 @if "%ERRORLEVEL%" == "1" goto nsis_failed
 
 
-:: create the nsis viewer launcher
-:: ===============================
-
-@echo [INFO] Make nsis viewer installer
-"%NSIS_PATH%\makensis.exe" "%~dp0..\..\installers\quickinstaller\eIDViewerLauncher.nsi"
-@if %ERRORLEVEL%==1 goto end_resetpath
 
 
 :: sign the nsis installer

@@ -268,6 +268,7 @@ CK_RV C_GetSlotList(CK_BBOOL       tokenPresent,  /* only slots with token prese
 			ret = cal_token_present(h, &pPresent);
 			if(ret != CKR_OK && ret != CKR_TOKEN_NOT_RECOGNIZED)
 			{
+				log_trace(WHERE, "I: cal_token_present returned %i", ret);
 				goto cleanup;
 			}
 			ret = CKR_OK; // CKR_TOKEN_NOT_RECOGNIZED is useless as a return value from this function, and we just ensured that nothing else is possible

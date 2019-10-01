@@ -291,10 +291,12 @@
 	[_window beginSheet:_CertDetailSheet completionHandler:^(NSModalResponse r){
 		[self.window endSheet:self.CertDetailSheet];
 	}];
+//make editable to do some changes
 	[_CertDetailView setEditable:YES];
 	[_CertDetailView selectAll:nil];
 	[_CertDetailView delete:nil];
 	[_CertDetailView insertText:details];
+//no more changes
 	[_CertDetailView setEditable:NO];
 }
 
@@ -555,6 +557,6 @@
 }
 
 - (IBAction)closeDetail:(id)sender {
-	[NSApp endSheet:_CertDetailSheet];
+	[self.window endSheet:_CertDetailSheet];
 }
 @end

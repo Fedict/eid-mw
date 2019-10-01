@@ -1,8 +1,0 @@
-#!/bin/bash
-## Remove parts of the previous middleware if they exist
-if test -e "/Library/Belgium Identity Card"; then
-	rm -rf "/Library/Belgium Identity Card/eID Middleware.app"
-	rm -rf "/Library/Belgium Identity Card/eID Info.app"
-fi
-echo "preinstall eID Info succeeded"
-

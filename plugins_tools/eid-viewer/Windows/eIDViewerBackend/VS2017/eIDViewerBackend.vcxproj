@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{754CDA28-B21E-4919-94A2-2DC6BA77F578}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>eIDViewerBackend</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)\..\eIDViewer\bin\Release\</OutDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)\..\eIDViewer\bin\Debug\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>..\..\..\..\..\doc\sdk\include\rsaref220;..\..\..\;..\..\..\..\..\tests\unit;..\..\..\..\util;..\..\..\include</AdditionalIncludeDirectories>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>beid_ff_pkcs11D.lib;Xmllite.lib;Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\..\..\cardcomm\VS_2017\Binaries\Win32_PKCS11_FF_DEBUG\</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>..\..\..\..\..\doc\sdk\include\rsaref220;..\..\..\;..\..\..\..\..\tests\unit;..\..\..\..\util;..\..\..\include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>beid_ff_pkcs11.lib;Xmllite.lib;Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\..\..\cardcomm\VS_2017\Binaries\Win32_PKCS11_FF_Release\</AdditionalLibraryDirectories>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>beidpkcs11.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\..\..\cardcomm\VS_2017\Binaries\Win32_release</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\util\labels.c" />
+    <ClCompile Include="..\..\..\..\util\utftranslate.c" />
+    <ClCompile Include="..\..\..\b64\base64dec.c" />
+    <ClCompile Include="..\..\..\b64\base64enc.c" />
+    <ClCompile Include="..\..\..\backend.c" />
+    <ClCompile Include="..\..\..\cache\cache.cpp" />
+    <ClCompile Include="..\..\..\conversions\bbannumconv.cpp" />
+    <ClCompile Include="..\..\..\conversions\convert.cpp" />
+    <ClCompile Include="..\..\..\conversions\convertor.cpp" />
+    <ClCompile Include="..\..\..\conversions\convworker.cpp" />
+    <ClCompile Include="..\..\..\conversions\dateconv.cpp" />
+    <ClCompile Include="..\..\..\conversions\dob.cpp" />
+    <ClCompile Include="..\..\..\conversions\doctypeconv.cpp" />
+    <ClCompile Include="..\..\..\conversions\booldecode.cpp" />
+    <ClCompile Include="..\..\..\conversions\genderconv.cpp" />
+    <ClCompile Include="..\..\..\conversions\hexdecode.cpp" />
+    <ClCompile Include="..\..\..\conversions\hexnumconv.cpp" />
+    <ClCompile Include="..\..\..\conversions\natnumconv.cpp" />
+    <ClCompile Include="..\..\..\conversions\specconv.cpp" />
+    <ClCompile Include="..\..\..\conversions\specorgconv.cpp" />
+    <ClCompile Include="..\..\..\conversions\toxmlmemberoffamilyconv.cpp" />
+    <ClCompile Include="..\..\..\conversions\valdate.cpp" />
+    <ClCompile Include="..\..\..\conversions\workpermitconv.cpp" />
+    <ClCompile Include="..\..\..\conversions\xmldoctypeconv.cpp" />
+    <ClCompile Include="..\..\..\conversions\xmlfileversconv.cpp" />
+    <ClCompile Include="..\..\..\conversions\xmlspecconv.cpp" />
+    <ClCompile Include="..\..\..\conversions\xmlspecorgconv.cpp" />
+    <ClCompile Include="..\..\..\noverification.c" />
+    <ClCompile Include="..\..\..\oslayer.c" />
+    <ClCompile Include="..\..\..\p11.c" />
+    <ClCompile Include="..\..\..\state-posix.c" />
+    <ClCompile Include="..\..\..\state.c" />
+    <ClCompile Include="..\..\..\eidxmllite.cpp" />
+    <ClCompile Include="..\..\..\xmlmap.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\util\eid-util\utftranslate.h" />
+    <ClInclude Include="..\..\..\b64\base64dec.h" />
+    <ClInclude Include="..\..\..\b64\base64enc.h" />
+    <ClInclude Include="..\..\..\backend.h" />
+    <ClInclude Include="..\..\..\conversions.h" />
+    <ClInclude Include="..\..\..\conversions\convertor.h" />
+    <ClInclude Include="..\..\..\conversions\booldecode.h" />
+    <ClInclude Include="..\..\..\conversions\specconv.h" />
+    <ClInclude Include="..\..\..\conversions\toxmlmemberoffamilyconv.h" />
+    <ClInclude Include="..\..\..\conversions\xmlspecconv.h" />
+    <ClInclude Include="..\..\..\cppeidstring.h" />
+    <ClInclude Include="..\..\..\eidxmllite.h" />
+    <ClInclude Include="..\..\..\include\eid-viewer\oslayer.h" />
+    <ClInclude Include="..\..\..\p11.h" />
+    <ClInclude Include="..\..\..\state.h" />
+    <ClInclude Include="..\..\..\xml.h" />
+    <ClInclude Include="..\..\..\xmlmap.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

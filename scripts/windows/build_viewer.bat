@@ -52,6 +52,9 @@ copy %~dp0..\..\installers\eid-viewer\Windows\bin\beidViewer.msi %~dp0
 "%NSIS_PATH%\makensis.exe" "%~dp0..\..\installers\quickinstaller\eIDViewerInstaller.nsi"
 @if %ERRORLEVEL%==1 goto makensis_failed
 
+
+:: create the NSIS launcher installer
+:: ==================================
 @echo [INFO] Make nsis viewer launcher installer
 "%NSIS_PATH%\makensis.exe" "%~dp0..\..\installers\quickinstaller\eIDViewerLauncher.nsi"
 @if %ERRORLEVEL%==1 goto makensis_failed
@@ -74,6 +77,9 @@ copy %~dp0..\..\installers\eid-viewer\Windows\bin\beidViewer.msi %~dp0
 @echo [INFO] copy nsis installer
 copy "%~dp0..\..\installers\quickinstaller\Belgium eID Viewer Installer %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe" %~dp0
 
+
+:: copy the NSIS launcher installer
+:: ================================
 @echo [INFO] copy nsis launcher installer
 copy "%~dp0..\..\installers\quickinstaller\Belgium eID Viewer Launcher %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe" %~dp0
 goto end_resetpath
