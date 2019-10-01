@@ -31,4 +31,6 @@
   allow_failure: true
   artifacts:
     when: on_success
-    untracked: true
+    paths:
+    - $MACOS_BASEDIR/scripts/mac/*dmg
+    - $MACOS_BASEDIR/installers/eid-mw/mac/release/*
