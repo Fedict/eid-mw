@@ -12,9 +12,8 @@ fi
 #or
 # EIDMW_SIGN_BUILD=0 ./make-mac.sh
 EIDMW_SIGN_BUILD=${EIDMW_SIGN_BUILD:-1}
-if [ -z "$EIDMW_SIGN_BUILD" ]
+if [ "$EIDMW_SIGN_BUILD" -eq 1 ]
 then
-	EIDMW_SIGN_BUILD=1
 	echo "will be signing Release Build"
 fi
 
