@@ -57,14 +57,14 @@ echo "********** staple the notarization ticket to the DMG **********"
 
 
 
-Echo "**** Use the below command to get notarised package identifiers ****"
-Echo "xcrun altool --notarization-history 0 -u $AC_USERNAME -p @keychain:altool"
+echo "**** Use the below command to get notarised package identifiers ****"
+echo "xcrun altool --notarization-history 0 -u $AC_USERNAME -p @keychain:altool"
 
-Echo "**** Then use that [identifier] to get the log url: ****"
-Echo "xcrun altool --notarization-info [identifier] -u $AC_USERNAME -p @keychain:altool"
+echo "**** Then use that [identifier] to get the log url: ****"
+echo "xcrun altool --notarization-info [identifier] -u $AC_USERNAME -p @keychain:altool"
 
-Echo "**** If the log is ok, but stapling failed due to record not found, retry stapling: ****"
-Echo "/usr/bin/xcrun stapler staple -v $EIDVIEWER_DMG"
+echo "**** If the log is ok, but stapling failed due to record not found, retry stapling: ****"
+echo "/usr/bin/xcrun stapler staple -v $EIDVIEWER_DMG"
 
 
 popd
