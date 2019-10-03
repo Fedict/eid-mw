@@ -15,8 +15,9 @@ fi
 shift
 if [ -z "$DIST" ] && [ ! -z "$1" ]
 then
-	DIST=shift
+	DIST=$1
 fi
+shift
 case $DIST in
 	debian)
 		/usr/local/bin/download-debuerreotype-tarball.sh $CODE $ARCH
