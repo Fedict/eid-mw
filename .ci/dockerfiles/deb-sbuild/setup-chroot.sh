@@ -33,5 +33,5 @@ case $DIST in
 esac
 
 schroot --directory=/ -c source:$CODE-$ARCH-sbuild apt-get update
-schroot --directory=/ -c source:$CODE-$ARCH-sbuild apt-get -y install eatmydata
+schroot --directory=/ -c source:$CODE-$ARCH-sbuild -- apt-get -y install eatmydata
 echo "command-prefix=eatmydata" >> /etc/schroot/chroot.d/*
