@@ -386,6 +386,8 @@ repo:inject-debs:
     - $CI_COMMIT_TAG
 
 repo:inject-fed:
+  variables:
+    TARGET: continuous
   only:
     variables:
     - $CI_COMMIT_REF_NAME == "master"
@@ -402,6 +404,8 @@ repo:inject-fed:
   extends: .inject-fed
 
 repo:inject-suse:
+  variables:
+    TARGET: continuous
   only:
     variables:
     - $CI_COMMIT_REF_NAME == "master"

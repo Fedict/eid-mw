@@ -199,7 +199,6 @@
   tags:
     - repobuilder
   script:
-    - export TARGET=continuous
     - if [ $CANDIDATEBRANCH = $CI_COMMIT_REF_NAME ]; then TARGET=candidate; fi
     - if [ ! -z "$CI_COMMIT_TAG" ]; then TARGET=candidate; fi
     - bash -x $LINUX_BASEDIR/scripts/build-aux/fed-rel.sh
@@ -208,7 +207,6 @@
   tags:
     - repobuilder
   script:
-    - export TARGET=continuous
     - if [ $CANDIDATEBRANCH = $CI_COMMIT_REF_NAME ]; then TARGET=candidate; fi
     - if [ ! -z "$CI_COMMIT_TAG" ]; then TARGET=candidate; fi
     - bash -x $LINUX_BASEDIR/scripts/build-aux/suse-rel.sh
