@@ -30,3 +30,7 @@ case $DIST in
 		exit 1
 	;;
 esac
+
+schroot -c source:$CODE-$ARCH-sbuild apt-get update
+schroot -c source:$CODE-$ARCH-sbuild apt-get -y install eatmydata
+echo "command-prefix=eatmydata" >> /etc/schroot/chroot.d/*
