@@ -78,14 +78,14 @@ test:distcheck:
   stage: tests
   extends: .distcheck
   cache:
-    key: $CI_COMMIT_REF_SLUG:build
+    key: $CI_COMMIT_REF_SLUG-build
     untracked: true
 
 test:robot:linux:
   stage: tests
   extends: .robot:linux
   cache:
-    key: $CI_COMMIT_REF_SLUG:build
+    key: $CI_COMMIT_REF_SLUG-build
     untracked: true
 
 test:repro:debian:
@@ -320,7 +320,7 @@ build:windows:
   extends: .build-windows
   cache:
     untracked: true
-    key: "windows:$CI_COMMIT_REF_SLUG"
+    key: "windows-$CI_COMMIT_REF_SLUG"
 
 # macOS
 build:macos:
@@ -328,7 +328,7 @@ build:macos:
   extends: .build-macos
   cache:
     untracked: true
-    key: "macos:$CI_COMMIT_REF_SLUG"
+    key: "macos-$CI_COMMIT_REF_SLUG"
 
 validate:robot:windows:
   stage: validate
@@ -337,7 +337,7 @@ validate:robot:windows:
   - build:windows
   cache:
     untracked: true
-    key: "windows:$CI_COMMIT_REF_SLUG"
+    key: "windows-$CI_COMMIT_REF_SLUG"
 
 validate:robot:macos:
   stage: validate
