@@ -9,6 +9,7 @@
   - pushd $LINUX_BASEDIR
   - autoreconf -f -i
   - popd
+  - rm -rf products
   script:
   - pushd $LINUX_BASEDIR
   - ./configure
