@@ -5,6 +5,7 @@
   image: docker:stable
   tags:
   - docker
+  - dind
   services:
   - docker:dind
   variables:
