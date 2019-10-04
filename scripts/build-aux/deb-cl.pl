@@ -47,7 +47,13 @@ if(!defined($version)) {
 	close $vers;
 	chomp $version;
 }
-$entry->{header} = "eid-mw ($version-0" . $ENV{SHORT} . "-1) " . $ENV{TARGET} . "-" . $ENV{CODE} . "; urgency=low";
+my $distribution = "";
+if(exists($ENV{TARGET}) && length($ENV{TARGET}) > 0) {
+	$distribution = $ENV{TARGET} . "-";
+}
+$distribution .= $ENV{CODE};
+
+$entry->{header} = "eid-mw ($version-0" . $ENV{SHORT} . "-1) $distribution; urgency=low";
 $entry->{changes} = ["  * Snapshot release"];
 $entry->{trailer} = " -- $author  $date";
 $entry->normalize;
