@@ -107,6 +107,8 @@ src:srpm:
 ## Debian-based distributions
 .build-deb: &build-deb
   extends: .build-deb-base
+  variables:
+    TARGET: continuous
   dependencies:
     - test:distcheck
   stage: binary-package
