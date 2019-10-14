@@ -47,7 +47,6 @@ if(!defined($version)) {
 	close $vers;
 	chomp $version;
 }
-<<<<<<< HEAD
 my $distribution = "";
 if(exists($ENV{TARGET}) && length($ENV{TARGET}) > 0) {
 	$distribution = $ENV{TARGET} . "-";
