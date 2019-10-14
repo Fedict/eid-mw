@@ -48,15 +48,14 @@ if(!defined($version)) {
 	chomp $version;
 }
 my $distribution = "";
+my $released = "";
 if(exists($ENV{TARGET}) && length($ENV{TARGET}) > 0) {
 	$distribution = $ENV{TARGET} . "-";
+} else {
+	$released = "r";
 }
 $distribution .= $ENV{CODE};
 
-my $released = "";
-if(!exists($ENV{TARGET})) {
-	$released = "r";
-}
 
 $entry->{header} = "eid-mw ($version-0" . $ENV{SHORT} . "$released-1) $distribution; urgency=low";
 $entry->{changes} = ["  * Snapshot release"];
