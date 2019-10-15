@@ -25,7 +25,7 @@
   - ./make-mac.sh
   - ./make-viewer.sh
   after_script:
-  - sudo chown -R $USER $MACOS_BASEDIR/installers/eid-mw/mac/release
+  - sudo chown -R $USER $MACOS_BASEDIR/installers/eid-mw/mac/release || true
   tags:
   - macos
   allow_failure: true
