@@ -110,8 +110,6 @@
     - products/srpm
 
 .build-deb-base:
-  variables:
-    GIT_STRATEGY: none
   before_script:
   - VER=$(cat products/source/version)
   - VERSHORT=${VER#*-}
@@ -143,8 +141,6 @@
   tags:
   - docker
   image: $CI_REGISTRY_IMAGE/fed-build:$CI_COMMIT_REF_SLUG
-  variables:
-    GIT_STRATEGY: none
   before_script:
   - dnf -y install mock git
   - VER=$(cat products/srpm/version)
