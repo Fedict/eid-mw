@@ -959,7 +959,7 @@
                                                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                                         <tableColumns>
-                                                                            <tableColumn editable="NO" width="741" minWidth="300" maxWidth="1000" id="SbE-j5-DtL">
+                                                                            <tableColumn identifier="certificate" editable="NO" width="741" minWidth="300" maxWidth="1000" id="SbE-j5-DtL">
                                                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Certificate">
                                                                                     <font key="font" metaFont="smallSystem"/>
                                                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -972,26 +972,28 @@
                                                                                 </textFieldCell>
                                                                                 <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                                                                 <prototypeCellViews>
-                                                                                    <tableCellView id="Bu6-6L-gVm">
+                                                                                    <tableCellView id="9tg-05-XpQ">
                                                                                         <rect key="frame" x="1" y="1" width="741" height="17"/>
                                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                         <subviews>
-                                                                                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jre-Bh-cxO">
-                                                                                                <rect key="frame" x="-2" y="0.0" width="745" height="17"/>
-                                                                                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Certificate" id="EWX-mV-sXX">
+                                                                                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yGq-W6-xcj">
+                                                                                                <rect key="frame" x="3" y="0.0" width="17" height="17"/>
+                                                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSActionTemplate" id="Ad5-zV-tAw"/>
+                                                                                            </imageView>
+                                                                                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wmZ-75-59F">
+                                                                                                <rect key="frame" x="25" y="0.0" width="716" height="17"/>
+                                                                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                                                                <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Certificate" id="qf1-PD-Jx7">
                                                                                                     <font key="font" metaFont="system"/>
                                                                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                                                 </textFieldCell>
                                                                                             </textField>
                                                                                         </subviews>
-                                                                                        <constraints>
-                                                                                            <constraint firstAttribute="centerY" secondItem="Jre-Bh-cxO" secondAttribute="centerY" id="WKX-4l-4Bt"/>
-                                                                                            <constraint firstAttribute="trailing" secondItem="Jre-Bh-cxO" secondAttribute="trailing" id="asP-an-ZYg"/>
-                                                                                            <constraint firstItem="Jre-Bh-cxO" firstAttribute="leading" secondItem="Bu6-6L-gVm" secondAttribute="leading" id="woJ-iE-P5e"/>
-                                                                                        </constraints>
                                                                                         <connections>
-                                                                                            <outlet property="textField" destination="Jre-Bh-cxO" id="cbw-WJ-jht"/>
+                                                                                            <outlet property="imageView" destination="yGq-W6-xcj" id="yIe-Sh-YeT"/>
+                                                                                            <outlet property="textField" destination="wmZ-75-59F" id="N1W-9W-xio"/>
                                                                                         </connections>
                                                                                     </tableCellView>
                                                                                 </prototypeCellViews>
