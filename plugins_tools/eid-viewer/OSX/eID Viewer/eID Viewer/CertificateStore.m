@@ -171,6 +171,8 @@
 	NSTableCellView *cell = [outlineView makeViewWithIdentifier:[tableColumn identifier] owner:_ui];
 	NSTextField *field = [cell textField];
 	[field setStringValue:[[_CertificateData objectForKey:item] objectAtIndex:CERT_COL_LABEL]];
+	NSImageView *img = [cell imageView];
+	[img setImage:[[_CertificateData objectForKey:item] objectAtIndex:CERT_COL_IMAGE]];
 
 	return cell;
 }
