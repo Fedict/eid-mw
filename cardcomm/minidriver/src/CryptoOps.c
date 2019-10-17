@@ -59,7 +59,10 @@ DWORD WINAPI   CardRSADecrypt
 {
 	DWORD    dwReturn = 0;
 	LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
-
+	/* 
+	 * for ECC - only smart cards, this entry point is not defined and is
+	 * set to NULL in the CARD_DATA structure returned from CardAcquireContext
+	*/
 	CLEANUP(SCARD_E_UNSUPPORTED_FEATURE);
 
 cleanup:
@@ -478,15 +481,26 @@ DWORD WINAPI   CardQueryKeySizes
 	switch(dwKeySpec)
 	{
 	case AT_ECDHE_P256 :
-	case AT_ECDHE_P384 :
 	case AT_ECDHE_P521 :
 	case AT_ECDSA_P256 :
-	case AT_ECDSA_P384 :
 	case AT_ECDSA_P521 :
 		iUnSupported++;
 		break;
+	//supported EC keys
+	case AT_ECDHE_P384:
+	case AT_ECDSA_P384:
+		pKeySizes->dwMinimumBitlen = 384;
+		pKeySizes->dwDefaultBitlen = 384;
+		pKeySizes->dwMaximumBitlen = 384;
+		pKeySizes->dwIncrementalBitlen = 1;
+		break;
+	//for RSA keys
 	case AT_KEYEXCHANGE:
 	case AT_SIGNATURE  :
+		pKeySizes->dwMinimumBitlen = 1024;
+		pKeySizes->dwDefaultBitlen = 1024;
+		pKeySizes->dwMaximumBitlen = 2048;
+		pKeySizes->dwIncrementalBitlen = 0;
 		break;
 	default:
 		iInValid++;
@@ -502,11 +516,6 @@ DWORD WINAPI   CardQueryKeySizes
 		LogTrace(LOGTYPE_ERROR, WHERE, "Unsupported parameter [dwKeySpec][%d]", dwKeySpec);
 		CLEANUP(SCARD_E_UNSUPPORTED_FEATURE);
 	}
-
-	pKeySizes->dwMinimumBitlen     = 1024;
-	pKeySizes->dwDefaultBitlen     = 1024;
-	pKeySizes->dwMaximumBitlen     = 2048;
-	pKeySizes->dwIncrementalBitlen = 0;
 
 cleanup:
 	LogTrace(LOGTYPE_INFO, WHERE, "Exit API...");
