@@ -68,10 +68,17 @@ DWORD WINAPI   CardAuthenticatePin
 		LogTrace(LOGTYPE_ERROR, WHERE, "Invalid parameter value [pwszUserId]");
 		CLEANUP(SCARD_E_INVALID_PARAMETER);
 	}
-	
+
+	VENDOR_SPECIFIC* pVendorSpec = pCardData->pvVendorSpecific;
+	BYTE bAlgo = BELPIC_SIGN_ALGO_RSASSA_PKCS1;
+
+	if (pVendorSpec->bBEIDCardType == BEID_ECC_CARD)
+	{
+		bAlgo = BELPIC_SIGN_ALGO_ECDSA_SHA2_384;
+	}
+
 	//authenticate for which key, and what to use as default algo?
-	//use 
-	dwReturn = BeidMSE(pCardData, BELPIC_KEY_AUTH,BELPIC_SIGN_ALGO_RSASSA_PKCS1);
+	dwReturn = BeidMSE(pCardData, BELPIC_KEY_AUTH, bAlgo);
 	//dwReturn = BeidMSE(pCardData, ROLE_DIGSIG);
 	if ( dwReturn != SCARD_S_SUCCESS )
 	{
