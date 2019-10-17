@@ -118,6 +118,7 @@ DWORD WINAPI   CardReadFile
 	char					   szSerialNumber[33];
 	char					   szContainerName[40];
 	int					   iReturn;
+	VENDOR_SPECIFIC* pVendorSpec;
 
    LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
 
@@ -277,10 +278,18 @@ DWORD WINAPI   CardReadFile
 					LogTrace(LOGTYPE_ERROR, WHERE, "Error BeidSelectAndReadFile 0x%.08x", dwReturn);
 					CLEANUP(dwReturn);
 				}
-				dwReturn = BeidParsePrKDF(pCardData,pcbData,*ppbData ,&keySize);
-				if (dwReturn != 0)  {
-					LogTrace(LOGTYPE_ERROR, WHERE, "Error BeidParsePrKDF 0x%.08x keySize = %d", dwReturn,keySize);
-					CLEANUP(dwReturn);
+				pVendorSpec = pCardData->pvVendorSpecific;
+				if (pVendorSpec->bBEIDCardType == BEID_RSA_CARD)
+				{
+					dwReturn = BeidParsePrKDF(pCardData, pcbData, *ppbData, &keySize);
+					if (dwReturn != 0) {
+						LogTrace(LOGTYPE_ERROR, WHERE, "Error BeidParsePrKDF 0x%.08x keySize = %d", dwReturn, keySize);
+						CLEANUP(dwReturn);
+					}
+				}
+				else
+				{
+					keySize = 384;
 				}
 
 				*pcbData = sizeof(cmr);
@@ -586,69 +595,69 @@ DWORD WINAPI   CardGetFileInfo
    {
       LogTrace(LOGTYPE_INFO, WHERE, "pszFileName = [%s]", pszFileName);
    }
-	if ( pszDirectoryName == NULL)                              /* root */
+   if (pszDirectoryName == NULL)                              /* root */
    {
-		DirFound++;
-		if (_stricmp("cardid", pszFileName) == 0)                   /* /cardid */
-		{
-			FileFound++;
-			pCardFileInfo->cbFileSize      = sizeof(GUID);
-   }
+	   DirFound++;
+	   if (_stricmp("cardid", pszFileName) == 0)                   /* /cardid */
+	   {
+		   FileFound++;
+		   pCardFileInfo->cbFileSize = sizeof(GUID);
+	   }
 
-		if ( _stricmp("cardapps", pszFileName) == 0)				      /* /cardapps */
+	   if (_stricmp("cardapps", pszFileName) == 0)				      /* /cardapps */
+	   {
+		   FileFound++;
+		   pCardFileInfo->cbFileSize = 5;
+	   }
+	   if (_stricmp("cardcf", pszFileName) == 0)					      /* /cardcf */
+	   {
+		   FileFound++;
+		   pCardFileInfo->cbFileSize = 6;
+	   }
+   }
+   else                         									         /* not on root */
    {
-			FileFound++;
-			pCardFileInfo->cbFileSize      =  5;
-		}
-		if (_stricmp("cardcf", pszFileName) == 0)					      /* /cardcf */
-      {
-			FileFound++;
-			pCardFileInfo->cbFileSize       = 6;
-		}
-	}
-	else                         									         /* not on root */
-	{
-		if ( _stricmp("mscp", pszDirectoryName) == 0)               /* /mscp */
-		{
-         DirFound++;
-			if (_stricmp("cmapfile", pszFileName) == 0)			      /* /mscp/cmapfile */
-         {
-            FileFound++;
-				pCardFileInfo->cbFileSize = sizeof(CONTAINER_MAP_RECORD) * 2;
-         }
-			if ( _stricmp("ksc00", pszFileName) == 0)					   /* /mscp/ksc00 */
-			{
-				FileFound++;
-				dwReturn = BeidReadCert(pCardData, CERT_AUTH, &(pCardFileInfo->cbFileSize), NULL);
-				if ( dwReturn != SCARD_S_SUCCESS )
-				{
-					LogTrace(LOGTYPE_ERROR, WHERE, "BeidReadCert[CERT_AUTH] returned [%d]", dwReturn);
-					CLEANUP(SCARD_E_UNEXPECTED);
-      }
-   }
-			if ( _stricmp("ksc01", pszFileName) == 0)					   /* /mscp/ksc01 */
-			{
-				FileFound++;
-				dwReturn = BeidReadCert(pCardData, CERT_NONREP, &(pCardFileInfo->cbFileSize), NULL);
-				if ( dwReturn != SCARD_S_SUCCESS )
-				{
-					LogTrace(LOGTYPE_ERROR, WHERE, "BeidReadCert[CERT_NONREP] returned [%d]", dwReturn);
-					CLEANUP(SCARD_E_UNEXPECTED);
-				}
-			}
-			if ( _stricmp("msroots", pszFileName) == 0)					/* /mscp/msroots */
-			{
-				FileFound++;
-				dwReturn = BeidCreateMSRoots(pCardData, &(pCardFileInfo->cbFileSize), NULL);
-				if ( dwReturn != SCARD_S_SUCCESS )
-				{
-					LogTrace(LOGTYPE_ERROR, WHERE, "BeidCreateMSRoots returned [%d]", dwReturn);
-					CLEANUP(SCARD_E_UNEXPECTED);
-				}
+	   if (_stricmp("mscp", pszDirectoryName) == 0)               /* /mscp */
+	   {
+		   DirFound++;
+		   if (_stricmp("cmapfile", pszFileName) == 0)			      /* /mscp/cmapfile */
+		   {
+			   FileFound++;
+			   pCardFileInfo->cbFileSize = sizeof(CONTAINER_MAP_RECORD) * 2;
+		   }
+		   if (_stricmp("ksc00", pszFileName) == 0)					   /* /mscp/ksc00 */
+		   {
+			   FileFound++;
+			   dwReturn = BeidReadCert(pCardData, CERT_AUTH, &(pCardFileInfo->cbFileSize), NULL);
+			   if (dwReturn != SCARD_S_SUCCESS)
+			   {
+				   LogTrace(LOGTYPE_ERROR, WHERE, "BeidReadCert[CERT_AUTH] returned [%d]", dwReturn);
+				   CLEANUP(SCARD_E_UNEXPECTED);
+			   }
+		   }
+		   if (_stricmp("ksc01", pszFileName) == 0)					   /* /mscp/ksc01 */
+		   {
+			   FileFound++;
+			   dwReturn = BeidReadCert(pCardData, CERT_NONREP, &(pCardFileInfo->cbFileSize), NULL);
+			   if (dwReturn != SCARD_S_SUCCESS)
+			   {
+				   LogTrace(LOGTYPE_ERROR, WHERE, "BeidReadCert[CERT_NONREP] returned [%d]", dwReturn);
+				   CLEANUP(SCARD_E_UNEXPECTED);
+			   }
+		   }
+		   if (_stricmp("msroots", pszFileName) == 0)					/* /mscp/msroots */
+		   {
+			   FileFound++;
+			   dwReturn = BeidCreateMSRoots(pCardData, &(pCardFileInfo->cbFileSize), NULL);
+			   if (dwReturn != SCARD_S_SUCCESS)
+			   {
+				   LogTrace(LOGTYPE_ERROR, WHERE, "BeidCreateMSRoots returned [%d]", dwReturn);
+				   CLEANUP(SCARD_E_UNEXPECTED);
+			   }
 
-			}
-		}
-	}
+		   }
+	   }
+   }
    if ( ! FileFound )
    {
       if ( ! DirFound )
