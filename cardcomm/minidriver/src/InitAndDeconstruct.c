@@ -29,19 +29,27 @@
 #define MINIMUM_VERSION_SUPPORTED      CARD_DATA_VERSION_SIX
 #define CURRENT_VERSION_SUPPORTED      CARD_DATA_VERSION_SIX
 
-#define SUPPORTED_CARDS                3
+#define SUPPORTED_CARDS                4
 
 /* Supported ATRs by the Mini Driver */
 CARD_ATR    CardAtr[] = 
             { 
-               {{0x3B,0x98,0x13,0x40,0x0A,0xA5,0x03,0x01,0x01,0x01,0xAD,0x13,0x11}, 13},
-               {{0x3B,0x98,0x94,0x40,0x0A,0xA5,0x03,0x01,0x01,0x01,0xAD,0x13,0x10}, 13},
-               {{0x3B,0x98,0x94,0x40,0xFF,0xA5,0x03,0x01,0x01,0x01,0xAD,0x13,0x10}, 13}
+               {{0x3B,0x98,0x13,0x40,0x0A,0xA5,0x03,0x01,0x01,0x01,0xAD,0x13,0x11}, 13, BEID_RSA_CARD},
+               {{0x3B,0x98,0x94,0x40,0x0A,0xA5,0x03,0x01,0x01,0x01,0xAD,0x13,0x10}, 13, BEID_RSA_CARD},
+               {{0x3B,0x98,0x94,0x40,0xFF,0xA5,0x03,0x01,0x01,0x01,0xAD,0x13,0x10}, 13, BEID_RSA_CARD},
+			   {{0x3b,0x7f,0x96,0x00,0x00,0x80,0x31,0x80,0x65,0xb0,0x85,0x04,0x01,0x20,0x12,0x0f,0xff,0x82,0x90,0x00}, 20, BEID_ECC_CARD }
             };
 
 /****************************************************************************************************/
+/*trying to get the card's ATR by calling SCardGetAttrib
+returned: ATR length = 13 retval : 0x00000000
+	ATR = 0x3b 0x98 0x13 0x40 0x0a 0xa5 0x03 0x01 0x01 0x01 0xad 0x13 0x11
 
-
+	returned : ATR length = 20 retval : 0x00000000
+	ATR = 0x3b 0x7f 0x96 0x00 0x00 0x80 0x31 0x80 0x65 0xb0 0x85 0x04 0x01 0x20 0x12 0x0f 0xff 0x82 0x90 0x00
+	trying to get the card's ATR by calling SCardStatus
+	returned : ATR length = 20 retval : 0x00000000
+	ATR = 0x3b 0x7f 0x96 0x00 0x00 0x80 0x31 0x80 0x65 0xb0 0x85 0x04 0x01 0x20 0x12 0x0f 0xff 0x82 0x90 0x00*/
 //
 // Function: CardAcquireContext
 //
@@ -62,6 +70,7 @@ DWORD WINAPI   CardAcquireContext
    int                     iCardCnt    = 0;
    int                     iLgCnt      = 0;
    int                     i           = 0;
+   BYTE					bBEIDCARD_TYPE = 0;
 
    LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
 
@@ -74,8 +83,12 @@ DWORD WINAPI   CardAcquireContext
       CLEANUP(SCARD_E_INVALID_PARAMETER);
    }
 
+   /* Secure Key Injection is not supported, so dwFlags needs to be 0 */
    if ( dwFlags != 0 )
    {
+	  //If CARD_SECURE_KEY_INJECTION_NO_CARD_MODE is set in dwFlags and the minidriver does not support this flag, the minidriver should return SCARD_E_UNSUPPORTED_FEATURE.
+
+
       LogTrace(LOGTYPE_ERROR, WHERE, "Invalid parameter [dwFlags]");
       CLEANUP(SCARD_E_INVALID_PARAMETER);
    }
@@ -95,6 +108,7 @@ DWORD WINAPI   CardAcquireContext
       LogTrace(LOGTYPE_ERROR, WHERE, "Invalid parameter [pCardData->pbAtr]");
       CLEANUP(SCARD_E_INVALID_PARAMETER);
    }
+
    for ( iAtr = 0 ; iAtr < SUPPORTED_CARDS ; iAtr++ )
    {
       if ( pCardData->cbAtr == CardAtr[iAtr].cbAtr )
@@ -102,6 +116,7 @@ DWORD WINAPI   CardAcquireContext
          if ( memcmp(pCardData->pbAtr, CardAtr[iAtr].pbAtr, pCardData->cbAtr) == 0 )
          {
             iCardCnt++;
+			bBEIDCARD_TYPE = CardAtr[iAtr].bBEIDCardType;
             break;
          }
 
@@ -209,6 +224,7 @@ DWORD WINAPI   CardAcquireContext
    pCardData->pfnCardDestroyDHAgreement      = NULL;
 #endif
 
+
    pCardData->pfnCardSignData                = CardSignData;
    pCardData->pfnCardQueryKeySizes           = CardQueryKeySizes;
 
@@ -218,6 +234,11 @@ DWORD WINAPI   CardAcquireContext
 	/* Vendor specific */
 	pCardData->pvVendorSpecific               = pCardData->pfnCspAlloc(sizeof(VENDOR_SPECIFIC));
 	memset(pCardData->pvVendorSpecific, 0, sizeof(VENDOR_SPECIFIC));
+
+	/* store if the attached card supports RSA or ECC*/
+	VENDOR_SPECIFIC* pVendorSpec = pCardData->pvVendorSpecific;
+	pVendorSpec->bBEIDCardType = bBEIDCARD_TYPE;
+
 cleanup:
 
    LogTrace(LOGTYPE_INFO, WHERE, "Exit API...");

@@ -44,10 +44,20 @@
 
 #define MAX_CONTAINERS                    5
 
+#define BEID_RSA_CARD	1
+#define BEID_ECC_CARD	2
+/*
+typedef enum
+{
+	beidRSACard = 1,
+	beidECCCard = 2
+}BEIDCARD_TYPE;
+*/
 typedef struct _CARD_ATR
 {
    BYTE     pbAtr[32];
    DWORD    cbAtr;
+   BYTE		bBEIDCardType;
 } CARD_ATR, *PCARD_ATR;
 
 typedef struct _VIRTUAL_FILE_OBJECT
@@ -75,6 +85,7 @@ typedef struct _VENDOR_SPECIFIC
 {
 	BYTE bSerialNumberSet;
 	BYTE szSerialNumber[16];
+	BYTE bBEIDCardType;
 } VENDOR_SPECIFIC;
 
 /************************************************************************************************************************/
