@@ -1040,7 +1040,7 @@ DWORD BeidGetCardSN(PCARD_DATA  pCardData,
 	Cmd [1] = 0xE4;
 	Cmd [2] = 0x00;
 	Cmd [3] = 0x00;
-	Cmd [4] = 0x10;//1C we only need 16 bytes, asking for 28 would help out some readers in combination with default ccid driver (if it weren't for certprop service, which also asks 16 bytes)
+	Cmd [4] = 0x1C;//10 we only need 16 bytes, asking for 28 would help out some readers in combination with default ccid driver (if it weren't for certprop service, which also asks 16 bytes)
 	uiCmdLg = 5;
 
 	do {
@@ -1525,6 +1525,7 @@ DWORD BeidSelectAndReadFile(PCARD_DATA  pCardData, DWORD dwOffset, BYTE cbFileID
    uiCmdLg = 5;
    LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
 
+
    memcpy(&Cmd[5], pbFileID, cbFileID);
    uiCmdLg += cbFileID;
 
@@ -1676,14 +1677,14 @@ DWORD BeidReadCert(PCARD_DATA  pCardData, DWORD dwCertSpec, DWORD *pcbCertif, PB
    }
 
    cbCertif = (bRead[2] << 8) + bRead[3] + 4;
-	if (ppbCertif == NULL) 
-	{
-		// we will only return the file length
-		if (pcbCertif != NULL)
-			*pcbCertif = cbCertif;
-		LogTrace(LOGTYPE_INFO, WHERE, "returning filelength = %d",cbCertif);
-		CLEANUP(SCARD_S_SUCCESS);
-	}
+   if (ppbCertif == NULL)
+   {
+	   // we will only return the file length
+	   if (pcbCertif != NULL)
+		   *pcbCertif = cbCertif;
+	   LogTrace(LOGTYPE_INFO, WHERE, "returning filelength = %d", cbCertif);
+	   CLEANUP(SCARD_S_SUCCESS);
+   }
    cbRead = cbCertif;
 
    *ppbCertif = pCardData->pfnCspAlloc(cbCertif);
