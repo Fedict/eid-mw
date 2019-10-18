@@ -509,6 +509,7 @@ namespace eIDMW
 			(m_csReader.find("VASCO DIGIPASS 876") == 0) ||    
 		    (m_csReader.find("Gemalto ING Shield Pro") == 0) ||
 			(m_csReader.find("ETSWW eKrypto PINPhab") == 0) ||
+			(m_csReader.find("ETSWW eKrypto PINPad") == 0) ||
 			(m_csReader.find("DIOSS pinpad") == 0))
 		{
 			oResp = m_poPCSC->Transmit(m_hCard, oCmd, &lRetVal);
