@@ -1,4 +1,4 @@
-XML2_VERSION=2.9.2
+XML2_VERSION=2.9.9
 TP_DIR=../../../../../../ThirdParty
 
 build: builddir/libxml2.la libxml2
