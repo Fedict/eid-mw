@@ -121,7 +121,6 @@
   - if [ ! -z "$CI_COMMIT_TAG" ]; then TARGET=candidate; fi
   - if [ $ARCH = "i386" ]; then DASHA="-A -s"; else DASHA=""; fi
   - if [ ! -z "$TARGET" ]; then dist="$TARGET-$CODE"; else dist=$CODE; fi
-  - env
   - ../products/source/deb-cl.pl debian/changelog "$COMMITDATE" "$VER"
   script:
   - sbuild -n $DASHA -d $dist -c $CODE-$ARCH-sbuild --arch=$ARCH
