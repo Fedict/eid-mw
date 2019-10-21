@@ -17,7 +17,8 @@
   - cd %WINDOWS_BASEDIR%\scripts\windows
   - build_all.bat
   after_script:
-  - md products\windows
+  - rmdir /s /q products
+  - mkdir products\windows
   - xcopy %WINDOWS_BASEDIR%\scripts\windows\*.exe products\windows
   - xcopy %WINDOWS_BASEDIR%\scripts\windows\*.msi products\windows
   tags:
