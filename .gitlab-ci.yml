@@ -107,9 +107,6 @@ src:srpm:
 ## Debian-based distributions
 .build-deb: &build-deb
   extends: .build-deb-base
-  variables:
-    TARGET: continuous
-    GIT_STRATEGY: none
   dependencies:
     - test:distcheck
   stage: binary-package
@@ -121,6 +118,8 @@ build:deb_oldstable_32:
     CODE: $DEBIAN_OLDSTABLE_CODE
     SHORT: deb$DEBIAN_OLDSTABLE_VERSION
     ARCH: i386
+    TARGET: continuous
+    GIT_STRATEGY: none
   only:
     variables:
     - $DEBIAN_OLDSTABLE_CODE
@@ -131,6 +130,8 @@ build:deb_oldstable_64:
     CODE: $DEBIAN_OLDSTABLE_CODE
     SHORT: deb$DEBIAN_OLDSTABLE_VERSION
     ARCH: amd64
+    TARGET: continuous
+    GIT_STRATEGY: none
   only:
     variables:
     - $DEBIAN_OLDSTABLE_CODE
@@ -141,6 +142,8 @@ build:deb_stable_32:
     CODE: $DEBIAN_STABLE_CODE
     SHORT: deb$DEBIAN_STABLE_VERSION
     ARCH: i386
+    TARGET: continuous
+    GIT_STRATEGY: none
   only:
     variables:
     - $DEBIAN_STABLE_CODE
@@ -151,6 +154,8 @@ build:deb_stable_64:
     CODE: $DEBIAN_STABLE_CODE
     SHORT: deb$DEBIAN_STABLE_VERSION
     ARCH: amd64
+    TARGET: continuous
+    GIT_STRATEGY: none
   only:
     variables:
     - $DEBIAN_STABLE_CODE
@@ -161,6 +166,8 @@ build:sid-32:
     CODE: sid
     SHORT: sid
     ARCH: i386
+    TARGET: continuous
+    GIT_STRATEGY: none
   allow_failure: true
 build:sid-64:
   <<: *build-deb
@@ -169,6 +176,8 @@ build:sid-64:
     CODE: sid
     SHORT: sid
     ARCH: amd64
+    TARGET: continuous
+    GIT_STRATEGY: none
   allow_failure: true
 build:ubuntu_oldlts_32:
   <<: *build-deb
@@ -177,6 +186,8 @@ build:ubuntu_oldlts_32:
     CODE: $UBUNTU_OLDLTS_CODE
     SHORT: u$UBUNTU_OLDLTS_VERSION
     ARCH: i386
+    TARGET: continuous
+    GIT_STRATEGY: none
   only:
     variables:
     - $UBUNTU_OLDLTS_CODE
@@ -187,6 +198,8 @@ build:ubuntu_oldlts_64:
     CODE: $UBUNTU_OLDLTS_CODE
     SHORT: u$UBUNTU_OLDLTS_VERSION
     ARCH: amd64
+    TARGET: continuous
+    GIT_STRATEGY: none
   only:
     variables:
     - $UBUNTU_OLDLTS_CODE
@@ -197,6 +210,8 @@ build:ubuntu_lts_32:
     CODE: $UBUNTU_LTS_CODE
     SHORT: u$UBUNTU_LTS_VERSION
     ARCH: i386
+    TARGET: continuous
+    GIT_STRATEGY: none
   only:
     variables:
     - $UBUNTU_LTS_CODE
@@ -207,6 +222,8 @@ build:ubuntu_lts_64:
     CODE: $UBUNTU_LTS_CODE
     SHORT: u$UBUNTU_LTS_VERSION
     ARCH: amd64
+    TARGET: continuous
+    GIT_STRATEGY: none
   only:
     variables:
     - $UBUNTU_LTS_CODE
@@ -217,6 +234,8 @@ build:ubuntu_stable_32:
     CODE: $UBUNTU_STABLE_CODE
     SHORT: u$UBUNTU_STABLE_VERSION
     ARCH: i386
+    TARGET: continuous
+    GIT_STRATEGY: none
   only:
     variables:
     - $UBUNTU_STABLE_CODE
@@ -227,6 +246,8 @@ build:ubuntu_stable_64:
     CODE: $UBUNTU_STABLE_CODE
     SHORT: u$UBUNTU_STABLE_VERSION
     ARCH: amd64
+    TARGET: continuous
+    GIT_STRATEGY: none
   only:
     variables:
     - $UBUNTU_STABLE_CODE
