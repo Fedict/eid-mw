@@ -145,11 +145,9 @@
   - dnf -y install mock git
   - VER=$(cat products/srpm/version)
   - VERSHORT=${VER#*-}
-  script:
-  - mock --dnf --old-chroot --verbose -r $DIST-$DVER-$ARCH --rebuild products/srpm/eid-mw-*.src.rpm --define "revision $VERSHORT"
-  after_script:
   - mkdir -p products/$DIST-$DVER-$ARCH
-  - cp /var/lib/mock/$DIST-$DVER-$ARCH/result/eid*rpm products/$DIST-$DVER-$ARCH/
+  script:
+  - mock --dnf --old-chroot --verbose -r $DIST-$DVER-$ARCH --rebuild products/srpm/eid-mw-*.src.rpm --resultdir $CI_PROJECT_DIR/products/$DIST-$DVER-$ARCH --define "revision $VERSHORT"
   artifacts:
     paths:
     - products/$DIST-$DVER-$ARCH
