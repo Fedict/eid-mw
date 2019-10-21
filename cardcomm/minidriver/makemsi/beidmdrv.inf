@@ -8,7 +8,7 @@ Class=SmartCard
 ClassGuid={990A2BD7-E738-46c7-B26F-1CF8FB9F1391}
 Provider=%BOSA%
 CatalogFile=beidmdrv.cat
-DriverVer=03/04/2019,4.4.18
+DriverVer=10/10/2019,4.4.24
 ;MMDDYYYY
 [Manufacturer]
 %BOSA%=Bosa,NTamd64,NTamd64.6.1,NTx86,NTx86.6.1
