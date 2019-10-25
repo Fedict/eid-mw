@@ -182,7 +182,10 @@ namespace eIDMW
 
 	tPrivKey CPKCS15::GetPrivKey(unsigned long ulIndex)
 	{
-		return keymap[m_poCard->GetAppletVersion()][ulIndex];
+		if(keymap.find(m_poCard->GetAppletVersion()) != keymap.end()) {
+			return keymap[m_poCard->GetAppletVersion()][ulIndex];
+		}
+		return PrivKeyInvalid;
 	}
 
 	tPrivKey CPKCS15::GetPrivKeyByID(unsigned long ulID)
