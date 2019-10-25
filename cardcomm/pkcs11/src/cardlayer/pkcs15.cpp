@@ -19,6 +19,8 @@
 
 **************************************************************************** */
 #include <iostream>
+#include <map>
+#include <array>
 #include "pkcs15.h"
 #include "pkcs15parser.h"
 #include "card.h"
@@ -29,26 +31,63 @@ namespace eIDMW
 	const static tCert CertInvalid = { false, "", 0, 0, 0, 0, false, false, "" };
 	const static tPrivKey PrivKeyInvalid = { false, "", 0, 0, 0, 0, 0, 0, 0, "", 0, false };
 
-	// Hardcoded Beid V1 PINs, keys, certs
-	bool            bValid;
-	std::string     csLabel;
-	bool            bFlags[2];
-	unsigned long   ulAuthID; // optional
-	unsigned long   ulID;
-	bool            bPinFlags[6];
-	unsigned long   ulPinType;
-	unsigned long   ulMinLen;
-	unsigned long   ulStoredLen;
-	unsigned long   ulMaxLen;  // optional ?
-	unsigned char   ulPinRef;  // optional
-	unsigned char   ucPadChar;
-	//tPinEncoding    encoding;
-	//std::string     csPath;
-
-	const static tPrivKey KeyAuthBeidV1 = { true, "Authentication", 0,2,0,1,0,0,0x82,"3F00DF00", 128,true };
-	const static tPrivKey KeySignBeidV1 = { true, "Signature", 0,3,0,1,0,0,0x83,"3F00DF00", 128,true };
-	const static tPrivKey KeyAuthBeidV2 = { true, "Authentication", 0,2,0,2,0,0,0x8A,"3F00DF00", 128,true };
-	const static tPrivKey KeySignBeidV2 = { true, "Signature", 0,3,0,2,0,0,0x89,"3F00DF00", 128,true };
+	const static tPrivKey KeyAuthBeidV11 = {
+		.bValid = true,
+		.csLabel = "Authentication",
+		.ulFlags = 3,
+		.ulAuthID = 1,
+		.ulUserConsent = 0,
+		.ulID = 2,
+		.ulKeyUsageFlags = 4,
+		.ulKeyAccessFlags = 29,
+		.ulKeyRef = 130,
+		.csPath = "3F00DF00",
+		.ulKeyLenBytes = 128,
+		.bUsedInP11 = true,
+	};
+	const static tPrivKey KeySignBeidV11 = {
+		.bValid = true,
+		.csLabel = "Signature",
+		.ulFlags = 3,
+		.ulAuthID = 1,
+		.ulUserConsent = 1,
+		.ulID = 3,
+		.ulKeyUsageFlags = 512,
+		.ulKeyAccessFlags = 29,
+		.ulKeyRef = 131,
+		.csPath = "3F00DF00",
+		.ulKeyLenBytes = 128,
+		.bUsedInP11 = true,
+	};
+	const static tPrivKey KeyAuthBeidV17 = {
+		.bValid = true,
+		.csLabel = "Authentication",
+		.ulFlags = 3,
+		.ulAuthID = 1,
+		.ulUserConsent = 0,
+		.ulID = 2,
+		.ulKeyUsageFlags = 4,
+		.ulKeyAccessFlags = 29,
+		.ulKeyRef = 130,
+		.csPath = "3F00DF00",
+		.ulKeyLenBytes = 256,
+		.bUsedInP11 = true,
+	};
+	const static tPrivKey KeySignBeidV17 = {
+		.bValid = true,
+		.csLabel = "Signature",
+		.ulFlags = 3,
+		.ulAuthID = 1,
+		.ulUserConsent = 1,
+		.ulID = 3,
+		.ulKeyUsageFlags = 512,
+		.ulKeyAccessFlags = 29,
+		.ulKeyRef = 131,
+		.csPath = "3F00DF00",
+		.ulKeyLenBytes = 256,
+		.bUsedInP11 = true,
+	};
+	std::map<unsigned char, std::array<tPrivKey, 2> > keymap;
 
 	const std::string defaultEFTokenInfo = "3F00DF005032";
 
@@ -58,6 +97,16 @@ namespace eIDMW
 
 	CPKCS15::CPKCS15(void) :m_poParser(NULL)
 	{
+		if(keymap.empty()) {
+			std::array<tPrivKey, 2> v11;
+			v11[0] = KeyAuthBeidV11;
+			v11[1] = KeySignBeidV11;
+			keymap[0x11] = v11;
+			std::array<tPrivKey, 2> v17;
+			v17[0] = KeyAuthBeidV17;
+			v17[1] = KeySignBeidV17;
+			keymap[0x17] = v17;
+		}
 		Clear();
 	}
 
@@ -143,16 +192,12 @@ namespace eIDMW
 
 	unsigned long CPKCS15::PrivKeyCount()
 	{
-		if (!m_xPrKDF.isRead)  ReadLevel3(PRKDF);
-		return (unsigned long)m_oPrKeys.size();
+		return keymap[m_poCard->GetAppletVersion()].size();
 	}
 
 	tPrivKey CPKCS15::GetPrivKey(unsigned long ulIndex)
 	{
-		if (!m_xPrKDF.isRead)  ReadLevel3(PRKDF);
-		if (ulIndex >= m_oPrKeys.size())
-			throw CMWEXCEPTION(EIDMW_ERR_PARAM_RANGE);
-		return m_oPrKeys.at(ulIndex);
+		return keymap[m_poCard->GetAppletVersion()][ulIndex];
 	}
 
 	tPrivKey CPKCS15::GetPrivKeyByID(unsigned long ulID)
@@ -173,11 +218,6 @@ namespace eIDMW
 			ReadFile(&m_xCDF, 2);
 			// parse 
 			m_oCertificates = m_poParser->ParseCdf(m_xCDF.byteArray);
-			break;
-		case PRKDF:
-			ReadFile(&m_xPrKDF, 2);
-			// parse
-			m_oPrKeys = m_poParser->ParsePrkdf(m_xPrKDF.byteArray);
 			break;
 		default:
 			// error: this method can only be called with CDF or PRKDF
