@@ -921,7 +921,7 @@ namespace eIDMW
 		// For V1.7 cards, the Belpic dir (3F00DF00) has to be selected
 		if (m_ucAppletVersion >= 0x17)
 		{
-			SelectFile(key.csPath);
+			SelectFile("3F00DF00");
 		}
 		else 
 		{

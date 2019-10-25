@@ -71,26 +71,22 @@ namespace eIDMW
 		unsigned long ulStoredLen;
 	} tPin;
 
+	typedef enum {
+		RSA,
+		EC,
+	} tKeyType;
 	typedef struct
 	{
 		bool bValid;
-		// common object attributes
 		std::string csLabel;
-		unsigned long ulFlags;
-		unsigned long ulAuthID;
 		unsigned long ulUserConsent;
 
-		// common key attributes
 		unsigned long ulID;
 		unsigned long ulKeyUsageFlags;
-		unsigned long ulKeyAccessFlags;
 		unsigned long ulKeyRef;
 
-		// private RSA key attributes
-		std::string csPath;
 		unsigned long ulKeyLenBytes;
-
-		bool bUsedInP11;
+		tKeyType keyType;
 	} tPrivKey;
 
 	typedef struct

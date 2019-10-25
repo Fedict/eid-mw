@@ -29,63 +29,49 @@ namespace eIDMW
 {
 
 	const static tCert CertInvalid = { false, "", 0, 0, 0, 0, false, false, "" };
-	const static tPrivKey PrivKeyInvalid = { false, "", 0, 0, 0, 0, 0, 0, 0, "", 0, false };
 
 	const static tPrivKey KeyAuthBeidV11 = {
 		.bValid = true,
 		.csLabel = "Authentication",
-		.ulFlags = 3,
-		.ulAuthID = 1,
 		.ulUserConsent = 0,
 		.ulID = 2,
 		.ulKeyUsageFlags = 4,
-		.ulKeyAccessFlags = 29,
 		.ulKeyRef = 130,
-		.csPath = "3F00DF00",
 		.ulKeyLenBytes = 128,
-		.bUsedInP11 = true,
+		.keyType = RSA,
 	};
 	const static tPrivKey KeySignBeidV11 = {
 		.bValid = true,
 		.csLabel = "Signature",
-		.ulFlags = 3,
-		.ulAuthID = 1,
 		.ulUserConsent = 1,
 		.ulID = 3,
 		.ulKeyUsageFlags = 512,
-		.ulKeyAccessFlags = 29,
 		.ulKeyRef = 131,
-		.csPath = "3F00DF00",
 		.ulKeyLenBytes = 128,
-		.bUsedInP11 = true,
+		.keyType = RSA,
 	};
 	const static tPrivKey KeyAuthBeidV17 = {
 		.bValid = true,
 		.csLabel = "Authentication",
-		.ulFlags = 3,
-		.ulAuthID = 1,
 		.ulUserConsent = 0,
 		.ulID = 2,
 		.ulKeyUsageFlags = 4,
-		.ulKeyAccessFlags = 29,
 		.ulKeyRef = 130,
-		.csPath = "3F00DF00",
 		.ulKeyLenBytes = 256,
-		.bUsedInP11 = true,
+		.keyType = RSA,
 	};
 	const static tPrivKey KeySignBeidV17 = {
 		.bValid = true,
 		.csLabel = "Signature",
-		.ulFlags = 3,
-		.ulAuthID = 1,
 		.ulUserConsent = 1,
 		.ulID = 3,
 		.ulKeyUsageFlags = 512,
-		.ulKeyAccessFlags = 29,
 		.ulKeyRef = 131,
-		.csPath = "3F00DF00",
 		.ulKeyLenBytes = 256,
-		.bUsedInP11 = true,
+		.keyType = RSA,
+	};
+	const static tPrivKey PrivKeyInvalid = {
+		.bValid = false,
 	};
 	std::map<unsigned char, std::array<tPrivKey, 2> > keymap;
 

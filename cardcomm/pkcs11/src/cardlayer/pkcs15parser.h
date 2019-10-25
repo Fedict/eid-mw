@@ -56,13 +56,10 @@ public:
 
 		//tOdfInfo ParseOdf(const CByteArray & contents);
 
-		std::vector < tPrivKey > ParsePrkdf(const CByteArray & contents);
-
 		std::vector < tCert > ParseCdf(const CByteArray & contents);
 
 private:
 
-		void FillCOAPrKey(tPrivKey * key, tCommonObjAttr * coa);
 		void FillCOACert(tCert * cert, tCommonObjAttr * coa);
 	};
 

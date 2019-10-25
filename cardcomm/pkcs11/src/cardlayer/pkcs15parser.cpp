@@ -218,13 +218,6 @@ namespace eIDMW {
 
 	//----------------------------------------------------------------------------------------
 
-	void PKCS15Parser::FillCOAPrKey(tPrivKey* key, tCommonObjAttr *coa) {
-		key->csLabel = coa->csLabel;
-		key->ulFlags = coa->ulFlags;
-		key->ulAuthID = coa->ulAuthID;
-		key->ulUserConsent = coa->ulUserConsent;
-	}
-
 	//----------------------------------------------------------------------------------------
 
 	void PKCS15Parser::FillCOACert(tCert* cert, tCommonObjAttr *coa) {
@@ -503,94 +496,6 @@ namespace eIDMW {
 	*/
 
 	//----------------------------------------------------------------------------------------
-
-	std::vector <tPrivKey> PKCS15Parser::ParsePrkdf(const CByteArray & contents)
-	{
-		std::vector<tPrivKey> oResult;
-		ASN1_ITEM           xLev0Item;  // 
-		ASN1_ITEM           xLev1Item;  // 
-		ASN1_ITEM           xLev2Item;  // 
-		ASN1_ITEM           xLev3Item;  // 
-		ASN1_ITEM           xLev4Item;  // 
-		tPrivKey            xKey;
-
-		xLev0Item.p_data = (unsigned char*)contents.GetBytes();
-		xLev0Item.l_data = contents.Size();
-		oResult.clear();
-
-#ifdef VERBOSE
-		std::cerr << "\n----------- PKCS15Parser::ParsePrkdf ------------ " << std::endl;
-#endif
-
-
-		// loop over the possible paths
-		while (xLev0Item.l_data > 0)
-		{
-			//--- get level.1 sequence: Authentication object
-			if ((xLev0Item.l_data < 2) || (asn1_next_item(&xLev0Item, &xLev1Item) != 0))
-				throw CMWEXCEPTION(EIDMW_WRONG_ASN1_FORMAT);
-
-			if (xLev1Item.tag == ASN_SEQUENCE)
-			{
-				// ------------- Private RSA Key ------------------
-				xKey.bValid = true;
-				xKey.bUsedInP11 = true;
-
-				// ---- common object attributes
-				tCommonObjAttr coAttr = ParseCommonObjectAttributes(&xLev1Item);
-				FillCOAPrKey(&xKey, &coAttr);
-
-				//---- common xKey attributes
-				// get sequence
-				if ((xLev1Item.l_data < 2) || (asn1_next_item(&xLev1Item, &xLev2Item) != 0) || (xLev2Item.tag != ASN_SEQUENCE))
-					throw CMWEXCEPTION(EIDMW_WRONG_ASN1_FORMAT);
-
-				// identifier
-				if ((xLev2Item.l_data < 2) || (asn1_next_item(&xLev2Item, &xLev3Item) != 0) || (xLev3Item.tag != ASN_OCTET_STRING))
-					throw CMWEXCEPTION(EIDMW_WRONG_ASN1_FORMAT);
-				xKey.ulID = bin2ulong(xLev3Item.p_data, xLev3Item.l_data);
-
-				// xKey usage flags
-				if ((xLev2Item.l_data < 2) || (asn1_next_item(&xLev2Item, &xLev3Item) != 0) || (xLev3Item.tag != ASN_BIT_STRING))
-					throw CMWEXCEPTION(EIDMW_WRONG_ASN1_FORMAT);
-				xKey.ulKeyUsageFlags = p15_bitstring2ul((unsigned char*)xLev3Item.p_data, xLev3Item.l_data);
-
-				// key access flags
-				if ((xLev2Item.l_data < 2) || (asn1_next_item(&xLev2Item, &xLev3Item) != 0) || (xLev3Item.tag != ASN_BIT_STRING))
-					throw CMWEXCEPTION(EIDMW_WRONG_ASN1_FORMAT);
-				xKey.ulKeyAccessFlags = p15_bitstring2ul((unsigned char*)xLev3Item.p_data, xLev3Item.l_data);
-
-				// key reference
-				if ((xLev2Item.l_data < 2) || (asn1_next_item(&xLev2Item, &xLev3Item) != 0) || (xLev3Item.tag != ASN_INTEGER))
-					throw CMWEXCEPTION(EIDMW_WRONG_ASN1_FORMAT);
-				xKey.ulKeyRef = bin2ulong(xLev3Item.p_data, xLev3Item.l_data);
-
-
-
-				//---- private key attributes
-				if ((xLev1Item.l_data < 2) || (asn1_next_item(&xLev1Item, &xLev2Item) != 0))
-					throw CMWEXCEPTION(EIDMW_WRONG_ASN1_FORMAT);
-
-				if (xLev2Item.tag == ASN_CONSTRUCTED_CONTEXT_N(1))
-				{
-					if ((xLev2Item.l_data < 2) || (asn1_next_item(&xLev2Item, &xLev3Item) != 0) || (xLev3Item.tag != ASN_SEQUENCE))
-						throw CMWEXCEPTION(EIDMW_WRONG_ASN1_FORMAT);
-
-					xKey.csPath = ParsePath2(&xLev3Item);
-
-					// modulus length
-					if ((xLev3Item.l_data < 2) || (asn1_next_item(&xLev3Item, &xLev4Item) != 0) || (xLev4Item.tag != ASN_INTEGER))
-						throw CMWEXCEPTION(EIDMW_WRONG_ASN1_FORMAT);
-
-					xKey.ulKeyLenBytes = (bin2ulong(xLev4Item.p_data, xLev4Item.l_data) + 7) / 8;  //convert bit to byte, round up
-				}
-			}
-			oResult.push_back(xKey);
-		}
-
-		return oResult;
-	}
-
 
 	//----------------------------------------------------------------------------------------
 
