@@ -842,6 +842,7 @@ CK_RV cal_init_objects(P11_SLOT * pSlot)
 
 				/***************/
 				tPrivKey key = poCard->GetPrivKey(keyCounter);
+				keytype = (key.keyType == RSA ? CKK_RSA : CKK_EC);
 
 				KeyId = (CK_ULONG) key.ulID;
 
@@ -902,15 +903,17 @@ CK_RV cal_init_objects(P11_SLOT * pSlot)
 					}
 
 					//TODO error in cal, size is in bits allready
-					modsize = key.ulKeyLenBytes * 8;
-					ret = p11_set_attribute_value
-						(pObject->pAttr,
-						 pObject->count,
-						 CKA_MODULUS_BITS,
-						 (CK_VOID_PTR) & modsize,
-						 sizeof(CK_ULONG));
-					if (ret != CKR_OK)
-						goto cleanup;
+					if(key.keyType == RSA) {
+						modsize = key.ulKeyLenBytes * 8;
+						ret = p11_set_attribute_value
+							(pObject->pAttr,
+							 pObject->count,
+							 CKA_MODULUS_BITS,
+							 (CK_VOID_PTR) & modsize,
+							 sizeof(CK_ULONG));
+						if (ret != CKR_OK)
+							goto cleanup;
+					}
 					ret = p11_set_attribute_value
 						(pObject->pAttr,
 						 pObject->count,
@@ -966,14 +969,16 @@ CK_RV cal_init_objects(P11_SLOT * pSlot)
 						 sizeof(CK_KEY_TYPE));
 					if (ret != CKR_OK)
 						goto cleanup;
-					ret = p11_set_attribute_value
-						(pObject->pAttr,
-						 pObject->count,
-						 CKA_MODULUS_BITS,
-						 (CK_VOID_PTR) & modsize,
-						 sizeof(CK_ULONG));
-					if (ret != CKR_OK)
-						goto cleanup;
+					if(key.keyType == RSA) {
+						ret = p11_set_attribute_value
+							(pObject->pAttr,
+							 pObject->count,
+							 CKA_MODULUS_BITS,
+							 (CK_VOID_PTR) & modsize,
+							 sizeof(CK_ULONG));
+						if (ret != CKR_OK)
+							goto cleanup;
+					}
 					ret = p11_set_attribute_value
 						(pObject->pAttr,
 						 pObject->count, CKA_DERIVE,
