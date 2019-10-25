@@ -94,7 +94,6 @@ private:
 #endif
 		std::vector < tPin > m_oPins;
 		std::vector < tCert > m_oCertificates;
-		std::vector < tPrivKey > m_oPrKeys;
 #ifdef WIN32
 #pragma warning(pop)
 #endif

@@ -124,7 +124,6 @@ namespace eIDMW
 
 		m_oPins.clear();
 		m_oCertificates.clear();
-		m_oPrKeys.clear();
 
 		m_xPin.setDefault();
 		m_xPrKey.setDefault();
