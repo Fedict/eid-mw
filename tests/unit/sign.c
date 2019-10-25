@@ -111,13 +111,12 @@ int verify_sig(const unsigned char *sig_in, CK_ULONG siglen, const unsigned char
 int test_key(char* label, CK_SESSION_HANDLE session, CK_SLOT_ID slot) {
 	CK_ATTRIBUTE attr[2];
 	CK_MECHANISM mech;
-	CK_MECHANISM_TYPE_PTR mechlist;
 	CK_BYTE data[] = { 'f', 'o', 'o' };
 	CK_BYTE_PTR sig, mod, exp;
 	CK_ULONG sig_len, type, count;
-	CK_OBJECT_HANDLE privatekey, publickey, certificate;
+	CK_OBJECT_HANDLE privatekey, publickey;
+	CK_KEY_TYPE keytype;
 	bool is_rsa = false;
-	int i;
 
 	attr[0].type = CKA_CLASS;
 	attr[0].pValue = &type;
@@ -137,34 +136,22 @@ int test_key(char* label, CK_SESSION_HANDLE session, CK_SLOT_ID slot) {
 		fprintf(stderr, "Cannot test \"%s\" signature on a card without a \"%s\" key\n", label, label);
 		return TEST_RV_SKIP;
 	}
+	
+	attr[0].type = CKA_KEY_TYPE;
+	attr[0].pValue = &keytype;
+	attr[0].ulValueLen = sizeof(keytype);
 
-	check_rv(C_GetMechanismList(slot, NULL_PTR, &count));
-	mechlist = malloc(sizeof(CK_MECHANISM_TYPE) * count);
-#undef CHECK_RV_DEALLOC
-#define CHECK_RV_DEALLOC free(mechlist)
+	check_rv(C_GetAttributeValue(session, privatekey, attr, 1));
 
-	check_rv(C_GetMechanismList(slot, mechlist, &count));
-
-	for(i=0; i<count; i++) {
-		if(mechlist[i] == CKM_SHA256_RSA_PKCS) {
-			mech.mechanism = mechlist[i];
-			i=count;
-			is_rsa = true;
-			break;
-		}
-		if(mechlist[i] == CKM_ECDSA_SHA256) {
-			mech.mechanism = mechlist[i];
-			i=count;
-			is_rsa = false;
-			break;
-		}
+	verbose_assert(keytype == CKK_RSA || keytype == CKK_EC);
+	if(keytype == CKK_RSA) {
+		is_rsa = true;
+		mech.mechanism = CKM_SHA256_RSA_PKCS;
+	} else {
+		is_rsa = false;
+		mech.mechanism = CKM_ECDSA_SHA256;
 	}
-
 	check_rv(C_SignInit(session, &mech, privatekey));
-
-#undef CHECK_RV_DEALLOC
-#define CHECK_RV_DEALLOC
-	free(mechlist);
 
 	check_rv(C_Sign(session, data, sizeof(data), NULL, &sig_len));
 	sig = malloc(sig_len);
