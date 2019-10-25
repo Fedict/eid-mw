@@ -479,7 +479,7 @@ CK_RV C_SignInit(CK_SESSION_HANDLE hSession,    /* the session's handle */
    //check class, keytype and sign attribute CKO_PRIV_KEY
    /* CKR_KEY_TYPE_INCONSISTENT has higher rank than CKR_KEY_FUNCTION_NOT_PERMITTED */
    ret = p11_get_attribute_value(pObject->pAttr, pObject->count, CKA_KEY_TYPE, (CK_VOID_PTR*) &pkeytype, &len);
-   if (ret || (len != sizeof(CK_KEY_TYPE)) || (*pkeytype != CKK_RSA))
+   if (ret || (len != sizeof(CK_KEY_TYPE)) || (*pkeytype != CKK_RSA && *pkeytype != CKK_EC))
       {
       log_trace(WHERE, "E: Wrong keytype");
       ret = CKR_KEY_TYPE_INCONSISTENT;
@@ -502,13 +502,18 @@ CK_RV C_SignInit(CK_SESSION_HANDLE hSession,    /* the session's handle */
       goto cleanup;
       }
 
-   ret = p11_get_attribute_value(pObject->pAttr, pObject->count, CKA_MODULUS_BITS, (CK_VOID_PTR*) &pmodsize, &len);
-   if (ret || (len != sizeof(CK_ULONG)) )
-      {
-      log_trace(WHERE, "E: Lengh not defined for modulus bits for private key");
-      ret = CKR_FUNCTION_FAILED;
-      goto cleanup;
-      }
+   if(*pkeytype == CKK_RSA) {
+	   ret = p11_get_attribute_value(pObject->pAttr, pObject->count, CKA_MODULUS_BITS, (CK_VOID_PTR*) &pmodsize, &len);
+	   if (ret || (len != sizeof(CK_ULONG)) )
+	      {
+	      log_trace(WHERE, "E: Lengh not defined for modulus bits for private key");
+	      ret = CKR_FUNCTION_FAILED;
+	      goto cleanup;
+	      }
+   } else {
+     pmodsize = malloc(sizeof(CK_ULONG));
+     *pmodsize = 768; // TODO: do not hardcode length of P-384 signatures
+   }
 
    /* get ID to identify signature key */
    /* at this time, id should be available, otherwise, device is not connected and objects are not initialized */
