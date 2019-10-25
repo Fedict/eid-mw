@@ -111,6 +111,12 @@
 		65E2354E19A7DE9D00C33AAC /* ordering.c in Sources */ = {isa = PBXBuildFile; fileRef = 65CC20ED19A7DE4E0089CD13 /* ordering.c */; };
 		65EABAF31C621FB400034337 /* labels.c in Sources */ = {isa = PBXBuildFile; fileRef = 65EABAED1C621F3D00034337 /* labels.c */; };
 		65F3F0231BE237480073F2A3 /* readdata_sequence.c in Sources */ = {isa = PBXBuildFile; fileRef = 65F3F0211BE236680073F2A3 /* readdata_sequence.c */; };
+		6C2B4F4423588F890078C7E2 /* QuickLookThumbnailing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C2B4F4323588F890078C7E2 /* QuickLookThumbnailing.framework */; };
+		6C2B4F4623588F890078C7E2 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C2B4F4523588F890078C7E2 /* Quartz.framework */; };
+		6C2B4F4F23588F890078C7E2 /* Thumbnailer.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 6C2B4F4223588F890078C7E2 /* Thumbnailer.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		6C2B4F5A23588FD50078C7E2 /* ThumbnailProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C2B4F5723588FD50078C7E2 /* ThumbnailProvider.m */; };
+		6C2B4F5B2358908E0078C7E2 /* BeidView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 652709FA1FE975A1004F326D /* BeidView.framework */; };
+		6C2B4F5C2358908E0078C7E2 /* BeidView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 652709FA1FE975A1004F326D /* BeidView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6CAFE1D821DF86E40078C7E2 /* pkcs11.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CAFE1D521DF86E40078C7E2 /* pkcs11.h */; };
 		6CAFE1D921DF86E40078C7E2 /* pkcs11t.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CAFE1D621DF86E40078C7E2 /* pkcs11t.h */; };
 		6CAFE1DA21DF86E40078C7E2 /* pkcs11f.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CAFE1D721DF86E40078C7E2 /* pkcs11f.h */; };
@@ -251,6 +257,20 @@
 			remoteGlobalIDString = 653490F51FEA7B39000F7787;
 			remoteInfo = eidfilepreview;
 		};
+		6C2B4F4D23588F890078C7E2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6C2B4F4123588F890078C7E2;
+			remoteInfo = Thumbnailer;
+		};
+		6C2B4F5D2358908E0078C7E2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 652709F91FE975A1004F326D;
+			remoteInfo = BeidView;
+		};
 		86BC84C51A037C19009E374E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 86BC84C01A037C19009E374E /* test_dialogs.xcodeproj */;
@@ -299,6 +319,28 @@
 			files = (
 				659FD59B1FEA92EF00E4AF83 /* eidfilepreview.qlgenerator in CopyFiles */,
 			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6C2B4F5023588F890078C7E2 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				6C2B4F4F23588F890078C7E2 /* Thumbnailer.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6C2B4F5F2358908E0078C7E2 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				6C2B4F5C2358908E0078C7E2 /* BeidView.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -448,11 +490,19 @@
 		65EABAEE1C621F3D00034337 /* labels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = labels.h; path = "plugins_tools/util/eid-util/labels.h"; sourceTree = "<group>"; };
 		65EABAEF1C621F3D00034337 /* utftranslate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = utftranslate.h; path = "plugins_tools/util/eid-util/utftranslate.h"; sourceTree = "<group>"; };
 		65F3F0211BE236680073F2A3 /* readdata_sequence.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = readdata_sequence.c; path = tests/unit/readdata_sequence.c; sourceTree = "<group>"; };
+		6C2B4F4223588F890078C7E2 /* Thumbnailer.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Thumbnailer.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		6C2B4F4323588F890078C7E2 /* QuickLookThumbnailing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLookThumbnailing.framework; path = System/Library/Frameworks/QuickLookThumbnailing.framework; sourceTree = SDKROOT; };
+		6C2B4F4523588F890078C7E2 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
+		6C2B4F5523588FD50078C7E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = "plugins_tools/eid-viewer/OSX/Thumbnailer/Info.plist"; sourceTree = SOURCE_ROOT; };
+		6C2B4F5623588FD50078C7E2 /* ThumbnailProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ThumbnailProvider.h; path = "plugins_tools/eid-viewer/OSX/Thumbnailer/ThumbnailProvider.h"; sourceTree = SOURCE_ROOT; };
+		6C2B4F5723588FD50078C7E2 /* ThumbnailProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ThumbnailProvider.m; path = "plugins_tools/eid-viewer/OSX/Thumbnailer/ThumbnailProvider.m"; sourceTree = SOURCE_ROOT; };
+		6C2B4F5823588FD50078C7E2 /* Thumbnailer.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = Thumbnailer.entitlements; path = "plugins_tools/eid-viewer/OSX/Thumbnailer/Thumbnailer.entitlements"; sourceTree = SOURCE_ROOT; };
 		6CAFE1D521DF86E40078C7E2 /* pkcs11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pkcs11.h; sourceTree = "<group>"; };
 		6CAFE1D621DF86E40078C7E2 /* pkcs11t.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pkcs11t.h; sourceTree = "<group>"; };
 		6CAFE1D721DF86E40078C7E2 /* pkcs11f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pkcs11f.h; sourceTree = "<group>"; };
 		6CAFE1DB21DF889B0078C7E2 /* unix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unix.h; sourceTree = "<group>"; };
 		6CBD45C822C609760078C7E2 /* serial_macos.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = serial_macos.c; path = tests/unit/serial_macos.c; sourceTree = "<group>"; };
+		6CC2D4012358B1E90078C7E2 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		6CD1B8BD21A5A61A0005F6E9 /* certificate_bad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = certificate_bad.png; path = "plugins_tools/eid-viewer/resources/certificate_bad.png"; sourceTree = SOURCE_ROOT; };
 		6CD1B8BF21A5A61A0005F6E9 /* certificate_large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = certificate_large.png; path = "plugins_tools/eid-viewer/resources/certificate_large.png"; sourceTree = SOURCE_ROOT; };
 		6CD1B8C021A5A61A0005F6E9 /* certificate_checked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = certificate_checked.png; path = "plugins_tools/eid-viewer/resources/certificate_checked.png"; sourceTree = SOURCE_ROOT; };
@@ -466,7 +516,7 @@
 		7F9011190F8502F8004A5FCC /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = /usr/lib/libcrypto.dylib; sourceTree = "<absolute>"; };
 		7F90111C0F850342004A5FCC /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = /usr/lib/libssl.dylib; sourceTree = "<absolute>"; };
 		7F90112C0F850450004A5FCC /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.4.4.22.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; name = libbeidpkcs11.4.4.22.dylib; path = libbeidpkcs11.4.4.22.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.4.4.22.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeidpkcs11.4.4.22.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		86BC84C01A037C19009E374E /* test_dialogs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = test_dialogs.xcodeproj; path = tests/dialogs/test_dialogs.xcodeproj; sourceTree = "<group>"; };
 		86C0E72721C2586E00602028 /* tlvbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tlvbuffer.h; sourceTree = "<group>"; };
 		86C0E72821C2586E00602028 /* eiderrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = eiderrors.h; sourceTree = "<group>"; };
@@ -605,6 +655,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6C2B4F3F23588F890078C7E2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6C2B4F4423588F890078C7E2 /* QuickLookThumbnailing.framework in Frameworks */,
+				6C2B4F4623588F890078C7E2 /* Quartz.framework in Frameworks */,
+				6C2B4F5B2358908E0078C7E2 /* BeidView.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7FA1A9F50F85F36E000D9EE1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -625,6 +685,7 @@
 				652709FA1FE975A1004F326D /* BeidView.framework */,
 				653490F61FEA7B39000F7787 /* eidfilepreview.qlgenerator */,
 				651DDF291FEA843C00C4961E /* eID Viewer.app */,
+				6C2B4F4223588F890078C7E2 /* Thumbnailer.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -640,6 +701,7 @@
 				652709FB1FE975A1004F326D /* BeidView */,
 				653490F71FEA7B3A000F7787 /* eidfilepreview */,
 				651DDF2A1FEA843D00C4961E /* eID Viewer */,
+				6C2B4F4723588F890078C7E2 /* Thumbnailer */,
 				034768DDFF38A45A11DB9C8B /* Products */,
 				65270A871FE97E7D004F326D /* Frameworks */,
 			);
@@ -791,8 +853,11 @@
 		65270A871FE97E7D004F326D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6CC2D4012358B1E90078C7E2 /* AppKit.framework */,
 				65270A8B1FE97EBD004F326D /* libxml2.a */,
 				65270A891FE97E97004F326D /* libcrypto.a */,
+				6C2B4F4323588F890078C7E2 /* QuickLookThumbnailing.framework */,
+				6C2B4F4523588F890078C7E2 /* Quartz.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -868,6 +933,17 @@
 				651DDF5B1FEA853D00C4961E /* Images.xcassets */,
 			);
 			name = "Supporting files";
+			sourceTree = "<group>";
+		};
+		6C2B4F4723588F890078C7E2 /* Thumbnailer */ = {
+			isa = PBXGroup;
+			children = (
+				6C2B4F5523588FD50078C7E2 /* Info.plist */,
+				6C2B4F5823588FD50078C7E2 /* Thumbnailer.entitlements */,
+				6C2B4F5623588FD50078C7E2 /* ThumbnailProvider.h */,
+				6C2B4F5723588FD50078C7E2 /* ThumbnailProvider.m */,
+			);
+			path = Thumbnailer;
 			sourceTree = "<group>";
 		};
 		6CAFE1D421DF86E40078C7E2 /* v240 */ = {
@@ -1138,12 +1214,14 @@
 				651DDF271FEA843C00C4961E /* Resources */,
 				659FD59A1FEA92C600E4AF83 /* CopyFiles */,
 				659FD5891FEA867600E4AF83 /* Embed Frameworks */,
+				6C2B4F5023588F890078C7E2 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				659FD58B1FEA87E000E4AF83 /* PBXTargetDependency */,
 				659FD5881FEA867600E4AF83 /* PBXTargetDependency */,
+				6C2B4F4E23588F890078C7E2 /* PBXTargetDependency */,
 			);
 			name = "eID Viewer";
 			productName = "eID Viewer";
@@ -1208,6 +1286,24 @@
 			productReference = 6536230219A7E8E600D46ECB /* testsuite */;
 			productType = "com.apple.product-type.tool";
 		};
+		6C2B4F4123588F890078C7E2 /* Thumbnailer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6C2B4F5423588F890078C7E2 /* Build configuration list for PBXNativeTarget "Thumbnailer" */;
+			buildPhases = (
+				6C2B4F3E23588F890078C7E2 /* Sources */,
+				6C2B4F3F23588F890078C7E2 /* Frameworks */,
+				6C2B4F5F2358908E0078C7E2 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6C2B4F5E2358908E0078C7E2 /* PBXTargetDependency */,
+			);
+			name = Thumbnailer;
+			productName = Thumbnailer;
+			productReference = 6C2B4F4223588F890078C7E2 /* Thumbnailer.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		7FA1A9F60F85F36E000D9EE1 /* beidpkcs11 */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7FA1AA090F85F380000D9EE1 /* Build configuration list for PBXNativeTarget "beidpkcs11" */;
@@ -1248,10 +1344,12 @@
 					};
 					653490F51FEA7B39000F7787 = {
 						CreatedOnToolsVersion = 9.2;
-						DevelopmentTeam = EU27N85PBZ;
 					};
 					6536230119A7E8E600D46ECB = {
 						DevelopmentTeam = EU27N85PBZ;
+					};
+					6C2B4F4123588F890078C7E2 = {
+						CreatedOnToolsVersion = 11.1;
 					};
 					7FA1A9F60F85F36E000D9EE1 = {
 						DevelopmentTeam = EU27N85PBZ;
@@ -1289,6 +1387,7 @@
 				652709F91FE975A1004F326D /* BeidView */,
 				653490F51FEA7B39000F7787 /* eidfilepreview */,
 				651DDF281FEA843C00C4961E /* eID Viewer */,
+				6C2B4F4123588F890078C7E2 /* Thumbnailer */,
 			);
 		};
 /* End PBXProject section */
@@ -1354,7 +1453,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "make -C plugins_tools/eid-viewer/OSX/support/ossl -j $(( $(sysctl hw.ncpu | cut -d' ' -f2) * 125 / 100 )) build\nmake -C plugins_tools/eid-viewer/OSX/support/xml -j $(( $(sysctl hw.ncpu | cut -d' ' -f2) * 125 / 100 )) build\n";
+			shellScript = "make -C plugins_tools/eid-viewer/OSX/support/ossl -j $(( $(sysctl hw.ncpu | cut -d' ' -f2) * 125 / 100 )) build || true\nmake -C plugins_tools/eid-viewer/OSX/support/xml -j $(( $(sysctl hw.ncpu | cut -d' ' -f2) * 125 / 100 )) build || true\n";
 		};
 		8604AB082194798F00FB3C92 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1372,7 +1471,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nmake -C plugins_tools/eid-viewer/OSX/support/ossl -j $(( $(sysctl hw.ncpu | cut -d' ' -f2) * 125 / 100 )) build\nmake -C plugins_tools/eid-viewer/OSX/support/xml -j $(( $(sysctl hw.ncpu | cut -d' ' -f2) * 125 / 100 )) build\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nmake -C plugins_tools/eid-viewer/OSX/support/ossl -j $(( $(sysctl hw.ncpu | cut -d' ' -f2) * 125 / 100 )) build || true\nmake -C plugins_tools/eid-viewer/OSX/support/xml -j $(( $(sysctl hw.ncpu | cut -d' ' -f2) * 125 / 100 )) build || true\n";
 		};
 		86C65C5C223913D4001ED3A7 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1506,6 +1605,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6C2B4F3E23588F890078C7E2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6C2B4F5A23588FD50078C7E2 /* ThumbnailProvider.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7FA1A9F40F85F36E000D9EE1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1577,6 +1684,16 @@
 			isa = PBXTargetDependency;
 			target = 653490F51FEA7B39000F7787 /* eidfilepreview */;
 			targetProxy = 659FD58A1FEA87E000E4AF83 /* PBXContainerItemProxy */;
+		};
+		6C2B4F4E23588F890078C7E2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6C2B4F4123588F890078C7E2 /* Thumbnailer */;
+			targetProxy = 6C2B4F4D23588F890078C7E2 /* PBXContainerItemProxy */;
+		};
+		6C2B4F5E2358908E0078C7E2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 652709F91FE975A1004F326D /* BeidView */;
+			targetProxy = 6C2B4F5D2358908E0078C7E2 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1787,7 +1904,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "be.fedict.eID-Viewer";
@@ -1847,7 +1964,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = "be.fedict.eID-Viewer";
@@ -1859,6 +1976,7 @@
 		652709FF1FE975A1004F326D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ENABLE_MODULES = YES;
@@ -1897,7 +2015,7 @@
 					"$(PROJECT_DIR)/plugins_tools/eid-viewer/OSX/support/ossl/openssl",
 					"$(PROJECT_DIR)/plugins_tools/eid-viewer/OSX/support/xml/builddir",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = be.fedict.BeidView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1911,6 +2029,7 @@
 		65270A001FE975A1004F326D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ENABLE_MODULES = YES;
@@ -1948,7 +2067,7 @@
 					"$(PROJECT_DIR)/plugins_tools/eid-viewer/OSX/support/ossl/openssl",
 					"$(PROJECT_DIR)/plugins_tools/eid-viewer/OSX/support/xml/builddir",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = be.fedict.BeidView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1989,7 +2108,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = EU27N85PBZ;
@@ -2014,7 +2133,7 @@
 					"$(PROJECT_DIR)/plugins_tools/eid-viewer/OSX/support/ossl/openssl",
 					"$(PROJECT_DIR)/plugins_tools/eid-viewer/OSX/support/xml/builddir",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2055,7 +2174,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
@@ -2078,7 +2197,7 @@
 					"$(PROJECT_DIR)/plugins_tools/eid-viewer/OSX/support/ossl/openssl",
 					"$(PROJECT_DIR)/plugins_tools/eid-viewer/OSX/support/xml/builddir",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2125,7 +2244,7 @@
 					doc/sdk/include/v240,
 					plugins_tools/util,
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
@@ -2167,9 +2286,92 @@
 					doc/sdk/include/v240,
 					plugins_tools/util,
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+			};
+			name = Release;
+		};
+		6C2B4F5123588F890078C7E2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "plugins_tools/eid-viewer/OSX/Thumbnailer/Thumbnailer.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = EU27N85PBZ;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = "plugins_tools/eid-viewer/OSX/Thumbnailer/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "be.fedict.eid.eID-Viewer.Thumbnailer";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		6C2B4F5223588F890078C7E2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "plugins_tools/eid-viewer/OSX/Thumbnailer/Thumbnailer.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = EU27N85PBZ;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = "plugins_tools/eid-viewer/OSX/Thumbnailer/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "be.fedict.eid.eID-Viewer.Thumbnailer";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
@@ -2211,6 +2413,7 @@
 				INSTALL_PATH = /usr/local/lib;
 				LINKER_DISPLAYS_MANGLED_NAMES = YES;
 				MACH_O_TYPE = mh_dylib;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_CFLAGS = "-fno-strict-aliasing";
 				PRESERVE_DEAD_CODE_INITS_AND_TERMS = YES;
 				PRODUCT_NAME = "beidpkcs11.$(CURRENT_PROJECT_VERSION)";
@@ -2255,6 +2458,7 @@
 				);
 				INSTALL_PATH = /usr/local/lib;
 				MACH_O_TYPE = mh_dylib;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-fno-strict-aliasing";
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
@@ -2312,6 +2516,15 @@
 			buildConfigurations = (
 				6536230819A7E8E600D46ECB /* Debug */,
 				6536230919A7E8E600D46ECB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6C2B4F5423588F890078C7E2 /* Build configuration list for PBXNativeTarget "Thumbnailer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6C2B4F5123588F890078C7E2 /* Debug */,
+				6C2B4F5223588F890078C7E2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
