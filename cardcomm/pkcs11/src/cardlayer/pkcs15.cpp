@@ -101,7 +101,7 @@ namespace eIDMW
 			std::array<tPrivKey, 2> v11;
 			v11[0] = KeyAuthBeidV11;
 			v11[1] = KeySignBeidV11;
-			keymap[0x11] = v11;
+			keymap[0x01] = v11;
 			std::array<tPrivKey, 2> v17;
 			v17[0] = KeyAuthBeidV17;
 			v17[1] = KeySignBeidV17;
