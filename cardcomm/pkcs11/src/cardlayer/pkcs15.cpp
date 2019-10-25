@@ -70,6 +70,26 @@ namespace eIDMW
 		.ulKeyLenBytes = 256,
 		.keyType = RSA,
 	};
+	const static tPrivKey KeyAuthBeidV18 = {
+		.bValid = true,
+		.csLabel = "Authentication",
+		.ulUserConsent = 0,
+		.ulID = 2,
+		.ulKeyUsageFlags = 4,
+		.ulKeyRef = 130,
+		.ulKeyLenBytes = 48,
+		.keyType = EC,
+	};
+	const static tPrivKey KeySignBeidV18 = {
+		.bValid = true,
+		.csLabel = "Signature",
+		.ulUserConsent = 1,
+		.ulID = 3,
+		.ulKeyUsageFlags = 512,
+		.ulKeyRef = 131,
+		.ulKeyLenBytes = 48,
+		.keyType = EC,
+	};
 	const static tPrivKey PrivKeyInvalid = {
 		.bValid = false,
 	};
@@ -92,6 +112,10 @@ namespace eIDMW
 			v17[0] = KeyAuthBeidV17;
 			v17[1] = KeySignBeidV17;
 			keymap[0x17] = v17;
+			std::array<tPrivKey, 2> v18;
+			v18[0] = KeyAuthBeidV18;
+			v18[1] = KeySignBeidV18;
+			keymap[0x18] = v18;
 		}
 		Clear();
 	}
