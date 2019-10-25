@@ -202,10 +202,9 @@ namespace eIDMW
 
 	tPrivKey CPKCS15::GetPrivKeyByID(unsigned long ulID)
 	{
-		if (!m_xPrKDF.isRead)  ReadLevel3(PRKDF);
-
-		for (std::vector<tPrivKey>::const_iterator ik = m_oPrKeys.begin();
-			ik != m_oPrKeys.end(); ++ik) {
+		unsigned char vers = m_poCard->GetAppletVersion();
+		for (std::array<tPrivKey, 2>::const_iterator ik = keymap[vers].begin();
+			ik != keymap[vers].end(); ++ik) {
 			if (ik->ulID == ulID) return *ik;
 		}
 		return PrivKeyInvalid;
