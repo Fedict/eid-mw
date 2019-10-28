@@ -10,6 +10,7 @@ addons:
   apt:
     packages:
     - autotools-dev
+    - autoconf-archive
     - libgtk2.0-dev
     - libpcsclite-dev
     - libtool
