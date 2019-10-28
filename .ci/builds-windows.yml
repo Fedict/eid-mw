@@ -19,6 +19,7 @@
   after_script:
   - rmdir /s /q products
   - mkdir products\windows
+  - del /q %WINDOWS_BASEDIR%\scripts\windows\*.exe
   - xcopy %WINDOWS_BASEDIR%\scripts\windows\*.exe products\windows
   - xcopy %WINDOWS_BASEDIR%\scripts\windows\*.msi products\windows
   tags:
