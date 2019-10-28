@@ -28,7 +28,10 @@ not for you; in that case, we instead recommend you download it from the
 
 ### Code from git repository:
 
-- Make sure you have libtool 2.2.7c or above, autoconf, automake and libassuan are installed, and in your `$PATH`
+- Make sure you have libtool 2.2.7c or above, autoconf, automake,
+  libassuan, and the [autoconf
+  archive](https://www.gnu.org/software/autoconf-archive/) installed,
+  and (where relevant) in your `$PATH`
 - run `autoreconf -i`
 - proceed to the next step
 
