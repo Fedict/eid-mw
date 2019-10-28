@@ -30,69 +30,13 @@ namespace eIDMW
 
 	const static tCert CertInvalid = { false, "", 0, 0, 0, 0, false, false, "" };
 
-	const static tPrivKey KeyAuthBeidV11 = {
-		.bValid = true,
-		.csLabel = "Authentication",
-		.ulUserConsent = 0,
-		.ulID = 2,
-		.ulKeyUsageFlags = 4,
-		.ulKeyRef = 130,
-		.ulKeyLenBytes = 128,
-		.keyType = RSA,
-	};
-	const static tPrivKey KeySignBeidV11 = {
-		.bValid = true,
-		.csLabel = "Signature",
-		.ulUserConsent = 1,
-		.ulID = 3,
-		.ulKeyUsageFlags = 512,
-		.ulKeyRef = 131,
-		.ulKeyLenBytes = 128,
-		.keyType = RSA,
-	};
-	const static tPrivKey KeyAuthBeidV17 = {
-		.bValid = true,
-		.csLabel = "Authentication",
-		.ulUserConsent = 0,
-		.ulID = 2,
-		.ulKeyUsageFlags = 4,
-		.ulKeyRef = 130,
-		.ulKeyLenBytes = 256,
-		.keyType = RSA,
-	};
-	const static tPrivKey KeySignBeidV17 = {
-		.bValid = true,
-		.csLabel = "Signature",
-		.ulUserConsent = 1,
-		.ulID = 3,
-		.ulKeyUsageFlags = 512,
-		.ulKeyRef = 131,
-		.ulKeyLenBytes = 256,
-		.keyType = RSA,
-	};
-	const static tPrivKey KeyAuthBeidV18 = {
-		.bValid = true,
-		.csLabel = "Authentication",
-		.ulUserConsent = 0,
-		.ulID = 2,
-		.ulKeyUsageFlags = 4,
-		.ulKeyRef = 130,
-		.ulKeyLenBytes = 48,
-		.keyType = EC,
-	};
-	const static tPrivKey KeySignBeidV18 = {
-		.bValid = true,
-		.csLabel = "Signature",
-		.ulUserConsent = 1,
-		.ulID = 3,
-		.ulKeyUsageFlags = 512,
-		.ulKeyRef = 131,
-		.ulKeyLenBytes = 48,
-		.keyType = EC,
-	};
-	const static tPrivKey PrivKeyInvalid = {
-		.bValid = false,
-	};
+	const static tPrivKey KeyAuthBeidV11 = { true, "Authentication", 0, 2, 4,   130, 128, RSA };
+	const static tPrivKey KeySignBeidV11 = { true, "Signature",      1, 3, 512, 131, 128, RSA };
+	const static tPrivKey KeyAuthBeidV17 = { true, "Authentication", 0, 2, 4,   130, 256, RSA };
+	const static tPrivKey KeySignBeidV17 = { true, "Signature",      1, 3, 512, 131, 256, RSA };
+	const static tPrivKey KeyAuthBeidV18 = { true, "Authentication", 0, 2, 4,   130, 48,  EC };
+	const static tPrivKey KeySignBeidV18 = { true, "Signature",      1, 3, 512, 131, 48,  EC };
+	const static tPrivKey PrivKeyInvalid = { false };
 	std::map<unsigned char, std::array<tPrivKey, 2> > keymap;
 
 	const std::string defaultEFTokenInfo = "3F00DF005032";
