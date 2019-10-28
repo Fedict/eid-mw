@@ -512,7 +512,7 @@ CK_RV C_SignInit(CK_SESSION_HANDLE hSession,    /* the session's handle */
 	      goto cleanup;
 	      }
    } else {
-     pmodsize = &modsize
+     pmodsize = &modsize;
    }
 
    /* get ID to identify signature key */
