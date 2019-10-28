@@ -347,6 +347,7 @@ CK_RV C_SignInit(CK_SESSION_HANDLE hSession,    /* the session's handle */
    CK_BBOOL       *pcan_sign = NULL;
    CK_KEY_TYPE    *pkeytype = NULL;
    CK_ULONG       *pmodsize = NULL;
+   CK_ULONG	  modsize = 768; // TODO: do not hardcode length of P-384 signatures
    CK_ULONG       *pid = NULL;
    CK_ULONG       *pclass = NULL;
    CK_ULONG len = 0;
@@ -511,8 +512,7 @@ CK_RV C_SignInit(CK_SESSION_HANDLE hSession,    /* the session's handle */
 	      goto cleanup;
 	      }
    } else {
-     pmodsize = malloc(sizeof(CK_ULONG));
-     *pmodsize = 768; // TODO: do not hardcode length of P-384 signatures
+     pmodsize = &modsize
    }
 
    /* get ID to identify signature key */
