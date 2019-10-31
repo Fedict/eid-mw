@@ -88,6 +88,24 @@ namespace eIDMW
 		return *this;
 	}
 
+	CByteArray & CByteArray::operator = (CByteArray &&oByteArray) noexcept
+	{
+		if(this != &oByteArray) {
+			if(m_pucData != NULL) {
+				SecureClearContents();
+			}
+			this->m_pucData = oByteArray.m_pucData;
+			oByteArray.m_pucData = NULL;
+			this->m_ulSize = oByteArray.m_ulSize;
+			oByteArray.m_ulSize = 0;
+			this->m_ulCapacity = oByteArray.m_ulCapacity;
+			oByteArray.m_ulCapacity = 0;
+			this->m_bMallocError = oByteArray.m_bMallocError;
+			oByteArray.m_bMallocError = false;
+		}
+		return *this;
+	}
+
 	static inline bool IsHexDigit(char c)
 	{
 		return ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F'));
