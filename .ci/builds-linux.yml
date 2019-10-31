@@ -184,6 +184,8 @@
     - dcmd mv products/deb/*ges /srv/repo/reprepro/incoming
   script:
     - cd /srv/repo/reprepro && reprepro processincoming incoming
+  after_script:
+    - rm -f /srv/reprepro/incoming/*
   variables:
     GIT_STRATEGY: none
 
