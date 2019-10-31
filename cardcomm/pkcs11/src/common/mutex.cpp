@@ -71,14 +71,17 @@ namespace eIDMW
 		{
 			switch (errno)
 			{
-				case EBUSY:
-					MWLOG(LEV_CRIT, MOD_LIB,
-					      L"trying to destroy a mutex which is still in use!");
-					break;
-				case EINVAL:
-					MWLOG(LEV_CRIT, MOD_LIB,
-					      L"trying to destroy an invalid mutex!");
-					break;
+				try {
+					case EBUSY:
+						MWLOG(LEV_CRIT, MOD_LIB,
+						      L"trying to destroy a mutex which is still in use!");
+						break;
+					case EINVAL:
+						MWLOG(LEV_CRIT, MOD_LIB,
+						      L"trying to destroy an invalid mutex!");
+						break;
+				} catch(...) {
+				}
 			}
 		}
 #endif
