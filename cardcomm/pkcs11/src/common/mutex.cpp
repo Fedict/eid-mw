@@ -69,9 +69,9 @@ namespace eIDMW
 		// have support for that. So ignore.
 		if (__builtin_expect(pthread_mutex_destroy(&m_Mutex), 0))
 		{
-			switch (errno)
-			{
-				try {
+			try {
+				switch (errno)
+				{
 					case EBUSY:
 						MWLOG(LEV_CRIT, MOD_LIB,
 						      L"trying to destroy a mutex which is still in use!");
@@ -80,8 +80,8 @@ namespace eIDMW
 						MWLOG(LEV_CRIT, MOD_LIB,
 						      L"trying to destroy an invalid mutex!");
 						break;
-				} catch(...) {
 				}
+			} catch(...) {
 			}
 		}
 #endif
