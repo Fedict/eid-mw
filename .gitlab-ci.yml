@@ -412,7 +412,6 @@ repo:inject-debs:
 repo:inject-fed:
   variables:
     TARGET: continuous
-    GIT_STRATEGY: none
   only:
     variables:
     - $CI_COMMIT_REF_NAME == "master"
