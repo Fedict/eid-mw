@@ -23,7 +23,7 @@ do
 			mkdir -p /srv/repo/repo/rpm/$TARGET/${DISTNAMES[$dist]}/$vers/RPMS/$arch
 			if [ -d products/$dist-$vers-$arch ]
 			then
-				for i in products/$dist-$vers-$arch/*
+				for i in products/$dist-$vers-$arch/*rpm
 				do
 					targetfile=/srv/repo/repo/rpm/$TARGET/${DISTNAMES[$dist]}/$vers/RPMS/$arch/$(basename $i)
 					echo "$i => $targetfile"
