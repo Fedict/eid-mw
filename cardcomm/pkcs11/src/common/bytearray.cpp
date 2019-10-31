@@ -88,7 +88,7 @@ namespace eIDMW
 		return *this;
 	}
 
-	CByteArray & CByteArray::operator = (CByteArray &&oByteArray) noexcept
+	CByteArray & CByteArray::operator = (CByteArray &&oByteArray)
 	{
 		if(this != &oByteArray) {
 			if(m_pucData != NULL) {

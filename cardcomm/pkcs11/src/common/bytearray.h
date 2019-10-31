@@ -35,7 +35,7 @@ public:
 		~CByteArray();
 
 		CByteArray & operator =(const CByteArray & oByteArray);
-		CByteArray & operator =(CByteArray && oByteArray) noexcept;
+		CByteArray & operator =(CByteArray && oByteArray);
 
 		unsigned long Size() const;
 
