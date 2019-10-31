@@ -142,7 +142,10 @@ namespace eIDMW
 
 	CCard::~CCard(void)
 	{
-		Disconnect(DISCONNECT_LEAVE_CARD);
+		try {
+			Disconnect(DISCONNECT_LEAVE_CARD);
+		} catch(CMWException) {
+		}
 	}
 
 
@@ -1523,10 +1526,13 @@ namespace eIDMW
 
 	CAutoLock::~CAutoLock()
 	{
-		if (m_poCard)
-			m_poCard->Unlock();
-		else
-			m_poPCSC->EndTransaction(m_hCard);
+		try {
+			if (m_poCard)
+				m_poCard->Unlock();
+			else
+				m_poPCSC->EndTransaction(m_hCard);
+		} catch (CMWException) {
+		}
 	}
 
 }
