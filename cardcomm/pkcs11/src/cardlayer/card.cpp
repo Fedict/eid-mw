@@ -144,7 +144,7 @@ namespace eIDMW
 	{
 		try {
 			Disconnect(DISCONNECT_LEAVE_CARD);
-		} catch(CMWException*) {
+		} catch(CMWException&) {
 		}
 	}
 
@@ -1531,7 +1531,7 @@ namespace eIDMW
 				m_poCard->Unlock();
 			else
 				m_poPCSC->EndTransaction(m_hCard);
-		} catch (CMWException*) {
+		} catch (CMWException&) {
 		}
 	}
 
