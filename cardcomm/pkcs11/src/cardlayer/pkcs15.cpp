@@ -36,7 +36,7 @@ namespace eIDMW
 	const static tPrivKey KeySignBeidV17 = { true, "Signature",      1, 3, 512, 131, 256, RSA };
 	const static tPrivKey KeyAuthBeidV18 = { true, "Authentication", 0, 2, 4,   130, 48,  EC };
 	const static tPrivKey KeySignBeidV18 = { true, "Signature",      1, 3, 512, 131, 48,  EC };
-	const static tPrivKey PrivKeyInvalid = { false };
+	const static tPrivKey PrivKeyInvalid = { false, "", 0, 0, 0, 0, 0, RSA };
 	std::map<unsigned char, std::array<tPrivKey, 2> > keymap;
 
 	const std::string defaultEFTokenInfo = "3F00DF005032";
