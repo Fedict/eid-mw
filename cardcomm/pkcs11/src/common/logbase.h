@@ -161,7 +161,7 @@ public:
 					 ...);
 
 private:
-		static std::auto_ptr < CLogger > m_instance;
+		static std::unique_ptr < CLogger > m_instance;
 		static bool m_bApplicationLeaving;
 
 		     std::wstring m_directory;
