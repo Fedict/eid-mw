@@ -4,10 +4,10 @@
   - robot
   - windows
   before_script:
-  - cd %CI_BUILDS_DIR%\%CI_PROJECT_DIR%\%WINDOWS_BASEDIR%\scripts\windows
+  - cd %WINDOWS_BASEDIR%\scripts\windows
   - build_testsuite.bat
   script:
-  - cd %CI_BUILDS_DIR%\%CI_PROJECT_DIR%\%WINDOWS_BASEDIR%\tests\unit\windows\Release
+  - cd %WINDOWS_BASEDIR%\tests\unit\windows\Release
   - pkcs11_tests.exe
   allow_failure: true
 
