@@ -81,7 +81,7 @@ Description: Belgian Electronic Identity Card - Mozilla plugin
 Package: beid-mozilla-webext
 Section: web
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, libbeidpkcs11-0, firefox (>= 58) | firefox-esr (>= 58)
+Depends: ${shlibs:Depends}, ${misc:Depends}, libbeidpkcs11-0
 Conflicts: beid-mozilla-extension (<< 4.3.6), beid-mozilla-xpcext
 Replaces: beid-mozilla-extension (<< 4.3.6)
 Description: Belgian Electronic Identity Card - WebExtension
