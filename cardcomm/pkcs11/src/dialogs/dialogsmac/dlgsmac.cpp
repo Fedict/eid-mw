@@ -418,7 +418,7 @@ DlgRet eIDMW::DlgAskPins(DlgPinOperation operation,
         CFStringRef newPinValue = NULL;
         CFStringRef confNewPinValue = NULL;
         CFIndex length;
-        CFComparisonResult compResult = 0;
+        CFComparisonResult compResult = kCFCompareEqualTo;
         
         switch (responseFlags & 0x03)
         {
