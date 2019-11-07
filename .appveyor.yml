@@ -5,13 +5,21 @@ environment:
 build_script:
 - cmd: >-
     cd scripts\windows
+
     build_all
+
 test_script:
 - cmd: >-
     cd scripts\windows
+
     build_testsuite
+
     cd ..\..
+
     copy cardcomm\pkcs11\VS_2017\Binaries\Win32_Release\beidpkcs11.dll tests\unit\windows\Release
+
     cd tests\unit\windows\Release
+
     Pkcs11_tests.exe
+
 deploy: off
