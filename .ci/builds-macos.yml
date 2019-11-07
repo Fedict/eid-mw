@@ -13,6 +13,8 @@
   - xcodebuild -project beidmw.xcodeproj -target testsuite -configuration Release
   - popd
   script:
+  - export EIDMW_CODESIGN_IDENTITY_APP=${EIDMW_CODESIGN_IDENTITY_APP:-$EIDMW_CODESIGN_IDENTITY_APP_${CI_RUNNER_SHORT_TOKEN}}
+  - export EIDMW_CODESIGN_IDENTITY_INST=${EIDMW_CODESIGN_IDENTITY_INST:-$EIDMW_CODESIGN_IDENTITY_INST_${CI_RUNNER_SHORT_TOKEN}}
   - pushd $MACOS_BASEDIR
   - ./testsuite
   - popd
