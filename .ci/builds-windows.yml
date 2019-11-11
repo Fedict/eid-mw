@@ -24,6 +24,7 @@
   - xcopy %WINDOWS_BASEDIR%\scripts\windows\*.exe products\windows
   - xcopy %WINDOWS_BASEDIR%\scripts\windows\*.msi products\windows
   tags:
+  - build
   - windows
   artifacts:
     when: on_success
