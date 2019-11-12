@@ -30,7 +30,7 @@
     when: on_success
     paths:
     - products\windows
-    - cardcomm\minidriver\VS_2017\Binaries\*\*.lib
-    - cardcomm\pkcs11\VS_2017\Binaries\*\*.lib
-    - installers\quickinstaller\NSIS_Plugins\beidread\VS_2017\*\*.lib
-    - plugins_tools\eid-viewer\Windows\VS_2017\eIDViewer\bin\*\*.lib
+    - %WINDOWS_BASEDIR%\cardcomm\minidriver\VS_2017\Binaries\*\*.lib
+    - %WINDOWS_BASEDIR%\cardcomm\pkcs11\VS_2017\Binaries\*\*.lib
+    - %WINDOWS_BASEDIR%\installers\quickinstaller\NSIS_Plugins\beidread\VS_2017\*\*.lib
+    - %WINDOWS_BASEDIR%\plugins_tools\eid-viewer\Windows\VS_2017\eIDViewer\bin\*\*.lib
