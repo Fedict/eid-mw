@@ -350,9 +350,6 @@ build:windows:
 build:macos:
   stage: binary-package
   extends: .build-macos
-  cache:
-    untracked: true
-    key: "macos-$CI_COMMIT_REF_SLUG"
 
 validate:robot:windows:
   stage: validate
