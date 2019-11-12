@@ -30,6 +30,7 @@
   - sudo chown -R $USER $MACOS_BASEDIR/installers/eid-mw/mac/release || true
   tags:
   - macos
+  - build
   allow_failure: true
   artifacts:
     when: on_success
