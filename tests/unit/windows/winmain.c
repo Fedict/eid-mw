@@ -59,6 +59,7 @@ int	_tmain(int argc, _TCHAR* argv[]){
 	errno_t error;
 
 	eIDTest eIDTests[] = {
+		{0,true, "eject cardreaders before using them", &eject},
 		{0,true, "initialize_finalize",&init_finalize},
 		{0,true, "getinfo",&getinfo},
 		{0,true, "funclist",&funclist},
