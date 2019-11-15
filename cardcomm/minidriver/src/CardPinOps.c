@@ -42,6 +42,9 @@ DWORD WINAPI   CardAuthenticatePin
 	)
 {
 	DWORD dwReturn = SCARD_S_SUCCESS;
+	VENDOR_SPECIFIC* pVendorSpec;
+	BYTE bAlgo = BELPIC_SIGN_ALGO_RSASSA_PKCS1;
+
 
 	LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
 
@@ -69,17 +72,16 @@ DWORD WINAPI   CardAuthenticatePin
 		CLEANUP(SCARD_E_INVALID_PARAMETER);
 	}
 
-	VENDOR_SPECIFIC* pVendorSpec = pCardData->pvVendorSpecific;
-	BYTE bAlgo = BELPIC_SIGN_ALGO_RSASSA_PKCS1;
-
+	pVendorSpec = pCardData->pvVendorSpecific;
 	if (pVendorSpec->bBEIDCardType == BEID_ECC_CARD)
 	{
-		bAlgo = BELPIC_SIGN_ALGO_ECDSA_SHA2_384;
+
+		bAlgo = BELPIC_SIGN_ALGO_ECDSA;
 	}
 
-	//authenticate for which key, and what to use as default algo?
+	//authenticate for which key, and what to use as default algo
 	dwReturn = BeidMSE(pCardData, BELPIC_KEY_AUTH, bAlgo);
-	//dwReturn = BeidMSE(pCardData, ROLE_DIGSIG);
+
 	if ( dwReturn != SCARD_S_SUCCESS )
 	{
 		LogTrace(LOGTYPE_ERROR, WHERE, "MSE: [0x%02X]", dwReturn);
@@ -246,6 +248,8 @@ DWORD WINAPI CardAuthenticateEx
 	PIN_INFO pbPinInfo;
 	DWORD dwDataLen;
 	BYTE bKeyID;
+	VENDOR_SPECIFIC* pVendorSpec;
+	BYTE bAlgo = BELPIC_SIGN_ALGO_RSASSA_PKCS1;
 
 	LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
 
@@ -281,8 +285,15 @@ DWORD WINAPI CardAuthenticateEx
 			CLEANUP(SCARD_E_INVALID_PARAMETER);
 		}
 	}
+	pVendorSpec = pCardData->pvVendorSpecific;
+	if (pVendorSpec->bBEIDCardType == BEID_ECC_CARD)
+	{
+		bAlgo = BELPIC_SIGN_ALGO_ECDSA;
+	}
+
+	//authenticate for which key, and what to use as default algo
+	dwReturn = BeidMSE(pCardData, BELPIC_KEY_AUTH, bAlgo);
 	//use BELPIC_SIGN_ALGO_RSASSA_PKCS1 as default
-	dwReturn = BeidMSE(pCardData, bKeyID,BELPIC_SIGN_ALGO_RSASSA_PKCS1);
 	if ( dwReturn != SCARD_S_SUCCESS )
 	{
 		LogTrace(LOGTYPE_ERROR, WHERE, "MSE: [0x%02X]", dwReturn);
