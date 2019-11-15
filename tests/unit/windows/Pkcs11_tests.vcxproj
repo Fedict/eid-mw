@@ -100,6 +100,7 @@
     <ClCompile Include="..\decode_photo.c" />
     <ClCompile Include="..\digest.c" />
     <ClCompile Include="..\double_init.c" />
+    <ClCompile Include="..\eject.c" />
     <ClCompile Include="..\funclist.c" />
     <ClCompile Include="..\getinfo.c" />
     <ClCompile Include="..\init_finalize.c" />
