@@ -776,7 +776,7 @@ DWORD BeidMSE(PCARD_DATA		pCardData,
       LogTrace(LOGTYPE_INFO, WHERE, "SET COMMAND: undefined key [0x%.2x]", bKey);
       CLEANUP(SCARD_E_UNEXPECTED);
    }
-	 if ( (bAlgo != 0x01) && (bAlgo != 0x02) && (bAlgo != 0x04) && (bAlgo != 0x08) && (bAlgo != 0x10) && (bAlgo != 0x20))
+	 if ( (bAlgo != 0x01) && (bAlgo != 0x02) && (bAlgo != 0x04) && (bAlgo != 0x08) && (bAlgo != 0x10) && (bAlgo != 0x20) && (bAlgo != 0x40) )
 	 {
 		  LogTrace(LOGTYPE_INFO, WHERE, "SET COMMAND: undefined algo [0x%.2x]", bAlgo);
       CLEANUP(SCARD_E_UNEXPECTED);
@@ -1134,231 +1134,246 @@ cleanup:
 #define WHERE "BeidSignData"
 DWORD BeidSignData(PCARD_DATA  pCardData, unsigned int HashAlgo, DWORD cbToBeSigned, PBYTE pbToBeSigned, DWORD *pcbSignature, PBYTE *ppbSignature)
 {
-   DWORD                   dwReturn = 0;
+	DWORD                   dwReturn = 0;
 
-   SCARD_IO_REQUEST        ioSendPci = {1, sizeof(SCARD_IO_REQUEST)};
-   SCARD_IO_REQUEST        ioRecvPci = {1, sizeof(SCARD_IO_REQUEST)};
+	SCARD_IO_REQUEST        ioSendPci = { 1, sizeof(SCARD_IO_REQUEST) };
+	SCARD_IO_REQUEST        ioRecvPci = { 1, sizeof(SCARD_IO_REQUEST) };
 
-   unsigned char           Cmd[128];
-   unsigned int            uiCmdLg = 0;
+	unsigned char           Cmd[128];
+	unsigned int            uiCmdLg = 0;
 
-   unsigned char           recvbuf[1024];
-   unsigned long           recvlen = sizeof(recvbuf);
-   BYTE                    SW1, SW2;
+	unsigned char           recvbuf[1024];
+	unsigned long           recvlen = sizeof(recvbuf);
+	BYTE                    SW1, SW2;
+	VENDOR_SPECIFIC*		pVendorSpec;
 
-   static const unsigned char MD2_AID[] = {
-      0x30, 0x20, 
-         0x30, 0x0c, 
-            0x06, 0x08, 0x2a, 0x86, 0x48, 0x86, 0xf7, 0x0d, 0x02, 0x02, 
-            0x05, 0x00, 
-         0x04, 0x10
-   };
-   static const unsigned char MD4_AID[] = {
-      0x30, 0x20, 
-         0x30, 0x0c, 
-            0x06, 0x08, 0x2a, 0x86, 0x48, 0x86, 0xf7, 0x0d, 0x02, 0x04, 
-            0x05, 0x00, 
-         0x04, 0x10
-   };
-   static const unsigned char MD5_AID[] = {
-       0x30, 0x20,
-           0x30, 0x0c,
-               0x06, 0x08, 0x2a, 0x86, 0x48, 0x86, 0xf7, 0x0d, 0x02, 0x05,
-               0x05, 0x00,
-           0x04, 0x10
-   };
-   static const unsigned char SHA1_AID[] = {
-       0x30, 0x21,
-           0x30, 0x09,
-               0x06, 0x05, 0x2b, 0x0e, 0x03, 0x02, 0x1a,
-           0x05, 0x00,
-           0x04, 0x14
-   };
-   static const unsigned char SHA256_AID[] = {
-       0x30, 0x31,
-           0x30, 0x0d,
-               0x06, 0x09, 0x60, 0x86, 0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x01,
-           0x05, 0x00,
-           0x04, 0x20
-   };
-   static const unsigned char SHA384_AID[] = {
-       0x30, 0x41,
-           0x30, 0x0d,
-               0x06, 0x09, 0x60, 0x86, 0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x02,
-           0x05,0x00,
-           0x04, 0x30
-   };
-   static const unsigned char SHA512_AID[] = {
-       0x30, 0x51,
-           0x30, 0x0d,
-               0x06, 0x09, 0x60, 0x86, 0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x03,
-           0x05, 0x00,
-           0x04, 0x40
-   };
-   static const unsigned char RIPEMD160_AID[] = {
-       0x30, 0x21,
-           0x30, 0x09,
-               0x06, 0x05, 0x2B, 0x24,	0x03, 0x02, 0x01,
-           0x05, 0x00,
-           0x04, 0x14
-   };
+	static const unsigned char MD2_AID[] = {
+	   0x30, 0x20,
+		  0x30, 0x0c,
+			 0x06, 0x08, 0x2a, 0x86, 0x48, 0x86, 0xf7, 0x0d, 0x02, 0x02,
+			 0x05, 0x00,
+		  0x04, 0x10
+	};
+	static const unsigned char MD4_AID[] = {
+	   0x30, 0x20,
+		  0x30, 0x0c,
+			 0x06, 0x08, 0x2a, 0x86, 0x48, 0x86, 0xf7, 0x0d, 0x02, 0x04,
+			 0x05, 0x00,
+		  0x04, 0x10
+	};
+	static const unsigned char MD5_AID[] = {
+		0x30, 0x20,
+			0x30, 0x0c,
+				0x06, 0x08, 0x2a, 0x86, 0x48, 0x86, 0xf7, 0x0d, 0x02, 0x05,
+				0x05, 0x00,
+			0x04, 0x10
+	};
+	static const unsigned char SHA1_AID[] = {
+		0x30, 0x21,
+			0x30, 0x09,
+				0x06, 0x05, 0x2b, 0x0e, 0x03, 0x02, 0x1a,
+			0x05, 0x00,
+			0x04, 0x14
+	};
+	static const unsigned char SHA256_AID[] = {
+		0x30, 0x31,
+			0x30, 0x0d,
+				0x06, 0x09, 0x60, 0x86, 0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x01,
+			0x05, 0x00,
+			0x04, 0x20
+	};
+	static const unsigned char SHA384_AID[] = {
+		0x30, 0x41,
+			0x30, 0x0d,
+				0x06, 0x09, 0x60, 0x86, 0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x02,
+			0x05,0x00,
+			0x04, 0x30
+	};
+	static const unsigned char SHA512_AID[] = {
+		0x30, 0x51,
+			0x30, 0x0d,
+				0x06, 0x09, 0x60, 0x86, 0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x03,
+			0x05, 0x00,
+			0x04, 0x40
+	};
+	static const unsigned char RIPEMD160_AID[] = {
+		0x30, 0x21,
+			0x30, 0x09,
+				0x06, 0x05, 0x2B, 0x24,	0x03, 0x02, 0x01,
+			0x05, 0x00,
+			0x04, 0x14
+	};
 
-   unsigned int            i          = 0;
-   unsigned int            cbHdrHash  = 0;
-   const unsigned char     *pbHdrHash = NULL;
+	unsigned int            i = 0;
+	unsigned int            cbHdrHash = 0;
+	const unsigned char     *pbHdrHash = NULL;
 
-   /* Sign Command */
-   Cmd [0] = 0x00;
-   Cmd [1] = 0x2A;   /* PSO: Compute Digital Signature COMMAND */
-   Cmd [2] = 0x9E;
-   Cmd [3] = 0x9A;
+	/* Sign Command */
+	Cmd[0] = 0x00;
+	Cmd[1] = 0x2A;   /* PSO: Compute Digital Signature COMMAND */
+	Cmd[2] = 0x9E;
+	Cmd[3] = 0x9A;
 
-   LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
-   /* Length of data to be signed   */
-   switch (HashAlgo)
-   {
-   case HASH_ALGO_NONE:
-      LogTrace(LOGTYPE_INFO, WHERE, "NONE");
-      cbHdrHash = 0;
-      pbHdrHash = NULL;
-      break;
+	LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
+	/* Length of data to be signed   */
+	switch (HashAlgo)
+	{
+	case HASH_ALGO_NONE:
+		LogTrace(LOGTYPE_INFO, WHERE, "NONE");
+		cbHdrHash = 0;
+		pbHdrHash = NULL;
+		break;
 
-   case HASH_ALGO_MD2:
-      LogTrace(LOGTYPE_INFO, WHERE, "CALG_MD2");
-      cbHdrHash = sizeof(MD2_AID);
-      pbHdrHash = MD2_AID;
-      break;
-   case HASH_ALGO_MD4:
-      LogTrace(LOGTYPE_INFO, WHERE, "CALG_MD4");
-      cbHdrHash = sizeof(MD4_AID);
-      pbHdrHash = MD4_AID;
-      break;
-   case HASH_ALGO_MD5:
-      LogTrace(LOGTYPE_INFO, WHERE, "CALG_MD5");
-      cbHdrHash = sizeof(MD5_AID);
-      pbHdrHash = MD5_AID;
-      break;
-   case HASH_ALGO_SHA1:
-      LogTrace(LOGTYPE_INFO, WHERE, "CALG_SHA1");
-      cbHdrHash = sizeof(SHA1_AID);
-      pbHdrHash = SHA1_AID;
-      break;
-   case HASH_ALGO_SHA_256:
-      LogTrace(LOGTYPE_INFO, WHERE, "CALG_SHA_256");
-      cbHdrHash = sizeof(SHA256_AID);
-      pbHdrHash = SHA256_AID;
-      break;
-   case HASH_ALGO_SHA_384:
-      LogTrace(LOGTYPE_INFO, WHERE, "CALG_SHA_384");
-      cbHdrHash = sizeof(SHA384_AID);
-      pbHdrHash = SHA384_AID;
-      break;
-   case HASH_ALGO_SHA_512:
-      LogTrace(LOGTYPE_INFO, WHERE, "CALG_SHA_512");
-      cbHdrHash = sizeof(SHA512_AID);
-      pbHdrHash = SHA512_AID;
-      break;
-   default:
-      break;
-   }
-   if ( HashAlgo == HASH_ALGO_NONE )
-   {
-      Cmd [4] = (BYTE)(cbToBeSigned);
-      memcpy(Cmd + 5, pbToBeSigned, cbToBeSigned);
-      uiCmdLg = 5 + cbToBeSigned;
-   }
-   else
-   {
-      Cmd [4] = (BYTE)(cbToBeSigned + cbHdrHash);
-      memcpy(Cmd + 5, pbHdrHash, cbHdrHash);
-      memcpy(Cmd + 5 + cbHdrHash, pbToBeSigned, cbToBeSigned);
-      uiCmdLg = 5 + cbHdrHash + cbToBeSigned;
-   }
+	case HASH_ALGO_MD2:
+		LogTrace(LOGTYPE_INFO, WHERE, "CALG_MD2");
+		cbHdrHash = sizeof(MD2_AID);
+		pbHdrHash = MD2_AID;
+		break;
+	case HASH_ALGO_MD4:
+		LogTrace(LOGTYPE_INFO, WHERE, "CALG_MD4");
+		cbHdrHash = sizeof(MD4_AID);
+		pbHdrHash = MD4_AID;
+		break;
+	case HASH_ALGO_MD5:
+		LogTrace(LOGTYPE_INFO, WHERE, "CALG_MD5");
+		cbHdrHash = sizeof(MD5_AID);
+		pbHdrHash = MD5_AID;
+		break;
+	case HASH_ALGO_SHA1:
+		LogTrace(LOGTYPE_INFO, WHERE, "CALG_SHA1");
+		cbHdrHash = sizeof(SHA1_AID);
+		pbHdrHash = SHA1_AID;
+		break;
+	case HASH_ALGO_SHA_256:
+		LogTrace(LOGTYPE_INFO, WHERE, "CALG_SHA_256");
+		cbHdrHash = sizeof(SHA256_AID);
+		pbHdrHash = SHA256_AID;
+		break;
+	case HASH_ALGO_SHA_384:
+		LogTrace(LOGTYPE_INFO, WHERE, "CALG_SHA_384");
+		cbHdrHash = sizeof(SHA384_AID);
+		pbHdrHash = SHA384_AID;
+		break;
+	case HASH_ALGO_SHA_512:
+		LogTrace(LOGTYPE_INFO, WHERE, "CALG_SHA_512");
+		cbHdrHash = sizeof(SHA512_AID);
+		pbHdrHash = SHA512_AID;
+		break;
+	default:
+		break;
+	}
+	if (HashAlgo == HASH_ALGO_NONE)
+	{
+		Cmd[4] = (BYTE)(cbToBeSigned);
+		memcpy(Cmd + 5, pbToBeSigned, cbToBeSigned);
+		uiCmdLg = 5 + cbToBeSigned;
+	}
+	else
+	{
+		Cmd[4] = (BYTE)(cbToBeSigned + cbHdrHash);
+		memcpy(Cmd + 5, pbHdrHash, cbHdrHash);
+		memcpy(Cmd + 5 + cbHdrHash, pbToBeSigned, cbToBeSigned);
+		uiCmdLg = 5 + cbHdrHash + cbToBeSigned;
+	}
 
 #ifdef _DEBUG
-   LogDumpBin("C:\\SmartCardMinidriverTest\\signdata.bin", cbHdrHash + cbToBeSigned, (char *)&Cmd[5]);
+	LogDumpBin("C:\\SmartCardMinidriverTest\\signdata.bin", cbHdrHash + cbToBeSigned, (char *)&Cmd[5]);
 #endif
 
-   recvlen = sizeof(recvbuf);
-   dwReturn = SCardTransmit(pCardData->hScard, 
-                            &ioSendPci, 
-                            Cmd, 
-                            uiCmdLg, 
-                            &ioRecvPci, 
-                            recvbuf, 
-                            &recvlen);
-   SW1 = recvbuf[recvlen-2];
-   SW2 = recvbuf[recvlen-1];
-   LogTrace(LOGTYPE_TRACE, WHERE, "SCardTransmit return code: [0x%08X]", dwReturn);
-   BeidDelayAndRecover(pCardData, SW1, SW2, dwReturn);
-   if ( dwReturn != SCARD_S_SUCCESS )
-   {
-      LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit (SIGN) errorcode: [0x%08X]", dwReturn);
-      CLEANUP(dwReturn);
-   }
-	 LogTrace(LOGTYPE_TRACE, WHERE, "ADPU response: [0x%02X][0x%02X]", SW1, SW2);
-	 LogTrace(LOGTYPE_TRACE, WHERE, "recvlen = %d", recvlen, SW2);
-	 if (SW1 == 0x61)
-	 {
-		 /* Retrieve signature Command */
-		 Cmd [0] = 0x00;
-		 Cmd [1] = 0xC0;   /* PSO: GET RESPONSE COMMAND */
-		 Cmd [2] = 0x00;
-		 Cmd [3] = 0x00;
-		 Cmd [4] = SW2;   /* Length of response */
-		 uiCmdLg = 5;
+	recvlen = sizeof(recvbuf);
+	dwReturn = SCardTransmit(pCardData->hScard,
+		&ioSendPci,
+		Cmd,
+		uiCmdLg,
+		&ioRecvPci,
+		recvbuf,
+		&recvlen);
+	SW1 = recvbuf[recvlen - 2];
+	SW2 = recvbuf[recvlen - 1];
+	LogTrace(LOGTYPE_TRACE, WHERE, "SCardTransmit return code: [0x%08X]", dwReturn);
+	BeidDelayAndRecover(pCardData, SW1, SW2, dwReturn);
+	if (dwReturn != SCARD_S_SUCCESS)
+	{
+		LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit (SIGN) errorcode: [0x%08X]", dwReturn);
+		CLEANUP(dwReturn);
+	}
+	LogTrace(LOGTYPE_TRACE, WHERE, "ADPU response: [0x%02X][0x%02X]", SW1, SW2);
+	LogTrace(LOGTYPE_TRACE, WHERE, "recvlen = %d", recvlen, SW2);
+	if (SW1 == 0x61)
+	{
+		/* Retrieve signature Command */
+		Cmd[0] = 0x00;
+		Cmd[1] = 0xC0;   /* PSO: GET RESPONSE COMMAND */
+		Cmd[2] = 0x00;
+		Cmd[3] = 0x00;
+		Cmd[4] = SW2;   /* Length of response */
+		uiCmdLg = 5;
 
-		 recvlen = sizeof(recvbuf);
-		 dwReturn = SCardTransmit(pCardData->hScard, 
-			 &ioSendPci, 
-			 Cmd, 
-			 uiCmdLg, 
-			 &ioRecvPci, 
-			 recvbuf, 
-			 &recvlen);
-		 SW1 = recvbuf[recvlen-2];
-		 SW2 = recvbuf[recvlen-1];
-		 LogTrace(LOGTYPE_TRACE, WHERE, "SCardTransmit return code: [0x%08X]", dwReturn);
-		 BeidDelayAndRecover(pCardData, SW1, SW2, dwReturn);
-		 if ( dwReturn != SCARD_S_SUCCESS )
-		 {
-			 LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit (Get Response) errorcode: [0x%08X]", dwReturn);
-			 CLEANUP(dwReturn);
-		 }
-		 if ( ( SW1 != 0x90 ) || ( SW2 != 0x00 ) )
-		 {
-			 LogTrace(LOGTYPE_ERROR, WHERE, "Get Response Failed: [0x%02X][0x%02X]", SW1, SW2);
-			 CLEANUP(SCARD_E_UNEXPECTED);
-		 }
-	 }//end of get response handling
-	 else if ( ( SW1 != 0x90 ) || ( SW2 != 0x00 ) )
-	 {
-		 LogTrace(LOGTYPE_ERROR, WHERE, "Sign Failed: [0x%02X][0x%02X]", SW1, SW2);
+		recvlen = sizeof(recvbuf);
+		dwReturn = SCardTransmit(pCardData->hScard,
+			&ioSendPci,
+			Cmd,
+			uiCmdLg,
+			&ioRecvPci,
+			recvbuf,
+			&recvlen);
+		SW1 = recvbuf[recvlen - 2];
+		SW2 = recvbuf[recvlen - 1];
+		LogTrace(LOGTYPE_TRACE, WHERE, "SCardTransmit return code: [0x%08X]", dwReturn);
+		BeidDelayAndRecover(pCardData, SW1, SW2, dwReturn);
+		if (dwReturn != SCARD_S_SUCCESS)
+		{
+			LogTrace(LOGTYPE_ERROR, WHERE, "SCardTransmit (Get Response) errorcode: [0x%08X]", dwReturn);
+			CLEANUP(dwReturn);
+		}
+		if ((SW1 != 0x90) || (SW2 != 0x00))
+		{
+			LogTrace(LOGTYPE_ERROR, WHERE, "Get Response Failed: [0x%02X][0x%02X]", SW1, SW2);
+			CLEANUP(SCARD_E_UNEXPECTED);
+		}
+	}//end of get response handling
+	else if ((SW1 != 0x90) || (SW2 != 0x00))
+	{
+		LogTrace(LOGTYPE_ERROR, WHERE, "Sign Failed: [0x%02X][0x%02X]", SW1, SW2);
 
-		 if ( SW1 == 0x69 )
-		 {
-			 CLEANUP(SCARD_W_SECURITY_VIOLATION);
-		 }
-		 else
-		 {
-			 CLEANUP(SCARD_E_UNEXPECTED);
-		 }
-	 }
-
-	 if( (recvlen - 2) == 0x80 )
-	 {
-		 *pcbSignature = 0x80; //128d
-	 }
-	 else if ( (recvlen - 2) == 0x100 )
-	 {
-		 *pcbSignature = 0x100; //256d
-	 }
-	 else //not supported
-	 {
-      LogTrace(LOGTYPE_ERROR, WHERE, "Invalid length received: [0x%02X]", recvlen - 2);
-      CLEANUP(SCARD_E_UNEXPECTED);
-   }
-
+		if (SW1 == 0x69)
+		{
+			CLEANUP(SCARD_W_SECURITY_VIOLATION);
+		}
+		else
+		{
+			CLEANUP(SCARD_E_UNEXPECTED);
+		}
+	}
+	pVendorSpec = pCardData->pvVendorSpecific;
+	if (pVendorSpec->bBEIDCardType == BEID_ECC_CARD)
+	{
+		if ((recvlen - 2) == 0x60)
+		{
+			*pcbSignature = 0x60; //48d * 2
+		}
+		else //not supported
+		{
+			LogTrace(LOGTYPE_ERROR, WHERE, "Invalid length received: [0x%02X]", recvlen - 2);
+			CLEANUP(SCARD_E_UNEXPECTED);
+		}
+	}
+	else
+	{
+		if ((recvlen - 2) == 0x80)
+		{
+			*pcbSignature = 0x80; //128d
+		}
+		else if ((recvlen - 2) == 0x100)
+		{
+			*pcbSignature = 0x100; //256d
+		}
+		else //not supported
+		{
+			LogTrace(LOGTYPE_ERROR, WHERE, "Invalid length received: [0x%02X]", recvlen - 2);
+			CLEANUP(SCARD_E_UNEXPECTED);
+		}
+	}
    /* Allocate memory for the target buffer */
    *ppbSignature = (PBYTE)(pCardData->pfnCspAlloc(*pcbSignature));
    if ( *ppbSignature == NULL )

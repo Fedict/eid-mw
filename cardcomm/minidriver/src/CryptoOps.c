@@ -187,6 +187,8 @@ DWORD WINAPI   CardSignData
 	BYTE	bKeyNr = BELPIC_KEY_NON_REP;
 	BYTE	bAlgoRef = BELPIC_SIGN_ALGO_RSASSA_PKCS1;
 
+	VENDOR_SPECIFIC* pVendorSpec;
+
 	LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
 	/********************/
 	/* Check Parameters */
@@ -229,11 +231,32 @@ DWORD WINAPI   CardSignData
 		CLEANUP(SCARD_E_NO_KEY_CONTAINER);
 	}
 
-	if ( pInfo->dwKeySpec != AT_SIGNATURE )
+	pVendorSpec = pCardData->pvVendorSpecific;
+	if (pVendorSpec->bBEIDCardType == BEID_ECC_CARD)
 	{
-		LogTrace(LOGTYPE_ERROR, WHERE, "Invalid parameter [pInfo->dwKeySpec]");
-		CLEANUP(SCARD_E_INVALID_PARAMETER);
+		//bAlgoRef = BELPIC_SIGN_ALGO_ECDSA_SHA2_256;
+		if ((pInfo->dwKeySpec == AT_ECDSA_P256) || (pInfo->dwKeySpec == AT_ECDSA_P384) || (pInfo->dwKeySpec == AT_ECDSA_P521))
+		{
+			if (pInfo->dwKeySpec != AT_ECDSA_P384)
+			{
+				LogTrace(LOGTYPE_ERROR, WHERE, "Invalid parameter [pInfo->dwKeySpec]");
+				CLEANUP(SCARD_E_INVALID_PARAMETER);
+			}
+		}
+		else
+		{
+			LogTrace(LOGTYPE_ERROR, WHERE, "Unsupported feature [pInfo->dwKeySpec]");
+			CLEANUP(SCARD_E_UNSUPPORTED_FEATURE);
+		}
 	}
+	else { //RSA card
+		if (pInfo->dwKeySpec != AT_SIGNATURE)
+		{
+			LogTrace(LOGTYPE_ERROR, WHERE, "Invalid parameter [pInfo->dwKeySpec]");
+			CLEANUP(SCARD_E_INVALID_PARAMETER);
+		}
+	}
+
 
 	if ( pInfo->dwSigningFlags == 0xFFFFFFFF )
 	{
@@ -244,8 +267,14 @@ DWORD WINAPI   CardSignData
 	if ( ( pInfo->dwSigningFlags & CARD_BUFFER_SIZE_ONLY ) == CARD_BUFFER_SIZE_ONLY)
 	{
 		LogTrace(LOGTYPE_INFO, WHERE, "pInfo->dwSigningFlags: CARD_BUFFER_SIZE_ONLY");
-
-		pInfo->cbSignedData = 256;
+		if (pVendorSpec->bBEIDCardType == BEID_ECC_CARD)
+		{
+			pInfo->cbSignedData = 96;
+		}
+		else
+		{
+			pInfo->cbSignedData = 256;
+		}
 		CLEANUP(SCARD_S_SUCCESS);
 	}
 
@@ -255,8 +284,9 @@ DWORD WINAPI   CardSignData
 		CLEANUP(SCARD_E_INVALID_PARAMETER);
 	}
 
-
-	//First check if padding info is provided
+	if (pVendorSpec->bBEIDCardType != BEID_ECC_CARD) //no predefined padding in EC cards
+	{
+		//First check if padding info is provided
 		if ((pInfo->dwSigningFlags & CARD_PADDING_INFO_PRESENT) == CARD_PADDING_INFO_PRESENT)
 		{
 			LogTrace(LOGTYPE_INFO, WHERE, "pInfo->dwSigningFlags: CARD_PADDING_INFO_PRESENT");
@@ -383,17 +413,33 @@ DWORD WINAPI   CardSignData
 			case CALG_HMAC:
 				CLEANUP(SCARD_E_UNSUPPORTED_FEATURE);
 				break;
-		default:
-			LogTrace(LOGTYPE_ERROR, WHERE, "[pInfo->aiHashAlg] is zero");
-			CLEANUP(SCARD_E_INVALID_PARAMETER);
-			/*uiHashAlgo = HASH_ALGO_NONE;*/
-			break;
+			default:
+				LogTrace(LOGTYPE_ERROR, WHERE, "[pInfo->aiHashAlg] is zero");
+				CLEANUP(SCARD_E_INVALID_PARAMETER);
+				/*uiHashAlgo = HASH_ALGO_NONE;*/
+				break;
+			}
+		}
+	}
+	else //no predefined padding in EC cards, do not add a PKCS#1 header
+	{
+	//First check if padding info is provided
+		if ((pInfo->dwSigningFlags & CARD_PADDING_INFO_PRESENT) == CARD_PADDING_INFO_PRESENT)
+		{
+			LogTrace(LOGTYPE_INFO, WHERE, "pInfo->dwSigningFlags: CARD_PADDING_INFO_PRESENT");
+			CLEANUP(SCARD_E_UNSUPPORTED_FEATURE);
+		}
+		else
+		{
+			LogTrace(LOGTYPE_INFO, WHERE, "No CARD_PADDING_INFO_PRESENT");
 		}
 
+	//the hash lengths (i.e. DTBS) are limited to 160, 224, 256, 384 and 512 bits
+		uiHashAlgo = HASH_ALGO_NONE;
 	}
 
 #ifdef _DEBUG
-	LogTrace(LOGTYPE_INFO, WHERE, "BeidMSE [key=0x%.2x, algo=0x%.2x]", bKeyNr,bAlgoRef);
+	LogTrace(LOGTYPE_INFO, WHERE, "BeidMSE [key=0x%.2x, Hashalgo=0x%.2x]", bKeyNr, uiHashAlgo);
 #endif
 
 	//dwReturn = BeidMSE(pCardData,bKeyNr,bAlgoRef);
