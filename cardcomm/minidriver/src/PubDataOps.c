@@ -232,9 +232,7 @@ DWORD WINAPI   CardReadFile
          DirFound++;
 			if (_stricmp("cmapfile", pszFileName) == 0)			      /* /mscp/cmapfile */
          {
-				BYTE  pbFileID [] = {0xDF, 0x00, 0x50, 0x35};
-				
-				BYTE cbFileID  = (BYTE)sizeof(pbFileID);
+
 				WORD keySize;
 
             FileFound++;
@@ -273,19 +271,12 @@ DWORD WINAPI   CardReadFile
 					CLEANUP(dwReturn);
 				}
 
-				dwReturn = BeidSelectAndReadFile(pCardData, 0, cbFileID , pbFileID , pcbData, ppbData);
-				if (dwReturn != SCARD_S_SUCCESS)  {
-					LogTrace(LOGTYPE_ERROR, WHERE, "Error BeidSelectAndReadFile 0x%.08x", dwReturn);
-					CLEANUP(dwReturn);
-				}
+
 				pVendorSpec = pCardData->pvVendorSpecific;
 				if (pVendorSpec->bBEIDCardType == BEID_RSA_CARD)
 				{
-					dwReturn = BeidParsePrKDF(pCardData, pcbData, *ppbData, &keySize);
-					if (dwReturn != 0) {
-						LogTrace(LOGTYPE_ERROR, WHERE, "Error BeidParsePrKDF 0x%.08x keySize = %d", dwReturn, keySize);
-						CLEANUP(dwReturn);
-					}
+					keySize = 2048;
+
 				}
 				else
 				{
@@ -293,13 +284,12 @@ DWORD WINAPI   CardReadFile
 				}
 
 				*pcbData = sizeof(cmr);
-				*ppbData = (PBYTE)pCardData->pfnCspReAlloc(*ppbData,*pcbData);
-				if ( *ppbData == NULL )
-				{
-					LogTrace(LOGTYPE_ERROR, WHERE, "Error allocating memory for [*ppbData]");
-					CLEANUP(SCARD_E_NO_MEMORY);
-				}
-				
+
+				if (*ppbData == NULL)
+					*ppbData = (PBYTE)pCardData->pfnCspAlloc(*pcbData);
+				else
+					*ppbData = (PBYTE)pCardData->pfnCspReAlloc(*ppbData, *pcbData);
+
 				if ( *ppbData == NULL )
 				{
 					LogTrace(LOGTYPE_ERROR, WHERE, "Error allocating memory for [*ppbData]");

@@ -245,7 +245,7 @@ DWORD WINAPI   CardSignData
 	{
 		LogTrace(LOGTYPE_INFO, WHERE, "pInfo->dwSigningFlags: CARD_BUFFER_SIZE_ONLY");
 
-		pInfo->cbSignedData = 128;
+		pInfo->cbSignedData = 256;
 		CLEANUP(SCARD_S_SUCCESS);
 	}
 
@@ -257,53 +257,53 @@ DWORD WINAPI   CardSignData
 
 
 	//First check if padding info is provided
-	if ( ( pInfo->dwSigningFlags & CARD_PADDING_INFO_PRESENT ) == CARD_PADDING_INFO_PRESENT)
+		if ((pInfo->dwSigningFlags & CARD_PADDING_INFO_PRESENT) == CARD_PADDING_INFO_PRESENT)
 		{
 			LogTrace(LOGTYPE_INFO, WHERE, "pInfo->dwSigningFlags: CARD_PADDING_INFO_PRESENT");
-			if ( pInfo->pPaddingInfo == NULL )
+			if (pInfo->pPaddingInfo == NULL)
 			{
 				LogTrace(LOGTYPE_ERROR, WHERE, "Invalid parameter [pInfo->pPaddingInfo]");
 				CLEANUP(SCARD_E_INVALID_PARAMETER);
 			}
 
-			switch(pInfo->dwPaddingType)
+			switch (pInfo->dwPaddingType)
 			{
 			case CARD_PADDING_PKCS1:
 				LogTrace(LOGTYPE_INFO, WHERE, "pInfo->dwPaddingType: CARD_PADDING_PKCS1");
 
-				PkcsPadInfo = (BCRYPT_PKCS1_PADDING_INFO *) pInfo->pPaddingInfo;
+				PkcsPadInfo = (BCRYPT_PKCS1_PADDING_INFO *)pInfo->pPaddingInfo;
 
-				if ( PkcsPadInfo->pszAlgId == NULL )
+				if (PkcsPadInfo->pszAlgId == NULL)
 				{
 					LogTrace(LOGTYPE_INFO, WHERE, "PkcsPadInfo->pszAlgId = NULL: CMD PKCS#1 Sign...");
 
 					uiHashAlgo = HASH_ALGO_NONE;
 				}
-				else if ( wcscmp(PkcsPadInfo->pszAlgId, L"MD2") == 0 ) 
+				else if (wcscmp(PkcsPadInfo->pszAlgId, L"MD2") == 0)
 				{
 					uiHashAlgo = HASH_ALGO_MD2;
 				}
-				else if ( wcscmp(PkcsPadInfo->pszAlgId, L"MD4") == 0 ) 
+				else if (wcscmp(PkcsPadInfo->pszAlgId, L"MD4") == 0)
 				{
 					uiHashAlgo = HASH_ALGO_MD4;
 				}
-				else if ( wcscmp(PkcsPadInfo->pszAlgId, L"MD5") == 0 ) 
+				else if (wcscmp(PkcsPadInfo->pszAlgId, L"MD5") == 0)
 				{
 					uiHashAlgo = HASH_ALGO_MD5;
 				}
-				else if ( wcscmp(PkcsPadInfo->pszAlgId, L"SHA1") == 0 ) 
+				else if (wcscmp(PkcsPadInfo->pszAlgId, L"SHA1") == 0)
 				{
 					uiHashAlgo = HASH_ALGO_SHA1;
 				}
-				else if ( wcscmp(PkcsPadInfo->pszAlgId, L"SHA256") == 0 ) 
+				else if (wcscmp(PkcsPadInfo->pszAlgId, L"SHA256") == 0)
 				{
 					uiHashAlgo = HASH_ALGO_SHA_256;
 				}
-				else if ( wcscmp(PkcsPadInfo->pszAlgId, L"SHA384") == 0 ) 
+				else if (wcscmp(PkcsPadInfo->pszAlgId, L"SHA384") == 0)
 				{
 					uiHashAlgo = HASH_ALGO_SHA_384;
 				}
-				else if ( wcscmp(PkcsPadInfo->pszAlgId, L"SHA512") == 0 ) 
+				else if (wcscmp(PkcsPadInfo->pszAlgId, L"SHA512") == 0)
 				{
 					uiHashAlgo = HASH_ALGO_SHA_512;
 				}
@@ -319,20 +319,20 @@ DWORD WINAPI   CardSignData
 				//(beidcard does not allow setting algo between pinpvalidation and signature,
 				//and base csp doesn't show the padding algo before pin validation )
 				/*PssPadInfo = (BCRYPT_PSS_PADDING_INFO *) pInfo->pPaddingInfo;
-				if ( wcscmp(PkcsPadInfo->pszAlgId, L"SHA1") == 0 ) 
+				if ( wcscmp(PkcsPadInfo->pszAlgId, L"SHA1") == 0 )
 				{
 					uiHashAlgo = HASH_ALGO_NONE;
 					bAlgoRef = BELPIC_SIGN_ALGO_RSASSA_PSS_SHA1;
 				}
-				else if ( wcscmp(PkcsPadInfo->pszAlgId, L"SHA256") == 0 ) 
+				else if ( wcscmp(PkcsPadInfo->pszAlgId, L"SHA256") == 0 )
 				{
 					uiHashAlgo = HASH_ALGO_NONE;
 					bAlgoRef = BELPIC_SIGN_ALGO_RSASSA_PSS_SHA256;
 				}
 				else
 				{*/
-					LogTrace(LOGTYPE_ERROR, WHERE, "CARD_PADDING_PSS unsupported...");
-					CLEANUP(SCARD_E_UNSUPPORTED_FEATURE);
+				LogTrace(LOGTYPE_ERROR, WHERE, "CARD_PADDING_PSS unsupported...");
+				CLEANUP(SCARD_E_UNSUPPORTED_FEATURE);
 				//}
 				//LogTrace(LOGTYPE_INFO, WHERE, "pInfo->dwPaddingType: CARD_PADDING_PSS");
 				////memcpy (&PssPadInfo, pInfo->pPaddingInfo, sizeof(PssPadInfo));
@@ -346,43 +346,43 @@ DWORD WINAPI   CardSignData
 				break;
 			}
 		}
-	else
-	{ //no padding info is provided, defaulting to PKCS1
-		LogTrace(LOGTYPE_ERROR, WHERE, "[pInfo->pPaddingInfo] unsupported...");
+		else
+		{ //no padding info is provided, defaulting to PKCS1
+			LogTrace(LOGTYPE_ERROR, WHERE, "[pInfo->pPaddingInfo] unsupported...");
 
-		switch(pInfo->aiHashAlg)
-		{
-		case CALG_MD2:
-			uiHashAlgo = HASH_ALGO_MD2;
-			break;
-		case CALG_MD4:
-			uiHashAlgo = HASH_ALGO_MD4;
-			break;
-		case CALG_MD5:
-			uiHashAlgo = HASH_ALGO_MD5;
-			break;
-		case CALG_SHA1: //CALG_SHA: same value
-			uiHashAlgo = HASH_ALGO_SHA1;
-			break;
-		case CALG_SHA_256:
-			uiHashAlgo = HASH_ALGO_SHA_256;
-			break;
-		case CALG_SHA_384:
-			uiHashAlgo = HASH_ALGO_SHA_384;
-			break;
-		case CALG_SHA_512:
-			uiHashAlgo = HASH_ALGO_SHA_512;
-			break;
-		case CALG_SSL3_SHAMD5:
-			uiHashAlgo = HASH_ALGO_NONE;
-			break;
-		case CALG_TLS1PRF:
-		case CALG_MAC:
-		case CALG_HASH_REPLACE_OWF:
-		case CALG_HUGHES_MD5:
-		case CALG_HMAC:
-			CLEANUP(SCARD_E_UNSUPPORTED_FEATURE);
-			break;
+			switch (pInfo->aiHashAlg)
+			{
+			case CALG_MD2:
+				uiHashAlgo = HASH_ALGO_MD2;
+				break;
+			case CALG_MD4:
+				uiHashAlgo = HASH_ALGO_MD4;
+				break;
+			case CALG_MD5:
+				uiHashAlgo = HASH_ALGO_MD5;
+				break;
+			case CALG_SHA1: //CALG_SHA: same value
+				uiHashAlgo = HASH_ALGO_SHA1;
+				break;
+			case CALG_SHA_256:
+				uiHashAlgo = HASH_ALGO_SHA_256;
+				break;
+			case CALG_SHA_384:
+				uiHashAlgo = HASH_ALGO_SHA_384;
+				break;
+			case CALG_SHA_512:
+				uiHashAlgo = HASH_ALGO_SHA_512;
+				break;
+			case CALG_SSL3_SHAMD5:
+				uiHashAlgo = HASH_ALGO_NONE;
+				break;
+			case CALG_TLS1PRF:
+			case CALG_MAC:
+			case CALG_HASH_REPLACE_OWF:
+			case CALG_HUGHES_MD5:
+			case CALG_HMAC:
+				CLEANUP(SCARD_E_UNSUPPORTED_FEATURE);
+				break;
 		default:
 			LogTrace(LOGTYPE_ERROR, WHERE, "[pInfo->aiHashAlg] is zero");
 			CLEANUP(SCARD_E_INVALID_PARAMETER);
@@ -497,8 +497,8 @@ DWORD WINAPI   CardQueryKeySizes
 	//for RSA keys
 	case AT_KEYEXCHANGE:
 	case AT_SIGNATURE  :
-		pKeySizes->dwMinimumBitlen = 1024;
-		pKeySizes->dwDefaultBitlen = 1024;
+		pKeySizes->dwMinimumBitlen = 2048;
+		pKeySizes->dwDefaultBitlen = 2048;
 		pKeySizes->dwMaximumBitlen = 2048;
 		pKeySizes->dwIncrementalBitlen = 0;
 		break;

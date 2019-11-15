@@ -346,6 +346,11 @@ DWORD CardGetKeysizes(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD p
       break;
    case AT_KEYEXCHANGE:
    case AT_SIGNATURE  :
+	   KeySizes.dwVersion = CARD_KEY_SIZES_CURRENT_VERSION;
+	   KeySizes.dwMinimumBitlen = 2048;
+	   KeySizes.dwDefaultBitlen = 2048;
+	   KeySizes.dwMaximumBitlen = 2048;
+	   KeySizes.dwIncrementalBitlen = 0;
       break;
    default:
       iInValid++;
@@ -361,12 +366,6 @@ DWORD CardGetKeysizes(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD p
       LogTrace(LOGTYPE_ERROR, WHERE, "Unsupported parameter [dwFlags]");
       CLEANUP(SCARD_E_UNSUPPORTED_FEATURE);
    }
-
-   KeySizes.dwVersion            = CARD_KEY_SIZES_CURRENT_VERSION;
-   KeySizes.dwMinimumBitlen      = 1024;
-   KeySizes.dwDefaultBitlen      = 1024;
-   KeySizes.dwMaximumBitlen      = 2048;
-   KeySizes.dwIncrementalBitlen  = 0;
 
    memcpy (pbData, &KeySizes, sizeof(KeySizes));
    *pdwDataLen = sizeof(KeySizes);
