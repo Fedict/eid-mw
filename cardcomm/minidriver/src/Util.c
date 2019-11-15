@@ -74,9 +74,8 @@ DWORD BeidGetPubKey(PCARD_DATA  pCardData, DWORD cbCertif, PBYTE pbCertif, DWORD
 		//              X coord (big endian)
 		//              Y coord (big endian)
 		*pcbPubKey = (((*((*pCertContext).pCertInfo)).SubjectPublicKeyInfo).PublicKey).cbData - 1;
-		LogTrace(LOGTYPE_INFO, WHERE, "PubKey length is %d", *pcbPubKey);
-		LogDump(*pcbPubKey, (((*((*pCertContext).pCertInfo)).SubjectPublicKeyInfo).PublicKey).pbData);
-
+		LogTrace(LOGTYPE_INFO, WHERE, "PubKey length is %d + 1 compression byte", *pcbPubKey);
+		LogDump((*pcbPubKey)+1, (((*((*pCertContext).pCertInfo)).SubjectPublicKeyInfo).PublicKey).pbData);
 
 		//Fill in the BCRYPT_ECCKEY_BLOB
 		//szOID_ECC_PUBLIC_KEY: The unrestricted algorithm identifier: 1.2.840.10045.2.1
