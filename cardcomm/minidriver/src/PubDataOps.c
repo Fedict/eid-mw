@@ -285,11 +285,7 @@ DWORD WINAPI   CardReadFile
 
 				*pcbData = sizeof(cmr);
 
-				if (*ppbData == NULL)
-					*ppbData = (PBYTE)pCardData->pfnCspAlloc(*pcbData);
-				else
-					*ppbData = (PBYTE)pCardData->pfnCspReAlloc(*ppbData, *pcbData);
-
+				*ppbData = (PBYTE)pCardData->pfnCspAlloc(*pcbData);
 				if ( *ppbData == NULL )
 				{
 					LogTrace(LOGTYPE_ERROR, WHERE, "Error allocating memory for [*ppbData]");
