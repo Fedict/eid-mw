@@ -292,7 +292,7 @@ DWORD WINAPI CardAuthenticateEx
 	}
 
 	//authenticate for which key, and what to use as default algo
-	dwReturn = BeidMSE(pCardData, BELPIC_KEY_AUTH, bAlgo);
+	dwReturn = BeidMSE(pCardData, bKeyID, bAlgo);
 	//use BELPIC_SIGN_ALGO_RSASSA_PKCS1 as default
 	if ( dwReturn != SCARD_S_SUCCESS )
 	{
