@@ -108,7 +108,7 @@ DWORD BeidGetPubKey(PCARD_DATA  pCardData, DWORD cbCertif, PBYTE pbCertif, DWORD
 			CLEANUP(SCARD_E_UNEXPECTED);
 		}
 
-		ECCHeader.cbKey = *pcbPubKey;
+		ECCHeader.cbKey = (ULONG)(*pcbPubKey)/2;
 
 		//ECC key structure :
 			//
