@@ -1374,19 +1374,29 @@ DWORD BeidSignData(PCARD_DATA  pCardData, unsigned int HashAlgo, DWORD cbToBeSig
 			CLEANUP(SCARD_E_UNEXPECTED);
 		}
 	}
-   /* Allocate memory for the target buffer */
-   *ppbSignature = (PBYTE)(pCardData->pfnCspAlloc(*pcbSignature));
-   if ( *ppbSignature == NULL )
-   {
-      LogTrace(LOGTYPE_ERROR, WHERE, "Error allocating memory for [*ppbSignature]");
-      CLEANUP(SCARD_E_NO_MEMORY);
-   }
-   /* Copy the signature */
-   for ( i = 0 ; i < *pcbSignature ; i++ )
-   {
-      (*ppbSignature)[i] = recvbuf[*pcbSignature - i - 1];
-   }
-
+	/* Allocate memory for the target buffer */
+	*ppbSignature = (PBYTE)(pCardData->pfnCspAlloc(*pcbSignature));
+	if (*ppbSignature == NULL)
+	{
+		LogTrace(LOGTYPE_ERROR, WHERE, "Error allocating memory for [*ppbSignature]");
+		CLEANUP(SCARD_E_NO_MEMORY);
+	}
+	/* Copy the signature */
+	if (pVendorSpec->bBEIDCardType == BEID_RSA_CARD)
+	{
+		//for RSA, revert byte order
+		for (i = 0; i < *pcbSignature; i++)
+		{
+			(*ppbSignature)[i] = recvbuf[*pcbSignature - i - 1];
+		}
+	}
+	else
+	{
+		for (i = 0; i < *pcbSignature; i++)
+		{
+			(*ppbSignature)[i] = recvbuf[i];
+		}
+	}
 
 cleanup:
    LogTrace(LOGTYPE_INFO, WHERE, "Exit API...");
