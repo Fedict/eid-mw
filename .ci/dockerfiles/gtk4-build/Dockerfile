@@ -1,0 +1,2 @@
+FROM debian:unstable
+RUN apt-get update && apt-get -y install extrepo eatmydata && extrepo enable debian_experimental && eatmydata apt-get update && eatmydata apt-get -y install --no-install-recommends autoconf automake libtool libpcsclite-dev libp11-kit-dev libassuan-dev libssl-dev libxml2-dev libcurl4-openssl-dev libproxy-dev plantuml zip gettext build-essential g++ git graphviz && eatmydata apt -t experimental install libxml2-dev libgtk-4-dev && apt-get clean

@@ -30,6 +30,21 @@
     paths:
     - products/source
 
+.gtk4:
+  tags:
+  - docker
+  image: $CI_REGISTRY_IMAGE/gtk4-build:$CI_COMMIT_REF_SLUG
+  before_script:
+  - pushd $LINUX_BASEDIR
+  - autoreconf -f -i
+  - popd
+  script:
+  - pushd $LINUX_BASEDIR
+  - ./configure --with-gtkvers=4 --disable-pinentry
+  - make -j $(nproc) distcheck
+  - popd
+  allow_failure: true
+
 .robot:linux:
   variables:
     EID_ROBOT_STYLE: zetes:/dev/CARD:/dev/USB

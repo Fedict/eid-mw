@@ -71,6 +71,14 @@ deb-sbuild:
     - .ci/builds-docker.yml
     - .ci/build-configs.yml
 
+gtk4-build:
+  extends: .docker-base
+  only:
+    changes:
+    - .ci/dockerfiles/gtk4-build/**/*
+    - .ci/builds-docker.yml
+    - .ci/build-configs.yml
+
 ##########################################################################################################
 # Stage "tests": run a test battery before doing all the hard work (i.e., try to find any problems ASAP) #
 ##########################################################################################################
@@ -91,9 +99,17 @@ test:robot:linux:
 test:repro:debian:
   stage: tests
   extends: .repro:debian
+
 test:scan-build:
   stage: tests
   extends: .scan-build
+
+test:gtk4:
+  stage: tests
+  extends: .gtk4
+  cache:
+    key: $CI_COMMIT_REF_SLUG-gtk4
+    untracked: true
 #################################################
 # Stage "source-package": build source packages #
 #################################################
