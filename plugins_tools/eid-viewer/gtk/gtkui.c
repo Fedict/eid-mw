@@ -38,13 +38,11 @@ void n(GtkMenuItem* item G_GNUC_UNUSED, gpointer user_data) { \
 
 static enum eid_vwr_langs curlang = EID_VWR_LANG_NONE;
 
-IGNORE_DEPRECATED
 /* Hide the certificate state icon */
 static void clear_cert_image(char* label) {
 	GtkImage *img = GTK_IMAGE(gtk_builder_get_object(builder, label));
-	gtk_image_set_from_stock(img, GTK_STOCK_MISSING_IMAGE, GTK_ICON_SIZE_BUTTON);
+	gtk_image_set_from_icon_name(img, "image-missing", GTK_ICON_SIZE_BUTTON);
 }
-END_IGNORE_DEPRECATED
 
 /* Show the correct certificate state icon. TODO: make this match what the
  * certificate validation returns */
