@@ -33,6 +33,21 @@
 #define EXIT_CANCEL 1
 #define EXIT_ERROR	2
 
+#if GTK_CHECK_VERSION(3, 96, 0)
+#define gtk_init(a, b) gtk_init()
+
+void gtk_widget_show_all_ll(GtkWidget *widget, gpointer data G_GNUC_UNUSED) {
+	if(GTK_IS_CONTAINER(widget)) {
+		gtk_container_foreach(GTK_CONTAINER(widget), gtk_widget_show_all_ll, NULL);
+	}
+	gtk_widget_show(widget);
+}
+
+void gtk_widget_show_all(GtkWidget *widget) {
+	gtk_widget_show_all_ll(widget, NULL);
+}
+#endif
+
 // struct holding all the runtime data, so we can use callbacks without global variables
 /////////////////////////////////////////////////////////////////////////////////////////
 typedef struct {

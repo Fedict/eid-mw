@@ -34,6 +34,23 @@
 #define EXIT_CANCEL 1
 #define EXIT_ERROR	2
 
+#if GTK_CHECK_VERSION(3, 96, 0)
+#define gtk_init(a, b) gtk_init()
+
+void gtk_widget_show_all_ll(GtkWidget *widget, gpointer data G_GNUC_UNUSED) {
+	if(GTK_IS_CONTAINER(widget)) {
+		gtk_container_foreach(GTK_CONTAINER(widget), gtk_widget_show_all_ll, NULL);
+	}
+	gtk_widget_show(widget);
+}
+
+void gtk_widget_show_all(GtkWidget *widget) {
+	gtk_widget_show_all_ll(widget, NULL);
+}
+#define gtk_image_new_from_icon_name(a, b) gtk_image_new_from_icon_name(a)
+#define gtk_box_pack_start(b, c, e, f, p) gtk_box_insert_child_after(b, c, NULL)
+#endif
+
 // struct holding all the runtime data, so we can use callbacks without global variables
 /////////////////////////////////////////////////////////////////////////////////////////
 typedef struct {
@@ -149,6 +166,23 @@ static void on_key_clear(GtkWidget * kie, gpointer _pindialog) {
 // event handler for key presses on physical keyboard.
 // handles digits and backspace by itself, passes all other keystrokes to default handler
 /////////////////////////////////////////////////////////////////////////////////////////
+#if GTK_CHECK_VERSION(3, 96, 0)
+// Version for Gtk4
+gboolean on_key_press(GtkEventControllerKey *ctrl, guint keyval, guint keycode, GdkModifierType state, gpointer _pindialog) {
+	PinDialogInfo *pindialog = (PinDialogInfo *) _pindialog;
+
+	guint32 ucChar = gdk_keyval_to_unicode(keyval);
+	if(g_unichar_isdigit(ucChar)) {
+		add_digit(pindialog, g_unichar_digit_value(ucChar));
+		return TRUE;
+	} else if (keyval == GDK_KEY_BackSpace) {
+		backspace(pindialog);
+		return TRUE;
+	}
+	return FALSE;
+}
+#else
+// Version for Gtk3
 gboolean on_key_press(GtkWidget * window, GdkEventKey * pKey, gpointer _pindialog) {
         PinDialogInfo *pindialog = (PinDialogInfo *) _pindialog;
 
@@ -165,6 +199,7 @@ gboolean on_key_press(GtkWidget * window, GdkEventKey * pKey, gpointer _pindialo
         }
         return FALSE;
 }
+#endif
 
 // initialise the bullet field, using a temporary get_entry to obtain the theme's current "invisible char"
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -219,7 +254,9 @@ int main(int argc, char *argv[]) {
         gtk_dialog_set_default_response(GTK_DIALOG(pindialog.dialog), GTK_RESPONSE_OK);
         gtk_window_set_title(GTK_WINDOW(pindialog.dialog), gettext("beID: PIN Code Required"));
         gtk_window_set_position(GTK_WINDOW(pindialog.dialog), GTK_WIN_POS_CENTER);
+#if !GTK_CHECK_VERSION(3, 96, 0)
         g_signal_connect(pindialog.dialog, "delete-event", G_CALLBACK(on_delete_event), &pindialog);
+#endif
 
         // create on-screen numeric keypad, connect the digit and action keys to their event handlers
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -275,18 +312,22 @@ int main(int argc, char *argv[]) {
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         pindialog.pinLabel = gtk_label_new("");
-        pindialog.eventBox = gtk_event_box_new();
         pindialog.pinFrame = gtk_frame_new(NULL);
-        gtk_frame_set_shadow_type(GTK_FRAME(pindialog.pinFrame), GTK_SHADOW_ETCHED_IN);
+#if GTK_CHECK_VERSION(3, 96, 0)
+	gtk_container_add(GTK_CONTAINER(pindialog.pinFrame), pindialog.pinLabel);
+#else
+        pindialog.eventBox = gtk_event_box_new();
 	GtkStyleContext *ctx = gtk_widget_get_style_context(pindialog.eventBox);
 	gtk_style_context_add_class(ctx, GTK_STYLE_CLASS_ENTRY);
+        gtk_container_add(GTK_CONTAINER(pindialog.eventBox), pindialog.pinLabel);
+        gtk_container_add(GTK_CONTAINER(pindialog.pinFrame), pindialog.eventBox);
+        gtk_container_set_border_width(GTK_CONTAINER(pindialog.dialog), 10);
+#endif
+        gtk_frame_set_shadow_type(GTK_FRAME(pindialog.pinFrame), GTK_SHADOW_ETCHED_IN);
 
         // add all these objects to the dialog
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        gtk_container_add(GTK_CONTAINER(pindialog.eventBox), pindialog.pinLabel);
-        gtk_container_add(GTK_CONTAINER(pindialog.pinFrame), pindialog.eventBox);
-        gtk_container_set_border_width(GTK_CONTAINER(pindialog.dialog), 10);
         gtk_box_pack_start(GTK_BOX(gtk_dialog_get_content_area(GTK_DIALOG(pindialog.dialog))),
                            pindialog.pinFrame, TRUE, TRUE, 2);
         gtk_box_pack_start(GTK_BOX(gtk_dialog_get_content_area(GTK_DIALOG(pindialog.dialog))),
@@ -294,7 +335,13 @@ int main(int argc, char *argv[]) {
 
         // capture key presses at dialog level (since we have no real entry fields)
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-        g_signal_connect(pindialog.dialog, "key-press-event", G_CALLBACK(on_key_press), &pindialog);
+#if GTK_CHECK_VERSION(3, 96, 0)
+	GtkEventController *ctrl = gtk_event_controller_key_new();
+	gtk_widget_add_controller(pindialog.dialog, ctrl);
+	g_signal_connect(ctrl, "key-pressed", G_CALLBACK(on_key_press), &pindialog);
+#else
+	g_signal_connect(pindialog.dialog, "key-press-event", G_CALLBACK(on_key_press), &pindialog);
+#endif
 
         // reset the PIN to the empty string and update the dialog state to an empty PIN
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////     

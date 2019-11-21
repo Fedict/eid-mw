@@ -36,6 +36,23 @@
 #define EXIT_CANCEL 1
 #define EXIT_ERROR	2
 
+#if GTK_CHECK_VERSION(3, 96, 0)
+#define gtk_init(a, b) gtk_init()
+#define gtk_entry_get_text(e) gtk_entry_buffer_get_text(gtk_entry_get_buffer(e))
+#define gtk_box_pack_start(b, c, e, f, p) gtk_box_insert_child_after(b, c, NULL)
+
+void gtk_widget_show_all_ll(GtkWidget *widget, gpointer data G_GNUC_UNUSED) {
+	if(GTK_IS_CONTAINER(widget)) {
+		gtk_container_foreach(GTK_CONTAINER(widget), gtk_widget_show_all_ll, NULL);
+	}
+	gtk_widget_show(widget);
+}
+
+void gtk_widget_show_all(GtkWidget *widget) {
+	gtk_widget_show_all_ll(widget, NULL);
+}
+#endif
+
 // struct holding all the runtime data, so we can use callbacks without global variables
 /////////////////////////////////////////////////////////////////////////////////////////
 typedef struct {
@@ -225,7 +242,9 @@ int main(int argc, char *argv[]) {
         // add all these objects to the dialog
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+#if !GTK_CHECK_VERSION(3, 96, 0)
         gtk_container_set_border_width(GTK_CONTAINER(pindialog.dialog), 10);
+#endif
         gtk_box_pack_start(GTK_BOX(gtk_dialog_get_content_area(GTK_DIALOG(pindialog.dialog))),
                            pindialog.newPinsGrid, TRUE, TRUE, 2);
 
