@@ -306,7 +306,11 @@ void disable_dnd(void) {
 }
 
 /* Perform a drag-and-drop operation */
+#if GTK_CHECK_VERSION(3, 96, 0)
+void drag_data_get(GtkWidget* widget G_GNUC_UNUSED, GdkDrag *ctx G_GNUC_UNUSED, GtkSelectionData *data, guint info G_GNUC_UNUSED, guint time G_GNUC_UNUSED, gpointer user_data G_GNUC_UNUSED) {
+#else
 void drag_data_get(GtkWidget* widget G_GNUC_UNUSED, GdkDragContext *ctx G_GNUC_UNUSED, GtkSelectionData *data, guint info G_GNUC_UNUSED, guint time G_GNUC_UNUSED, gpointer user_data G_GNUC_UNUSED) {
+#endif
 	const char* xml = eid_vwr_be_get_xmlform();
 	if(!xml) return;
 	gtk_selection_data_set_text(data, xml, -1);

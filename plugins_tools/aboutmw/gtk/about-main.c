@@ -43,6 +43,24 @@
 
 #include "gettext.h"
 
+#if GTK_CHECK_VERSION(3, 96, 0)
+#define GtkClipboard GdkClipboard
+#define gtk_clipboard_get(a) gdk_display_get_clipboard(gdk_display_get_default())
+#define gtk_clipboard_set_text(c, t, l) gdk_clipboard_set_text(c, t)
+#define gtk_init(a, b) gtk_init()
+
+void gtk_widget_show_all_ll(GtkWidget *widget, gpointer data G_GNUC_UNUSED) {
+	if(GTK_IS_CONTAINER(widget)) {
+		gtk_container_foreach(GTK_CONTAINER(widget), gtk_widget_show_all_ll, NULL);
+	}
+	gtk_widget_show(widget);
+}
+
+void gtk_widget_show_all(GtkWidget *widget) {
+	gtk_widget_show_all_ll(widget, NULL);
+}
+#endif
+
 #ifndef _
 #define _(s) gettext(s)
 #endif

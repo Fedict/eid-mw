@@ -22,6 +22,10 @@
 #include "print.h"
 #include "gtk_main.h"
 
+#if GTK_CHECK_VERSION(3, 96, 0)
+#define gtk_style_context_get_color(ct, s, cr) gtk_style_context_get_color(ct, cr)
+#endif
+
 #ifndef _
 #define _(s) gettext(s)
 #endif
@@ -333,25 +337,11 @@ static void show_date_state(char* label, void* data, int length G_GNUC_UNUSED) {
 	if(*is_invalid) {
 		attr = pango_attr_foreground_new(G_MAXUINT16, 0, 0);
 	} else {
-#if HAVE_GTK == 3
 		GdkRGBA color;
 		GtkStyleContext *style = gtk_widget_get_style_context(GTK_WIDGET(l));
 
 		gtk_style_context_get_color(style, GTK_STATE_FLAG_NORMAL, &color);
 		attr = pango_attr_foreground_new(color.red * G_MAXUINT16, color.green * G_MAXUINT16, color.blue * G_MAXUINT16);
-#else
-#if HAVE_GTK == 2
-		/* In GTK+ 2, there is no GtkStyleContext yet. It
-		 * should, in theory, be possible to figure out what the
-		 * default foreground color is by using a GTK+
-		 * 2-specific API, but that's too much work and GTK+ 2
-		 * is a minority now anyway, so... */
-		attr = pango_attr_foreground_new(0, 0, 0);
-#else
-		/* The configure script only allows GTK+2 or GTK+3. */
-#error should not happen
-#endif
-#endif
 	}
 	pango_attr_list_insert(attrs, attr);
 	gtk_label_set_attributes(l, attrs);
