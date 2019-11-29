@@ -27,32 +27,17 @@
             <property name="toolbar_style">icons</property>
             <child>
               <object class="GtkToolButton" id="copybtn">
-                <property name="use_action_appearance">False</property>
                 <property name="can_focus">False</property>
                 <property name="stock_id">gtk-copy</property>
               </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="homogeneous">True</property>
-              </packing>
             </child>
             <child>
               <object class="GtkToolButton" id="quitbtn">
-                <property name="use_action_appearance">False</property>
                 <property name="can_focus">False</property>
                 <property name="stock_id">gtk-quit</property>
               </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="homogeneous">True</property>
-              </packing>
             </child>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">0</property>
-          </packing>
         </child>
         <child>
           <object class="GtkScrolledWindow" id="scrolledwindow1">
@@ -69,17 +54,13 @@
                 <property name="headers_visible">False</property>
                 <property name="search_column">0</property>
                 <property name="enable_grid_lines">horizontal</property>
+		<property name="vexpand">True</property>
                 <child internal-child="selection">
                   <object class="GtkTreeSelection"/>
                 </child>
               </object>
             </child>
           </object>
-          <packing>
-            <property name="expand">True</property>
-            <property name="fill">True</property>
-            <property name="position">1</property>
-          </packing>
         </child>
         <child>
           <object class="GtkStatusbar" id="statusbar1">
@@ -88,11 +69,6 @@
             <property name="orientation">vertical</property>
             <property name="spacing">2</property>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">2</property>
-          </packing>
         </child>
       </object>
     </child>
