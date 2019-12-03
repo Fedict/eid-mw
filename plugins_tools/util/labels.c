@@ -125,7 +125,7 @@ struct labelnames* get_foreigner_labels() {
 		int i;
 		foreignerlabels = calloc(sizeof(struct labelnames), 1);
 		for(i=0; labels[i].label != NULL; i++) {
-			if(!labels[i].on_eid) {
+			if(!labels[i].on_eid && labels[i].on_foreigner) {
 				foreignerlabels->label = realloc(foreignerlabels->label, sizeof(EID_CHAR*) * ++(foreignerlabels->len));
 				foreignerlabels->label[foreignerlabels->len - 1] = labels[i].label;
 			}
