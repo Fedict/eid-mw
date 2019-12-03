@@ -111,8 +111,13 @@ static void copy_log(GtkButton* but G_GNUC_UNUSED, gpointer user_data G_GNUC_UNU
 	gtk_text_buffer_get_start_iter(buf, &start);
 	gtk_text_buffer_get_end_iter(buf, &end);
 	gchar* text = gtk_text_buffer_get_text(buf, &start, &end, TRUE);
+#if GTK_CHECK_VERSION(3, 96, 0)
+	GdkClipboard* clip = gdk_display_get_clipboard(gdk_display_get_default());
+	gdk_clipboard_set_text(clip, text);
+#else
 	GtkClipboard* clip = gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
 	gtk_clipboard_set_text(clip, text, strlen(text));
+#endif
 }
 
 /* Toggle the visibility of the log tab. Callback for the "show log" menu item */

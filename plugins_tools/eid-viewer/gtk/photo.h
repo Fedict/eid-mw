@@ -7,6 +7,7 @@ struct photo_info
 	int plen;
 	void *hash;
 	int hlen;
+	GdkPixbuf *pixbuf;
 };
 
 void displayphoto(char *label, void *data, int length);

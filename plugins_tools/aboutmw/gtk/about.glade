@@ -21,12 +21,14 @@
             <property name="toolbar-style">icons</property>
             <child>
               <object class="GtkToolButton" id="copybtn">
-                <property name="stock-id">gtk-copy</property>
+                <property name="can_focus">False</property>
+                <property name="icon_name">edit-copy</property>
               </object>
             </child>
             <child>
               <object class="GtkToolButton" id="quitbtn">
-                <property name="stock-id">gtk-quit</property>
+                <property name="can_focus">False</property>
+                <property name="icon_name">application-exit</property>
               </object>
             </child>
           </object>

@@ -35,6 +35,9 @@ void n(GtkMenuItem* item G_GNUC_UNUSED, gpointer user_data) { \
 #if !GTK_CHECK_VERSION(3,22,0)
 #define gtk_show_uri_on_window(parent,uri,timestamp,error) gtk_show_uri(gtk_widget_get_screen(GTK_WIDGET(parent)),uri,timestamp,error)
 #endif
+#if GTK_CHECK_VERSION(3, 96, 0)
+#define gtk_image_set_from_icon_name(i, n, s) gtk_image_set_from_icon_name(i, n)
+#endif
 
 static enum eid_vwr_langs curlang = EID_VWR_LANG_NONE;
 
@@ -282,7 +285,11 @@ void translate(GtkMenuItem* item G_GNUC_UNUSED, gpointer target) {
 static gboolean setup_dnd_real(gpointer foo G_GNUC_UNUSED) {
 	GtkWidget* photo = GTK_WIDGET(gtk_builder_get_object(builder, "photobox"));
 
+#if GTK_CHECK_VERSION(3, 96, 0)
+	gtk_drag_source_set(photo, GDK_BUTTON1_MASK, NULL, GDK_ACTION_COPY);
+#else
 	gtk_drag_source_set(photo, GDK_BUTTON1_MASK, NULL, 0, GDK_ACTION_COPY);
+#endif
 	gtk_drag_source_add_text_targets(photo);
 
 	return FALSE;
@@ -307,7 +314,7 @@ void disable_dnd(void) {
 
 /* Perform a drag-and-drop operation */
 #if GTK_CHECK_VERSION(3, 96, 0)
-void drag_data_get(GtkWidget* widget G_GNUC_UNUSED, GdkDrag *ctx G_GNUC_UNUSED, GtkSelectionData *data, guint info G_GNUC_UNUSED, guint time G_GNUC_UNUSED, gpointer user_data G_GNUC_UNUSED) {
+void drag_data_get(GtkWidget* widget G_GNUC_UNUSED, GdkDrag *ctx G_GNUC_UNUSED, GtkSelectionData *data, gpointer user_data G_GNUC_UNUSED) {
 #else
 void drag_data_get(GtkWidget* widget G_GNUC_UNUSED, GdkDragContext *ctx G_GNUC_UNUSED, GtkSelectionData *data, guint info G_GNUC_UNUSED, guint time G_GNUC_UNUSED, gpointer user_data G_GNUC_UNUSED) {
 #endif

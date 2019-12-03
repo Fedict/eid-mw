@@ -3,6 +3,7 @@
 #include "gtk_globals.h"
 #include "gtkui.h"
 #include "glib_util.h"
+#include "photo.h"
 
 #include "gettext.h"
 
@@ -173,7 +174,7 @@ static void draw_page(GtkPrintOperation* print G_GNUC_UNUSED, GtkPrintContext* c
 
 	cairo_set_line_width(cr, 1.0);
 
-	photobuf = gtk_image_get_pixbuf(GTK_IMAGE(gtk_builder_get_object(builder, "photo")));
+	photobuf = GDK_PIXBUF(g_object_ref(photo_get_data()->pixbuf));
 	G_GNUC_BEGIN_IGNORE_DEPRECATIONS
 	switch(get_curlang()) {
 		case EID_VWR_LANG_DE:
@@ -316,6 +317,7 @@ static void draw_page(GtkPrintOperation* print G_GNUC_UNUSED, GtkPrintContext* c
 		}
 	}
 	add_photo(cr, photobuf, c_pagewidth, 1);
+	g_object_unref(photobuf);
 	add_photo(cr, coabuf, c_pagewidth, 0);
 
 	cairo_move_to(cr, (c_pagewidth / 2) - (c_headerwidth / 2), C_MARGIN + (C_HEADER_HEIGHT /2) - (c_headerheight / 2));

@@ -34,7 +34,6 @@ eid_viewer_SOURCES = \
 	resources/coat_of_arms_fr.c \
 	resources/coat_of_arms_en.c \
 	resources/coat_of_arms_de.c \
-	resources/logo_128.c \
 	resources/certificate_large.c \
 	resources/certificate_bad.c \
 	resources/certificate_checked.c \

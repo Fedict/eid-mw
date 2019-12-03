@@ -24,6 +24,7 @@
 
 #if GTK_CHECK_VERSION(3, 96, 0)
 #define gtk_style_context_get_color(ct, s, cr) gtk_style_context_get_color(ct, cr)
+#define gtk_init(a, b) gtk_init()
 #endif
 
 #ifndef _
@@ -411,7 +412,9 @@ void update_info(GtkTreeSelection* sel, gpointer user_data G_GNUC_UNUSED) {
 /* Called when the user clicks on the treeview on the certificates tab */
 static gboolean show_menu(GtkWidget* widget G_GNUC_UNUSED, GdkEvent* event, gpointer user_data G_GNUC_UNUSED) {
 	GtkMenu* menu = GTK_MENU(gtk_builder_get_object(builder, "certmenu"));
-	if(event->button.button == 3) { // RMB click
+	guint button;
+	gdk_event_get_button(event, &button);
+	if(button == 3) { // RMB click
 #if GTK_CHECK_VERSION(3, 22, 0)
 		gtk_menu_popup_at_pointer(menu, event);
 #else
@@ -487,10 +490,7 @@ int main(int argc, char** argv) {
 
 	eid_vwr_init_crypto();
 
-	G_GNUC_BEGIN_IGNORE_DEPRECATIONS
-	logo = gdk_pixbuf_from_pixdata(&logo_128, FALSE, NULL);
-	G_GNUC_END_IGNORE_DEPRECATIONS
-	gtk_window_set_default_icon(logo);
+	gtk_window_set_default_icon_name("eid-viewer");
 
 	gtk_widget_show(window);
 
