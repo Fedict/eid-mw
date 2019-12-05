@@ -366,6 +366,8 @@ build:windows:
 build:macos:
   stage: binary-package
   extends: .build-macos
+  variables:
+    EIDMW_SIGN_BUILD: 0
 
 validate:robot:windows:
   stage: validate
