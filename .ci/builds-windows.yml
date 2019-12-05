@@ -3,10 +3,9 @@
   tags:
   - robot
   - windows
-  before_script:
+  script:
   - cd %WINDOWS_BASEDIR%\scripts\windows
   - build_testsuite.bat
-  script:
   - cd %WINDOWS_BASEDIR%\tests\unit\windows\Release
   - pkcs11_tests.exe
   allow_failure: true
