@@ -76,6 +76,10 @@
   - apt-get -y install reprotest diffoscope equivs devscripts faketime disorderfs sudo
   - mk-build-deps -r -i -t "apt-get -y -o Debug::pkgProblemResolver=yes --no-install-recommends"
   - autoreconf -f -i
+  - pushd $LINUX_BASEDIR
+  - ./configure
+  - make dist
+  - popd
   script:
   - reprotest $LINUX_BASEDIR
   allow_failure: true
