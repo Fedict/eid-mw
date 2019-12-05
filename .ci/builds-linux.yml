@@ -10,6 +10,7 @@
   - autoreconf -f -i
   - popd
   - rm -rf products
+  - rm -rf $LINUX_BASEDIR/eid-mw-*.tar.gz $LINUX_BASEDIR/eid-mw-*.zip
   script:
   - pushd $LINUX_BASEDIR
   - ./configure
