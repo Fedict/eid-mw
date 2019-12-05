@@ -82,7 +82,6 @@
   - popd
   script:
   - reprotest $LINUX_BASEDIR
-  allow_failure: true
   artifacts:
     when: on_failure
     paths:
