@@ -41,13 +41,13 @@
 #define WHERE "BeidParsePrKDF"
 DWORD BeidParsePrKDF(PCARD_DATA  pCardData, DWORD *cbStream, BYTE *pbStream, WORD *cbKeySize)
 {
-  DWORD dwReturn  = 0;
-	DWORD	dwCounter = 0;
+	DWORD dwReturn  = 0;
+	DWORD dwCounter = 0;
 	DWORD dwInc = 0;
 	*cbKeySize = 0;
 
 	LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
-	   /********************/
+	/********************/
    /* Check Parameters */
    /********************/
    if ( pCardData == NULL )
@@ -60,7 +60,7 @@ DWORD BeidParsePrKDF(PCARD_DATA  pCardData, DWORD *cbStream, BYTE *pbStream, WOR
       LogTrace(LOGTYPE_ERROR, WHERE, "Invalid parameter [ppbStream]");
       CLEANUP(SCARD_E_INVALID_PARAMETER);
    }
-	 if ( cbStream == NULL )
+	if ( cbStream == NULL )
    {
       LogTrace(LOGTYPE_ERROR, WHERE, "Invalid parameter [cbStream]");
       CLEANUP(SCARD_E_INVALID_PARAMETER);
