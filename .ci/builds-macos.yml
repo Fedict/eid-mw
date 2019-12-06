@@ -15,7 +15,7 @@
   - xcodebuild -project beidmw.xcodeproj -target testsuite -configuration Release
   - popd
   script:
-  - pushd $MACOS_BASEDIR
+  - pushd $MACOS_BASEDIR/Release
   - ./testsuite
   - popd
   allow_failure: true
