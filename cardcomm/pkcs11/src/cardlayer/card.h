@@ -120,7 +120,7 @@ namespace eIDMW
 
 		CByteArray ReadFile(const std::string & csPath, unsigned long ulOffset = 0, unsigned long ulMaxLen = FULL_FILE);
 
-		CByteArray CCard::ReadRecord(const std::string & csPath, unsigned char ulRecordID);
+		CByteArray ReadRecord(const std::string & csPath, unsigned char ulRecordID);
 
 		tPin GetPinFor(tPinObjective obj);
 		tPin GetPinByKeyID(unsigned long id);
