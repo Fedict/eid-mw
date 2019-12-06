@@ -2,6 +2,7 @@
   variables:
     EID_ROBOT_STYLE: $EID_ROBOT_STYLE_MACOS
     EID_DIALOGS_STYLE: nopin
+    EIDMW_SIGN_BUILD: 0
     DYLD_LIBRARY_PATH: $CI_BUILDS_DIR/$CI_PROJECT_DIR/$MACOS_BASEDIR/build/Release
   tags:
   - robot
@@ -10,10 +11,9 @@
   - build:macos
   before_script:
   - pushd $MACOS_BASEDIR
-  - export EIDMW_CODESIGN_IDENTITY_APP=${EIDMW_CODESIGN_IDENTITY_APP:-$EIDMW_CODESIGN_IDENTITY_APP_${CI_RUNNER_SHORT_TOKEN}}
-  - export EIDMW_CODESIGN_IDENTITY_INST=${EIDMW_CODESIGN_IDENTITY_INST:-$EIDMW_CODESIGN_IDENTITY_INST_${CI_RUNNER_SHORT_TOKEN}}
-  - echo $EIDMW_CODESIGN_IDENTITY_APP
-  - echo $EIDMW_CODESIGN_IDENTITY_INST
+  - pushd scripts/mac
+  - ./make-mac.sh
+  - popd
   - xcodebuild -project beidmw.xcodeproj -target testsuite -configuration Release
   - popd
   script:
