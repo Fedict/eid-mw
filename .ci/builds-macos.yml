@@ -18,7 +18,6 @@
   - pushd $MACOS_BASEDIR/Release
   - ./testsuite
   - popd
-  allow_failure: true
 
 .build-macos:
   variables:
