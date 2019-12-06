@@ -7,8 +7,6 @@
   tags:
   - robot
   - macos
-  dependencies:
-  - build:macos
   before_script:
   - pushd $MACOS_BASEDIR
   - pushd scripts/mac

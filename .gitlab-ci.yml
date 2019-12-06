@@ -381,20 +381,8 @@ validate:robot:windows:
 validate:robot:macos:
   stage: validate
   extends: .robot:macos
-  variables:
-    EID_ROBOT_STYLE: $EID_ROBOT_STYLE_MACOS
-    EID_DIALOGS_STYLE: nopin
-    DYLD_LIBRARY_PATH: $CI_BUILDS_DIR/$CI_PROJECT_DIR/build/Release
-  tags:
-  - robot
-  - macos
   dependencies:
   - build:macos
-  before_script:
-  - xcodebuild -project beidmw.xcodeproj -target testsuite -configuration Release
-  script:
-  - ./testsuite
-  allow_failure: true
   cache:
     untracked: true
     key: "macos:$CI_COMMIT_REF_SLUG"
