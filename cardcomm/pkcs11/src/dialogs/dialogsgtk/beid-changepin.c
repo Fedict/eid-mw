@@ -36,21 +36,28 @@
 #define EXIT_CANCEL 1
 #define EXIT_ERROR	2
 
-/* When compiling against GTK+3, we get a few deprecation warnings.
- * Moving away from the deprecated API calls would stop the ability to
- * compile against GTK+2, which is not yet an option. Disable
- * deprecation warnings, so we understand when there really *are*
- * problems. */
-#if __GNUC__ >= 4
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#if GTK_CHECK_VERSION(3, 96, 0)
+#define gtk_init(a, b) gtk_init()
+#define gtk_entry_get_text(e) gtk_entry_buffer_get_text(gtk_entry_get_buffer(e))
+#define gtk_box_pack_start(b, c, e, f, p) gtk_box_insert_child_after(b, c, NULL)
+
+void gtk_widget_show_all_ll(GtkWidget *widget, gpointer data G_GNUC_UNUSED) {
+	if(GTK_IS_CONTAINER(widget)) {
+		gtk_container_foreach(GTK_CONTAINER(widget), gtk_widget_show_all_ll, NULL);
+	}
+	gtk_widget_show(widget);
+}
+
+void gtk_widget_show_all(GtkWidget *widget) {
+	gtk_widget_show_all_ll(widget, NULL);
+}
 #endif
 
 // struct holding all the runtime data, so we can use callbacks without global variables
 /////////////////////////////////////////////////////////////////////////////////////////
 typedef struct {
         GtkWidget *dialog;
-        GtkWidget *newPinsTable, *originalPinLabel, *newPin0Label, *newPin1Label, *originalPinEntry,
+        GtkWidget *newPinsGrid, *originalPinLabel, *newPin0Label, *newPin1Label, *originalPinEntry,
                 *newPin0Entry, *newPin1Entry;
         GtkButton *okbutton, *cancelbutton;
 } PinDialogInfo;
@@ -176,10 +183,10 @@ int main(int argc, char *argv[]) {
 
         pindialog.cancelbutton =
                 GTK_BUTTON(gtk_dialog_add_button
-                           (GTK_DIALOG(pindialog.dialog), GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL));
+                           (GTK_DIALOG(pindialog.dialog), gettext("_Cancel"), GTK_RESPONSE_CANCEL));
         pindialog.okbutton =
                 GTK_BUTTON(gtk_dialog_add_button
-                           (GTK_DIALOG(pindialog.dialog), GTK_STOCK_OK, GTK_RESPONSE_OK));
+                           (GTK_DIALOG(pindialog.dialog), gettext("_OK"), GTK_RESPONSE_OK));
 
         gtk_dialog_set_default_response(GTK_DIALOG(pindialog.dialog), GTK_RESPONSE_OK);
         gtk_window_set_title(GTK_WINDOW(pindialog.dialog), gettext("beID: Change PIN Code"));
@@ -189,7 +196,9 @@ int main(int argc, char *argv[]) {
         // create original, new, and verify new pin entry fields with labels, in a table
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        pindialog.newPinsTable = gtk_table_new(3, 2, TRUE);     // table of 4 rows, 3 columns
+        pindialog.newPinsGrid = gtk_grid_new();
+	gtk_grid_set_row_homogeneous(GTK_GRID(pindialog.newPinsGrid), TRUE);
+	gtk_grid_set_column_homogeneous(GTK_GRID(pindialog.newPinsGrid), TRUE);
 
         pindialog.originalPinLabel = gtk_label_new(gettext("Current PIN:"));
         pindialog.newPin0Label = gtk_label_new(gettext("New PIN:"));
@@ -209,24 +218,12 @@ int main(int argc, char *argv[]) {
         gtk_entry_set_visibility(GTK_ENTRY(pindialog.newPin1Entry), FALSE);
 
         // put labels and entries in a table
-        gtk_table_attach(GTK_TABLE(pindialog.newPinsTable), pindialog.originalPinLabel, 0, 1, 0,
-                         1, (GtkAttachOptions) (GTK_SHRINK | GTK_FILL),
-                         (GtkAttachOptions) (GTK_SHRINK | GTK_FILL), 2, 2);
-        gtk_table_attach(GTK_TABLE(pindialog.newPinsTable), pindialog.newPin0Label, 0, 1, 1, 2,
-                         (GtkAttachOptions) (GTK_SHRINK | GTK_FILL),
-                         (GtkAttachOptions) (GTK_SHRINK | GTK_FILL), 2, 2);
-        gtk_table_attach(GTK_TABLE(pindialog.newPinsTable), pindialog.newPin1Label, 0, 1, 2, 3,
-                         (GtkAttachOptions) (GTK_SHRINK | GTK_FILL),
-                         (GtkAttachOptions) (GTK_SHRINK | GTK_FILL), 2, 2);
-        gtk_table_attach(GTK_TABLE(pindialog.newPinsTable), pindialog.originalPinEntry, 1, 2, 0,
-                         1, (GtkAttachOptions) (GTK_SHRINK | GTK_FILL),
-                         (GtkAttachOptions) (GTK_SHRINK | GTK_FILL), 2, 2);
-        gtk_table_attach(GTK_TABLE(pindialog.newPinsTable), pindialog.newPin0Entry, 1, 2, 1, 2,
-                         (GtkAttachOptions) (GTK_SHRINK | GTK_FILL),
-                         (GtkAttachOptions) (GTK_SHRINK | GTK_FILL), 2, 2);
-        gtk_table_attach(GTK_TABLE(pindialog.newPinsTable), pindialog.newPin1Entry, 1, 2, 2, 3,
-                         (GtkAttachOptions) (GTK_SHRINK | GTK_FILL),
-                         (GtkAttachOptions) (GTK_SHRINK | GTK_FILL), 2, 2);
+        gtk_grid_attach(GTK_GRID(pindialog.newPinsGrid), pindialog.originalPinLabel, 0, 0, 1, 1);
+        gtk_grid_attach(GTK_GRID(pindialog.newPinsGrid), pindialog.newPin0Label, 0, 1, 1, 1);
+        gtk_grid_attach(GTK_GRID(pindialog.newPinsGrid), pindialog.newPin1Label, 0, 2, 1, 1);
+        gtk_grid_attach(GTK_GRID(pindialog.newPinsGrid), pindialog.originalPinEntry, 1, 0, 1, 1);
+        gtk_grid_attach(GTK_GRID(pindialog.newPinsGrid), pindialog.newPin0Entry, 1, 1, 1, 1);
+        gtk_grid_attach(GTK_GRID(pindialog.newPinsGrid), pindialog.newPin1Entry, 1, 2, 1, 1);
 
         // connect signals to filter and read inputs
         g_signal_connect(pindialog.originalPinEntry, "insert_text",
@@ -245,9 +242,11 @@ int main(int argc, char *argv[]) {
         // add all these objects to the dialog
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+#if !GTK_CHECK_VERSION(3, 96, 0)
         gtk_container_set_border_width(GTK_CONTAINER(pindialog.dialog), 10);
+#endif
         gtk_box_pack_start(GTK_BOX(gtk_dialog_get_content_area(GTK_DIALOG(pindialog.dialog))),
-                           pindialog.newPinsTable, TRUE, TRUE, 2);
+                           pindialog.newPinsGrid, TRUE, TRUE, 2);
 
         // initial state for OK button
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -283,7 +282,3 @@ int main(int argc, char *argv[]) {
         gtk_widget_destroy(pindialog.dialog);
         exit(return_value);
 }
-
-#if __GNUC__ >= 4
-#pragma GCC diagnostic pop
-#endif

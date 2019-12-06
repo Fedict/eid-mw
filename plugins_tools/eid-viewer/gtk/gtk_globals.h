@@ -18,13 +18,4 @@ extern const GdkPixdata certificate_bad;
 extern const GdkPixdata certificate_checked;
 extern const GdkPixdata certificate_warn;
 
-#if __GNUC__ >= 4
-#define IGNORE_DEPRECATED _Pragma("GCC diagnostic push") \
-	_Pragma("GCC diagnostic ignored \"-Wdeprecated-declarations\"")
-#define END_IGNORE_DEPRECATED _Pragma("GCC diagnostic pop")
-#else
-#define IGNORE_DEPRECATED
-#define END_IGNORE_DEPRECATED
-#endif
-
 #endif

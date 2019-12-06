@@ -43,6 +43,24 @@
 
 #include "gettext.h"
 
+#if GTK_CHECK_VERSION(3, 96, 0)
+#define GtkClipboard GdkClipboard
+#define gtk_clipboard_get(a) gdk_display_get_clipboard(gdk_display_get_default())
+#define gtk_clipboard_set_text(c, t, l) gdk_clipboard_set_text(c, t)
+#define gtk_init(a, b) gtk_init()
+
+void gtk_widget_show_all_ll(GtkWidget *widget, gpointer data G_GNUC_UNUSED) {
+	if(GTK_IS_CONTAINER(widget)) {
+		gtk_container_foreach(GTK_CONTAINER(widget), gtk_widget_show_all_ll, NULL);
+	}
+	gtk_widget_show(widget);
+}
+
+void gtk_widget_show_all(GtkWidget *widget) {
+	gtk_widget_show_all_ll(widget, NULL);
+}
+#endif
+
 #ifndef _
 #define _(s) gettext(s)
 #endif
@@ -189,6 +207,17 @@ void do_files(GtkWidget* top, GtkListStore* data) {
 		}
 		break;
 	}
+}
+
+void do_gtk(GtkWidget* top, GtkListStore* data) {
+	guint maj = gtk_get_major_version();
+	guint min = gtk_get_minor_version();
+	guint mic = gtk_get_micro_version();
+	GtkTreeIter iter;
+
+	gtk_list_store_append(data, &iter);
+	gchar *version = g_strdup_printf("%d.%d.%d", maj, min, mic);
+	gtk_list_store_set(data, &iter, 0, _("GTK library version"), 1, version, -1);
 }
 
 void copyline_simple(GtkTreeModel* model, GtkTreePath *path G_GNUC_UNUSED, GtkTreeIter *iter, gchar** text) {
@@ -342,6 +371,7 @@ int main(int argc, char** argv) {
 	GtkAccelGroup *group;
 	GtkTreeSelection* sel;
 	gchar *tmp, *loc;
+	GError *err = NULL;
 
 	bindtextdomain("about-eid-mw", DATAROOTDIR "/locale");
 	textdomain("about-eid-mw");
@@ -349,7 +379,10 @@ int main(int argc, char** argv) {
 	gtk_init(&argc, &argv);
 
 	builder = gtk_builder_new();
-	gtk_builder_add_from_string(builder, ABOUT_GLADE_STRING, strlen(ABOUT_GLADE_STRING), NULL);
+	if(!gtk_builder_add_from_string(builder, ABOUT_GLADE_STRING, strlen(ABOUT_GLADE_STRING), &err)) {
+		g_critical("could not load builder: %s", err->message);
+		exit(EXIT_FAILURE);
+	}
 	window = GTK_WIDGET(gtk_builder_get_object(builder, "window"));
 	group = gtk_accel_group_new();
 	gtk_window_add_accel_group(GTK_WINDOW(window), group);
@@ -374,6 +407,7 @@ int main(int argc, char** argv) {
 	do_distro(window, store);
 	do_uname(window, store);
 	do_files(window, store);
+	do_gtk(window, store);
 
 	renderer = gtk_cell_renderer_text_new();
 	col = gtk_tree_view_column_new_with_attributes(_("Item"), renderer, "text", 0, NULL);

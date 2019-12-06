@@ -101,7 +101,15 @@ then
 fi
 if test "$have_gtk" = "no"
 then
-	if test "$gtkvers" = detect -o "$gtkvers" = 2
+	if test "$gtkvers" = "detect" -o "$gtkvers" = 4
+	then
+		AC_MSG_CHECKING([for gtk4])
+		PKG_CHECK_MODULES(GTK, [gtk4], [have_gtk=4],[have_gtk=no])
+	fi
+fi
+if test "$have_gtk" = "no"
+then
+	if test "$gtkvers" = 2
 	then
 		AC_MSG_ERROR([Gtk 2 is no longer supported, sorry])
 	fi

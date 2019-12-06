@@ -1250,9 +1250,6 @@
 						CreatedOnToolsVersion = 9.2;
 						DevelopmentTeam = EU27N85PBZ;
 					};
-					6536230119A7E8E600D46ECB = {
-						DevelopmentTeam = EU27N85PBZ;
-					};
 					7FA1A9F60F85F36E000D9EE1 = {
 						DevelopmentTeam = EU27N85PBZ;
 					};

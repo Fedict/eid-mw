@@ -35,16 +35,17 @@ void n(GtkMenuItem* item G_GNUC_UNUSED, gpointer user_data) { \
 #if !GTK_CHECK_VERSION(3,22,0)
 #define gtk_show_uri_on_window(parent,uri,timestamp,error) gtk_show_uri(gtk_widget_get_screen(GTK_WIDGET(parent)),uri,timestamp,error)
 #endif
+#if GTK_CHECK_VERSION(3, 96, 0)
+#define gtk_image_set_from_icon_name(i, n, s) gtk_image_set_from_icon_name(i, n)
+#endif
 
 static enum eid_vwr_langs curlang = EID_VWR_LANG_NONE;
 
-IGNORE_DEPRECATED
 /* Hide the certificate state icon */
 static void clear_cert_image(char* label) {
 	GtkImage *img = GTK_IMAGE(gtk_builder_get_object(builder, label));
-	gtk_image_set_from_stock(img, GTK_STOCK_MISSING_IMAGE, GTK_ICON_SIZE_BUTTON);
+	gtk_image_set_from_icon_name(img, "image-missing", GTK_ICON_SIZE_BUTTON);
 }
-END_IGNORE_DEPRECATED
 
 /* Show the correct certificate state icon. TODO: make this match what the
  * certificate validation returns */
@@ -69,12 +70,7 @@ void showabout(GtkMenuItem* about G_GNUC_UNUSED, gpointer user_data G_GNUC_UNUSE
 			"authors", authors,
 			"copyright", _("Copyright 2015-2016 Fedict\nCopyright 2017-2018 BOSA"),
 			"comments", _("View data on the Belgian eID card"),
-#if (HAVE_GTK == 3)
 			"license-type", GTK_LICENSE_LGPL_3_0,
-#else
-			"license", _("This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.\n\nThis program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more details.\n\nYou should have received a copy of the GNU General Public License along with this program.  If not, see http://www.gnu.org/licenses/."),
-			"wrap-license", TRUE,
-#endif
 			"artists", artists,
 			NULL);
 }
@@ -289,7 +285,11 @@ void translate(GtkMenuItem* item G_GNUC_UNUSED, gpointer target) {
 static gboolean setup_dnd_real(gpointer foo G_GNUC_UNUSED) {
 	GtkWidget* photo = GTK_WIDGET(gtk_builder_get_object(builder, "photobox"));
 
+#if GTK_CHECK_VERSION(3, 96, 0)
+	gtk_drag_source_set(photo, GDK_BUTTON1_MASK, NULL, GDK_ACTION_COPY);
+#else
 	gtk_drag_source_set(photo, GDK_BUTTON1_MASK, NULL, 0, GDK_ACTION_COPY);
+#endif
 	gtk_drag_source_add_text_targets(photo);
 
 	return FALSE;
@@ -313,7 +313,11 @@ void disable_dnd(void) {
 }
 
 /* Perform a drag-and-drop operation */
+#if GTK_CHECK_VERSION(3, 96, 0)
+void drag_data_get(GtkWidget* widget G_GNUC_UNUSED, GdkDrag *ctx G_GNUC_UNUSED, GtkSelectionData *data, gpointer user_data G_GNUC_UNUSED) {
+#else
 void drag_data_get(GtkWidget* widget G_GNUC_UNUSED, GdkDragContext *ctx G_GNUC_UNUSED, GtkSelectionData *data, guint info G_GNUC_UNUSED, guint time G_GNUC_UNUSED, gpointer user_data G_GNUC_UNUSED) {
+#endif
 	const char* xml = eid_vwr_be_get_xmlform();
 	if(!xml) return;
 	gtk_selection_data_set_text(data, xml, -1);

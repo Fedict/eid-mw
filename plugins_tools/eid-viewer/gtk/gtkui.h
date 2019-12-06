@@ -19,9 +19,13 @@ enum eid_vwr_langs get_curlang();
 void show_cert_image(const char *name, void *data, int len);
 void setup_dnd(void);
 void disable_dnd(void);
+#if GTK_CHECK_VERSION(3, 96, 0)
+void drag_data_get(GtkWidget * widget, GdkDrag *ctx, GtkSelectionData *data, gpointer user_data);
+#else
 void drag_data_get(GtkWidget * widget, GdkDragContext * ctx,
 		   GtkSelectionData * data, guint info, guint time,
 		   gpointer user_data);
+#endif
 void validate_toggle(gpointer event_source, gpointer user_data);
 void auto_reader(GtkCheckMenuItem * mi, gpointer user_data);
 void update_doctype(char* label, void* data, int length);

@@ -19,6 +19,8 @@ static void clearphoto(char* label G_GNUC_UNUSED) {
 		free(pi.raw);
 	if(pi.hash)
 		free(pi.hash);
+	if(pi.pixbuf)
+		g_object_unref(pi.pixbuf);
 	memset(&pi, 0, sizeof(pi));
 }
 
@@ -30,6 +32,7 @@ void displayphoto(char* label G_GNUC_UNUSED, void* data, int length) {
 	 */
 	GInputStream *mstream = G_INPUT_STREAM(g_memory_input_stream_new_from_data(data, length, NULL));
 	GdkPixbuf *pixbuf = gdk_pixbuf_new_from_stream(mstream, NULL, NULL);
+	pi.pixbuf = GDK_PIXBUF(g_object_ref(pixbuf));
 	g_input_stream_close(mstream, NULL, NULL);
 
 	g_hash_table_insert(touched_labels, g_strdup("PHOTO_HASH"), clearphoto);
