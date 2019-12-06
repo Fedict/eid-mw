@@ -71,6 +71,7 @@ extern "C"
 #define CACHED_DATA_TYPE_SIGN_CERT		0x200
 #define CACHED_DATA_TYPE_CA_CERT		0x400
 #define CACHED_DATA_TYPE_ROOT_CERT		0x800
+#define CACHED_DATA_TYPE_PER_RECORD		0x1000
 
 #define CARD_FUNCTION_NOT_IMPLEMENTED  -101
 #define CARD_FUNCTION_NOT_SUPPORTED		-102
@@ -140,6 +141,7 @@ extern "C"
 		int state;
 		CK_ATTRIBUTE_PTR pAttr;
 		CK_ULONG count;
+		CK_BBOOL hidden;
 	} P11_OBJECT;
 
 
@@ -287,12 +289,13 @@ extern "C"
 				     CK_ULONG * phObject, CK_VOID_PTR plabel,
 				     CK_ULONG labelLen, CK_VOID_PTR pvalue,
 				     CK_ULONG valueLen, CK_VOID_PTR pobjectID,
-				     CK_ULONG objectIDLen);
+				     CK_ULONG objectIDLen, CK_BBOOL bHidden);
 	CK_RV p11_add_slot_object(P11_SLOT * pSlot,
 				  CK_ATTRIBUTE_PTR pTemplate,
 				  CK_ULONG ulCount, CK_BBOOL bToken,
 				  CK_ULONG type, CK_ULONG id,
 				  CK_BBOOL bPrivate, CK_ULONG * phObject);
+	void p11_hide_object(P11_OBJECT *pObject);
 	void p11_clean_object(P11_OBJECT * pObject);
 	void p11_clean_attributelist(CK_ATTRIBUTE_PTR pAttr,
 				     CK_ULONG ulCount);

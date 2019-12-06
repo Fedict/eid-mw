@@ -120,6 +120,8 @@ namespace eIDMW
 
 		CByteArray ReadFile(const std::string & csPath, unsigned long ulOffset = 0, unsigned long ulMaxLen = FULL_FILE);
 
+		CByteArray CCard::ReadRecord(const std::string & csPath, unsigned char ulRecordID);
+
 		tPin GetPinFor(tPinObjective obj);
 		tPin GetPinByKeyID(unsigned long id);
 		unsigned long PinStatus(const tPin & Pin);
@@ -157,6 +159,11 @@ namespace eIDMW
 		* number of bytes that are available. */
 		CByteArray ReadCardFile(const std::string & csPath, unsigned long ulOffset = 0, unsigned long ulMaxLen = FULL_FILE);
 
+		/* Read record with Type bRecordID the file indicated by 'csPath'.
+		 * This path can be absolute, relative or empty
+		* (in which case the currenlty selected file is read)
+		*/
+		CByteArray ReadRecordFromFile(const std::string & csPath, unsigned char bRecordID);
 
 		//--- P15 functions
 		unsigned long PinCount();

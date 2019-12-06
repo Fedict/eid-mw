@@ -168,6 +168,41 @@ extern "C"
 	{ BEID_FIELD_TAG_ADDR_Municipality,		"address_municipality"}  \
 }
 
+#define BEID_ID_RECORD_DATA_LABELS  {  \
+	{ BEID_FIELD_TAG_ID_CardNr,							"record_card_number"},  \
+	{ BEID_FIELD_TAG_ID_ChipNr,							"record_chip_number"},  \
+	{ BEID_FIELD_TAG_ID_ValidityBeginDate,				"record_validity_begin_date"},  \
+	{ BEID_FIELD_TAG_ID_ValidityEndDate,				"record_validity_end_date"},  \
+	{ BEID_FIELD_TAG_ID_IssuingMunicipality,			"record_issuing_municipality"},  \
+	{ BEID_FIELD_TAG_ID_NationalNr,						"record_national_number"},  \
+	{ BEID_FIELD_TAG_ID_Surname,						"record_surname"},  \
+	{ BEID_FIELD_TAG_ID_FirstNames,						"record_firstnames"},  \
+	{ BEID_FIELD_TAG_ID_FirstLetterOfThirdGivenName,	"record_first_letter_of_third_given_name"},  \
+	{ BEID_FIELD_TAG_ID_Nationality,					"record_nationality"},  \
+	{ BEID_FIELD_TAG_ID_LocationOfBirth,				"record_location_of_birth"},  \
+	{ BEID_FIELD_TAG_ID_DateOfBirth,					"record_date_of_birth"},  \
+	{ BEID_FIELD_TAG_ID_Gender,							"record_gender"},  \
+	{ BEID_FIELD_TAG_ID_Nobility,						"record_nobility"},  \
+	{ BEID_FIELD_TAG_ID_DocumentType,					"record_document_type"},  \
+	{ BEID_FIELD_TAG_ID_SpecialStatus,					"record_special_status"},  \
+	{ BEID_FIELD_TAG_ID_PhotoHash,						"record_photo_hash"},  \
+	{ BEID_FIELD_TAG_ID_Duplicata,						"record_duplicata"},  \
+	{ BEID_FIELD_TAG_ID_SpecialOrganization,			"record_special_organization"},  \
+	{ BEID_FIELD_TAG_ID_MemberOfFamily,					"record_member_of_family"}, \
+	{ BEID_FIELD_TAG_ID_DateAndCountryOfProtection,		"record_date_and_country_of_protection"},  \
+	{ BEID_FIELD_TAG_ID_WorkPermitType,					"record_work_permit_mention"}, \
+	{ BEID_FIELD_TAG_ID_Vat1,							"record_employer_vat_1"}, \
+	{ BEID_FIELD_TAG_ID_Vat2,							"record_employer_vat_2"}, \
+	{ BEID_FIELD_TAG_ID_RegionalFileNumber,				"record_regional_file_number"}, \
+}
+
+	//{ BEID_FIELD_TAG_ADDR_Version,							"Address_Version"},
+#define BEID_ADDRESS_RECORD_DATA_LABELS  {  \
+	{ BEID_FIELD_TAG_ADDR_Street,						"record_address_street_and_number"},  \
+	{ BEID_FIELD_TAG_ADDR_ZipCode,						"record_address_zip"},  \
+	{ BEID_FIELD_TAG_ADDR_Municipality,					"record_address_municipality"}  \
+}
+
 #define BEID_LABEL_DATA_SerialNr				"carddata_serialnumber"
 #define BEID_LABEL_DATA_CompCode				"carddata_comp_code"
 #define BEID_LABEL_DATA_OSNr					"carddata_os_number"
@@ -186,15 +221,18 @@ extern "C"
 #define BEID_LABEL_DATA_PinNonRep				"carddata_pin_nonrepudiation_counter"
 #define BEID_LABEL_DATA_PinReadEf				"carddata_pin_read_ef_counter"
 
-#define BEID_LABEL_ATR									"ATR"
+#define BEID_LABEL_ATR							"ATR"
 
-#define BEID_OBJECTID_ID									"id"
-#define BEID_OBJECTID_ADDRESS							"address"
-#define BEID_OBJECTID_PHOTO								"photo"
-#define BEID_OBJECTID_CARDDATA						"carddata"
-#define BEID_OBJECTID_RNCERT							"rncert"
+#define BEID_OBJECTID_ID						"id"
+#define BEID_OBJECTID_ADDRESS					"address"
+#define BEID_OBJECTID_PHOTO						"photo"
+#define BEID_OBJECTID_CARDDATA					"carddata"
+#define BEID_OBJECTID_RNCERT					"rncert"
 #define BEID_OBJECTID_SIGN_DATA_FILE			"sign_data_file"
-#define BEID_OBJECTID_SIGN_ADDRESS_FILE		"sign_address_file"
+#define BEID_OBJECTID_SIGN_ADDRESS_FILE			"sign_address_file"
+//to give the hidden record objects their own (hidden/undocumented) CKA_OBJECT_ID
+//this "record" CKA_OBJECT_ID is not meant to (and can not) be used to retrieve all hidden objects
+#define BEID_OBJECTID_RECORD					"record"
 
 	typedef struct BEID_DATA_LABELS_NAME
 	{
@@ -210,7 +248,7 @@ extern "C"
 //#define BEID_LABEL_CERT_RNCA          "CERT_RNCA_FILE"
 
 #define BEID_LABEL_SGN_RN			"SIGN_DATA_FILE"
-#define BEID_LABEL_SGN_ADDRESS	"SIGN_ADDRESS_FILE"
+#define BEID_LABEL_SGN_ADDRESS		"SIGN_ADDRESS_FILE"
 
 	typedef enum {
 		BEID_PIN_READ_EF,
@@ -242,6 +280,7 @@ extern "C"
 			     CK_CHAR_PTR oldpin, CK_ULONG l_newpin,
 			     CK_CHAR_PTR newpin);
 	CK_RV cal_get_card_data(CK_SLOT_ID hSlot);
+	CK_RV cal_read_and_store_record(P11_SLOT* pSlot, CK_ULONG ulDataType, CK_BYTE bRecordID, CK_UTF8CHAR* plabel, CK_ULONG ulLabelLen);
 	CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType);
 	CK_RV cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT * pObject);
 	CK_RV cal_sign(CK_SLOT_ID hSlot, P11_SIGN_DATA * pSignData,

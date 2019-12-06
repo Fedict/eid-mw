@@ -222,21 +222,54 @@ namespace eIDMW
 		return PinInvalid;
 	}
 
+	CByteArray CCard::ReadRecordFromFile(const std::string & csPath, unsigned char ucRecordID)
+	{
+		try
+		{
+			return ReadRecord(csPath, ucRecordID);
+		}
+		catch (const CNotAuthenticatedException & e)
+		{
+			(void)e.GetError();
+
+			/*  unused feature
+			// A PIN is needed to read -> ask the correct PIN and do a verification
+			unsigned long ulRemaining;
+
+			tPin pin = GetPinFor(BEID_PIN_READ_EF);
+
+			if (pin.bValid)
+			{
+				if (PinCmd(PIN_OP_VERIFY, pin, "", "", ulRemaining, NULL))
+				{
+					return ReadRecord(csPath, ucRecordID);
+				}
+				else {
+					throw CMWEXCEPTION(ulRemaining == 0 ? EIDMW_ERR_PIN_BLOCKED : EIDMW_ERR_PIN_BAD);
+				}
+			}
+			else
+			*/
+			throw CMWEXCEPTION(EIDMW_ERR_CMD_NOT_ALLOWED);
+		}
+	}
+
 	CByteArray CCard::ReadCardFile(const std::string & csPath, unsigned long ulOffset, unsigned long ulMaxLen)
 	{
-
 		try
 		{
 			return ReadFile(csPath, ulOffset, ulMaxLen);
 		}
 		catch (const CNotAuthenticatedException & e)
 		{
+			(void)e.GetError();
+			/*
+			// unused feature
 			// A PIN is needed to read -> ask the correct PIN and do a verification
 			unsigned long ulRemaining;
 
 			tPin pin = GetPinFor(BEID_PIN_READ_EF);
 
-			(void)e.GetError();
 
 			if (pin.bValid)
 			{
@@ -249,7 +282,8 @@ namespace eIDMW
 				}
 			}
 			else
-				throw CMWEXCEPTION(EIDMW_ERR_CMD_NOT_ALLOWED);
+			*/
+			throw CMWEXCEPTION(EIDMW_ERR_CMD_NOT_ALLOWED);
 		}
 	}
 
@@ -481,10 +515,42 @@ namespace eIDMW
 		return oData;
 	}
 
+	CByteArray CCard::ReadRecord(const std::string & csPath, unsigned char ulRecordID)
+	{
+		CAutoLock autolock(this);
+		SelectByPath(csPath);
+		unsigned long ulSW12 = 0;
+
+		//Le = 0 to read 256 bytes
+		CByteArray oResp = SendAPDU(0x80, 0xB2, ulRecordID, ulRecordID, 0);
+
+		MWLOG(LEV_INFO, MOD_CAL, L"   ReadRecord %ls (0X%x recordID) from card", utilStringWiden(csPath).c_str(), ulRecordID);
+		
+		ulSW12 = getSW12(oResp);
+		switch (ulSW12)
+		{
+		case 0x6982:
+			throw CNotAuthenticatedException(EIDMW_ERR_NOT_AUTHENTICATED);
+			break;
+		case 0x6B00:
+			throw CMWEXCEPTION(EIDMW_ERR_PARAM_RANGE);
+			break;
+		case 0x6D00:
+			throw CMWEXCEPTION(EIDMW_ERR_NOT_ACTIVATED);
+			break;
+		case 0x9000:
+			break;
+		default:
+			throw CMWEXCEPTION(m_poPCSC->SW12ToErr(ulSW12));
+		}
+		return oResp;
+	}
+
 	CByteArray CCard::SendAPDU(const CByteArray & oCmdAPDU)
 	{
 		CAutoLock oAutoLock(this);
 		long lRetVal = 0;
+		unsigned long ulSize = 0;
 
 		CByteArray oResp = m_poPCSC->Transmit(m_hCard, oCmdAPDU, &lRetVal);
 
@@ -510,8 +576,8 @@ namespace eIDMW
 				oResp = m_poPCSC->Transmit(m_hCard, oCmdAPDU, &lRetVal);
 			}
 		}
-
-		if (oResp.Size() == 2)
+		ulSize = oResp.Size();
+		if (ulSize == 2)
 		{
 			// If SW1 = 0x61, then SW2 indicates the maximum value to be given to the
 			// short Le  field (length of data still available) in a GET RESPONSE.
@@ -550,6 +616,27 @@ namespace eIDMW
 					CThread::SleepMillisecs(ulDelay);
 				}
 				return SendAPDU(oNewCmdAPDU);
+			}
+		}
+		else if (ulSize == 258)
+		{
+			//use response command chaining to get the entire result, if resultdata > 256
+			// If SW1 = 0x61, then SW2 indicates the value to be given to the
+			// short Le field (length of data still available) in a GET RESPONSE to receive the extra data.
+			while (oResp.GetByte(ulSize-2) == 0x61) 
+			{
+				//create the GET RESPONSE command
+				CByteArray oCommand(10);
+				const unsigned char Command[] = { 0x00, 0xC0, 0x00, 0x00 };
+				oCommand.Append(Command, sizeof(Command));
+				
+				oCommand.Append(oResp.GetByte(ulSize-1)); //add the correct length
+
+				CByteArray oExtraBytes = SendAPDU(oCommand);	// Get extra bytes from the get response command
+				oResp.Chop(2);									//remove the status word bytes
+				oResp.Append(oExtraBytes);						//apend the extra bytes
+
+				ulSize += oExtraBytes.Size();
 			}
 		}
 

@@ -517,7 +517,7 @@ cleanup:
 #define WHERE "p11_add_slot_ID_object()"
 CK_RV p11_add_slot_ID_object(P11_SLOT *pSlot, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_BBOOL bToken,
 			     CK_ULONG type, CK_BBOOL bPrivate, CK_ULONG *phObject,
-			     CK_VOID_PTR plabel, CK_ULONG labelLen, CK_VOID_PTR pvalue, CK_ULONG valueLen, CK_VOID_PTR pobjectID, CK_ULONG objectIDLen)
+			     CK_VOID_PTR plabel, CK_ULONG labelLen, CK_VOID_PTR pvalue, CK_ULONG valueLen, CK_VOID_PTR pobjectID, CK_ULONG objectIDLen, CK_BBOOL bHidden)
 {
 	CK_RV ret = CKR_OK;
 	P11_OBJECT *pObject = NULL;
@@ -612,6 +612,10 @@ CK_RV p11_add_slot_ID_object(P11_SLOT *pSlot, CK_ATTRIBUTE_PTR pTemplate, CK_ULO
 
 	pObject->state=P11_CACHED;
 
+	//wether or not the object should be returned when CKA_LABEL is not present in search template
+	pObject->hidden = bHidden;
+
+
 cleanup:
 
 	return (ret);
@@ -645,6 +649,7 @@ void p11_clean_object(P11_OBJECT *pObject)
 	//set used flag to 0 so it can be reused.
 	//we don't clean the object itself
 	pObject->inuse = 0;
+	pObject->hidden = 0;
 	pObject->state = 0;
 
 	return;

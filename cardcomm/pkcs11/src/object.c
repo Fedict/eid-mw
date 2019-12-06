@@ -32,7 +32,8 @@
 //function declarations
 void SetParseFlagByLabel(CK_ULONG* pFilesToParseFlag,CK_UTF8CHAR_PTR pLabel,CK_ULONG len);
 void SetParseFlagByObjectID(CK_ULONG* pFilesToParseFlag,CK_UTF8CHAR_PTR pObjectID,CK_ULONG len);
-
+CK_BBOOL CheckLabelInuse(P11_SLOT* pSlot, CK_UTF8CHAR* pLabel, CK_ULONG labelLen);
+CK_RV ReadRecordLabel(P11_SLOT* pSlot, CK_UTF8CHAR* pLabel, CK_ULONG labelLen);
 
 #define WHERE "C_CreateObject()"
 CK_RV C_CreateObject(CK_SESSION_HANDLE hSession,    /* the session's handle */
@@ -226,8 +227,8 @@ CK_RV C_SetAttributeValue(CK_SESSION_HANDLE hSession,   /* the session's handle 
 
 #define WHERE "C_FindObjectsInit()"
 CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
-												CK_ATTRIBUTE_PTR  pTemplate,  /* attribute values to match */
-												CK_ULONG          ulCount)    /* attributes in search template */
+						CK_ATTRIBUTE_PTR  pTemplate,  /* attribute values to match */
+						CK_ULONG          ulCount)    /* attributes in search template */
 {
 	P11_SESSION *pSession = NULL;
 	P11_SLOT    *pSlot    = NULL;
@@ -281,7 +282,7 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 	/* reason to add this is that e.g. Firefox for every certificate in its store starts a find operation with CKA_CLASS_TYPE */
 	/* that is unknown by this implementation */
 	/* CKA_CLASS_TYPE we support is only CKO_CERTIFICATE, CKO_PRIVATE_KEY and CKO_PUBLIC_KEY */
-	/* Sun-PKCS11 cannot handle  CKR_ATTRIBUTE_VALUE_INVALID properly so => initialize search and findObjects will just return 0 matching objects
+	/* Sun-PKCS11 cannot handle CKR_ATTRIBUTE_VALUE_INVALID properly so => initialize search and findObjects will just return 0 matching objects
 	in case of CKO_DATA */
 	if (ulCount)
 	{
@@ -308,7 +309,7 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 			else if (*pclass == CKO_DATA)
 			{
 				addIdObjects = CK_TRUE;
-			}
+			}			
 		}
 		//We only return the CKO_DATA objects when specifically asked for, this to prevent webbrowsers
 		//to read the entire carddata, while they only need the certificates. 
@@ -345,17 +346,18 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 		goto cleanup;
 	}
 
-	if(addIdObjects == CK_TRUE)
+/*	if(addIdObjects == CK_TRUE)
 	{
 		//parse the search template
 		CK_UTF8CHAR* pLabel;
 		CK_UTF8CHAR* pObjectID;
+
 		ret = p11_get_attribute_value(pTemplate, ulCount, CKA_OBJECT_ID, (CK_VOID_PTR *) &pObjectID, &len);
 		if ( (ret == 0) && (len > 0 ) )
 		{
 			SetParseFlagByObjectID(&filesToCacheFlag,pObjectID,len);
 		}
-		else
+		else //no CKA_OBJECT_ID specified
 		{
 			ret = p11_get_attribute_value(pTemplate, ulCount, CKA_LABEL, (CK_VOID_PTR *) &pLabel, &len);
 			if ( (ret == 0) && (len > 0 ) )
@@ -364,7 +366,7 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 			}
 		}
 
-		/*
+		
 		if((filesToCacheFlag != CACHED_DATA_TYPE_CARDDATA) && (filesToCacheFlag != CACHED_DATA_TYPE_RNCERT))
 		{
 			if ((pSession->bReadDataAllowed == P11_READDATA_ASK) & (eidmw_readpermission != P11_READDATA_ALWAYS))
@@ -399,8 +401,8 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 				goto cleanup;
 			}
 		}
-		*/
-	}
+		
+	}*/
 
 	/* init search operation */
 	pData = (P11_FIND_DATA *)pSession->Operation[P11_OPERATION_FIND].pData;
@@ -448,6 +450,45 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 
 	if ( addIdObjects )
 	{
+		CK_UTF8CHAR* pLabel;
+		CK_UTF8CHAR* pObjectID;
+
+		ret = p11_get_attribute_value(pTemplate, ulCount, CKA_OBJECT_ID, (CK_VOID_PTR *)&pObjectID, &len);
+		if ((ret == 0) && (len > 0))
+		{
+			SetParseFlagByObjectID(&filesToCacheFlag, pObjectID, len);
+		}
+		else //no CKA_OBJECT_ID specified
+		{
+			ret = p11_get_attribute_value(pTemplate, ulCount, CKA_LABEL, (CK_VOID_PTR *)&pLabel, &len);
+			if ((ret == 0) && (len > 0))
+			{
+				SetParseFlagByLabel(&filesToCacheFlag, pLabel, len);
+			}
+		}
+
+		//check if a record_ object is being asked for
+		if (filesToCacheFlag == CACHED_DATA_TYPE_PER_RECORD)
+		{
+			//check if the record_ object is already present
+			if (CheckLabelInuse(pSlot, pLabel, len) == CK_FALSE)
+			{
+				ret = ReadRecordLabel(pSlot, pLabel, len);
+				{
+					if (ret != 0) {
+						log_trace(WHERE, "E: ReadRecordLabel() failed with %lu", ret);
+						goto cleanup;
+					}
+				}
+			}
+			//we have (now or before) read this record from the eID card
+			ret = CKR_OK;
+
+			goto cleanup;
+
+		}
+
+
 		//check if the data isn't cached already
 		if(	((filesToCacheFlag != CACHED_DATA_TYPE_ALL_DATA) && ((pSlot->ulCardDataCached & filesToCacheFlag) == FALSE)) ||
 			((filesToCacheFlag == CACHED_DATA_TYPE_ALL_DATA) && (pSlot->ulCardDataCached != CACHED_DATA_TYPE_ALL_DATA)) )
@@ -535,7 +576,8 @@ CK_RV C_FindObjects(CK_SESSION_HANDLE    hSession,          /* the session's han
     unsigned long h = 0;
     unsigned int  j = 0;
 
-	CK_ULONG len = 0;
+	CK_ULONG		len = 0;
+	CK_BBOOL      bShowHidden = CK_FALSE;
 
 	log_trace(WHERE, "I: enter");
 
@@ -605,6 +647,21 @@ CK_RV C_FindObjects(CK_SESSION_HANDLE    hSession,          /* the session's han
 		}
 	}
 
+	//check if we have a LABEL attribute to look for
+	//if not, we will not return hidden objects, if so we will when their LABEL attributes match
+	len = 0;
+	if (pData->size > 0)
+	{
+		ret = p11_get_attribute_value(pData->pSearch, pData->size, CKA_LABEL, (CK_VOID_PTR *)&pbToken, &len);
+		//when the type (CKA_LABEL) is found, CKR_OK is returned
+		if ((ret == CKR_OK) && (len > 0))
+		{
+			//when searching for a non-empty label, set showhidden flag (so it is returned in case the data object is hidden)
+			log_trace(WHERE, "I: CKA_LABEL in search string, turning hidden flag off");
+			bShowHidden = CK_TRUE;
+		}
+	}
+
 	pSlot = p11_get_slot(pSession->hslot);
 	if (pSlot == NULL)
 	{
@@ -627,6 +684,12 @@ CK_RV C_FindObjects(CK_SESSION_HANDLE    hSession,          /* the session's han
 		}
 		if (pObject->inuse == 0)
 			continue; //this object is not in use by the token()
+
+		if ( (pObject->hidden == 1) && !bShowHidden)
+		{
+			//this object is hidden, only return it when specifically asked for (bShowHidden flag enabled)
+			continue;
+		}
 
 		//if not logged in, objects with missing CKA_PRIVATE or CKA_PRIVATE set to false will be ignored
 #if 0 //TODO
@@ -845,6 +908,16 @@ void SetParseFlagByLabel(CK_ULONG* pFilesToParseFlag,CK_UTF8CHAR_PTR pLabel,CK_U
 		}
 		counter++;
 	}
+	//label of per record data
+	if (len >= 7)
+	{
+		if (memcmp("record_", pLabel, 7) == 0) 
+		{
+			*pFilesToParseFlag = CACHED_DATA_TYPE_PER_RECORD;
+			return;
+		}
+	}
+
 	//unknown label
 	return;
 }
@@ -896,3 +969,132 @@ void SetParseFlagByObjectID(CK_ULONG* pFilesToParseFlag,CK_UTF8CHAR_PTR pObjectI
 	}
 	return;
 }
+
+/* 
+ * To be called from the pkcs#11 API functions C_
+ * p11_lock() should be held;
+ */
+#define WHERE "CheckLabelInuse()"
+CK_BBOOL CheckLabelInuse(P11_SLOT* pSlot, CK_UTF8CHAR* pLabel, CK_ULONG labelLen)
+{
+	CK_ULONG i = 0;
+	CK_BBOOL ret = CK_FALSE;
+	CK_UTF8CHAR* pObjectLabel;
+	CK_ULONG	objectLabelLen = 0;
+	P11_OBJECT*	pObject = NULL;
+
+	log_trace(WHERE, "I: enter");
+
+//	if (p11_get_init() != BEIDP11_INITIALIZED)
+//	{
+//		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
+//		return (CK_FALSE);
+//	}
+
+//	p11_lock();
+	if (pSlot == NULL)
+	{
+		log_trace(WHERE, "E: pSlot == NULL");
+		ret = CK_FALSE;
+		goto cleanup;
+	}
+
+	if (pSlot->nobjects == 0)
+	{
+		log_trace(WHERE, "I: no objects in list, so we will not find the one we are looking for");
+		ret = CK_FALSE;
+		goto cleanup;
+	}
+
+	//for all objects in session, check if the value of CK_LABEL matches pLabel
+	for (i = 0; i <= (pSlot->nobjects); i++)
+	{
+		pObject = p11_get_slot_object(pSlot, i);
+		if (pObject == NULL)
+		{
+			log_trace(WHERE, "E: invalid object handle, call C_FindObjectsInit() first");
+			ret = CK_FALSE;
+			goto cleanup;
+		}
+		if (pObject->inuse == 0)
+			continue; //this object is not in use by the token()
+
+		//retrieve the CKA_LABEL of the object
+		if (p11_get_attribute_value(pObject->pAttr, pObject->count, CKA_LABEL, (CK_VOID_PTR*)&pObjectLabel, &objectLabelLen) == CKR_OK)
+		{
+			if (objectLabelLen > 0)
+			{
+				if (labelLen == objectLabelLen)
+				{
+					if (memcmp(pObjectLabel, pLabel, labelLen) == 0)
+					{
+						ret = CK_TRUE;
+						goto cleanup;
+					}
+				}
+			}
+		}
+		else
+		{
+			//couldn't check the attribute, skip this object
+			continue;
+		}
+	}
+
+cleanup:
+	log_trace(WHERE, "I: leave");
+//	p11_unlock();
+	return ret;
+}
+#undef WHERE
+
+/*
+ *Search for the file (on the card) this label belongs to, 
+ *then read only the correpsponding record from the card, 
+ *and create and store an object that represents it
+*/
+#define WHERE "ReadRecordLabel()"
+CK_RV ReadRecordLabel(P11_SLOT* pSlot, CK_UTF8CHAR* pLabel, CK_ULONG labelLen)
+{
+	BEID_DATA_LABELS_NAME ID_RECORD_LABELS[] = BEID_ID_RECORD_DATA_LABELS;
+	BEID_DATA_LABELS_NAME ADDRESS_RECORD_LABELS[] = BEID_ADDRESS_RECORD_DATA_LABELS;
+	int nrOfItems = 0;
+	CK_BYTE counter = 0;
+	int ulDataType = 0;
+	CK_RV ret = 0;
+
+	//retrieve the record number and file (id, address) it resides in
+	nrOfItems = sizeof(ID_RECORD_LABELS) / sizeof(BEID_DATA_LABELS_NAME);
+	for (counter = 0; counter < nrOfItems; counter++)
+	{
+		if (strlen(ID_RECORD_LABELS[counter].name) == labelLen)
+		{
+			if (memcmp(ID_RECORD_LABELS[counter].name, pLabel, labelLen) == 0) {
+				ulDataType = CACHED_DATA_TYPE_ID;
+				//tags also start at 0, increment by 1 and are 1 BYTE long
+				ret = cal_read_and_store_record(pSlot, ulDataType, ID_RECORD_LABELS[counter].tag, pLabel, labelLen);
+				goto cleanup;
+			}
+		}
+	}
+	counter = 0;
+	nrOfItems = sizeof(ADDRESS_RECORD_LABELS) / sizeof(BEID_DATA_LABELS_NAME);
+	for (counter = 0; counter < nrOfItems; counter++)
+	{
+		if (strlen(ADDRESS_RECORD_LABELS[counter].name) == labelLen)
+		{
+			if (memcmp(ADDRESS_RECORD_LABELS[counter].name, pLabel, labelLen) == 0) {
+				ulDataType = CACHED_DATA_TYPE_ADDRESS;
+				//tags also start at 0, increment by 1 and are 1 BYTE long
+				ret = cal_read_and_store_record(pSlot, ulDataType, ADDRESS_RECORD_LABELS[counter].tag, pLabel, labelLen);
+				goto cleanup;
+			}
+		}
+	}
+
+cleanup:
+	log_trace(WHERE, "I: leave");
+	p11_unlock();
+	return ret;
+}
+#undef WHERE

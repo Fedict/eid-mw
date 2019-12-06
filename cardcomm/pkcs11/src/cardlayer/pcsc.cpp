@@ -123,8 +123,10 @@ namespace eIDMW
 		long lRet = SCardGetStatusChange(m_hContext, 0, &xReaderState, 1);
 		MWLOG(LEV_DEBUG, MOD_CAL, L"    SCardGetStatusChange: current status 0x%0x, event status 0x%0x", xReaderState.dwCurrentState, xReaderState.dwEventState);
 		if (SCARD_S_SUCCESS != lRet)
+		{
+			MWLOG(LEV_ERROR, MOD_CAL, L"    SCardGetStatusChange failed with 0x%0x", lRet);
 			throw CMWEXCEPTION(PcscToErr(lRet));
-
+		}
 		return (xReaderState.dwEventState & SCARD_STATE_PRESENT) == SCARD_STATE_PRESENT;
 	}
 
