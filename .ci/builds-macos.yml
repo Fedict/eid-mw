@@ -3,7 +3,6 @@
     EID_ROBOT_STYLE: $EID_ROBOT_STYLE_MACOS
     EID_DIALOGS_STYLE: nopin
     EIDMW_SIGN_BUILD: 0
-    DYLD_LIBRARY_PATH: $CI_BUILDS_DIR/$CI_PROJECT_DIR/$MACOS_BASEDIR/build/Release
   tags:
   - robot
   - macos
@@ -16,6 +15,7 @@
   - popd
   script:
   - pushd $MACOS_BASEDIR/Release
+  - export DYLD_LIBRARY_PATH=$(pwd)
   - ./testsuite
   - popd
 
