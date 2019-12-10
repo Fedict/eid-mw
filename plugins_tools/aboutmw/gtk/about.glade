@@ -59,8 +59,6 @@
         <child>
           <object class="GtkStatusbar" id="statusbar1">
             <property name="visible">1</property>
-            <property name="orientation">vertical</property>
-            <property name="spacing">2</property>
           </object>
         </child>
       </object>
