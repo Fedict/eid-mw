@@ -1628,7 +1628,7 @@ CK_RV cal_read_and_store_record(P11_SLOT *pSlot, CK_ULONG ulDataType, CK_BYTE bR
 			break;
 		default:
 			//unsupported ulDataType given, not fatal, but also not useable
-			log_trace(WHERE, "E: wrong ulDataType given (%lu), recordID = %x", ulDataType);
+			log_trace(WHERE, "E: wrong ulDataType given (%lu), recordID = %x", ulDataType, bRecordID);
 			return CKR_OK;
 		}
 
