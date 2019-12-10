@@ -2009,13 +2009,16 @@ CK_RV cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT * pObject)
 				oCertData = poCard->ReadCardFile(cert.csPath);
 			else
 			{
+				log_trace(WHERE, "E: cert.bValid is false");
 				return (CKR_DEVICE_ERROR);
 			}
+
 
             //at least 64K Bytes as size (unsigned int) will suffice for cert length
 			if (cert_get_info(oCertData.GetBytes(), (unsigned int)(oCertData.Size()), &certinfo) < 0)
 			{
 				// ASN.1 parser failed. Assume hardware failure.
+				log_trace(WHERE, "E: cert_get_info failed");
 				ret = CKR_DEVICE_ERROR;
 				goto cleanup;
 			}
@@ -2267,6 +2270,7 @@ CK_RV cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT * pObject)
 	}
 	if (ret != 0)
 	{
+		log_trace(WHERE, "E: ret is 0x%0x", ret);
 		cert_free_info(&certinfo);
 		return (CKR_DEVICE_ERROR);
 	}
