@@ -136,19 +136,29 @@ int cert_get_info(const unsigned char *pcert, unsigned int lcert, T_CERT_INFO *i
 				return(E_X509_ALLOC);
 			memcpy(info->exp, item.p_data, item.l_data);
 			info->l_exp = item.l_data;
+
+			/* PKINFO */
+			ret = asn1_get_item(pcert, lcert, X509_PKINFO, &item);
+			if (ret)
+				return(ret);
+			info->pkinfo = malloc(item.l_raw);
+			if (info->pkinfo == NULL)
+				return(E_X509_ALLOC);
+			memcpy(info->pkinfo, item.p_raw, item.l_raw);
+			info->l_pkinfo = item.l_raw;
+
 		}
-		else if (item.l_data != sizeof(OID_EC_PUBLIC_KEY)-1 || memcmp(item.p_data, OID_EC_PUBLIC_KEY, item.l_data) != 0)
+		else if (item.l_data == sizeof(OID_EC_PUBLIC_KEY) - 1 && memcmp(item.p_data, OID_EC_PUBLIC_KEY, item.l_data) == 0){
+			/* EC public key; */
+			//ret = asn1_get_item(pcert, lcert, X509_EC_CURVE, &item);
+			//if (ret)
+			//	return(ret);
+		}
+		else {
 			return (E_X509_UNKNOWN_KEYTYPE);
+		}		
 	}
-	/* PKINFO */
-	ret = asn1_get_item(pcert, lcert, X509_PKINFO, &item);
-	if (ret)
-		return(ret);
-	info->pkinfo = malloc(item.l_raw);
-	if (info->pkinfo == NULL)
-		return(E_X509_ALLOC);
-	memcpy(info->pkinfo, item.p_raw, item.l_raw);
-	info->l_pkinfo = item.l_raw;
+
 
 	return (0);
 }

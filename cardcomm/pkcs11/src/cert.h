@@ -56,9 +56,11 @@ extern "C"
 #define X509_VALID_FROM       "\1\1\5\1"
 #define X509_VALID_UNTIL      "\1\1\5\2"
 #define X509_SUBJECT          "\1\1\6"
-#define X509_KEYTYPE          "\1\1\7\1\1"
-#define X509_EC_CURVE	      "\1\1\7\1\2"
-#define X509_PUBLIC_KEY       "\1\1\7\2"
+											// "\1\1\7" SubjectPublicKeyInfo
+											// "\1\1\7\1" AlgorithmIdentifier (SEQUENCE)
+#define X509_KEYTYPE          "\1\1\7\1\1"	// algorithm OBJECT IDENTIFIER
+#define X509_EC_CURVE	      "\1\1\7\1\2"	// parameters  (ANY DEFINED BY algorithm OPTIONAL)
+#define X509_PUBLIC_KEY       "\1\1\7\2"	// BIT STRING subjectPublicKey
 #define X509_PKINFO           "\1\1\7\2\1"
 #define X509_RSA_MOD          "\1\1\7\2\1\1"
 #define X509_RSA_EXP          "\1\1\7\2\1\2"
