@@ -2013,7 +2013,6 @@ CK_RV cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT * pObject)
 				return (CKR_DEVICE_ERROR);
 			}
 
-
             //at least 64K Bytes as size (unsigned int) will suffice for cert length
 			if (cert_get_info(oCertData.GetBytes(), (unsigned int)(oCertData.Size()), &certinfo) < 0)
 			{
@@ -2023,49 +2022,23 @@ CK_RV cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT * pObject)
 				goto cleanup;
 			}
 
-			ret = p11_set_attribute_value(pCertObject->pAttr,
-						      pCertObject->count,
-						      CKA_SUBJECT,
-						      (CK_VOID_PTR) certinfo.
-						      subject,
-						      (CK_ULONG) certinfo.
-						      l_subject);
+			ret = p11_set_attribute_value(pCertObject->pAttr, pCertObject->count, CKA_SUBJECT, (CK_VOID_PTR) certinfo.subject, (CK_ULONG) certinfo.l_subject);
 			if (ret != CKR_OK)
 				goto cleanup;
-			ret = p11_set_attribute_value(pCertObject->pAttr,
-						      pCertObject->count,
-						      CKA_ISSUER,
-						      (CK_VOID_PTR) certinfo.
-						      issuer,
-						      (CK_ULONG) certinfo.
-						      l_issuer);
+
+			ret = p11_set_attribute_value(pCertObject->pAttr, pCertObject->count, CKA_ISSUER, (CK_VOID_PTR) certinfo.issuer, (CK_ULONG) certinfo.l_issuer);
 			if (ret != CKR_OK)
 				goto cleanup;
-			ret = p11_set_attribute_value(pCertObject->pAttr,
-						      pCertObject->count,
-						      CKA_SERIAL_NUMBER,
-						      (CK_VOID_PTR) certinfo.
-						      serial,
-						      (CK_ULONG) certinfo.
-						      l_serial);
+
+			ret = p11_set_attribute_value(pCertObject->pAttr, pCertObject->count, CKA_SERIAL_NUMBER, (CK_VOID_PTR) certinfo.serial, (CK_ULONG) certinfo.l_serial);
 			if (ret != CKR_OK)
 				goto cleanup;
 			//use real length from decoder here instead of lg from cal
-			ret = p11_set_attribute_value(pCertObject->pAttr,
-						      pCertObject->count,
-						      CKA_VALUE,
-						      (CK_VOID_PTR) oCertData.
-						      GetBytes(),
-						      (CK_ULONG) certinfo.
-						      lcert);
+			ret = p11_set_attribute_value(pCertObject->pAttr, pCertObject->count, CKA_VALUE, (CK_VOID_PTR) oCertData.GetBytes(), (CK_ULONG) certinfo.lcert);
 			if (ret != CKR_OK)
 				goto cleanup;
 			//TODO Check this in the cal if we can be sure that the certificate can be trusted and not be modified on the card
-			ret = p11_set_attribute_value(pCertObject->pAttr,
-						      pCertObject->count,
-						      CKA_TRUSTED,
-						      (CK_VOID_PTR) & btrue,
-						      sizeof(btrue));
+			ret = p11_set_attribute_value(pCertObject->pAttr, pCertObject->count, CKA_TRUSTED, (CK_VOID_PTR) & btrue, sizeof(btrue));
 			if (ret != CKR_OK)
 				goto cleanup;
 
@@ -2075,181 +2048,76 @@ CK_RV cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT * pObject)
 
 			if (pPrivKeyObject != NULL)
 			{
-				ret = p11_set_attribute_value(pPrivKeyObject->
-							      pAttr,
-							      pPrivKeyObject->
-							      count,
-							      CKA_SENSITIVE,
-							      (CK_VOID_PTR) &
-							      btrue,
-							      sizeof(btrue));
+				ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_SENSITIVE, (CK_VOID_PTR) & btrue, sizeof(btrue));
 				if (ret != CKR_OK)
 					goto cleanup;
-				ret = p11_set_attribute_value(pPrivKeyObject->
-							      pAttr,
-							      pPrivKeyObject->
-							      count,
-							      CKA_DECRYPT,
-							      (CK_VOID_PTR) &
-							      bfalse,
-							      sizeof(bfalse));
+
+				ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_DECRYPT, (CK_VOID_PTR) & bfalse, sizeof(bfalse));
 				if (ret != CKR_OK)
 					goto cleanup;
-				ret = p11_set_attribute_value(pPrivKeyObject->
-							      pAttr,
-							      pPrivKeyObject->
-							      count,
-							      CKA_SIGN_RECOVER,
-							      (CK_VOID_PTR) &
-							      bfalse,
-							      sizeof
-							      (CK_BBOOL));
+
+				ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_SIGN_RECOVER, (CK_VOID_PTR) & bfalse, sizeof(CK_BBOOL));
 				if (ret != CKR_OK)
 					goto cleanup;
-				ret = p11_set_attribute_value(pPrivKeyObject->
-							      pAttr,
-							      pPrivKeyObject->
-							      count,
-							      CKA_UNWRAP,
-							      (CK_VOID_PTR) &
-							      bfalse,
-							      sizeof
-							      (CK_BBOOL));
+
+				ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_UNWRAP, (CK_VOID_PTR) & bfalse, sizeof(CK_BBOOL));
 				if (ret != CKR_OK)
 					goto cleanup;
-				ret = p11_set_attribute_value(pPrivKeyObject->
-							      pAttr,
-							      pPrivKeyObject->
-							      count,
-							      CKA_SUBJECT,
-							      (CK_VOID_PTR)
-							      certinfo.
-							      subject,
-							      (CK_ULONG)
-							      certinfo.
-							      l_subject);
+
+				ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_SUBJECT, (CK_VOID_PTR)certinfo.subject, (CK_ULONG)certinfo.l_subject);
 				if (ret != CKR_OK)
 					goto cleanup;
-				ret = p11_set_attribute_value(pPrivKeyObject->
-							      pAttr,
-							      pPrivKeyObject->
-							      count,
-							      CKA_MODULUS,
-							      (CK_VOID_PTR)
-							      certinfo.mod,
-							      (CK_ULONG)
-							      certinfo.l_mod);
+
+				if (certinfo.l_mod > 0)
+					ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_MODULUS, (CK_VOID_PTR)certinfo.mod, (CK_ULONG)certinfo.l_mod);
 				if (ret != CKR_OK)
 					goto cleanup;
-				ret = p11_set_attribute_value(pPrivKeyObject->
-							      pAttr,
-							      pPrivKeyObject->
-							      count,
-							      CKA_PUBLIC_EXPONENT,
-							      (CK_VOID_PTR)
-							      certinfo.exp,
-							      (CK_ULONG)
-							      certinfo.l_exp);
+
+				if (certinfo.l_exp > 0)
+					ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_PUBLIC_EXPONENT, (CK_VOID_PTR)certinfo.exp, (CK_ULONG)certinfo.l_exp);
 				if (ret != CKR_OK)
 					goto cleanup;
 				pPrivKeyObject->state = P11_CACHED;
 			}
 			if (pPubKeyObject != NULL)
 			{
-				ret = p11_set_attribute_value(pPubKeyObject->
-							      pAttr,
-							      pPubKeyObject->
-							      count,
-							      CKA_SENSITIVE,
-							      (CK_VOID_PTR) &
-							      btrue,
-							      sizeof(btrue));
-				if (ret != CKR_OK)
-					goto cleanup;
-				ret = p11_set_attribute_value(pPubKeyObject->
-							      pAttr,
-							      pPubKeyObject->
-							      count,
-							      CKA_VERIFY,
-							      (CK_VOID_PTR) &
-							      btrue,
-							      sizeof(btrue));
-				if (ret != CKR_OK)
-					goto cleanup;
-				ret = p11_set_attribute_value(pPubKeyObject->
-							      pAttr,
-							      pPubKeyObject->
-							      count,
-							      CKA_ENCRYPT,
-							      (CK_VOID_PTR) &
-							      bfalse,
-							      sizeof(bfalse));
-				if (ret != CKR_OK)
-					goto cleanup;
-				ret = p11_set_attribute_value(pPubKeyObject->
-							      pAttr,
-							      pPubKeyObject->
-							      count, CKA_WRAP,
-							      (CK_VOID_PTR) &
-							      bfalse,
-							      sizeof
-							      (CK_BBOOL));
+				ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_SENSITIVE, (CK_VOID_PTR) & btrue, sizeof(btrue));
 				if (ret != CKR_OK)
 					goto cleanup;
 
-				ret = p11_set_attribute_value(pPubKeyObject->
-							      pAttr,
-							      pPubKeyObject->
-							      count,
-							      CKA_SUBJECT,
-							      (CK_VOID_PTR)
-							      certinfo.
-							      subject,
-							      (CK_ULONG)
-							      certinfo.
-							      l_subject);
+				ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_VERIFY, (CK_VOID_PTR) & btrue, sizeof(btrue));
 				if (ret != CKR_OK)
 					goto cleanup;
-				ret = p11_set_attribute_value(pPubKeyObject->
-							      pAttr,
-							      pPubKeyObject->
-							      count,
-							      CKA_MODULUS,
-							      (CK_VOID_PTR)
-							      certinfo.mod,
-							      certinfo.l_mod);
+
+				ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_ENCRYPT, (CK_VOID_PTR) & bfalse, sizeof(bfalse));
 				if (ret != CKR_OK)
 					goto cleanup;
-				ret = p11_set_attribute_value(pPubKeyObject->
-							      pAttr,
-							      pPubKeyObject->
-							      count,
-							      CKA_VALUE,
-							      (CK_VOID_PTR)
-							      certinfo.pkinfo,
-							      certinfo.
-							      l_pkinfo);
+
+				ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_WRAP, (CK_VOID_PTR) & bfalse, sizeof(CK_BBOOL));
 				if (ret != CKR_OK)
 					goto cleanup;
-				ret = p11_set_attribute_value(pPubKeyObject->
-							      pAttr,
-							      pPubKeyObject->
-							      count,
-							      CKA_PUBLIC_EXPONENT,
-							      (CK_VOID_PTR)
-							      certinfo.exp,
-							      certinfo.l_exp);
+
+				ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_SUBJECT, (CK_VOID_PTR)certinfo.subject, (CK_ULONG)certinfo.l_subject);
 				if (ret != CKR_OK)
 					goto cleanup;
+
+				if (certinfo.l_mod > 0)
+					ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_MODULUS, (CK_VOID_PTR)certinfo.mod, certinfo.l_mod);
+				if (ret != CKR_OK)
+					goto cleanup;
+
+				if (certinfo.l_pkinfo > 0)
+					ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_VALUE, (CK_VOID_PTR)certinfo.pkinfo, certinfo.l_pkinfo);
+				if (ret != CKR_OK)
+					goto cleanup;
+
+				if (certinfo.l_exp > 0)
+					ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_PUBLIC_EXPONENT, (CK_VOID_PTR)certinfo.exp, certinfo.l_exp);
+				if (ret != CKR_OK)
+					goto cleanup;
+
 				//TODO test if we can set the trusted flag...
-				ret = p11_set_attribute_value(pPubKeyObject->
-							      pAttr,
-							      pPubKeyObject->
-							      count,
-							      CKA_TRUSTED,
-							      (CK_VOID_PTR) &
-							      btrue,
-							      sizeof(btrue));
+				ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_TRUSTED, (CK_VOID_PTR) & btrue, sizeof(btrue));
 				if (ret != CKR_OK)
 					goto cleanup;
 
