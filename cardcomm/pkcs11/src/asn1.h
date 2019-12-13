@@ -145,7 +145,7 @@ extern "C"
 
 /* ASN1 decoding functions */
 	int asn1_get_item(const unsigned char *content, unsigned int len,
-			  const char *path, ASN1_ITEM * item);
+			  const char *path, ASN1_ITEM * item, unsigned char ucParseBitString);
 	int asn1_find_item(const unsigned char *content, unsigned int len,
 			   unsigned int findtag, ASN1_ITEM * item);
 	int dec_oid(unsigned char *p_data, int l_data, unsigned int *oid,

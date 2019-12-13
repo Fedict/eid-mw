@@ -36,7 +36,7 @@ int cert_get_info(const unsigned char *pcert, unsigned int lcert, T_CERT_INFO *i
 	memset(info, 0, sizeof(T_CERT_INFO));
 
 	//check size of cert
-	ret = asn1_get_item(pcert, lcert, "\1", &item);
+	ret = asn1_get_item(pcert, lcert, "\1", &item, 1);
 	if (ret)
 		return(ret);
 	if (item.l_raw <= lcert)
@@ -44,7 +44,7 @@ int cert_get_info(const unsigned char *pcert, unsigned int lcert, T_CERT_INFO *i
 	else
 		return (E_X509_INCOMPLETE);
 
-	ret = asn1_get_item(pcert, lcert, X509_SUBJECT, &item);
+	ret = asn1_get_item(pcert, lcert, X509_SUBJECT, &item, 1);
 	if (ret)
 		return(ret);
 
@@ -54,7 +54,7 @@ int cert_get_info(const unsigned char *pcert, unsigned int lcert, T_CERT_INFO *i
 	memcpy(info->subject, item.p_raw, item.l_raw);
 	info->l_subject = item.l_raw;
 
-	ret = asn1_get_item(pcert, lcert, X509_ISSUER, &item);
+	ret = asn1_get_item(pcert, lcert, X509_ISSUER, &item, 1);
 	if (ret)
 		return(ret);
 
@@ -64,7 +64,7 @@ int cert_get_info(const unsigned char *pcert, unsigned int lcert, T_CERT_INFO *i
 	memcpy(info->issuer, item.p_raw, item.l_raw);
 	info->l_issuer = item.l_raw;
 
-	ret = asn1_get_item(pcert, lcert, X509_SERIAL, &item);
+	ret = asn1_get_item(pcert, lcert, X509_SERIAL, &item, 1);
 	if (ret)
 		return(ret);
 	else if (item.tag != ASN_INTEGER)
@@ -76,7 +76,7 @@ int cert_get_info(const unsigned char *pcert, unsigned int lcert, T_CERT_INFO *i
 	memcpy(info->serial, item.p_raw, item.l_raw);
 	info->l_serial = item.l_raw;
 
-	ret = asn1_get_item(pcert, lcert, X509_VALID_FROM, &item);
+	ret = asn1_get_item(pcert, lcert, X509_VALID_FROM, &item, 1);
 	if (ret)
 		return(ret);
 
@@ -86,7 +86,7 @@ int cert_get_info(const unsigned char *pcert, unsigned int lcert, T_CERT_INFO *i
 	memcpy(info->validfrom, item.p_data, item.l_data);
 	info->l_validfrom = item.l_data;
 
-	ret = asn1_get_item(pcert, lcert, X509_VALID_UNTIL, &item);
+	ret = asn1_get_item(pcert, lcert, X509_VALID_UNTIL, &item, 1);
 	if (ret)
 		return(ret);
 
@@ -97,7 +97,7 @@ int cert_get_info(const unsigned char *pcert, unsigned int lcert, T_CERT_INFO *i
 	info->l_validto = item.l_data;
 
 	/* check for key type */
-	ret = asn1_get_item(pcert, lcert, X509_KEYTYPE, &item);
+	ret = asn1_get_item(pcert, lcert, X509_KEYTYPE, &item, 1);
 	if (ret)
 		return(ret);
 	else if (item.tag != ASN_OID)
@@ -105,7 +105,7 @@ int cert_get_info(const unsigned char *pcert, unsigned int lcert, T_CERT_INFO *i
 	else {
 		if (item.l_data == sizeof(OID_RSA_ENCRYPTION)-1 && memcmp(item.p_data, OID_RSA_ENCRYPTION, item.l_data) == 0) {
 			/* RSA key; extract modulus and exponent */
-			ret = asn1_get_item(pcert, lcert, X509_RSA_MOD, &item);
+			ret = asn1_get_item(pcert, lcert, X509_RSA_MOD, &item, 1);
 			if (ret)
 				return(ret);
 			if (*(item.p_data) == 0)
@@ -122,7 +122,7 @@ int cert_get_info(const unsigned char *pcert, unsigned int lcert, T_CERT_INFO *i
 			memcpy(info->mod, item.p_data, item.l_data);
 			info->l_mod = item.l_data;
 
-			ret = asn1_get_item(pcert, lcert, X509_RSA_EXP, &item);
+			ret = asn1_get_item(pcert, lcert, X509_RSA_EXP, &item, 1);
 			if (ret)
 				return(ret);
 			if (*(item.p_data) == 0)
@@ -138,7 +138,7 @@ int cert_get_info(const unsigned char *pcert, unsigned int lcert, T_CERT_INFO *i
 			info->l_exp = item.l_data;
 
 			/* PKINFO */
-			ret = asn1_get_item(pcert, lcert, X509_PKINFO, &item);
+			ret = asn1_get_item(pcert, lcert, X509_PKINFO, &item, 1);
 			if (ret)
 				return(ret);
 			info->pkinfo = malloc(item.l_raw);
@@ -149,10 +149,20 @@ int cert_get_info(const unsigned char *pcert, unsigned int lcert, T_CERT_INFO *i
 
 		}
 		else if (item.l_data == sizeof(OID_EC_PUBLIC_KEY) - 1 && memcmp(item.p_data, OID_EC_PUBLIC_KEY, item.l_data) == 0){
-			/* EC public key; */
+			/* EC public key curve; no CKA argument to store it*/
 			//ret = asn1_get_item(pcert, lcert, X509_EC_CURVE, &item);
 			//if (ret)
 			//	return(ret);
+
+			/* EC public key; */
+			ret = asn1_get_item(pcert, lcert, X509_PKINFO, &item, 0);
+			if (ret)
+				return(ret);
+			info->pkinfo = malloc(item.l_raw);
+			if (info->pkinfo == NULL)
+				return(E_X509_ALLOC);
+			memcpy(info->pkinfo, item.p_raw, item.l_raw);
+			info->l_pkinfo = item.l_raw;
 		}
 		else {
 			return (E_X509_UNKNOWN_KEYTYPE);

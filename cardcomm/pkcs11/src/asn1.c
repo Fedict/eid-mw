@@ -224,10 +224,11 @@ return (0);
 }
 
 
-int asn1_get_item(const unsigned char *p_cInDat,     /**< In: ASN-1 data */
-                  unsigned int        iInLen,        /**< In: ASN-1 len   */
-                  const char          *p_cInPath,    /**< In: path  e.g.  "\1\1\2" = 0x01 0x01 0x02 0x00 */
-                  ASN1_ITEM           *p_xItem       /**< Out: object   */
+int asn1_get_item(const unsigned char *p_cInDat,		/**< In: ASN-1 data */
+                  unsigned int        iInLen,			/**< In: ASN-1 len   */
+                  const char          *p_cInPath,		/**< In: path  e.g.  "\1\1\2" = 0x01 0x01 0x02 0x00 */
+                  ASN1_ITEM           *p_xItem,			/**< Out: object   */
+				  unsigned char		  ucParseBitString	/**< In: whether contents of a BIT STRING should be parsed as ASN.1 **/
                   )
 {
 unsigned int  iClassTag = 0;
@@ -253,11 +254,17 @@ for (; *p_cPath; p_cPath++)
    /* check if we are decoding inside a BIT STRING: iNumTag == parent_tag */
    /* first octet of bit string is the number of unused bits at the end of the bitstring */
    /* in CER/DER: unused bits are always zero. And if they aren't zero, we still don't need to know the nr. of unused bits */
-   if (iNumTag == 0x03 )
-      {
-      p_cDat++;
-      iLen--;
-      }
+   if (iNumTag == 0x03)
+   {
+	   p_cDat++;
+	   iLen--;
+	   if (!ucParseBitString)
+	   {
+		   /* in case of EC key, there is no further TLV in here, only the public key (preceeded by the compression byte)
+		   so don't try to parse it, but just return it*/
+		   break;
+	   }
+   }
 
    p_cRawDat = p_cDat;
    iRawLen = 0;
@@ -338,7 +345,7 @@ int asn1_next_item(ASN1_ITEM          *p_xLev0Item,      /**< In/out: object   *
                    ASN1_ITEM          *p_xLev1Item       /**< Out: object   */
                   )
 {
-    int iReturn = asn1_get_item(p_xLev0Item->p_data, p_xLev0Item->l_data, ASNPATH_FIRST, p_xLev1Item);
+    int iReturn = asn1_get_item(p_xLev0Item->p_data, p_xLev0Item->l_data, ASNPATH_FIRST, p_xLev1Item, 1);
     if (iReturn == 0)
     {
         if (p_xLev1Item->l_raw > p_xLev0Item->l_data)  p_xLev1Item->l_raw = p_xLev0Item->l_data; //make sure not to pass the end

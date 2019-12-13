@@ -48,6 +48,36 @@
 extern "C"
 {
 #endif
+	/* x509v3:
+		SubjectPublicKeyInfo																		/1 1 7/
+
+		SubjectPublicKeyInfo  ::=  SEQUENCE  {
+        algorithm            AlgorithmIdentifier,													/1 1 7 1/
+		subjectPublicKey     BIT STRING  }															/1 1 7 2/
+	
+		AlgorithmIdentifier  ::=  SEQUENCE  {														/1 1 7 1/
+		algorithm               OBJECT IDENTIFIER,													/1 1 7 1 1/
+		parameters              ANY DEFINED BY algorithm OPTIONAL 									/1 1 7 1 2/(should be NULL for RSA, defines curve type for EC (see EcpkParameters))
+
+	 for RSA:
+		in subjectPublicKey     BIT STRING:															/1 1 7 2/
+		RSAPublicKey ::= SEQUENCE {																	/1 1 7 2 1/(sequence in the bitstring, so first jump into the bitstring, then one deeper into the sequence)
+		modulus            INTEGER,    -- n															/1 1 7 2 1 1/
+		publicExponent     INTEGER  }  -- e															/1 1 7 2 1 2/
+
+	 for EC:
+
+		in subjectPublicKey     BIT STRING:															/1 1 7 2/
+		The elliptic curve public key (an ECPoint which is an OCTET STRING)							
+		is mapped to a subjectPublicKey (a BIT STRING)												/1 1 7 2 1/(jump into the bitstring)
+
+		EcpkParameters ::= CHOICE {
+		ecParameters  ECParameters(SEQUENCE),				
+		namedCurve    OBJECT IDENTIFIER,															/1 1 7 1 2/
+		implicitlyCA  NULL }
+
+*/
+
 
 #define X509_VERSION          "\1\1\1\1"
 #define X509_SERIAL           "\1\1\2"
@@ -56,11 +86,9 @@ extern "C"
 #define X509_VALID_FROM       "\1\1\5\1"
 #define X509_VALID_UNTIL      "\1\1\5\2"
 #define X509_SUBJECT          "\1\1\6"
-											// "\1\1\7" SubjectPublicKeyInfo
-											// "\1\1\7\1" AlgorithmIdentifier (SEQUENCE)
-#define X509_KEYTYPE          "\1\1\7\1\1"	// algorithm OBJECT IDENTIFIER
-#define X509_EC_CURVE	      "\1\1\7\1\2"	// parameters  (ANY DEFINED BY algorithm OPTIONAL)
-#define X509_PUBLIC_KEY       "\1\1\7\2"	// BIT STRING subjectPublicKey
+#define X509_KEYTYPE          "\1\1\7\1\1"
+#define X509_EC_CURVE	      "\1\1\7\1\2"
+#define X509_PUBLIC_KEY       "\1\1\7\2"
 #define X509_PKINFO           "\1\1\7\2\1"
 #define X509_RSA_MOD          "\1\1\7\2\1\1"
 #define X509_RSA_EXP          "\1\1\7\2\1\2"
