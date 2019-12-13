@@ -158,11 +158,11 @@ int cert_get_info(const unsigned char *pcert, unsigned int lcert, T_CERT_INFO *i
 			ret = asn1_get_item(pcert, lcert, X509_PKINFO, &item, 0);
 			if (ret)
 				return(ret);
-			info->pkinfo = malloc(item.l_raw);
+			info->pkinfo = malloc(item.l_data);
 			if (info->pkinfo == NULL)
 				return(E_X509_ALLOC);
-			memcpy(info->pkinfo, item.p_raw, item.l_raw);
-			info->l_pkinfo = item.l_raw;
+			memcpy(info->pkinfo, item.p_data, item.l_data);
+			info->l_pkinfo = item.l_data;
 		}
 		else {
 			return (E_X509_UNKNOWN_KEYTYPE);
