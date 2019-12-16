@@ -38,25 +38,25 @@ extern "C"
 #endif
 
 #define CAL_MECHANISM_TABLE { \
-	{  CKM_MD5,                128, 128  , CKF_DIGEST         }, \
-	{  CKM_SHA_1,              160, 160  , CKF_DIGEST         }, \
-	{  CKM_SHA256,             256, 256  , CKF_DIGEST         }, \
-	{  CKM_SHA384,             384, 384  , CKF_DIGEST         }, \
-	{  CKM_SHA512,             512, 512  , CKF_DIGEST         }, \
-	{  CKM_RIPEMD160,          160, 160  , CKF_DIGEST         }, \
-	{  CKM_RSA_PKCS,           1024, 2048, CKF_HW | CKF_SIGN  }, \
-	{  CKM_MD5_RSA_PKCS,       1024, 2048, CKF_HW | CKF_SIGN  }, \
-	{  CKM_SHA1_RSA_PKCS,      1024, 2048, CKF_HW | CKF_SIGN  }, \
-	{  CKM_SHA256_RSA_PKCS,    1024, 2048, CKF_HW | CKF_SIGN  }, \
-	{  CKM_SHA384_RSA_PKCS,    1024, 2048, CKF_HW | CKF_SIGN  }, \
-	{  CKM_SHA512_RSA_PKCS,    1024, 2048, CKF_HW | CKF_SIGN  }, \
-	{  CKM_RIPEMD160_RSA_PKCS, 1024, 2048, CKF_HW | CKF_SIGN  }, \
-	{  CKM_SHA1_RSA_PKCS_PSS,  2048, 2048, CKF_HW | CKF_SIGN  }, \
-	{  CKM_SHA256_RSA_PKCS_PSS,2048, 2048, CKF_HW | CKF_SIGN  }, \
-	{  CKM_ECDSA_SHA256,	   256,  521,  CKF_HW | CKF_SIGN  }, \
-	{  CKM_ECDSA_SHA384,	   256,  521,  CKF_HW | CKF_SIGN  }, \
-	{  CKM_ECDSA_SHA512,	   256,  521,  CKF_HW | CKF_SIGN  }, \
-	{  CKM_ECDSA,		   256,  521,  CKF_HW | CKF_SIGN  }  \
+	{  CKM_MD5,					128, 128  , CKF_DIGEST         }, \
+	{  CKM_SHA_1,			    160, 160  , CKF_DIGEST         }, \
+	{  CKM_SHA256,				256, 256  , CKF_DIGEST         }, \
+	{  CKM_SHA384,				384, 384  , CKF_DIGEST         }, \
+	{  CKM_SHA512,				512, 512  , CKF_DIGEST         }, \
+	{  CKM_RIPEMD160,			160, 160  , CKF_DIGEST         }, \
+	{  CKM_RSA_PKCS,			1024, 2048, CKF_HW | CKF_SIGN  }, \
+	{  CKM_MD5_RSA_PKCS,		1024, 2048, CKF_HW | CKF_SIGN  }, \
+	{  CKM_SHA1_RSA_PKCS,		1024, 2048, CKF_HW | CKF_SIGN  }, \
+	{  CKM_SHA256_RSA_PKCS,		1024, 2048, CKF_HW | CKF_SIGN  }, \
+	{  CKM_SHA384_RSA_PKCS,		1024, 2048, CKF_HW | CKF_SIGN  }, \
+	{  CKM_SHA512_RSA_PKCS,		1024, 2048, CKF_HW | CKF_SIGN  }, \
+	{  CKM_RIPEMD160_RSA_PKCS,	1024, 2048, CKF_HW | CKF_SIGN  }, \
+	{  CKM_SHA1_RSA_PKCS_PSS,	2048, 2048, CKF_HW | CKF_SIGN  }, \
+	{  CKM_SHA256_RSA_PKCS_PSS,	2048, 2048, CKF_HW | CKF_SIGN  }, \
+	{  CKM_ECDSA_SHA256,		256,  521,  CKF_HW | CKF_SIGN  }, \
+	{  CKM_ECDSA_SHA384,		256,  521,  CKF_HW | CKF_SIGN  }, \
+	{  CKM_ECDSA_SHA512,		256,  521,  CKF_HW | CKF_SIGN  }, \
+	{  CKM_ECDSA,				256,  521,  CKF_HW | CKF_SIGN  }  \
 }
 
 
@@ -74,7 +74,7 @@ extern "C"
 	{ CKA_UNWRAP,           ( CK_VOID_PTR ) NULL, 0 },   \
 	{ CKA_MODULUS,          ( CK_VOID_PTR ) NULL, 0 },   \
 	{ CKA_MODULUS_BITS,     ( CK_VOID_PTR ) NULL, 0 },   \
-	{ CKA_EXTRACTABLE,	( CK_VOID_PTR ) NULL, 0 },   \
+	{ CKA_EXTRACTABLE,		( CK_VOID_PTR ) NULL, 0 },   \
 	{ CKA_PUBLIC_EXPONENT,  ( CK_VOID_PTR ) NULL, 0 },   \
 	{ CKA_PRIVATE,          ( CK_VOID_PTR ) NULL, 0 },   \
 	{ CKA_PRIVATE_EXPONENT, ( CK_VOID_PTR ) NULL, 0 },   \
@@ -83,7 +83,7 @@ extern "C"
 	{ CKA_EXPONENT_1,       ( CK_VOID_PTR ) NULL, 0 },   \
 	{ CKA_EXPONENT_2,       ( CK_VOID_PTR ) NULL, 0 },   \
 	{ CKA_COEFFICIENT,      ( CK_VOID_PTR ) NULL, 0 },   \
-	{ CKA_DERIVE,		( CK_VOID_PTR ) NULL, 0 }    \
+	{ CKA_DERIVE,			( CK_VOID_PTR ) NULL, 0 }    \
 }
 
 #define BEID_TEMPLATE_PUB_KEY  {  \
@@ -99,11 +99,11 @@ extern "C"
 	{ CKA_ENCRYPT,          ( CK_VOID_PTR ) NULL, 0 },  \
 	{ CKA_VERIFY,           ( CK_VOID_PTR ) NULL, 0 },  \
 	{ CKA_WRAP,             ( CK_VOID_PTR ) NULL, 0 },  \
-	{ CKA_VALUE,		( CK_VOID_PTR ) NULL, 0 },  \
+	{ CKA_VALUE,			( CK_VOID_PTR ) NULL, 0 },  \
 	{ CKA_MODULUS,          ( CK_VOID_PTR ) NULL, 0 },  \
 	{ CKA_MODULUS_BITS,     ( CK_VOID_PTR ) NULL, 0 },  \
 	{ CKA_PUBLIC_EXPONENT,  ( CK_VOID_PTR ) NULL, 0 },  \
-	{ CKA_DERIVE,		( CK_VOID_PTR ) NULL, 0 }   \
+	{ CKA_DERIVE,			( CK_VOID_PTR ) NULL, 0 }   \
 }
 
 #define BEID_TEMPLATE_CERTIFICATE  {  \
@@ -129,7 +129,7 @@ extern "C"
 	{ CKA_VALUE_LEN,        ( CK_VOID_PTR )    NULL, 0 },  \
 	{ CKA_LABEL,            ( CK_VOID_PTR )    NULL, 0 },  \
 	{ CKA_MODIFIABLE,       ( CK_VOID_PTR )    NULL, 0 },  \
-	{ CKA_OBJECT_ID,	( CK_VOID_PTR )    NULL, 0 }	 \
+	{ CKA_OBJECT_ID,		( CK_VOID_PTR )    NULL, 0 }	 \
 }
 
 	//      { BEID_FIELD_TAG_ID_Version,                    "Version"},
@@ -155,10 +155,11 @@ extern "C"
 	{ BEID_FIELD_TAG_ID_SpecialOrganization,"special_organization"},  \
 	{ BEID_FIELD_TAG_ID_MemberOfFamily,		"member_of_family"}, \
 	{ BEID_FIELD_TAG_ID_DateAndCountryOfProtection,		"date_and_country_of_protection"},  \
-	{ BEID_FIELD_TAG_ID_WorkPermitType, "work_permit_mention"}, \
-	{ BEID_FIELD_TAG_ID_Vat1, "employer_vat_1"}, \
-	{ BEID_FIELD_TAG_ID_Vat2, "employer_vat_2"}, \
+	{ BEID_FIELD_TAG_ID_WorkPermitType,		"work_permit_mention"}, \
+	{ BEID_FIELD_TAG_ID_Vat1,				"employer_vat_1"}, \
+	{ BEID_FIELD_TAG_ID_Vat2,				"employer_vat_2"}, \
 	{ BEID_FIELD_TAG_ID_RegionalFileNumber, "regional_file_number"}, \
+	{ BEID_FIELD_TAG_ID_BasicKeyHash,		"basic_key_hash"}, \
 }
 
 	//{ BEID_FIELD_TAG_ADDR_Version,                        "Address_Version"},
@@ -194,6 +195,7 @@ extern "C"
 	{ BEID_FIELD_TAG_ID_Vat1,							"record_employer_vat_1"}, \
 	{ BEID_FIELD_TAG_ID_Vat2,							"record_employer_vat_2"}, \
 	{ BEID_FIELD_TAG_ID_RegionalFileNumber,				"record_regional_file_number"}, \
+	{ BEID_FIELD_TAG_ID_BasicKeyHash,					"record_basic_key_hash"}, \
 }
 
 	//{ BEID_FIELD_TAG_ADDR_Version,							"Address_Version"},
@@ -207,15 +209,15 @@ extern "C"
 #define BEID_LABEL_DATA_CompCode				"carddata_comp_code"
 #define BEID_LABEL_DATA_OSNr					"carddata_os_number"
 #define BEID_LABEL_DATA_OSVersion				"carddata_os_version"
-#define BEID_LABEL_DATA_SoftMaskNumber				"carddata_soft_mask_number"
-#define BEID_LABEL_DATA_SoftMaskVersion				"carddata_soft_mask_version"
+#define BEID_LABEL_DATA_SoftMaskNumber			"carddata_soft_mask_number"
+#define BEID_LABEL_DATA_SoftMaskVersion			"carddata_soft_mask_version"
 #define BEID_LABEL_DATA_ApplVersion				"carddata_appl_version"
-#define BEID_LABEL_DATA_GlobOSVersion				"carddata_glob_os_version"
-#define BEID_LABEL_DATA_ApplIntVersion				"carddata_appl_int_version"
-#define BEID_LABEL_DATA_PKCS1Support				"carddata_pkcs1_support"
-#define BEID_LABEL_DATA_ApplLifeCycle				"carddata_appl_lifecycle"
-#define BEID_LABEL_DATA_KeyExchangeVersion			"carddata_key_exchange_version"
-#define BEID_LABEL_DATA_PKCS15Version				"carddata_pkcs15_version"
+#define BEID_LABEL_DATA_GlobOSVersion			"carddata_glob_os_version"
+#define BEID_LABEL_DATA_ApplIntVersion			"carddata_appl_int_version"
+#define BEID_LABEL_DATA_PKCS1Support			"carddata_pkcs1_support"
+#define BEID_LABEL_DATA_ApplLifeCycle			"carddata_appl_lifecycle"
+#define BEID_LABEL_DATA_KeyExchangeVersion		"carddata_key_exchange_version"
+#define BEID_LABEL_DATA_PKCS15Version			"carddata_pkcs15_version"
 #define BEID_LABEL_DATA_Signature				"carddata_signature"
 #define BEID_LABEL_DATA_PinAuth					"carddata_pin_authentication_counter"
 #define BEID_LABEL_DATA_PinNonRep				"carddata_pin_nonrepudiation_counter"
@@ -258,7 +260,7 @@ extern "C"
 
 	CK_RV cal_init(void);
 //void cal_init_pcsc();
-	long cal_check_pcsc(CK_BBOOL * pRunning);
+//	long cal_check_pcsc(CK_BBOOL * pRunning);
 	void cal_wait(int millisecs);
 	void cal_close(void);
 	void cal_clean_slots(void);
