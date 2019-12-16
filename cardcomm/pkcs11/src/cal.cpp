@@ -798,45 +798,27 @@ CK_RV cal_init_objects(P11_SLOT * pSlot)
 		CCard* poCard = oReader.GetCard();
 
 		/* add all certificate objects from card */
-		for (certCounter = 0; certCounter < poCard->CertCount();
-		     certCounter++)
+		for (certCounter = 0; certCounter < poCard->CertCount(); certCounter++)
 		{
 			CertId = (CK_ULONG)poCard->GetCert(certCounter).ulID;
 			//      sprintf_s(clabel,sizeof(clabel), "Certificate %d (%s)", i+1, oReader.GetCert(i).csLabel.c_str());
 			sprintf_s(clabel, sizeof(clabel), "%s", poCard->GetCert(certCounter).csLabel.c_str());
 
-			ret = p11_add_slot_object(pSlot, CERTIFICATE,
-						  sizeof(CERTIFICATE) /
-						  sizeof(CK_ATTRIBUTE),
-						  CK_TRUE, CKO_CERTIFICATE,
-						  CertId, CK_FALSE, &hObject);
+			ret = p11_add_slot_object(pSlot, CERTIFICATE, sizeof(CERTIFICATE) / sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_CERTIFICATE, CertId, CK_FALSE, &hObject);
 			if (ret != CKR_OK)
 				goto cleanup;
 			pObject = p11_get_slot_object(pSlot, hObject);
 
-			ret = p11_set_attribute_value(pObject->pAttr,
-						      pObject->count,
-						      CKA_CERTIFICATE_TYPE,
-						      (CK_VOID_PTR) &
-						      certType,
-						      sizeof(CK_ULONG));
+			ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_CERTIFICATE_TYPE, (CK_VOID_PTR) & certType, sizeof(CK_ULONG));
 			if (ret != CKR_OK)
 				goto cleanup;
-			ret = p11_set_attribute_value(pObject->pAttr,
-						      pObject->count,
-						      CKA_LABEL,
-						      (CK_VOID_PTR) clabel,
-						      (CK_ULONG)
-						      strlen(clabel));
+			ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_LABEL, (CK_VOID_PTR) clabel, (CK_ULONG)strlen(clabel));
 			if (ret != CKR_OK)
 				goto cleanup;
 
 			//only add keys that have a matching cert
-			for (keyCounter = 0;
-			     keyCounter < poCard->PrivKeyCount();
-			     keyCounter++)
+			for (keyCounter = 0; keyCounter < poCard->PrivKeyCount(); keyCounter++)
 			{
-
 				/***************/
 				/* Private key */
 
@@ -849,55 +831,28 @@ CK_RV cal_init_objects(P11_SLOT * pSlot)
 				if (KeyId == CertId)
 				{
 					//      sprintf_s(clabel,sizeof(clabel), "Private Key %d (%s)", i+1, key.csLabel.c_str());
-					sprintf_s(clabel, sizeof(clabel),
-						  "%s", key.csLabel.c_str());
+					sprintf_s(clabel, sizeof(clabel), "%s", key.csLabel.c_str());
 
-					ret = p11_add_slot_object(pSlot,
-								  PRV_KEY,
-								  sizeof
-								  (PRV_KEY) /
-								  sizeof
-								  (CK_ATTRIBUTE),
-								  CK_TRUE,
-								  CKO_PRIVATE_KEY,
-								  KeyId,
-								  CK_TRUE,
-								  &hObject);
+					ret = p11_add_slot_object(pSlot, PRV_KEY, sizeof(PRV_KEY) / sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_PRIVATE_KEY, KeyId, CK_TRUE, &hObject);
 					if (ret != CKR_OK)
 						goto cleanup;
 
 					//put some other attribute items allready so the key can be used for signing
-					pObject =
-						p11_get_slot_object(pSlot,
-								    hObject);
+					pObject = p11_get_slot_object(pSlot, hObject);
 
 					//type = (CK_ULONG) oReader.GetPrivKey(i).;
 					//TODO fixed set to RSA
-					ret = p11_set_attribute_value
-						(pObject->pAttr,
-						 pObject->count, CKA_LABEL,
-						 (CK_VOID_PTR) clabel,
-						 (CK_ULONG) strlen(clabel));
+					ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_LABEL, (CK_VOID_PTR) clabel, (CK_ULONG) strlen(clabel));
 					if (ret != CKR_OK)
 						goto cleanup;
 
-					ret = p11_set_attribute_value
-						(pObject->pAttr,
-						 pObject->count, CKA_KEY_TYPE,
-						 (CK_VOID_PTR) & keytype,
-						 sizeof(CK_KEY_TYPE));
+					ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_KEY_TYPE, (CK_VOID_PTR) & keytype, sizeof(CK_KEY_TYPE));
 					if (ret != CKR_OK)
 						goto cleanup;
 
 					//TODO if (ulKeyUsage & SIGN)
 					{
-						ret = p11_set_attribute_value
-							(pObject->pAttr,
-							 pObject->count,
-							 CKA_SIGN,
-							 (CK_VOID_PTR) &
-							 btrue,
-							 sizeof(btrue));
+						ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_SIGN, (CK_VOID_PTR) & btrue, sizeof(btrue));
 						if (ret != CKR_OK)
 							goto cleanup;
 					}
@@ -905,28 +860,14 @@ CK_RV cal_init_objects(P11_SLOT * pSlot)
 					//TODO error in cal, size is in bits allready
 					if(key.keyType == RSA) {
 						modsize = key.ulKeyLenBytes * 8;
-						ret = p11_set_attribute_value
-							(pObject->pAttr,
-							 pObject->count,
-							 CKA_MODULUS_BITS,
-							 (CK_VOID_PTR) & modsize,
-							 sizeof(CK_ULONG));
+						ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_MODULUS_BITS, (CK_VOID_PTR) & modsize, sizeof(CK_ULONG));
 						if (ret != CKR_OK)
 							goto cleanup;
 					}
-					ret = p11_set_attribute_value
-						(pObject->pAttr,
-						 pObject->count,
-						 CKA_EXTRACTABLE,
-						 (CK_VOID_PTR) & bfalse,
-						 sizeof(bfalse));
+					ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_EXTRACTABLE, (CK_VOID_PTR) & bfalse, sizeof(bfalse));
 					if (ret != CKR_OK)
 						goto cleanup;
-					ret = p11_set_attribute_value
-						(pObject->pAttr,
-						 pObject->count, CKA_DERIVE,
-						 (CK_VOID_PTR) & bfalse,
-						 sizeof(bfalse));
+					ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_DERIVE, (CK_VOID_PTR) & bfalse, sizeof(bfalse));
 					if (ret != CKR_OK)
 						goto cleanup;
 
@@ -934,56 +875,26 @@ CK_RV cal_init_objects(P11_SLOT * pSlot)
 					/* Public key corresponding to private key object */
 
 					/**************************************************/
-					ret = p11_add_slot_object(pSlot,
-								  PUB_KEY,
-								  sizeof
-								  (PUB_KEY) /
-								  sizeof
-								  (CK_ATTRIBUTE),
-								  CK_TRUE,
-								  CKO_PUBLIC_KEY,
-								  KeyId,
-								  CK_FALSE,
-								  &hObject);
+					ret = p11_add_slot_object(pSlot, PUB_KEY, sizeof(PUB_KEY) / sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_PUBLIC_KEY, KeyId, CK_FALSE, &hObject);
 					if (ret != CKR_OK)
 						goto cleanup;
 
-					pObject =
-						p11_get_slot_object(pSlot,
-								    hObject);
+					pObject = p11_get_slot_object(pSlot, hObject);
 
 					//      sprintf_s(clabel,sizeof(clabel), "Public Key %d (%s)", i+1, key.csLabel.c_str());
-					sprintf_s(clabel, sizeof(clabel),
-						  "%s", key.csLabel.c_str());
-					ret = p11_set_attribute_value
-						(pObject->pAttr,
-						 pObject->count, CKA_LABEL,
-						 (CK_VOID_PTR) clabel,
-						 (CK_ULONG) strlen(clabel));
+					sprintf_s(clabel, sizeof(clabel), "%s", key.csLabel.c_str());
+					ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_LABEL, (CK_VOID_PTR) clabel, (CK_ULONG) strlen(clabel));
 					if (ret != CKR_OK)
 						goto cleanup;
-					ret = p11_set_attribute_value
-						(pObject->pAttr,
-						 pObject->count, CKA_KEY_TYPE,
-						 (CK_VOID_PTR) & keytype,
-						 sizeof(CK_KEY_TYPE));
+					ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_KEY_TYPE, (CK_VOID_PTR) & keytype, sizeof(CK_KEY_TYPE));
 					if (ret != CKR_OK)
 						goto cleanup;
 					if(key.keyType == RSA) {
-						ret = p11_set_attribute_value
-							(pObject->pAttr,
-							 pObject->count,
-							 CKA_MODULUS_BITS,
-							 (CK_VOID_PTR) & modsize,
-							 sizeof(CK_ULONG));
+						ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_MODULUS_BITS, (CK_VOID_PTR) & modsize, sizeof(CK_ULONG));
 						if (ret != CKR_OK)
 							goto cleanup;
 					}
-					ret = p11_set_attribute_value
-						(pObject->pAttr,
-						 pObject->count, CKA_DERIVE,
-						 (CK_VOID_PTR) & bfalse,
-						 sizeof(bfalse));
+					ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_DERIVE, (CK_VOID_PTR) & bfalse, sizeof(bfalse));
 					if (ret != CKR_OK)
 						goto cleanup;
 				}
@@ -1756,12 +1667,9 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 				if (ret)
 					goto cleanup;
 
-				oTLVBuffer.ParseTLV(oFileData.GetBytes(),
-						    oFileData.Size());
+				oTLVBuffer.ParseTLV(oFileData.GetBytes(), oFileData.Size());
 
-				nrOfItems =
-					sizeof(ID_LABELS) /
-					sizeof(BEID_DATA_LABELS_NAME);
+				nrOfItems = sizeof(ID_LABELS)/sizeof(BEID_DATA_LABELS_NAME);
 
 				for (i = 0; i < nrOfItems; i++)
 				{
@@ -1794,9 +1702,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 					goto cleanup;
 				oTLVBufferAddress.ParseTLV(oFileData.GetBytes(),
 							   oFileData.Size());
-				nrOfItems =
-					sizeof(ADDRESS_LABELS) /
-					sizeof(BEID_DATA_LABELS_NAME);
+				nrOfItems = sizeof(ADDRESS_LABELS)/sizeof(BEID_DATA_LABELS_NAME);
 				for (i = 0; i < nrOfItems; i++)
 				{
 					ulLen = sizeof(cBuffer);
@@ -1920,7 +1826,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 		return (CKR_DEVICE_ERROR);
 	}
 
-      cleanup:
+	cleanup:
 	return (ret);
 }
 
