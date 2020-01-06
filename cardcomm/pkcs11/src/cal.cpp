@@ -2044,7 +2044,7 @@ CK_RV cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT * pObject)
 	}
 	if (ret != 0)
 	{
-		log_trace(WHERE, "E: ret is 0x%0x", ret);
+		log_trace(WHERE, "E: ret is 0x%0lx", ret);
 		cert_free_info(&certinfo);
 		return (CKR_DEVICE_ERROR);
 	}
