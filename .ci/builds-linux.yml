@@ -149,7 +149,7 @@
   - sbuild -n $DASHA -d $dist -c $CODE-$ARCH-sbuild --arch=$ARCH
   after_script:
   - mkdir -p products/deb/
-  - dcmd mv *ges products/deb/
+  - dcmd cp *ges products/deb/
   artifacts:
     paths:
     - products/deb
@@ -204,7 +204,7 @@
   tags:
     - repobuilder
   before_script:
-    - dcmd mv products/deb/*ges /srv/repo/reprepro/incoming
+    - dcmd cp products/deb/*ges /srv/repo/reprepro/incoming
   script:
     - cd /srv/repo/reprepro && reprepro processincoming incoming
   after_script:
