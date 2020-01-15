@@ -101,7 +101,7 @@
   - popd
   script:
   - pushd $LINUX_BASEDIR
-  - scan-build --status-bugs -o public make -j $(nproc)
+  - scan-build -disable-checker deadcode.DeadStores --status-bugs -o public make -j $(nproc)
   - popd
   artifacts:
     when: on_failure
