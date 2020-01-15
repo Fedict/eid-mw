@@ -18,6 +18,7 @@
   - export DYLD_LIBRARY_PATH=$(pwd)
   - ./testsuite
   - popd
+  allow_failure: true
 
 .build-macos:
   variables:
