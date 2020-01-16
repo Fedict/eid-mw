@@ -125,8 +125,11 @@
   script:
   - rpmbuild --define "revision $VERSHORT" -bs $HOME/rpmbuild/SPECS/eid-mw.spec
   after_script:
+  - VER=$(cat products/source/version)
+  - VERSHORT=${VER#*-}
+  - VERFULL=${VER%-*}-0.$VERSHORT
   - mkdir -p products/srpm/
-  - cp $HOME/rpmbuild/SRPMS/eid-mw-*.src.rpm products/srpm/
+  - cp $HOME/rpmbuild/SRPMS/eid-mw-$VERFULL.src.rpm products/srpm/
   - cp products/source/version products/srpm/
   artifacts:
     paths:
