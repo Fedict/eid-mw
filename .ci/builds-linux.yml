@@ -129,7 +129,7 @@
   - VERSHORT=${VER#*-}
   - VERFULL=${VER%-*}-0.$VERSHORT
   - mkdir -p products/srpm/
-  - cp $HOME/rpmbuild/SRPMS/eid-mw-$VERFULL.src.rpm products/srpm/
+  - cp $HOME/rpmbuild/SRPMS/eid-mw-$VERFULL.*.src.rpm products/srpm/
   - cp products/source/version products/srpm/
   artifacts:
     paths:
