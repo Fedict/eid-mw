@@ -85,16 +85,10 @@ gtk4-build:
 test:distcheck:
   stage: tests
   extends: .distcheck
-  cache:
-    key: $CI_COMMIT_REF_SLUG-build
-    untracked: true
 
 test:robot:linux:
   stage: tests
   extends: .robot:linux
-  cache:
-    key: $CI_COMMIT_REF_SLUG-build
-    untracked: true
 
 test:repro:debian:
   stage: tests
@@ -107,9 +101,6 @@ test:scan-build:
 test:gtk4:
   stage: tests
   extends: .gtk4
-  cache:
-    key: $CI_COMMIT_REF_SLUG-gtk4
-    untracked: true
 #################################################
 # Stage "source-package": build source packages #
 #################################################
@@ -358,9 +349,6 @@ build:suse_stable:
 build:windows:
   stage: binary-package
   extends: .build-windows
-  cache:
-    untracked: true
-    key: "windows-$CI_COMMIT_REF_SLUG"
 
 # macOS
 build:macos:
@@ -374,18 +362,12 @@ validate:robot:windows:
   extends: .robot:windows
   dependencies:
   - build:windows
-  cache:
-    untracked: true
-    key: "windows-$CI_COMMIT_REF_SLUG"
 
 validate:robot:macos:
   stage: validate
   extends: .robot:macos
   dependencies:
   - build:macos
-  cache:
-    untracked: true
-    key: "macos:$CI_COMMIT_REF_SLUG"
 
 ####################################################################
 # Stage "build-repository": copy binaries into a repository layout #
