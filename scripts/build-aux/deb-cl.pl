@@ -51,7 +51,7 @@ if(!defined($version)) {
 my $distribution = "";
 my $released = "";
 print "Environment:";
-print Dumper(%ENV);
+print Dumper(\%ENV);
 if(exists($ENV{TARGET}) && length($ENV{TARGET}) > 0) {
 	$distribution = $ENV{TARGET} . "-";
 } else {
