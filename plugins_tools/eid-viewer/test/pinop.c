@@ -19,13 +19,21 @@ static enum eid_vwr_states curstate;
 
 static void newstate(enum eid_vwr_states s) {
 	curstate = s;
-	if(curstate == STATE_TOKEN_WAIT) {
+	switch(curstate) {
+	case STATE_TOKEN_WAIT:
 		if(!can_enter_pin(0)) {
 			printf("Cannot do PIN tests without PIN code...\n");
 			exit(TEST_RV_SKIP);
 		}
 		eid_vwr_pinop(EID_VWR_PINOP_TEST);
 		pthread_barrier_wait(&barrier);
+	break;
+	case STATE_CARD_INVALID:
+		fprintf("E: could not read token: card data invalid");
+		exit(TEST_RV_FAIL);
+	default:
+		// nothing to do here
+		break;
 	}
 }
 
