@@ -45,6 +45,7 @@ TEST_FUNC(sign_state) {
 	CK_ULONG sig_len, type, count;
 	CK_OBJECT_HANDLE privatekey, publickey;
 	CK_ATTRIBUTE attr[2];
+	CK_KEY_TYPE keytype;
 	ckrv_mod m_is_rmvd[] = {
 		{ CKR_OK, TEST_RV_FAIL },
 		{ CKR_TOKEN_NOT_PRESENT, TEST_RV_OK },
@@ -98,23 +99,24 @@ TEST_FUNC(sign_state) {
 		return TEST_RV_SKIP;
 	}
 
+	attr[0].type = CKA_KEY_TYPE;
+	attr[0].pValue = &keytype;
+	attr[0].ulValueLen = sizeof(keytype);
+
+	check_rv(C_GetAttributeValue(session, privatekey, attr, 1));
+	verbose_assert(keytype == CKK_RSA || keytype == CKK_EC);
+
+	if(keytype == CKK_RSA) {
+		mech.mechanism = CKM_SHA256_RSA_PKCS;
+	} else {
+		mech.mechanism = CKM_ECDSA_SHA256;
+	}
+
 	type = CKO_PUBLIC_KEY;
 	check_rv(C_FindObjectsInit(session, attr, 2));
 	check_rv(C_FindObjects(session, &publickey, 1, &count));
 	verbose_assert(count == 1);
 	check_rv(C_FindObjectsFinal(session));
-
-	attr[0].type = CKA_MODULUS;
-	attr[0].pValue = NULL_PTR;
-	attr[0].ulValueLen = 0;
-
-	attr[1].type = CKA_PUBLIC_EXPONENT;
-	attr[1].pValue = NULL_PTR;
-	attr[1].ulValueLen = 0;
-
-	mech.mechanism = CKM_SHA256_RSA_PKCS;
-
-	check_rv(C_GetAttributeValue(session, publickey, attr, 2));
 
 	check_rv_long(C_SignInit(session, &mech, publickey), m_pubkey);
 
