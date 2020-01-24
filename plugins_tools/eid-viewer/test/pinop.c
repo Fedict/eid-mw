@@ -29,7 +29,7 @@ static void newstate(enum eid_vwr_states s) {
 		pthread_barrier_wait(&barrier);
 	break;
 	case STATE_CARD_INVALID:
-		fprintf("E: could not read token: card data invalid");
+		fprintf(stderr, "E: could not read token: card data invalid");
 		exit(TEST_RV_FAIL);
 	default:
 		// nothing to do here
