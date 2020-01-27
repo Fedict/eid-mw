@@ -239,7 +239,7 @@ int eid_vwr_check_data_validity(const void* photo, int plen,
 	for(ptr = address_data + addfilelen; *ptr == 0; ptr--);
 	ptr++;
 	memcpy(ptr, datasig, datsiglen);
-	if(!verify_once(pubkey, md, datafile, datfilelen, datasig, datsiglen)) {
+	if(!verify_once(pubkey, md, address_data, (ptr - address_data) + datfilelen, addrsig, addsiglen)) {
 		be_log(EID_VWR_LOG_COARSE, "Could not verify data validity: address signature invalid!");
 		free(address_data);
 		return 0;
