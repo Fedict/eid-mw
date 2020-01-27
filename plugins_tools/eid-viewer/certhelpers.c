@@ -128,9 +128,6 @@ bool verify_once(EVP_PKEY *pubkey, const EVP_MD *md, const unsigned char *data, 
 		goto exit;
 	}
 	if(key_base_id == EVP_PKEY_EC) {
-		BIGNUM *r;
-		BIGNUM *s;
-
 		if((r = BN_bin2bn(sig, siglen / 2, NULL)) == NULL) {
 			be_log(EID_VWR_LOG_COARSE, "Could not convert R part of ECDSA signature");
 			goto exit;
