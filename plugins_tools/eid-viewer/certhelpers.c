@@ -127,6 +127,9 @@ bool verify_once(EVP_PKEY *pubkey, const EVP_MD *md, const unsigned char *data, 
 		be_log(EID_VWR_LOG_COARSE, "Could not verify card validity: wrong key type (expecting RSA or EC, got %d)", key_base_id);
 		goto exit;
 	}
+	if(key_base_id == EVP_PKEY_EC) {
+		md = EVP_get_digestbyname("sha384");
+	}
 	if(EVP_DigestVerifyInit(mdctx, &pctx, md, NULL, pubkey) != 1) {
 		be_log(EID_VWR_LOG_COARSE, "Could not verify card validity: failed to initialize verification context");
 		goto exit;
