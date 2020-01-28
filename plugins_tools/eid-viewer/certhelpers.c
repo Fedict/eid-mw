@@ -140,6 +140,8 @@ bool verify_once(EVP_PKEY *pubkey, const EVP_MD *md, const unsigned char *data, 
 			be_log(EID_VWR_LOG_COARSE, "Could not set ECDSA_SIG structure");
 			goto exit;
 		}
+		r = NULL;
+		s = NULL;
 		siglen = i2d_ECDSA_SIG(ec_sig, NULL);
 		dersig = _sig = malloc(siglen);
 		siglen = i2d_ECDSA_SIG(ec_sig, &dersig);
