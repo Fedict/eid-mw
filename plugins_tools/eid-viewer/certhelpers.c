@@ -16,6 +16,14 @@
 #if OPENSSL_VERSION_NUMBER < 0x10100000L || defined(LIBRESSL_VERSION_NUMBER)
 #define X509_get0_extensions(ce) ((ce)->cert_info->extensions)
 #define ASN1_STRING_get0_data ASN1_STRING_data
+int ECDSA_SIG_set0(ECDSA_SIG* ec_sig, BIGNUM *r, BIGNUM *s) {
+	ec_sig->r = r;
+	ec_sig->s = s;
+
+	return 1;
+}
+#define EVP_MD_CTX_new EVP_MD_CTX_create
+#define EVP_MD_CTX_free EVP_MD_CTX_destroy
 #endif
 
 void eid_vwr_init_crypto() {
