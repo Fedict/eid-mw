@@ -156,7 +156,7 @@ bool verify_once(EVP_PKEY *pubkey, const EVP_MD *md, const unsigned char *data, 
 		siglen = i2d_ECDSA_SIG(ec_sig, NULL);
 		dersig = _sig = malloc(siglen);
 		siglen = i2d_ECDSA_SIG(ec_sig, &dersig);
-		dersig = sig;
+		dersig = _sig;
 	}
 	if(EVP_DigestVerifyFinal(mdctx, _sig, siglen) != 1) {
 		be_log(EID_VWR_LOG_COARSE, "Signature validity check failed");
