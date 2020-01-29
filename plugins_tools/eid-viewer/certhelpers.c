@@ -128,7 +128,7 @@ bool verify_once(EVP_PKEY *pubkey, const EVP_MD *md, const unsigned char *data, 
 		be_log(EID_VWR_LOG_COARSE, "Could not verify card validity: hashing failed");
 		goto exit;
 	}
-	if(EVP_DigestVerifyFinal(mdctx, _sig, siglen) != 1) {
+	if(EVP_DigestVerifyFinal(mdctx, sig, siglen) != 1) {
 		be_log(EID_VWR_LOG_COARSE, "Signature validity check failed");
 		goto exit;
 	}
