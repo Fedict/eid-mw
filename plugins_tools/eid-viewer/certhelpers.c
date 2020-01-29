@@ -16,12 +16,6 @@
 #if OPENSSL_VERSION_NUMBER < 0x10100000L || defined(LIBRESSL_VERSION_NUMBER)
 #define X509_get0_extensions(ce) ((ce)->cert_info->extensions)
 #define ASN1_STRING_get0_data ASN1_STRING_data
-int ECDSA_SIG_set0(ECDSA_SIG* ec_sig, BIGNUM *r, BIGNUM *s) {
-	ec_sig->r = r;
-	ec_sig->s = s;
-
-	return 1;
-}
 #define EVP_MD_CTX_new EVP_MD_CTX_create
 #define EVP_MD_CTX_free EVP_MD_CTX_destroy
 #endif
@@ -118,10 +112,6 @@ bool verify_once(EVP_PKEY *pubkey, const EVP_MD *md, const unsigned char *data, 
 	EVP_PKEY_CTX *pctx;
 	int key_base_id = EVP_PKEY_base_id(pubkey);
 	bool rv = false;
-	ECDSA_SIG *ec_sig = ECDSA_SIG_new();
-	BIGNUM *r = NULL, *s = NULL;
-	unsigned char *dersig = NULL;
-	unsigned char *_sig = (unsigned char*) sig;
 
 	if(key_base_id != EVP_PKEY_RSA && key_base_id != EVP_PKEY_EC) {
 		be_log(EID_VWR_LOG_COARSE, "Could not verify card validity: wrong key type (expecting RSA or EC, got %d)", key_base_id);
@@ -138,43 +128,13 @@ bool verify_once(EVP_PKEY *pubkey, const EVP_MD *md, const unsigned char *data, 
 		be_log(EID_VWR_LOG_COARSE, "Could not verify card validity: hashing failed");
 		goto exit;
 	}
-	if(key_base_id == EVP_PKEY_EC) {
-		if((r = BN_bin2bn(sig, siglen / 2, NULL)) == NULL) {
-			be_log(EID_VWR_LOG_COARSE, "Could not convert R part of ECDSA signature");
-			goto exit;
-		}
-		if((s = BN_bin2bn(sig + (siglen / 2), siglen / 2, NULL)) == NULL) {
-			be_log(EID_VWR_LOG_COARSE, "Could not convert S part of ECDSA signature");
-			goto exit;
-		}
-		if(ECDSA_SIG_set0(ec_sig, r, s) == 0) {
-			be_log(EID_VWR_LOG_COARSE, "Could not set ECDSA_SIG structure");
-			goto exit;
-		}
-		r = NULL;
-		s = NULL;
-		siglen = i2d_ECDSA_SIG(ec_sig, NULL);
-		dersig = _sig = malloc(siglen);
-		siglen = i2d_ECDSA_SIG(ec_sig, &dersig);
-		dersig = _sig;
-	}
 	if(EVP_DigestVerifyFinal(mdctx, _sig, siglen) != 1) {
 		be_log(EID_VWR_LOG_COARSE, "Signature validity check failed");
 		goto exit;
 	}
 	rv = true;
 exit:
-	if(r) {
-		BN_free(r);
-	}
-	if(s) {
-		BN_free(s);
-	}
-	if(dersig) {
-		free(dersig);
-	}
 	EVP_MD_CTX_free(mdctx);
-	ECDSA_SIG_free(ec_sig);
 	return rv;
 }
 
