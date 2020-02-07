@@ -316,13 +316,24 @@
             constraints[@(TKTokenOperationSignData)] = constraint;
             keyItem.constraints = constraints;
         }
-        /*if ([keyItem.keyType isEqual:(id)kSecAttrKeyTypeRSA]) {
-            os_log_error(OS_LOG_DEFAULT, "BEID populateIdentityFromSmartCard keyItem.keyType isEqual:(id)kSecAttrKeyTypeRSA]");
+        if ([keyItem.keyType isEqual:(id)kSecAttrKeyTypeRSA]) {
+#ifdef DEBUG
+            os_log_info(OS_LOG_DEFAULT, "BEID populateIdentityFromSmartCard keyItem.keyType isEqual:(id)kSecAttrKeyTypeRSA]");
+#endif
             keyItem.canDecrypt = keyManagement;
             if (keyManagement) {
                 constraints[@(TKTokenOperationDecryptData)] = constraint;
             }
-        }*/
+        }
+        else if ([keyItem.keyType isEqual:(id)kSecAttrKeyTypeECDSA] ||
+                 [keyItem.keyType isEqual:(id)kSecAttrKeyTypeEC] ||
+                 [keyItem.keyType isEqual:(id)kSecAttrKeyTypeECSECPrimeRandom])
+        {
+#ifdef DEBUG
+            os_log_info(OS_LOG_DEFAULT, "BEID populateIdentityFromSmartCard keyItem.keyType is EC");
+#endif
+            keyItem.keySizeInBits = kSecp384r1;
+        }
 
         [items addObject:keyItem];
     }

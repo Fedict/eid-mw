@@ -6,6 +6,11 @@
 #import "Token.h"
 #import "TokenSession.h"
 
+#import <Security/SecAsn1Coder.h>
+
+
+
+
 
 
 @implementation BEIDAuthOperation
@@ -322,10 +327,6 @@
 {
     os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called, algoritm to check is kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA256");
 }
-    if([algorithm isAlgorithm:kSecKeyAlgorithmRSASignatureDigestPKCS1v15Raw])
-    {
-        os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called, algoritm to check is kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA1");
-    }
     if([algorithm isAlgorithm:kSecKeyAlgorithmRSASignatureRaw])
     {
         os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called, algoritm to check is kSecKeyAlgorithmRSASignatureRaw");
@@ -338,11 +339,63 @@
     {
         os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called, supportsAlgorithm kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA1");
     }
-    if([algorithm supportsAlgorithm:kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA256])
+    if([algorithm isAlgorithm:kSecKeyAlgorithmECDSASignatureRFC4754])
     {
-        os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called, supportsAlgorithm kSecKeyAlgorithmRSASignatureMessagePKCS1v15SHA1");
+        os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called, algoritm to check is kSecKeyAlgorithmECDSASignatureRFC4754");
+    }
+    if([algorithm supportsAlgorithm:kSecKeyAlgorithmECDSASignatureRFC4754])
+    {
+        os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called, supportsAlgorithm kSecKeyAlgorithmECDSASignatureRFC4754");
+    }
+    if([algorithm isAlgorithm:kSecKeyAlgorithmECDSASignatureDigestX962])
+    {
+        os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called, isAlgorithm kSecKeyAlgorithmECDSASignatureDigestX962");
+    }
+    if([algorithm supportsAlgorithm:kSecKeyAlgorithmECDSASignatureDigestX962])
+    {
+        os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called, supportsAlgorithm kSecKeyAlgorithmECDSASignatureDigestX962");
+    }
+    if([algorithm isAlgorithm:kSecKeyAlgorithmECDSASignatureDigestX962SHA1])
+    {
+        os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called, algoritm to check is kSecKeyAlgorithmECDSASignatureDigestX962SHA1");
+    }
+    if([algorithm isAlgorithm:kSecKeyAlgorithmECDSASignatureDigestX962SHA224])
+    {
+        os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called, algoritm to check is kSecKeyAlgorithmECDSASignatureDigestX962SHA224");
+    }
+    if([algorithm isAlgorithm:kSecKeyAlgorithmECDSASignatureDigestX962SHA256])
+    {
+        os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called, algoritm to check is kSecKeyAlgorithmECDSASignatureDigestX962SHA256");
+    }
+    if([algorithm supportsAlgorithm:kSecKeyAlgorithmECDSASignatureDigestX962SHA384])
+    {
+        os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called, supportsAlgorithm kSecKeyAlgorithmECDSASignatureDigestX962SHA384");
+    }
+    if([algorithm supportsAlgorithm:kSecKeyAlgorithmECDSASignatureDigestX962SHA512])
+    {
+        os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called, supportsAlgorithm kSecKeyAlgorithmECDSASignatureDigestX962SHA512");
+    }
+    if([algorithm supportsAlgorithm:kSecKeyAlgorithmECDSASignatureMessageX962SHA1])
+    {
+        os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called, supportsAlgorithm kSecKeyAlgorithmECDSASignatureMessageX962SHA1");
+    }
+    if([algorithm isAlgorithm:kSecKeyAlgorithmECDSASignatureMessageX962SHA224])
+    {
+        os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called, algoritm to check is kSecKeyAlgorithmECDSASignatureMessageX962SHA224");
+    }
+    if([algorithm supportsAlgorithm:kSecKeyAlgorithmECDSASignatureMessageX962SHA256])
+    {
+        os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called, supportsAlgorithm kSecKeyAlgorithmECDSASignatureMessageX962SHA256");
+    }
+    if([algorithm supportsAlgorithm:kSecKeyAlgorithmECDSASignatureMessageX962SHA384])
+    {
+        os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called, supportsAlgorithm kSecKeyAlgorithmECDSASignatureMessageX962SHA384");
+    }
+    if([algorithm supportsAlgorithm:kSecKeyAlgorithmECDSASignatureMessageX962SHA512])
+    {
+        os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called, supportsAlgorithm kSecKeyAlgorithmECDSASignatureMessageX962SHA512");
     }*/
-
+    
     switch (operation) {
         case TKTokenOperationSignData:
 #ifdef DEBUG
@@ -354,7 +407,25 @@
                     // we should add it here.
                     BOOL returnValue = ([algorithm isAlgorithm:kSecKeyAlgorithmRSASignatureRaw] && [algorithm supportsAlgorithm:kSecKeyAlgorithmRSASignatureDigestPKCS1v15Raw]);
 #ifdef DEBUG
-                    os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation returning %i",returnValue);
+                    os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation RSA returning %i",returnValue);
+                    os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation RSA description %s",algorithm.description.UTF8String);
+#endif
+                    return returnValue;
+                }
+                if ([keyItem.keyType isEqual:(id)kSecAttrKeyTypeECDSA]) {
+                    
+                    BOOL returnValue = ([algorithm isAlgorithm:kSecKeyAlgorithmECDSASignatureRFC4754] ||
+                    [algorithm isAlgorithm:kSecKeyAlgorithmECDSASignatureDigestX962] ||
+                    [algorithm isAlgorithm:kSecKeyAlgorithmECDSASignatureDigestX962SHA256] ||
+                    [algorithm isAlgorithm:kSecKeyAlgorithmECDSASignatureDigestX962SHA384] ||
+                    [algorithm isAlgorithm:kSecKeyAlgorithmECDSASignatureDigestX962SHA512]);
+     
+#ifdef DEBUG
+                    os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation ECDSA class name %s",algorithm.className.UTF8String);
+                    os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation ECDSA description %s",algorithm.description.UTF8String);
+                    
+
+                    os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation ECDSA returning %i",returnValue);
 #endif
                     return returnValue;
                 }
@@ -382,13 +453,21 @@
     }
     //select key on token
     const uint8_t keyId = keyItem.keyID;//0x82 0r 0x83;
+    uint8_t hashAlgId = 0x01;
 #ifdef DEBUG
     os_log_error(OS_LOG_DEFAULT, "BEID authenticatedKeyForObjectID keyId = %ux", keyItem.keyID);
 #endif
     
+    if ([keyItem.keyType isEqual:(id)kSecAttrKeyTypeECDSA] ||
+        [keyItem.keyType isEqual:(id)kSecAttrKeyTypeEC] ||
+        [keyItem.keyType isEqual:(id)kSecAttrKeyTypeECSECPrimeRandom])
+    {
+        hashAlgId = 0x40;
+    }
+    
     BOOL (^selectKey)(NSError**) = ^(NSError** error) {
         //first select key and algo
-        BOOL retVAL = [self selectKeyForSign:keyId smartCard:self.smartCard error:error];
+        BOOL retVAL = [self selectKeyForSign:keyId algId:hashAlgId smartCard:self.smartCard error:error];
         if (retVAL == NO){
             os_log_error(OS_LOG_DEFAULT, "BEID authenticatedKeyForObjectID selectKeyForSign failed");
             return retVAL;
@@ -419,14 +498,16 @@
     return keyItem;
 }
 
-- (BOOL) selectKeyForSign:(const uint8_t)keyId smartCard:(TKSmartCard *)smartCard error:( NSError **)error
+- (BOOL) selectKeyForSign:(const uint8_t)keyId algId:(const uint8_t)algId smartCard:(TKSmartCard *)smartCard error:( NSError **)error
 {
 #ifdef DEBUG
     os_log_error(OS_LOG_DEFAULT, "BEID selectKeyForSign called");
 #endif
     // Select signing algorithm, pkcs1 padding and key keyId
     //unsigned char command[] = { 0x00, 0x22, 0x41, 0xB6, 0x05, 0x04, 0x80, 0x01, 0x84, keyId };
-    unsigned char command[] = { 0x04, 0x80, 0x01, 0x84, keyId };//1 for unknown hash
+    
+    unsigned char command[] = { 0x04, 0x80, algId, 0x84, keyId };//40 for unknown hash, EC
+    
     //unsigned char command[] = { 0x04, 0x80, 0x08, 0x84, keyId };//8 for sha256
     
     NSData *data = [NSData dataWithBytes:command length:5];
@@ -479,12 +560,12 @@
         return nil;
     }
 
-    NSNumber *resultLen = [NSNumber numberWithUnsignedChar:keyItem.keySizeInBits];
+    NSNumber *resultLen = [NSNumber numberWithUnsignedChar:96];
+//keyItem.keySizeInBits *2 for EC
     __block NSData *statResponse;
     
-    
     Byte* dataBytes = (Byte*)data.bytes;
-    int i;
+    int i = 0;
     
 #ifdef DEBUG
     os_log_error(OS_LOG_DEFAULT, "BEID generalAuthenticateWithData original Data to be signed length = %lu, data :",data.length);
@@ -493,15 +574,19 @@
         os_log_error(OS_LOG_DEFAULT, "%d: 0x%x ",i, dataBytes[i]);
     }
 #endif
-    //remove the pkcs1 padding 00 01 ff ff ... ff 00
-    for ( i = 0 ; i < data.length ; i++)
-    {
-        if ((i > 2)&&(dataBytes[i]!=0xff))
-            break;
-    }
-    //also remove the ending 0
-    i++;
- 
+    
+      if ([algorithm isAlgorithm:kSecKeyAlgorithmRSASignatureRaw] && [algorithm supportsAlgorithm:kSecKeyAlgorithmRSASignatureDigestPKCS1v15Raw])
+          {
+              resultLen = [NSNumber numberWithUnsignedChar:keyItem.keySizeInBits];
+              //remove the pkcs1 padding 00 01 ff ff ... ff 00
+              for ( i = 0 ; i < data.length ; i++)
+              {
+                  if ((i > 2)&&(dataBytes[i]!=0xff))
+                      break;
+              }
+              //also remove the ending 0
+              i++;
+          }
     NSData * blockData = [[NSData alloc] initWithBytes:&dataBytes[i] length:((data.length)-(i))];
 #ifdef DEBUG
     os_log_error(OS_LOG_DEFAULT, "BEID generalAuthenticateWithData tempered Data to be signed length = %lu, data :",blockData.length);
@@ -535,14 +620,56 @@
 #ifdef DEBUG
     os_log_error(OS_LOG_DEFAULT, "BEID signData signature length = %lu",(unsigned long)statResponse.length);
 #endif
-/*    Byte* responseBytes = (Byte*)statResponse.bytes;
-    int iii;
-    for ( iii = 0 ; iii < statResponse.length ; iii++)
-    {
-        os_log_error(OS_LOG_DEFAULT, "%d: 0x%x ",iii, responseBytes[iii]);
-    }*/
-    return statResponse;
+//   Byte* responseBytes = (Byte*)statResponse.bytes;
+//    int iii;
+//    for ( iii = 0 ; iii < statResponse.length ; iii++)
+//    {
+//        os_log_error(OS_LOG_DEFAULT, "%d: 0x%x ",iii, responseBytes[iii]);
+//    }
     
+    if ([algorithm isAlgorithm:kSecKeyAlgorithmECDSASignatureDigestX962] ||
+        [algorithm isAlgorithm:kSecKeyAlgorithmECDSASignatureDigestX962SHA1] ||
+        [algorithm isAlgorithm:kSecKeyAlgorithmECDSASignatureDigestX962SHA224] ||
+        [algorithm isAlgorithm:kSecKeyAlgorithmECDSASignatureDigestX962SHA256] ||
+        [algorithm isAlgorithm:kSecKeyAlgorithmECDSASignatureDigestX962SHA384] ||
+        [algorithm isAlgorithm:kSecKeyAlgorithmECDSASignatureDigestX962SHA512])
+    {
+#ifdef DEBUG
+        os_log_error(OS_LOG_DEFAULT, "BEID package signature into ASN1 sequence");
+#endif
+       
+        typedef struct {
+            SecAsn1Item r;
+            SecAsn1Item s;
+        } ECDSA;
+        
+        static const SecAsn1Template ECDSATemplate[] = {
+            { SEC_ASN1_SEQUENCE, 0, nil, sizeof(ECDSA) },
+            { SEC_ASN1_INTEGER, offsetof(ECDSA, r) },
+            { SEC_ASN1_INTEGER, offsetof(ECDSA, s) },
+            { 0 }                                           //marks the end of the template
+        };
+        
+        uint8 *bytes = (uint8*)statResponse.bytes;
+        
+        ECDSA ecdsa = {
+            { statResponse.length / 2, bytes },
+            { statResponse.length / 2, bytes + (statResponse.length / 2) },
+        };
+        
+        SecAsn1CoderRef coder;
+        SecAsn1CoderCreate(&coder);
+    
+        SecAsn1Item dest = {0, nil};
+        OSStatus ortn = SecAsn1EncodeItem(coder, &ecdsa, ECDSATemplate, &dest);
+        
+        statResponse = [NSData dataWithBytes:dest.Data length:dest.Length];
+
+        SecAsn1CoderRelease(coder);
+        //NSLog(@"TokenSession SecAsn1EncodeItem %i %@", ortn, statResponse);
+    }
+    
+    return statResponse;
 }
 
 - (NSData *)tokenSession:(TKTokenSession *)session signData:(NSData *)dataToSign usingKey:(TKTokenObjectID)keyObjectID algorithm:(TKTokenKeyAlgorithm *)algorithm error:(NSError * _Nullable __autoreleasing *)error {
