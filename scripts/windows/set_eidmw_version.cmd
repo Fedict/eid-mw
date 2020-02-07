@@ -2,10 +2,10 @@
 :: for eIDViewer: set the viewer version also in eidmw\plugins_tools\eid-viewer\Windows\eIDViewer\Sources\About.cs
 
 
-@SET BASE_VERSION1=4
-@SET BASE_VERSION2=4
-@SET BASE_VERSION3=23
-@SET YEAR=2019
+@SET BASE_VERSION1=5
+@SET BASE_VERSION2=0
+@SET BASE_VERSION3=0
+@SET YEAR=2020
 
 
 @IF EXIST "C:\Program Files (x86)\Git\bin\git.exe" (

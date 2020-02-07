@@ -16,6 +16,8 @@
 #if OPENSSL_VERSION_NUMBER < 0x10100000L || defined(LIBRESSL_VERSION_NUMBER)
 #define X509_get0_extensions(ce) ((ce)->cert_info->extensions)
 #define ASN1_STRING_get0_data ASN1_STRING_data
+#define EVP_MD_CTX_new EVP_MD_CTX_create
+#define EVP_MD_CTX_free EVP_MD_CTX_destroy
 #endif
 
 void eid_vwr_init_crypto() {
@@ -105,6 +107,37 @@ char* eid_vwr_describe_cert(const char* label, X509* cert) {
 	return strdup((char*)value);
 }
 
+bool verify_once(EVP_PKEY *pubkey, const EVP_MD *md, const unsigned char *data, size_t datalen, const unsigned char *sig, size_t siglen) {
+	EVP_MD_CTX *mdctx = EVP_MD_CTX_new();
+	EVP_PKEY_CTX *pctx;
+	int key_base_id = EVP_PKEY_base_id(pubkey);
+	bool rv = false;
+
+	if(key_base_id != EVP_PKEY_RSA && key_base_id != EVP_PKEY_EC) {
+		be_log(EID_VWR_LOG_COARSE, "Could not verify card validity: wrong key type (expecting RSA or EC, got %d)", key_base_id);
+		goto exit;
+	}
+	if(key_base_id == EVP_PKEY_EC) {
+		md = EVP_get_digestbyname("sha384");
+	}
+	if(EVP_DigestVerifyInit(mdctx, &pctx, md, NULL, pubkey) != 1) {
+		be_log(EID_VWR_LOG_COARSE, "Could not verify card validity: failed to initialize verification context");
+		goto exit;
+	}
+	if(EVP_DigestVerifyUpdate(mdctx, data, datalen) != 1) {
+		be_log(EID_VWR_LOG_COARSE, "Could not verify card validity: hashing failed");
+		goto exit;
+	}
+	if(EVP_DigestVerifyFinal(mdctx, sig, siglen) != 1) {
+		be_log(EID_VWR_LOG_COARSE, "Signature validity check failed");
+		goto exit;
+	}
+	rv = true;
+exit:
+	EVP_MD_CTX_free(mdctx);
+	return rv;
+}
+
 /* Test if the card data signatures (identity signature, address signature) are
  * valid for the given rrn certificate*/
 int eid_vwr_check_data_validity(const void* photo, int plen,
@@ -115,30 +148,34 @@ int eid_vwr_check_data_validity(const void* photo, int plen,
 		const void* addrsig, int addsiglen,
 		const void* cert, int certlen) {
 	BIO *bio;
-	X509* rrncert;
-	EVP_PKEY* pubkey;
-	unsigned char digest[SHA256_DIGEST_LENGTH];
+	X509 *rrncert;
+	EVP_PKEY *pubkey;
+	const EVP_MD *md;
 	unsigned char*(*hash)(const unsigned char*, size_t, unsigned char*);
+	unsigned char digest[SHA384_DIGEST_LENGTH];
 	unsigned char *address_data, *ptr;
-	int nid;
 
 	bio = BIO_new_mem_buf((char*)cert, certlen);
 	rrncert = d2i_X509_bio(bio, NULL);
 
-	assert(photo != NULL && plen != 0
-			&& photohash != NULL && (hashlen == SHA_DIGEST_LENGTH || hashlen == SHA256_DIGEST_LENGTH)
+	assert(photo != NULL && plen != 0 && photohash != NULL
+			&& (hashlen == SHA_DIGEST_LENGTH || hashlen == SHA256_DIGEST_LENGTH || hashlen == SHA384_DIGEST_LENGTH)
 			&& datafile != NULL && datfilelen != 0 && datasig != NULL && datsiglen != 0
 			&& addrfile != NULL && addfilelen != 0 && addrsig != NULL && addsiglen != 0
 			&& rrncert != NULL);
 
 	switch(hashlen) {
 		case SHA_DIGEST_LENGTH:
+			md = EVP_get_digestbyname("sha1");
 			hash = SHA1;
-			nid = NID_sha1;
 			break;
 		case SHA256_DIGEST_LENGTH:
+			md = EVP_get_digestbyname("sha256");
 			hash = SHA256;
-			nid = NID_sha256;
+			break;
+		case SHA384_DIGEST_LENGTH:
+			md = EVP_get_digestbyname("sha384");
+			hash = SHA384;
 			break;
 		default:
 			be_log(EID_VWR_LOG_COARSE, "Could not verify data validity: unknown hash type");
@@ -152,23 +189,16 @@ int eid_vwr_check_data_validity(const void* photo, int plen,
 		return 0;
 	}
 	pubkey = X509_get_pubkey(rrncert);
-	if(EVP_PKEY_base_id(pubkey) != EVP_PKEY_RSA) {
-		be_log(EID_VWR_LOG_COARSE, "Could not verify data validity: wrong key type (expecting RSA, got %d)", EVP_PKEY_base_id(pubkey));
-		return 0;
-	}
-	/* data signature is created over hash(concatenation(data file, photo hash)).
-	 * Calculate the hash and verify the signature */
-	hash(datafile, datfilelen, digest);
-	if(RSA_verify(nid, digest, hashlen, datasig, datsiglen, EVP_PKEY_get1_RSA(pubkey)) != 1) {
-		/* Some CA4 cards are re-signed CA3 ones where the photo hash is still SHA1, but everything else is SHA256. Try if this is such a card */
-		hash = SHA256; nid = NID_sha256; hashlen = 32;
-		hash(datafile, datfilelen, digest);
-		if(RSA_verify(NID_sha256, digest, 32, datasig, datsiglen, EVP_PKEY_get1_RSA(pubkey)) != 1) {
-			be_log(EID_VWR_LOG_COARSE, "Could not verify data validity: data signature invalid!");
+	if(!verify_once(pubkey, md, datafile, datfilelen, datasig, datsiglen)) {
+		/* Some CA4 cards are re-signed CA3 ones where the photo hash
+		 * is still SHA2, but everything else is SHA256. Try if this is
+		 * such a card. */
+		md = EVP_get_digestbyname("sha1");
+		if(!verify_once(pubkey, md, datafile, datfilelen, datasig, datsiglen)) {
+			be_log(EID_VWR_LOG_COARSE, "Data signature fails validation!");
 			return 0;
 		}
 	}
-
 	address_data = calloc(addfilelen + datsiglen, 1);
 	memcpy(address_data, addrfile, addfilelen);
 	/* The documentation on the address file claims that the
@@ -183,8 +213,7 @@ int eid_vwr_check_data_validity(const void* photo, int plen,
 	for(ptr = address_data + addfilelen; *ptr == 0; ptr--);
 	ptr++;
 	memcpy(ptr, datasig, datsiglen);
-	hash(address_data, (ptr - address_data) + datsiglen, digest);
-	if(RSA_verify(nid, digest, hashlen, addrsig, addsiglen, EVP_PKEY_get1_RSA(pubkey)) != 1) {
+	if(!verify_once(pubkey, md, address_data, (ptr - address_data) + datsiglen, addrsig, addsiglen)) {
 		be_log(EID_VWR_LOG_COARSE, "Could not verify data validity: address signature invalid!");
 		free(address_data);
 		return 0;
