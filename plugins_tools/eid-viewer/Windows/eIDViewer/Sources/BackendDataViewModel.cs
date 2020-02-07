@@ -1007,7 +1007,6 @@ namespace eIDViewer
 
         public void ResetDataValues()
         {
-            text_color = "Gray";
             document_type = "-";
             _firstName = "";
             _first_letter_of_third_given_name = "";
@@ -1642,17 +1641,6 @@ namespace eIDViewer
             {
                 _cert_trust = value;
                 this.NotifyPropertyChanged("cert_trust");
-            }
-        }
-
-        private String _text_color;
-        public String text_color
-        {
-            get { return _text_color; }
-            set
-            {
-                _text_color = value;
-                this.NotifyPropertyChanged("text_color");
             }
         }
 

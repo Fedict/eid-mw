@@ -168,14 +168,12 @@ namespace eIDViewer
                     break;
                 case eid_vwr_source.EID_VWR_SRC_CARD:
                     theData.open_enabled = false;
-                    theData.text_color = "Black";
                     AdjustIconImage("Resources/Images/state_eidpresent.png");
                     theData.eid_card_present = true;
                     theData.progress_bar_visible = "Visible";
                     theData.progress_info = "reading eID card";
                     break;
                 case eid_vwr_source.EID_VWR_SRC_FILE:
-                    theData.text_color = "Black";
                     AdjustIconImage("Resources/Images/state_fileloaded.png");
                     theData.eid_card_present = true;
                     theData.progress_info = "reading eID file";
