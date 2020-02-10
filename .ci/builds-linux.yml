@@ -145,7 +145,8 @@
   - setup-chroot.sh $CODE $ARCH $DIST
   - if [ $CANDIDATEBRANCH = $CI_COMMIT_REF_NAME ]; then TARGET=candidate; fi
   - if [ ! -z "$CI_COMMIT_TAG" ]; then TARGET=candidate; fi
-  - if [ $ARCH = "i386" ]; then DASHA="-A -s"; else DASHA=""; fi
+  - if [ $ARCH = "i386" ]; then DASHA="-A -s"; else DASHA="--no-arch-all --no-source"; fi
+  - export DASHA
   - if [ ! -z "$TARGET" ]; then dist="$TARGET-$CODE"; else dist=$CODE; fi
   - ../products/source/deb-cl.pl debian/changelog "$COMMITDATE" "$VER"
   script:
