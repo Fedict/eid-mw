@@ -208,11 +208,11 @@
   tags:
     - repobuilder
   before_script:
-    - dcmd cp products/deb/*ges /srv/repo/reprepro/incoming
+    - dcmd cp products/deb/*ges $REPREPRO_BASE_DIR/incoming
   script:
-    - cd /srv/repo/reprepro && reprepro processincoming incoming
+    - reprepro processincoming incoming
   after_script:
-    - rm -f /srv/reprepro/incoming/*
+    - rm -f $REPREPRO_BASE_DIR/incoming/*
   variables:
     GIT_STRATEGY: none
 
