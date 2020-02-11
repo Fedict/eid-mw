@@ -208,6 +208,7 @@
   tags:
     - repobuilder
   before_script:
+    - $LINUX_BASEDIR/scripts/build-aux/ensure-reprepro-config
     - dcmd cp products/deb/*ges $REPREPRO_BASE_DIR/incoming
   script:
     - reprepro processincoming incoming
