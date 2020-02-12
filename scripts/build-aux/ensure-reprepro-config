@@ -43,9 +43,7 @@ foreach my $dist(@dists_known) {
 		$new->{SignWith} = $ENV{GPG_SIGN_KEY_ID};
 		push @blocks, $new;
 		$changed++;
-		my $dash = $prefix;
-		$dash =~ s,/,-,g;
-		$extra_allow .= " $dash" . $ENV{$code} . ">$prefix" . $ENV{$code};
+		$extra_allow .= " " . $ENV{$code};
 	}
 	foreach my $prefix("proposed/", "continuous/", "candidate/") {
 		if(!exists($dists{$prefix . $ENV{$code}})) {
