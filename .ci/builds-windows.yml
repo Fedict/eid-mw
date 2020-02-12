@@ -5,7 +5,7 @@
   - windows
   script:
   - cd %WINDOWS_BASEDIR%\scripts\windows
-  - build_testsuite.bat
+  - call build_testsuite.bat
   - cd %WINDOWS_BASEDIR%\tests\unit\windows\Release
   - pkcs11_tests.exe
   allow_failure: true
