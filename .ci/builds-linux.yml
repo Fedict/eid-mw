@@ -214,8 +214,6 @@
     - reprepro processincoming incoming
   after_script:
     - rm -f $REPREPRO_BASE_DIR/incoming/*
-  variables:
-    GIT_STRATEGY: none
 
 .inject-fed:
   tags:
