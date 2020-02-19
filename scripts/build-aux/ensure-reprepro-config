@@ -19,7 +19,7 @@ while($reprepro_cfg->parse($file)) {
 	$dists{$reprepro_cfg->{Codename}} = $reprepro_cfg;
 	$reprepro_cfg = Dpkg::Control::HashCore->new();
 }
-my $extra_allow = "";
+my $extra_allow = " ";
 
 foreach my $dist(@dists_known) {
 	my $code = "${dist}_CODE";
