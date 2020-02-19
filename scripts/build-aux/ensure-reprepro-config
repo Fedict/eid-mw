@@ -84,7 +84,7 @@ foreach my $block(@blocks) {
 
 close $file;
 
-if(length($extra_allow) > 0) {
+if(length($extra_allow) > 1) {
 	my $incoming = Dpkg::Control::HashCore->new();
 	$incoming->load($ENV{REPREPRO_BASE_DIR} . "/incoming");
 	$incoming->{Allow} .= $extra_allow;
