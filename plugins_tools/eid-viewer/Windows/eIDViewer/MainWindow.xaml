@@ -30,10 +30,10 @@
         <KeyBinding Key="Q" Modifiers="Control" Command="viewer:MainWindow.SelectQuitCommand"/>
     </Window.InputBindings>
 
-    <Grid Background="{StaticResource DefaultBackground}" >
-        <TabControl Margin="0,23,0,60" Background="{StaticResource DefaultBackground}">
+    <Grid>
+        <TabControl Margin="0,23,0,60">
             <TabItem Header="{Binding Path=applicationResource.IDENTITY, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}">
-                <Grid Background="{StaticResource DefaultBackground}" Margin="0,0,0,0"
+                <Grid Margin="0,0,0,0"
                       HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" MinWidth="150"  />
@@ -72,27 +72,27 @@
                     </Grid.RowDefinitions>
                     <Label Grid.ColumnSpan="3" Grid.Row="0" Content="{Binding Path=document_type, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,20,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Height="26"/>
                     <Separator Grid.ColumnSpan="3" Grid.Row="1" HorizontalAlignment="Center" Height="16" VerticalAlignment="Top" Width="250"/>
-                    <Label Grid.Column="1" Grid.Row="2" Content="{Binding Path=identityTabResource.NameLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Label Grid.Column="1" Grid.Row="3" Content="{Binding Path=identityTabResource.GivenNamesLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="26"/>
-                    <Label Grid.Column="1" Grid.Row="4" Content="{Binding Path=identityTabResource.PlaceOfBirthLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="26"/>
-                    <Label Grid.Column="1" Grid.Row="5" Content="{Binding Path=identityTabResource.DateOfBirthLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="26"/>
-                    <Label Grid.Column="1" Grid.Row="6" Content="{Binding Path=identityTabResource.SexLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="26"/>
-                    <Label Grid.Column="1" Grid.Row="7" Content="{Binding Path=identityTabResource.NationalNumberLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="26"/>
-                    <Label Grid.Column="1" Grid.Row="8" Content="{Binding Path=identityTabResource.NationalityLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="26"/>
-                    <Label Grid.Column="1" Grid.Row="9" Content="{Binding Path=identityTabResource.TitleLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="26"/>
-                    <Label Grid.Column="1" Grid.Row="10" Content="{Binding Path=identityTabResource.SpecialStatusLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="26"/>
-                    <Label Grid.Column="1" Grid.Row="11" Content="{Binding Path=identityTabResource.MemberLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="26"/>
-                    <Label Grid.Column="1" Grid.Row="12" Content="{Binding Path=identityTabResource.ProtectionLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Label Grid.Column="1" Grid.Row="13" Content="{Binding Path=identityTabResource.SpecialOrganisationLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="26"/>
-                    <Label Grid.Column="1" Grid.Row="14" Content="{Binding Path=identityTabResource.DuplicateLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="26"/>
-                    <Label Grid.Column="1" Grid.Row="15" Content="{Binding Path=identityTabResource.WorkPermitMentionLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="26"/>
-                    <Label Grid.Column="1" Grid.Row="16" Content="{Binding Path=identityTabResource.EmployersVATNumber1Label, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Label Grid.Column="1" Grid.Row="17" Content="{Binding Path=identityTabResource.EmployersVATNumber2Label, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Label Grid.Column="1" Grid.Row="18" Content="{Binding Path=identityTabResource.RegionalFileNumberLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="26"/>
+                    <Label Grid.Column="1" Grid.Row="2" Content="{Binding Path=identityTabResource.NameLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <Label Grid.Column="1" Grid.Row="3" Content="{Binding Path=identityTabResource.GivenNamesLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
+                    <Label Grid.Column="1" Grid.Row="4" Content="{Binding Path=identityTabResource.PlaceOfBirthLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
+                    <Label Grid.Column="1" Grid.Row="5" Content="{Binding Path=identityTabResource.DateOfBirthLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
+                    <Label Grid.Column="1" Grid.Row="6" Content="{Binding Path=identityTabResource.SexLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
+                    <Label Grid.Column="1" Grid.Row="7" Content="{Binding Path=identityTabResource.NationalNumberLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
+                    <Label Grid.Column="1" Grid.Row="8" Content="{Binding Path=identityTabResource.NationalityLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
+                    <Label Grid.Column="1" Grid.Row="9" Content="{Binding Path=identityTabResource.TitleLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
+                    <Label Grid.Column="1" Grid.Row="10" Content="{Binding Path=identityTabResource.SpecialStatusLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
+                    <Label Grid.Column="1" Grid.Row="11" Content="{Binding Path=identityTabResource.MemberLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
+                    <Label Grid.Column="1" Grid.Row="12" Content="{Binding Path=identityTabResource.ProtectionLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <Label Grid.Column="1" Grid.Row="13" Content="{Binding Path=identityTabResource.SpecialOrganisationLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
+                    <Label Grid.Column="1" Grid.Row="14" Content="{Binding Path=identityTabResource.DuplicateLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
+                    <Label Grid.Column="1" Grid.Row="15" Content="{Binding Path=identityTabResource.WorkPermitMentionLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
+                    <Label Grid.Column="1" Grid.Row="16" Content="{Binding Path=identityTabResource.EmployersVATNumber1Label, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <Label Grid.Column="1" Grid.Row="17" Content="{Binding Path=identityTabResource.EmployersVATNumber2Label, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <Label Grid.Column="1" Grid.Row="18" Content="{Binding Path=identityTabResource.RegionalFileNumberLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
                     <Separator Grid.ColumnSpan="3" Grid.Row="19" HorizontalAlignment="Center" Height="16" VerticalAlignment="Top" Width="250"/>
-                    <Label Grid.Column="1" Grid.Row="20" Content="{Binding Path=identityTabResource.StreetLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="26"/>
-                    <Label Grid.Column="1" Grid.Row="21" Content="{Binding Path=identityTabResource.PostalCodeLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="26"/>
-                    <Label Grid.Column="1" Grid.Row="22" Content="{Binding Path=identityTabResource.MunicipalityLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="25"/>
+                    <Label Grid.Column="1" Grid.Row="20" Content="{Binding Path=identityTabResource.StreetLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
+                    <Label Grid.Column="1" Grid.Row="21" Content="{Binding Path=identityTabResource.PostalCodeLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
+                    <Label Grid.Column="1" Grid.Row="22" Content="{Binding Path=identityTabResource.MunicipalityLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="25"/>
                     <Label Grid.Column="2" Grid.Row="2" Content="{Binding Path=surName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
                     <Label Grid.Column="2" Grid.Row="3" Content="{Binding Path=firstNames, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
                     <Label Grid.Column="2" Grid.Row="4" Content="{Binding Path=location_of_birth, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
@@ -117,12 +117,12 @@
                 </Grid>
             </TabItem>
             <TabItem Header="{Binding Path=applicationResource.CARD, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}">
-                <Grid Background="{StaticResource DefaultBackground}">
-                    <Label Content="{Binding Path=cardTabResource.cardNumberLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Margin="92,133,0,0" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Label Content="{Binding Path=cardTabResource.placeOfIssueLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Margin="92,159,0,0" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                    <Label Content="{Binding Path=cardTabResource.chipNumberLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Margin="92,185,0,0" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Label Content="{Binding Path=cardTabResource.validFromLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Margin="92,211,0,0" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Label Content="{Binding Path=cardTabResource.validUntilLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Margin="92,237,0,0" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <Grid>
+                    <Label Content="{Binding Path=cardTabResource.cardNumberLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Margin="92,133,0,0" VerticalAlignment="Top" />
+                    <Label Content="{Binding Path=cardTabResource.placeOfIssueLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Margin="92,159,0,0" VerticalAlignment="Top"  />
+                    <Label Content="{Binding Path=cardTabResource.chipNumberLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Margin="92,185,0,0" VerticalAlignment="Top" />
+                    <Label Content="{Binding Path=cardTabResource.validFromLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Margin="92,211,0,0" VerticalAlignment="Top" />
+                    <Label Content="{Binding Path=cardTabResource.validUntilLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Margin="92,237,0,0" VerticalAlignment="Top" />
                     <Button Click="PincodeTest_Click" Content="{Binding Path=cardTabResource.verifyPinButton, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Margin="92,283,0,0" VerticalAlignment="Top" Width="207" IsEnabled="{Binding Path=eid_card_present, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <Button Click="PincodeTest_Change" Content="{Binding Path=cardTabResource.changePinButton, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Margin="92,308,0,0" VerticalAlignment="Top" Width="207" IsEnabled="{Binding Path=eid_card_present, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <Label Content="{Binding Path=card_number, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="215,133,0,0" VerticalAlignment="Top"/>
@@ -133,13 +133,13 @@
                 </Grid>
             </TabItem>
             <TabItem Header="{Binding Path=applicationResource.CERTIFICATES, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}">
-                <Grid Background="{StaticResource DefaultBackground}" Margin="0,-2,0,2">
+                <Grid Margin="0,-2,0,2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="19*"/>
                         <ColumnDefinition Width="562*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="124"/>
+                        <RowDefinition Height="148"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
@@ -177,7 +177,7 @@
                             </TreeView.ItemTemplate>
                         </TreeView>
                     </ContentControl>
-                    <Grid Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="2,0,2,0" VerticalAlignment="Top" Background="{StaticResource DefaultBackground}">
+                    <Grid Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="2,0,2,0" VerticalAlignment="Top">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" MinWidth="150"  />
                             <ColumnDefinition Width="Auto" MinWidth="100" />
@@ -198,13 +198,13 @@
                             <RowDefinition Height="Auto" MinHeight="26" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        <Label Grid.Column="1" Grid.Row="4" Content="{Binding Path=certificateTabResource.CertValidFromLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="26"/>
-                        <Label Grid.Column="1" Grid.Row="5" Content="{Binding Path=certificateTabResource.CertValidUntilLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="26"/>
+                        <Label Grid.Column="1" Grid.Row="4" Content="{Binding Path=certificateTabResource.CertValidFromLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
+                        <Label Grid.Column="1" Grid.Row="5" Content="{Binding Path=certificateTabResource.CertValidUntilLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
                         <Separator Grid.ColumnSpan="3" Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Top" Width="250"/>
-                        <Label Grid.Column="1" Grid.Row="7" Content="{Binding Path=certificateTabResource.CertUsageLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="26"/>
+                        <Label Grid.Column="1" Grid.Row="7" Content="{Binding Path=certificateTabResource.CertUsageLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
                         <Separator Grid.ColumnSpan="3" Grid.Row="8" HorizontalAlignment="Center" VerticalAlignment="Top" Width="250"/>
-                        <Label Grid.Column="1" Grid.Row="9" Content="{Binding Path=certificateTabResource.CertTrustLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{Binding Path=text_color, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Height="26"/>
-                        <Label Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="3" Content="{Binding Path=cert_subject, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Background="#FFACACAC" >
+                        <Label Grid.Column="1" Grid.Row="9" Content="{Binding Path=certificateTabResource.CertTrustLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
+                        <Label Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="3" Content="{Binding Path=cert_subject, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
                             <Label.Resources>
                                 <Style TargetType="TextBlock">
                                     <Setter Property="TextWrapping" Value="Wrap" />
@@ -229,28 +229,28 @@
                             <ColumnDefinition Width="200*"/>
                         </Grid.ColumnDefinitions>
                         <CheckBox Grid.Column="0" x:Name="checkBox" Margin="0,0,10,0" Content="{Binding Path=certificateTabResource.AlwaysValidateCheckboxLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Right" VerticalAlignment="Center" IsChecked="{Binding Path=validateAlways, Mode=TwoWay}" />
-                        <Button Grid.Column="1" x:Name="button" Content="{Binding Path=certificateTabResource.ValidateNowButtonLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Height="28" VerticalAlignment="Center" Click="ValidateNowButton_Click" Margin="10,0,0,-3" Background="{StaticResource DefaultBackground}"/>
+                        <Button Grid.Column="1" x:Name="button" Content="{Binding Path=certificateTabResource.ValidateNowButtonLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Height="28" VerticalAlignment="Center" Click="ValidateNowButton_Click" Margin="10,0,0,-3"/>
                     </Grid>
                 </Grid>
             </TabItem>
             <TabItem Header="{Binding Path=applicationResource.LOG, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings}}">
-                <Grid Background="{StaticResource DefaultBackground}">
+                <Grid>
                     <TextBox viewer:TextBoxUtilities.AlwaysScrollToEnd="True" Text="{Binding Path=logText, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
-                             TextWrapping="Wrap" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,47" Background="{StaticResource DefaultBackground}" />
-                    <Grid Height="47" VerticalAlignment="Bottom" Background="{StaticResource DefaultBackground}">
+                             TextWrapping="Wrap" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,47"/>
+                    <Grid Height="47" VerticalAlignment="Bottom">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" MinWidth="200" />
                             <ColumnDefinition Width="Auto" MinWidth="100" />
                             <ColumnDefinition Width="Auto" MinWidth="200"/>
                         </Grid.ColumnDefinitions>
-                        <ComboBox SelectionChanged="LogLevel_OnSelectionChanged" Background="{StaticResource DefaultBackground}" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="120" SelectedIndex="{Binding Path=log_level_index, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
-                            <ComboBoxItem Content="Error" Background="{StaticResource DefaultBackground}"/>
-                            <ComboBoxItem Content="Warning" Background="{StaticResource DefaultBackground}"/>
-                            <ComboBoxItem Content="Normal" Background="{StaticResource DefaultBackground}" />
-                            <ComboBoxItem Content="Detail" Background="{StaticResource DefaultBackground}"/>
+                        <ComboBox SelectionChanged="LogLevel_OnSelectionChanged" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="120" SelectedIndex="{Binding Path=log_level_index, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+                            <ComboBoxItem Content="Error"/>
+                            <ComboBoxItem Content="Warning"/>
+                            <ComboBoxItem Content="Normal"/>
+                            <ComboBoxItem Content="Detail"/>
                         </ComboBox>
-                        <Button Background="{StaticResource DefaultBackground}" Grid.Column="1" x:Name="ClearLog" Content="Clear Log" HorizontalAlignment="Center" VerticalAlignment="Center" Width="75" Click="ClearLog_Click"/>
-                        <Button Background="{StaticResource DefaultBackground}" Grid.Column="2" x:Name="CopyLogToClipboard" Content="Copy Log to Clipboard" HorizontalAlignment="Left" VerticalAlignment="Center" Click="CopyLogToClipboard_Click" />
+                        <Button Grid.Column="1" x:Name="ClearLog" Content="Clear Log" HorizontalAlignment="Center" VerticalAlignment="Center" Width="75" Click="ClearLog_Click"/>
+                        <Button Grid.Column="2" x:Name="CopyLogToClipboard" Content="Copy Log to Clipboard" HorizontalAlignment="Left" VerticalAlignment="Center" Click="CopyLogToClipboard_Click" />
                     </Grid>
                 </Grid>
             </TabItem>
@@ -299,6 +299,6 @@
             <Label Grid.Column="1" Content="{Binding Path=progress_info, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
             <Image Grid.Column="2" HorizontalAlignment="Right" Height="55" Margin="0,0,0,0" VerticalAlignment="Top" Width="80" Source="{Binding Path=cardreader_icon, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
-        <ProgressBar Value="{Binding Path=progress, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Name="sbar" Minimum="0" Maximum="100" Height="10" VerticalAlignment="Bottom" Background="Beige" UseLayoutRounding="True" Visibility="{Binding Path=progress_bar_visible, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <ProgressBar Value="{Binding Path=progress, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Name="sbar" Minimum="0" Maximum="100" Height="10" VerticalAlignment="Bottom" UseLayoutRounding="True" Visibility="{Binding Path=progress_bar_visible, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
     </Grid>
 </Window>
