@@ -101,6 +101,21 @@ test:scan-build:
 test:gtk4:
   stage: tests
   extends: .gtk4
+
+test:freebsd:
+  stage: tests
+  tags:
+  - freebsd
+  before_script:
+  - pushd $LINUX_BASEDIR
+  - autoreconf -f -i
+  - popd
+  script:
+  - pushd $LINUX_BASEDIR
+  - ./configure
+  - make -j $(sysctl -n hw.ncpu) distcheck
+  - popd
+  allow_failure: true
 #################################################
 # Stage "source-package": build source packages #
 #################################################
