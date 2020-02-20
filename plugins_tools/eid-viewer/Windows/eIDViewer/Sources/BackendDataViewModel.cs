@@ -62,12 +62,7 @@ namespace eIDViewer
 
         ~BackendDataViewModel()
         {
-            //store application settings
-            if (Properties.Settings.Default.AlwaysValidate != validateAlways)
-            {
-                Properties.Settings.Default.AlwaysValidate = validateAlways;
-                Properties.Settings.Default.Save();
-            }
+            Dispose(false);
         }
 
 
@@ -91,50 +86,137 @@ namespace eIDViewer
             _syncContext.Post(o => ShowPINVerifiedOKCallback(message), null);
         }
 
-        //hashAlg being "SHA1", or "SHA256"
+        //hashAlg being "SHA1", "SHA256" or "SHA384"
         public bool CheckRNSignature(byte[] data, byte[] signedHash, string hashAlg)
         {
             byte[] HashValue;
+
             try
             {
-                if (hashAlg.Equals("SHA1"))
+                if (carddata_appl_version < 0x18)
                 {
-                    SHA1 sha = new SHA1CryptoServiceProvider();
-                    HashValue = sha.ComputeHash(data);
-                }
-                else if (hashAlg.Equals("SHA256"))
-                {
-                    SHA256 sha = new SHA256CryptoServiceProvider();
-                    HashValue = sha.ComputeHash(data);
-                }
-                else
-                {
-                    return false;
-                }
-
-                RSACryptoServiceProvider csp = RN_cert.PublicKey.Key as RSACryptoServiceProvider;
-
-                if (csp.VerifyHash(HashValue, CryptoConfig.MapNameToOID(hashAlg), signedHash))
-                {
-                    WriteLog( "The signature of the data is valid \n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
-                    return true;
-                }
-                else
-                {
-                    //check if this is not a re-keyed card that received a hash upgrade sha1 -> sha256
                     if (hashAlg.Equals("SHA1"))
                     {
-                        this.WriteLog("The SHA1 signature of the data is invalid, checking if the card is re-keyed \n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);               
-                        return CheckRNSignature(data, signedHash, "SHA256");
+                        SHA1 sha = new SHA1CryptoServiceProvider();
+                        HashValue = sha.ComputeHash(data);
                     }
-                    this.WriteLog("The signature of the data is not valid \n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
-                    ResetDataValues();
+                    else if (hashAlg.Equals("SHA256"))
+                    {
+                        SHA256 sha = new SHA256CryptoServiceProvider();
+                        HashValue = sha.ComputeHash(data);
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                    RSACryptoServiceProvider csp = RN_cert.PublicKey.Key as RSACryptoServiceProvider;
+
+                    if (csp.VerifyHash(HashValue, CryptoConfig.MapNameToOID(hashAlg), signedHash))
+                    {
+                        WriteLog("The signature of the data is valid \n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
+                        return true;
+                    }
+                    else
+                    {
+                        //check if this is not a re-keyed card that received a hash upgrade sha1 -> sha256
+                        if (hashAlg.Equals("SHA1"))
+                        {
+                            this.WriteLog("The SHA1 signature of the data is invalid, checking if the card is re-keyed \n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
+                            return CheckRNSignature(data, signedHash, "SHA256");
+                        }
+                        this.WriteLog("The signature of the data is not valid \n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+                        ResetDataValues();
+                    }
+                }
+                else if (carddata_appl_version == 0x18)
+                {
+                    //ASN.1 structure:
+                    //SEQ (0x30) / PayloadLen / Int Type (0x02) / Len (r) / r[] / Int Type (0x02) / Len (s) / s[]
+
+                    //we only support keys with length not over 0x80
+                    byte rLen = 0; //Length of r value as in ASN.1 signature
+                    byte sLen = 0; //Length of s value as in ASN.1 signature
+
+                    byte[] rawData; //the concatenation of 2 byte arrays, each the same size as the EC key
+
+                    //first byte needs to be sequence
+                    if (signedHash[0] == 0x30)
+                    {
+                        //int totalLen = signedHash[1];
+                        if (signedHash[2] == 0x02)   //r value should be of int type
+                        {
+                            rLen = signedHash[3];
+
+                            if (signedHash[4 + rLen] == 0x02)  //s value should be of int type
+                            {
+                                sLen = signedHash[5 + rLen];
+
+                                rawData = new byte[96];
+                                //array is 0 initialized (needed as the possible prepending zero's)
+
+                                if (rLen <= 48)
+                                {
+                                    //add r value to rawdata (in the first 48 bytes, with prepended zero's added in the raw signature if needed )
+                                    Array.Copy(signedHash, 4, rawData, 48 - rLen, rLen);
+                                }
+                                else
+                                {
+                                    //add r value to rawdata (in the first 48 bytes, drop the prepended zero's from the asn.1 signature if needed )
+                                    Array.Copy(signedHash, 4 + rLen - 48, rawData, 0, 48);
+                                }
+
+                                if (sLen <= 48)
+                                {
+                                    //add s value to rawdata (in the next 48 bytes, with prepended zero's if needed )
+                                    Array.Copy(signedHash, 6 + rLen, rawData, 96 - sLen, sLen);
+                                }
+                                else
+                                {
+                                    //add s value to rawdata (in the next 48 bytes, drop the prepended zero's from the asn.1 signature if needed )
+                                    Array.Copy(signedHash, 6 + rLen + sLen - 48, rawData, 48, 48);
+                                }
+
+
+                                ECDsaCng thepublicKey = (ECDsaCng)RN_cert.GetECDsaPublicKey();
+                                {
+                                    thepublicKey.HashAlgorithm = CngAlgorithm.Sha384;
+                                    if (thepublicKey.VerifyData(data, rawData, HashAlgorithmName.SHA384))
+                                    {
+                                        WriteLog("The EC signature of the data is valid \n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
+                                        return true;
+                                    }
+                                    else
+                                    {
+                                        this.WriteLog("The EC signature of the data is not valid \n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                //s value not of type int
+                                this.WriteLog("Format error in asn.1 signature (type of s not int (0x02)), unable to start validation\n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+                            }
+                        }
+                        else
+                        {
+                            //r value not of type int
+                            this.WriteLog("Format error in asn.1 signature (type of r not int (0x02)), unable to start validation\n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+                        }
+                    }
+                    else
+                    {
+                        //error out, signedHash not starting with SEQ
+                        this.WriteLog("Format error in asn.1 signature (doesn't start with SEQ (0x30)), unable to start validation\n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+                    }
+
                 }
             }
             catch (Exception e)
             {
                 this.WriteLog("An error occurred validating the data signature\n Exception message is: " + e.Message + "\n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
             }
+            ResetDataValues();
             return false;
         }
 
@@ -151,6 +233,11 @@ namespace eIDViewer
                 else if (shaHash.Length == 32)
                 {
                     SHA256 sha = new SHA256CryptoServiceProvider();
+                    HashValue = sha.ComputeHash(data);
+                }
+                else if (shaHash.Length == 48)
+                {
+                    SHA384 sha = new SHA384CryptoServiceProvider();
                     HashValue = sha.ComputeHash(data);
                 }
                 else
@@ -181,7 +268,7 @@ namespace eIDViewer
 
         }
 
-        //verify if the chain that was build by .NET is identical (or witch cross-signed root) to the one on the eID Card
+        //verify if the chain that was build by .NET is identical (or with cross-signed root) to the one on the eID Card
         public bool CheckChain(ref X509Chain buildChain, ref X509Certificate2 leafCertificate)
         {
             int chainLen = 3;
@@ -815,7 +902,7 @@ namespace eIDViewer
             else if (String.Equals(label, "nobility", StringComparison.Ordinal))
             {
                 if (data != "")
-                    { nobility = data; }
+                { nobility = data; }
             }
             else if (String.Equals(label, "special_status", StringComparison.Ordinal))
             { special_status = data; }
@@ -959,6 +1046,10 @@ namespace eIDViewer
                 {
                     member_of_family = true;
                     ForeignersFieldPresent();
+                }
+                else if (String.Equals(label, "carddata_appl_version", StringComparison.Ordinal))
+                {
+                    carddata_appl_version = data[0];
                 }
             }
             catch (Exception e)
@@ -1193,6 +1284,8 @@ namespace eIDViewer
                 NotifyPropertyChanged("logText");
             }
         }
+
+        public byte carddata_appl_version = 0x00;
 
         private string _firstName;
         public string firstName
