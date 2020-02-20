@@ -12,8 +12,60 @@ using System.ComponentModel;
 namespace eIDViewer
 {
 
-    public partial class BackendDataViewModel : INotifyPropertyChanged
+    public partial class BackendDataViewModel : INotifyPropertyChanged, IDisposable
     {
+        //to check if Dispose has been called before
+        private bool disposed = false;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (this.disposed == false)
+            {
+                //store application settings
+                if (Properties.Settings.Default.AlwaysValidate != validateAlways)
+                {
+                    Properties.Settings.Default.AlwaysValidate = validateAlways;
+                    Properties.Settings.Default.Save();
+                }
+
+                if (disposing)
+                {
+                    // dispose managed resources
+                    if (authentication_cert != null)
+                    {
+                        authentication_cert.Dispose();
+                    }
+                    if (signature_cert != null)
+                    {
+                        signature_cert.Dispose();
+                    }
+                    if (rootCA_cert != null)
+                    {
+                        rootCA_cert.Dispose();
+                    }
+                    if (intermediateCA_cert != null)
+                    {
+                        intermediateCA_cert.Dispose();
+                    }
+                    if (RN_cert != null)
+                    {
+                        RN_cert.Dispose();
+                    }
+                }
+                //Dispose only once
+                disposed = true;
+            }
+            // free native resources
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            // call GC.SupressFinalize to take this object off the finalization queue
+            // and prevent finalization code for this object from executing a second time.
+            GC.SuppressFinalize(this);
+        }
+
         public string ReadRegistryStringValue(string subkey, string valueName, object defaultValue)
         {
             const string userRoot = "HKEY_CURRENT_USER";
