@@ -112,7 +112,7 @@ test:freebsd:
   - popd
   script:
   - pushd $LINUX_BASEDIR
-  - ./configure
+  - ./configure --disable-dependency-tracking
   - make -j $(sysctl -n hw.ncpu) distcheck
   - popd
   allow_failure: true
