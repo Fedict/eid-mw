@@ -112,7 +112,7 @@ test:freebsd:
   - popd
   script:
   - pushd $LINUX_BASEDIR
-  - ./configure --disable-dependency-tracking
+  - ./configure --disable-dependency-tracking --disable-webextension
   - make -j $(sysctl -n hw.ncpu)
   - make -j $(sysctl -n hw.ncpu) check
   - popd
