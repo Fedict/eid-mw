@@ -22,6 +22,7 @@
 #include "card.h"
 #include "common/log.h"
 #include "cardfactory.h"
+#include "common/mwexception.h"
 
 namespace eIDMW
 {
@@ -124,48 +125,95 @@ namespace eIDMW
 	{
 		tCardStatus status;
 		static int iStatusCount = 0;
+		bool cardPresent = FALSE;
+		long lRet = SCARD_S_SUCCESS;
 
-		try {
+		try
+		{
 			if (m_poCard == NULL)
 			{
-				if (m_poContext->m_oPCSC.Status(m_csReader))
-				{ 
-					status = Connect()? CARD_INSERTED : CARD_NOT_PRESENT;
+				//no card object created yet, if a card is present we should create one
+				lRet = m_poContext->m_oPCSC.Status(m_csReader, cardPresent);
+				if (lRet == SCARD_S_SUCCESS)
+				{
+					if (cardPresent == TRUE)
+					{
+						status = Connect() ? CARD_INSERTED : CARD_NOT_PRESENT;
+					}
+					else
+					{
+						status = CARD_NOT_PRESENT;
+					}
+				}
+				else if (lRet == SCARD_E_SHARING_VIOLATION)
+				{
+					status = CARD_UNKNOWN_STATE;
 				}
 				else
-					status = CARD_NOT_PRESENT;
-			} else
-			{
-				if (m_poContext->m_oPCSC.Status(m_csReader))
 				{
-					status = CARD_STILL_PRESENT;
-				} else
-				{
-					Disconnect();
-					// if bReconnect = true, then we try to connect to a
-					// possibly new card that has been inserted
-					if (bReconnect && m_poContext->m_oPCSC.Status(m_csReader))
-					{
-						status = Connect()? CARD_OTHER : CARD_REMOVED;
-					}
-						
-					else
-						status = CARD_REMOVED;
+					throw CMWEXCEPTION(m_poContext->m_oPCSC.PcscToErr(lRet));
 				}
 			}
-		}
-		catch(CMWException &e) {
-			if(e.GetError() == EIDMW_ERR_CARD_SHARING) {
-				status = CARD_UNKNOWN_STATE;
-			} else {
-				throw e;
+			else
+			{
+				//card object was present already
+
+				lRet = m_poContext->m_oPCSC.Status(m_csReader, cardPresent);
+
+				if (lRet == SCARD_S_SUCCESS)
+				{
+					if (cardPresent == TRUE)
+					{
+						//check if card is still the same
+						if (m_poCard->Status())
+						{
+							status = CARD_STILL_PRESENT;
+						}
+						else
+						{
+							//its a different card, so drop the old connection
+							Disconnect();
+
+							if (bReconnect)
+							{
+								//try to start a new connection to this card
+								status = Connect() ? CARD_OTHER : CARD_REMOVED;
+							}
+							else
+							{
+								//no reconnection was wanted, so report as card removed
+								status = CARD_REMOVED;
+							}
+						}
+					}
+					//else
+					//{
+						//Disconnect(); not dropping the card context yet
+						//status = CARD_REMOVED;
+					//}
+				}
+				else if (lRet == SCARD_E_SHARING_VIOLATION)
+				{
+					status = CARD_UNKNOWN_STATE;
+				}
+			}
+
+			if (iStatusCount < 5)
+			{
+				MWLOG(LEV_DEBUG, MOD_CAL, L"    ReaderStatus(): %ls", Status2String(status));
+				iStatusCount++;
 			}
 		}
-
-		if (iStatusCount < 5)
+		catch (CMWException &e)
 		{
-			MWLOG(LEV_DEBUG, MOD_CAL, L"    ReaderStatus(): %ls", Status2String(status));
-			iStatusCount++;
+			if (e.GetError() == EIDMW_ERR_CARD_SHARING)
+			{
+				status = CARD_UNKNOWN_STATE;
+			}
+			else
+			{
+				throw e;
+			}
 		}
 
 		return status;
@@ -334,8 +382,7 @@ namespace eIDMW
 
 		try
 		{
-			return m_poCard->ReadFile(csPath, ulOffset, ulMaxLen,
-						  bDoNotCache);
+			return m_poCard->ReadFile(csPath, ulOffset, ulMaxLen, bDoNotCache);
 		}
 		catch(const CNotAuthenticatedException & e)
 		{
