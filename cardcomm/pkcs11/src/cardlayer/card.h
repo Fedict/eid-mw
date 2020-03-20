@@ -68,7 +68,7 @@ namespace eIDMW
 		/** Return the serial number of the card reader */
 		CByteArray GetIFDVersion();
 
-		/** Return true if there is definitely a card in the reader, false otherwise */
+		/** Return true if we can use our current cardhandle (m_poCard) with the card, false otherwise */
 		bool Status();
 
 		/** Return true if the card reader has a PIN pad */

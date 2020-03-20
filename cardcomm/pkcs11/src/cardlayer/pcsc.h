@@ -122,7 +122,8 @@ public:
 		//this is temporary, pkcs11 will move away from using this cardlayer
 		long GetTheStatusChange(unsigned long ulTimeout, SCARD_READERSTATEA * txReaderStates, unsigned long ulReaderCount);
 
-		bool Status(const std::string & csReader);
+
+		long Status(const std::string & csReader, bool &bCardStillPresent);
 
 		SCARDHANDLE Connect(const std::string & csReader, unsigned long ulShareMode = SCARD_SHARE_SHARED,
 				    unsigned long ulPreferredProtocols = SCARD_PROTOCOL_T0 );
@@ -149,9 +150,9 @@ public:
 		SCARDCONTEXT GetContext();
 
 		long SW12ToErr(unsigned long ulSW12);
-
-private:
 		long PcscToErr(unsigned long lRet);
+
+private:	
 
 		//unsigned long m_hContext;
 		SCARDCONTEXT m_hContext;
