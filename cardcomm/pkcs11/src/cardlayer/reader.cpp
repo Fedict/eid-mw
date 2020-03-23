@@ -77,7 +77,7 @@ namespace eIDMW
 	{
 		tCardStatus status;
 		static int iStatusCount = 0;
-		bool cardPresent = FALSE;
+		bool cardPresent = false;
 		long lRet = SCARD_S_SUCCESS;
 
 		try
@@ -85,10 +85,10 @@ namespace eIDMW
 			if (m_poCard == NULL)
 			{
 				//no card object created yet, if a card is present we should create one
-				lRet = m_oPCSC->Status(m_csReader, cardPresent);
+				lRet = m_poPCSC->Status(m_csReader, cardPresent);
 				if (lRet == SCARD_S_SUCCESS)
 				{
-					if (cardPresent == TRUE)
+					if (cardPresent == true)
 					{
 						if (!bPresenceOnly) {
 							status = Connect()? CARD_INSERTED : CARD_NOT_PRESENT;
@@ -107,18 +107,18 @@ namespace eIDMW
 				}
 				else
 				{
-					throw CMWEXCEPTION(m_poContext->m_oPCSC.PcscToErr(lRet));
+					throw CMWEXCEPTION(m_poPCSC->PcscToErr(lRet));
 				}
 			}
 			else
 			{
 				//card object was present already
 
-				lRet = m_oPCSC->Status(m_csReader, cardPresent);
+				lRet = m_poPCSC->Status(m_csReader, cardPresent);
 
 				if (lRet == SCARD_S_SUCCESS)
 				{
-					if (cardPresent == TRUE)
+					if (cardPresent == true)
 					{
 						//check if card is still the same
 						if (m_poCard->Status())
