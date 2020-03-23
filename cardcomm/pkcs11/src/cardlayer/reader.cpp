@@ -125,7 +125,7 @@ namespace eIDMW
 	{
 		tCardStatus status;
 		static int iStatusCount = 0;
-		bool cardPresent = FALSE;
+		bool cardPresent = false;
 		long lRet = SCARD_S_SUCCESS;
 
 		try
@@ -136,7 +136,7 @@ namespace eIDMW
 				lRet = m_poContext->m_oPCSC.Status(m_csReader, cardPresent);
 				if (lRet == SCARD_S_SUCCESS)
 				{
-					if (cardPresent == TRUE)
+					if (cardPresent == true)
 					{
 						status = Connect() ? CARD_INSERTED : CARD_NOT_PRESENT;
 					}
@@ -162,7 +162,7 @@ namespace eIDMW
 
 				if (lRet == SCARD_S_SUCCESS)
 				{
-					if (cardPresent == TRUE)
+					if (cardPresent == true)
 					{
 						//check if card is still the same
 						if (m_poCard->Status())

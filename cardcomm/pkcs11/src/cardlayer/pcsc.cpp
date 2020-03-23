@@ -267,7 +267,7 @@ namespace eIDMW
 		else
 		{
 			MWLOG(LEV_ERROR, MOD_CAL, L"    SCardGetStatusChange returned: 0x%0x", lRet);
-			bCardPresent = FALSE;
+			bCardPresent = false;
 		}
 
 		return lRet;
