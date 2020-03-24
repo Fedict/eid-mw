@@ -142,6 +142,8 @@ TEST_FUNC(sign_state) {
 
 	check_rv(C_SignInit(session, &mech, privatekey));
 
+	check_rv(C_Sign(session, data, sizeof(data), NULL, &sig_len));
+
 	robot_remove_card();
 	robot_insert_card();
 
