@@ -123,7 +123,7 @@ public:
 		long GetTheStatusChange(unsigned long ulTimeout, SCARD_READERSTATEA * txReaderStates, unsigned long ulReaderCount);
 
 
-		long Status(const std::string & csReader, bool &bCardStillPresent);
+		bool CPCSC::Status(const std::string & csReader);
 
 		SCARDHANDLE Connect(const std::string & csReader, unsigned long ulShareMode = SCARD_SHARE_SHARED,
 				    unsigned long ulPreferredProtocols = SCARD_PROTOCOL_T0 );
@@ -150,10 +150,10 @@ public:
 		SCARDCONTEXT GetContext();
 
 		long SW12ToErr(unsigned long ulSW12);
-		long PcscToErr(unsigned long lRet);
 
 private:	
 
+		long PcscToErr(unsigned long lRet);
 		//unsigned long m_hContext;
 		SCARDCONTEXT m_hContext;
 
