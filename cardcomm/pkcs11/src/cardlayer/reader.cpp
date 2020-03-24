@@ -125,83 +125,49 @@ namespace eIDMW
 	{
 		tCardStatus status;
 		static int iStatusCount = 0;
-		bool cardPresent = false;
-		long lRet = SCARD_S_SUCCESS;
 
 		try
 		{
 			if (m_poCard == NULL)
 			{
 				//no card object created yet, if a card is present we should create one
-				lRet = m_poContext->m_oPCSC.Status(m_csReader, cardPresent);
-				if (lRet == SCARD_S_SUCCESS)
+				if (m_poContext->m_oPCSC.Status(m_csReader))
 				{
-					if (cardPresent == true)
-					{
-						status = Connect() ? CARD_INSERTED : CARD_NOT_PRESENT;
-					}
-					else
-					{
-						status = CARD_NOT_PRESENT;
-					}
-				}
-				else if (lRet == SCARD_E_SHARING_VIOLATION)
-				{
-					status = CARD_UNKNOWN_STATE;
+					status = Connect() ? CARD_INSERTED : CARD_NOT_PRESENT;
 				}
 				else
 				{
-					throw CMWEXCEPTION(m_poContext->m_oPCSC.PcscToErr(lRet));
+					status = CARD_NOT_PRESENT;
 				}
 			}
 			else
 			{
-				//card object was present already
+				//a card object is created already
 
-				lRet = m_poContext->m_oPCSC.Status(m_csReader, cardPresent);
-
-				if (lRet == SCARD_S_SUCCESS)
+				//check if the same card is still present (i.e. if we can still communicate using the current card handle)
+				if (m_poCard->Status())
 				{
-					if (cardPresent == true)
+					//we can still use the current card handle, so the same card is still present
+					status = CARD_STILL_PRESENT;
+				}
+				else
+				{
+					//its a different card, or no card, so drop the old connection (current card handle no longer valid)
+					Disconnect();
+
+					//check if a card is also present now
+					if (bReconnect && m_poContext->m_oPCSC.Status(m_csReader))
 					{
-						//check if card is still the same
-						if (m_poCard->Status())
-						{
-							status = CARD_STILL_PRESENT;
-						}
-						else
-						{
-							//its a different card, so drop the old connection
-							Disconnect();
-
-							if (bReconnect)
-							{
-								//try to start a new connection to this card
-								status = Connect() ? CARD_OTHER : CARD_REMOVED;
-							}
-							else
-							{
-								//no reconnection was wanted, so report as card removed
-								status = CARD_REMOVED;
-							}
-						}
+						//try to start a new connection to this card as a reconnection was wanted
+						status = Connect() ? CARD_OTHER : CARD_REMOVED;
 					}
-					//else
-					//{
-						//Disconnect(); not dropping the card context yet
-						//status = CARD_REMOVED;
-					//}
+					else
+					{
+						//either no reconnection was wanted and we'll report the old card as removed
+						//or the card has been removed and no new card is present yet
+						status = CARD_REMOVED;
+					}
 				}
-				else if (lRet == SCARD_E_SHARING_VIOLATION)
-				{
-					status = CARD_UNKNOWN_STATE;
-				}
-			}
-
-			if (iStatusCount < 5)
-			{
-				MWLOG(LEV_DEBUG, MOD_CAL, L"    ReaderStatus(): %ls", Status2String(status));
-				iStatusCount++;
 			}
 		}
 		catch (CMWException &e)
@@ -214,6 +180,12 @@ namespace eIDMW
 			{
 				throw e;
 			}
+		}
+
+		if (iStatusCount < 5)
+		{
+			MWLOG(LEV_DEBUG, MOD_CAL, L"    ReaderStatus(): %ls", Status2String(status));
+			iStatusCount++;
 		}
 
 		return status;

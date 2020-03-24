@@ -48,7 +48,7 @@ public:
 	 * a card context will be created when a card is detected and no context was present yet
 	 * an old card context will be removed if no card is present anymore
 	 * If the card has been removed and a (new) card has been inserted
-	 * then if bReconnect is true, this function will reconnect to the (new) card.
+	 * then if bReconnect is true, this function will connect to the (new) card.
 	 *
 	 * \retval #CARD_INSERTED      a card has been inserted
 	 * \retval #CARD_NOT_PRESENT   no card is present

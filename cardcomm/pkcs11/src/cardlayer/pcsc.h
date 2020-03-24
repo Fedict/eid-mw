@@ -132,7 +132,7 @@ public:
 		//attempt to start the pcsc service if it ain't running yet
 		//void StartPCSCService();
 
-		long Status(const std::string & csReader, bool &bCardStillPresent);
+		bool CPCSC::Status(const std::string & csReader);
 
 		SCARDHANDLE Connect(const std::string & csReader,
 				    unsigned long ulShareMode = SCARD_SHARE_SHARED,
@@ -166,11 +166,11 @@ public:
 		//unsigned long GetContext();
 		SCARDCONTEXT GetContext();
 
-		long SW12ToErr(unsigned long ulSW12);
-		long PcscToErr(unsigned long lRet);
+		long SW12ToErr(unsigned long ulSW12);		
 
 private:	
 
+		long PcscToErr(unsigned long lRet);
 		//unsigned long m_hContext;
 		SCARDCONTEXT m_hContext;
 

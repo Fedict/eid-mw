@@ -249,7 +249,7 @@ namespace eIDMW
 		return bChanged;
 	}
 
-	long CPCSC::Status(const std::string & csReader, bool &bCardPresent)
+	bool CPCSC::Status(const std::string & csReader)
 	{
 		SCARD_READERSTATEA xReaderState;
 
@@ -260,17 +260,13 @@ namespace eIDMW
 		xReaderState.cbAtr = 0;
 
 		long lRet = SCardGetStatusChange(m_hContext, 0, &xReaderState, 1);
-		if (SCARD_S_SUCCESS == lRet)
-		{
-			bCardPresent = (xReaderState.dwEventState & SCARD_STATE_PRESENT) == SCARD_STATE_PRESENT;
-		}
-		else
+		if (SCARD_S_SUCCESS != lRet)
 		{
 			MWLOG(LEV_ERROR, MOD_CAL, L"    SCardGetStatusChange returned: 0x%0x", lRet);
-			bCardPresent = false;
+			throw CMWEXCEPTION(PcscToErr(lRet));
 		}
 
-		return lRet;
+		return (xReaderState.dwEventState & SCARD_STATE_PRESENT) == SCARD_STATE_PRESENT;
 	}
 
 	SCARDHANDLE CPCSC::Connect(const std::string & csReader,
