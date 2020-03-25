@@ -123,7 +123,7 @@ public:
 		long GetTheStatusChange(unsigned long ulTimeout, SCARD_READERSTATEA * txReaderStates, unsigned long ulReaderCount);
 
 
-		bool CPCSC::Status(const std::string & csReader);
+		bool Status(const std::string & csReader);
 
 		SCARDHANDLE Connect(const std::string & csReader, unsigned long ulShareMode = SCARD_SHARE_SHARED,
 				    unsigned long ulPreferredProtocols = SCARD_PROTOCOL_T0 );
