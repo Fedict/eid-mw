@@ -132,7 +132,7 @@ public:
 		//attempt to start the pcsc service if it ain't running yet
 		//void StartPCSCService();
 
-		bool CPCSC::Status(const std::string & csReader);
+		bool Status(const std::string & csReader);
 
 		SCARDHANDLE Connect(const std::string & csReader,
 				    unsigned long ulShareMode = SCARD_SHARE_SHARED,
