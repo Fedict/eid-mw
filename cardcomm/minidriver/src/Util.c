@@ -32,7 +32,6 @@ DWORD BeidGetPubKey(PCARD_DATA  pCardData, DWORD cbCertif, PBYTE pbCertif, DWORD
 {
 	DWORD          dwReturn = 0;
 	PCCERT_CONTEXT pCertContext = NULL; 
-	DWORD          cbDecoded = 0;
 
 #ifdef _DEBUG
 	BLOBHEADER     BlobHeader;
