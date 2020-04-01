@@ -89,7 +89,7 @@ set OUR_CURRENT_PATH="%cd%"
 "%SIGNTOOL_PATH%\signtool" sign /a /n "ZetesTestCert" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi"
 @if %ERRORLEVEL%==1 goto signtool_failed
 @echo [INFO] copy 32 bit msi installer
-copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi %~dp0
+copy "%~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi" "%~dp0"
 
 @call "%~dp0..\..\installers\eid-mw\Windows\build_msi_eidmw64.cmd"
 @if %ERRORLEVEL%==1 goto end_resetpath_with_error
@@ -97,11 +97,11 @@ copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi %~dp0
 "%SIGNTOOL_PATH%\signtool" sign /a /n "ZetesTestCert" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_64.msi"
 @if %ERRORLEVEL%==1 goto signtool_failed
 @echo [INFO] copy 64 bit msi installer
-copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_64.msi %~dp0
+copy "%~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_64.msi" "%~dp0"
 
 @cd "%OUR_CURRENT_PATH%"
 
-@cd %~dp0..\..\installers\eid-viewer\Windows
+@cd "%~dp0..\..\installers\eid-viewer\Windows"
 
 @call "%~dp0..\..\installers\eid-viewer\Windows\build_msi_eidviewer.cmd"
 @if %ERRORLEVEL%==1 goto end_resetpath_with_error
@@ -109,7 +109,7 @@ copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_64.msi %~dp0
 "%SIGNTOOL_PATH%\signtool" sign /a /n "ZetesTestCert" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi"
 @if %ERRORLEVEL%==1 goto signtool_failed
 @echo [INFO] copy 32 bit msi installer
-copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi %~dp0
+copy "%~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi" "%~dp0"
 
 @cd "%OUR_CURRENT_PATH%"
 
@@ -151,8 +151,8 @@ copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi %~dp0
 :: copy the NSIS installers
 :: =========================
 @echo [INFO] copy nsis installers
-copy "%~dp0..\..\installers\quickinstaller\Belgium eID-QuickInstaller %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe" %~dp0
-copy "%~dp0..\..\installers\quickinstaller\Belgium eID Viewer Installer %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe" %~dp0
+copy "%~dp0..\..\installers\quickinstaller\Belgium eID-QuickInstaller %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe" "%~dp0"
+copy "%~dp0..\..\installers\quickinstaller\Belgium eID Viewer Installer %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe" "%~dp0"
 goto end_resetpath
 
 :msbuild_failed

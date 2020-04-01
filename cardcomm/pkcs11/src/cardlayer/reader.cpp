@@ -77,9 +77,11 @@ namespace eIDMW
 		tCardStatus status;
 		static int iStatusCount = 0;
 
-		try {
+		try
+		{
 			if (m_poCard == NULL)
 			{
+				//no card object created yet, if a card is present we should create one
 				if (m_poPCSC->Status(m_csReader))
 				{
 					if (!bPresenceOnly) {
@@ -89,31 +91,48 @@ namespace eIDMW
 					}
 				}
 				else
+				{
 					status = CARD_NOT_PRESENT;
-			} else
+				}
+			}
+			else
 			{
-				if (m_poPCSC->Status(m_csReader))
+				//a card object is created already
+
+				//check if the same card is still present (i.e. if we can still communicate using the current card handle)
+				if (m_poCard->Status())
 				{
+					//we can still use the current card handle, so the same card is still present
 					status = CARD_STILL_PRESENT;
-				} else
+				}
+				else
 				{
+					//its a different card, or no card, so drop the old connection (current card handle no longer valid)
 					Disconnect();
-					// if bReconnect = true, then we try to connect to a
-					// possibly new card that has been inserted
+
+					//check if a card is also present now
 					if (bReconnect && m_poPCSC->Status(m_csReader))
 					{
-						status = Connect()? CARD_OTHER : CARD_REMOVED;
+						//try to start a new connection to this card as a reconnection was wanted
+						status = Connect() ? CARD_OTHER : CARD_REMOVED;
 					}
-						
 					else
+					{
+						//either no reconnection was wanted and we'll report the old card as removed
+						//or the card has been removed and no new card is present yet
 						status = CARD_REMOVED;
+					}
 				}
 			}
 		}
-		catch(CMWException &e) {
-			if(e.GetError() == EIDMW_ERR_CARD_SHARING) {
+		catch (CMWException &e)
+		{
+			if (e.GetError() == EIDMW_ERR_CARD_SHARING)
+			{
 				status = CARD_UNKNOWN_STATE;
-			} else {
+			}
+			else
+			{
 				throw e;
 			}
 		}

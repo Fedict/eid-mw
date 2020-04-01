@@ -45,6 +45,11 @@ public:
 
 	/**
 	 * Get the status w.r.t. a card being present in the reader
+	 * a card context will be created when a card is detected and no context was present yet
+	 * an old card context will be removed if no card is present anymore
+	 * If the card has been removed and a (new) card has been inserted
+	 * then if bReconnect is true, this function will connect to the (new) card.
+	 *
 	 * \retval #CARD_INSERTED      a card has been inserted
 	 * \retval #CARD_NOT_PRESENT   no card is present
 	 * \retval #CARD_STILL_PRESENT the card we connected to is stil present
@@ -52,9 +57,6 @@ public:
 	 * \retval #CARD_OTHER         the card has been removed and replace by (another) one,
 	 *             this can only be returned if bReconnect = true
 	 * \retval #CARD_UNKNOWN_STATE we were unable to determine card status (e.g., because the slot is in use by another process)
-	 *
-	 * If the card has been removed and a (new) card has been inserted
-	 * then if bReconnect is true, this function will reconnect to the (new) card.
 	 */
 		tCardStatus Status(bool bReconnect = false, bool bPresenceOnly = false);
 

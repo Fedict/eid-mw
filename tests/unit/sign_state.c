@@ -142,6 +142,13 @@ TEST_FUNC(sign_state) {
 
 	check_rv(C_SignInit(session, &mech, privatekey));
 
+	check_rv(C_Sign(session, data, sizeof(data), NULL, &sig_len));
+
+	robot_remove_card();
+	robot_insert_card();
+
+	check_rv_long(C_Sign(session, data, sizeof(data), NULL, &sig_len), m_is_rmvd);
+
 	check_rv(C_FindObjectsFinal(session));
 
 	check_rv(C_Finalize(NULL_PTR));

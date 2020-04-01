@@ -219,9 +219,7 @@ extern "C"
 #define BEID_LABEL_DATA_KeyExchangeVersion		"carddata_key_exchange_version"
 #define BEID_LABEL_DATA_PKCS15Version			"carddata_pkcs15_version"
 #define BEID_LABEL_DATA_Signature				"carddata_signature"
-#define BEID_LABEL_DATA_PinAuth					"carddata_pin_authentication_counter"
-#define BEID_LABEL_DATA_PinNonRep				"carddata_pin_nonrepudiation_counter"
-#define BEID_LABEL_DATA_PinReadEf				"carddata_pin_read_ef_counter"
+#define BEID_LABEL_DATA_PinAuth					"carddata_pin_counter"
 
 #define BEID_LABEL_ATR							"ATR"
 
