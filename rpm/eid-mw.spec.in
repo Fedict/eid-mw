@@ -4,7 +4,7 @@ Version: @MAINVERSION@
 Release: 0.%{revision}%{?dist}
 License: LGPL
 Group: Applications/Communications
-URL: http://eid.belgium.be/
+URL: https://eid.belgium.be/
 
 Source: http://eidmw.yourict.net/dist/sources/eid-mw-%{version}-%{revision}.tar.gz
 Source1: baselibs.conf
