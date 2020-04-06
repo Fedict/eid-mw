@@ -6,7 +6,7 @@ License: LGPL
 Group: Applications/Communications
 URL: https://eid.belgium.be/
 
-Source: http://eidmw.yourict.net/dist/sources/eid-mw-%{version}-%{revision}.tar.gz
+Source: eid-mw-%{version}-%{revision}.tar.gz
 Source1: baselibs.conf
 #BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
