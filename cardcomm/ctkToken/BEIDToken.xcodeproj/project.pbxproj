@@ -3,13 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2F3883B31CF46C9D00F114A7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F3883B21CF46C9D00F114A7 /* Cocoa.framework */; };
 		2F3883BF1CF46C9D00F114A7 /* BEIDToken.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2F3883B01CF46C9D00F114A7 /* BEIDToken.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		2F3883CA1CF46DD400F114A7 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F3883C91CF46DD400F114A7 /* libz.dylib */; };
 		8B27BEFC1DA53FC7009652DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B27BEF71DA53FC7009652DF /* Assets.xcassets */; };
 		8B27BEFD1DA53FC7009652DF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B27BEF91DA53FC7009652DF /* AppDelegate.m */; };
 		8B27BEFE1DA53FC7009652DF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B27BEFA1DA53FC7009652DF /* main.m */; };
@@ -18,6 +16,16 @@
 		8B6D46D71DAB98AD00149838 /* TokenSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B27BF041DA54051009652DF /* TokenSession.m */; };
 		8B6D46D91DAB9AF800149838 /* en.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 8B27BF061DA54051009652DF /* en.lproj */; };
 		8B91F8B21DAB8C8B00FA5E0C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B91F8B01DAB8C8B00FA5E0C /* MainMenu.xib */; };
+		AB43115E243D195D00E117B3 /* de.lproj in Resources */ = {isa = PBXBuildFile; fileRef = AB43115D243D195D00E117B3 /* de.lproj */; };
+		ABD1EFD6243D11940053797C /* nl.lproj in Resources */ = {isa = PBXBuildFile; fileRef = ABD1EFD2243D11940053797C /* nl.lproj */; };
+		ABD1EFD7243D11940053797C /* de.lproj in Resources */ = {isa = PBXBuildFile; fileRef = ABD1EFD3243D11940053797C /* de.lproj */; };
+		ABD1EFD8243D11940053797C /* fr.lproj in Resources */ = {isa = PBXBuildFile; fileRef = ABD1EFD4243D11940053797C /* fr.lproj */; };
+		ABD1EFDB243D11C00053797C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABD1EFDA243D11C00053797C /* Foundation.framework */; };
+		ABD1EFDF243D11DA0053797C /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = ABD1EFDE243D11CD0053797C /* libz.tbd */; };
+		ABD1EFE1243D12010053797C /* CryptoTokenKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABD1EFE0243D12010053797C /* CryptoTokenKit.framework */; };
+		ABD1EFE3243D13350053797C /* nl.lproj in Resources */ = {isa = PBXBuildFile; fileRef = ABD1EFE2243D13350053797C /* nl.lproj */; };
+		ABD1EFE7243D16210053797C /* en.lproj in Resources */ = {isa = PBXBuildFile; fileRef = ABD1EFE6243D16210053797C /* en.lproj */; };
+		ABD1EFE9243D17A50053797C /* fr.lproj in Resources */ = {isa = PBXBuildFile; fileRef = ABD1EFE8243D17A50053797C /* fr.lproj */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +75,18 @@
 		8B7FA33A205284F2008DC9D9 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/MainMenu.strings; sourceTree = "<group>"; };
 		8B7FA33C20528532008DC9D9 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/MainMenu.strings; sourceTree = "<group>"; };
 		8B91F8B11DAB8C8B00FA5E0C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = BEIDTokenApp/Base.lproj/MainMenu.xib; sourceTree = SOURCE_ROOT; };
+		AB43115D243D195D00E117B3 /* de.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = de.lproj; sourceTree = "<group>"; };
+		ABD1EFD2243D11940053797C /* nl.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = nl.lproj; sourceTree = "<group>"; };
+		ABD1EFD3243D11940053797C /* de.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = de.lproj; sourceTree = "<group>"; };
+		ABD1EFD4243D11940053797C /* fr.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fr.lproj; sourceTree = "<group>"; };
+		ABD1EFDA243D11C00053797C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		ABD1EFDC243D11C50053797C /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		ABD1EFDE243D11CD0053797C /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		ABD1EFE0243D12010053797C /* CryptoTokenKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoTokenKit.framework; path = System/Library/Frameworks/CryptoTokenKit.framework; sourceTree = SDKROOT; };
+		ABD1EFE2243D13350053797C /* nl.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = nl.lproj; sourceTree = "<group>"; };
+		ABD1EFE5243D13AC0053797C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		ABD1EFE6243D16210053797C /* en.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = en.lproj; sourceTree = "<group>"; };
+		ABD1EFE8243D17A50053797C /* fr.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fr.lproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,8 +101,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2F3883CA1CF46DD400F114A7 /* libz.dylib in Frameworks */,
-				2F3883B31CF46C9D00F114A7 /* Cocoa.framework in Frameworks */,
+				ABD1EFDF243D11DA0053797C /* libz.tbd in Frameworks */,
+				ABD1EFE1243D12010053797C /* CryptoTokenKit.framework in Frameworks */,
+				ABD1EFDB243D11C00053797C /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,6 +136,10 @@
 				8B91F8B01DAB8C8B00FA5E0C /* MainMenu.xib */,
 				8B27BEF61DA53FC7009652DF /* Info.plist */,
 				8B27BEF71DA53FC7009652DF /* Assets.xcassets */,
+				ABD1EFD3243D11940053797C /* de.lproj */,
+				ABD1EFE6243D16210053797C /* en.lproj */,
+				ABD1EFD4243D11940053797C /* fr.lproj */,
+				ABD1EFD2243D11940053797C /* nl.lproj */,
 				8B27BEF81DA53FC7009652DF /* AppDelegate.h */,
 				8B27BEF91DA53FC7009652DF /* AppDelegate.m */,
 				2F38839E1CF46C6E00F114A7 /* Supporting Files */,
@@ -133,6 +158,10 @@
 		2F3883B11CF46C9D00F114A7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				ABD1EFE0243D12010053797C /* CryptoTokenKit.framework */,
+				ABD1EFDE243D11CD0053797C /* libz.tbd */,
+				ABD1EFDC243D11C50053797C /* AppKit.framework */,
+				ABD1EFDA243D11C00053797C /* Foundation.framework */,
 				2F3883C91CF46DD400F114A7 /* libz.dylib */,
 				2F3883B21CF46C9D00F114A7 /* Cocoa.framework */,
 			);
@@ -148,7 +177,10 @@
 				8B27BF031DA54051009652DF /* Token.h */,
 				8B27BF041DA54051009652DF /* TokenSession.m */,
 				8B27BF051DA54051009652DF /* TokenSession.h */,
+				AB43115D243D195D00E117B3 /* de.lproj */,
 				8B27BF061DA54051009652DF /* en.lproj */,
+				ABD1EFE8243D17A50053797C /* fr.lproj */,
+				ABD1EFE2243D13350053797C /* nl.lproj */,
 				2F3883B51CF46C9D00F114A7 /* Supporting Files */,
 			);
 			path = BEIDToken;
@@ -207,21 +239,19 @@
 		2F3883901CF46C6E00F114A7 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1010;
+				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = "";
 				TargetAttributes = {
 					2F3883971CF46C6E00F114A7 = {
 						CreatedOnToolsVersion = 8.0;
-						ProvisioningStyle = Manual;
 					};
 					2F3883AF1CF46C9D00F114A7 = {
 						CreatedOnToolsVersion = 8.0;
-						ProvisioningStyle = Manual;
 					};
 				};
 			};
 			buildConfigurationList = 2F3883931CF46C6E00F114A7 /* Build configuration list for PBXProject "BEIDToken" */;
-			compatibilityVersion = "Xcode 8.0";
+			compatibilityVersion = "Xcode 11.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -248,6 +278,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B91F8B21DAB8C8B00FA5E0C /* MainMenu.xib in Resources */,
+				ABD1EFD6243D11940053797C /* nl.lproj in Resources */,
+				ABD1EFD7243D11940053797C /* de.lproj in Resources */,
+				ABD1EFD8243D11940053797C /* fr.lproj in Resources */,
+				ABD1EFE7243D16210053797C /* en.lproj in Resources */,
 				8B27BEFC1DA53FC7009652DF /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -257,6 +291,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B6D46D91DAB9AF800149838 /* en.lproj in Resources */,
+				ABD1EFE9243D17A50053797C /* fr.lproj in Resources */,
+				AB43115E243D195D00E117B3 /* de.lproj in Resources */,
+				ABD1EFE3243D13350053797C /* nl.lproj in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,6 +337,7 @@
 				8B7FA335205282A0008DC9D9 /* nl */,
 				8B7FA33A205284F2008DC9D9 /* de */,
 				8B7FA33C20528532008DC9D9 /* fr */,
+				ABD1EFE5243D13AC0053797C /* en */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -314,7 +352,7 @@
 				ASSETCATALOG_COMPRESSION = lossless;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -337,13 +375,14 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 5.0.1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = EU27N85PBZ;
+				DEVELOPMENT_TEAM = YZAQ856TTM;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -357,11 +396,16 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				GENERATE_PKGINFO_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
-				VALID_ARCHS = x86_64;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_BUILDER = "$(USER)";
+				VERSION_INFO_FILE = BEIDTokenVers.c;
 			};
 			name = Debug;
 		};
@@ -372,7 +416,7 @@
 				ASSETCATALOG_COMPRESSION = "respect-asset-catalog";
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -395,14 +439,15 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 5.0.1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = EU27N85PBZ;
+				DEVELOPMENT_TEAM = YZAQ856TTM;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -410,10 +455,15 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				GENERATE_PKGINFO_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
-				VALID_ARCHS = x86_64;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_BUILDER = "$(USER)";
+				VERSION_INFO_FILE = BEIDTokenVers.c;
 			};
 			name = Release;
 		};
@@ -421,12 +471,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
-				ENABLE_HARDENED_RUNTIME = NO;
+				DEVELOPMENT_TEAM = YZAQ856TTM;
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = BEIDTokenApp/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = be.fedict.BEIDToken.BEIDTokenApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -437,13 +491,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = EU27N85PBZ;
+				DEVELOPMENT_TEAM = YZAQ856TTM;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = BEIDTokenApp/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				OTHER_CODE_SIGN_FLAGS = "--timestamp";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = be.fedict.BEIDToken.BEIDTokenApp;
 				PRODUCT_NAME = BEIDToken;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -453,13 +510,19 @@
 		2F3883C11CF46C9D00F114A7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = BEIDToken/BEIDToken.entitlements;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
-				ENABLE_HARDENED_RUNTIME = NO;
+				DEVELOPMENT_TEAM = YZAQ856TTM;
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = BEIDToken/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = be.fedict.BEIDToken.BEIDTokenApp.BEIDToken;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -470,14 +533,19 @@
 		2F3883C21CF46C9D00F114A7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = BEIDToken/BEIDToken.entitlements;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = EU27N85PBZ;
+				DEVELOPMENT_TEAM = YZAQ856TTM;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = BEIDToken/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
-				OTHER_CODE_SIGN_FLAGS = "--timestamp";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = be.fedict.BEIDToken.BEIDTokenApp.BEIDToken;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

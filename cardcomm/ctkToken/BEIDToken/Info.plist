@@ -19,9 +19,11 @@
 	<key>CFBundleShortVersionString</key>
 	<string>5.0.1</string>
 	<key>CFBundleSignature</key>
-	<string>????</string>
+	<string>IDTK</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.utilities</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
 	<key>NSExtension</key>

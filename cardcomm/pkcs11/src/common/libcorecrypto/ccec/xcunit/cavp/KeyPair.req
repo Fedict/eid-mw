@@ -1,0 +1,7 @@
+# CAVS 3.0
+# "Key Pair" information for "ECDSA_Test"
+# Curves selected: P-192 K-233
+[P-192]
+N = 10
+[K-233]
+N = 10

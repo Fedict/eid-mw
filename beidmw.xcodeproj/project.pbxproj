@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -61,15 +61,12 @@
 		65270A7C1FE97A2B004F326D /* natnumconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65270A5B1FE97A2A004F326D /* natnumconv.cpp */; };
 		65270A821FE97A2B004F326D /* convert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65270A611FE97A2A004F326D /* convert.cpp */; };
 		65270A881FE97E7D004F326D /* libbeidpkcs11.5.0.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.5.0.1.dylib */; };
-		65270A8A1FE97E97004F326D /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65270A891FE97E97004F326D /* libcrypto.a */; };
-		65270A8C1FE97EBD004F326D /* libxml2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65270A8B1FE97EBD004F326D /* libxml2.a */; };
 		65314FBC2080E9E10079D0B0 /* workpermitconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65314FB72080E9E10079D0B0 /* workpermitconv.cpp */; };
 		65314FBD2080E9E20079D0B0 /* workpermitconv.h in Headers */ = {isa = PBXBuildFile; fileRef = 65314FBB2080E9E10079D0B0 /* workpermitconv.h */; };
 		653490F01FEA75FE000F7787 /* libbeidpkcs11.5.0.1.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.5.0.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		653490FD1FEA7B3A000F7787 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 653490FC1FEA7B3A000F7787 /* main.c */; };
 		6534910E1FEA7BE7000F7787 /* GeneratePreviewForURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 6534910C1FEA7BE6000F7787 /* GeneratePreviewForURL.m */; };
 		6534910F1FEA7BE7000F7787 /* GenerateThumbnailForURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 6534910D1FEA7BE7000F7787 /* GenerateThumbnailForURL.m */; };
-		653491101FEA7C64000F7787 /* libxml2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65270A8B1FE97EBD004F326D /* libxml2.a */; };
 		653491111FEA8065000F7787 /* dataroot-osx.m in Sources */ = {isa = PBXBuildFile; fileRef = 65270A2A1FE976BE004F326D /* dataroot-osx.m */; };
 		653491121FEA8072000F7787 /* base64dec.c in Sources */ = {isa = PBXBuildFile; fileRef = 65270A231FE976BC004F326D /* base64dec.c */; };
 		653491131FEA8074000F7787 /* base64dec.h in Sources */ = {isa = PBXBuildFile; fileRef = 65270A221FE976BC004F326D /* base64dec.h */; };
@@ -153,16 +150,7 @@
 		86C0E77421C2586E00602028 /* hash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86C0E74421C2586E00602028 /* hash.cpp */; };
 		86C0E77521C2586E00602028 /* svn_revision.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C0E74521C2586E00602028 /* svn_revision.h */; };
 		86C0E77621C2586E00602028 /* dynamiclib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86C0E74621C2586E00602028 /* dynamiclib.cpp */; };
-		86C0E77821C2586E00602028 /* tomcrypt_hash.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C0E74921C2586E00602028 /* tomcrypt_hash.h */; };
-		86C0E77921C2586E00602028 /* sha1.c in Sources */ = {isa = PBXBuildFile; fileRef = 86C0E74A21C2586E00602028 /* sha1.c */; };
-		86C0E77A21C2586E00602028 /* tomcrypt_macros.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C0E74B21C2586E00602028 /* tomcrypt_macros.h */; };
-		86C0E77B21C2586E00602028 /* tomcrypt_cfg.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C0E74C21C2586E00602028 /* tomcrypt_cfg.h */; };
 		86C0E77C21C2586E00602028 /* sha256.c in Sources */ = {isa = PBXBuildFile; fileRef = 86C0E74D21C2586E00602028 /* sha256.c */; };
-		86C0E77D21C2586E00602028 /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = 86C0E74E21C2586E00602028 /* md5.c */; };
-		86C0E77E21C2586E00602028 /* tomcrypt_argchk.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C0E74F21C2586E00602028 /* tomcrypt_argchk.h */; };
-		86C0E77F21C2586E00602028 /* sha512.c in Sources */ = {isa = PBXBuildFile; fileRef = 86C0E75021C2586E00602028 /* sha512.c */; };
-		86C0E78021C2586E00602028 /* rmd160.c in Sources */ = {isa = PBXBuildFile; fileRef = 86C0E75121C2586E00602028 /* rmd160.c */; };
-		86C0E78121C2586E00602028 /* sha384.c in Sources */ = {isa = PBXBuildFile; fileRef = 86C0E75221C2586E00602028 /* sha384.c */; };
 		86C0E78221C2586E00602028 /* hash.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C0E75321C2586E00602028 /* hash.h */; };
 		86C0E78321C2586E00602028 /* configbase.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C0E75421C2586E00602028 /* configbase.h */; };
 		86C0E78421C2586E00602028 /* mwexception.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C0E75521C2586E00602028 /* mwexception.h */; };
@@ -227,6 +215,15 @@
 		8BD62CA121021C6300C28B6D /* toxmlmemberoffamilyconv.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BC8E012210216900026D6AB /* toxmlmemberoffamilyconv.h */; };
 		8BD62CA221021C7000C28B6D /* xmlfileversconv.h in Headers */ = {isa = PBXBuildFile; fileRef = 6578014F20D135F4002B826A /* xmlfileversconv.h */; };
 		8BD62CA321021C9300C28B6D /* booldecode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8E00F210216900026D6AB /* booldecode.cpp */; };
+		AB68D65E243CA07100BA8851 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AB68D65D243CA06800BA8851 /* libxml2.tbd */; };
+		AB8BE5D5243CC2AF003967F8 /* libcorecrypto_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB8BE5B2243CC1FF003967F8 /* libcorecrypto_static.a */; };
+		AB8BE6C6243CC5AB003967F8 /* libcrypto.1.0.1.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = AB8BE688243CC4D4003967F8 /* libcrypto.1.0.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		AB8BE6C8243CC5B1003967F8 /* libssl.1.0.1.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = AB8BE68A243CC4D4003967F8 /* libssl.1.0.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		AB8BE6C9243CC5C2003967F8 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AB68D65D243CA06800BA8851 /* libxml2.tbd */; };
+		AB8BE6CB243CC5D2003967F8 /* libcrypto.1.0.1.dylib in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AB8BE688243CC4D4003967F8 /* libcrypto.1.0.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		ABF9A4FB243CD55000D3528B /* libcrypto.1.0.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AB8BE688243CC4D4003967F8 /* libcrypto.1.0.1.dylib */; };
+		ABF9A4FC243CD55000D3528B /* libssl.1.0.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AB8BE68A243CC4D4003967F8 /* libssl.1.0.1.dylib */; };
+		ABF9A4FD243CD55800D3528B /* libcrypto.1.0.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AB8BE688243CC4D4003967F8 /* libcrypto.1.0.1.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -258,6 +255,377 @@
 			remoteGlobalIDString = 86F33B0C1987A6B400E200F0;
 			remoteInfo = test_dialogs;
 		};
+		AB715D58243D09C700B3D387 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB715D53243D09C600B3D387 /* BEIDToken.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2F3883981CF46C6E00F114A7;
+			remoteInfo = BEIDTokenApp;
+		};
+		AB715D5A243D09C700B3D387 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB715D53243D09C600B3D387 /* BEIDToken.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2F3883B01CF46C9D00F114A7;
+			remoteInfo = BEIDToken;
+		};
+		AB8BE5AF243CC1FF003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4CC0779F152E4D6C00D0C77B;
+			remoteInfo = corecrypto_headers;
+		};
+		AB8BE5B1243CC1FF003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4BC68AA11B06C1900098A4AA;
+			remoteInfo = corecrypto_static;
+		};
+		AB8BE5B3243CC1FF003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5DDA38E814DAFE6B006151BE;
+			remoteInfo = corecrypto_dylib;
+		};
+		AB8BE5B5243CC1FF003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0CEF581D14C0FC34000A93B0;
+			remoteInfo = corecrypto_kext;
+		};
+		AB8BE5B7243CC1FF003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 79A743AD14BCF4CA00CCBEFB;
+			remoteInfo = corecrypto_l4;
+		};
+		AB8BE5B9243CC1FF003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EEFE55EC199B3BEF00C16C1B;
+			remoteInfo = corecrypto_s3;
+		};
+		AB8BE5BB243CC1FF003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4B4A47321A6835BB00E88587;
+			remoteInfo = corecrypto_seprom;
+		};
+		AB8BE5BD243CC1FF003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 48498647175EF49A0090831A;
+			remoteInfo = corecrypto_iboot;
+		};
+		AB8BE5BF243CC1FF003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4BFF737C1B3CBA5400A5686E;
+			remoteInfo = corecrypto_efi;
+		};
+		AB8BE5C1243CC1FF003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4C9AD0EB1200D68E004C50F5;
+			remoteInfo = validation;
+		};
+		AB8BE5C3243CC1FF003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4CE89A491267ABCE004179B9;
+			remoteInfo = ec_verify;
+		};
+		AB8BE5C5243CC1FF003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0C28C72C1410018F008A2E7E;
+			remoteInfo = ccdh_gen_gp;
+		};
+		AB8BE5C7243CC1FF003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5DDA38FD14DB005F006151BE;
+			remoteInfo = cc_fips_test;
+		};
+		AB8BE5C9243CC1FF003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5D9A49E9151A56F80003E474;
+			remoteInfo = hmacfiletool;
+		};
+		AB8BE5CB243CC1FF003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0C75E6CE12E15717009E8E65;
+			remoteInfo = corecrypto_perf;
+		};
+		AB8BE5CD243CC1FF003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4850041E16027EC60091A2A3;
+			remoteInfo = corecrypto_test;
+		};
+		AB8BE5CF243CC1FF003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4B1A5AF41AFC0B3300DDE509;
+			remoteInfo = corecrypto_test_asan;
+		};
+		AB8BE5D1243CC291003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 4CC075D8152E4D6C00D0C77B;
+			remoteInfo = corecrypto_headers;
+		};
+		AB8BE5D3243CC299003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D;
+			remoteInfo = corecrypto_static;
+		};
+		AB8BE685243CC4D4003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1C3434430F71AB0C0045E860;
+			remoteInfo = openssl;
+		};
+		AB8BE687243CC4D4003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1C342FEE0F71A9220045E860;
+			remoteInfo = crypto.1.0.1;
+		};
+		AB8BE689243CC4D4003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1C3430030F71AA900045E860;
+			remoteInfo = ssl1.0.1;
+		};
+		AB8BE68B243CC4D4003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1C4E311B0FA115F600F91AE5;
+			remoteInfo = test_des;
+		};
+		AB8BE68D243CC4D4003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1C4E31680FA1236F00F91AE5;
+			remoteInfo = test_sha;
+		};
+		AB8BE68F243CC4D4003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1CD4BB460FA1257A001142D5;
+			remoteInfo = test_sha1;
+		};
+		AB8BE691243CC4D4003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1CD4BB5B0FA125E0001142D5;
+			remoteInfo = test_sha256;
+		};
+		AB8BE693243CC4D4003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1CD4BB6F0FA12632001142D5;
+			remoteInfo = test_sha512;
+		};
+		AB8BE695243CC4D4003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1CD4BB810FA1267A001142D5;
+			remoteInfo = test_mdc2;
+		};
+		AB8BE697243CC4D4003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1CD4BB920FA126C3001142D5;
+			remoteInfo = test_md5;
+		};
+		AB8BE699243CC4D4003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1CD4BBAC0FA12719001142D5;
+			remoteInfo = test_md4;
+		};
+		AB8BE69B243CC4D4003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1CD4BBBD0FA1275B001142D5;
+			remoteInfo = test_hmac;
+		};
+		AB8BE69D243CC4D4003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1CD4BBD40FA127D4001142D5;
+			remoteInfo = test_md2;
+		};
+		AB8BE69F243CC4D4003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1CD4BBE60FA12860001142D5;
+			remoteInfo = test_rmd;
+		};
+		AB8BE6A1243CC4D4003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1CD4BBF80FA129F2001142D5;
+			remoteInfo = test_bf;
+		};
+		AB8BE6A3243CC4D4003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1CD4BC0C0FA12A51001142D5;
+			remoteInfo = test_cast;
+		};
+		AB8BE6A5243CC4D4003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1CD4BC1D0FA12A9C001142D5;
+			remoteInfo = test_rc2;
+		};
+		AB8BE6A7243CC4D4003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1CD4BC2E0FA12AD8001142D5;
+			remoteInfo = test_rc4;
+		};
+		AB8BE6A9243CC4D4003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1CD4BC420FA12B4D001142D5;
+			remoteInfo = test_rc5;
+		};
+		AB8BE6AB243CC4D4003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1CD4BC540FA12BBB001142D5;
+			remoteInfo = test_rand;
+		};
+		AB8BE6AD243CC4D4003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1CD4BCE70FA13531001142D5;
+			remoteInfo = test_bn;
+		};
+		AB8BE6AF243CC4D4003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1CD4BD0B0FA137BC001142D5;
+			remoteInfo = test_exp;
+		};
+		AB8BE6B1243CC4D4003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1CD4BD250FA1383A001142D5;
+			remoteInfo = test_ec;
+		};
+		AB8BE6B3243CC4D4003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1CD4BD390FA13897001142D5;
+			remoteInfo = test_ecdsa;
+		};
+		AB8BE6B5243CC4D4003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1CD4BD4D0FA138F6001142D5;
+			remoteInfo = test_ecdh;
+		};
+		AB8BE6B7243CC4D4003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1CD4BD750FA13B0C001142D5;
+			remoteInfo = test_dh;
+		};
+		AB8BE6B9243CC4D4003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1CD4BD940FA13B6B001142D5;
+			remoteInfo = test_dsa;
+		};
+		AB8BE6BB243CC4D4003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1CD4BDE10FA13E07001142D5;
+			remoteInfo = test_engine;
+		};
+		AB8BE6BD243CC4D4003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1CD4BDF50FA13E59001142D5;
+			remoteInfo = test_ige;
+		};
+		AB8BE6BF243CC4D4003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1CD4BE0B0FA13ED4001142D5;
+			remoteInfo = test_jpake;
+		};
+		AB8BE6C1243CC4D4003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1C6CEF440FA239E100D47643;
+			remoteInfo = test_ssl;
+		};
+		AB8BE6C3243CC4D4003967F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4C1115AE110A862400FCEEB6;
+			remoteInfo = "Unit Tests";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -268,6 +636,8 @@
 			dstSubfolderSpec = 10;
 			files = (
 				653490F01FEA75FE000F7787 /* libbeidpkcs11.5.0.1.dylib in CopyFiles */,
+				AB8BE6C6243CC5AB003967F8 /* libcrypto.1.0.1.dylib in CopyFiles */,
+				AB8BE6C8243CC5B1003967F8 /* libssl.1.0.1.dylib in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,6 +657,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				659FD5861FEA867600E4AF83 /* BeidView.framework in Embed Frameworks */,
+				AB8BE6CB243CC5D2003967F8 /* libcrypto.1.0.1.dylib in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -568,6 +939,13 @@
 		8BC8E011210216900026D6AB /* toxmlmemberoffamilyconv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = toxmlmemberoffamilyconv.cpp; sourceTree = "<group>"; };
 		8BC8E012210216900026D6AB /* toxmlmemberoffamilyconv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = toxmlmemberoffamilyconv.h; sourceTree = "<group>"; };
 		8BCC05F7211479F90015C705 /* pkcs11log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pkcs11log.h; path = cardcomm/pkcs11/src/pkcs11log.h; sourceTree = "<group>"; };
+		AB68D657243CA04700BA8851 /* libcrypto.1.0.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.1.0.1.dylib; path = ../../../../usr/local/lib/libcrypto.1.0.1.dylib; sourceTree = "<group>"; };
+		AB68D65A243CA05F00BA8851 /* libssl.1.0.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.1.0.1.dylib; path = ../../../../usr/local/lib/libssl.1.0.1.dylib; sourceTree = "<group>"; };
+		AB68D65D243CA06800BA8851 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
+		AB715D53243D09C600B3D387 /* BEIDToken.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BEIDToken.xcodeproj; path = cardcomm/ctkToken/BEIDToken.xcodeproj; sourceTree = "<group>"; };
+		AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = corecrypto.xcodeproj; path = cardcomm/pkcs11/src/common/libcorecrypto/corecrypto.xcodeproj; sourceTree = "<group>"; };
+		AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openssl.xcodeproj; path = "OpenSSL-1.0.1j-Apple-Catalina/openssl.xcodeproj"; sourceTree = "<group>"; };
+		ABA19114243CAB3800116415 /* BeidView.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = BeidView.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -576,6 +954,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				659FD5851FEA867600E4AF83 /* BeidView.framework in Frameworks */,
+				ABF9A4FD243CD55800D3528B /* libcrypto.1.0.1.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -583,9 +962,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABF9A4FB243CD55000D3528B /* libcrypto.1.0.1.dylib in Frameworks */,
+				ABF9A4FC243CD55000D3528B /* libssl.1.0.1.dylib in Frameworks */,
 				65270A881FE97E7D004F326D /* libbeidpkcs11.5.0.1.dylib in Frameworks */,
-				65270A8A1FE97E97004F326D /* libcrypto.a in Frameworks */,
-				65270A8C1FE97EBD004F326D /* libxml2.a in Frameworks */,
+				AB68D65E243CA07100BA8851 /* libxml2.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -593,7 +973,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				653491101FEA7C64000F7787 /* libxml2.a in Frameworks */,
+				AB8BE6C9243CC5C2003967F8 /* libxml2.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -609,6 +989,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB8BE5D5243CC2AF003967F8 /* libcorecrypto_static.a in Frameworks */,
 				86CE3689187EB5E700EB96A5 /* CoreFoundation.framework in Frameworks */,
 				86CE3688187EB58A00EB96A5 /* PCSC.framework in Frameworks */,
 			);
@@ -632,7 +1013,10 @@
 		0867D691FE84028FC02AAC07 /* beidmw */ = {
 			isa = PBXGroup;
 			children = (
+				AB715D53243D09C600B3D387 /* BEIDToken.xcodeproj */,
 				86BC84C01A037C19009E374E /* test_dialogs.xcodeproj */,
+				AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */,
+				AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */,
 				6536230C19A7E8FE00D46ECB /* testsuite */,
 				7FA1AA420F85F446000D9EE1 /* Pkcs11 */,
 				5073E0CA09E734BC00EC74B6 /* Configuration Files */,
@@ -734,6 +1118,7 @@
 				65270A091FE9761A004F326D /* trustdirname.m */,
 				652709FC1FE975A1004F326D /* BeidView.h */,
 				652709FD1FE975A1004F326D /* Info.plist */,
+				ABA19114243CAB3800116415 /* BeidView.entitlements */,
 			);
 			name = BeidView;
 			path = "plugins_tools/eid-viewer/OSX/eID Viewer/BeidView";
@@ -791,6 +1176,9 @@
 		65270A871FE97E7D004F326D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AB68D65D243CA06800BA8851 /* libxml2.tbd */,
+				AB68D65A243CA05F00BA8851 /* libssl.1.0.1.dylib */,
+				AB68D657243CA04700BA8851 /* libcrypto.1.0.1.dylib */,
 				65270A8B1FE97EBD004F326D /* libxml2.a */,
 				65270A891FE97E97004F326D /* libcrypto.a */,
 			);
@@ -1038,6 +1426,78 @@
 			path = cardcomm/pkcs11/src/cardlayer;
 			sourceTree = "<group>";
 		};
+		AB715D54243D09C600B3D387 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AB715D59243D09C700B3D387 /* BEIDTokenApp.app */,
+				AB715D5B243D09C700B3D387 /* BEIDToken.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AB8BE595243CC1FF003967F8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AB8BE5B0243CC1FF003967F8 /* libcorecrypto.empty.a */,
+				AB8BE5B2243CC1FF003967F8 /* libcorecrypto_static.a */,
+				AB8BE5B4243CC1FF003967F8 /* libcorecrypto.dylib */,
+				AB8BE5B6243CC1FF003967F8 /* corecrypto.kext */,
+				AB8BE5B8243CC1FF003967F8 /* libcorecrypto_l4.a */,
+				AB8BE5BA243CC1FF003967F8 /* libcorecrypto_s3.a */,
+				AB8BE5BC243CC1FF003967F8 /* libcorecrypto_seprom.a */,
+				AB8BE5BE243CC1FF003967F8 /* libcorecrypto_iboot.a */,
+				AB8BE5C0243CC1FF003967F8 /* libcorecrypto_efi.a */,
+				AB8BE5C2243CC1FF003967F8 /* validation.xctest */,
+				AB8BE5C4243CC1FF003967F8 /* ec_verify */,
+				AB8BE5C6243CC1FF003967F8 /* ccdh_gen_gp */,
+				AB8BE5C8243CC1FF003967F8 /* cc_fips_test */,
+				AB8BE5CA243CC1FF003967F8 /* hmacfiletool */,
+				AB8BE5CC243CC1FF003967F8 /* corecrypto_perf */,
+				AB8BE5CE243CC1FF003967F8 /* corecrypto_test */,
+				AB8BE5D0243CC1FF003967F8 /* corecrypto_test_asan */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AB8BE64F243CC4D4003967F8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AB8BE686243CC4D4003967F8 /* openssl */,
+				AB8BE68A243CC4D4003967F8 /* libssl.1.0.1.dylib */,
+				AB8BE688243CC4D4003967F8 /* libcrypto.1.0.1.dylib */,
+				AB8BE68C243CC4D4003967F8 /* test_des */,
+				AB8BE68E243CC4D4003967F8 /* test_sha */,
+				AB8BE690243CC4D4003967F8 /* test_sha1 */,
+				AB8BE692243CC4D4003967F8 /* test_sha256 */,
+				AB8BE694243CC4D4003967F8 /* test_sha512 */,
+				AB8BE696243CC4D4003967F8 /* test_mdc2 */,
+				AB8BE698243CC4D4003967F8 /* test_md5 */,
+				AB8BE69A243CC4D4003967F8 /* test_md4 */,
+				AB8BE69C243CC4D4003967F8 /* test_hmac */,
+				AB8BE69E243CC4D4003967F8 /* test_md2 */,
+				AB8BE6A0243CC4D4003967F8 /* test_rmd */,
+				AB8BE6A2243CC4D4003967F8 /* test_bf */,
+				AB8BE6A4243CC4D4003967F8 /* test_cast */,
+				AB8BE6A6243CC4D4003967F8 /* test_rc2 */,
+				AB8BE6A8243CC4D4003967F8 /* test_rc4 */,
+				AB8BE6AA243CC4D4003967F8 /* test_rc5 */,
+				AB8BE6AC243CC4D4003967F8 /* test_rand */,
+				AB8BE6AE243CC4D4003967F8 /* test_bn */,
+				AB8BE6B0243CC4D4003967F8 /* test_exp */,
+				AB8BE6B2243CC4D4003967F8 /* test_ec */,
+				AB8BE6B4243CC4D4003967F8 /* test_ecdsa */,
+				AB8BE6B6243CC4D4003967F8 /* test_ecdh */,
+				AB8BE6B8243CC4D4003967F8 /* test_dh */,
+				AB8BE6BA243CC4D4003967F8 /* test_dsa */,
+				AB8BE6BC243CC4D4003967F8 /* test_engine */,
+				AB8BE6BE243CC4D4003967F8 /* test_ige */,
+				AB8BE6C0243CC4D4003967F8 /* test_jpake */,
+				AB8BE6C2243CC4D4003967F8 /* ssltest */,
+				AB8BE6C4243CC4D4003967F8 /* Unit Tests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1072,8 +1532,6 @@
 			files = (
 				86C0E96E21C25E4700602028 /* pinpadlib.h in Headers */,
 				86C0E96921C25E4700602028 /* p15objects.h in Headers */,
-				86C0E77821C2586E00602028 /* tomcrypt_hash.h in Headers */,
-				86C0E77E21C2586E00602028 /* tomcrypt_argchk.h in Headers */,
 				86C0E77021C2586E00602028 /* util.h in Headers */,
 				86C0E8DC21C258D900602028 /* language.h in Headers */,
 				86C0E97721C25E4700602028 /* readersinfo.h in Headers */,
@@ -1094,7 +1552,6 @@
 				86E3DF5B1653EFE60015B5E1 /* phash.h in Headers */,
 				6CAFE1D921DF86E40078C7E2 /* pkcs11t.h in Headers */,
 				86C0E97321C25E4700602028 /* internalconst.h in Headers */,
-				86C0E77A21C2586E00602028 /* tomcrypt_macros.h in Headers */,
 				86C0E96321C25E4700602028 /* card.h in Headers */,
 				86C0E95F21C25E4700602028 /* pinpad2.h in Headers */,
 				86C0E75821C2586E00602028 /* tlvbuffer.h in Headers */,
@@ -1112,7 +1569,6 @@
 				86C0E76821C2586E00602028 /* mw_util.h in Headers */,
 				86C0E75921C2586E00602028 /* eiderrors.h in Headers */,
 				86C0E77221C2586E00602028 /* beidversions.h in Headers */,
-				86C0E77B21C2586E00602028 /* tomcrypt_cfg.h in Headers */,
 				86C0E78421C2586E00602028 /* mwexception.h in Headers */,
 				86C0E78221C2586E00602028 /* hash.h in Headers */,
 				86C0E96F21C25E4700602028 /* cardfactory.h in Headers */,
@@ -1154,7 +1610,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 65270A071FE975A1004F326D /* Build configuration list for PBXNativeTarget "BeidView" */;
 			buildPhases = (
-				65270A841FE97E22004F326D /* ShellScript */,
 				652709F71FE975A1004F326D /* Headers */,
 				652709F51FE975A1004F326D /* Sources */,
 				652709F61FE975A1004F326D /* Frameworks */,
@@ -1176,7 +1631,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 653490FF1FEA7B3A000F7787 /* Build configuration list for PBXNativeTarget "eidfilepreview" */;
 			buildPhases = (
-				8604AB082194798F00FB3C92 /* Run Script */,
 				653490F11FEA7B39000F7787 /* Sources */,
 				653490F21FEA7B39000F7787 /* Frameworks */,
 				653490F31FEA7B39000F7787 /* Headers */,
@@ -1219,6 +1673,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				AB8BE5D2243CC291003967F8 /* PBXTargetDependency */,
+				AB8BE5D4243CC299003967F8 /* PBXTargetDependency */,
 			);
 			name = beidpkcs11;
 			productName = beidpkcs11;
@@ -1231,7 +1687,7 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1010;
+				LastUpgradeCheck = 1130;
 				TargetAttributes = {
 					651DDF281FEA843C00C4961E = {
 						CreatedOnToolsVersion = 9.2;
@@ -1256,7 +1712,7 @@
 				};
 			};
 			buildConfigurationList = 1DEB916408733D950010E9CD /* Build configuration list for PBXProject "beidmw" */;
-			compatibilityVersion = "Xcode 10.0";
+			compatibilityVersion = "Xcode 11.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -1270,6 +1726,18 @@
 			productRefGroup = 034768DDFF38A45A11DB9C8B /* Products */;
 			projectDirPath = "";
 			projectReferences = (
+				{
+					ProductGroup = AB715D54243D09C600B3D387 /* Products */;
+					ProjectRef = AB715D53243D09C600B3D387 /* BEIDToken.xcodeproj */;
+				},
+				{
+					ProductGroup = AB8BE595243CC1FF003967F8 /* Products */;
+					ProjectRef = AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */;
+				},
+				{
+					ProductGroup = AB8BE64F243CC4D4003967F8 /* Products */;
+					ProjectRef = AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */;
+				},
 				{
 					ProductGroup = 86BC84C11A037C19009E374E /* Products */;
 					ProjectRef = 86BC84C01A037C19009E374E /* test_dialogs.xcodeproj */;
@@ -1292,6 +1760,363 @@
 			fileType = "compiled.mach-o.executable";
 			path = test_dialogs;
 			remoteRef = 86BC84C51A037C19009E374E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB715D59243D09C700B3D387 /* BEIDTokenApp.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = BEIDTokenApp.app;
+			remoteRef = AB715D58243D09C700B3D387 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB715D5B243D09C700B3D387 /* BEIDToken.appex */ = {
+			isa = PBXReferenceProxy;
+			fileType = "wrapper.app-extension";
+			path = BEIDToken.appex;
+			remoteRef = AB715D5A243D09C700B3D387 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE5B0243CC1FF003967F8 /* libcorecrypto.empty.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libcorecrypto.empty.a;
+			remoteRef = AB8BE5AF243CC1FF003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE5B2243CC1FF003967F8 /* libcorecrypto_static.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libcorecrypto_static.a;
+			remoteRef = AB8BE5B1243CC1FF003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE5B4243CC1FF003967F8 /* libcorecrypto.dylib */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.dylib";
+			path = libcorecrypto.dylib;
+			remoteRef = AB8BE5B3243CC1FF003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE5B6243CC1FF003967F8 /* corecrypto.kext */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = corecrypto.kext;
+			remoteRef = AB8BE5B5243CC1FF003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE5B8243CC1FF003967F8 /* libcorecrypto_l4.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libcorecrypto_l4.a;
+			remoteRef = AB8BE5B7243CC1FF003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE5BA243CC1FF003967F8 /* libcorecrypto_s3.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libcorecrypto_s3.a;
+			remoteRef = AB8BE5B9243CC1FF003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE5BC243CC1FF003967F8 /* libcorecrypto_seprom.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libcorecrypto_seprom.a;
+			remoteRef = AB8BE5BB243CC1FF003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE5BE243CC1FF003967F8 /* libcorecrypto_iboot.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libcorecrypto_iboot.a;
+			remoteRef = AB8BE5BD243CC1FF003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE5C0243CC1FF003967F8 /* libcorecrypto_efi.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libcorecrypto_efi.a;
+			remoteRef = AB8BE5BF243CC1FF003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE5C2243CC1FF003967F8 /* validation.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = validation.xctest;
+			remoteRef = AB8BE5C1243CC1FF003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE5C4243CC1FF003967F8 /* ec_verify */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = ec_verify;
+			remoteRef = AB8BE5C3243CC1FF003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE5C6243CC1FF003967F8 /* ccdh_gen_gp */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = ccdh_gen_gp;
+			remoteRef = AB8BE5C5243CC1FF003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE5C8243CC1FF003967F8 /* cc_fips_test */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = cc_fips_test;
+			remoteRef = AB8BE5C7243CC1FF003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE5CA243CC1FF003967F8 /* hmacfiletool */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = hmacfiletool;
+			remoteRef = AB8BE5C9243CC1FF003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE5CC243CC1FF003967F8 /* corecrypto_perf */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = corecrypto_perf;
+			remoteRef = AB8BE5CB243CC1FF003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE5CE243CC1FF003967F8 /* corecrypto_test */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = corecrypto_test;
+			remoteRef = AB8BE5CD243CC1FF003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE5D0243CC1FF003967F8 /* corecrypto_test_asan */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = corecrypto_test_asan;
+			remoteRef = AB8BE5CF243CC1FF003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE686243CC4D4003967F8 /* openssl */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = openssl;
+			remoteRef = AB8BE685243CC4D4003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE688243CC4D4003967F8 /* libcrypto.1.0.1.dylib */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.dylib";
+			path = libcrypto.1.0.1.dylib;
+			remoteRef = AB8BE687243CC4D4003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE68A243CC4D4003967F8 /* libssl.1.0.1.dylib */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.dylib";
+			path = libssl.1.0.1.dylib;
+			remoteRef = AB8BE689243CC4D4003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE68C243CC4D4003967F8 /* test_des */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = test_des;
+			remoteRef = AB8BE68B243CC4D4003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE68E243CC4D4003967F8 /* test_sha */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = test_sha;
+			remoteRef = AB8BE68D243CC4D4003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE690243CC4D4003967F8 /* test_sha1 */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = test_sha1;
+			remoteRef = AB8BE68F243CC4D4003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE692243CC4D4003967F8 /* test_sha256 */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = test_sha256;
+			remoteRef = AB8BE691243CC4D4003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE694243CC4D4003967F8 /* test_sha512 */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = test_sha512;
+			remoteRef = AB8BE693243CC4D4003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE696243CC4D4003967F8 /* test_mdc2 */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = test_mdc2;
+			remoteRef = AB8BE695243CC4D4003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE698243CC4D4003967F8 /* test_md5 */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = test_md5;
+			remoteRef = AB8BE697243CC4D4003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE69A243CC4D4003967F8 /* test_md4 */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = test_md4;
+			remoteRef = AB8BE699243CC4D4003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE69C243CC4D4003967F8 /* test_hmac */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = test_hmac;
+			remoteRef = AB8BE69B243CC4D4003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE69E243CC4D4003967F8 /* test_md2 */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = test_md2;
+			remoteRef = AB8BE69D243CC4D4003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE6A0243CC4D4003967F8 /* test_rmd */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = test_rmd;
+			remoteRef = AB8BE69F243CC4D4003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE6A2243CC4D4003967F8 /* test_bf */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = test_bf;
+			remoteRef = AB8BE6A1243CC4D4003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE6A4243CC4D4003967F8 /* test_cast */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = test_cast;
+			remoteRef = AB8BE6A3243CC4D4003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE6A6243CC4D4003967F8 /* test_rc2 */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = test_rc2;
+			remoteRef = AB8BE6A5243CC4D4003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE6A8243CC4D4003967F8 /* test_rc4 */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = test_rc4;
+			remoteRef = AB8BE6A7243CC4D4003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE6AA243CC4D4003967F8 /* test_rc5 */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = test_rc5;
+			remoteRef = AB8BE6A9243CC4D4003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE6AC243CC4D4003967F8 /* test_rand */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = test_rand;
+			remoteRef = AB8BE6AB243CC4D4003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE6AE243CC4D4003967F8 /* test_bn */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = test_bn;
+			remoteRef = AB8BE6AD243CC4D4003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE6B0243CC4D4003967F8 /* test_exp */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = test_exp;
+			remoteRef = AB8BE6AF243CC4D4003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE6B2243CC4D4003967F8 /* test_ec */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = test_ec;
+			remoteRef = AB8BE6B1243CC4D4003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE6B4243CC4D4003967F8 /* test_ecdsa */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = test_ecdsa;
+			remoteRef = AB8BE6B3243CC4D4003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE6B6243CC4D4003967F8 /* test_ecdh */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = test_ecdh;
+			remoteRef = AB8BE6B5243CC4D4003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE6B8243CC4D4003967F8 /* test_dh */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = test_dh;
+			remoteRef = AB8BE6B7243CC4D4003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE6BA243CC4D4003967F8 /* test_dsa */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = test_dsa;
+			remoteRef = AB8BE6B9243CC4D4003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE6BC243CC4D4003967F8 /* test_engine */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = test_engine;
+			remoteRef = AB8BE6BB243CC4D4003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE6BE243CC4D4003967F8 /* test_ige */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = test_ige;
+			remoteRef = AB8BE6BD243CC4D4003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE6C0243CC4D4003967F8 /* test_jpake */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = test_jpake;
+			remoteRef = AB8BE6BF243CC4D4003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE6C2243CC4D4003967F8 /* ssltest */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = ssltest;
+			remoteRef = AB8BE6C1243CC4D4003967F8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB8BE6C4243CC4D4003967F8 /* Unit Tests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Unit Tests.octest";
+			remoteRef = AB8BE6C3243CC4D4003967F8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1336,37 +2161,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		65270A841FE97E22004F326D /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "make -C plugins_tools/eid-viewer/OSX/support/ossl -j $(( $(sysctl hw.ncpu | cut -d' ' -f2) * 125 / 100 )) build\nmake -C plugins_tools/eid-viewer/OSX/support/xml -j $(( $(sysctl hw.ncpu | cut -d' ' -f2) * 125 / 100 )) build\n";
-		};
-		8604AB082194798F00FB3C92 /* Run Script */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Run Script";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nmake -C plugins_tools/eid-viewer/OSX/support/ossl -j $(( $(sysctl hw.ncpu | cut -d' ' -f2) * 125 / 100 )) build\nmake -C plugins_tools/eid-viewer/OSX/support/xml -j $(( $(sysctl hw.ncpu | cut -d' ' -f2) * 125 / 100 )) build\n";
-		};
 		86C65C5C223913D4001ED3A7 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1507,8 +2301,6 @@
 				86C0E93521C25D5400602028 /* pkcs11util.cpp in Sources */,
 				86C0E97421C25E4700602028 /* readersinfo.cpp in Sources */,
 				86C0E93621C25D5400602028 /* asn1.c in Sources */,
-				86C0E77D21C2586E00602028 /* md5.c in Sources */,
-				86C0E77921C2586E00602028 /* sha1.c in Sources */,
 				86C0E76421C2586E00602028 /* datafile.cpp in Sources */,
 				86C0E75C21C2586E00602028 /* mutex.cpp in Sources */,
 				86E3DF5E1653EFE60015B5E1 /* cert.c in Sources */,
@@ -1527,8 +2319,6 @@
 				86E3DF631653EFE60015B5E1 /* p11.c in Sources */,
 				86E3DF641653EFE60015B5E1 /* session.c in Sources */,
 				86C0E76E21C2586E00602028 /* configuration.cpp in Sources */,
-				86C0E78121C2586E00602028 /* sha384.c in Sources */,
-				86C0E77F21C2586E00602028 /* sha512.c in Sources */,
 				86C0E75E21C2586E00602028 /* thread.cpp in Sources */,
 				86C0E8D921C258D900602028 /* dlgsmac.cpp in Sources */,
 				86C0E97521C25E4700602028 /* card.cpp in Sources */,
@@ -1541,7 +2331,6 @@
 				86C0E76021C2586E00602028 /* util.cpp in Sources */,
 				86C0E97221C25E4700602028 /* reader.cpp in Sources */,
 				86E3DF661653EFE60015B5E1 /* cal.cpp in Sources */,
-				86C0E78021C2586E00602028 /* rmd160.c in Sources */,
 				86C0E76121C2586E00602028 /* configcommon.cpp in Sources */,
 				86C0E75F21C2586E00602028 /* log.cpp in Sources */,
 				86C0E96021C25E4700602028 /* pcsc.cpp in Sources */,
@@ -1571,6 +2360,16 @@
 			target = 653490F51FEA7B39000F7787 /* eidfilepreview */;
 			targetProxy = 659FD58A1FEA87E000E4AF83 /* PBXContainerItemProxy */;
 		};
+		AB8BE5D2243CC291003967F8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = corecrypto_headers;
+			targetProxy = AB8BE5D1243CC291003967F8 /* PBXContainerItemProxy */;
+		};
+		AB8BE5D4243CC299003967F8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = corecrypto_static;
+			targetProxy = AB8BE5D3243CC299003967F8 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -1598,9 +2397,8 @@
 		1DEB916508733D950010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -1612,22 +2410,23 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 5.0.1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = EU27N85PBZ;
+				DEVELOPMENT_TEAM = YZAQ856TTM;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = /System/Library/Frameworks;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PFE_FILE_C_DIALECTS = "c c++";
@@ -1643,6 +2442,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_PKGINFO_FILE = YES;
 				HEADER_SEARCH_PATHS = (
 					plugins_tools/util,
 					"plugins_tools/eid-viewer/include",
@@ -1653,21 +2453,25 @@
 					"$(inherited)",
 				);
 				INFOPLIST_EXPAND_BUILD_SETTINGS = NO;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 5.0.2;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = dynamic;
 				STRIP_INSTALLED_PRODUCT = NO;
 				VALID_ARCHS = x86_64;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_BUILDER = "$(USER)";
+				VERSION_INFO_FILE = beidmwversion.c;
 			};
 			name = Debug;
 		};
 		1DEB916608733D950010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -1679,21 +2483,24 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 5.0.1;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = EU27N85PBZ;
+				DEVELOPMENT_TEAM = YZAQ856TTM;
+				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = /System/Library/Frameworks;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_MODEL_TUNING = "";
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PFE_FILE_C_DIALECTS = "c c++";
@@ -1709,6 +2516,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_PKGINFO_FILE = YES;
 				HEADER_SEARCH_PATHS = (
 					plugins_tools/util,
 					"plugins_tools/eid-viewer/include",
@@ -1719,11 +2527,16 @@
 					"$(inherited)",
 				);
 				INFOPLIST_EXPAND_BUILD_SETTINGS = NO;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 5.0.2;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = macosx;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = dynamic;
 				VALID_ARCHS = x86_64;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_BUILDER = "$(USER)";
+				VERSION_INFO_FILE = beidmwversion.c;
 			};
 			name = Release;
 		};
@@ -1731,11 +2544,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
@@ -1757,36 +2568,47 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = "/Users/andyvand/Downloads/eid-mw/plugins_tools/eid-viewer/OSX/eID Viewer/BeidView/BeidView.entitlements";
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = EU27N85PBZ;
-				ENABLE_HARDENED_RUNTIME = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
+					USING_DL_OPEN,
 					"$(inherited)",
 				);
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = (
+					plugins_tools/util,
+					"plugins_tools/eid-viewer/include",
+					"plugins_tools/eid-viewer/OSX/support/ossl/openssl/include",
+					"plugins_tools/eid-viewer/OSX/support/xml/libxml2/include",
+					"plugins_tools/eid-viewer",
+					doc/sdk/include/rsaref220,
+					/usr/local/include,
+					"$(SDK_DIR)/usr/include",
+					"$(inherited)",
+				);
 				INFOPLIST_EXPAND_BUILD_SETTINGS = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/plugins_tools/eid-viewer/OSX/eID Viewer/eID Viewer/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/lib,
+					"$(SDK_DIR)/usr/lib",
+					"$(inherited)",
+				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "be.fedict.eID-Viewer";
+				PRODUCT_BUNDLE_IDENTIFIER = "be.fedict.eid.eID-Viewer";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -1794,11 +2616,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
@@ -1820,62 +2640,77 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = "/Users/andyvand/Downloads/eid-mw/plugins_tools/eid-viewer/OSX/eID Viewer/BeidView/BeidView.entitlements";
 				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = EU27N85PBZ;
-				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"EIDMW_PREFIX=/usr/local",
+					USING_DL_OPEN,
+				);
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = (
+					plugins_tools/util,
+					"plugins_tools/eid-viewer/include",
+					"plugins_tools/eid-viewer/OSX/support/ossl/openssl/include",
+					"plugins_tools/eid-viewer/OSX/support/xml/libxml2/include",
+					"plugins_tools/eid-viewer",
+					doc/sdk/include/rsaref220,
+					/usr/local/include,
+					"$(SDK_DIR)/usr/include",
+					"$(inherited)",
+				);
 				INFOPLIST_EXPAND_BUILD_SETTINGS = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/plugins_tools/eid-viewer/OSX/eID Viewer/eID Viewer/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/lib,
+					"$(SDK_DIR)/usr/lib",
+					"$(inherited)",
+				);
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_CODE_SIGN_FLAGS = "--timestamp";
-				PRODUCT_BUNDLE_IDENTIFIER = "be.fedict.eID-Viewer";
+				PRODUCT_BUNDLE_IDENTIFIER = "be.fedict.eid.eID-Viewer";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};
 		652709FF1FE975A1004F326D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = EU27N85PBZ;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_HARDENED_RUNTIME = NO;
 				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(SDK_DIR)/System/Library/Frameworks";
 				FRAMEWORK_VERSION = A;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"EIDMW_PREFIX=/usr/local",
+					USING_DL_OPEN,
+					LTC_NO_ASM,
+					USE_NSURLSESSION,
+				);
 				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					doc/sdk/include/rsaref220,
-					plugins_tools/util/,
+					"$(PROJECT_DIR)/doc/sdk/include/rsaref220",
+					"$(PROJECT_DIR)/plugins_tools/util/",
 					"plugins_tools/eid-viewer",
-					"plugins_tools/eid-viewer/include",
-					"plugins_tools/eid-viewer/OSX/support/ossl/openssl/include",
-					"plugins_tools/eid-viewer/OSX/support/xml/libxml2/include",
+					"$(PROJECT_DIR)/plugins_tools/eid-viewer/include",
+					/usr/local/include,
+					"$(SDK_DIR)/usr/include",
+					"$(inherited)",
 				);
 				INFOPLIST_EXPAND_BUILD_SETTINGS = YES;
 				INFOPLIST_FILE = "plugins_tools/eid-viewer/OSX/eID Viewer/BeidView/Info.plist";
@@ -1886,15 +2721,13 @@
 					"@loader_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = (
+					"$(SDK_DIR)/usr/lib",
+					/usr/local/lib,
 					"$(inherited)",
-					"$(PROJECT_DIR)/plugins_tools/eid-viewer/OSX/support/ossl/openssl",
-					"$(PROJECT_DIR)/plugins_tools/eid-viewer/OSX/support/xml/builddir",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = be.fedict.BeidView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1904,29 +2737,31 @@
 		65270A001FE975A1004F326D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = EU27N85PBZ;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_HARDENED_RUNTIME = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(SDK_DIR)/System/Library/Frameworks";
 				FRAMEWORK_VERSION = A;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"EIDMW_PREFIX=/usr/local",
+					USING_DL_OPEN,
+					USE_NSURLSESSION,
+				);
 				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					doc/sdk/include/rsaref220,
-					plugins_tools/util/,
+					"$(PROJECT_DIR)/doc/sdk/include/rsaref220",
+					"$(PROJECT_DIR)/plugins_tools/util/",
 					"plugins_tools/eid-viewer",
-					"plugins_tools/eid-viewer/include",
-					"plugins_tools/eid-viewer/OSX/support/ossl/openssl/include",
-					"plugins_tools/eid-viewer/OSX/support/xml/libxml2/include",
+					"$(PROJECT_DIR)/plugins_tools/eid-viewer/include",
+					/usr/local/include,
+					"$(SDK_DIR)/usr/include",
+					"$(inherited)",
 				);
 				INFOPLIST_EXPAND_BUILD_SETTINGS = YES;
 				INFOPLIST_FILE = "plugins_tools/eid-viewer/OSX/eID Viewer/BeidView/Info.plist";
@@ -1937,15 +2772,12 @@
 					"@loader_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = (
+					"$(SDK_DIR)/usr/lib",
+					/usr/local/lib,
 					"$(inherited)",
-					"$(PROJECT_DIR)/plugins_tools/eid-viewer/OSX/support/ossl/openssl",
-					"$(PROJECT_DIR)/plugins_tools/eid-viewer/OSX/support/xml/builddir",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = be.fedict.BeidView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1956,10 +2788,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
@@ -1981,11 +2811,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = EU27N85PBZ;
-				ENABLE_HARDENED_RUNTIME = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2002,15 +2828,13 @@
 				INFOPLIST_FILE = "$(SRCROOT)/plugins_tools/eid-viewer/OSX/eID Viewer/eidfilepreview/Info.plist";
 				INSTALL_PATH = /Library/QuickLook;
 				LIBRARY_SEARCH_PATHS = (
+					/usr/local/lib,
+					"$(SDK_DIR)/usr/lib",
 					"$(inherited)",
-					"$(PROJECT_DIR)/plugins_tools/eid-viewer/OSX/support/ossl/openssl",
-					"$(PROJECT_DIR)/plugins_tools/eid-viewer/OSX/support/xml/builddir",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = qlgenerator;
@@ -2021,10 +2845,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
@@ -2046,13 +2868,8 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = EU27N85PBZ;
-				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = "";
@@ -2065,15 +2882,12 @@
 				INFOPLIST_FILE = "$(SRCROOT)/plugins_tools/eid-viewer/OSX/eID Viewer/eidfilepreview/Info.plist";
 				INSTALL_PATH = /Library/QuickLook;
 				LIBRARY_SEARCH_PATHS = (
+					/usr/local/lib,
+					"$(SDK_DIR)/usr/lib",
 					"$(inherited)",
-					"$(PROJECT_DIR)/plugins_tools/eid-viewer/OSX/support/ossl/openssl",
-					"$(PROJECT_DIR)/plugins_tools/eid-viewer/OSX/support/xml/builddir",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = qlgenerator;
@@ -2083,7 +2897,6 @@
 		6536230819A7E8E600D46ECB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -2094,9 +2907,6 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = EU27N85PBZ;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2111,20 +2921,17 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				HEADER_SEARCH_PATHS = (
-					/System/Library/Frameworks/PCSC.framework/Headers,
+					"$(SDK_DIR)/System/Library/Frameworks/PCSC.framework/Headers",
 					doc/sdk/include/v240,
 					plugins_tools/util,
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
 		6536230919A7E8E600D46ECB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -2135,11 +2942,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = EU27N85PBZ;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2152,13 +2955,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				HEADER_SEARCH_PATHS = (
-					/System/Library/Frameworks/PCSC.framework/Headers,
+					"$(SDK_DIR)/System/Library/Frameworks/PCSC.framework/Headers",
 					doc/sdk/include/v240,
 					plugins_tools/util,
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};
@@ -2166,20 +2967,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LIBRARY = "libc++";
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = EU27N85PBZ;
-				DYLIB_COMPATIBILITY_VERSION = "";
-				DYLIB_CURRENT_VERSION = "";
-				ENABLE_HARDENED_RUNTIME = NO;
+				DYLIB_COMPATIBILITY_VERSION = 5.0;
+				DYLIB_CURRENT_VERSION = "$(CURRENT_PROJECT_VERSION)";
 				EXECUTABLE_PREFIX = lib;
 				"EXPORTED_SYMBOLS_FILE[arch=*]" = "";
 				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDK_DIR)/System/Library/Frameworks",
 					"$(inherited)",
-					/System/Library/Frameworks,
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_MODEL_TUNING = G5;
@@ -2191,11 +2987,19 @@
 					USING_DL_OPEN,
 					LTC_NO_ROLC,
 				);
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=x86_64]" = (
+					"EIDMW_PREFIX=/usr/local",
+					LTC_NO_ASM,
+					EIDMW_STATIC_LIB,
+					USING_DL_OPEN,
+				);
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
-					"${PROJECT_DIR}/cardcomm/pkcs11/src/common",
-					"${PROJECT_DIR}/cardcomm/pkcs11/src/cardlayer",
-					/System/Library/Frameworks/PCSC.framework/Headers,
+					"$(PROJECT_DIR)/cardcomm/pkcs11/src/common",
+					"$(PROJECT_DIR)/cardcomm/pkcs11/src/cardlayer",
+					"$(PROJECT_DIR)/cardcomm/pkcs11/src/common/libcorecrypto/build/Release/usr/local/include",
+					"$(SDK_DIR)/System/Library/Frameworks/PCSC.framework/Headers",
+					"$(inherited)",
 				);
 				INSTALL_PATH = /usr/local/lib;
 				LINKER_DISPLAYS_MANGLED_NAMES = YES;
@@ -2203,7 +3007,6 @@
 				OTHER_CFLAGS = "-fno-strict-aliasing";
 				PRESERVE_DEAD_CODE_INITS_AND_TERMS = YES;
 				PRODUCT_NAME = "beidpkcs11.$(CURRENT_PROJECT_VERSION)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				"USER_HEADER_SEARCH_PATHS[arch=*]" = "${PROJECT_DIR}/cardcomm/pkcs11/src";
@@ -2215,19 +3018,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LIBRARY = "libc++";
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = EU27N85PBZ;
-				DYLIB_COMPATIBILITY_VERSION = "";
-				DYLIB_CURRENT_VERSION = "";
-				ENABLE_HARDENED_RUNTIME = YES;
+				DYLIB_COMPATIBILITY_VERSION = 5.0;
+				DYLIB_CURRENT_VERSION = "$(CURRENT_PROJECT_VERSION)";
 				EXECUTABLE_PREFIX = lib;
 				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDK_DIR)/System/Library/Frameworks",
 					"$(inherited)",
-					/System/Library/Frameworks,
 				);
 				GCC_MODEL_TUNING = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2236,19 +3034,23 @@
 					USING_DL_OPEN,
 					LTC_NO_ROLC,
 				);
-				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = "EIDMW_PREFIX=/usr/local";
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=x86_64]" = (
+					"EIDMW_PREFIX=/usr/local",
+					EIDMW_STATIC_LIB,
+					USING_DL_OPEN,
+				);
 				HEADER_SEARCH_PATHS = (
-					"${PROJECT_DIR}/cardcomm/pkcs11/src/common",
-					"${PROJECT_DIR}/cardcomm/pkcs11/src/cardlayer",
-					/System/Library/Frameworks/PCSC.framework/Headers,
+					"$(PROJECT_DIR)/cardcomm/pkcs11/src/common",
+					"$(PROJECT_DIR)/cardcomm/pkcs11/src/cardlayer",
+					"$(PROJECT_DIR)/cardcomm/pkcs11/src/common/libcorecrypto/build/Release/usr/local/include",
+					"$(SDK_DIR)/System/Library/Frameworks/PCSC.framework/Headers",
+					"$(inherited)",
 				);
 				INSTALL_PATH = /usr/local/lib;
 				MACH_O_TYPE = mh_dylib;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-fno-strict-aliasing";
-				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_NAME = "beidpkcs11.$(CURRENT_PROJECT_VERSION)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				"USER_HEADER_SEARCH_PATHS[arch=*]" = "${PROJECT_DIR}/cardcomm/pkcs11/src";

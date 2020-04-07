@@ -102,7 +102,7 @@ namespace eIDMW {
 			}
 		}
 
-		return(lBits);
+		return((unsigned int)lBits);
 	}
 
 
@@ -517,7 +517,7 @@ namespace eIDMW {
 		//---  X509 Certificate
 
 		xLev0Item.p_data = (unsigned char*)contents.GetBytes();
-		xLev0Item.l_data = contents.Size();
+		xLev0Item.l_data = (unsigned int)contents.Size();
 
 		// loop over the possible certificate
 		while (xLev0Item.l_data > 0)

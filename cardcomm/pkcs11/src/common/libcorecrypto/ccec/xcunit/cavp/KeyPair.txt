@@ -1,0 +1,31 @@
+#  CAVS 5.0
+#  "Key Pair" information for "ecdsatestvectors"
+#  Curves selected: P-192 P-224 K-163 K-233 B-163 B-233
+#  Generated on Tue Feb 14 15:51:22 2006
+
+
+
+[P-192]
+
+N = 10
+
+[P-224]
+
+N = 10
+
+[K-163]
+
+N = 10
+
+[K-233]
+
+N = 10
+
+[B-163]
+
+N = 10
+
+[B-233]
+
+N = 10
+

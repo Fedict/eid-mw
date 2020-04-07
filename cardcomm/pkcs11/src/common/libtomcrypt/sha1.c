@@ -54,7 +54,7 @@ static int  sha1_compress(hash_state *md, unsigned char *buf)
 
     /* copy the state into 512-bits into W[0..15] */
     for (i = 0; i < 16; i++) {
-        LOAD32H(W[i], buf + (4*i));
+        W[i] = (ulong32)LOAD32H(buf + (4 * i));
     }
 
     /* copy state */

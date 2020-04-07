@@ -73,11 +73,11 @@ typedef unsigned long ulong32;
      { (y)[0] = (unsigned char)(((x)>>24)&255); (y)[1] = (unsigned char)(((x)>>16)&255);   \
        (y)[2] = (unsigned char)(((x)>>8)&255); (y)[3] = (unsigned char)((x)&255); }
 
-#define LOAD32H(x, y)                            \
-     { x = ((unsigned long)((y)[0] & 255)<<24) | \
+#define LOAD32H(y)                            \
+     (((unsigned long)((y)[0] & 255)<<24) | \
            ((unsigned long)((y)[1] & 255)<<16) | \
            ((unsigned long)((y)[2] & 255)<<8)  | \
-           ((unsigned long)((y)[3] & 255)); }
+           ((unsigned long)((y)[3] & 255)))
 
 #define STORE64H(x, y)                                                                     \
    { (y)[0] = (unsigned char)(((x)>>56)&255); (y)[1] = (unsigned char)(((x)>>48)&255);     \
@@ -281,6 +281,7 @@ __asm__ ("rolq %2, %0" : \
 "J" (i)); \
 __ROL64c_tmp; \
 })
+
 #define ROR64c(word,i) ({ \
 ulong64 __ROR64c_tmp = word; \
 __asm__ ("rorq %2, %0" : \

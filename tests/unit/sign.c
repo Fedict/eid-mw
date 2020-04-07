@@ -114,7 +114,7 @@ int test_key(char* label, CK_SESSION_HANDLE session, CK_SLOT_ID slot) {
 	CK_BYTE data[] = { 'f', 'o', 'o' };
 	CK_BYTE_PTR sig, mod, exp;
 	CK_ULONG sig_len, type, count;
-	CK_OBJECT_HANDLE privatekey, publickey, certificate;
+	CK_OBJECT_HANDLE privatekey, publickey/*, certificate*/;
 	CK_KEY_TYPE keytype;
 	bool is_rsa = false;
 

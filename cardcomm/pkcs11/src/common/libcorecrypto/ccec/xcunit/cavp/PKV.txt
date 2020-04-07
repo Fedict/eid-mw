@@ -1,0 +1,306 @@
+#  CAVS 5.0
+#  "PKV" information for "ecdsatestvectors"
+#  Curves selected: P-192 P-224 K-163 K-233 B-163 B-233
+#  Generated on Tue Feb 14 15:51:22 2006
+
+
+[P-192]
+
+Qx = 5a883324e1ccf35573fd2a350d3f4cdf14d82f4cf1f5b687
+Qy = 206f68b38285a12b21a561f12889c9bbf2be49d14e3b0ab9
+Result = F (2 - Point not on curve)
+
+Qx = 8985a8a969bb23d090ab3465642968a92bbcb93475ace23a
+Qy = 2a7bb25f40035d7e06083b6b04f2f6c16b658a7160e0aa35
+Result = F (2 - Point not on curve)
+
+Qx = e9aa87ce3e9520dd86b6d8cca83c6d8102ef4c8b411e4c83
+Qy = 0001a425c3d4fed1142dd57ce6e40ae6d7b3ee388cf8dca7d140
+Result = F (1 - Q_x or Q_y out of range)
+
+Qx = 62cdde571cce3590249c75538eff3640e8100413972d1792
+Qy = e5609375d411a796fc43bbdf76669ba347c39d276832876d
+Result = F (2 - Point not on curve)
+
+Qx = 47c7176966c0f9f736596f0b8f43525ace728cdac944d49f
+Qy = 0001d8ce44939bea70606921cfac0e400963a2ed5e560b28323d
+Result = F (1 - Q_x or Q_y out of range)
+
+Qx = 804fdeef09637854cacf97f01b0081fee0f232aac646282c
+Qy = 1cf6fc6cd355bae33612cbc13b319f1551a26068fdaee07d
+Result = F (2 - Point not on curve)
+
+Qx = 033d858f277d5d72f0acee3cf1479f23c072be9ac4c8a47e
+Qy = 194a5b747837b402fddce7ca41f8afefd1c05a7bb72f101f
+Result = P (0 )
+
+Qx = da282fdb226eabb17340eaa7abb8840b050c9e975af2d54a
+Qy = 7fa849c1e9215bc85b0f8cf7fff23487628927d1ea4b42d9
+Result = P (0 )
+
+Qx = 5e404971a3f4a3a1f9d99596dab6f6d2b35cf946a51edb55
+Qy = 00017c09eb3dfa26aa75b515193be9f0f0a64750a15172746ca1
+Result = F (1 - Q_x or Q_y out of range)
+
+Qx = 38f89b06f7e32ded1696fd3affda5fe69cef4fc0ee7cd393
+Qy = 000182ddc059a662ccebf3f8278bbf5d4848a932f12afa4035e2
+Result = F (1 - Q_x or Q_y out of range)
+
+Qx = 5674c63e6777373cdedb365e509d8ee16a434ef527d3435e
+Qy = 9c097f05af56c75b31c923d3d8594ff5241cb610c1ac4264
+Result = P (0 )
+
+Qx = 5205554ae1bff0e12d94376a7eeef4f0886c588ad3fb11b5
+Qy = c876b7725f109e39e80db3f3aaa67571e7ee7d98c15a9cf5
+Result = P (0 )
+
+[P-224]
+
+Qx = 05ebd15a7136e4d38a3433dec391ee11a822aca23937e3f58de20f27
+Qy = 00010a9ad6cbd520cd02ccedb05d1cb5d3f78862f0c889bd442432a94c0a
+Result = F (1 - Q_x or Q_y out of range)
+
+Qx = 6d745484840f4ea069e1d2fbc08ced4d3373dcc6e25851233f631ebc
+Qy = 3a41db9787ec443922784e0df1cd55433d56bb118f466182a48fab73
+Result = F (2 - Point not on curve)
+
+Qx = d52df74ead5264cbc1d555197807978075c05d9199e31629d10a91d5
+Qy = 464c90eadfd2afd90676c679d56985792d76c58d1079343f70ffd98f
+Result = P (0 )
+
+Qx = a6c7e77df4e77eafef2b042b8d4debc615c4a41aa9a31d43a6856464
+Qy = 35e84ce072c56614636f07fbe132985e09086285e2854df62e26c4f5
+Result = F (2 - Point not on curve)
+
+Qx = 0001990d09c0fc3ee9523af26d502f01594a220f2ad9f5f4e9ba1335c8e2
+Qy = 09fb112c6921383cfc90b75c7e8e8794404501f500f96817ffe56897
+Result = F (1 - Q_x or Q_y out of range)
+
+Qx = 00014a9eb8ea249ed1e4c650a1fb4dce5106f5ba2a5147dcfdcbfd9ad35c
+Qy = 40241e016b7626aa04af1d27e978a13c22ed0054f350a6780b1f285f
+Result = F (1 - Q_x or Q_y out of range)
+
+Qx = 202e3841fd72e37c7f8eaa4abe456a823a44c043c19538050447c2ac
+Qy = c56fb89a0aeebf727ae14c0f2efd68a045723e42b1b7c1ece9b95002
+Result = P (0 )
+
+Qx = dc81be653ee27a3da9a0cd902ac493b2b3f3d12da48f1a6aa22d2a25
+Qy = e126570e6d4687d47ed9e3ececdcee30dcf1b2186dc9d6715dd0809a
+Result = F (2 - Point not on curve)
+
+Qx = 755db10fc60240dc0b5ec21509e6af5ab9433b127c931e80a0076b07
+Qy = 00014ce95e6b302544fa08ac872b6c890eb185b5691d4262b0dcde99fd49
+Result = F (1 - Q_x or Q_y out of range)
+
+Qx = 251eb2539e56379bd47477be2e96ca922d404080d9c2f1870b384c17
+Qy = 38c6f09649d94435c7501a2f3da9718e529add47a0c790f7663f7e14
+Result = P (0 )
+
+Qx = d50fa0fc29b36ca817fb095b8ac00aaf31697c3a57e54ff546f19229
+Qy = 2908c6bd8f8b8318217523b8b0d52cb889f5b81faf2866ccf1c102e2
+Result = F (2 - Point not on curve)
+
+Qx = 838ce5dd205bb231fb4e1d27a3bcf973f25d504e414f2a41aa0581e7
+Qy = 645e31d5ae016c7e3c0e760c089e53b5293e35b7d266b9fe743b81f9
+Result = P (0 )
+
+[K-163]
+
+Qx = 0002bbf62f117c15d062d242c3e681124dd41d6c0043
+Qy = 000315d3219941cd47f9602b5a77aeabd37c776bd6fd
+Result = F (1 - Point not on curve)
+
+Qx = 0007b98ba0595fca79cee9c6002987fdcf4b7f26f127
+Qy = 0001433352eee57c57700e2ad34468745723e793fb9e
+Result = F (2 - Added PT of order 2)
+
+Qx = 00051392d51a970f637c9be24a78e1e55d8181d74693
+Qy = 0004cc54a50bcbd5edb7cb6e250407f857e6f7eb0c24
+Result = P (0 )
+
+Qx = 0001e023ab90c4e0881eb9427a2289f4f270f622beb1
+Qy = 000533aa55f0a92eec79fa1deb333990801dfb014ba0
+Result = F (2 - Added PT of order 2)
+
+Qx = a6d4c8695af0dfcef0ce0744262bdc9d456b3e2f
+Qy = 0001eb61b1b43a549adc999676fdbd9190382b11db46
+Result = F (1 - Point not on curve)
+
+Qx = 00013f2696d8c8b2b160ae9668fafc94a2d7e76b9491
+Qy = dd6f14bb9aaca32dd7707013745be767ba92a369
+Result = F (1 - Point not on curve)
+
+Qx = 000655bc3e15fdd7f428992f1273cd382ea614531f0d
+Qy = 0002c7084c7716d09065e2437cf971294c7ea2bbe5f5
+Result = P (0 )
+
+Qx = 0006c16d1685257be435bee2fd07070e306ba6d24cae
+Qy = 0006c8549b2149cc246f6515e6270c6e4d74e6c44fec
+Result = F (2 - Added PT of order 2)
+
+Qx = 000698e55efb5dbd0b1738258a99b157e362d9f43d5b
+Qy = 0002b3efc266c4043104aeebed509fa26d1ed0fec070
+Result = P (0 )
+
+Qx = 00042286c6086e2d3dfe7bd5d2f12db8dbe8ddfea3bd
+Qy = 00052ebed7193c0cdc9afe51f59e8fa1e6457e4e0070
+Result = F (1 - Point not on curve)
+
+Qx = 0003b040f4d0bbe7ef3bc08b0633d73d9a62b8ed62ac
+Qy = 291bca3a5e58f53c4bbd5595d50dd4fb8d6da148
+Result = P (0 )
+
+Qx = 0006e7f77f69cb9fc1e7d3f7797fb86665e18921f81b
+Qy = 0003ade5a6ba11d5fffdffcad15c0ea21bb864880d40
+Result = F (2 - Added PT of order 2)
+
+[K-233]
+
+Qx = 01915e822069a5edab257cc8bd680f449f9f0816a8ce5c79e31f816cca72
+Qy = 00f1647a7c388d74e7c0ed11f93cd61edce97bd0dce13de2246ab67e1be4
+Result = P (0 )
+
+Qx = 01ce001b06bb4410fc8d9e08ad34c36a38169ec07b27cb0f852247a32c14
+Qy = 012747e696389707187fd61d38b5d6e8b4f48272b36a625d5089da3500a9
+Result = F (1 - Point not on curve)
+
+Qx = 013519181f3dc834dae89e11fc3a7457f8b1e38505c7b9206773a340e7ca
+Qy = 011940f924f5cc664d4b35511912f858281fed29343eb8f7cb2c8af8664b
+Result = F (1 - Point not on curve)
+
+Qx = 0025c062e37a3273819a9645e36a0799bbaec9d406ba905fbf756605211f
+Qy = 001aaf87c52c45a8a04e10a484b57039387f9b72463e4cce555c364a62e1
+Result = P (0 )
+
+Qx = 00c9334b562fef8267940032943fdd3363f08519518f29c0c8e6df186e40
+Qy = 017a24120587971a5d3bcbad20496f3bd58ee2d7bd1bca7929d25ef835b8
+Result = F (2 - Added PT of order 2)
+
+Qx = 00b843514396ad410631e799055ae10554d9a52de931f31baf2427e02624
+Qy = 01a480a3ca50cd50b932d4652f346185d9ab2d962dbc40bd73ac08a84dda
+Result = F (1 - Point not on curve)
+
+Qx = 00314b40659e5671039bd30fdd5b18f7de4f464aeb993757770111c22321
+Qy = 019254d53757737cdf671b1cceeb3e43d19fa46fc0847fbae0031c402bb7
+Result = F (2 - Added PT of order 2)
+
+Qx = 00836a27afea84e09340aa288f328ad5c4bc77db24615a68eca81bad29e9
+Qy = 00fd1d42eb8cd66dd503e920e31d6d8b948f1f09db297dd6e1ad56320142
+Result = F (2 - Added PT of order 2)
+
+Qx = 01e91e5d094f053d3e362d86c0db7c4d33398938d351b3a56cc45303197a
+Qy = 0038d0723999c7d6511fcc70788e8d709e9e7977b1084aa3ce9cf743fa2b
+Result = P (0 )
+
+Qx = 01981b8ca6d8c66dc583590909685042f2ee890813c4095bc9c2c9ea40ca
+Qy = 002bbf5e3a6138126e08849e052ac885d080f1f6430c4f10d2a5aab69a84
+Result = P (0 )
+
+Qx = 018af1b6688567f7ab9315a03160f0e5b692978c75ed7262fc1b0330ff82
+Qy = 00f3bf4e54a6610cdfe008a2452027172f3c57ba268498d44a1d3bcb4458
+Result = F (2 - Added PT of order 2)
+
+Qx = 00d78c79310adf9fb14b85a21f13bb156788545d566c162ffa7890b0f2dc
+Qy = 01dee36cc58bb89a06e677dd47006b44417bc047cfa5d3bea04b24dcedd9
+Result = F (1 - Point not on curve)
+
+[B-163]
+
+Qx = 0002ed8abb2ec9135054652fe52acd554da8d961e8e5
+Qy = 00031de8f71e331f8d642286ae46fb7aa436519659a2
+Result = F (2 - Added PT of order 2)
+
+Qx = 00011016b434c931a2eeec1f74069027b0eb87c25e70
+Qy = 0005fb0951eeea515b92891f45751a640720e6bfb4c5
+Result = F (1 - Point not on curve)
+
+Qx = 0005040f48ea4f83e9141f8161063f61b78f76ca2417
+Qy = 000375e7eafff46b6234873bf1b369d4e03d542f87b6
+Result = P (0 )
+
+Qx = 00076b481bc51d7021703ee0dea5e11b03c9a0154103
+Qy = 81638e366160af93616d4edff2815b449aa73c05
+Result = F (1 - Point not on curve)
+
+Qx = 00011c97e267f04f3be2ddacd2385db59073820ebc49
+Qy = 0004cc10895539ab5c7c3852642716b9af012432f2c5
+Result = P (0 )
+
+Qx = 00068bf3ed90a3baf3e83ccafd1ec813b74b7a8512e0
+Qy = 0002a44d673bc72833146bf2002862ef8028313451fc
+Result = F (2 - Added PT of order 2)
+
+Qx = 00035cc946a0b72f036c207b38192ee111367be979a4
+Qy = 00045dd7cd3cf64e1b6c8521a80f2d94483b40220bcb
+Result = F (1 - Point not on curve)
+
+Qx = 0006230766e4d1025240f1881cb324ae74d04837b813
+Qy = 0002298dd76039ac5e1e8674d9e5e93d0fdf1c6bef9d
+Result = F (2 - Added PT of order 2)
+
+Qx = 1c5ea14e52984deca084b3c1c7e2eb46f7102771
+Qy = 0006f2fe5c79fdf2f923cd41a7a0d3e8abf74f906d81
+Result = P (0 )
+
+Qx = 0002cab502d9b84b6a7bc1b11350d03ca83d9f747d7b
+Qy = c729e6f3db4ddf3b1298e8f659e75618b9cea578
+Result = P (0 )
+
+Qx = 000306cf1ddc728a952723d406d3af219cf241bb73a8
+Qy = 000191ae531b989f847c242c1eb9bf81ef93ee557e1e
+Result = F (1 - Point not on curve)
+
+Qx = 000520a50d0155d5caad8c3e42020eacca24204e5c13
+Qy = 00049cab1ee05d1bde1e5d58cdea899519ad335a2fd6
+Result = F (2 - Added PT of order 2)
+
+[B-233]
+
+Qx = 012f754de74933e40f85f587112b68770752faa25b3d587d652d67e31212
+Qy = 00af3232cc76031c54b076608cb809fccc8e0540028c27a47917b97cbd85
+Result = P (0 )
+
+Qx = 011085d6f1ac4ce683447ae2c6d4475084ad2e80acf5fc3bbdb17f73b4ae
+Qy = 019242c7cfe924216199479261c9a511afa41d519a1fc1f1039faf89a098
+Result = F (2 - Added PT of order 2)
+
+Qx = 007852f712ad930f66c882024dbf033b9156d9d830c65fbee0d1a7dd62e0
+Qy = 0177c8b5e98522c7681c2552733a276299c6292f1551624e509f02853c36
+Result = P (0 )
+
+Qx = 0074b5ae4ef0b3b9c9409acaf828805a6cb5d7fe9723e13beede2a217101
+Qy = 0080b9b774de252de152dfd9de3de6ede4d0bca6c6bf6dca61d966944d48
+Result = F (1 - Point not on curve)
+
+Qx = 015c6fa60109fc4486bed3c91e3197936675cf2141fe13c431156719a133
+Qy = 01cd93f29537543710f1f1c51934a0eb5786afb17e11c6d87e8e74ef7334
+Result = F (1 - Point not on curve)
+
+Qx = 01a0fcbc2a9910130f322c6259de5d2e00d35e53e8513a081b35b898c374
+Qy = 00dca03d8267f4f1da9c70385a99b834dd20d50bfa8a14a26d40bccd6ef0
+Result = F (1 - Point not on curve)
+
+Qx = 019bf5be377a9933096b800c9e1bd8e86fb2a2dad27426fc3b9eee8e5e2a
+Qy = 01d4636c1a569043f3800f5224d9819d65e1ec88ce1950c3d04e7ab4d6ff
+Result = P (0 )
+
+Qx = 01e96ab23430356937b4726cefacd432e266352b9a6f17ce61d326e30182
+Qy = 0147b11b51fa053e3b21fd0dbd0aaa36af07333c3bdacfcc07b867661e38
+Result = F (1 - Point not on curve)
+
+Qx = 01cd3f98e92be17116f5c8b20fd2246feee6438f49b0bee644a19b67123e
+Qy = 00bbb3ed730667630db5d3e5125c432123badb172717914dcf4f6711c7d1
+Result = P (0 )
+
+Qx = 01ecb7c23714ad01e29ba23e668a2d7a5f857480f24cf3c735b2200db5ed
+Qy = 00d1b38fcaf5e1fa3ca61b3a598b0a0692fe2eca102585354aae0a3baa7d
+Result = F (2 - Added PT of order 2)
+
+Qx = 01217db7f35f26c05f400da70a43f8395923134a345c6440c32d7a8792ce
+Qy = 00cb39408a48448ca3ab12c65aaf98c6df4a95a5e5c7cc2f5c7275612b57
+Result = F (2 - Added PT of order 2)
+
+Qx = 00330712cdac0f273c35701fe84e336ca6c5f1eb9d342db7ca277f992c2c
+Qy = 012f32aeda5bd8102a8ef36fb4ed1adf264dd162ca6907ba06bf4dba2142
+Result = F (2 - Added PT of order 2)
+

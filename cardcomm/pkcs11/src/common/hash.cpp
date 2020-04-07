@@ -34,23 +34,58 @@ unsigned long CHash::GetHashLength(tHashAlgo algo)
 	switch (algo)
 	{
 		case ALGO_MD5:
+#if defined(__APPLE__) && defined(__MACH__)
+			return CCMD5_OUTPUT_SIZE;
+#else
 			return 16;
+#endif
+
 		case ALGO_SHA1:
+#if defined(__APPLE__) && defined(__MACH__)
+			return CCSHA1_OUTPUT_SIZE;
+#else
 			return 20;
-		case ALGO_MD5_SHA1:
+#endif
+
+        case ALGO_MD5_SHA1:
+#if defined(__APPLE__) && defined(__MACH__)
+			return (CCMD5_OUTPUT_SIZE + CCSHA1_OUTPUT_SIZE);
+#else
 			return 36;
-		case ALGO_SHA256:
+#endif
+
+        case ALGO_SHA256:
+#if defined(__APPLE__) && defined(__MACH__)
+			return CCSHA256_OUTPUT_SIZE;
+#else
 			return 32;
-		case ALGO_SHA384:
+#endif
+
+        case ALGO_SHA384:
+#if defined(__APPLE__) && defined(__MACH__)
+			return CCSHA384_OUTPUT_SIZE;
+#else
 			return 48;
-		case ALGO_SHA512:
+#endif
+
+        case ALGO_SHA512:
+#if defined(__APPLE__) && defined(__MACH__)
+			return CCSHA512_OUTPUT_SIZE;
+#else
 			return 64;
-		case ALGO_RIPEMD160:
+#endif
+
+        case ALGO_RIPEMD160:
+#if defined(__APPLE__) && defined(__MACH__)
+			return CCRMD160_STATE_SIZE;
+#else
 			return 20;
-		default:
-			throw CMWEXCEPTION(EIDMW_ERR_PARAM_BAD);
+#endif
 	}
 
+    throw CMWEXCEPTION(EIDMW_ERR_PARAM_BAD);
+
+    return 0;
 }
 
 CByteArray CHash::Hash(tHashAlgo algo, const CByteArray & data)
@@ -71,27 +106,63 @@ void CHash::Init(tHashAlgo algo)
 	switch (algo)
 	{
 		case ALGO_MD5:
+#if defined(__APPLE__) && defined(__MACH__)
+            ccdigest_init(ccmd5_di(), m_md1);
+#else
 			md5_init(&m_md1);
+#endif
 			break;
+
 		case ALGO_SHA1:
+#if defined(__APPLE__) && defined(__MACH__)
+            ccdigest_init(ccsha1_di(), m_md1);
+#else
 			sha1_init(&m_md1);
+#endif
 			break;
+
 		case ALGO_MD5_SHA1:
+#if defined(__APPLE__) && defined(__MACH__)
+            ccdigest_init(ccmd5_di(), m_md1);
+            ccdigest_init(ccsha1_di(), m_md2);
+#else
 			md5_init(&m_md1);
 			sha1_init(&m_md2);
+#endif
 			break;
+
 		case ALGO_SHA256:
+#if defined(__APPLE__) && defined(__MACH__)
+            ccdigest_init(ccsha256_di(), m_md1);
+#else
 			sha256_init(&m_md1);
+#endif
 			break;
+
 		case ALGO_SHA384:
+#if defined(__APPLE__) && defined(__MACH__)
+            ccdigest_init(ccsha384_di(), m_md1);
+#else
 			sha384_init(&m_md1);
+#endif
 			break;
+
 		case ALGO_SHA512:
+#if defined(__APPLE__) && defined(__MACH__)
+            ccdigest_init(ccsha512_di(), m_md1);
+#else
 			sha512_init(&m_md1);
-			break;
+#endif
+            break;
+
 		case ALGO_RIPEMD160:
+#if defined(__APPLE__) && defined(__MACH__)
+            ccdigest_init(&ccrmd160_di, m_md1);
+#else
 			rmd160_init(&m_md1);
+#endif
 			break;
+
 		default:
 			throw CMWEXCEPTION(EIDMW_ERR_PARAM_BAD);
 	}
@@ -108,7 +179,7 @@ void CHash::Update(const CByteArray & data)
 void CHash::Update(const CByteArray & data, unsigned long ulOffset,
 		   unsigned long ulLen)
 {
-	if (!m_bInitialized)
+	if (m_bInitialized == false)
 		throw CMWEXCEPTION(EIDMW_ERR_PARAM_BAD);
 
 	if (ulLen != 0)
@@ -118,67 +189,143 @@ void CHash::Update(const CByteArray & data, unsigned long ulOffset,
 		switch (m_Algo)
 		{
 			case ALGO_MD5:
+#if defined(__APPLE__) && defined(__MACH__)
+                ccdigest_update(ccmd5_di(), m_md1, ulLen, pucData);
+#else
 				md5_process(&m_md1, pucData, ulLen);
+#endif
 				break;
+
 			case ALGO_SHA1:
+#if defined(__APPLE__) && defined(__MACH__)
+                ccdigest_update(ccsha1_di(), m_md1, ulLen, pucData);
+#else
 				sha1_process(&m_md1, pucData, ulLen);
+#endif
 				break;
+
 			case ALGO_MD5_SHA1:
+#if defined(__APPLE__) && defined(__MACH__)
+                ccdigest_update(ccmd5_di(), m_md1, ulLen, pucData);
+                ccdigest_update(ccsha1_di(), m_md2, ulLen, pucData);
+#else
 				md5_process(&m_md1, pucData, ulLen);
 				sha1_process(&m_md2, pucData, ulLen);
+#endif
 				break;
+
 			case ALGO_SHA256:
+#if defined(__APPLE__) && defined(__MACH__)
+                ccdigest_update(ccsha256_di(), m_md1, ulLen, pucData);
+#else
 				sha256_process(&m_md1, pucData, ulLen);
+#endif
 				break;
+
 			case ALGO_SHA384:
+#if defined(__APPLE__) && defined(__MACH__)
+                ccdigest_update(ccsha384_di(), m_md1, ulLen, pucData);
+#else
 				sha384_process(&m_md1, pucData, ulLen);
+#endif
 				break;
+
 			case ALGO_SHA512:
+#if defined(__APPLE__) && defined(__MACH__)
+                ccdigest_update(ccsha512_di(), m_md1, ulLen, pucData);
+#else
 				sha512_process(&m_md1, pucData, ulLen);
+#endif
 				break;
+
 			case ALGO_RIPEMD160:
+#if defined(__APPLE__) && defined(__MACH__)
+                ccdigest_update(&ccrmd160_ltc_di, m_md1, ulLen, pucData);
+#else
 				rmd160_process(&m_md1, pucData, ulLen);
+#endif
 				break;
-			default:
-				throw CMWEXCEPTION(EIDMW_ERR_PARAM_BAD);
 		}
 	}
+
+    throw CMWEXCEPTION(EIDMW_ERR_PARAM_BAD);
 }
 
 CByteArray CHash::GetHash()
 {
-	if (!m_bInitialized)
+	if (m_bInitialized == false)
 		throw CMWEXCEPTION(EIDMW_ERR_PARAM_BAD);
 
 	m_bInitialized = false;
 
 	// hash result
-	unsigned char tucHash[64];	// make sure this is enough if other hashes are added!!!
+    // make sure this is enough if other hashes are added!!!
+#if defined(__APPLE__) && defined(__MACH__)
+    unsigned char tucHash[CCSHA512_OUTPUT_SIZE] = { 0 };
+#else
+    unsigned char tucHash[64] = { 0 };
+#endif
 
 	switch (m_Algo)
 	{
 		case ALGO_MD5:
+#if defined(__APPLE__) && defined(__MACH__)
+            ccdigest_final(ccmd5_di(), m_md1, tucHash);
+#else
 			md5_done(&m_md1, tucHash);
+#endif
 			break;
+
 		case ALGO_SHA1:
+#if defined(__APPLE__) && defined(__MACH__)
+            ccdigest_final(ccsha1_di(), m_md1, tucHash);
+#else
 			sha1_done(&m_md1, tucHash);
+#endif
 			break;
+
 		case ALGO_MD5_SHA1:
+#if defined(__APPLE__) && defined(__MACH__)
+            ccdigest_final(ccmd5_di(), m_md1, tucHash);
+            ccdigest_final(ccsha1_di(), m_md2, (tucHash + CCMD5_OUTPUT_SIZE));
+#else
 			md5_done(&m_md1, tucHash);
-			sha1_done(&m_md2, tucHash + 16);
+			sha1_done(&m_md2, (tucHash + 16));
+#endif
 			break;
+
 		case ALGO_SHA256:
+#if defined(__APPLE__) && defined(__MACH__)
+            ccdigest_final(ccsha256_di(), m_md1, tucHash);
+#else
 			sha256_done(&m_md1, tucHash);
+#endif
 			break;
+
 		case ALGO_SHA384:
+#if defined(__APPLE__) && defined(__MACH__)
+            ccdigest_final(ccsha384_di(), m_md1, tucHash);
+#else
 			sha384_done(&m_md1, tucHash);
+#endif
 			break;
+
 		case ALGO_SHA512:
+#if defined(__APPLE__) && defined(__MACH__)
+            ccdigest_final(ccsha512_di(), m_md1, tucHash);
+#else
 			sha512_done(&m_md1, tucHash);
+#endif
 			break;
+
 		case ALGO_RIPEMD160:
+#if defined(__APPLE__) && defined(__MACH__)
+            ccdigest_final(&ccrmd160_ltc_di, m_md1, tucHash);
+#else
 			rmd160_done(&m_md1, tucHash);
+#endif
 			break;
+
 		default:
 			throw CMWEXCEPTION(EIDMW_ERR_PARAM_BAD);
 	}

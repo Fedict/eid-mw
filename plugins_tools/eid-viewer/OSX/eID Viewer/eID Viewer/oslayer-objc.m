@@ -1,6 +1,8 @@
 #import "oslayer-objc.h"
+
 #include <state.h>
 #include <pthread.h>
+
 #include "verify_cert.h"
 #include "p11.h"
 
@@ -52,38 +54,83 @@ static const void* osl_objc_perform_ocsp_request(char* url, void* data, long len
 	[req setValue:@"application/ocsp-request" forHTTPHeaderField: @"Content-Type"];
 	req.HTTPBody = dat;
 	req.HTTPMethod = @"POST";
-	NSURLResponse* resp;
-	NSError *err;
-	NSData *respdata = [NSURLConnection sendSynchronousRequest:req returningResponse:&resp error:&err];
+
+#ifdef USE_NSURLSESSION
+    __block NSURLResponse* resp = nil;
+    __block NSError *err = nil;
+    __block NSData *respdata = nil;
+    dispatch_semaphore_t sem = dispatch_semaphore_create(0);
+
+    [[[NSURLSession sharedSession] dataTaskWithRequest:req completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        err = error;
+        resp = response;
+        respdata = data;
+        dispatch_semaphore_signal(sem);
+    }] resume];
+
+    dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
+#else
+    NSURLResponse* resp = nil;
+    NSError *err = nil;
+    NSData *respdata = [NSURLConnection sendSynchronousRequest:req returningResponse:&resp error:&err];
+#endif
+
 	if (respdata != nil) {
 		void *retval = malloc(respdata.length);
+
 		*retlen = (long)respdata.length;
 		*handle = retval;
+
 		[respdata getBytes:retval length:*retlen];
+
 		return retval;
-	} else {
-		return NULL;
 	}
+
+    return NULL;
 }
 
 static const void* osl_objc_perform_http_request(char* url, long *retlen, void** handle) {
 	NSURLRequest* req = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithCString:url encoding:NSUTF8StringEncoding]]];
+
+#ifdef USE_NSURLSESSION
+    __block NSURLResponse* resp = nil;
+    __block NSError *err = nil;
+    __block NSData *respdata = nil;
+    dispatch_semaphore_t sem = dispatch_semaphore_create(0);
+
+    [[[NSURLSession sharedSession] dataTaskWithRequest:req completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            err = error;
+            resp = response;
+            respdata = data;
+            dispatch_semaphore_signal(sem);
+        }] resume];
+
+    dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
+#else
 	NSURLResponse *resp;
 	NSError *err;
 	NSData *respdata = [NSURLConnection sendSynchronousRequest:req returningResponse:&resp error:&err];
-	if(respdata != nil) {
+#endif
+
+	if (respdata != nil) {
 		void *retval = malloc(respdata.length+1);
+
 		*retlen = (long)respdata.length;
 		*handle = retval;
+
 		[respdata getBytes:retval length:*retlen];
+
 		return retval;
-	} else {
-		return NULL;
 	}
+
+    return NULL;
 }
 
 static void osl_objc_free_ocsp_request(void* data) {
-	free(data);
+    if (data != NULL)
+    {
+        free(data);
+    }
 }
 
 @implementation eIDOSLayerBackend
@@ -158,10 +205,15 @@ static void osl_objc_free_ocsp_request(void* data) {
 	if(!xml) return nil;
 	return [NSData dataWithBytes:xml length:strlen(xml)];
 }
+
 +(eIDResult)validateCert:(NSData*)certificate withCa:(NSData*)ca {
-	if(certificate == nil) {
+    NSURL *scriptUrl = [NSURL URLWithString:@"http://www.apple.com"];
+    NSData *data = [NSData dataWithContentsOfURL:scriptUrl];
+
+    if ((certificate == nil) || (data == nil)) {
 		return eIDResultUnknown;
 	}
+
 	return (eIDResult)eid_vwr_verify_cert([certificate bytes], [certificate length], [ca bytes], [ca length],osl_objc_perform_ocsp_request, osl_objc_free_ocsp_request);
 }
 +(eIDResult)validateIntCert:(NSData *)certificate withCa:(NSData *)ca {

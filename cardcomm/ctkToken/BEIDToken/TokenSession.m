@@ -1,4 +1,3 @@
-
 #import <os/log.h>
 #import <Foundation/Foundation.h>
 #import <CryptoTokenKit/CryptoTokenKit.h>
@@ -8,24 +7,21 @@
 
 #import <Security/SecAsn1Coder.h>
 
-
-
-
-
-
 @implementation BEIDAuthOperation
 
 - (instancetype)initWithSession:(BEIDTokenSession *)session {
 #ifdef DEBUG
     os_log_info(OS_LOG_DEFAULT, "BEID initWithSession called");
 #endif
+
     if (self = [super init]) {
         _session = session;
 
         self.smartCard = session.smartCard;
         self.session.authState=BEIDAuthStateUnauthorized;
         // TODO: use template when apple implements it
- /*
+ 
+#ifdef USE_TEMPLATE
         self.smartCard.cla = 0x00;
         self.smartCard.useCommandChaining = NO;
         self.smartCard.useExtendedLength = NO;
@@ -42,19 +38,23 @@
         self.PINFormat.maxPINLength = 12;
         self.PINFormat.charset = TKSmartCardPINCharsetNumeric;
         self.PINFormat.PINJustification = TKSmartCardPINJustificationLeft;
-*/
-        //self.PINByteOffset=5;
+#endif
+
+#ifdef USE_PINBYTEOFFSET
+        self.PINByteOffset=5;
+#endif
+
 #ifdef DEBUG
          os_log_info(OS_LOG_DEFAULT, "BEID new TEST 18");
 #endif
  
         BOOL (^verifySecurePIN)(NSError**) = ^(NSError** error) {
-
-            TKSmartCardPINFormat *PINFormat;
-            TKSmartCardUserInteractionForSecurePINVerification *userInter;
-            NSData *APDUTemplate;
+            TKSmartCardPINFormat *PINFormat = NULL;
+            TKSmartCardUserInteractionForSecurePINVerification *userInter = NULL;
+            NSData *APDUTemplate = nil;
             
             const UInt8 template[] = {0x00, 0x20, 0x00, 0x01, 0x08, 0x20, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
+
             APDUTemplate = [NSData dataWithBytes:template length:sizeof(template)];
             PINFormat = [[TKSmartCardPINFormat alloc] init];
             PINFormat.PINBlockByteLength = 8;
@@ -78,10 +78,9 @@
 #ifdef DEBUG
                 os_log_error(OS_LOG_DEFAULT, "userInteractionForSecurePINVerificationWithPINFormat returned nil. You are not using a pinpad reader");
 #endif
+
                 return NO;
-            }
-            else
-            {
+            } else {
                 //reader is supporting secure PIN entry
                 dispatch_semaphore_t sema = dispatch_semaphore_create(0);
                 NSArray *messages = @[@0];//0 is Pin insertion prompt, and only this message is needed
@@ -90,15 +89,16 @@
                 
                 userInter.initialTimeout = 300;
                 userInter.interactionTimeout = 300;
+
                 //using the system Locale by default
                 //NSLocale* PINLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"nl_BE"];
                 //userInter.locale=PINLocale;
-                
-                
+
 #ifdef DEBUG
                 os_log_info(OS_LOG_DEFAULT, "Enter the PIN on the pinpad");
 #endif
-               [userInter runWithReply:^(BOOL success, NSError *error)
+
+                [userInter runWithReply:^(BOOL success, NSError *error)
                  {
                      if (success)
                      {
@@ -107,6 +107,7 @@
                          NSLog(@"resultSW: %04X", [userInter resultSW]);
                          NSLog(@"Smartcard reader name: %@", self.session.smartCard.slot.name);
 #endif
+
                          self.session.authState=BEIDAuthStateFreshlyAuthorized;
 
                          // Mark card session sensitive, because we entered PIN into it and no session should access it in this state.
@@ -124,6 +125,7 @@
                          NSLog(@"Failure enterring PIN on cardreader");
                          NSLog(@"Error: %@", error);
 #endif
+
                          self.session.authState=BEIDAuthStateUnauthorized;
                      }
                      dispatch_semaphore_signal(sema);
@@ -131,10 +133,12 @@
                 //wait max 30 seconds for user to enter PIN on secure PIN pad reader
                 dispatch_time_t  waitTime = dispatch_time(DISPATCH_TIME_NOW,  300000000000);
                 dispatch_semaphore_wait(sema ,waitTime);
+
 #ifdef DEBUG
                 os_log_info(OS_LOG_DEFAULT, "PIN handled by reader");
                 //NSLog(@"PIN handled by reader");
 #endif
+
                 //some secure PIN pad readers support both secure and on PC PIN entries
                 //when secure failed, try on PC as backup
                 if(self.session.authState==BEIDAuthStateUnauthorized){
@@ -144,35 +148,40 @@
             }
         };
         
-        NSError *error ;
+        NSError *error = nil;
+
         //check if smard card reader has PIN support
         BOOL success = [self.smartCard inSessionWithError:(NSError **)&error executeBlock:(BOOL(^)(NSError **error))verifySecurePIN];
+
         if (success == YES){
 #ifdef DEBUG
             os_log_error(OS_LOG_DEFAULT, "BEID initWithSession return nil");
 #endif
+
             return nil;
         }
     
     }
+
 #ifdef DEBUG
     os_log_error(OS_LOG_DEFAULT, "BEID initWithSession return self");
 #endif
+
     return self;
 }
 
 - (uint8_t)pinDigit:(uint8_t) digit
 {
-    if ('0' <= digit && digit <= '9')
-        return digit - '0';
-    else if ('A' <= digit && digit <= 'F')
-        return digit - 'A' + 0x10;
-    else if ('a' <= digit && digit <= 'f')
-        return digit - 'a' + 0x10;
-    else {
-        os_log_error(OS_LOG_DEFAULT, "BEID impossible PIN digit enterred");
-        return 0xFF;
-    }
+    if (('0' <= digit) && (digit <= '9'))
+        return (digit - '0');
+    else if (('A' <= digit) && (digit <= 'F'))
+        return ((digit - 'A') + 0x10);
+    else if (('a' <= digit) && (digit <= 'f'))
+        return ((digit - 'a') + 0x10);
+
+    os_log_error(OS_LOG_DEFAULT, "BEID impossible PIN digit enterred");
+
+    return 0xFF;
 }
 
 - (BOOL)finishWithError:(NSError * _Nullable __autoreleasing *)error {
@@ -180,8 +189,8 @@
     os_log_error(OS_LOG_DEFAULT, "BEID finishWithError called");
 #endif
 
+#ifdef USE_AUTO_TEMPLATE_SET
     //use this if you want to use the auto template set in initWithSession()
-    /*
     if(self.session.authState == BEIDAuthStateFreshlyAuthorized){
         return YES;
     }
@@ -198,20 +207,24 @@
     
     BOOL success = [self.smartCard inSessionWithError:(NSError **)error executeBlock:(BOOL(^)(NSError **error))autoVerify];
     return success;
-*/
+#endif
  
     BOOL (^verifyPIN)(NSError**) = ^(NSError** error) {
         if(self.PIN == nil){
             os_log_error(OS_LOG_DEFAULT, "BEID finishWithError called PIN == nil");
+
             return NO;
         }
 
         uint8_t pin[] = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF };
         uint64_t PinLength = self.PIN.length;
+
         if(PinLength < 4 || PinLength > 12){
             os_log_error(OS_LOG_DEFAULT, "BEID PIN length not ok, Pinlength = %llu",PinLength);
+
             return NO;
         }
+
         [[self.PIN dataUsingEncoding:NSUTF8StringEncoding] getBytes:pin length:PinLength];
         
 #ifdef DEBUG
@@ -219,7 +232,8 @@
 #endif
 
         // Send VERIFY command to the card.
-        UInt16 sw;
+        UInt16 sw = 0;
+
         //format PIN
         uint8_t apdu[] = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF };
         uint32_t offset = 0;
@@ -231,37 +245,47 @@
         }
 
         NSMutableData *PINData = [NSMutableData dataWithBytes:apdu length:8];
+
         if ([self.smartCard sendIns:0x20 p1:0x00 p2:0x01 data:PINData le:nil sw:&sw error:error] == nil) {
             os_log(OS_LOG_DEFAULT, "verify PIN sendIns failed");
             return NO;
         }
+
 #ifdef DEBUG
         os_log_error(OS_LOG_DEFAULT, "verify PIN returned sw: 0x%04x", sw);
 #endif
+
         if ((sw & 0xff00) == 0x6300) {
             int triesLeft = sw & 0x3f;
+
             os_log(OS_LOG_DEFAULT, "Failed to verify PIN sw:0x%04x retries: %d", sw, triesLeft);
+
             if (error != nil) {
                 *error = [NSError errorWithDomain:TKErrorDomain code:TKErrorCodeAuthenticationFailed userInfo:
                           @{NSLocalizedDescriptionKey: [NSString localizedStringWithFormat: NSLocalizedString(@"VERIFY_TRY_LEFT", nil), triesLeft]}];
             }
+
             return NO;
-        }else if (sw == 0x6983) {
+        } else if (sw == 0x6983) {
             os_log_error(OS_LOG_DEFAULT, "Failed to verify PIN, PIN blocked sw:0x%04x", sw);
+
             if (error != nil) {
                 *error = [NSError errorWithDomain:TKErrorDomain code:TKErrorCodeAuthenticationFailed userInfo:
                           @{NSLocalizedDescriptionKey: [NSString localizedStringWithFormat: NSLocalizedString(@"VPIN_BLOCKED", nil), 0]}];
             }
+
             return NO;
-        }
-        else if (sw != 0x9000) {
+        } else if (sw != 0x9000) {
             os_log_error(OS_LOG_DEFAULT, "Failed to verify PIN sw: 0x%04x", sw);
+
             if (error != nil) {
                 *error = [NSError errorWithDomain:TKErrorDomain code:TKErrorCodeAuthenticationFailed userInfo:
                           @{NSLocalizedDescriptionKey: [NSString localizedStringWithFormat: NSLocalizedString(@"VERIFY_TRY_LEFT", nil), 0]}];
             }
+
             return NO;
         }
+
         return YES;
     };
 
@@ -295,14 +319,17 @@
 #endif
     if (![constraint isEqual:BEIDConstraintPIN] && ![constraint isEqual:BEIDConstraintPINAlways]) {
         os_log_error(OS_LOG_DEFAULT, "attempt to evaluate unsupported constraint %@", constraint);
+
         if (error != nil) {
             *error = [NSError errorWithDomain:TKErrorDomain code:TKErrorCodeBadParameter userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"WRONG_CONSTR", nil)}];
         }
+
         return nil;
     }
 
     
     TKTokenAuthOperation * tokenAuth = [[BEIDAuthOperation alloc] initWithSession:self];
+
     if(tokenAuth == nil)
     {
         return [[TKTokenAuthOperation alloc] init];
@@ -315,101 +342,126 @@
 #ifdef DEBUG
     os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called");
 #endif
+
     BEIDTokenKeychainKey *keyItem = (BEIDTokenKeychainKey *)[self.token.keychainContents keyForObjectID:keyObjectID error:nil];
     if (keyItem == nil) {
         os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation returning NO, keyItem == nil");
         return NO;
     }
-    //NSString* algo = algorithm.description;
-    //NSData *bytes = [algo dataUsingEncoding:NSUTF8StringEncoding];
-    //os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called, algoritm to check is %s",[bytes bytes]);
-/*if([algorithm isAlgorithm:kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA256])
-{
-    os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called, algoritm to check is kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA256");
-}
+
+#ifdef DEBUG
+    NSString* algo = algorithm.description;
+    NSData *bytes = [algo dataUsingEncoding:NSUTF8StringEncoding];
+    os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called, algoritm to check is %s",[bytes bytes]);
+
+    if([algorithm isAlgorithm:kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA256])
+    {
+        os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called, algoritm to check is kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA256");
+    }
+
     if([algorithm isAlgorithm:kSecKeyAlgorithmRSASignatureRaw])
     {
         os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called, algoritm to check is kSecKeyAlgorithmRSASignatureRaw");
     }
+
     if([algorithm supportsAlgorithm:kSecKeyAlgorithmRSASignatureDigestPKCS1v15Raw])
     {
         os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called, supportsAlgorithm kSecKeyAlgorithmRSASignatureDigestPKCS1v15Raw");
     }
+
     if([algorithm supportsAlgorithm:kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA1])
     {
         os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called, supportsAlgorithm kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA1");
     }
+
     if([algorithm isAlgorithm:kSecKeyAlgorithmECDSASignatureRFC4754])
     {
         os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called, algoritm to check is kSecKeyAlgorithmECDSASignatureRFC4754");
     }
+
     if([algorithm supportsAlgorithm:kSecKeyAlgorithmECDSASignatureRFC4754])
     {
         os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called, supportsAlgorithm kSecKeyAlgorithmECDSASignatureRFC4754");
     }
+
     if([algorithm isAlgorithm:kSecKeyAlgorithmECDSASignatureDigestX962])
     {
         os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called, isAlgorithm kSecKeyAlgorithmECDSASignatureDigestX962");
     }
+
     if([algorithm supportsAlgorithm:kSecKeyAlgorithmECDSASignatureDigestX962])
     {
         os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called, supportsAlgorithm kSecKeyAlgorithmECDSASignatureDigestX962");
     }
+
     if([algorithm isAlgorithm:kSecKeyAlgorithmECDSASignatureDigestX962SHA1])
     {
         os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called, algoritm to check is kSecKeyAlgorithmECDSASignatureDigestX962SHA1");
     }
+
     if([algorithm isAlgorithm:kSecKeyAlgorithmECDSASignatureDigestX962SHA224])
     {
         os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called, algoritm to check is kSecKeyAlgorithmECDSASignatureDigestX962SHA224");
     }
+
     if([algorithm isAlgorithm:kSecKeyAlgorithmECDSASignatureDigestX962SHA256])
     {
         os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called, algoritm to check is kSecKeyAlgorithmECDSASignatureDigestX962SHA256");
     }
+
     if([algorithm supportsAlgorithm:kSecKeyAlgorithmECDSASignatureDigestX962SHA384])
     {
         os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called, supportsAlgorithm kSecKeyAlgorithmECDSASignatureDigestX962SHA384");
     }
+
     if([algorithm supportsAlgorithm:kSecKeyAlgorithmECDSASignatureDigestX962SHA512])
     {
         os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called, supportsAlgorithm kSecKeyAlgorithmECDSASignatureDigestX962SHA512");
     }
+
     if([algorithm supportsAlgorithm:kSecKeyAlgorithmECDSASignatureMessageX962SHA1])
     {
         os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called, supportsAlgorithm kSecKeyAlgorithmECDSASignatureMessageX962SHA1");
     }
+
     if([algorithm isAlgorithm:kSecKeyAlgorithmECDSASignatureMessageX962SHA224])
     {
         os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called, algoritm to check is kSecKeyAlgorithmECDSASignatureMessageX962SHA224");
     }
+
     if([algorithm supportsAlgorithm:kSecKeyAlgorithmECDSASignatureMessageX962SHA256])
     {
         os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called, supportsAlgorithm kSecKeyAlgorithmECDSASignatureMessageX962SHA256");
     }
+
     if([algorithm supportsAlgorithm:kSecKeyAlgorithmECDSASignatureMessageX962SHA384])
     {
         os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called, supportsAlgorithm kSecKeyAlgorithmECDSASignatureMessageX962SHA384");
     }
+
     if([algorithm supportsAlgorithm:kSecKeyAlgorithmECDSASignatureMessageX962SHA512])
     {
         os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called, supportsAlgorithm kSecKeyAlgorithmECDSASignatureMessageX962SHA512");
-    }*/
-    
+    }
+#endif
+
     switch (operation) {
         case TKTokenOperationSignData:
 #ifdef DEBUG
             os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation called TKTokenOperationSignData");
 #endif
+
             if (keyItem.canSign) {
                 if ([keyItem.keyType isEqual:(id)kSecAttrKeyTypeRSA]) {
                     // We support only RAW data format and PKCS1 padding.  Once SecKey gets support for PSS padding,
                     // we should add it here.
                     BOOL returnValue = ([algorithm isAlgorithm:kSecKeyAlgorithmRSASignatureRaw] && [algorithm supportsAlgorithm:kSecKeyAlgorithmRSASignatureDigestPKCS1v15Raw]);
+
 #ifdef DEBUG
                     os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation RSA returning %i",returnValue);
                     os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation RSA description %s",algorithm.description.UTF8String);
 #endif
+
                     return returnValue;
                 }
                 if ([keyItem.keyType isEqual:(id)kSecAttrKeyTypeECDSA]) {
@@ -423,10 +475,9 @@
 #ifdef DEBUG
                     os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation ECDSA class name %s",algorithm.className.UTF8String);
                     os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation ECDSA description %s",algorithm.description.UTF8String);
-                    
-
                     os_log_error(OS_LOG_DEFAULT, "BEID supportsOperation ECDSA returning %i",returnValue);
 #endif
+
                     return returnValue;
                 }
             }
@@ -446,6 +497,7 @@
 #ifdef DEBUG
     os_log_error(OS_LOG_DEFAULT, "BEID authenticatedKeyForObjectID called");
 #endif
+
     BEIDTokenKeychainKey *keyItem = (BEIDTokenKeychainKey *)[self.token.keychainContents keyForObjectID:keyObjectID error:error];
     if (keyItem == nil) {
         os_log_error(OS_LOG_DEFAULT, "BEID authenticatedKeyForObjectID keyItem == nil");
@@ -454,6 +506,7 @@
     //select key on token
     const uint8_t keyId = keyItem.keyID;//0x82 0r 0x83;
     uint8_t hashAlgId = 0x01;
+
 #ifdef DEBUG
     os_log_error(OS_LOG_DEFAULT, "BEID authenticatedKeyForObjectID keyId = %ux", keyItem.keyID);
 #endif
@@ -484,10 +537,12 @@
             os_log_error(OS_LOG_DEFAULT, "BEID selectKey failed");
             return nil;
         }
+
 #ifdef DEBUG
         os_log_error(OS_LOG_DEFAULT, "BEID selectKey success");
         os_log_error(OS_LOG_DEFAULT, "BEID authenticatedKeyForObjectID BEIDAuthStateUnauthorized, setting keyItem = nil");
 #endif
+
         //TODO: move to the (succes == NO section)
         if (error != nil) {
             *error = [NSError errorWithDomain:TKErrorDomain code:TKErrorCodeAuthenticationNeeded userInfo:nil];
@@ -503,11 +558,12 @@
 #ifdef DEBUG
     os_log_error(OS_LOG_DEFAULT, "BEID selectKeyForSign called");
 #endif
+
     // Select signing algorithm, pkcs1 padding and key keyId
     //unsigned char command[] = { 0x00, 0x22, 0x41, 0xB6, 0x05, 0x04, 0x80, 0x01, 0x84, keyId };
-    
+
     unsigned char command[] = { 0x04, 0x80, algId, 0x84, keyId };//40 for unknown hash, EC
-    
+
     //unsigned char command[] = { 0x04, 0x80, 0x08, 0x84, keyId };//8 for sha256
     
     NSData *data = [NSData dataWithBytes:command length:5];
@@ -522,9 +578,11 @@
         }
         return NO;
     }
+
 #ifdef DEBUG
     os_log_error(OS_LOG_DEFAULT, "BEID selectKeyForSign success");
 #endif
+
     return YES;
 }
 
@@ -543,9 +601,11 @@
         }
         return NO;
     }
+
 #ifdef DEBUG
     os_log_error(OS_LOG_DEFAULT, "BEID signData result length is %lu", (unsigned long)(*result).length);
 #endif
+
     return YES;
 }
 
@@ -554,14 +614,16 @@
 #ifdef DEBUG
     os_log_error(OS_LOG_DEFAULT, "BEID generalAuthenticateWithData called");
 #endif
+
     BEIDTokenKeychainKey *keyItem = [self authenticatedKeyForObjectID:keyObjectID error:error];
+
     if (keyItem == nil) {
         os_log_error(OS_LOG_DEFAULT, "BEID generalAuthenticateWithData failed, keyItem == nil");
         return nil;
     }
 
     NSNumber *resultLen = [NSNumber numberWithUnsignedChar:96];
-//keyItem.keySizeInBits *2 for EC
+    //keyItem.keySizeInBits *2 for EC
     __block NSData *statResponse;
     
     Byte* dataBytes = (Byte*)data.bytes;
@@ -588,14 +650,16 @@
               i++;
           }
     NSData * blockData = [[NSData alloc] initWithBytes:&dataBytes[i] length:((data.length)-(i))];
+
 #ifdef DEBUG
     os_log_error(OS_LOG_DEFAULT, "BEID generalAuthenticateWithData tempered Data to be signed length = %lu, data :",blockData.length);
-#endif
-/*    dataBytes = (Byte*)blockData.bytes;
+
+    dataBytes = (Byte*)blockData.bytes;
     for ( i = 0 ; i < blockData.length ; i++)
     {
         os_log_error(OS_LOG_DEFAULT, "%d: 0x%x ",i, dataBytes[i]);
-    }*/
+    }
+#endif
 
  
     BOOL (^sign)(NSError**) = ^(NSError** error) {
@@ -610,16 +674,20 @@
     };
     
     BOOL success = [self.smartCard inSessionWithError:(NSError **)error executeBlock:(BOOL(^)(NSError **error))sign];
+
     if(success == NO){
         os_log_error(OS_LOG_DEFAULT, "BEID sign failed");
+
         return nil;
     }
     
     // Mark BEIDTokenSession as already authorized and authorization used.
     session.authState = BEIDAuthStateAuthorizedButAlreadyUsed;
+
 #ifdef DEBUG
     os_log_error(OS_LOG_DEFAULT, "BEID signData signature length = %lu",(unsigned long)statResponse.length);
 #endif
+
 //   Byte* responseBytes = (Byte*)statResponse.bytes;
 //    int iii;
 //    for ( iii = 0 ; iii < statResponse.length ; iii++)
@@ -651,7 +719,7 @@
         };
         
         uint8 *bytes = (uint8*)statResponse.bytes;
-        
+
         ECDSA ecdsa = {
             { statResponse.length / 2, bytes },
             { statResponse.length / 2, bytes + (statResponse.length / 2) },
@@ -661,12 +729,20 @@
         SecAsn1CoderCreate(&coder);
     
         SecAsn1Item dest = {0, nil};
+
+#ifndef DEBUG
+        SecAsn1EncodeItem(coder, &ecdsa, ECDSATemplate, &dest);
+#else
         OSStatus ortn = SecAsn1EncodeItem(coder, &ecdsa, ECDSATemplate, &dest);
-        
+#endif
+
         statResponse = [NSData dataWithBytes:dest.Data length:dest.Length];
 
         SecAsn1CoderRelease(coder);
-        //NSLog(@"TokenSession SecAsn1EncodeItem %i %@", ortn, statResponse);
+
+#ifdef DEBUG
+        NSLog(@"TokenSession SecAsn1EncodeItem %i %@", ortn, statResponse);
+#endif
     }
     
     return statResponse;
@@ -676,6 +752,7 @@
 #ifdef DEBUG
     os_log_error(OS_LOG_DEFAULT, "BEID signData called");
 #endif
+
     return [self generalAuthenticateWithData:dataToSign session:(BEIDTokenSession *)session algorithm:(TKTokenKeyAlgorithm *)algorithm usingKey:keyObjectID error:error];
 }
 

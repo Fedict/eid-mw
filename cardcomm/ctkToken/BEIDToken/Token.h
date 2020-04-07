@@ -1,5 +1,3 @@
-
-
 #import <Foundation/Foundation.h>
 #import <CryptoTokenKit/CryptoTokenKit.h>
 #import <CryptoTokenKit/TKSmartCardToken.h>
@@ -62,7 +60,7 @@ static const TKTokenOperationConstraint BEIDConstraintPINAlways = @"PINAlways";
 @end
 
 @interface BEIDTokenDriver : TKSmartCardTokenDriver<TKSmartCardTokenDriverDelegate>
-@end
 
+@end
 
 NS_ASSUME_NONNULL_END

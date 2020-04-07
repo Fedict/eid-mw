@@ -92,7 +92,7 @@ namespace eIDMW
 				}
 				//--- get Length
 //            int iNrBytes = ulLen - ulIndex - 1;     //calculate remaining bytes
-				int iNrBytes = ulLen - ulIndex;	//calculate remaining bytes
+				int iNrBytes = (int)(ulLen - ulIndex);	//calculate remaining bytes
 
 				if (!TlvDecodeLen(pucData + ulIndex, &iNrBytes, &ulFieldLen))
 				{

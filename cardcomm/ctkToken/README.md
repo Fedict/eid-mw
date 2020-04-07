@@ -6,13 +6,13 @@ The new extension will be automatically installed when the hosting application i
 
 ## Requirements
 
-This sample requires SmartCard reader, BEID SmartCard and OS X 10.12 or later
+This sample requires SmartCard reader, BEID SmartCard and OS X 10.15 or later
 
 ### Build
 
-Xcode 8.0 or later; OS X 10.12 or later
+Xcode 11.0 or later; OS X 10.15 or later
 
 ### Runtime
 
-OS X 10.12 or later
+OS X 10.15 or later
 

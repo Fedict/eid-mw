@@ -1,0 +1,9 @@
+CORECRYPTO_HOST_TOOLCHAIN = $(DT_TOOLCHAIN_DIR)/usr/local/bin
+
+OTHER_CFLAGS = $(inherited) -Wcast-qual -Wno-error=#warnings -isystem "$(SDKROOT)/System/Library/Frameworks/System.framework/PrivateHeaders"
+OTHER_CFLAGS[sdk=macosx10.8*] = $(OTHER_CFLAGS) -Wno-nonnull
+
+// Change TOOLCHAINS from SDK to default if ASan is enabled
+// This is to run ASan on trains where the default Clang does not support it
+TOOLCHAINS_ASAN_YES=default
+TOOLCHAINS=$(TOOLCHAINS_ASAN_$(CLANG_ADDRESS_SANITIZER)) $(inherited)

@@ -1,0 +1,18 @@
+/*
+ Localizable.strings
+ CryptoTokenKit
+ */
+
+"CORRUPTED_CERT" = "certificaat data corrupt";
+"CARD_AUTH_CERT" = "Certificaat Voor Kaart Authenticatie";
+"DIG_SIG_CERT" = "Certificaat Voor Digitale Handtekening";
+"KEY_MGMT_CERT" = "Certificaat Voor Sleutel Beheer";
+"PIV_AUTH_CERT" = "Certificaat Voor PIV Authenticatie";
+"CARD_AUTH_KEY" = "Sleutel Voor Kaart Authenticatie";
+"DIG_SIG_KEY" = "Sleutel Voor Digitale Handtekening";
+"KEY_MGMT_KEY" = "Sleutel Voor Sleutel Beheer";
+"PIV_AUTH_KEY" = "Sleutel Voor PIV Authenticatie";
+"RET_KEY_MGMT_CERT" = "Vervallen Certificaat Voor Sleutel Beheer %ld";
+"RET_KEY_MGMT_KEY" = "Vervallen Sleutel Voor Sleutel Beheer %ld";
+"WRONG_CONSTR" = "Onverwachte beperking";
+

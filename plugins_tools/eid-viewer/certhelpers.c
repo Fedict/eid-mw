@@ -21,9 +21,13 @@
 #endif
 
 void eid_vwr_init_crypto() {
+#if !defined(__APPLE__) && !defined(__MACH__)
 	ERR_load_crypto_strings();
+#endif /* !defined(__APPLE__) && !defined(__MACH__) */
+
 	be_log(EID_VWR_LOG_DETAIL, "Built with %s", OPENSSL_VERSION_TEXT);
 	be_log(EID_VWR_LOG_DETAIL, "Using %s", SSLeay_version(SSLEAY_VERSION));
+
 	OpenSSL_add_all_algorithms();
 }
 
@@ -128,7 +132,7 @@ bool verify_once(EVP_PKEY *pubkey, const EVP_MD *md, const unsigned char *data, 
 		be_log(EID_VWR_LOG_COARSE, "Could not verify card validity: hashing failed");
 		goto exit;
 	}
-	if(EVP_DigestVerifyFinal(mdctx, sig, siglen) != 1) {
+	if(EVP_DigestVerifyFinal(mdctx, (unsigned char *)sig, siglen) != 1) {
 		be_log(EID_VWR_LOG_COARSE, "Signature validity check failed");
 		goto exit;
 	}

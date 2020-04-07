@@ -7,8 +7,9 @@
       "scale" : "1x"
     },
     {
-      "idiom" : "mac",
       "size" : "16x16",
+      "idiom" : "mac",
+      "filename" : "logo_16x16@2x.png",
       "scale" : "2x"
     },
     {
@@ -18,8 +19,9 @@
       "scale" : "1x"
     },
     {
-      "idiom" : "mac",
       "size" : "32x32",
+      "idiom" : "mac",
+      "filename" : "logo_32x32@2x.png",
       "scale" : "2x"
     },
     {
@@ -29,8 +31,9 @@
       "scale" : "1x"
     },
     {
-      "idiom" : "mac",
       "size" : "128x128",
+      "idiom" : "mac",
+      "filename" : "logo_128x128@2x.png",
       "scale" : "2x"
     },
     {
@@ -40,19 +43,21 @@
       "scale" : "1x"
     },
     {
-      "idiom" : "mac",
       "size" : "256x256",
+      "idiom" : "mac",
+      "filename" : "logo_256x256@2x.png",
       "scale" : "2x"
     },
     {
       "size" : "512x512",
       "idiom" : "mac",
-      "filename" : "logo_512.png",
+      "filename" : "logo_512x512.png",
       "scale" : "1x"
     },
     {
-      "idiom" : "mac",
       "size" : "512x512",
+      "idiom" : "mac",
+      "filename" : "logo_512x512@2x.png",
       "scale" : "2x"
     }
   ],

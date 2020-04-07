@@ -9,7 +9,15 @@
 #include <unistd.h>
 
 #include <sys/ioctl.h>
+
+#if 0
 #include <sys/select.h>
+#else /* Direct defined */
+#ifndef SELECT_DEFINED
+#define SELECT_DEFINED
+extern int select(int, fd_set * __restrict, fd_set * __restrict, fd_set * __restrict, struct timeval * __restrict);
+#endif /* SELECT_DEFINED */
+#endif /* Select */
 
 char *default_card_port = "/dev/tty.usbmodem14141";
 char *default_usb_port = "/dev/tty.usbmodem14131";
@@ -66,7 +74,9 @@ bool wait_for_data(Serial *port, int time) {
 	FD_SET(port->fd, &rb);
 	tv.tv_sec = time;
 	tv.tv_usec = 0;
+
 	select(port->fd+1, &rb, NULL, NULL, &tv);
+
 	return FD_ISSET(port->fd, &rb) ? true : false;
 }
 

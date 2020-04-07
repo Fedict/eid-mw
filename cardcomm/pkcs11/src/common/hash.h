@@ -47,7 +47,22 @@
 #define HASH_H
 
 #include "bytearray.h"
+
+#if defined(__APPLE__) && defined(__MACH__)
+extern "C"
+{
+    #include <corecrypto/ccdigest.h>
+    #include <corecrypto/ccsha2.h>
+    #include <corecrypto/ccsha1.h>
+    #include <corecrypto/ccmd5.h>
+    #include <corecrypto/ccripemd.h>
+
+    typedef ccdigest_ctx_t hash_state;
+}
+
+#else /* Not Apple */
 #include "libtomcrypt/tomcrypt_hash.h"
+#endif /* Apple? */
 
 namespace eIDMW
 {

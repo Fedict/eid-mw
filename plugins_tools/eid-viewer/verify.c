@@ -18,6 +18,7 @@
 
 #ifdef __APPLE__
 #include "trustdirname.h"
+
 #define CERTTRUSTDIR eid_vwr_osl_objc_trustdirname()
 #else
 #define CERTTRUSTDIR (DATAROOTDIR "/" PACKAGE_NAME "/trustdir")
@@ -55,8 +56,8 @@ static void log_ssl_error(char* message) {
 }
 
 enum eid_vwr_result eid_vwr_verify_int_cert(const void *certificate, size_t certlen, const void *ca, size_t calen, const void *(*perform_http_request)(char*, long*, void**), void(*free_http_request)(void*)) {
-#if OPENSSL_VERSION_NUMBER < 0x10100000L || defined(LIBRESSL_VERSION_NUMBER)
-	be_log(EID_VWR_LOG_DETAIL, "Ignoring CRL check: OpenSSL 1.1 required");
+#if OPENSSL_VERSION_NUMBER < 0x10000000L || defined(LIBRESSL_VERSION_NUMBER)
+	be_log(EID_VWR_LOG_DETAIL, "Ignoring CRL check: OpenSSL 1.0 or better required");
 	return EID_VWR_RES_UNKNOWN;
 #else
 	X509 *cert_i = NULL, *ca_i = NULL;
@@ -82,7 +83,7 @@ enum eid_vwr_result eid_vwr_verify_int_cert(const void *certificate, size_t cert
 	}
 	exts = X509_get0_extensions(cert_i);
 
-	CRL_DIST_POINTS *pts = X509V3_get_d2i(exts, NID_crl_distribution_points, NULL, NULL);
+	CRL_DIST_POINTS *pts = X509V3_get_d2i((STACK_OF(X509_EXTENSION)*)   exts, NID_crl_distribution_points, NULL, NULL);
 	for(i=0; i<sk_DIST_POINT_num(pts); i++) {
 		DIST_POINT *point = sk_DIST_POINT_value(pts, i);
 		for(j=0; j<sk_GENERAL_NAME_num(point->distpoint->name.fullname); j++) {

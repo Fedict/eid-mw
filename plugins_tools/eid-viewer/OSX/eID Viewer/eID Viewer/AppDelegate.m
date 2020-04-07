@@ -104,14 +104,19 @@
 				break;
 		}
 		NSString* output = [NSString stringWithFormat:@"%c: %@\n", l, line];
+        
+#ifdef USE_OLD_INSERTTEXT
 		[[self logItem] insertText:output];
+#else /* NEW_INSERTTEXT */
+        [[self logItem] insertText:output replacementRange:NSMakeRange([[[self logItem]  string] length], 0)];
+#endif /* INSERTTEXT */
 	}];
 }
 - (void)file_open:(id)sender {
 	NSOpenPanel *panel = [NSOpenPanel openPanel];
 
 	[panel beginWithCompletionHandler:^(NSInteger result) {
-		if(result == NSFileHandlingPanelOKButton) {
+        if(result == NSModalResponseOK) {
 			[eIDOSLayerBackend deserialize:[[panel URLs]objectAtIndex:0]];
 		}
 	}];
@@ -121,7 +126,7 @@
 	[panel setAllowedFileTypes:[NSArray arrayWithObjects: @"be.fedict.eid.eidviewer", nil]];
 	[panel setNameFieldStringValue:[NSString stringWithFormat:@"%@.eid", [(NSTextField*)[self searchObjectById:@"national_number" ofClass:[NSTextField class] forUpdate:NO] stringValue]]];
 	[panel beginWithCompletionHandler:^(NSInteger result) {
-		if(result == NSFileHandlingPanelOKButton) {
+        if(result == NSModalResponseOK) {
 			[eIDOSLayerBackend serialize:[panel URL]];
 		}
 	}];
@@ -149,7 +154,7 @@
 			NSTextField* tf = (NSTextField*)obj;
 			[tf setStringValue:@""];
 		}];
-        [self.memberOfFamilyState setState:NSOffState];
+        [self.memberOfFamilyState setState:NSControlStateValueOff];
 	}];
 }
 - (void)newbindata:(NSData *)data withLabel:(NSString *)label {
@@ -232,7 +237,7 @@
 			[self.CardReadSheet orderOut:self.window];
 			[self.spinner stopAnimation:self];
 		}
-		if(doValidateNow && ([self.alwaysValidate state] == NSOnState)) {
+        if(doValidateNow && ([self.alwaysValidate state] == NSControlStateValueOn)) {
 			[self validateNow:nil];
 		}
 	}];
@@ -295,7 +300,13 @@
 	[_CertDetailView setEditable:YES];
 	[_CertDetailView selectAll:nil];
 	[_CertDetailView delete:nil];
+
+#ifdef USE_OLD_INSERTTEXT
 	[_CertDetailView insertText:details];
+#else /* USE_NEW_INSERTTEXT */
+    [_CertDetailView insertText:details replacementRange:NSMakeRange([[_CertDetailView string] length], 0)];
+#endif /* INSERTTEXT */
+
 //no more changes
 	[_CertDetailView setEditable:NO];
 }
@@ -368,9 +379,9 @@
 	eIDLogLevel level = [prefs integerForKey:@"log_level"];
 	BOOL alw_val = [prefs boolForKey:@"always_validate"];
 	if(alw_val) {
-		[_alwaysValidate setState:NSOnState];
+        [_alwaysValidate setState:NSControlStateValueOn];
 	} else {
-		[_alwaysValidate setState:NSOffState];
+        [_alwaysValidate setState:NSControlStateValueOff];
 	}
 	[self setIsForeignerCard:NO];
 	[_logLevel selectItemAtIndex:level];
@@ -441,7 +452,7 @@
 	}
 	if([label isEqualToString:@"member_of_family"]) {
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-			[self.memberOfFamilyState setState:NSOnState];
+            [self.memberOfFamilyState setState:NSControlStateValueOn];
 		}];
 	}
 	if([label isEqualToString:@"document_type_raw"]) {
@@ -509,7 +520,7 @@
 	if(resParents == eIDResultFailed || resRRN == eIDResultFailed) {
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			NSAlert* error = [[NSAlert alloc ] init];
-			[error setAlertStyle:NSWarningAlertStyle];
+            [error setAlertStyle:NSAlertStyleWarning];
 			[error setMessageText:NSLocalizedStringWithDefaultValue(@"InvalidCertsFound", nil, [NSBundle mainBundle], @"One or more of the certificates on this card were found to be invalid or revoked.", "")];
 			[error setInformativeText:NSLocalizedStringWithDefaultValue(@"InvalidCertsMoreInfo", nil, [NSBundle mainBundle], @"For more information, please see the log tab", "")];
 			[error runModal];
@@ -517,7 +528,7 @@
 	}
 }
 -(void)changeValidatePolicy:(id)sender {
-	BOOL on = ([_alwaysValidate state] == NSOnState);
+    BOOL on = ([_alwaysValidate state] == NSControlStateValueOn);
 	[[NSUserDefaults standardUserDefaults] setBool:on forKey:@"always_validate"];
 	if(on) {
 		[self validateNow:sender];
@@ -529,17 +540,17 @@
 		return;
 	}
 	for(int i=0; i<[_readerSelections count]; i++) {
-		[[_readerSelections objectAtIndex:i] setState:NSOffState];
+        [[_readerSelections objectAtIndex:i] setState:NSControlStateValueOff];
 	}
-	[sender setState:NSOnState];
+    [sender setState:NSControlStateValueOn];
 	[eIDOSLayerBackend setReaderAuto:YES];
 }
 -(IBAction)selectManualReader:(ReaderMenuItem*)sender {
-	[_menu_file_reader_auto setState: NSOffState];
+    [_menu_file_reader_auto setState: NSControlStateValueOff];
 	for(int i=0; i<[_readerSelections count]; i++) {
-		[[_readerSelections objectAtIndex:i] setState: NSOffState];
+        [[_readerSelections objectAtIndex:i] setState: NSControlStateValueOff];
 	}
-	[sender setState:NSOnState];
+    [sender setState:NSControlStateValueOn];
 	[eIDOSLayerBackend selectReader:[sender slotNumber]];
 }
 -(void)readersFound:(NSArray *)readers withSlotNumbers:(NSArray *)slots {

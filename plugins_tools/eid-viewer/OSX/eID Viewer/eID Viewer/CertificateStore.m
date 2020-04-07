@@ -23,7 +23,9 @@
 	X509 *cert = NULL;
 	BIO *bio = BIO_new(BIO_s_mem());
 	char *buf;
+#if !defined(__APPLE__) && !defined(__MACH__)
 	char errbuf[120];
+#endif /* !defined(__APPLE__) && !defined(__MACH__) */
 	size_t size = data.length;
 	unsigned char *bytes = malloc(size);
 	unsigned char *bytes_b = bytes;
@@ -40,12 +42,17 @@
 	arr[CERT_COL_DATA] = data;
 	[data getBytes:bytes length:size];
 	if(d2i_X509(&cert, (const unsigned char**)&bytes, size) == NULL) {
+#if !defined(__APPLE__) && !defined(__MACH__)
 		ERR_load_crypto_strings();
 		unsigned long err;
 		[_ui log:[[NSString alloc] initWithFormat:@"Could not parse %@ certificate:", label] withLevel:eIDLogLevelCoarse];
 		while((err = ERR_get_error()) > 0) {
 			[_ui log:[[NSString alloc] initWithFormat:@"... %s", ERR_error_string(err, errbuf)] withLevel:eIDLogLevelCoarse];
 		}
+#else /* defined(__APPLE)__ && defined(__MACH__ */
+        [_ui log:[[NSString alloc] initWithFormat:@"Could not parse %@ certificate:", label] withLevel:eIDLogLevelCoarse];
+#endif /* !defined(__APPLE__) && !defined(__MACH__) */
+
 		return;
 	}
 	arr[CERT_COL_LABEL] = [NSString stringWithCString:eid_vwr_describe_cert(label.UTF8String, cert) encoding:NSUTF8StringEncoding];
