@@ -110,6 +110,7 @@
 
 void ERR_load_crypto_strings(void)
 	{
+#ifndef __APPLE__
 #ifndef OPENSSL_NO_ERR
 	ERR_load_ERR_strings(); /* include error strings for SYSerr */
 	ERR_load_BN_strings();
@@ -163,6 +164,7 @@ void ERR_load_crypto_strings(void)
 #endif
 #ifndef OPENSSL_NO_JPAKE
 	ERR_load_JPAKE_strings();
+#endif
 #endif
 #endif
 	}

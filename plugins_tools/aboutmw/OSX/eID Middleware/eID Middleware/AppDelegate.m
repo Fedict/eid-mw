@@ -35,8 +35,8 @@
 @end
 
 struct utsname uts;
-long darwinver;
-static const long max_supported_darwin_version = 16; // 10.12
+long darwinver = 0;
+static const long max_supported_darwin_version = 19; // 10.15
 static const long min_supported_darwin_version = 12; // 10.8
 
 
