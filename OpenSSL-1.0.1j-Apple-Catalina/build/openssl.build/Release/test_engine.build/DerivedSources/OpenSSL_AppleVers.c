@@ -1,0 +1,1 @@
+ const unsigned char test_engineVersionString[] __attribute__ ((used)) = "@(#)PROGRAM:test_engine  PROJECT:openssl-1.0.1j" "\n"; const double test_engineVersionNumber __attribute__ ((used)) = (double)1.0;

@@ -1,0 +1,263 @@
+{
+  'version': 0,
+  'case-sensitive': 'false',
+  'roots': [
+    {
+      'type': 'directory',
+      'name': "/Users/andyvand/Downloads/OpenSSL101j-52/build/Release/Modules",
+      'contents': [
+        {
+          'type': 'file',
+          'name': "module.modulemap",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/build/openssl.build/Release/crypto.1.0.1.build/module.modulemap"
+        }
+      ]
+    },
+    {
+      'type': 'directory',
+      'name': "/Users/andyvand/Downloads/OpenSSL101j-52/build/Release/openssl",
+      'contents': [
+        {
+          'type': 'file',
+          'name': "aes.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/aes/aes.h"
+        },
+        {
+          'type': 'file',
+          'name': "bio.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/bio/bio.h"
+        },
+        {
+          'type': 'file',
+          'name': "blowfish.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/bf/blowfish.h"
+        },
+        {
+          'type': 'file',
+          'name': "bn.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/bn/bn.h"
+        },
+        {
+          'type': 'file',
+          'name': "buffer.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/buffer/buffer.h"
+        },
+        {
+          'type': 'file',
+          'name': "cast.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/cast/cast.h"
+        },
+        {
+          'type': 'file',
+          'name': "comp.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/comp/comp.h"
+        },
+        {
+          'type': 'file',
+          'name': "conf.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/conf/conf.h"
+        },
+        {
+          'type': 'file',
+          'name': "conf_api.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/conf/conf_api.h"
+        },
+        {
+          'type': 'file',
+          'name': "crypto.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/crypto.h"
+        },
+        {
+          'type': 'file',
+          'name': "crypto_1_0_1-Swift.h",
+          'external-contents': "/usr/include/openssl/crypto_1_0_1-Swift.h"
+        },
+        {
+          'type': 'file',
+          'name': "des.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/des/des.h"
+        },
+        {
+          'type': 'file',
+          'name': "des_old.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/des/des_old.h"
+        },
+        {
+          'type': 'file',
+          'name': "dso.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/dso/dso.h"
+        },
+        {
+          'type': 'file',
+          'name': "e_os2.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/e_os2.h"
+        },
+        {
+          'type': 'file',
+          'name': "ebcdic.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/ebcdic.h"
+        },
+        {
+          'type': 'file',
+          'name': "ecdh.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/ecdh/ecdh.h"
+        },
+        {
+          'type': 'file',
+          'name': "ecdsa.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/ecdsa/ecdsa.h"
+        },
+        {
+          'type': 'file',
+          'name': "err.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/err/err.h"
+        },
+        {
+          'type': 'file',
+          'name': "hmac.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/hmac/hmac.h"
+        },
+        {
+          'type': 'file',
+          'name': "lhash.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/lhash/lhash.h"
+        },
+        {
+          'type': 'file',
+          'name': "md2.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/md2/md2.h"
+        },
+        {
+          'type': 'file',
+          'name': "md4.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/md4/md4.h"
+        },
+        {
+          'type': 'file',
+          'name': "md5.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/md5/md5.h"
+        },
+        {
+          'type': 'file',
+          'name': "mdc2.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/mdc2/mdc2.h"
+        },
+        {
+          'type': 'file',
+          'name': "ocsp.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/ocsp/ocsp.h"
+        },
+        {
+          'type': 'file',
+          'name': "opensslconf.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/opensslconf.h"
+        },
+        {
+          'type': 'file',
+          'name': "opensslv.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/opensslv.h"
+        },
+        {
+          'type': 'file',
+          'name': "ossl_typ.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/ossl_typ.h"
+        },
+        {
+          'type': 'file',
+          'name': "pkcs12.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/pkcs12/pkcs12.h"
+        },
+        {
+          'type': 'file',
+          'name': "pkcs7.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/pkcs7/pkcs7.h"
+        },
+        {
+          'type': 'file',
+          'name': "pqueue.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/pqueue/pqueue.h"
+        },
+        {
+          'type': 'file',
+          'name': "rand.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/rand/rand.h"
+        },
+        {
+          'type': 'file',
+          'name': "rc2.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/rc2/rc2.h"
+        },
+        {
+          'type': 'file',
+          'name': "rc5.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/rc5/rc5.h"
+        },
+        {
+          'type': 'file',
+          'name': "ripemd.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/ripemd/ripemd.h"
+        },
+        {
+          'type': 'file',
+          'name': "safestack.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/stack/safestack.h"
+        },
+        {
+          'type': 'file',
+          'name': "seed.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/seed/seed.h"
+        },
+        {
+          'type': 'file',
+          'name': "sha.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/sha/sha.h"
+        },
+        {
+          'type': 'file',
+          'name': "stack.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/stack/stack.h"
+        },
+        {
+          'type': 'file',
+          'name': "store.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/store/store.h"
+        },
+        {
+          'type': 'file',
+          'name': "symhacks.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/symhacks.h"
+        },
+        {
+          'type': 'file',
+          'name': "txt_db.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/txt_db/txt_db.h"
+        },
+        {
+          'type': 'file',
+          'name': "ui.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/ui/ui.h"
+        },
+        {
+          'type': 'file',
+          'name': "ui_compat.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/ui/ui_compat.h"
+        },
+        {
+          'type': 'file',
+          'name': "x509.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/x509/x509.h"
+        },
+        {
+          'type': 'file',
+          'name': "x509_vfy.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/x509/x509_vfy.h"
+        },
+        {
+          'type': 'file',
+          'name': "x509v3.h",
+          'external-contents': "/Users/andyvand/Downloads/OpenSSL101j-52/src/crypto/x509v3/x509v3.h"
+        }
+      ]
+    }
+  ]
+}

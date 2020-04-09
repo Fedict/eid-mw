@@ -1,0 +1,33 @@
+
+/* Class = "NSMenuItem"; title = "BEIDTokenApp"; ObjectID = "1Xt-HY-uBw"; */
+"1Xt-HY-uBw.title" = "BEIDTokenApp";
+
+/* Class = "NSMenuItem"; title = "Quit BEIDTokenApp"; ObjectID = "4sb-4s-VLi"; */
+"4sb-4s-VLi.title" = "Stop BEIDTokenApp";
+
+/* Class = "NSMenuItem"; title = "About BEIDTokenApp"; ObjectID = "5kV-Vb-QxS"; */
+"5kV-Vb-QxS.title" = "Over BEIDTokenApp";
+
+/* Class = "NSButtonCell"; title = "BEIDToken is registered"; ObjectID = "6PN-x3-4VU"; */
+"6PN-x3-4VU.title" = "Ok";
+
+/* Class = "NSMenu"; title = "Main Menu"; ObjectID = "AYu-sK-qS6"; */
+"AYu-sK-qS6.title" = "Hoofdmenu";
+
+/* Class = "NSMenuItem"; title = "Show All"; ObjectID = "Kd2-mp-pUS"; */
+"Kd2-mp-pUS.title" = "Toon alles";
+
+/* Class = "NSMenuItem"; title = "Hide BEIDTokenApp"; ObjectID = "Olw-nP-bQN"; */
+"Olw-nP-bQN.title" = "Verberg BEIDTokenApp";
+
+/* Class = "NSWindow"; title = "BEIDTokenApp"; ObjectID = "QvC-M9-y7g"; */
+"QvC-M9-y7g.title" = "BEIDTokenApp";
+
+/* Class = "NSTextFieldCell"; title = "Configuration completed"; ObjectID = "SQb-Av-NzX"; */
+"SQb-Av-NzX.title" = "Configuratie voltooid";
+
+/* Class = "NSMenuItem"; title = "Hide Others"; ObjectID = "Vdr-fp-XzO"; */
+"Vdr-fp-XzO.title" = "Verberg alles";
+
+/* Class = "NSMenu"; title = "BEIDTokenApp"; ObjectID = "uQy-DD-JDr"; */
+"uQy-DD-JDr.title" = "BEIDTokenApp";

@@ -1,0 +1,1 @@
+ const unsigned char test_sha256VersionString[] __attribute__ ((used)) = "@(#)PROGRAM:test_sha256  PROJECT:openssl-1.0.1j" "\n"; const double test_sha256VersionNumber __attribute__ ((used)) = (double)1.0;
