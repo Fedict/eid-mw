@@ -6,6 +6,24 @@
 	objectVersion = 52;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		AB6545C8243F19DF00A0B0B3 /* Full Build */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = AB654619243F19DF00A0B0B3 /* Build configuration list for PBXAggregateTarget "Full Build" */;
+			buildPhases = (
+			);
+			dependencies = (
+				AB65461B243F1A0400A0B0B3 /* PBXTargetDependency */,
+				AB654621243F1A1F00A0B0B3 /* PBXTargetDependency */,
+				AB65461F243F1A1500A0B0B3 /* PBXTargetDependency */,
+				AB65461D243F1A1100A0B0B3 /* PBXTargetDependency */,
+				AB654623243F1A3F00A0B0B3 /* PBXTargetDependency */,
+			);
+			name = "Full Build";
+			productName = "Full Build";
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		651DDF241FEA833C00C4961E /* eidv4.xsd in Resources */ = {isa = PBXBuildFile; fileRef = 651DDF231FEA833C00C4961E /* eidv4.xsd */; };
 		651DDF2D1FEA843D00C4961E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 651DDF2C1FEA843D00C4961E /* AppDelegate.m */; };
@@ -254,6 +272,69 @@
 			proxyType = 2;
 			remoteGlobalIDString = 86F33B0C1987A6B400E200F0;
 			remoteInfo = test_dialogs;
+		};
+		AB65461A243F1A0400A0B0B3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 651DDF281FEA843C00C4961E;
+			remoteInfo = "eID Viewer";
+		};
+		AB65461C243F1A1100A0B0B3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6536230119A7E8E600D46ECB;
+			remoteInfo = testsuite;
+		};
+		AB65461E243F1A1500A0B0B3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB96639B243EFEC60079069B /* eID Middleware.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 658054E41A66C9BB000AEFE0;
+			remoteInfo = "eID Middleware";
+		};
+		AB654620243F1A1F00A0B0B3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB715D53243D09C600B3D387 /* BEIDToken.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 2F3883971CF46C6E00F114A7;
+			remoteInfo = BEIDTokenApp;
+		};
+		AB654622243F1A3F00A0B0B3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 86BC84C01A037C19009E374E /* test_dialogs.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 86F33B0B1987A6B400E200F0;
+			remoteInfo = test_dialogs;
+		};
+		AB654624243F1A6F00A0B0B3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 1C342FED0F71A9220045E860;
+			remoteInfo = crypto.1.0.1;
+		};
+		AB654626243F1A8300A0B0B3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 1C342FED0F71A9220045E860;
+			remoteInfo = crypto.1.0.1;
+		};
+		AB654628243F1A8D00A0B0B3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 1C3430020F71AA900045E860;
+			remoteInfo = ssl1.0.1;
+		};
+		AB65462A243F1A9C00A0B0B3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7FA1A9F60F85F36E000D9EE1;
+			remoteInfo = beidpkcs11;
 		};
 		AB715D58243D09C700B3D387 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -626,6 +707,13 @@
 			remoteGlobalIDString = 4C1115AE110A862400FCEEB6;
 			remoteInfo = "Unit Tests";
 		};
+		AB9663B7243EFEC60079069B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB96639B243EFEC60079069B /* eID Middleware.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 658054E51A66C9BB000AEFE0;
+			remoteInfo = "eID Middleware";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -945,6 +1033,7 @@
 		AB715D53243D09C600B3D387 /* BEIDToken.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BEIDToken.xcodeproj; path = cardcomm/ctkToken/BEIDToken.xcodeproj; sourceTree = "<group>"; };
 		AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = corecrypto.xcodeproj; path = cardcomm/pkcs11/src/common/libcorecrypto/corecrypto.xcodeproj; sourceTree = "<group>"; };
 		AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openssl.xcodeproj; path = "OpenSSL-1.0.1j-Apple-Catalina/openssl.xcodeproj"; sourceTree = "<group>"; };
+		AB96639B243EFEC60079069B /* eID Middleware.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "eID Middleware.xcodeproj"; path = "plugins_tools/aboutmw/OSX/eID Middleware/eID Middleware.xcodeproj"; sourceTree = "<group>"; };
 		ABA19114243CAB3800116415 /* BeidView.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = BeidView.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1013,6 +1102,7 @@
 		0867D691FE84028FC02AAC07 /* beidmw */ = {
 			isa = PBXGroup;
 			children = (
+				AB96639B243EFEC60079069B /* eID Middleware.xcodeproj */,
 				AB715D53243D09C600B3D387 /* BEIDToken.xcodeproj */,
 				86BC84C01A037C19009E374E /* test_dialogs.xcodeproj */,
 				AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */,
@@ -1498,6 +1588,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		AB96639C243EFEC60079069B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AB9663B8243EFEC60079069B /* eID Middleware.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1598,6 +1696,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				AB654625243F1A6F00A0B0B3 /* PBXTargetDependency */,
 				659FD58B1FEA87E000E4AF83 /* PBXTargetDependency */,
 				659FD5881FEA867600E4AF83 /* PBXTargetDependency */,
 			);
@@ -1620,6 +1719,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				AB654629243F1A8D00A0B0B3 /* PBXTargetDependency */,
+				AB654627243F1A8300A0B0B3 /* PBXTargetDependency */,
 				65270A861FE97E6C004F326D /* PBXTargetDependency */,
 			);
 			name = BeidView;
@@ -1656,6 +1757,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				AB65462B243F1A9C00A0B0B3 /* PBXTargetDependency */,
 			);
 			name = testsuite;
 			productName = testsuite;
@@ -1709,6 +1811,9 @@
 					7FA1A9F60F85F36E000D9EE1 = {
 						DevelopmentTeam = EU27N85PBZ;
 					};
+					AB6545C8243F19DF00A0B0B3 = {
+						CreatedOnToolsVersion = 11.3.1;
+					};
 				};
 			};
 			buildConfigurationList = 1DEB916408733D950010E9CD /* Build configuration list for PBXProject "beidmw" */;
@@ -1735,6 +1840,10 @@
 					ProjectRef = AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */;
 				},
 				{
+					ProductGroup = AB96639C243EFEC60079069B /* Products */;
+					ProjectRef = AB96639B243EFEC60079069B /* eID Middleware.xcodeproj */;
+				},
+				{
 					ProductGroup = AB8BE64F243CC4D4003967F8 /* Products */;
 					ProjectRef = AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */;
 				},
@@ -1745,6 +1854,7 @@
 			);
 			projectRoot = "";
 			targets = (
+				AB6545C8243F19DF00A0B0B3 /* Full Build */,
 				7FA1A9F60F85F36E000D9EE1 /* beidpkcs11 */,
 				6536230119A7E8E600D46ECB /* testsuite */,
 				652709F91FE975A1004F326D /* BeidView */,
@@ -2119,6 +2229,13 @@
 			remoteRef = AB8BE6C3243CC4D4003967F8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		AB9663B8243EFEC60079069B /* eID Middleware.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "eID Middleware.app";
+			remoteRef = AB9663B7243EFEC60079069B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -2359,6 +2476,51 @@
 			isa = PBXTargetDependency;
 			target = 653490F51FEA7B39000F7787 /* eidfilepreview */;
 			targetProxy = 659FD58A1FEA87E000E4AF83 /* PBXContainerItemProxy */;
+		};
+		AB65461B243F1A0400A0B0B3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 651DDF281FEA843C00C4961E /* eID Viewer */;
+			targetProxy = AB65461A243F1A0400A0B0B3 /* PBXContainerItemProxy */;
+		};
+		AB65461D243F1A1100A0B0B3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6536230119A7E8E600D46ECB /* testsuite */;
+			targetProxy = AB65461C243F1A1100A0B0B3 /* PBXContainerItemProxy */;
+		};
+		AB65461F243F1A1500A0B0B3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "eID Middleware";
+			targetProxy = AB65461E243F1A1500A0B0B3 /* PBXContainerItemProxy */;
+		};
+		AB654621243F1A1F00A0B0B3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = BEIDTokenApp;
+			targetProxy = AB654620243F1A1F00A0B0B3 /* PBXContainerItemProxy */;
+		};
+		AB654623243F1A3F00A0B0B3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = test_dialogs;
+			targetProxy = AB654622243F1A3F00A0B0B3 /* PBXContainerItemProxy */;
+		};
+		AB654625243F1A6F00A0B0B3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = crypto.1.0.1;
+			targetProxy = AB654624243F1A6F00A0B0B3 /* PBXContainerItemProxy */;
+		};
+		AB654627243F1A8300A0B0B3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = crypto.1.0.1;
+			targetProxy = AB654626243F1A8300A0B0B3 /* PBXContainerItemProxy */;
+		};
+		AB654629243F1A8D00A0B0B3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ssl1.0.1;
+			targetProxy = AB654628243F1A8D00A0B0B3 /* PBXContainerItemProxy */;
+		};
+		AB65462B243F1A9C00A0B0B3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7FA1A9F60F85F36E000D9EE1 /* beidpkcs11 */;
+			targetProxy = AB65462A243F1A9C00A0B0B3 /* PBXContainerItemProxy */;
 		};
 		AB8BE5D2243CC291003967F8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -3059,6 +3221,24 @@
 			};
 			name = Release;
 		};
+		AB6545C9243F19DF00A0B0B3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = YZAQ856TTM;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		AB6545CA243F19DF00A0B0B3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = YZAQ856TTM;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -3112,6 +3292,15 @@
 			buildConfigurations = (
 				7FA1A9F80F85F36F000D9EE1 /* Debug */,
 				7FA1A9F90F85F36F000D9EE1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AB654619243F19DF00A0B0B3 /* Build configuration list for PBXAggregateTarget "Full Build" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AB6545C9243F19DF00A0B0B3 /* Debug */,
+				AB6545CA243F19DF00A0B0B3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

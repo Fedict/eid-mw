@@ -15,7 +15,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			uxXPPIbHpMNrhWRUiI3FMYFExzc=
+			msteZ8yUUZBeDOWhEiHvYLPJ/i8=
 			</data>
 			<key>requirement</key>
 			<string>identifier libbeidpkcs11 and anchor apple generic and certificate leaf[subject.CN] = "Apple Development: catvampire35@gmail.com (VC2F3CGZ22)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
@@ -24,7 +24,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			qA+Xbh/7HJ/acJaLjV2Mpog8L3Q=
+			TXPygTr1BQqFWC2XhfewB3k58PA=
 			</data>
 			<key>requirement</key>
 			<string>identifier "libcrypto.1" and anchor apple generic and certificate leaf[subject.CN] = "Apple Development: catvampire35@gmail.com (VC2F3CGZ22)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>

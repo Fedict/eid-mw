@@ -13,6 +13,7 @@
 		658054F01A66C9BB000AEFE0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 658054EF1A66C9BB000AEFE0 /* Images.xcassets */; };
 		658054F31A66C9BB000AEFE0 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 658054F11A66C9BB000AEFE0 /* MainMenu.xib */; };
 		65CE8EB51A66D5AC00B20669 /* DataItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CE8EB41A66D5AC00B20669 /* DataItem.m */; };
+		ABCA8DFD243F06CF0024CBAB /* quarantine.h in Headers */ = {isa = PBXBuildFile; fileRef = ABCA8DFC243F06CF0024CBAB /* quarantine.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		658054F21A66C9BB000AEFE0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		65CE8EB31A66D5AC00B20669 /* DataItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataItem.h; sourceTree = "<group>"; };
 		65CE8EB41A66D5AC00B20669 /* DataItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataItem.m; sourceTree = "<group>"; };
+		ABCA8DFC243F06CF0024CBAB /* quarantine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = quarantine.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 		658054E71A66C9BB000AEFE0 /* eID Middleware */ = {
 			isa = PBXGroup;
 			children = (
+				ABCA8DFC243F06CF0024CBAB /* quarantine.h */,
 				658054EA1A66C9BB000AEFE0 /* AppDelegate.h */,
 				658054EB1A66C9BB000AEFE0 /* AppDelegate.m */,
 				65CE8EB31A66D5AC00B20669 /* DataItem.h */,
@@ -86,6 +89,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABCA8DFD243F06CF0024CBAB /* quarantine.h in Headers */,
 				65709EA01A69898E006835B8 /* beidversions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -124,7 +128,7 @@
 					658054E41A66C9BB000AEFE0 = {
 						CreatedOnToolsVersion = 6.1.1;
 						DevelopmentTeam = YZAQ856TTM;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};

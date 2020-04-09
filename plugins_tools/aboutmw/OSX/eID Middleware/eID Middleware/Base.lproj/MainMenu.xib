@@ -57,6 +57,23 @@
                         </items>
                     </menu>
                 </menuItem>
+                <menuItem title="File" id="sQX-hx-PSV">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="File" id="bQ4-eu-hHJ">
+                        <items>
+                            <menuItem title="Page Setup…" keyEquivalent="P" id="0DE-TF-sO4">
+                                <connections>
+                                    <action selector="runPageLayout:" target="-1" id="dxE-rN-MNq"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Print…" keyEquivalent="p" id="kcM-FJ-Kbh">
+                                <connections>
+                                    <action selector="print:" target="-1" id="RWV-kv-9P9"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
                 <menuItem title="Edit" id="5QF-Oa-p0T">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Edit" id="W48-6f-4Dl">
@@ -110,9 +127,10 @@
             <point key="canvasLocation" x="140" y="154"/>
         </menu>
         <window title="eID Middleware" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
-            <windowStyleMask key="styleMask" titled="YES" miniaturizable="YES" resizable="YES"/>
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <rect key="contentRect" x="335" y="390" width="580" height="360"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <value key="minSize" type="size" width="580" height="360"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="580" height="360"/>
                 <autoresizingMask key="autoresizingMask"/>
