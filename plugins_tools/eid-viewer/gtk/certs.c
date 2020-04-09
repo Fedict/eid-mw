@@ -235,7 +235,7 @@ static const void* perform_ocsp_request(char* url, void* data, long datlen, long
 	struct curl_slist *list = NULL;
 	const void *retval;
 
-	curl_slist_append(list, "Content-Type: application/ocsp-request");
+	list = curl_slist_append(list, "Content-Type: application/ocsp-request");
 	curl = curl_easy_init();
 	curl_easy_setopt(curl, CURLOPT_POST, (long)1);
 	curl_easy_setopt(curl, CURLOPT_POSTFIELDS, data);
