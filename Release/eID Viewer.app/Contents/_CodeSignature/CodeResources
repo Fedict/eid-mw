@@ -10,7 +10,7 @@
 		</data>
 		<key>Resources/Assets.car</key>
 		<data>
-		sPTmVSz6iIUT/2AZ05z64AAkmFg=
+		xRIh9J9TJl4gEzUymiK2MaTg+Hc=
 		</data>
 		<key>Resources/Base.lproj/MainMenu.nib</key>
 		<data>
@@ -110,7 +110,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			VjwufkGvfe5ux6wzRa28/WQo3V4=
+			guqGO3hUxEUPVg87ya9njUdMQO4=
 			</data>
 			<key>requirement</key>
 			<string>identifier "be.fedict.BeidView" and anchor apple generic and certificate leaf[subject.CN] = "Apple Development: catvampire35@gmail.com (VC2F3CGZ22)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
@@ -119,7 +119,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			TXPygTr1BQqFWC2XhfewB3k58PA=
+			efWspcNRckSMYXdiTHmxLvyTyGY=
 			</data>
 			<key>requirement</key>
 			<string>identifier "libcrypto.1" and anchor apple generic and certificate leaf[subject.CN] = "Apple Development: catvampire35@gmail.com (VC2F3CGZ22)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
@@ -135,7 +135,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			AIgGqcsIMQyVAfhEH2IXP8j/fpCxW5paTSgX1RJ1VTo=
+			GT0LwU1P+h+9e/MVwTf7Hho9HUt5ygt2KSlZ2am7Bl0=
 			</data>
 		</dict>
 		<key>Library/QuickLook/eidfilepreview.qlgenerator/Contents/PkgInfo</key>
@@ -170,7 +170,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			S2DhhnUhusWuvG3rOOl/CjirG9eGkoNlu3IG9pKbZeQ=
+			oHuv7KG9nCqyf5Z/JtzxPwiVeoEdTrEu8b/MLaW3C80=
 			</data>
 		</dict>
 		<key>Resources/Base.lproj/MainMenu.nib</key>

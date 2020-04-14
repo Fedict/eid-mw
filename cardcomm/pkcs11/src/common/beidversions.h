@@ -6,10 +6,10 @@
 #define BEID_PRODUCT_NAME "Belgium eID Middleware"
 #define BEID_PRODUCT_VERSION "5.0.1"
 #define BEID_VERSION_STRING "5, 0, 1"
-#define BEID_BUILD_DATE "2020-04-09"
+#define BEID_BUILD_DATE "2020-04-14"
 #define BASE_VERSION1 5
 #define BASE_VERSION2 0
 #define BASE_VERSION3 1
-#define EIDMW_REVISION_STR "v4.4.23-785-g5f16f5e8-dirty"
+#define EIDMW_REVISION_STR "v4.4.23-786-g50c27478-dirty"
 
 #endif

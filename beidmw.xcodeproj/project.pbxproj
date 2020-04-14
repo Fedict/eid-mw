@@ -235,13 +235,11 @@
 		8BD62CA321021C9300C28B6D /* booldecode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8E00F210216900026D6AB /* booldecode.cpp */; };
 		AB68D65E243CA07100BA8851 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AB68D65D243CA06800BA8851 /* libxml2.tbd */; };
 		AB8BE5D5243CC2AF003967F8 /* libcorecrypto_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB8BE5B2243CC1FF003967F8 /* libcorecrypto_static.a */; };
-		AB8BE6C6243CC5AB003967F8 /* libcrypto.1.0.1.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = AB8BE688243CC4D4003967F8 /* libcrypto.1.0.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		AB8BE6C8243CC5B1003967F8 /* libssl.1.0.1.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = AB8BE68A243CC4D4003967F8 /* libssl.1.0.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		AB8BE6C9243CC5C2003967F8 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AB68D65D243CA06800BA8851 /* libxml2.tbd */; };
-		AB8BE6CB243CC5D2003967F8 /* libcrypto.1.0.1.dylib in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AB8BE688243CC4D4003967F8 /* libcrypto.1.0.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		ABF9A4FB243CD55000D3528B /* libcrypto.1.0.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AB8BE688243CC4D4003967F8 /* libcrypto.1.0.1.dylib */; };
-		ABF9A4FC243CD55000D3528B /* libssl.1.0.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AB8BE68A243CC4D4003967F8 /* libssl.1.0.1.dylib */; };
-		ABF9A4FD243CD55800D3528B /* libcrypto.1.0.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AB8BE688243CC4D4003967F8 /* libcrypto.1.0.1.dylib */; };
+		ABBE59A22446228800A40AA7 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABBE59A12446228800A40AA7 /* libcrypto.a */; };
+		ABBE59A42446229E00A40AA7 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABBE59A32446229E00A40AA7 /* libssl.a */; };
+		ABBE59A5244622CE00A40AA7 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABBE59A32446229E00A40AA7 /* libssl.a */; };
+		ABBE59A62446230500A40AA7 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABBE59A12446228800A40AA7 /* libcrypto.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -307,27 +305,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 86F33B0B1987A6B400E200F0;
 			remoteInfo = test_dialogs;
-		};
-		AB654624243F1A6F00A0B0B3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 1C342FED0F71A9220045E860;
-			remoteInfo = crypto.1.0.1;
-		};
-		AB654626243F1A8300A0B0B3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 1C342FED0F71A9220045E860;
-			remoteInfo = crypto.1.0.1;
-		};
-		AB654628243F1A8D00A0B0B3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 1C3430020F71AA900045E860;
-			remoteInfo = ssl1.0.1;
 		};
 		AB65462A243F1A9C00A0B0B3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -724,8 +701,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				653490F01FEA75FE000F7787 /* libbeidpkcs11.5.0.1.dylib in CopyFiles */,
-				AB8BE6C6243CC5AB003967F8 /* libcrypto.1.0.1.dylib in CopyFiles */,
-				AB8BE6C8243CC5B1003967F8 /* libssl.1.0.1.dylib in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -745,7 +720,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				659FD5861FEA867600E4AF83 /* BeidView.framework in Embed Frameworks */,
-				AB8BE6CB243CC5D2003967F8 /* libcrypto.1.0.1.dylib in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1035,6 +1009,8 @@
 		AB8BE64E243CC4D4003967F8 /* openssl.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openssl.xcodeproj; path = "OpenSSL-1.0.1j-Apple-Catalina/openssl.xcodeproj"; sourceTree = "<group>"; };
 		AB96639B243EFEC60079069B /* eID Middleware.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "eID Middleware.xcodeproj"; path = "plugins_tools/aboutmw/OSX/eID Middleware/eID Middleware.xcodeproj"; sourceTree = "<group>"; };
 		ABA19114243CAB3800116415 /* BeidView.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = BeidView.entitlements; sourceTree = "<group>"; };
+		ABBE59A12446228800A40AA7 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../../../../usr/local/lib/libcrypto.a; sourceTree = "<group>"; };
+		ABBE59A32446229E00A40AA7 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = ../../../../usr/local/lib/libssl.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1043,7 +1019,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				659FD5851FEA867600E4AF83 /* BeidView.framework in Frameworks */,
-				ABF9A4FD243CD55800D3528B /* libcrypto.1.0.1.dylib in Frameworks */,
+				ABBE59A5244622CE00A40AA7 /* libssl.a in Frameworks */,
+				ABBE59A62446230500A40AA7 /* libcrypto.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1051,9 +1028,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ABF9A4FB243CD55000D3528B /* libcrypto.1.0.1.dylib in Frameworks */,
-				ABF9A4FC243CD55000D3528B /* libssl.1.0.1.dylib in Frameworks */,
 				65270A881FE97E7D004F326D /* libbeidpkcs11.5.0.1.dylib in Frameworks */,
+				ABBE59A42446229E00A40AA7 /* libssl.a in Frameworks */,
+				ABBE59A22446228800A40AA7 /* libcrypto.a in Frameworks */,
 				AB68D65E243CA07100BA8851 /* libxml2.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1266,6 +1243,8 @@
 		65270A871FE97E7D004F326D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				ABBE59A32446229E00A40AA7 /* libssl.a */,
+				ABBE59A12446228800A40AA7 /* libcrypto.a */,
 				AB68D65D243CA06800BA8851 /* libxml2.tbd */,
 				AB68D65A243CA05F00BA8851 /* libssl.1.0.1.dylib */,
 				AB68D657243CA04700BA8851 /* libcrypto.1.0.1.dylib */,
@@ -1696,7 +1675,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				AB654625243F1A6F00A0B0B3 /* PBXTargetDependency */,
 				659FD58B1FEA87E000E4AF83 /* PBXTargetDependency */,
 				659FD5881FEA867600E4AF83 /* PBXTargetDependency */,
 			);
@@ -1719,8 +1697,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				AB654629243F1A8D00A0B0B3 /* PBXTargetDependency */,
-				AB654627243F1A8300A0B0B3 /* PBXTargetDependency */,
 				65270A861FE97E6C004F326D /* PBXTargetDependency */,
 			);
 			name = BeidView;
@@ -2502,21 +2478,6 @@
 			name = test_dialogs;
 			targetProxy = AB654622243F1A3F00A0B0B3 /* PBXContainerItemProxy */;
 		};
-		AB654625243F1A6F00A0B0B3 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = crypto.1.0.1;
-			targetProxy = AB654624243F1A6F00A0B0B3 /* PBXContainerItemProxy */;
-		};
-		AB654627243F1A8300A0B0B3 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = crypto.1.0.1;
-			targetProxy = AB654626243F1A8300A0B0B3 /* PBXContainerItemProxy */;
-		};
-		AB654629243F1A8D00A0B0B3 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = ssl1.0.1;
-			targetProxy = AB654628243F1A8D00A0B0B3 /* PBXContainerItemProxy */;
-		};
 		AB65462B243F1A9C00A0B0B3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 7FA1A9F60F85F36E000D9EE1 /* beidpkcs11 */;
@@ -2866,6 +2827,7 @@
 					USE_NSURLSESSION,
 				);
 				HEADER_SEARCH_PATHS = (
+					/usr/local/include,
 					"$(PROJECT_DIR)/doc/sdk/include/rsaref220",
 					"$(PROJECT_DIR)/plugins_tools/util/",
 					"plugins_tools/eid-viewer",
@@ -2883,6 +2845,7 @@
 					"@loader_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = (
+					/usr/local/lib,
 					"$(SDK_DIR)/usr/lib",
 					/usr/local/lib,
 					"$(inherited)",
@@ -2917,6 +2880,7 @@
 					USE_NSURLSESSION,
 				);
 				HEADER_SEARCH_PATHS = (
+					/usr/local/include,
 					"$(PROJECT_DIR)/doc/sdk/include/rsaref220",
 					"$(PROJECT_DIR)/plugins_tools/util/",
 					"plugins_tools/eid-viewer",
@@ -2934,6 +2898,7 @@
 					"@loader_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = (
+					/usr/local/lib,
 					"$(SDK_DIR)/usr/lib",
 					/usr/local/lib,
 					"$(inherited)",

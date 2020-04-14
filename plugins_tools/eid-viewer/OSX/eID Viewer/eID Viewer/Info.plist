@@ -20,6 +20,8 @@
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>5.0.2</string>
+	<key>CFBundleVersion</key>
+	<string>5.0.2</string>
 	<key>CFBundleSignature</key>
 	<string>EIDV</string>
 	<key>LSApplicationCategoryType</key>
@@ -48,10 +50,32 @@
 	</dict>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2014-2019 BOSA, copyright © 2020 Vampire Cat.</string>
+	<key>CFBundleGetInfoString</key>
+	<string>Belgian eID Viewer V5.0.2, copyright © 2014-2019 BOSA, copyright © 2020 Vampire Cat.</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeName</key>
+			<string>eID Document</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>public.xml</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>eid</string>
+				<string>xml</string>
+			</array>
+			<key>LSHandlerRank</key>
+			<string>Default</string>
+		</dict>
+	</array>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>

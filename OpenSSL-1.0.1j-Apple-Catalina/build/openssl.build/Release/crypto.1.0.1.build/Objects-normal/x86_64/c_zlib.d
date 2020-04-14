@@ -15,4 +15,5 @@ dependencies: \
   /Users/andyvand/Downloads/eid-mw/OpenSSL-1.0.1j-Apple-Catalina/src/include/openssl/bn.h \
   /Users/andyvand/Downloads/eid-mw/OpenSSL-1.0.1j-Apple-Catalina/src/include/openssl/comp.h \
   /Users/andyvand/Downloads/eid-mw/OpenSSL-1.0.1j-Apple-Catalina/src/include/openssl/err.h \
-  /Users/andyvand/Downloads/eid-mw/OpenSSL-1.0.1j-Apple-Catalina/src/include/openssl/lhash.h
+  /Users/andyvand/Downloads/eid-mw/OpenSSL-1.0.1j-Apple-Catalina/src/include/openssl/lhash.h \
+  /usr/local/include/zlib.h /usr/local/include/zconf.h
