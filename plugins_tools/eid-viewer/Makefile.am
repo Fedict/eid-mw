@@ -192,7 +192,7 @@ DISTCLEANFILES = \
 	$(icon256_DATA) \
 	$(icon512_DATA)
 
-dist_packagedata_DATA = eidv4.xsd
+dist_packagedata_DATA = xml/eidv4.xsd
 dist_trust_DATA = \
 	certs/belgiumrca2.pem \
 	certs/belgiumrca3.pem \
