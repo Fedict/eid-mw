@@ -12,7 +12,7 @@
 		<key>cc_world.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>28</integer>
+			<integer>79</integer>
 		</dict>
 		<key>ccdh_gen_gp.xcscheme_^#shared#^_</key>
 		<dict>
@@ -37,22 +37,22 @@
 		<key>corecrypto_executables.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>24</integer>
+			<integer>92</integer>
 		</dict>
 		<key>corecrypto_headers.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>25</integer>
+			<integer>67</integer>
 		</dict>
 		<key>corecrypto_iboot.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>29</integer>
+			<integer>33</integer>
 		</dict>
 		<key>corecrypto_kext.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>27</integer>
+			<integer>40</integer>
 		</dict>
 		<key>corecrypto_l4.xcscheme_^#shared#^_</key>
 		<dict>
@@ -87,7 +87,7 @@
 		<key>ec_verify.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>26</integer>
+			<integer>84</integer>
 		</dict>
 		<key>hmacfiletool.xcscheme_^#shared#^_</key>
 		<dict>
@@ -112,7 +112,7 @@
 		<key>tests.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>30</integer>
+			<integer>48</integer>
 		</dict>
 	</dict>
 </dict>

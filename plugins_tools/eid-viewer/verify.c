@@ -56,10 +56,10 @@ static void log_ssl_error(char* message) {
 }
 
 enum eid_vwr_result eid_vwr_verify_int_cert(const void *certificate, size_t certlen, const void *ca, size_t calen, const void *(*perform_http_request)(char*, long*, void**), void(*free_http_request)(void*)) {
-#if OPENSSL_VERSION_NUMBER < 0x10000000L || defined(LIBRESSL_VERSION_NUMBER)
+/*#if OPENSSL_VERSION_NUMBER < 0x10000000L || defined(LIBRESSL_VERSION_NUMBER)
 	be_log(EID_VWR_LOG_DETAIL, "Ignoring CRL check: OpenSSL 1.0 or better required");
 	return EID_VWR_RES_UNKNOWN;
-#else
+#else*/
 	X509 *cert_i = NULL, *ca_i = NULL;
 	const STACK_OF(X509_EXTENSION)* exts;
 	char *url = NULL;
@@ -131,7 +131,7 @@ exit:
 		free_http_request(http_handle);
 	}
 	return ret;
-#endif
+/*#endif*/
 }
 
 enum eid_vwr_result eid_vwr_verify_cert(const void *certificate, size_t certlen, const void *ca, size_t calen, const void*(*perform_ocsp_request)(char*, void*, long, long*, void**), void(*free_ocsp_request)(void*)) {

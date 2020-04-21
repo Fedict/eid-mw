@@ -10,6 +10,6 @@
 #define BASE_VERSION1 5
 #define BASE_VERSION2 0
 #define BASE_VERSION3 1
-#define EIDMW_REVISION_STR "v4.4.23-790-g22b04589-dirty"
+#define EIDMW_REVISION_STR "v4.4.23-791-g1bd204ed-dirty"
 
 #endif

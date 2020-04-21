@@ -1186,8 +1186,6 @@
 		65270A601FE97A2A004F326D /* convertor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = convertor.h; sourceTree = "<group>"; };
 		65270A611FE97A2A004F326D /* convert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = convert.cpp; sourceTree = "<group>"; };
 		65270A621FE97A2B004F326D /* specorgconv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = specorgconv.h; sourceTree = "<group>"; };
-		65270A891FE97E97004F326D /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = "plugins_tools/eid-viewer/OSX/support/ossl/openssl-1.0.2l/libcrypto.a"; sourceTree = "<group>"; };
-		65270A8B1FE97EBD004F326D /* libxml2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libxml2.a; path = "plugins_tools/eid-viewer/OSX/support/xml/builddir/.libs/libxml2.a"; sourceTree = "<group>"; };
 		65314FB72080E9E10079D0B0 /* workpermitconv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = workpermitconv.cpp; sourceTree = "<group>"; };
 		65314FBB2080E9E10079D0B0 /* workpermitconv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = workpermitconv.h; sourceTree = "<group>"; };
 		653490F61FEA7B39000F7787 /* eidfilepreview.qlgenerator */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = eidfilepreview.qlgenerator; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1253,8 +1251,6 @@
 		7F22A3D60F84D6B0001AD228 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		7F22A4110F84D948001AD228 /* PCSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PCSC.framework; path = System/Library/Frameworks/PCSC.framework; sourceTree = SDKROOT; };
 		7F9010620F84FEC3004A5FCC /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
-		7F9011190F8502F8004A5FCC /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = /usr/lib/libcrypto.dylib; sourceTree = "<absolute>"; };
-		7F90111C0F850342004A5FCC /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = /usr/lib/libssl.dylib; sourceTree = "<absolute>"; };
 		7F90112C0F850450004A5FCC /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.5.0.1.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeidpkcs11.5.0.1.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		86BC84C01A037C19009E374E /* test_dialogs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = test_dialogs.xcodeproj; path = tests/dialogs/test_dialogs.xcodeproj; sourceTree = "<group>"; };
@@ -1358,8 +1354,6 @@
 		8BC8E011210216900026D6AB /* toxmlmemberoffamilyconv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = toxmlmemberoffamilyconv.cpp; sourceTree = "<group>"; };
 		8BC8E012210216900026D6AB /* toxmlmemberoffamilyconv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = toxmlmemberoffamilyconv.h; sourceTree = "<group>"; };
 		8BCC05F7211479F90015C705 /* pkcs11log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pkcs11log.h; path = cardcomm/pkcs11/src/pkcs11log.h; sourceTree = "<group>"; };
-		AB68D657243CA04700BA8851 /* libcrypto.1.0.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.1.0.1.dylib; path = ../../../../usr/local/lib/libcrypto.1.0.1.dylib; sourceTree = "<group>"; };
-		AB68D65A243CA05F00BA8851 /* libssl.1.0.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.1.0.1.dylib; path = ../../../../usr/local/lib/libssl.1.0.1.dylib; sourceTree = "<group>"; };
 		AB68D65D243CA06800BA8851 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		AB715D53243D09C600B3D387 /* BEIDToken.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BEIDToken.xcodeproj; path = cardcomm/ctkToken/BEIDToken.xcodeproj; sourceTree = "<group>"; };
 		AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = corecrypto.xcodeproj; path = cardcomm/pkcs11/src/common/libcorecrypto/corecrypto.xcodeproj; sourceTree = "<group>"; };
@@ -1459,8 +1453,6 @@
 			children = (
 				7F22A4110F84D948001AD228 /* PCSC.framework */,
 				7F90112C0F850450004A5FCC /* SystemConfiguration.framework */,
-				7F90111C0F850342004A5FCC /* libssl.dylib */,
-				7F9011190F8502F8004A5FCC /* libcrypto.dylib */,
 				7F9010620F84FEC3004A5FCC /* CoreServices.framework */,
 				7F22A3D60F84D6B0001AD228 /* CoreFoundation.framework */,
 				08FB77AAFE841565C02AAC07 /* Carbon.framework */,
@@ -1603,10 +1595,6 @@
 				ABBE59A32446229E00A40AA7 /* libssl.a */,
 				ABBE59A12446228800A40AA7 /* libcrypto.a */,
 				AB68D65D243CA06800BA8851 /* libxml2.tbd */,
-				AB68D65A243CA05F00BA8851 /* libssl.1.0.1.dylib */,
-				AB68D657243CA04700BA8851 /* libcrypto.1.0.1.dylib */,
-				65270A8B1FE97EBD004F326D /* libxml2.a */,
-				65270A891FE97E97004F326D /* libcrypto.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
