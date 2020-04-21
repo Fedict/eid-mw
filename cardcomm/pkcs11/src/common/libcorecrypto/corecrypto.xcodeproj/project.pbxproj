@@ -2029,12 +2029,6 @@
 		4BC070891A7975B200313C8A /* cczp_mod_inv_field.c in Sources */ = {isa = PBXBuildFile; fileRef = 4BC070841A7975B200313C8A /* cczp_mod_inv_field.c */; };
 		4BC0708A1A7975B200313C8A /* cczp_mod_inv_field.c in Sources */ = {isa = PBXBuildFile; fileRef = 4BC070841A7975B200313C8A /* cczp_mod_inv_field.c */; };
 		4BC0708B1A7975B200313C8A /* cczp_mod_inv_field.c in Sources */ = {isa = PBXBuildFile; fileRef = 4BC070841A7975B200313C8A /* cczp_mod_inv_field.c */; };
-		4BC68AA21B06C1900098A4AA /* libcorecrypto_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BC68AA11B06C1900098A4AA /* libcorecrypto_static.a */; };
-		4BC68AA31B06C1900098A4AA /* libcorecrypto_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BC68AA11B06C1900098A4AA /* libcorecrypto_static.a */; };
-		4BC68AA41B06C1900098A4AA /* libcorecrypto_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BC68AA11B06C1900098A4AA /* libcorecrypto_static.a */; };
-		4BC68AA51B06C1900098A4AA /* libcorecrypto_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BC68AA11B06C1900098A4AA /* libcorecrypto_static.a */; };
-		4BC68AA61B06C1900098A4AA /* libcorecrypto_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BC68AA11B06C1900098A4AA /* libcorecrypto_static.a */; };
-		4BC68AA71B06C1900098A4AA /* libcorecrypto_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BC68AA11B06C1900098A4AA /* libcorecrypto_static.a */; };
 		4BC68AC31B06C39A0098A4AA /* vng_aes.c in Sources */ = {isa = PBXBuildFile; fileRef = 4BC68AA91B06C39A0098A4AA /* vng_aes.c */; };
 		4BC68AC41B06C39A0098A4AA /* vng_aes.c in Sources */ = {isa = PBXBuildFile; fileRef = 4BC68AA91B06C39A0098A4AA /* vng_aes.c */; };
 		4BC68AC51B06C39A0098A4AA /* vng_aes.c in Sources */ = {isa = PBXBuildFile; fileRef = 4BC68AA91B06C39A0098A4AA /* vng_aes.c */; };
@@ -5329,7 +5323,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0C28C73914101CC2008A2E7E /* libcorecrypto_static.a in Frameworks */,
-				4BC68AA61B06C1900098A4AA /* libcorecrypto_static.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5338,7 +5331,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0C3300C414EC838800B97B20 /* libcorecrypto_static.a in Frameworks */,
-				4BC68AA41B06C1900098A4AA /* libcorecrypto_static.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5369,7 +5361,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B1A5AF51AFC0B9D00DDE509 /* libcorecrypto_static.a in Frameworks */,
-				4BC68AA71B06C1900098A4AA /* libcorecrypto_static.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5393,7 +5384,6 @@
 			files = (
 				4C9AD1111200D78A004C50F5 /* libcorecrypto_static.a in Frameworks */,
 				4C5D63021293C5FF00C9B2AA /* Foundation.framework in Frameworks */,
-				4BC68AA31B06C1900098A4AA /* libcorecrypto_static.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5409,7 +5399,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CE89A4F1267AC0B004179B9 /* libcorecrypto_static.a in Frameworks */,
-				4BC68AA51B06C1900098A4AA /* libcorecrypto_static.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5426,7 +5415,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5DDA38F014DAFEBA006151BE /* libcorecrypto_static.a in Frameworks */,
-				4BC68AA21B06C1900098A4AA /* libcorecrypto_static.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8959,7 +8947,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastTestingUpgradeCheck = 0600;
-				LastUpgradeCheck = 1130;
+				LastUpgradeCheck = 1140;
 				TargetAttributes = {
 					0C28C72B1410018F008A2E7E = {
 						DevelopmentTeam = YZAQ856TTM;

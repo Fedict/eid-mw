@@ -208,6 +208,7 @@ enum eid_vwr_result eid_vwr_verify_cert(const void *certificate, size_t certlen,
 			}
 		}
 	}
+
 	if(!url) {
 		be_log(EID_VWR_LOG_NORMAL, "No OCSP URL found. Is this an actual eID card?");
 		ret = EID_VWR_RES_FAILED;

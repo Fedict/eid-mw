@@ -3,12 +3,517 @@
 <plist version="1.0">
 <dict>
  <key>clang_version</key>
-<string>Apple clang version 11.0.0 (clang-1100.0.33.17)</string>
+<string>Apple clang version 11.0.3 (clang-1103.0.32.59)</string>
  <key>diagnostics</key>
  <array>
+  <dict>
+   <key>path</key>
+   <array>
+    <dict>
+     <key>kind</key><string>event</string>
+     <key>location</key>
+     <dict>
+      <key>line</key><integer>148</integer>
+      <key>col</key><integer>10</integer>
+      <key>file</key><integer>0</integer>
+     </dict>
+     <key>ranges</key>
+     <array>
+       <array>
+        <dict>
+         <key>line</key><integer>148</integer>
+         <key>col</key><integer>17</integer>
+         <key>file</key><integer>0</integer>
+        </dict>
+        <dict>
+         <key>line</key><integer>148</integer>
+         <key>col</key><integer>41</integer>
+         <key>file</key><integer>0</integer>
+        </dict>
+       </array>
+     </array>
+     <key>depth</key><integer>0</integer>
+     <key>extended_message</key>
+     <string>Although the value stored to &apos;result&apos; is used in the enclosing expression, the value is never actually read from &apos;result&apos;</string>
+     <key>message</key>
+     <string>Although the value stored to &apos;result&apos; is used in the enclosing expression, the value is never actually read from &apos;result&apos;</string>
+    </dict>
+   </array>
+   <key>description</key><string>Although the value stored to &apos;result&apos; is used in the enclosing expression, the value is never actually read from &apos;result&apos;</string>
+   <key>category</key><string>Dead store</string>
+   <key>type</key><string>Dead nested assignment</string>
+   <key>check_name</key><string>deadcode.DeadStores</string>
+   <!-- This hash is experimental and going to change! -->
+   <key>issue_hash_content_of_line_in_context</key><string>71a7436c8950a700b5ab9418455f979b</string>
+  <key>issue_context_kind</key><string>function</string>
+  <key>issue_context</key><string>ccdh_test_compute_vector</string>
+  <key>issue_hash_function_offset</key><string>77</string>
+  <key>location</key>
+  <dict>
+   <key>line</key><integer>148</integer>
+   <key>col</key><integer>10</integer>
+   <key>file</key><integer>0</integer>
+  </dict>
+  <key>ExecutedLines</key>
+  <dict>
+   <key>0</key>
+   <array>
+    <integer>148</integer>
+   </array>
+  </dict>
+  </dict>
+  <dict>
+   <key>path</key>
+   <array>
+    <dict>
+     <key>kind</key><string>event</string>
+     <key>location</key>
+     <dict>
+      <key>line</key><integer>165</integer>
+      <key>col</key><integer>9</integer>
+      <key>file</key><integer>0</integer>
+     </dict>
+     <key>ranges</key>
+     <array>
+       <array>
+        <dict>
+         <key>line</key><integer>165</integer>
+         <key>col</key><integer>16</integer>
+         <key>file</key><integer>0</integer>
+        </dict>
+        <dict>
+         <key>line</key><integer>165</integer>
+         <key>col</key><integer>40</integer>
+         <key>file</key><integer>0</integer>
+        </dict>
+       </array>
+     </array>
+     <key>depth</key><integer>0</integer>
+     <key>extended_message</key>
+     <string>Although the value stored to &apos;result&apos; is used in the enclosing expression, the value is never actually read from &apos;result&apos;</string>
+     <key>message</key>
+     <string>Although the value stored to &apos;result&apos; is used in the enclosing expression, the value is never actually read from &apos;result&apos;</string>
+    </dict>
+   </array>
+   <key>description</key><string>Although the value stored to &apos;result&apos; is used in the enclosing expression, the value is never actually read from &apos;result&apos;</string>
+   <key>category</key><string>Dead store</string>
+   <key>type</key><string>Dead nested assignment</string>
+   <key>check_name</key><string>deadcode.DeadStores</string>
+   <!-- This hash is experimental and going to change! -->
+   <key>issue_hash_content_of_line_in_context</key><string>9ee3460e46069a4d6a16fa94ce7b194f</string>
+  <key>issue_context_kind</key><string>function</string>
+  <key>issue_context</key><string>ccdh_test_compute_vector</string>
+  <key>issue_hash_function_offset</key><string>94</string>
+  <key>location</key>
+  <dict>
+   <key>line</key><integer>165</integer>
+   <key>col</key><integer>9</integer>
+   <key>file</key><integer>0</integer>
+  </dict>
+  <key>ExecutedLines</key>
+  <dict>
+   <key>0</key>
+   <array>
+    <integer>165</integer>
+   </array>
+  </dict>
+  </dict>
+  <dict>
+   <key>path</key>
+   <array>
+    <dict>
+     <key>kind</key><string>event</string>
+     <key>location</key>
+     <dict>
+      <key>line</key><integer>179</integer>
+      <key>col</key><integer>9</integer>
+      <key>file</key><integer>0</integer>
+     </dict>
+     <key>ranges</key>
+     <array>
+       <array>
+        <dict>
+         <key>line</key><integer>179</integer>
+         <key>col</key><integer>16</integer>
+         <key>file</key><integer>0</integer>
+        </dict>
+        <dict>
+         <key>line</key><integer>179</integer>
+         <key>col</key><integer>40</integer>
+         <key>file</key><integer>0</integer>
+        </dict>
+       </array>
+     </array>
+     <key>depth</key><integer>0</integer>
+     <key>extended_message</key>
+     <string>Although the value stored to &apos;result&apos; is used in the enclosing expression, the value is never actually read from &apos;result&apos;</string>
+     <key>message</key>
+     <string>Although the value stored to &apos;result&apos; is used in the enclosing expression, the value is never actually read from &apos;result&apos;</string>
+    </dict>
+   </array>
+   <key>description</key><string>Although the value stored to &apos;result&apos; is used in the enclosing expression, the value is never actually read from &apos;result&apos;</string>
+   <key>category</key><string>Dead store</string>
+   <key>type</key><string>Dead nested assignment</string>
+   <key>check_name</key><string>deadcode.DeadStores</string>
+   <!-- This hash is experimental and going to change! -->
+   <key>issue_hash_content_of_line_in_context</key><string>9ee3460e46069a4d6a16fa94ce7b194f</string>
+  <key>issue_context_kind</key><string>function</string>
+  <key>issue_context</key><string>ccdh_test_compute_vector</string>
+  <key>issue_hash_function_offset</key><string>108</string>
+  <key>location</key>
+  <dict>
+   <key>line</key><integer>179</integer>
+   <key>col</key><integer>9</integer>
+   <key>file</key><integer>0</integer>
+  </dict>
+  <key>ExecutedLines</key>
+  <dict>
+   <key>0</key>
+   <array>
+    <integer>179</integer>
+   </array>
+  </dict>
+  </dict>
+  <dict>
+   <key>path</key>
+   <array>
+    <dict>
+     <key>kind</key><string>event</string>
+     <key>location</key>
+     <dict>
+      <key>line</key><integer>189</integer>
+      <key>col</key><integer>9</integer>
+      <key>file</key><integer>0</integer>
+     </dict>
+     <key>ranges</key>
+     <array>
+       <array>
+        <dict>
+         <key>line</key><integer>189</integer>
+         <key>col</key><integer>16</integer>
+         <key>file</key><integer>0</integer>
+        </dict>
+        <dict>
+         <key>line</key><integer>189</integer>
+         <key>col</key><integer>40</integer>
+         <key>file</key><integer>0</integer>
+        </dict>
+       </array>
+     </array>
+     <key>depth</key><integer>0</integer>
+     <key>extended_message</key>
+     <string>Although the value stored to &apos;result&apos; is used in the enclosing expression, the value is never actually read from &apos;result&apos;</string>
+     <key>message</key>
+     <string>Although the value stored to &apos;result&apos; is used in the enclosing expression, the value is never actually read from &apos;result&apos;</string>
+    </dict>
+   </array>
+   <key>description</key><string>Although the value stored to &apos;result&apos; is used in the enclosing expression, the value is never actually read from &apos;result&apos;</string>
+   <key>category</key><string>Dead store</string>
+   <key>type</key><string>Dead nested assignment</string>
+   <key>check_name</key><string>deadcode.DeadStores</string>
+   <!-- This hash is experimental and going to change! -->
+   <key>issue_hash_content_of_line_in_context</key><string>9ee3460e46069a4d6a16fa94ce7b194f</string>
+  <key>issue_context_kind</key><string>function</string>
+  <key>issue_context</key><string>ccdh_test_compute_vector</string>
+  <key>issue_hash_function_offset</key><string>118</string>
+  <key>location</key>
+  <dict>
+   <key>line</key><integer>189</integer>
+   <key>col</key><integer>9</integer>
+   <key>file</key><integer>0</integer>
+  </dict>
+  <key>ExecutedLines</key>
+  <dict>
+   <key>0</key>
+   <array>
+    <integer>189</integer>
+   </array>
+  </dict>
+  </dict>
+  <dict>
+   <key>path</key>
+   <array>
+    <dict>
+     <key>kind</key><string>event</string>
+     <key>location</key>
+     <dict>
+      <key>line</key><integer>202</integer>
+      <key>col</key><integer>9</integer>
+      <key>file</key><integer>0</integer>
+     </dict>
+     <key>ranges</key>
+     <array>
+       <array>
+        <dict>
+         <key>line</key><integer>202</integer>
+         <key>col</key><integer>16</integer>
+         <key>file</key><integer>0</integer>
+        </dict>
+        <dict>
+         <key>line</key><integer>202</integer>
+         <key>col</key><integer>40</integer>
+         <key>file</key><integer>0</integer>
+        </dict>
+       </array>
+     </array>
+     <key>depth</key><integer>0</integer>
+     <key>extended_message</key>
+     <string>Although the value stored to &apos;result&apos; is used in the enclosing expression, the value is never actually read from &apos;result&apos;</string>
+     <key>message</key>
+     <string>Although the value stored to &apos;result&apos; is used in the enclosing expression, the value is never actually read from &apos;result&apos;</string>
+    </dict>
+   </array>
+   <key>description</key><string>Although the value stored to &apos;result&apos; is used in the enclosing expression, the value is never actually read from &apos;result&apos;</string>
+   <key>category</key><string>Dead store</string>
+   <key>type</key><string>Dead nested assignment</string>
+   <key>check_name</key><string>deadcode.DeadStores</string>
+   <!-- This hash is experimental and going to change! -->
+   <key>issue_hash_content_of_line_in_context</key><string>9ee3460e46069a4d6a16fa94ce7b194f</string>
+  <key>issue_context_kind</key><string>function</string>
+  <key>issue_context</key><string>ccdh_test_compute_vector</string>
+  <key>issue_hash_function_offset</key><string>131</string>
+  <key>location</key>
+  <dict>
+   <key>line</key><integer>202</integer>
+   <key>col</key><integer>9</integer>
+   <key>file</key><integer>0</integer>
+  </dict>
+  <key>ExecutedLines</key>
+  <dict>
+   <key>0</key>
+   <array>
+    <integer>202</integer>
+   </array>
+  </dict>
+  </dict>
+  <dict>
+   <key>path</key>
+   <array>
+    <dict>
+     <key>kind</key><string>event</string>
+     <key>location</key>
+     <dict>
+      <key>line</key><integer>221</integer>
+      <key>col</key><integer>13</integer>
+      <key>file</key><integer>0</integer>
+     </dict>
+     <key>ranges</key>
+     <array>
+       <array>
+        <dict>
+         <key>line</key><integer>221</integer>
+         <key>col</key><integer>20</integer>
+         <key>file</key><integer>0</integer>
+        </dict>
+        <dict>
+         <key>line</key><integer>221</integer>
+         <key>col</key><integer>44</integer>
+         <key>file</key><integer>0</integer>
+        </dict>
+       </array>
+     </array>
+     <key>depth</key><integer>0</integer>
+     <key>extended_message</key>
+     <string>Although the value stored to &apos;result&apos; is used in the enclosing expression, the value is never actually read from &apos;result&apos;</string>
+     <key>message</key>
+     <string>Although the value stored to &apos;result&apos; is used in the enclosing expression, the value is never actually read from &apos;result&apos;</string>
+    </dict>
+   </array>
+   <key>description</key><string>Although the value stored to &apos;result&apos; is used in the enclosing expression, the value is never actually read from &apos;result&apos;</string>
+   <key>category</key><string>Dead store</string>
+   <key>type</key><string>Dead nested assignment</string>
+   <key>check_name</key><string>deadcode.DeadStores</string>
+   <!-- This hash is experimental and going to change! -->
+   <key>issue_hash_content_of_line_in_context</key><string>8ebd1529d887adc2c4f1d605c761bbe0</string>
+  <key>issue_context_kind</key><string>function</string>
+  <key>issue_context</key><string>ccdh_test_compute_vector</string>
+  <key>issue_hash_function_offset</key><string>150</string>
+  <key>location</key>
+  <dict>
+   <key>line</key><integer>221</integer>
+   <key>col</key><integer>13</integer>
+   <key>file</key><integer>0</integer>
+  </dict>
+  <key>ExecutedLines</key>
+  <dict>
+   <key>0</key>
+   <array>
+    <integer>221</integer>
+   </array>
+  </dict>
+  </dict>
+  <dict>
+   <key>path</key>
+   <array>
+    <dict>
+     <key>kind</key><string>event</string>
+     <key>location</key>
+     <dict>
+      <key>line</key><integer>242</integer>
+      <key>col</key><integer>9</integer>
+      <key>file</key><integer>0</integer>
+     </dict>
+     <key>ranges</key>
+     <array>
+       <array>
+        <dict>
+         <key>line</key><integer>242</integer>
+         <key>col</key><integer>16</integer>
+         <key>file</key><integer>0</integer>
+        </dict>
+        <dict>
+         <key>line</key><integer>242</integer>
+         <key>col</key><integer>40</integer>
+         <key>file</key><integer>0</integer>
+        </dict>
+       </array>
+     </array>
+     <key>depth</key><integer>0</integer>
+     <key>extended_message</key>
+     <string>Although the value stored to &apos;result&apos; is used in the enclosing expression, the value is never actually read from &apos;result&apos;</string>
+     <key>message</key>
+     <string>Although the value stored to &apos;result&apos; is used in the enclosing expression, the value is never actually read from &apos;result&apos;</string>
+    </dict>
+   </array>
+   <key>description</key><string>Although the value stored to &apos;result&apos; is used in the enclosing expression, the value is never actually read from &apos;result&apos;</string>
+   <key>category</key><string>Dead store</string>
+   <key>type</key><string>Dead nested assignment</string>
+   <key>check_name</key><string>deadcode.DeadStores</string>
+   <!-- This hash is experimental and going to change! -->
+   <key>issue_hash_content_of_line_in_context</key><string>fc9b383f116fe54eba9e20f5cdd14eff</string>
+  <key>issue_context_kind</key><string>function</string>
+  <key>issue_context</key><string>ccdh_test_compute_vector</string>
+  <key>issue_hash_function_offset</key><string>171</string>
+  <key>location</key>
+  <dict>
+   <key>line</key><integer>242</integer>
+   <key>col</key><integer>9</integer>
+   <key>file</key><integer>0</integer>
+  </dict>
+  <key>ExecutedLines</key>
+  <dict>
+   <key>0</key>
+   <array>
+    <integer>242</integer>
+   </array>
+  </dict>
+  </dict>
+  <dict>
+   <key>path</key>
+   <array>
+    <dict>
+     <key>kind</key><string>event</string>
+     <key>location</key>
+     <dict>
+      <key>line</key><integer>255</integer>
+      <key>col</key><integer>9</integer>
+      <key>file</key><integer>0</integer>
+     </dict>
+     <key>ranges</key>
+     <array>
+       <array>
+        <dict>
+         <key>line</key><integer>255</integer>
+         <key>col</key><integer>16</integer>
+         <key>file</key><integer>0</integer>
+        </dict>
+        <dict>
+         <key>line</key><integer>255</integer>
+         <key>col</key><integer>40</integer>
+         <key>file</key><integer>0</integer>
+        </dict>
+       </array>
+     </array>
+     <key>depth</key><integer>0</integer>
+     <key>extended_message</key>
+     <string>Although the value stored to &apos;result&apos; is used in the enclosing expression, the value is never actually read from &apos;result&apos;</string>
+     <key>message</key>
+     <string>Although the value stored to &apos;result&apos; is used in the enclosing expression, the value is never actually read from &apos;result&apos;</string>
+    </dict>
+   </array>
+   <key>description</key><string>Although the value stored to &apos;result&apos; is used in the enclosing expression, the value is never actually read from &apos;result&apos;</string>
+   <key>category</key><string>Dead store</string>
+   <key>type</key><string>Dead nested assignment</string>
+   <key>check_name</key><string>deadcode.DeadStores</string>
+   <!-- This hash is experimental and going to change! -->
+   <key>issue_hash_content_of_line_in_context</key><string>fc9b383f116fe54eba9e20f5cdd14eff</string>
+  <key>issue_context_kind</key><string>function</string>
+  <key>issue_context</key><string>ccdh_test_compute_vector</string>
+  <key>issue_hash_function_offset</key><string>184</string>
+  <key>location</key>
+  <dict>
+   <key>line</key><integer>255</integer>
+   <key>col</key><integer>9</integer>
+   <key>file</key><integer>0</integer>
+  </dict>
+  <key>ExecutedLines</key>
+  <dict>
+   <key>0</key>
+   <array>
+    <integer>255</integer>
+   </array>
+  </dict>
+  </dict>
+  <dict>
+   <key>path</key>
+   <array>
+    <dict>
+     <key>kind</key><string>event</string>
+     <key>location</key>
+     <dict>
+      <key>line</key><integer>269</integer>
+      <key>col</key><integer>9</integer>
+      <key>file</key><integer>0</integer>
+     </dict>
+     <key>ranges</key>
+     <array>
+       <array>
+        <dict>
+         <key>line</key><integer>269</integer>
+         <key>col</key><integer>16</integer>
+         <key>file</key><integer>0</integer>
+        </dict>
+        <dict>
+         <key>line</key><integer>269</integer>
+         <key>col</key><integer>40</integer>
+         <key>file</key><integer>0</integer>
+        </dict>
+       </array>
+     </array>
+     <key>depth</key><integer>0</integer>
+     <key>extended_message</key>
+     <string>Although the value stored to &apos;result&apos; is used in the enclosing expression, the value is never actually read from &apos;result&apos;</string>
+     <key>message</key>
+     <string>Although the value stored to &apos;result&apos; is used in the enclosing expression, the value is never actually read from &apos;result&apos;</string>
+    </dict>
+   </array>
+   <key>description</key><string>Although the value stored to &apos;result&apos; is used in the enclosing expression, the value is never actually read from &apos;result&apos;</string>
+   <key>category</key><string>Dead store</string>
+   <key>type</key><string>Dead nested assignment</string>
+   <key>check_name</key><string>deadcode.DeadStores</string>
+   <!-- This hash is experimental and going to change! -->
+   <key>issue_hash_content_of_line_in_context</key><string>9ee3460e46069a4d6a16fa94ce7b194f</string>
+  <key>issue_context_kind</key><string>function</string>
+  <key>issue_context</key><string>ccdh_test_compute_vector</string>
+  <key>issue_hash_function_offset</key><string>198</string>
+  <key>location</key>
+  <dict>
+   <key>line</key><integer>269</integer>
+   <key>col</key><integer>9</integer>
+   <key>file</key><integer>0</integer>
+  </dict>
+  <key>ExecutedLines</key>
+  <dict>
+   <key>0</key>
+   <array>
+    <integer>269</integer>
+   </array>
+  </dict>
+  </dict>
  </array>
  <key>files</key>
  <array>
+  <string>/Users/andyvand/Downloads/eid-mw/cardcomm/pkcs11/src/common/libcorecrypto/ccdh/src/ccdh_test.c</string>
  </array>
 </dict>
 </plist>

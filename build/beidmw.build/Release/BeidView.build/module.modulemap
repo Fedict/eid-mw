@@ -1,6 +1,0 @@
-framework module BeidView {
-  umbrella header "BeidView.h"
-
-  export *
-  module * { export * }
-}
