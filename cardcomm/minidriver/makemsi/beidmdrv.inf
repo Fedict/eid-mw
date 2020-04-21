@@ -8,25 +8,18 @@ Class=SmartCard
 ClassGuid={990A2BD7-E738-46c7-B26F-1CF8FB9F1391}
 Provider=%BOSA%
 CatalogFile=beidmdrv.cat
-DriverVer=01/09/2020,5.0.0
+DriverVer=04/17/2020,5.0.3
 ;MMDDYYYY
 [Manufacturer]
-%BOSA%=Bosa,NTamd64,NTamd64.6.1,NTx86,NTx86.6.1
+%BOSA%=Bosa,NTamd64.6.1,NTx86.6.1
 
-[Bosa.NTamd64]
-%BosaCardDeviceName%=Bosa64_Install,SCFILTER\CID_a503010101ad1310
-%BosaCardDeviceName%=Bosa64_Install,SCFILTER\CID_a503010101ad1311
-%BosaCardDeviceName%=Bosa64_Install,SCFILTER\CID_80318065b085040120120fff829000
-[Bosa.NTx86]
-%BosaCardDeviceName%=Bosa32_Install,SCFILTER\CID_a503010101ad1310
-%BosaCardDeviceName%=Bosa32_Install,SCFILTER\CID_a503010101ad1311
-%BosaCardDeviceName%=Bosa32_Install,SCFILTER\CID_80318065b085040120120fff829000
-
+;Windows 7 and beyond, 64bit amd64
 [Bosa.NTamd64.6.1]
 %BosaCardDeviceName%=Bosa64_61_Install,SCFILTER\CID_a503010101ad1310
 %BosaCardDeviceName%=Bosa64_61_Install,SCFILTER\CID_a503010101ad1311
 %BosaCardDeviceName%=Bosa64_61_Install,SCFILTER\CID_80318065b085040120120fff829000
 
+;Windows 7 and beyond, 32bit x86
 [Bosa.NTx86.6.1]
 %BosaCardDeviceName%=Bosa32_61_Install,SCFILTER\CID_a503010101ad1310
 %BosaCardDeviceName%=Bosa32_61_Install,SCFILTER\CID_a503010101ad1311
@@ -39,12 +32,6 @@ beidmdrv32.dll=1
 [SourceDisksNames]
 1 = %MediaDescription%
 
-[Bosa64_Install.NT]
-CopyFiles=amd64_CopyFiles
-CopyFiles=wow64_CopyFiles
-AddReg=AddRegWOW64
-AddReg=AddRegDefault64
-
 [Bosa64_61_Install.NT]
 CopyFiles=amd64_CopyFiles
 CopyFiles=wow64_CopyFiles
@@ -52,10 +39,6 @@ AddReg=AddRegWOW64
 AddReg=AddRegDefault64
 Include=umpass.inf
 Needs=UmPass
-
-[Bosa32_Install.NT]
-CopyFiles=x86_CopyFiles
-AddReg=AddRegDefault32
 
 [Bosa32_61_Install.NT]
 CopyFiles=x86_CopyFiles

@@ -1,0 +1,32 @@
+The files in this directory show how to create a drag-and-drop data
+receiver for the eid-viewer XML file format.
+
+Present are:
+
+- dnd.html: HTML file with some javascript that demonstrates how the
+  drag-and-drop is supposed to work
+- bg.jpg, teleport.png: used by dnd.html
+- eidv4.xsd: defines the XML format as exported by the eid viewer. This
+  is not used by dnd.html, passed on only informationally.
+
+To use this, do the following:
+- open dnd.html in a web browser
+- open the eid-viewer, and make sure it has data (either read from a
+  card, or from a file)
+- drag the photo from the viewer onto the web browser.
+- Alternatively, choose File->Save in the eid viewer, and drop the saved
+  file onto the web browser.
+
+!!!!!!!!!!!!!!!!!!!!!!!
+WARNING WARNING WARNING
+
+While the approach demonstrated here works and is supported, it is NOT a
+secure proof of identity. That is, the XML data that is dropped by the
+eid-viewer is not cryptographically signed, and can be trivially
+modified by the user.
+
+If you need proof of identity rather than an easy to use alternative
+method to manually filling out a web form, this is not the thing to use. 
+
+WARNING WARNING WARNING
+!!!!!!!!!!!!!!!!!!!!!!!
