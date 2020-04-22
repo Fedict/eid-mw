@@ -305,7 +305,7 @@
 
 /* Begin PBXFileReference section */
 		08FB77AAFE841565C02AAC07 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
-		651DDF231FEA833C00C4961E /* eidv4.xsd */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = eidv4.xsd; path = ../../../eidv4.xsd; sourceTree = "<group>"; };
+		651DDF231FEA833C00C4961E /* eidv4.xsd */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = eidv4.xsd; path = ../../../xml/eidv4.xsd; sourceTree = "<group>"; };
 		651DDF291FEA843C00C4961E /* eID Viewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "eID Viewer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		651DDF2B1FEA843D00C4961E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		651DDF2C1FEA843D00C4961E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
