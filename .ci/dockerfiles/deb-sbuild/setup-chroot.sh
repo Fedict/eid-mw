@@ -22,16 +22,14 @@ case $DIST in
 	debian)
 		/usr/local/bin/download-debuerreotype-tarball.sh $CODE $ARCH
 		schroot --directory=/ -c source:$CODE-$ARCH-sbuild apt-get update
-		schroot --directory=/ -c source:$CODE-$ARCH-sbuild -- apt-get -y install eatmydata
+		schroot --directory=/ -c source:$CODE-$ARCH-sbuild -- apt-get -y install
 	;;
 	ubuntu)
 		mkdir -p /srv/chroot
-		sbuild-createchroot --include=eatmydata --arch=$ARCH $CODE /srv/chroot/$CODE http://archive.ubuntu.com/ubuntu /usr/share/debootstrap/scripts/gutsy
+		sbuild-createchroot --arch=$ARCH $CODE /srv/chroot/$CODE http://archive.ubuntu.com/ubuntu /usr/share/debootstrap/scripts/gutsy
 	;;
 	*)
 		echo "E: unknown dist: $DIST" >&2
 		exit 1
 	;;
 esac
-
-echo "command-prefix=eatmydata" >> /etc/schroot/chroot.d/*
