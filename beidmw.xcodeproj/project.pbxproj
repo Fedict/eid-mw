@@ -25,7 +25,6 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		651DDF241FEA833C00C4961E /* eidv4.xsd in Resources */ = {isa = PBXBuildFile; fileRef = 651DDF231FEA833C00C4961E /* eidv4.xsd */; };
 		651DDF2D1FEA843D00C4961E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 651DDF2C1FEA843D00C4961E /* AppDelegate.m */; };
 		651DDF321FEA843D00C4961E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 651DDF301FEA843D00C4961E /* MainMenu.xib */; };
 		651DDF351FEA843D00C4961E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 651DDF341FEA843D00C4961E /* main.m */; };
@@ -117,7 +116,6 @@
 		6578015620D1364A002B826A /* xmlfileversconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6578015320D135F4002B826A /* xmlfileversconv.cpp */; };
 		659FD5851FEA867600E4AF83 /* BeidView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 652709FA1FE975A1004F326D /* BeidView.framework */; };
 		659FD5861FEA867600E4AF83 /* BeidView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 652709FA1FE975A1004F326D /* BeidView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		659FD58C1FEA919100E4AF83 /* eidv4.xsd in Resources */ = {isa = PBXBuildFile; fileRef = 651DDF231FEA833C00C4961E /* eidv4.xsd */; };
 		659FD5961FEA926F00E4AF83 /* coat_of_arms_de.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 659FD5941FEA926900E4AF83 /* coat_of_arms_de.jpg */; };
 		659FD5971FEA927200E4AF83 /* coat_of_arms_en.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 659FD5931FEA926800E4AF83 /* coat_of_arms_en.jpg */; };
 		659FD5981FEA927500E4AF83 /* coat_of_arms_fr.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 659FD5921FEA926800E4AF83 /* coat_of_arms_fr.jpg */; };
@@ -233,6 +231,7 @@
 		8BD62CA121021C6300C28B6D /* toxmlmemberoffamilyconv.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BC8E012210216900026D6AB /* toxmlmemberoffamilyconv.h */; };
 		8BD62CA221021C7000C28B6D /* xmlfileversconv.h in Headers */ = {isa = PBXBuildFile; fileRef = 6578014F20D135F4002B826A /* xmlfileversconv.h */; };
 		8BD62CA321021C9300C28B6D /* booldecode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8E00F210216900026D6AB /* booldecode.cpp */; };
+		AB60563E2452AAC30022196E /* eidv4.xsd in Resources */ = {isa = PBXBuildFile; fileRef = AB60563D2452AAB90022196E /* eidv4.xsd */; };
 		AB68D65E243CA07100BA8851 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AB68D65D243CA06800BA8851 /* libxml2.tbd */; };
 		AB8BE5D5243CC2AF003967F8 /* libcorecrypto_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB8BE5B2243CC1FF003967F8 /* libcorecrypto_static.a */; };
 		AB8BE6C9243CC5C2003967F8 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AB68D65D243CA06800BA8851 /* libxml2.tbd */; };
@@ -1095,7 +1094,6 @@
 
 /* Begin PBXFileReference section */
 		08FB77AAFE841565C02AAC07 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
-		651DDF231FEA833C00C4961E /* eidv4.xsd */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = eidv4.xsd; path = ../../../eidv4.xsd; sourceTree = "<group>"; };
 		651DDF291FEA843C00C4961E /* eID Viewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "eID Viewer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		651DDF2B1FEA843D00C4961E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		651DDF2C1FEA843D00C4961E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -1354,6 +1352,7 @@
 		8BC8E011210216900026D6AB /* toxmlmemberoffamilyconv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = toxmlmemberoffamilyconv.cpp; sourceTree = "<group>"; };
 		8BC8E012210216900026D6AB /* toxmlmemberoffamilyconv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = toxmlmemberoffamilyconv.h; sourceTree = "<group>"; };
 		8BCC05F7211479F90015C705 /* pkcs11log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pkcs11log.h; path = cardcomm/pkcs11/src/pkcs11log.h; sourceTree = "<group>"; };
+		AB60563D2452AAB90022196E /* eidv4.xsd */ = {isa = PBXFileReference; lastKnownFileType = file; name = eidv4.xsd; path = "plugins_tools/eid-viewer/xml/eidv4.xsd"; sourceTree = SOURCE_ROOT; };
 		AB68D65D243CA06800BA8851 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		AB715D53243D09C600B3D387 /* BEIDToken.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BEIDToken.xcodeproj; path = cardcomm/ctkToken/BEIDToken.xcodeproj; sourceTree = "<group>"; };
 		AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = corecrypto.xcodeproj; path = cardcomm/pkcs11/src/common/libcorecrypto/corecrypto.xcodeproj; sourceTree = "<group>"; };
@@ -1602,7 +1601,7 @@
 		653490F71FEA7B3A000F7787 /* eidfilepreview */ = {
 			isa = PBXGroup;
 			children = (
-				651DDF231FEA833C00C4961E /* eidv4.xsd */,
+				AB60563D2452AAB90022196E /* eidv4.xsd */,
 				6534910C1FEA7BE6000F7787 /* GeneratePreviewForURL.m */,
 				6534910D1FEA7BE7000F7787 /* GenerateThumbnailForURL.m */,
 				653490FC1FEA7B3A000F7787 /* main.c */,
@@ -2944,7 +2943,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				659FD58C1FEA919100E4AF83 /* eidv4.xsd in Resources */,
 				659FD5971FEA927200E4AF83 /* coat_of_arms_en.jpg in Resources */,
 				651DDF5D1FEA85AE00C4961E /* Images.xcassets in Resources */,
 				6CD1B8C521A5A6470005F6E9 /* state_noreaders.png in Resources */,
@@ -2972,7 +2970,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				651DDF241FEA833C00C4961E /* eidv4.xsd in Resources */,
+				AB60563E2452AAC30022196E /* eidv4.xsd in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
