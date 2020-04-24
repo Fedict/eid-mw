@@ -1,0 +1,85 @@
+aeadtest 1 0.0281853
+aes_wrap 1 0.0235422
+arc4randomforktest 0 0
+asn1evp 1 0.0252434
+asn1test 1 0.0257029
+asn1time 1 0.0231415
+base64test 1 0.0212189
+bftest 1 0.0186476
+bnaddsub 1 0.0193828
+bn_rand_interval 1 4.47609
+bntest 1 0.840435
+bn_to_string 1 0.0241702
+buffertest 1 0.0212985
+bytestringtest 1 0.0238344
+casttest 1 0.857924
+chachatest 1 0.0239151
+cipher_list 1 0.0225249
+cipherstest 1 0.0258448
+cmstest 1 0.0355599
+configtest 1 0.0221815
+cts128test 1 0.0166157
+destest 1 0.019698
+dhtest 1 0.0339899
+dsatest 1 0.0418791
+ecdhtest 1 0.671932
+ecdsatest 1 3.36176
+ectest 1 0.851044
+enginetest 1 0.0225944
+evptest 1 0.0370727
+explicit_bzero 1 0.0145331
+exptest 1 0.172792
+freenull 1 0.019146
+gcm128test 1 0.0171154
+gost2814789t 1 0.344776
+hkdf_test 1 0.0181376
+hmactest 1 0.0174143
+ideatest 1 0.0152068
+igetest 1 0.0171717
+key_schedule 1 0.0183383
+keypairtest 1 0.0205931
+md4test 1 0.0166702
+md5test 1 0.0174061
+mont 1 0.0398596
+optionstest 1 0.0155252
+pbkdf2 1 0.0872177
+pkcs7test 1 0.0276269
+poly1305test 1 0.015086
+pq_test 0 0
+randtest 1 0.019534
+rc2test 1 0.0154812
+rc4test 1 0.0226415
+recordtest 1 0.0155775
+rfc5280time 1 0.0188817
+rmdtest 1 0.0176301
+rsa_test 1 0.0917322
+servertest 0 0
+sha1test 1 0.0217454
+sha256test 1 0.0292235
+sha512test 1 0.0232615
+sm3test 1 0.0191911
+sm4test 1 0.466485
+ssl_versions 1 0.0293879
+ssltest 0 0
+testdsa 0 0
+testenc 0 0
+testrsa 0 0
+timingsafe 1 0.0353351
+tlsexttest 1 0.0314514
+tlstest 0 0
+tls_ext_alpn 1 0.0297467
+tls_prf 1 0.0734905
+utf8test 1 1.1892
+valid_handshakes_terminate 1 0.0224525
+verifytest 1 0.0323196
+x25519test 1 0.238212
+x509name 1 0.0524605
+---
+arc4randomforktest
+pq_test
+servertest
+ssltest
+testdsa
+testenc
+testrsa
+tlstest

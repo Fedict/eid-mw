@@ -8776,7 +8776,7 @@
 			name = "CMake PostBuild Rules";
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "make -C /Users/andyvand/Downloads/eid-mw/libressl -f /Users/andyvand/Downloads/eid-mw/libressl/CMakeScripts/RUN_TESTS_postBuildPhase.make$CONFIGURATION OBJDIR=$(basename \"$OBJECT_FILE_DIR_normal\") all";
+			shellScript = "make -C /Users/andyvand/Downloads/eid-mw/libressl -f /Users/andyvand/Downloads/eid-mw/libressl/CMakeScripts/RUN_TESTS_postBuildPhase.make$CONFIGURATION OBJDIR=$(basename \"$OBJECT_FILE_DIR_normal\") all\n";
 			showEnvVarsInLog = 0;
 		};
 		F227521C1FC649898A5F62A7 /* CMake Rules */ = {
@@ -12151,6 +12151,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = ocspcheck;
@@ -12226,6 +12228,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = bn_rand_interval;
@@ -12301,6 +12305,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = aeadtest;
@@ -12376,6 +12382,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = evptest;
@@ -12535,6 +12543,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = buffertest;
@@ -12610,6 +12620,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = cipher_list;
@@ -12685,6 +12697,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = md5test;
@@ -12760,6 +12774,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = sm4test;
@@ -12834,6 +12850,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = pbkdf2;
@@ -12909,6 +12927,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = dsatest;
@@ -13044,6 +13064,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = valid_handshakes_terminate;
@@ -13138,6 +13160,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = rsa_test;
@@ -13212,6 +13236,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = tlstest;
@@ -13287,6 +13313,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = bnaddsub;
@@ -13362,6 +13390,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = x25519test;
@@ -13436,6 +13466,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = bntest;
@@ -13511,6 +13543,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = sm3test;
@@ -13579,6 +13613,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = openssl;
@@ -13654,6 +13690,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = verifytest;
@@ -13729,6 +13767,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = ecdsatest;
@@ -13804,6 +13844,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = ideatest;
@@ -13879,6 +13921,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = tls_ext_alpn;
@@ -13954,6 +13998,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = rc2test;
@@ -14029,6 +14075,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = rmdtest;
@@ -14188,6 +14236,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = sha512test;
@@ -14263,6 +14313,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = chachatest;
@@ -14338,6 +14390,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = cipher_list;
@@ -14412,6 +14466,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = md4test;
@@ -14487,6 +14543,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = sm3test;
@@ -14617,6 +14675,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = key_schedule;
@@ -14691,6 +14751,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = gost2814789t;
@@ -14766,6 +14828,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = rfc5280time;
@@ -14841,6 +14905,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = pq_test;
@@ -14908,6 +14974,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = openssl;
@@ -14983,6 +15051,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = tlstest;
@@ -15058,6 +15128,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = ecdsatest;
@@ -15133,6 +15205,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = randtest;
@@ -15208,6 +15282,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = enginetest;
@@ -15282,6 +15358,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = dsatest;
@@ -15397,6 +15475,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = casttest;
@@ -15471,6 +15551,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = rc2test;
@@ -15546,6 +15628,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = cipher_list;
@@ -15620,6 +15704,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = pkcs7test;
@@ -15695,6 +15781,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = keypairtest;
@@ -15769,6 +15857,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = sha1test;
@@ -15844,6 +15934,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = tlsexttest;
@@ -15919,6 +16011,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = tlsexttest;
@@ -15994,6 +16088,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = bnaddsub;
@@ -16068,6 +16164,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = asn1time;
@@ -16143,6 +16241,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = recordtest;
@@ -16218,6 +16318,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = rfc5280time;
@@ -16293,6 +16395,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = poly1305test;
@@ -16368,6 +16472,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = igetest;
@@ -16443,6 +16549,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = mont;
@@ -16581,6 +16689,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = sha512test;
@@ -16656,6 +16766,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = arc4randomforktest;
@@ -16731,6 +16843,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = timingsafe;
@@ -16806,6 +16920,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = bn_rand_interval;
@@ -16881,6 +16997,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = servertest;
@@ -16955,6 +17073,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = recordtest;
@@ -17030,6 +17150,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = asn1test;
@@ -17167,6 +17289,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = explicit_bzero;
@@ -17262,6 +17386,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = chachatest;
@@ -17337,6 +17463,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = bytestringtest;
@@ -17411,6 +17539,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = rmdtest;
@@ -17486,6 +17616,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = dhtest;
@@ -17560,6 +17692,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = explicit_bzero;
@@ -17635,6 +17769,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = x25519test;
@@ -17709,6 +17845,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = bnaddsub;
@@ -17783,6 +17921,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = rc4test;
@@ -17858,6 +17998,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = freenull;
@@ -17933,6 +18075,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = md5test;
@@ -18008,6 +18152,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = dhtest;
@@ -18082,6 +18228,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = ideatest;
@@ -18157,6 +18305,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = asn1evp;
@@ -18232,6 +18382,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = ssl_versions;
@@ -18342,6 +18494,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = explicit_bzero;
@@ -18417,6 +18571,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = arc4randomforktest;
@@ -18491,6 +18647,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = sha256test;
@@ -18566,6 +18724,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = pbkdf2;
@@ -18641,6 +18801,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = hkdf_test;
@@ -18716,6 +18878,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = asn1evp;
@@ -18790,6 +18954,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = tlsexttest;
@@ -18884,6 +19050,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = md5test;
@@ -18959,6 +19127,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = rc4test;
@@ -19034,6 +19204,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = destest;
@@ -19109,6 +19281,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = aes_wrap;
@@ -19184,6 +19358,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = dhtest;
@@ -19259,6 +19435,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = asn1test;
@@ -19334,6 +19512,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = ssl_versions;
@@ -19402,6 +19582,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = openssl;
@@ -19477,6 +19659,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = rc2test;
@@ -19552,6 +19736,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = base64test;
@@ -19627,6 +19813,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = bytestringtest;
@@ -19702,6 +19890,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = tlstest;
@@ -19797,6 +19987,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = arc4randomforktest;
@@ -19872,6 +20064,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = x509name;
@@ -19947,6 +20141,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = mont;
@@ -20021,6 +20217,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = servertest;
@@ -20096,6 +20294,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = ssltest;
@@ -20170,6 +20370,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = rfc5280time;
@@ -20245,6 +20447,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = gcm128test;
@@ -20320,6 +20524,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = bytestringtest;
@@ -20395,6 +20601,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = hkdf_test;
@@ -20469,6 +20677,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = cts128test;
@@ -20544,6 +20754,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = ecdhtest;
@@ -20618,6 +20830,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = utf8test;
@@ -20693,6 +20907,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = sm3test;
@@ -20768,6 +20984,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = evptest;
@@ -20843,6 +21061,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = enginetest;
@@ -20918,6 +21138,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = cipherstest;
@@ -20992,6 +21214,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = asn1evp;
@@ -21067,6 +21291,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = rc2test;
@@ -21139,6 +21365,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = nc;
@@ -21214,6 +21442,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = aeadtest;
@@ -21289,6 +21519,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = x509name;
@@ -21364,6 +21596,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = ideatest;
@@ -21439,6 +21673,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = exptest;
@@ -21514,6 +21750,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = freenull;
@@ -21588,6 +21826,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = evptest;
@@ -21662,6 +21902,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = sm3test;
@@ -21736,6 +21978,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = tls_prf;
@@ -21831,6 +22075,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = ecdhtest;
@@ -21906,6 +22152,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = utf8test;
@@ -21980,6 +22228,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = x25519test;
@@ -22054,6 +22304,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = sha512test;
@@ -22128,6 +22380,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = ssl_versions;
@@ -22203,6 +22457,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = sha512test;
@@ -22298,6 +22554,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = exptest;
@@ -22373,6 +22631,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = pkcs7test;
@@ -22468,6 +22728,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = cipherstest;
@@ -22543,6 +22805,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = configtest;
@@ -22618,6 +22882,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = bftest;
@@ -22693,6 +22959,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = configtest;
@@ -22768,6 +23036,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = buffertest;
@@ -22840,6 +23110,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = nc;
@@ -22914,6 +23186,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = casttest;
@@ -22989,6 +23263,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = gost2814789t;
@@ -23064,6 +23340,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = asn1time;
@@ -23139,6 +23417,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = base64test;
@@ -23214,6 +23494,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = asn1time;
@@ -23288,6 +23570,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = bn_to_string;
@@ -23362,6 +23646,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = pq_test;
@@ -23437,6 +23723,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = dsatest;
@@ -23511,6 +23799,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = mont;
@@ -23649,6 +23939,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = casttest;
@@ -23723,6 +24015,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = destest;
@@ -23797,6 +24091,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = dhtest;
@@ -23871,6 +24167,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = tls_ext_alpn;
@@ -23966,6 +24264,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = x509name;
@@ -24122,6 +24422,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = valid_handshakes_terminate;
@@ -24196,6 +24498,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = freenull;
@@ -24271,6 +24575,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = bntest;
@@ -24346,6 +24652,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = md5test;
@@ -24421,6 +24729,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = bnaddsub;
@@ -24496,6 +24806,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = cmstest;
@@ -24571,6 +24883,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = sha1test;
@@ -24646,6 +24960,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = utf8test;
@@ -24741,6 +25057,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = cts128test;
@@ -24815,6 +25133,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = verifytest;
@@ -24890,6 +25210,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = hmactest;
@@ -24965,6 +25287,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = mont;
@@ -25095,6 +25419,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = sm4test;
@@ -25169,6 +25495,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = gcm128test;
@@ -25244,6 +25572,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = optionstest;
@@ -25318,6 +25648,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = arc4randomforktest;
@@ -25393,6 +25725,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = ssltest;
@@ -25468,6 +25802,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = explicit_bzero;
@@ -25543,6 +25879,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = tls_ext_alpn;
@@ -25618,6 +25956,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = tls_prf;
@@ -25693,6 +26033,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = ecdsatest;
@@ -25767,6 +26109,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = buffertest;
@@ -25842,6 +26186,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = cmstest;
@@ -25917,6 +26263,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = sm4test;
@@ -26073,6 +26421,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = ectest;
@@ -26148,6 +26498,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = rc4test;
@@ -26223,6 +26575,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = optionstest;
@@ -26298,6 +26652,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = ssltest;
@@ -26372,6 +26728,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = hmactest;
@@ -26447,6 +26805,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = x25519test;
@@ -26521,6 +26881,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = optionstest;
@@ -26596,6 +26958,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = cts128test;
@@ -26670,6 +27034,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = cmstest;
@@ -26745,6 +27111,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = bftest;
@@ -26820,6 +27188,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = timingsafe;
@@ -26895,6 +27265,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = keypairtest;
@@ -26970,6 +27342,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = casttest;
@@ -27045,6 +27419,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = exptest;
@@ -27120,6 +27496,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = evptest;
@@ -27195,6 +27573,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = tls_ext_alpn;
@@ -27270,6 +27650,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = pbkdf2;
@@ -27345,6 +27727,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = rsa_test;
@@ -27420,6 +27804,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = md4test;
@@ -27495,6 +27881,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = sha1test;
@@ -27570,6 +27958,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = key_schedule;
@@ -27645,6 +28035,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = gost2814789t;
@@ -27720,6 +28112,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = recordtest;
@@ -27795,6 +28189,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = dsatest;
@@ -27870,6 +28266,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = key_schedule;
@@ -27941,6 +28339,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = ocspcheck;
@@ -28016,6 +28416,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = destest;
@@ -28091,6 +28493,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = rsa_test;
@@ -28166,6 +28570,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = aeadtest;
@@ -28240,6 +28646,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = aeadtest;
@@ -28315,6 +28723,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = configtest;
@@ -28389,6 +28799,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = base64test;
@@ -28464,6 +28876,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = randtest;
@@ -28539,6 +28953,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = pkcs7test;
@@ -28614,6 +29030,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = bn_to_string;
@@ -28689,6 +29107,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = md4test;
@@ -28757,6 +29177,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = openssl;
@@ -28832,6 +29254,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = servertest;
@@ -28907,6 +29331,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = aes_wrap;
@@ -28982,6 +29408,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = timingsafe;
@@ -29057,6 +29485,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = buffertest;
@@ -29132,6 +29562,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = asn1test;
@@ -29226,6 +29658,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = key_schedule;
@@ -29384,6 +29818,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = ideatest;
@@ -29459,6 +29895,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = tlsexttest;
@@ -29533,6 +29971,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = bftest;
@@ -29608,6 +30048,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = tlstest;
@@ -29683,6 +30125,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = bntest;
@@ -29757,6 +30201,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = igetest;
@@ -29832,6 +30278,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = rsa_test;
@@ -29906,6 +30354,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = x509name;
@@ -29980,6 +30430,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = configtest;
@@ -30055,6 +30507,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = ecdhtest;
@@ -30129,6 +30583,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = ecdhtest;
@@ -30204,6 +30660,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = utf8test;
@@ -30279,6 +30737,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = gost2814789t;
@@ -30354,6 +30814,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = asn1time;
@@ -30429,6 +30891,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = igetest;
@@ -30539,6 +31003,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = cmstest;
@@ -30613,6 +31079,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = ectest;
@@ -30749,6 +31217,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = aes_wrap;
@@ -30887,6 +31357,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = keypairtest;
@@ -30962,6 +31434,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = verifytest;
@@ -31036,6 +31510,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = cipherstest;
@@ -31110,6 +31586,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = ecdsatest;
@@ -31204,6 +31682,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = keypairtest;
@@ -31279,6 +31759,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = tls_prf;
@@ -31354,6 +31836,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = gcm128test;
@@ -31429,6 +31913,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = hmactest;
@@ -31504,6 +31990,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = ssl_versions;
@@ -31579,6 +32067,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = base64test;
@@ -31654,6 +32144,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = valid_handshakes_terminate;
@@ -31726,6 +32218,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = nc;
@@ -31801,6 +32295,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = ectest;
@@ -31875,6 +32371,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = exptest;
@@ -31950,6 +32448,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = md4test;
@@ -32025,6 +32525,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = rfc5280time;
@@ -32095,6 +32597,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = ocspcheck;
@@ -32170,6 +32674,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = poly1305test;
@@ -32244,6 +32750,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = bytestringtest;
@@ -32318,6 +32826,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = randtest;
@@ -32392,6 +32902,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = hkdf_test;
@@ -32467,6 +32979,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = pbkdf2;
@@ -32542,6 +33056,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = ectest;
@@ -32616,6 +33132,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = valid_handshakes_terminate;
@@ -32691,6 +33209,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = gcm128test;
@@ -32765,6 +33285,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = ssltest;
@@ -32840,6 +33362,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = tls_prf;
@@ -32915,6 +33439,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = cts128test;
@@ -32990,6 +33516,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = sha256test;
@@ -33064,6 +33592,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = asn1test;
@@ -33139,6 +33669,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = bftest;
@@ -33214,6 +33746,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = rmdtest;
@@ -33288,6 +33822,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = chachatest;
@@ -33363,6 +33899,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = bn_to_string;
@@ -33437,6 +33975,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = enginetest;
@@ -33512,6 +34052,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = sha256test;
@@ -33606,6 +34148,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = bn_rand_interval;
@@ -33681,6 +34225,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = recordtest;
@@ -33755,6 +34301,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = cipher_list;
@@ -33830,6 +34378,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = pq_test;
@@ -33905,6 +34455,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = sha1test;
@@ -33980,6 +34532,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = bn_to_string;
@@ -34055,6 +34609,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = bn_rand_interval;
@@ -34130,6 +34686,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = optionstest;
@@ -34225,6 +34783,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = pkcs7test;
@@ -34320,6 +34880,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = rc4test;
@@ -34394,6 +34956,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = poly1305test;
@@ -34469,6 +35033,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = chachatest;
@@ -34543,6 +35109,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = sm4test;
@@ -34618,6 +35186,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = destest;
@@ -34693,6 +35263,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = rmdtest;
@@ -34768,6 +35340,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = hkdf_test;
@@ -34843,6 +35417,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = randtest;
@@ -34918,6 +35494,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = igetest;
@@ -34993,6 +35571,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = verifytest;
@@ -35068,6 +35648,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = freenull;
@@ -35143,6 +35725,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = hmactest;
@@ -35302,6 +35886,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = pq_test;
@@ -35377,6 +35963,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = poly1305test;
@@ -35448,6 +36036,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = ocspcheck;
@@ -35519,6 +36109,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = nc;
@@ -35594,6 +36186,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = enginetest;
@@ -35669,6 +36263,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = bntest;
@@ -35744,6 +36340,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = servertest;
@@ -35819,6 +36417,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/MinSizeRel/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/MinSizeRel/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/MinSizeRel/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = asn1evp;
@@ -35893,6 +36493,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = timingsafe;
@@ -35967,6 +36569,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Debug/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Debug/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Debug/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = aes_wrap;
@@ -36042,6 +36646,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/Release/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/Release/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/Release/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = cipherstest;
@@ -36117,6 +36723,8 @@
 					"/Users/andyvand/Downloads/eid-mw/libressl/tls/RelWithDebInfo/libtls.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/ssl/RelWithDebInfo/libssl.a",
 					"/Users/andyvand/Downloads/eid-mw/libressl/crypto/RelWithDebInfo/libcrypto.a",
+					"-framework",
+					TrustEvaluationAgent,
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = sha256test;
