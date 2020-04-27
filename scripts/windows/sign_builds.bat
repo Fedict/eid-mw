@@ -19,12 +19,6 @@ call "%~dp0.\set_eidmw_version.cmd"
 call "%~dp0.\package_minidriver.bat"
 
 
-:: sign the minidriver cabinet
-:: ===========================
-call "%~dp0.\sign_minidriver_cab.bat"
-@if "%ERRORLEVEL%" == "1" goto minidriver_cabinet_failed
-
-
 :: sign pkcs11
 :: ===========
 @echo [INFO] Sign the pkcs11 dll, 32bit
