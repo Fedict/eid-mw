@@ -160,8 +160,8 @@ libbeidpkcs11_la_SOURCES += \
 	dialogs/dialogsgtk/dlgs_gtk.cpp \
 	dialogs/dialogsgtk/single_dialog.c
 libexec_PROGRAMS = beid-askpin beid-changepin beid-badpin beid-askaccess beid-spr-askpin beid-spr-changepin
-endif
 SUBDIRS += dialogs/dialogsgtk/po
+endif
 endif
 
 if P11KIT
