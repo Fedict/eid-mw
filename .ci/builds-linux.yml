@@ -68,12 +68,11 @@
 .validation:linux
   dependencies: []
   tags:
-  - validate
+  - robot
   - linux
   before_script:
   - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
   - sudo apt install ./google-chrome-stable_current_amd64.deb
-  - wget http://launchpadlibrarian.net/405300800/actiona_3.10.0-1_amd64.deb 
   - sudo apt-get update -y
   - sudo apt-get install -y actiona
   - sudo apt-get -t continuous upgrade
