@@ -65,7 +65,7 @@
   - popd
   allow_failure: true
 
-.validation:linux
+.validation:linux:
   tags:
   - robot
   - linux
