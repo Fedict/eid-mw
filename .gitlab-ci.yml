@@ -377,13 +377,24 @@ validate:robot:windows:
   stage: validate
   extends: .robot:windows
   dependencies:
-  - build:windows
+  - build:ubuntu_oldlts_32
+  - build:ubuntu_oldlts_64
+  - build:ubuntu_stable_32
+  - build:ubuntu_stable_64
+  - build:ubuntu_lts_64
+  - build:ubuntu_lts_32
 
 validate:robot:macos:
   stage: validate
   extends: .robot:macos
   dependencies:
   - build:macos
+
+validate:validation:linux:
+  stage:validate
+  extends: .validation:linux
+  dependencies:
+  -
 
 ####################################################################
 # Stage "build-repository": copy binaries into a repository layout #
