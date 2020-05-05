@@ -76,9 +76,11 @@
   - apt-get install -y actiona
   - apt-get -t -y continuous upgrade
   - apt-get -t -y continuous install eid-mw
+  - apt-get install -y xvfb firefox
+  - apt-get install -y xvfb google-chrome
   script:
-  - actiona -e /home/~user/test/googleTest.ascr
-  - actiona -e /home/~user/test/firefoxTest.ascr
+  - xvfb-run actiona -e /home/~user/test/googleTest.ascr
+  - xvfb-run actiona -e /home/~user/test/firefoxTest.ascr
 
 .repro:debian:
   tags:
