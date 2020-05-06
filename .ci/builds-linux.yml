@@ -71,7 +71,7 @@
   - linux
   before_script:
   - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-  - apt-get install -y ./google-chrome-stable_current_amd64.deb
+  - dpkg -i -y ./google-chrome-stable_current_amd64.deb
   - apt-get update -y
   - apt-get install -y actiona
   - apt-get -t -y continuous upgrade
