@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?include ..\..\..\scripts\windows\eidmw_revision.wxs ?>
+
+  <?define var.OfficialProductVersion =$(var.BaseVersion1).$(var.BaseVersion2).$(var.BaseVersion3)?>
+  <?define var.ProductVersion =$(var.BaseVersion1).$(var.BaseVersion2).$(var.RevisionNumber)?>
+  <?define var.FullProductVersion =$(var.OfficialProductVersion).$(var.RevisionNumber)?>
+
+  <?define var.UpgradeCode ={A65D6AF1-8B50-4421-BFCB-CC1D3949807D}?>
+  <?define var.ProductGuid ={F3DC7F06-92FF-4c98-87F5-72C0B786$(var.RevisionNumber)}?>
+
+  <?define var.ProductName =Belgium e-ID viewer $(var.OfficialProductVersion) (build $(var.RevisionNumber))?>
+
+  <?define var.PackageCode="*"?>
+
+  <Product Id="$(var.ProductGuid)"
+           Name="$(var.ProductName)"
+           Language="!(loc.Lang)"
+           Codepage="1252"
+           Version="$(var.ProductVersion)"
+           Manufacturer="Belgian Government"
+           UpgradeCode="$(var.UpgradeCode)">
+
+    <Package Id="$(var.PackageCode)"
+             InstallerVersion="405"
+             Keywords="Belgium e-ID Viewer Installer"
+             Platform="x64"
+             Manufacturer="Belgian Government"
+             Compressed="yes"
+             InstallPrivileges="elevated"
+    />
+
+    <Upgrade Id="$(var.UpgradeCode)">
+      <UpgradeVersion Minimum="$(var.ProductVersion)"
+                      IncludeMinimum="no"
+                      OnlyDetect="yes"
+                      Property="NEWPRODUCTFOUND"
+      />
+      <UpgradeVersion Minimum="4.0.0"
+                      IncludeMinimum="yes"
+                      Maximum="$(var.ProductVersion)"
+                      IncludeMaximum="no"
+                      Property="UPGRADEFOUND"
+      />
+    </Upgrade>
+
+    <?if $(var.Lang) = "nl"?>
+    <WixVariable Id="WixUILicenseRtf" Value="..\..\..\doc\licenses\Dutch\License_nl.rtf" />
+    <?elseif $(var.Lang) = "fr"?>
+    <WixVariable Id="WixUILicenseRtf" Value="..\..\..\doc\licenses\French\License_fr.rtf" />
+    <?elseif $(var.Lang) = "de"?>
+    <WixVariable Id="WixUILicenseRtf" Value="..\..\..\doc\licenses\German\License_de.rtf" />
+    <?else?>
+    <WixVariable Id="WixUILicenseRtf" Value="..\..\..\doc\licenses\English\License_en.rtf" />
+    <?endif?>
+
+    <WixVariable Id="WixUIBannerBmp" Value="..\..\bannrbmp.bmp" />
+    <WixVariable Id="WixUIDialogBmp" Value="..\..\dlgbmp.bmp" />
+
+    <Condition Message="!(loc.MinOs)">
+      <![CDATA[
+      Installed
+      OR ((VersionNT = 500) and (ServicePackLevel > 3))
+      OR ((VersionNT = 501) and (ServicePackLevel > 1))
+      OR (VersionNT > 501)
+      ]]>
+    </Condition>
+
+    <Media Id="1" Cabinet="Viewer.cab" EmbedCab="yes" />
+
+    <Icon Id="eid.ico" SourceFile="..\..\eid.ico"/>
+
+    <Property Id="ARPPRODUCTICON" Value="eid.ico" />
+    <Property Id="ARPURLINFOABOUT" Value="https://eid.belgium.be"/>
+
+    <Property Id="ALLUSERS" Value="1" />
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+
+      <Directory Id="ProgramMenuFolder" Name="Menu">
+        <Directory Id="ApplicationProgramsFolder" Name="Belgium - eID"/>
+      </Directory>
+	  
+	  <Directory Id="DesktopFolder"/>
+      
+      <Directory Id="ProgramFiles64Folder">
+        <Directory Id="APPLICATIONROOTFOLDER" Name="Belgium Identity Card">
+          <Directory Id="BEIDVIEWERDIR" Name="EidViewer">
+			<Directory Id="BEIDVIEWERDIRNL" Name="nl" />
+			<Directory Id="BEIDVIEWERDIRFR" Name="fr" />
+			<Directory Id="BEIDVIEWERDIRDE" Name="de" />
+		  </Directory>
+        </Directory>
+      </Directory>
+
+	<?ifndef env.DONT_MERGE_VCRT?>
+		<Merge Id="VCRT_64" SourceFile="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Redist\MSVC\14.16.27012\MergeModules\Microsoft_VC141_CRT_x64.msm" Language="0" DiskId="1" />
+	<?endif?>
+    </Directory>
+
+    <DirectoryRef Id="BEIDVIEWERDIR">
+      <Component Id="BEIDVIEWER" Guid="{67B78F6B-C6D5-4616-88B9-0BE8A46E01F7}">
+        <File Id="eidviewer.exe" Name="eID Viewer.exe" KeyPath="yes" Source="..\..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\x64\Release\eIDViewer.exe" />
+		<File Id="eIDViewerBackend" Name="eIDViewerBackend.dll" KeyPath="no" Source="..\..\..\plugins_tools\eid-viewer\Windows\eIDViewerBackend\VS_2017\Binaries\x64_Release\eIDViewerBackend.dll" />	
+		<File Id="beid_ff_pkcs11" Name="beid_ff_pkcs11.dll" KeyPath="no" Source="..\..\..\cardcomm\pkcs11\VS_2017\Binaries\x64_PKCS11_FF_Release\beid_ff_pkcs11.dll" />			
+	  </Component>
+    </DirectoryRef>
+	
+    <DirectoryRef Id="BEIDVIEWERDIRNL">
+	  <Component Id="BEIDVIEWERNL" Guid="{7C199B6A-72EF-40A2-B9C3-93856836985C}">
+        <File Id="eIDViewer.resourcesNL.dll" Name="eIDViewer.resources.dll" KeyPath="yes" Source="..\..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\x64\Release\nl\eIDViewer.resources.dll" />
+      </Component>
+    </DirectoryRef>
+	
+	<DirectoryRef Id="BEIDVIEWERDIRFR">
+      <Component Id="BEIDVIEWERFR" Guid="{0BF38D61-45B6-4988-859B-CFA2AF2F4B92}">
+        <File Id="eIDViewer.resourcesFR.dll" Name="eIDViewer.resources.dll" KeyPath="yes" Source="..\..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\x64\Release\fr\eIDViewer.resources.dll" />
+      </Component>
+    </DirectoryRef>
+	
+	<DirectoryRef Id="BEIDVIEWERDIRDE">
+      <Component Id="BEIDVIEWERDE" Guid="{E7F0C1A0-AF8F-42B2-85E0-28CE56D073DB}">
+        <File Id="eIDViewer.resourcesDE.dll" Name="eIDViewer.resources.dll" KeyPath="yes" Source="..\..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\x64\Release\de\eIDViewer.resources.dll" />
+      </Component>
+    </DirectoryRef>
+	
+    <DirectoryRef Id="ApplicationProgramsFolder">
+      <Component Id="eidviewerShortcut" Guid="{54536294-6A10-497b-BE12-A9C8B5D1E0D3}">
+        <Shortcut Id="eidviewerStartMenuShortcut" Name="eID Viewer" Description="!(loc.BeidGuiDescr)" Target="[BEIDVIEWERDIR]eID Viewer.exe" WorkingDirectory="BEIDVIEWERDIR"/>
+        <Shortcut Id="EidViewerDesktopShortcut" Name="eID Viewer" Directory="DesktopFolder" Description="!(loc.BeidGuiDescr)" Target="[BEIDVIEWERDIR]eID Viewer.exe" WorkingDirectory="BEIDVIEWERDIR"/>
+        <!-- shortcuts cannot be keypaths, so we'll add a registry key here-->
+		<RegistryValue Root="HKCU" Key="SOFTWARE\BEID\Installer" Name="eID Viewer" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+      <Component Id="BeidApplicationProgramsFolder" Guid="{09FD9493-DF96-442c-80EA-1858CE65E796}">				  
+        <RemoveFolder Id="ApplicationProgramsFolder" On="both"/>
+        <RegistryValue Root="HKCU" Key="SOFTWARE\BEID\Installer" Name="BeidApplicationProgramsFolder" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>  
+	
+    <Feature Id="BeidGuiInstall"
+             Title="!(loc.BeidGui)"
+             Description="!(loc.BeidGuiDescr)"
+             Absent="disallow"
+             Level="1"
+             >
+<?ifndef env.DONT_MERGE_VCRT?>
+      <Feature Id="VCRedist" Title="VC++ 14.1 runtime" AllowAdvertise="no" Display="hidden" Level="1">
+        <MergeRef Id="VCRT_64" />
+      </Feature>
+<?endif?>
+      <!-- Program Files -->
+      <ComponentRef Id="BEIDVIEWER"/>
+	  <ComponentRef Id="BEIDVIEWERNL"/>
+	  <ComponentRef Id="BEIDVIEWERFR"/>
+	  <ComponentRef Id="BEIDVIEWERDE"/>  
+      <ComponentRef Id="eidviewerShortcut"/>
+	  <ComponentRef Id="BeidApplicationProgramsFolder"/>
+    </Feature>
+    
+    
+    <!--SetARPINSTALLLOCATION sets the location in the registry entries of the Add & Remove Panel-->
+    <CustomAction Id="SetARPINSTALLLOCATION" Property="ARPINSTALLLOCATION" Value="[APPLICATIONROOTFOLDER]" />
+
+    <CustomAction Id="IsPrivileged" Error="!(loc.AdminNeeded)" />
+
+    <InstallExecuteSequence>
+      <RemoveExistingProducts After="InstallFinalize" />
+
+      <Custom Action="SetARPINSTALLLOCATION" After="InstallValidate"></Custom>
+
+      <Custom Action="IsPrivileged" Before="LaunchConditions">Not Privileged</Custom>
+    </InstallExecuteSequence>
+
+  </Product>
+</Wix>
