@@ -87,7 +87,7 @@ Section "Belgium Eid Viewer" BeidViewer
 	StrCpy $FileToCopy "$INSTDIR\eIDViewer.exe"
 	File "..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\Release\eIDViewer.exe"
 	StrCpy $FileToCopy "$INSTDIR\eIDViewerBackend.dll"
-	File "..\..\plugins_tools\eid-viewer\Windows\VS_2017\eIDViewer\bin\Release\eIDViewerBackend.dll"
+	File "..\..\plugins_tools\eid-viewer\Windows\eIDViewerBackend\VS_2017\Binaries\Win32_Release\eIDViewerBackend.dll"
 	StrCpy $FileToCopy "$INSTDIR\beid_ff_pkcs11.dll"
 	File "..\..\cardcomm\pkcs11\VS_2017\Binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll"
 	
