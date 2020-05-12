@@ -83,18 +83,28 @@ Section "Belgium Eid Viewer" BeidViewer
 	HideWindow
 	SetOutPath "$INSTDIR"
 		
-	ClearErrors
-	StrCpy $FileToCopy "$INSTDIR\eIDViewer.exe"
-	File "..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\Release\eIDViewer.exe"
-	StrCpy $FileToCopy "$INSTDIR\eIDViewerBackend.dll"
-	File "..\..\plugins_tools\eid-viewer\Windows\VS_2017\eIDViewer\bin\Release\eIDViewerBackend.dll"
-	StrCpy $FileToCopy "$INSTDIR\beid_ff_pkcs11.dll"
-	File "..\..\cardcomm\pkcs11\VS_2017\Binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll"
-	
+	${If} ${RunningX64}
+		ClearErrors
+		StrCpy $FileToCopy "$INSTDIR\eIDViewer.exe"
+		File "..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\x64\Release\eIDViewer.exe"
+		StrCpy $FileToCopy "$INSTDIR\eIDViewerBackend.dll"
+		File "..\..\plugins_tools\eid-viewer\Windows\eIDViewerBackend\VS_2017\Binaries\x64_Release\eIDViewerBackend.dll"
+		StrCpy $FileToCopy "$INSTDIR\beid_ff_pkcs11.dll"
+		File "..\..\cardcomm\pkcs11\VS_2017\Binaries\x64_PKCS11_FF_Release\beid_ff_pkcs11.dll"
+	${Else}				
+		ClearErrors
+		StrCpy $FileToCopy "$INSTDIR\eIDViewer.exe"
+		File "..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\Release\eIDViewer.exe"
+		StrCpy $FileToCopy "$INSTDIR\eIDViewerBackend.dll"
+		File "..\..\plugins_tools\eid-viewer\Windows\eIDViewerBackend\VS_2017\Binaries\Win32_Release\eIDViewerBackend.dll"
+		StrCpy $FileToCopy "$INSTDIR\beid_ff_pkcs11.dll"
+		File "..\..\cardcomm\pkcs11\VS_2017\Binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll"
+	${EndIf}
+				
 	IfErrors 0 +2
 		Call ErrorHandler_file
 	ClearErrors
-
+	
 	ExecWait '"$INSTDIR\eIDViewer.exe"' $Response
 	${Switch} $Response
 		${Case} 0
@@ -106,7 +116,7 @@ Section "Belgium Eid Viewer" BeidViewer
 		${Default}
 			StrCpy $InstallFailed $Response
 	${EndSwitch}
-
+	
 	Delete "$INSTDIR\eIDViewer.exe"
 	Delete "$INSTDIR\eIDViewerBackend.dll"
 	Delete "$INSTDIR\beid_ff_pkcs11.dll"
