@@ -164,14 +164,14 @@ private:
 		static std::unique_ptr < CLogger > m_instance;
 		static bool m_bApplicationLeaving;
 
-		     std::wstring m_directory;
-		     std::wstring m_prefix;
+		std::wstring m_directory;
+		std::wstring m_prefix;
 		long m_filesize;
 		long m_filenr;
 		tLOG_Level m_maxlevel;
 		bool m_groupinnewfile;
 
-		     std::vector < CLog * >m_logStore;
+		std::vector < CLog * >m_logStore;
 	};
 
 	class CLog
