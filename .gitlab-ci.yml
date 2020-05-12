@@ -385,9 +385,9 @@ validate:robot:macos:
   dependencies:
   - build:macos
 
-validate:validation:linux:
+validate:validation:linux:google:
   stage: validate
-  extends: .validation:linux
+  extends: .validation:linux:google:
   dependencies:
   - build:ubuntu_oldlts_32
   - build:ubuntu_oldlts_64

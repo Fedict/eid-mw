@@ -65,14 +65,19 @@
   - popd
   allow_failure: true
 
-.validation:linux:
+.validation:linux:firefox:
   tags:
   - robot
   - linux
   script:
-  - xvfb-run actiona -e /home/~user/test/googleTest.ascr
-  - xvfb-run actiona -e /home/~user/test/firefoxTest.ascr
-  allow_failure: true
+  - xvfb-run actiona -e -x $CI_PROJECT_DIR/eid-browser-tests/Linux/test/firefoxTest.ascr
+
+.validation:linux:google:
+  tags:
+  - robot
+  - linux
+  script:
+  - xvfb-run actiona -e -x $CI_PROJECT_DIR/eid-browser-tests/Linux/test/googleTest.ascr
 
 .repro:debian:
   tags:
