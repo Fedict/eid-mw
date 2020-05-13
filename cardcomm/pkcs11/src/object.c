@@ -465,29 +465,27 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 			{
 				SetParseFlagByLabel(&filesToCacheFlag, pLabel, len);
 			}
-		}
 
-		//check if a record_ object is being asked for
-		if (filesToCacheFlag == CACHED_DATA_TYPE_PER_RECORD)
-		{
-			//check if the record_ object is already present
-			if (CheckLabelInuse(pSlot, pLabel, len) == CK_FALSE)
+			//check if a record_ object is being asked for
+			if (filesToCacheFlag == CACHED_DATA_TYPE_PER_RECORD)
 			{
-				ret = ReadRecordLabel(pSlot, pLabel, len);
+				//check if the record_ object is already present
+				if (CheckLabelInuse(pSlot, pLabel, len) == CK_FALSE)
 				{
-					if (ret != 0) {
-						log_trace(WHERE, "E: ReadRecordLabel() failed with %lu", ret);
-						goto cleanup;
+					ret = ReadRecordLabel(pSlot, pLabel, len);
+					{
+						if (ret != 0) {
+							log_trace(WHERE, "E: ReadRecordLabel() failed with %lu", ret);
+							goto cleanup;
+						}
 					}
 				}
+				//we have (now or before) read this record from the eID card
+				ret = CKR_OK;
+
+				goto cleanup;
 			}
-			//we have (now or before) read this record from the eID card
-			ret = CKR_OK;
-
-			goto cleanup;
-
 		}
-
 
 		//check if the data isn't cached already
 		if(	((filesToCacheFlag != CACHED_DATA_TYPE_ALL_DATA) && ((pSlot->ulCardDataCached & filesToCacheFlag) == FALSE)) ||
