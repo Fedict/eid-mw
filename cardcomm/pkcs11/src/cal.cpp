@@ -897,7 +897,7 @@ CK_RV cal_init_objects(P11_SLOT * pSlot)
 							goto cleanup;
 					}
 					else { //if (key.keyType == EC) 
-						ret = p11_add_slot_object(pSlot, PUB_KEY_EC, sizeof(PUB_KEY_EC) / sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_PRIVATE_KEY, KeyId, CK_TRUE, &hObject);
+						ret = p11_add_slot_object(pSlot, PUB_KEY_EC, sizeof(PUB_KEY_EC) / sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_PUBLIC_KEY, KeyId, CK_FALSE, &hObject);
 						if (ret != CKR_OK)
 							goto cleanup;
 					}
