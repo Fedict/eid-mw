@@ -756,8 +756,10 @@ CK_RV cal_disconnect(CK_SLOT_ID hSlot)
 CK_RV cal_init_objects(P11_SLOT * pSlot)
 {
 	CK_RV ret = CKR_OK;
-	CK_ATTRIBUTE PRV_KEY[] = BEID_TEMPLATE_PRV_KEY;
-	CK_ATTRIBUTE PUB_KEY[] = BEID_TEMPLATE_PUB_KEY;
+	CK_ATTRIBUTE PRV_KEY_RSA[] = BEID_TEMPLATE_PRV_KEY_RSA;
+	CK_ATTRIBUTE PUB_KEY_RSA[] = BEID_TEMPLATE_PUB_KEY_RSA;
+	CK_ATTRIBUTE PRV_KEY_EC[] = BEID_TEMPLATE_PRV_KEY_EC;
+	CK_ATTRIBUTE PUB_KEY_EC[] = BEID_TEMPLATE_PUB_KEY_EC;
 	CK_ATTRIBUTE CERTIFICATE[] = BEID_TEMPLATE_CERTIFICATE;
 	CK_ULONG hObject = 0;
 	P11_OBJECT *pObject = NULL;
@@ -833,9 +835,16 @@ CK_RV cal_init_objects(P11_SLOT * pSlot)
 					//      sprintf_s(clabel,sizeof(clabel), "Private Key %d (%s)", i+1, key.csLabel.c_str());
 					sprintf_s(clabel, sizeof(clabel), "%s", key.csLabel.c_str());
 
-					ret = p11_add_slot_object(pSlot, PRV_KEY, sizeof(PRV_KEY) / sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_PRIVATE_KEY, KeyId, CK_TRUE, &hObject);
-					if (ret != CKR_OK)
-						goto cleanup;
+					if (key.keyType == RSA) {
+						ret = p11_add_slot_object(pSlot, PRV_KEY_RSA, sizeof(PRV_KEY_RSA) / sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_PRIVATE_KEY, KeyId, CK_TRUE, &hObject);
+						if (ret != CKR_OK)
+							goto cleanup;
+					}
+					else { //if (key.keyType == EC) 
+						ret = p11_add_slot_object(pSlot, PRV_KEY_EC, sizeof(PRV_KEY_EC) / sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_PRIVATE_KEY, KeyId, CK_TRUE, &hObject);
+						if (ret != CKR_OK)
+							goto cleanup;
+					}
 
 					//put some other attribute items allready so the key can be used for signing
 					pObject = p11_get_slot_object(pSlot, hObject);
@@ -864,6 +873,12 @@ CK_RV cal_init_objects(P11_SLOT * pSlot)
 						if (ret != CKR_OK)
 							goto cleanup;
 					}
+					else { // if (key.keyType == EC)
+						unsigned char ECCurve[] = { 0x06, 0x05, 0x2b, 0x81, 0x04, 0x00, 0x22 };
+						ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_EC_PARAMS, (CK_VOID_PTR)& ECCurve, sizeof(ECCurve));
+						if (ret != CKR_OK)
+							goto cleanup;
+					}
 					ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_EXTRACTABLE, (CK_VOID_PTR) & bfalse, sizeof(bfalse));
 					if (ret != CKR_OK)
 						goto cleanup;
@@ -875,9 +890,17 @@ CK_RV cal_init_objects(P11_SLOT * pSlot)
 					/* Public key corresponding to private key object */
 
 					/**************************************************/
-					ret = p11_add_slot_object(pSlot, PUB_KEY, sizeof(PUB_KEY) / sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_PUBLIC_KEY, KeyId, CK_FALSE, &hObject);
-					if (ret != CKR_OK)
-						goto cleanup;
+
+					if (key.keyType == RSA) {
+						ret = p11_add_slot_object(pSlot, PUB_KEY_RSA, sizeof(PUB_KEY_RSA) / sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_PUBLIC_KEY, KeyId, CK_FALSE, &hObject);
+						if (ret != CKR_OK)
+							goto cleanup;
+					}
+					else { //if (key.keyType == EC) 
+						ret = p11_add_slot_object(pSlot, PUB_KEY_EC, sizeof(PUB_KEY_EC) / sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_PRIVATE_KEY, KeyId, CK_TRUE, &hObject);
+						if (ret != CKR_OK)
+							goto cleanup;
+					}
 
 					pObject = p11_get_slot_object(pSlot, hObject);
 
@@ -891,6 +914,12 @@ CK_RV cal_init_objects(P11_SLOT * pSlot)
 						goto cleanup;
 					if(key.keyType == RSA) {
 						ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_MODULUS_BITS, (CK_VOID_PTR) & modsize, sizeof(CK_ULONG));
+						if (ret != CKR_OK)
+							goto cleanup;
+					}
+					else {// if (key.keyType == EC) 
+						unsigned char ECCurve[] = { 0x06, 0x05, 0x2b, 0x81, 0x04, 0x00, 0x22 };
+						ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_EC_PARAMS, (CK_VOID_PTR)& ECCurve, sizeof(ECCurve));
 						if (ret != CKR_OK)
 							goto cleanup;
 					}
@@ -1911,19 +1940,19 @@ CK_RV cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT * pObject)
 
 			if (pPrivKeyObject != NULL)
 			{
-				ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_SENSITIVE, (CK_VOID_PTR) & btrue, sizeof(btrue));
+				ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_SENSITIVE, (CK_VOID_PTR)& btrue, sizeof(btrue));
 				if (ret != CKR_OK)
 					goto cleanup;
 
-				ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_DECRYPT, (CK_VOID_PTR) & bfalse, sizeof(bfalse));
+				ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_DECRYPT, (CK_VOID_PTR)& bfalse, sizeof(bfalse));
 				if (ret != CKR_OK)
 					goto cleanup;
 
-				ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_SIGN_RECOVER, (CK_VOID_PTR) & bfalse, sizeof(CK_BBOOL));
+				ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_SIGN_RECOVER, (CK_VOID_PTR)& bfalse, sizeof(CK_BBOOL));
 				if (ret != CKR_OK)
 					goto cleanup;
 
-				ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_UNWRAP, (CK_VOID_PTR) & bfalse, sizeof(CK_BBOOL));
+				ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_UNWRAP, (CK_VOID_PTR)& bfalse, sizeof(CK_BBOOL));
 				if (ret != CKR_OK)
 					goto cleanup;
 
@@ -1931,15 +1960,18 @@ CK_RV cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT * pObject)
 				if (ret != CKR_OK)
 					goto cleanup;
 
-				if (certinfo.l_mod > 0)
-					ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_MODULUS, (CK_VOID_PTR)certinfo.mod, (CK_ULONG)certinfo.l_mod);
-				if (ret != CKR_OK)
-					goto cleanup;
+				if (key.keyType == RSA)
+				{
+					if (certinfo.l_mod > 0)
+						ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_MODULUS, (CK_VOID_PTR)certinfo.mod, (CK_ULONG)certinfo.l_mod);
+					if (ret != CKR_OK)
+						goto cleanup;
 
-				if (certinfo.l_exp > 0)
-					ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_PUBLIC_EXPONENT, (CK_VOID_PTR)certinfo.exp, (CK_ULONG)certinfo.l_exp);
-				if (ret != CKR_OK)
-					goto cleanup;
+					if (certinfo.l_exp > 0)
+						ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_PUBLIC_EXPONENT, (CK_VOID_PTR)certinfo.exp, (CK_ULONG)certinfo.l_exp);
+					if (ret != CKR_OK)
+						goto cleanup;
+				}
 				pPrivKeyObject->state = P11_CACHED;
 			}
 			if (pPubKeyObject != NULL)
@@ -1964,18 +1996,21 @@ CK_RV cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT * pObject)
 				if (ret != CKR_OK)
 					goto cleanup;
 
-				if (certinfo.l_mod > 0)
-					ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_MODULUS, (CK_VOID_PTR)certinfo.mod, certinfo.l_mod);
-				if (ret != CKR_OK)
-					goto cleanup;
+				if (key.keyType == RSA)
+				{
+					if (certinfo.l_mod > 0)
+						ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_MODULUS, (CK_VOID_PTR)certinfo.mod, certinfo.l_mod);
+					if (ret != CKR_OK)
+						goto cleanup;
+
+					if (certinfo.l_exp > 0)
+						ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_PUBLIC_EXPONENT, (CK_VOID_PTR)certinfo.exp, certinfo.l_exp);
+					if (ret != CKR_OK)
+						goto cleanup;
+				}
 
 				if (certinfo.l_pkinfo > 0)
 					ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_VALUE, (CK_VOID_PTR)certinfo.pkinfo, certinfo.l_pkinfo);
-				if (ret != CKR_OK)
-					goto cleanup;
-
-				if (certinfo.l_exp > 0)
-					ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_PUBLIC_EXPONENT, (CK_VOID_PTR)certinfo.exp, certinfo.l_exp);
 				if (ret != CKR_OK)
 					goto cleanup;
 
