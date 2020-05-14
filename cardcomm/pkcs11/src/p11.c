@@ -281,6 +281,7 @@ CK_RV p11_new_slot_object(P11_SLOT *pSlot, CK_ULONG *phObject)
 	unsigned int index = 0;
 	unsigned int size = 0;
 	unsigned int diff = 0;
+	P11_OBJECT * pobjects_old = NULL;
 
 	//p11_lock();
 
@@ -304,9 +305,15 @@ CK_RV p11_new_slot_object(P11_SLOT *pSlot, CK_ULONG *phObject)
 		size = pSlot->nobjects * sizeof(P11_OBJECT);
 		diff = OBJECT_TAB_STEP_SIZE * sizeof(P11_OBJECT);
 
+		pobjects_old = pSlot->pobjects;
 		if ((pSlot->pobjects = realloc(pSlot->pobjects, size+diff)) == NULL)
 		{
-			log_trace(WHERE, "E: unable to allocate memory for slot object table, %d bytes\n", size+diff);
+			if (pobjects_old != NULL)
+			{
+				//not keeping just a portion of the objects, clear the objects that were already added before
+				free(pobjects_old);
+			}
+			log_trace(WHERE, "E: unable to allocate memory for slot object table, %d bytes\n", size + diff);
 			return(CKR_HOST_MEMORY);
 		}
 
