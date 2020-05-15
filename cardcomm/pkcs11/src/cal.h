@@ -60,7 +60,7 @@ extern "C"
 }
 
 
-#define BEID_TEMPLATE_PRV_KEY  {  \
+#define BEID_TEMPLATE_PRV_KEY_RSA  {  \
 	{ CKA_CLASS,            ( CK_VOID_PTR ) NULL, 0 },   \
 	{ CKA_ID,               ( CK_VOID_PTR ) NULL, 0 },   \
 	{ CKA_SUBJECT,          ( CK_VOID_PTR ) NULL, 0 },   \
@@ -86,7 +86,7 @@ extern "C"
 	{ CKA_DERIVE,			( CK_VOID_PTR ) NULL, 0 }    \
 }
 
-#define BEID_TEMPLATE_PUB_KEY  {  \
+#define BEID_TEMPLATE_PUB_KEY_RSA  {  \
 	{ CKA_CLASS,            ( CK_VOID_PTR ) NULL, 0 },  \
 	{ CKA_ID,               ( CK_VOID_PTR ) NULL, 0 },  \
 	{ CKA_SUBJECT,          ( CK_VOID_PTR ) NULL, 0 },  \
@@ -103,6 +103,43 @@ extern "C"
 	{ CKA_MODULUS,          ( CK_VOID_PTR ) NULL, 0 },  \
 	{ CKA_MODULUS_BITS,     ( CK_VOID_PTR ) NULL, 0 },  \
 	{ CKA_PUBLIC_EXPONENT,  ( CK_VOID_PTR ) NULL, 0 },  \
+	{ CKA_DERIVE,			( CK_VOID_PTR ) NULL, 0 }   \
+}
+
+#define BEID_TEMPLATE_PRV_KEY_EC  {  \
+	{ CKA_CLASS,            ( CK_VOID_PTR ) NULL, 0 },   \
+	{ CKA_ID,               ( CK_VOID_PTR ) NULL, 0 },   \
+	{ CKA_SUBJECT,          ( CK_VOID_PTR ) NULL, 0 },   \
+	{ CKA_LABEL,            ( CK_VOID_PTR ) NULL, 0 },   \
+	{ CKA_TOKEN,            ( CK_VOID_PTR ) NULL, 0 },   \
+	{ CKA_KEY_TYPE,         ( CK_VOID_PTR ) NULL, 0 },   \
+	{ CKA_SENSITIVE,        ( CK_VOID_PTR ) NULL, 0 },   \
+	{ CKA_SIGN,             ( CK_VOID_PTR ) NULL, 0 },   \
+	{ CKA_SIGN_RECOVER,     ( CK_VOID_PTR ) NULL, 0 },   \
+	{ CKA_DECRYPT,          ( CK_VOID_PTR ) NULL, 0 },   \
+	{ CKA_UNWRAP,           ( CK_VOID_PTR ) NULL, 0 },   \
+	{ CKA_EC_PARAMS,        ( CK_VOID_PTR ) NULL, 0 },   \
+	{ CKA_EXTRACTABLE,		( CK_VOID_PTR ) NULL, 0 },   \
+	{ CKA_PRIVATE,          ( CK_VOID_PTR ) NULL, 0 },   \
+	{ CKA_DERIVE,			( CK_VOID_PTR ) NULL, 0 }    \
+}
+
+#define BEID_TEMPLATE_PUB_KEY_EC  {  \
+	{ CKA_CLASS,            ( CK_VOID_PTR ) NULL, 0 },  \
+	{ CKA_ID,               ( CK_VOID_PTR ) NULL, 0 },  \
+	{ CKA_SUBJECT,          ( CK_VOID_PTR ) NULL, 0 },  \
+	{ CKA_LABEL,            ( CK_VOID_PTR ) NULL, 0 },  \
+	{ CKA_TOKEN,            ( CK_VOID_PTR ) NULL, 0 },  \
+	{ CKA_KEY_TYPE,         ( CK_VOID_PTR ) NULL, 0 },  \
+	{ CKA_PRIVATE,          ( CK_VOID_PTR ) NULL, 0 },  \
+	{ CKA_TRUSTED,          ( CK_VOID_PTR ) NULL, 0 },  \
+	{ CKA_SENSITIVE,        ( CK_VOID_PTR ) NULL, 0 },  \
+	{ CKA_ENCRYPT,          ( CK_VOID_PTR ) NULL, 0 },  \
+	{ CKA_VERIFY,           ( CK_VOID_PTR ) NULL, 0 },  \
+	{ CKA_WRAP,             ( CK_VOID_PTR ) NULL, 0 },  \
+	{ CKA_VALUE,			( CK_VOID_PTR ) NULL, 0 },  \
+	{ CKA_EC_PARAMS,        ( CK_VOID_PTR ) NULL, 0 },  \
+	{ CKA_EC_POINT,			( CK_VOID_PTR ) NULL, 0 },  \
 	{ CKA_DERIVE,			( CK_VOID_PTR ) NULL, 0 }   \
 }
 

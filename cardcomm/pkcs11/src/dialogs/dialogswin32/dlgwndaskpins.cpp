@@ -244,18 +244,24 @@ bool dlgWndAskPINs::CheckPin2Result()
 {
 	wchar_t PINBuf[128];
 	wchar_t PINBuf2[128];
-	long len = (long)SendMessage( GetDlgItem( m_hWnd, IDC_EDIT_PIN2 ), WM_GETTEXTLENGTH, 0, 0 );
-	if( len < 128 )
+	long len = (long)SendMessage(GetDlgItem(m_hWnd, IDC_EDIT_PIN2), WM_GETTEXTLENGTH, 0, 0);
+	if (len < 128)
 	{
 		SendMessage( GetDlgItem( m_hWnd, IDC_EDIT_PIN2 ), WM_GETTEXT, (WPARAM)(sizeof(PINBuf)), (LPARAM)PINBuf );
 		wcscpy_s( PINBuf2, PINBuf );
 	}
-	len = (long)SendMessage( GetDlgItem( m_hWnd, IDC_EDIT_PIN3 ), WM_GETTEXTLENGTH, 0, 0 );
-	if( len < 128 )
-	{
-		SendMessage( GetDlgItem( m_hWnd, IDC_EDIT_PIN3 ), WM_GETTEXT, (WPARAM)(sizeof(PINBuf)), (LPARAM)PINBuf );
+	else {
+		return false;
 	}
-	if( wcscoll( PINBuf, PINBuf2 ) == 0 )
+	len = (long)SendMessage(GetDlgItem(m_hWnd, IDC_EDIT_PIN3), WM_GETTEXTLENGTH, 0, 0);
+	if (len < 128)
+	{
+		SendMessage(GetDlgItem(m_hWnd, IDC_EDIT_PIN3), WM_GETTEXT, (WPARAM)(sizeof(PINBuf)), (LPARAM)PINBuf);
+	}
+	else {
+		return false;
+	}
+	if (wcscoll(PINBuf, PINBuf2) == 0)
 		return true;
 	return false;
 }

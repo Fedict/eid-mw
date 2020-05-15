@@ -36,7 +36,7 @@ namespace eIDMW
 		SetTag(0x00);
 	}
 
-	CTLV::    CTLV(const CTLV & oTlv)
+	CTLV::CTLV(const CTLV & oTlv)
 	{
 		SetTag(oTlv.m_ucTag);
 		SetData(oTlv.m_Data);
