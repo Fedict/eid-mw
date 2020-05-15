@@ -2,11 +2,11 @@
 
 if [ -d debian/tmp/usr/lib/eid-mw ]; then
 	echo usr/lib/eid-mw
+	echo usr/share/locale/*/LC_MESSAGES/dialogs-beid.mo
 fi
 cat <<EOF
 usr/bin/about-eid-mw
 usr/share/locale/*/LC_MESSAGES/about-eid-mw.mo
-usr/share/locale/*/LC_MESSAGES/dialogs-beid.mo
 usr/lib/mozilla/pkcs11-modules/beidpkcs11.json
 usr/bin/beid-update-nssdb
 etc/xdg/autostart

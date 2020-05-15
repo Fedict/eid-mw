@@ -238,7 +238,7 @@ int eid_vwr_gen_xml(void *data)
 	// Allocate enough memory for the xml content.
 
 	retVal = pMemoryStream->Stat(&ssStreamData, STATFLAG_NONAME);
-	SIZE_T cbSize = ssStreamData.cbSize.LowPart;
+	ULONG cbSize = ssStreamData.cbSize.LowPart;
 
 	pwszContent = new BYTE[cbSize];
 	if (pwszContent == NULL)
@@ -251,7 +251,7 @@ int eid_vwr_gen_xml(void *data)
 
 	position.QuadPart = 0;
 	retVal = pMemoryStream->Seek(position, STREAM_SEEK_SET, NULL);
-	SIZE_T cbRead;
+	ULONG cbRead;
 
 	retVal = pMemoryStream->Read(pwszContent, cbSize, &cbRead);
 
