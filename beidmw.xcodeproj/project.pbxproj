@@ -166,7 +166,6 @@
 		86C0E77421C2586E00602028 /* hash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86C0E74421C2586E00602028 /* hash.cpp */; };
 		86C0E77521C2586E00602028 /* svn_revision.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C0E74521C2586E00602028 /* svn_revision.h */; };
 		86C0E77621C2586E00602028 /* dynamiclib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86C0E74621C2586E00602028 /* dynamiclib.cpp */; };
-		86C0E77C21C2586E00602028 /* sha256.c in Sources */ = {isa = PBXBuildFile; fileRef = 86C0E74D21C2586E00602028 /* sha256.c */; };
 		86C0E78221C2586E00602028 /* hash.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C0E75321C2586E00602028 /* hash.h */; };
 		86C0E78321C2586E00602028 /* configbase.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C0E75421C2586E00602028 /* configbase.h */; };
 		86C0E78421C2586E00602028 /* mwexception.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C0E75521C2586E00602028 /* mwexception.h */; };
@@ -233,12 +232,13 @@
 		8BD62CA321021C9300C28B6D /* booldecode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8E00F210216900026D6AB /* booldecode.cpp */; };
 		AB60563E2452AAC30022196E /* eidv4.xsd in Resources */ = {isa = PBXBuildFile; fileRef = AB60563D2452AAB90022196E /* eidv4.xsd */; };
 		AB68D65E243CA07100BA8851 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AB68D65D243CA06800BA8851 /* libxml2.tbd */; };
-		AB8BE5D5243CC2AF003967F8 /* libcorecrypto_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB8BE5B2243CC1FF003967F8 /* libcorecrypto_static.a */; };
 		AB8BE6C9243CC5C2003967F8 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AB68D65D243CA06800BA8851 /* libxml2.tbd */; };
 		ABD3E1E5244ED92E00F32FB1 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABD3E16B244ED7DE00F32FB1 /* libcrypto.a */; };
 		ABD3E1E6244ED93500F32FB1 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABD3E1C5244ED7DE00F32FB1 /* libssl.a */; };
 		ABD3E1E7244ED95D00F32FB1 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABD3E16B244ED7DE00F32FB1 /* libcrypto.a */; };
 		ABD3E1E8244ED96800F32FB1 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABD3E1C5244ED7DE00F32FB1 /* libssl.a */; };
+		ABF334B3246EF19400DF579E /* libcorecrypto_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABF3348B246EE4D200DF579E /* libcorecrypto_static.a */; };
+		ABF334B4246EF34500DF579E /* rmd160.c in Sources */ = {isa = PBXBuildFile; fileRef = 86C0E75121C2586E00602028 /* rmd160.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -325,139 +325,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 2F3883B01CF46C9D00F114A7;
 			remoteInfo = BEIDToken;
-		};
-		AB8BE5AF243CC1FF003967F8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4CC0779F152E4D6C00D0C77B;
-			remoteInfo = corecrypto_headers;
-		};
-		AB8BE5B1243CC1FF003967F8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4BC68AA11B06C1900098A4AA;
-			remoteInfo = corecrypto_static;
-		};
-		AB8BE5B3243CC1FF003967F8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 5DDA38E814DAFE6B006151BE;
-			remoteInfo = corecrypto_dylib;
-		};
-		AB8BE5B5243CC1FF003967F8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 0CEF581D14C0FC34000A93B0;
-			remoteInfo = corecrypto_kext;
-		};
-		AB8BE5B7243CC1FF003967F8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 79A743AD14BCF4CA00CCBEFB;
-			remoteInfo = corecrypto_l4;
-		};
-		AB8BE5B9243CC1FF003967F8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = EEFE55EC199B3BEF00C16C1B;
-			remoteInfo = corecrypto_s3;
-		};
-		AB8BE5BB243CC1FF003967F8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4B4A47321A6835BB00E88587;
-			remoteInfo = corecrypto_seprom;
-		};
-		AB8BE5BD243CC1FF003967F8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 48498647175EF49A0090831A;
-			remoteInfo = corecrypto_iboot;
-		};
-		AB8BE5BF243CC1FF003967F8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4BFF737C1B3CBA5400A5686E;
-			remoteInfo = corecrypto_efi;
-		};
-		AB8BE5C1243CC1FF003967F8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4C9AD0EB1200D68E004C50F5;
-			remoteInfo = validation;
-		};
-		AB8BE5C3243CC1FF003967F8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4CE89A491267ABCE004179B9;
-			remoteInfo = ec_verify;
-		};
-		AB8BE5C5243CC1FF003967F8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 0C28C72C1410018F008A2E7E;
-			remoteInfo = ccdh_gen_gp;
-		};
-		AB8BE5C7243CC1FF003967F8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 5DDA38FD14DB005F006151BE;
-			remoteInfo = cc_fips_test;
-		};
-		AB8BE5C9243CC1FF003967F8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 5D9A49E9151A56F80003E474;
-			remoteInfo = hmacfiletool;
-		};
-		AB8BE5CB243CC1FF003967F8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 0C75E6CE12E15717009E8E65;
-			remoteInfo = corecrypto_perf;
-		};
-		AB8BE5CD243CC1FF003967F8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4850041E16027EC60091A2A3;
-			remoteInfo = corecrypto_test;
-		};
-		AB8BE5CF243CC1FF003967F8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4B1A5AF41AFC0B3300DDE509;
-			remoteInfo = corecrypto_test_asan;
-		};
-		AB8BE5D1243CC291003967F8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 4CC075D8152E4D6C00D0C77B;
-			remoteInfo = corecrypto_headers;
-		};
-		AB8BE5D3243CC299003967F8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D2AAC07D0554694100DB518D;
-			remoteInfo = corecrypto_static;
 		};
 		AB9663B7243EFEC60079069B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1047,6 +914,125 @@
 			remoteGlobalIDString = AD09D95D720A4E0DB258740E;
 			remoteInfo = ssl;
 		};
+		ABF33488246EE4D200DF579E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABF3346D246EE4D100DF579E /* corecrypto.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4CC0779F152E4D6C00D0C77B;
+			remoteInfo = corecrypto_headers;
+		};
+		ABF3348A246EE4D200DF579E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABF3346D246EE4D100DF579E /* corecrypto.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4BC68AA11B06C1900098A4AA;
+			remoteInfo = corecrypto_static;
+		};
+		ABF3348C246EE4D200DF579E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABF3346D246EE4D100DF579E /* corecrypto.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5DDA38E814DAFE6B006151BE;
+			remoteInfo = corecrypto_dylib;
+		};
+		ABF3348E246EE4D200DF579E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABF3346D246EE4D100DF579E /* corecrypto.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0CEF581D14C0FC34000A93B0;
+			remoteInfo = corecrypto_kext;
+		};
+		ABF33490246EE4D200DF579E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABF3346D246EE4D100DF579E /* corecrypto.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 79A743AD14BCF4CA00CCBEFB;
+			remoteInfo = corecrypto_l4;
+		};
+		ABF33492246EE4D200DF579E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABF3346D246EE4D100DF579E /* corecrypto.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EEFE55EC199B3BEF00C16C1B;
+			remoteInfo = corecrypto_s3;
+		};
+		ABF33494246EE4D200DF579E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABF3346D246EE4D100DF579E /* corecrypto.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4B4A47321A6835BB00E88587;
+			remoteInfo = corecrypto_seprom;
+		};
+		ABF33496246EE4D200DF579E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABF3346D246EE4D100DF579E /* corecrypto.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 48498647175EF49A0090831A;
+			remoteInfo = corecrypto_iboot;
+		};
+		ABF33498246EE4D200DF579E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABF3346D246EE4D100DF579E /* corecrypto.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4BFF737C1B3CBA5400A5686E;
+			remoteInfo = corecrypto_efi;
+		};
+		ABF3349A246EE4D200DF579E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABF3346D246EE4D100DF579E /* corecrypto.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4C9AD0EB1200D68E004C50F5;
+			remoteInfo = validation;
+		};
+		ABF3349C246EE4D200DF579E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABF3346D246EE4D100DF579E /* corecrypto.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4CE89A491267ABCE004179B9;
+			remoteInfo = ec_verify;
+		};
+		ABF3349E246EE4D200DF579E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABF3346D246EE4D100DF579E /* corecrypto.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0C28C72C1410018F008A2E7E;
+			remoteInfo = ccdh_gen_gp;
+		};
+		ABF334A0246EE4D200DF579E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABF3346D246EE4D100DF579E /* corecrypto.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5DDA38FD14DB005F006151BE;
+			remoteInfo = cc_fips_test;
+		};
+		ABF334A2246EE4D200DF579E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABF3346D246EE4D100DF579E /* corecrypto.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5D9A49E9151A56F80003E474;
+			remoteInfo = hmacfiletool;
+		};
+		ABF334A4246EE4D200DF579E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABF3346D246EE4D100DF579E /* corecrypto.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0C75E6CE12E15717009E8E65;
+			remoteInfo = corecrypto_perf;
+		};
+		ABF334A6246EE4D200DF579E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABF3346D246EE4D100DF579E /* corecrypto.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4850041E16027EC60091A2A3;
+			remoteInfo = corecrypto_test;
+		};
+		ABF334A8246EE4D200DF579E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABF3346D246EE4D100DF579E /* corecrypto.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4B1A5AF41AFC0B3300DDE509;
+			remoteInfo = corecrypto_test_asan;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -1352,15 +1338,15 @@
 		8BC8E011210216900026D6AB /* toxmlmemberoffamilyconv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = toxmlmemberoffamilyconv.cpp; sourceTree = "<group>"; };
 		8BC8E012210216900026D6AB /* toxmlmemberoffamilyconv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = toxmlmemberoffamilyconv.h; sourceTree = "<group>"; };
 		8BCC05F7211479F90015C705 /* pkcs11log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pkcs11log.h; path = cardcomm/pkcs11/src/pkcs11log.h; sourceTree = "<group>"; };
-		AB60563D2452AAB90022196E /* eidv4.xsd */ = {isa = PBXFileReference; lastKnownFileType = file; name = eidv4.xsd; path = "plugins_tools/eid-viewer/xml/eidv4.xsd"; sourceTree = SOURCE_ROOT; };
+		AB60563D2452AAB90022196E /* eidv4.xsd */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = eidv4.xsd; path = "plugins_tools/eid-viewer/xml/eidv4.xsd"; sourceTree = SOURCE_ROOT; };
 		AB68D65D243CA06800BA8851 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		AB715D53243D09C600B3D387 /* BEIDToken.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BEIDToken.xcodeproj; path = cardcomm/ctkToken/BEIDToken.xcodeproj; sourceTree = "<group>"; };
-		AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = corecrypto.xcodeproj; path = cardcomm/pkcs11/src/common/libcorecrypto/corecrypto.xcodeproj; sourceTree = "<group>"; };
 		AB96639B243EFEC60079069B /* eID Middleware.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "eID Middleware.xcodeproj"; path = "plugins_tools/aboutmw/OSX/eID Middleware/eID Middleware.xcodeproj"; sourceTree = "<group>"; };
 		ABA19114243CAB3800116415 /* BeidView.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = BeidView.entitlements; sourceTree = "<group>"; };
 		ABBE59A12446228800A40AA7 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../../../../usr/local/lib/libcrypto.a; sourceTree = "<group>"; };
 		ABBE59A32446229E00A40AA7 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = ../../../../usr/local/lib/libssl.a; sourceTree = "<group>"; };
 		ABD3E0D4244ED7DD00F32FB1 /* LibreSSL.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LibreSSL.xcodeproj; path = libressl/LibreSSL.xcodeproj; sourceTree = "<group>"; };
+		ABF3346D246EE4D100DF579E /* corecrypto.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = corecrypto.xcodeproj; path = cardcomm/pkcs11/src/common/libcorecrypto/corecrypto.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1405,7 +1391,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB8BE5D5243CC2AF003967F8 /* libcorecrypto_static.a in Frameworks */,
+				ABF334B3246EF19400DF579E /* libcorecrypto_static.a in Frameworks */,
 				86CE3689187EB5E700EB96A5 /* CoreFoundation.framework in Frameworks */,
 				86CE3688187EB58A00EB96A5 /* PCSC.framework in Frameworks */,
 			);
@@ -1433,7 +1419,7 @@
 				AB715D53243D09C600B3D387 /* BEIDToken.xcodeproj */,
 				86BC84C01A037C19009E374E /* test_dialogs.xcodeproj */,
 				ABD3E0D4244ED7DD00F32FB1 /* LibreSSL.xcodeproj */,
-				AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */,
+				ABF3346D246EE4D100DF579E /* corecrypto.xcodeproj */,
 				6536230C19A7E8FE00D46ECB /* testsuite */,
 				7FA1AA420F85F446000D9EE1 /* Pkcs11 */,
 				5073E0CA09E734BC00EC74B6 /* Configuration Files */,
@@ -1848,30 +1834,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		AB8BE595243CC1FF003967F8 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				AB8BE5B0243CC1FF003967F8 /* libcorecrypto.empty.a */,
-				AB8BE5B2243CC1FF003967F8 /* libcorecrypto_static.a */,
-				AB8BE5B4243CC1FF003967F8 /* libcorecrypto.dylib */,
-				AB8BE5B6243CC1FF003967F8 /* corecrypto.kext */,
-				AB8BE5B8243CC1FF003967F8 /* libcorecrypto_l4.a */,
-				AB8BE5BA243CC1FF003967F8 /* libcorecrypto_s3.a */,
-				AB8BE5BC243CC1FF003967F8 /* libcorecrypto_seprom.a */,
-				AB8BE5BE243CC1FF003967F8 /* libcorecrypto_iboot.a */,
-				AB8BE5C0243CC1FF003967F8 /* libcorecrypto_efi.a */,
-				AB8BE5C2243CC1FF003967F8 /* validation.xctest */,
-				AB8BE5C4243CC1FF003967F8 /* ec_verify */,
-				AB8BE5C6243CC1FF003967F8 /* ccdh_gen_gp */,
-				AB8BE5C8243CC1FF003967F8 /* cc_fips_test */,
-				AB8BE5CA243CC1FF003967F8 /* hmacfiletool */,
-				AB8BE5CC243CC1FF003967F8 /* corecrypto_perf */,
-				AB8BE5CE243CC1FF003967F8 /* corecrypto_test */,
-				AB8BE5D0243CC1FF003967F8 /* corecrypto_test_asan */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		AB96639C243EFEC60079069B /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1962,6 +1924,30 @@
 				ABD3E1DB244ED7DE00F32FB1 /* verifytest */,
 				ABD3E1DD244ED7DE00F32FB1 /* x25519test */,
 				ABD3E1DF244ED7DE00F32FB1 /* x509name */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		ABF3346E246EE4D100DF579E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				ABF33489246EE4D200DF579E /* libcorecrypto.empty.a */,
+				ABF3348B246EE4D200DF579E /* libcorecrypto_static.a */,
+				ABF3348D246EE4D200DF579E /* libcorecrypto.dylib */,
+				ABF3348F246EE4D200DF579E /* corecrypto.kext */,
+				ABF33491246EE4D200DF579E /* libcorecrypto_l4.a */,
+				ABF33493246EE4D200DF579E /* libcorecrypto_s3.a */,
+				ABF33495246EE4D200DF579E /* libcorecrypto_seprom.a */,
+				ABF33497246EE4D200DF579E /* libcorecrypto_iboot.a */,
+				ABF33499246EE4D200DF579E /* libcorecrypto_efi.a */,
+				ABF3349B246EE4D200DF579E /* validation.xctest */,
+				ABF3349D246EE4D200DF579E /* ec_verify */,
+				ABF3349F246EE4D200DF579E /* ccdh_gen_gp */,
+				ABF334A1246EE4D200DF579E /* cc_fips_test */,
+				ABF334A3246EE4D200DF579E /* hmacfiletool */,
+				ABF334A5246EE4D200DF579E /* corecrypto_perf */,
+				ABF334A7246EE4D200DF579E /* corecrypto_test */,
+				ABF334A9246EE4D200DF579E /* corecrypto_test_asan */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2146,8 +2132,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				AB8BE5D2243CC291003967F8 /* PBXTargetDependency */,
-				AB8BE5D4243CC299003967F8 /* PBXTargetDependency */,
 			);
 			name = beidpkcs11;
 			productName = beidpkcs11;
@@ -2207,8 +2191,8 @@
 					ProjectRef = AB715D53243D09C600B3D387 /* BEIDToken.xcodeproj */;
 				},
 				{
-					ProductGroup = AB8BE595243CC1FF003967F8 /* Products */;
-					ProjectRef = AB8BE594243CC1FF003967F8 /* corecrypto.xcodeproj */;
+					ProductGroup = ABF3346E246EE4D100DF579E /* Products */;
+					ProjectRef = ABF3346D246EE4D100DF579E /* corecrypto.xcodeproj */;
 				},
 				{
 					ProductGroup = AB96639C243EFEC60079069B /* Products */;
@@ -2255,125 +2239,6 @@
 			fileType = "wrapper.app-extension";
 			path = BEIDToken.appex;
 			remoteRef = AB715D5A243D09C700B3D387 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AB8BE5B0243CC1FF003967F8 /* libcorecrypto.empty.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libcorecrypto.empty.a;
-			remoteRef = AB8BE5AF243CC1FF003967F8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AB8BE5B2243CC1FF003967F8 /* libcorecrypto_static.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libcorecrypto_static.a;
-			remoteRef = AB8BE5B1243CC1FF003967F8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AB8BE5B4243CC1FF003967F8 /* libcorecrypto.dylib */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.dylib";
-			path = libcorecrypto.dylib;
-			remoteRef = AB8BE5B3243CC1FF003967F8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AB8BE5B6243CC1FF003967F8 /* corecrypto.kext */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = corecrypto.kext;
-			remoteRef = AB8BE5B5243CC1FF003967F8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AB8BE5B8243CC1FF003967F8 /* libcorecrypto_l4.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libcorecrypto_l4.a;
-			remoteRef = AB8BE5B7243CC1FF003967F8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AB8BE5BA243CC1FF003967F8 /* libcorecrypto_s3.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libcorecrypto_s3.a;
-			remoteRef = AB8BE5B9243CC1FF003967F8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AB8BE5BC243CC1FF003967F8 /* libcorecrypto_seprom.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libcorecrypto_seprom.a;
-			remoteRef = AB8BE5BB243CC1FF003967F8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AB8BE5BE243CC1FF003967F8 /* libcorecrypto_iboot.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libcorecrypto_iboot.a;
-			remoteRef = AB8BE5BD243CC1FF003967F8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AB8BE5C0243CC1FF003967F8 /* libcorecrypto_efi.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libcorecrypto_efi.a;
-			remoteRef = AB8BE5BF243CC1FF003967F8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AB8BE5C2243CC1FF003967F8 /* validation.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = validation.xctest;
-			remoteRef = AB8BE5C1243CC1FF003967F8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AB8BE5C4243CC1FF003967F8 /* ec_verify */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = ec_verify;
-			remoteRef = AB8BE5C3243CC1FF003967F8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AB8BE5C6243CC1FF003967F8 /* ccdh_gen_gp */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = ccdh_gen_gp;
-			remoteRef = AB8BE5C5243CC1FF003967F8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AB8BE5C8243CC1FF003967F8 /* cc_fips_test */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = cc_fips_test;
-			remoteRef = AB8BE5C7243CC1FF003967F8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AB8BE5CA243CC1FF003967F8 /* hmacfiletool */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = hmacfiletool;
-			remoteRef = AB8BE5C9243CC1FF003967F8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AB8BE5CC243CC1FF003967F8 /* corecrypto_perf */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = corecrypto_perf;
-			remoteRef = AB8BE5CB243CC1FF003967F8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AB8BE5CE243CC1FF003967F8 /* corecrypto_test */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = corecrypto_test;
-			remoteRef = AB8BE5CD243CC1FF003967F8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AB8BE5D0243CC1FF003967F8 /* corecrypto_test_asan */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = corecrypto_test_asan;
-			remoteRef = AB8BE5CF243CC1FF003967F8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		AB9663B8243EFEC60079069B /* eID Middleware.app */ = {
@@ -2936,6 +2801,125 @@
 			remoteRef = ABD3E1DE244ED7DE00F32FB1 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		ABF33489246EE4D200DF579E /* libcorecrypto.empty.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libcorecrypto.empty.a;
+			remoteRef = ABF33488246EE4D200DF579E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		ABF3348B246EE4D200DF579E /* libcorecrypto_static.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libcorecrypto_static.a;
+			remoteRef = ABF3348A246EE4D200DF579E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		ABF3348D246EE4D200DF579E /* libcorecrypto.dylib */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.dylib";
+			path = libcorecrypto.dylib;
+			remoteRef = ABF3348C246EE4D200DF579E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		ABF3348F246EE4D200DF579E /* corecrypto.kext */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = corecrypto.kext;
+			remoteRef = ABF3348E246EE4D200DF579E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		ABF33491246EE4D200DF579E /* libcorecrypto_l4.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libcorecrypto_l4.a;
+			remoteRef = ABF33490246EE4D200DF579E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		ABF33493246EE4D200DF579E /* libcorecrypto_s3.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libcorecrypto_s3.a;
+			remoteRef = ABF33492246EE4D200DF579E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		ABF33495246EE4D200DF579E /* libcorecrypto_seprom.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libcorecrypto_seprom.a;
+			remoteRef = ABF33494246EE4D200DF579E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		ABF33497246EE4D200DF579E /* libcorecrypto_iboot.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libcorecrypto_iboot.a;
+			remoteRef = ABF33496246EE4D200DF579E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		ABF33499246EE4D200DF579E /* libcorecrypto_efi.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libcorecrypto_efi.a;
+			remoteRef = ABF33498246EE4D200DF579E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		ABF3349B246EE4D200DF579E /* validation.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = validation.xctest;
+			remoteRef = ABF3349A246EE4D200DF579E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		ABF3349D246EE4D200DF579E /* ec_verify */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = ec_verify;
+			remoteRef = ABF3349C246EE4D200DF579E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		ABF3349F246EE4D200DF579E /* ccdh_gen_gp */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = ccdh_gen_gp;
+			remoteRef = ABF3349E246EE4D200DF579E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		ABF334A1246EE4D200DF579E /* cc_fips_test */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = cc_fips_test;
+			remoteRef = ABF334A0246EE4D200DF579E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		ABF334A3246EE4D200DF579E /* hmacfiletool */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = hmacfiletool;
+			remoteRef = ABF334A2246EE4D200DF579E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		ABF334A5246EE4D200DF579E /* corecrypto_perf */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = corecrypto_perf;
+			remoteRef = ABF334A4246EE4D200DF579E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		ABF334A7246EE4D200DF579E /* corecrypto_test */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = corecrypto_test;
+			remoteRef = ABF334A6246EE4D200DF579E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		ABF334A9246EE4D200DF579E /* corecrypto_test_asan */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = corecrypto_test_asan;
+			remoteRef = ABF334A8246EE4D200DF579E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -3133,12 +3117,12 @@
 				86C0E76721C2586E00602028 /* tlv.cpp in Sources */,
 				86C0E96621C25E4700602028 /* pinpadlib.cpp in Sources */,
 				86E3DF631653EFE60015B5E1 /* p11.c in Sources */,
+				ABF334B4246EF34500DF579E /* rmd160.c in Sources */,
 				86E3DF641653EFE60015B5E1 /* session.c in Sources */,
 				86C0E76E21C2586E00602028 /* configuration.cpp in Sources */,
 				86C0E75E21C2586E00602028 /* thread.cpp in Sources */,
 				86C0E8D921C258D900602028 /* dlgsmac.cpp in Sources */,
 				86C0E97521C25E4700602028 /* card.cpp in Sources */,
-				86C0E77C21C2586E00602028 /* sha256.c in Sources */,
 				86C0E96721C25E4700602028 /* pkcs15parser.cpp in Sources */,
 				86C0E92421C258D900602028 /* sharedmem.cpp in Sources */,
 				86C0E97121C25E4700602028 /* cardfactory.cpp in Sources */,
@@ -3205,16 +3189,6 @@
 			isa = PBXTargetDependency;
 			target = 7FA1A9F60F85F36E000D9EE1 /* beidpkcs11 */;
 			targetProxy = AB65462A243F1A9C00A0B0B3 /* PBXContainerItemProxy */;
-		};
-		AB8BE5D2243CC291003967F8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = corecrypto_headers;
-			targetProxy = AB8BE5D1243CC291003967F8 /* PBXContainerItemProxy */;
-		};
-		AB8BE5D4243CC299003967F8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = corecrypto_static;
-			targetProxy = AB8BE5D3243CC299003967F8 /* PBXContainerItemProxy */;
 		};
 		ABD3E1E2244ED91100F32FB1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

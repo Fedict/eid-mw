@@ -26,10 +26,10 @@
 # Copyright(c) Wouter Verhelst, 2018
 
 NSSDB=$HOME/.pki/nssdb
-MODUTIL="/usr/bin/modutil -force -dbdir sql:$NSSDB"
-CERTUTIL="/usr/bin/certutil -d sql:$NSSDB"
-LIBS=$(ld --verbose | grep SEARCH | awk '{ gsub(/;/,"\n"); print }' | awk -F '\"' '/SEARCH_DIR\(\"=?/ { gsub(/=/,""); print $2 }')
-PKCS11=libbeidpkcs11.so.0
+MODUTIL="/usr/local/bin/modutil -force -dbdir sql:$NSSDB"
+CERTUTIL="/usr/local/bin/certutil -d sql:$NSSDB"
+LIBS=/usr/local/lib/beid-pkcs11.bundle/Contents/MacOS
+PKCS11=libbeidpkcs11.dylib
 
 if [ ! -f $NSSDB/cert9.db ]; then
     echo "Initializing new database"

@@ -48,7 +48,8 @@
 
 #include "bytearray.h"
 
-#if defined(__APPLE__) && defined(__MACH__)
+#if (defined(__APPLE__) && defined(__MACH__)) && !defined(_USE_LIBTOMCRYPT)
+#if defined _USE_CORECRYPTO
 extern "C"
 {
     #include <corecrypto/ccdigest.h>
@@ -59,7 +60,14 @@ extern "C"
 
     typedef ccdigest_ctx_t hash_state;
 }
+#else /* CommonCrypto */
+extern "C"
+{
+#include <CommonCrypto/CommonDigest.h>
 
+#include "libtomcrypt/tomcrypt_hash.h"
+}
+#endif
 #else /* Not Apple */
 #include "libtomcrypt/tomcrypt_hash.h"
 #endif /* Apple? */
@@ -92,7 +100,7 @@ public:
 		void Init(tHashAlgo algo);
 		void Update(const CByteArray & data);
 		void Update(const CByteArray & data, unsigned long ulOffset, unsigned long ulLen);
-		CByteArray GetHash();
+		CByteArray GetHash(void);
 
 private:
 		hash_state m_md1;

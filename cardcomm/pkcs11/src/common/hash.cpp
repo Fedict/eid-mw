@@ -34,50 +34,78 @@ unsigned long CHash::GetHashLength(tHashAlgo algo)
 	switch (algo)
 	{
 		case ALGO_MD5:
-#if defined(__APPLE__) && defined(__MACH__)
+#if defined(__APPLE__) && defined(__MACH__) && !defined(_USE_LIBTOMCRYPT)
+#ifdef _USE_CORECRYPTO
 			return CCMD5_OUTPUT_SIZE;
+#else
+            return CC_MD5_DIGEST_LENGTH;
+#endif
 #else
 			return 16;
 #endif
 
 		case ALGO_SHA1:
-#if defined(__APPLE__) && defined(__MACH__)
+#if defined(__APPLE__) && defined(__MACH__) && !defined(_USE_LIBTOMCRYPT)
+#ifdef _USE_CORECRYPTO
 			return CCSHA1_OUTPUT_SIZE;
+#else
+            return CC_SHA1_DIGEST_LENGTH;
+#endif
 #else
 			return 20;
 #endif
 
         case ALGO_MD5_SHA1:
-#if defined(__APPLE__) && defined(__MACH__)
+#if defined(__APPLE__) && defined(__MACH__) && !defined(_USE_LIBTOMCRYPT)
+#ifdef _USE_CORECRYPTO
 			return (CCMD5_OUTPUT_SIZE + CCSHA1_OUTPUT_SIZE);
+#else
+            return (CC_MD5_DIGEST_LENGTH + CC_SHA1_DIGEST_LENGTH);
+#endif
 #else
 			return 36;
 #endif
 
         case ALGO_SHA256:
-#if defined(__APPLE__) && defined(__MACH__)
+#if defined(__APPLE__) && defined(__MACH__) && !defined(_USE_LIBTOMCRYPT)
+#ifdef _USE_CORECRYPTO
 			return CCSHA256_OUTPUT_SIZE;
+#else
+            return CC_SHA256_DIGEST_LENGTH;
+#endif
 #else
 			return 32;
 #endif
 
         case ALGO_SHA384:
-#if defined(__APPLE__) && defined(__MACH__)
+#if defined(__APPLE__) && defined(__MACH__) && !defined(_USE_LIBTOMCRYPT)
+#ifdef _USE_CORECRYPTO
 			return CCSHA384_OUTPUT_SIZE;
+#else
+            return CC_SHA384_DIGEST_LENGTH;
+#endif
 #else
 			return 48;
 #endif
 
         case ALGO_SHA512:
-#if defined(__APPLE__) && defined(__MACH__)
+#if defined(__APPLE__) && defined(__MACH__) && !defined(_USE_LIBTOMCRYPT)
+#ifdef _USE_CORECRYPTO
 			return CCSHA512_OUTPUT_SIZE;
+#else
+            return CC_SHA512_DIGEST_LENGTH;
+#endif
 #else
 			return 64;
 #endif
 
         case ALGO_RIPEMD160:
-#if defined(__APPLE__) && defined(__MACH__)
+#if defined(__APPLE__) && defined(__MACH__) && !defined(_USE_LIBTOMCRYPT)
+#ifdef _USE_CORECRYPTO
 			return CCRMD160_STATE_SIZE;
+#else
+            return CC_SHA1_DIGEST_LENGTH; // Same length as SHA1
+#endif
 #else
 			return 20;
 #endif
@@ -106,25 +134,38 @@ void CHash::Init(tHashAlgo algo)
 	switch (algo)
 	{
 		case ALGO_MD5:
-#if defined(__APPLE__) && defined(__MACH__)
+#if (defined(__APPLE__) && defined(__MACH__)) && !defined(_USE_LIBTOMCRYPT)
+#ifdef _USE_CORECRYPTO
             ccdigest_init(ccmd5_di(), m_md1);
+#else
+            CC_MD5_Init(&m_md1.md5);
+#endif
 #else
 			md5_init(&m_md1);
 #endif
 			break;
 
 		case ALGO_SHA1:
-#if defined(__APPLE__) && defined(__MACH__)
+#if (defined(__APPLE__) && defined(__MACH__)) && !defined(_USE_LIBTOMCRYPT)
+#ifdef _USE_CORECRYPTO
             ccdigest_init(ccsha1_di(), m_md1);
+#else
+            CC_SHA1_Init(&m_md1.sha1);
+#endif
 #else
 			sha1_init(&m_md1);
 #endif
 			break;
 
 		case ALGO_MD5_SHA1:
-#if defined(__APPLE__) && defined(__MACH__)
+#if (defined(__APPLE__) && defined(__MACH__)) && !defined(_USE_LIBTOMCRYPT)
+#ifdef _USE_CORECRYPTO
             ccdigest_init(ccmd5_di(), m_md1);
             ccdigest_init(ccsha1_di(), m_md2);
+#else
+            CC_MD5_Init(&m_md1.md5);
+            CC_SHA1_Init(&m_md2.sha1);
+#endif
 #else
 			md5_init(&m_md1);
 			sha1_init(&m_md2);
@@ -132,31 +173,43 @@ void CHash::Init(tHashAlgo algo)
 			break;
 
 		case ALGO_SHA256:
-#if defined(__APPLE__) && defined(__MACH__)
+#if (defined(__APPLE__) && defined(__MACH__)) && !defined(_USE_LIBTOMCRYPT)
+#ifdef _USE_CORECRYPTO
             ccdigest_init(ccsha256_di(), m_md1);
+#else
+            CC_SHA256_Init(&m_md1.sha256);
+#endif
 #else
 			sha256_init(&m_md1);
 #endif
 			break;
 
 		case ALGO_SHA384:
-#if defined(__APPLE__) && defined(__MACH__)
+#if (defined(__APPLE__) && defined(__MACH__)) && !defined(_USE_LIBTOMCRYPT)
+#ifdef _USE_CORECRYPTO
             ccdigest_init(ccsha384_di(), m_md1);
+#else
+            CC_SHA384_Init(&m_md1.sha512);
+#endif
 #else
 			sha384_init(&m_md1);
 #endif
 			break;
 
 		case ALGO_SHA512:
-#if defined(__APPLE__) && defined(__MACH__)
+#if (defined(__APPLE__) && defined(__MACH__)) && !defined(_USE_LIBTOMCRYPT)
+#ifdef _USE_CORECRYPTO
             ccdigest_init(ccsha512_di(), m_md1);
+#else
+            CC_SHA512_Init(&m_md1.sha512);
+#endif
 #else
 			sha512_init(&m_md1);
 #endif
             break;
 
 		case ALGO_RIPEMD160:
-#if defined(__APPLE__) && defined(__MACH__)
+#if defined(__APPLE__) && defined(__MACH__) && defined(_USE_CORECRYPTO) && !defined(_USE_LIBTOMCRYPT)
             ccdigest_init(&ccrmd160_di, m_md1);
 #else
 			rmd160_init(&m_md1);
@@ -189,25 +242,38 @@ void CHash::Update(const CByteArray & data, unsigned long ulOffset,
 		switch (m_Algo)
 		{
 			case ALGO_MD5:
-#if defined(__APPLE__) && defined(__MACH__)
+#if (defined(__APPLE__) && defined(__MACH__)) && !defined(_USE_LIBTOMCRYPT)
+#ifdef _USE_CORECRYPTO
                 ccdigest_update(ccmd5_di(), m_md1, ulLen, pucData);
+#else
+                CC_MD5_Update(&m_md1.md5, pucData, (CC_LONG)ulLen);
+#endif
 #else
 				md5_process(&m_md1, pucData, ulLen);
 #endif
 				break;
 
 			case ALGO_SHA1:
-#if defined(__APPLE__) && defined(__MACH__)
+#if (defined(__APPLE__) && defined(__MACH__)) && !defined(_USE_LIBTOMCRYPT)
+#ifdef _USE_CORECRYPTO
                 ccdigest_update(ccsha1_di(), m_md1, ulLen, pucData);
+#else
+                CC_SHA1_Update(&m_md1.sha1, pucData, (CC_LONG)ulLen);
+#endif
 #else
 				sha1_process(&m_md1, pucData, ulLen);
 #endif
 				break;
 
 			case ALGO_MD5_SHA1:
-#if defined(__APPLE__) && defined(__MACH__)
+#if (defined(__APPLE__) && defined(__MACH__)) && !defined(_USE_LIBTOMCRYPT)
+#ifdef _USE_CORECRYPTO
                 ccdigest_update(ccmd5_di(), m_md1, ulLen, pucData);
                 ccdigest_update(ccsha1_di(), m_md2, ulLen, pucData);
+#else
+                CC_MD5_Update(&m_md1.md5, pucData, (CC_LONG)ulLen);
+                CC_SHA1_Update(&m_md2.sha1, pucData, (CC_LONG)ulLen);
+#endif
 #else
 				md5_process(&m_md1, pucData, ulLen);
 				sha1_process(&m_md2, pucData, ulLen);
@@ -215,31 +281,43 @@ void CHash::Update(const CByteArray & data, unsigned long ulOffset,
 				break;
 
 			case ALGO_SHA256:
-#if defined(__APPLE__) && defined(__MACH__)
+#if (defined(__APPLE__) && defined(__MACH__)) && !defined(_USE_LIBTOMCRYPT)
+#ifdef _USE_CORECRYPTO
                 ccdigest_update(ccsha256_di(), m_md1, ulLen, pucData);
+#else
+                CC_SHA256_Update(&m_md1.sha256, pucData, (CC_LONG)ulLen);
+#endif
 #else
 				sha256_process(&m_md1, pucData, ulLen);
 #endif
 				break;
 
 			case ALGO_SHA384:
-#if defined(__APPLE__) && defined(__MACH__)
+#if (defined(__APPLE__) && defined(__MACH__)) && !defined(_USE_LIBTOMCRYPT)
+#ifdef _USE_CORECRYPTO
                 ccdigest_update(ccsha384_di(), m_md1, ulLen, pucData);
+#else
+                CC_SHA384_Update(&m_md1.sha512, pucData, (CC_LONG)ulLen);
+#endif
 #else
 				sha384_process(&m_md1, pucData, ulLen);
 #endif
 				break;
 
 			case ALGO_SHA512:
-#if defined(__APPLE__) && defined(__MACH__)
+#if (defined(__APPLE__) && defined(__MACH__)) && !defined(_USE_LIBTOMCRYPT)
+#ifdef _USE_CORECRYPTO
                 ccdigest_update(ccsha512_di(), m_md1, ulLen, pucData);
+#else
+                CC_SHA512_Update(&m_md1.sha512, pucData, (CC_LONG)ulLen);
+#endif
 #else
 				sha512_process(&m_md1, pucData, ulLen);
 #endif
 				break;
 
 			case ALGO_RIPEMD160:
-#if defined(__APPLE__) && defined(__MACH__)
+#if defined(__APPLE__) && defined(__MACH__) && defined(_USE_CORECRYPTO) && !defined(_USE_LIBTOMCRYPT)
                 ccdigest_update(&ccrmd160_ltc_di, m_md1, ulLen, pucData);
 #else
 				rmd160_process(&m_md1, pucData, ulLen);
@@ -251,7 +329,7 @@ void CHash::Update(const CByteArray & data, unsigned long ulOffset,
     throw CMWEXCEPTION(EIDMW_ERR_PARAM_BAD);
 }
 
-CByteArray CHash::GetHash()
+CByteArray CHash::GetHash(void)
 {
 	if (m_bInitialized == false)
 		throw CMWEXCEPTION(EIDMW_ERR_PARAM_BAD);
@@ -260,8 +338,12 @@ CByteArray CHash::GetHash()
 
 	// hash result
     // make sure this is enough if other hashes are added!!!
-#if defined(__APPLE__) && defined(__MACH__)
+#if (defined(__APPLE__) && defined(__MACH__)) && !defined(_USE_LIBTOMCRYPT)
+#ifdef _USE_CORECRYPTO
     unsigned char tucHash[CCSHA512_OUTPUT_SIZE] = { 0 };
+#else
+    unsigned char tucHash[CC_SHA512_DIGEST_LENGTH] = { 0 };
+#endif
 #else
     unsigned char tucHash[64] = { 0 };
 #endif
@@ -269,25 +351,38 @@ CByteArray CHash::GetHash()
 	switch (m_Algo)
 	{
 		case ALGO_MD5:
-#if defined(__APPLE__) && defined(__MACH__)
+#if (defined(__APPLE__) && defined(__MACH__)) && !defined(_USE_LIBTOMCRYPT)
+#ifdef _USE_CORECRYPTO
             ccdigest_final(ccmd5_di(), m_md1, tucHash);
+#else
+            CC_MD5_Final(tucHash, &m_md1.md5);
+#endif
 #else
 			md5_done(&m_md1, tucHash);
 #endif
 			break;
 
 		case ALGO_SHA1:
-#if defined(__APPLE__) && defined(__MACH__)
+#if (defined(__APPLE__) && defined(__MACH__)) && !defined(_USE_LIBTOMCRYPT)
+#ifdef _USE_CORECRYPTO
             ccdigest_final(ccsha1_di(), m_md1, tucHash);
+#else
+            CC_SHA1_Final(tucHash, &m_md1.sha1);
+#endif
 #else
 			sha1_done(&m_md1, tucHash);
 #endif
 			break;
 
 		case ALGO_MD5_SHA1:
-#if defined(__APPLE__) && defined(__MACH__)
+#if (defined(__APPLE__) && defined(__MACH__)) && !defined(_USE_LIBTOMCRYPT)
+#ifdef _USE_CORECRYPTO
             ccdigest_final(ccmd5_di(), m_md1, tucHash);
             ccdigest_final(ccsha1_di(), m_md2, (tucHash + CCMD5_OUTPUT_SIZE));
+#else
+            CC_MD5_Final(tucHash, &m_md1.md5);
+            CC_SHA1_Final((tucHash + CC_MD5_DIGEST_LENGTH), &m_md2.sha1);
+#endif
 #else
 			md5_done(&m_md1, tucHash);
 			sha1_done(&m_md2, (tucHash + 16));
@@ -295,31 +390,43 @@ CByteArray CHash::GetHash()
 			break;
 
 		case ALGO_SHA256:
-#if defined(__APPLE__) && defined(__MACH__)
+#if (defined(__APPLE__) && defined(__MACH__)) && !defined(_USE_LIBTOMCRYPT)
+#ifdef _USE_CORECRYPTO
             ccdigest_final(ccsha256_di(), m_md1, tucHash);
+#else
+            CC_SHA256_Final(tucHash, &m_md1.sha256);
+#endif
 #else
 			sha256_done(&m_md1, tucHash);
 #endif
 			break;
 
 		case ALGO_SHA384:
-#if defined(__APPLE__) && defined(__MACH__)
+#if (defined(__APPLE__) && defined(__MACH__)) && !defined(_USE_LIBTOMCRYPT)
+#ifdef _USE_CORECRYPTO
             ccdigest_final(ccsha384_di(), m_md1, tucHash);
+#else
+            CC_SHA384_Final(tucHash, &m_md1.sha512);
+#endif
 #else
 			sha384_done(&m_md1, tucHash);
 #endif
 			break;
 
 		case ALGO_SHA512:
-#if defined(__APPLE__) && defined(__MACH__)
+#if (defined(__APPLE__) && defined(__MACH__)) && !defined(_USE_LIBTOMCRYPT)
+#ifdef _USE_CORECRYPTO
             ccdigest_final(ccsha512_di(), m_md1, tucHash);
+#else
+            CC_SHA512_Final(tucHash, &m_md1.sha512);
+#endif
 #else
 			sha512_done(&m_md1, tucHash);
 #endif
 			break;
 
 		case ALGO_RIPEMD160:
-#if defined(__APPLE__) && defined(__MACH__)
+#if defined(__APPLE__) && defined(__MACH__) && defined(_USE_CORECRYPTO) && !defined(_USE_LIBTOMCRYPT)
             ccdigest_final(&ccrmd160_ltc_di, m_md1, tucHash);
 #else
 			rmd160_done(&m_md1, tucHash);
