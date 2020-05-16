@@ -63,9 +63,24 @@ extern "C"
 #else /* CommonCrypto */
 extern "C"
 {
-#include <CommonCrypto/CommonDigest.h>
+    #include <CommonCrypto/CommonDigest.h>
 
-#include "libtomcrypt/tomcrypt_hash.h"
+    /*
+     * Private Header
+     * Get it from CommonCrypto project
+     * https://opensource.apple.com
+     */
+    #include <CommonCrypto/CommonDigestSPI.h>
+
+    typedef union Hash_state
+    {
+        CC_MD5_CTX md5;
+        CC_SHA1_CTX sha1;
+        CC_SHA256_CTX sha256;
+        CC_SHA512_CTX sha512;
+        CCDigestRef rmd160;
+    } hash_state;
+
 }
 #endif
 #else /* Not Apple */

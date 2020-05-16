@@ -237,7 +237,7 @@
 		ABD3E1E6244ED93500F32FB1 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABD3E1C5244ED7DE00F32FB1 /* libssl.a */; };
 		ABD3E1E7244ED95D00F32FB1 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABD3E16B244ED7DE00F32FB1 /* libcrypto.a */; };
 		ABD3E1E8244ED96800F32FB1 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABD3E1C5244ED7DE00F32FB1 /* libssl.a */; };
-		ABF334B3246EF19400DF579E /* libcorecrypto_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABF3348B246EE4D200DF579E /* libcorecrypto_static.a */; };
+		ABE345F7246FC3550067F40A /* eidv4.xsd in Resources */ = {isa = PBXBuildFile; fileRef = ABE3458B246FC3540067F40A /* eidv4.xsd */; };
 		ABF334B4246EF34500DF579E /* rmd160.c in Sources */ = {isa = PBXBuildFile; fileRef = 86C0E75121C2586E00602028 /* rmd160.c */; };
 /* End PBXBuildFile section */
 
@@ -1346,6 +1346,7 @@
 		ABBE59A12446228800A40AA7 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../../../../usr/local/lib/libcrypto.a; sourceTree = "<group>"; };
 		ABBE59A32446229E00A40AA7 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = ../../../../usr/local/lib/libssl.a; sourceTree = "<group>"; };
 		ABD3E0D4244ED7DD00F32FB1 /* LibreSSL.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LibreSSL.xcodeproj; path = libressl/LibreSSL.xcodeproj; sourceTree = "<group>"; };
+		ABE3458B246FC3540067F40A /* eidv4.xsd */ = {isa = PBXFileReference; lastKnownFileType = file; name = eidv4.xsd; path = "plugins_tools/eid-viewer/xml/eidv4.xsd"; sourceTree = SOURCE_ROOT; };
 		ABF3346D246EE4D100DF579E /* corecrypto.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = corecrypto.xcodeproj; path = cardcomm/pkcs11/src/common/libcorecrypto/corecrypto.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1391,7 +1392,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ABF334B3246EF19400DF579E /* libcorecrypto_static.a in Frameworks */,
 				86CE3689187EB5E700EB96A5 /* CoreFoundation.framework in Frameworks */,
 				86CE3688187EB58A00EB96A5 /* PCSC.framework in Frameworks */,
 			);
@@ -1641,6 +1641,7 @@
 		65F8CC2B1FEBBE79006C30B6 /* Supporting files */ = {
 			isa = PBXGroup;
 			children = (
+				ABE3458B246FC3540067F40A /* eidv4.xsd */,
 				6CD1B8C221A5A6470005F6E9 /* state_error.png */,
 				6CD1B8C321A5A6470005F6E9 /* state_noreaders.png */,
 				6CD1B8BD21A5A61A0005F6E9 /* certificate_bad.png */,
@@ -2927,6 +2928,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABE345F7246FC3550067F40A /* eidv4.xsd in Resources */,
 				659FD5971FEA927200E4AF83 /* coat_of_arms_en.jpg in Resources */,
 				651DDF5D1FEA85AE00C4961E /* Images.xcassets in Resources */,
 				6CD1B8C521A5A6470005F6E9 /* state_noreaders.png in Resources */,

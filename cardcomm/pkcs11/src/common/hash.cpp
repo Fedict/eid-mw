@@ -209,8 +209,12 @@ void CHash::Init(tHashAlgo algo)
             break;
 
 		case ALGO_RIPEMD160:
-#if defined(__APPLE__) && defined(__MACH__) && defined(_USE_CORECRYPTO) && !defined(_USE_LIBTOMCRYPT)
+#if (defined(__APPLE__) && defined(__MACH__)) && !defined(_USE_LIBTOMCRYPT)
+#ifdef _USE_CORECRYPTO
             ccdigest_init(&ccrmd160_di, m_md1);
+#else
+            CCDigestInit(kCCDigestRMD160, m_md1.rmd160);
+#endif
 #else
 			rmd160_init(&m_md1);
 #endif
@@ -317,8 +321,12 @@ void CHash::Update(const CByteArray & data, unsigned long ulOffset,
 				break;
 
 			case ALGO_RIPEMD160:
-#if defined(__APPLE__) && defined(__MACH__) && defined(_USE_CORECRYPTO) && !defined(_USE_LIBTOMCRYPT)
+#if (defined(__APPLE__) && defined(__MACH__)) && !defined(_USE_LIBTOMCRYPT)
+#ifdef _USE_CORECRYPTO
                 ccdigest_update(&ccrmd160_ltc_di, m_md1, ulLen, pucData);
+#else
+                CCDigestUpdate(m_md1.rmd160, pucData, ulLen);
+#endif
 #else
 				rmd160_process(&m_md1, pucData, ulLen);
 #endif
@@ -426,8 +434,12 @@ CByteArray CHash::GetHash(void)
 			break;
 
 		case ALGO_RIPEMD160:
-#if defined(__APPLE__) && defined(__MACH__) && defined(_USE_CORECRYPTO) && !defined(_USE_LIBTOMCRYPT)
+#if (defined(__APPLE__) && defined(__MACH__)) && !defined(_USE_LIBTOMCRYPT)
+#ifdef _USE_CORECRYPTO
             ccdigest_final(&ccrmd160_ltc_di, m_md1, tucHash);
+#else
+            CCDigestFinal(m_md1.rmd160, tucHash);
+#endif
 #else
 			rmd160_done(&m_md1, tucHash);
 #endif

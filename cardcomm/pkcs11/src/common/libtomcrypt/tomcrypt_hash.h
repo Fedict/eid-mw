@@ -1,17 +1,11 @@
 #ifndef __TOMCRYPT_HASH_H__
 #define __TOMCRYPT_HASH_H__
 
-#if (!defined(_USE_CORECRYPTO) && !defined(__APPLE__) && !defined(__MACH__)) || (defined(_USE_LIBTOMCRYPT) && defined(__APPLE__) && defined(__MACH__))
 #define USE_SHA1
 #define USE_SHA256
 #define USE_SHA384
 #define USE_SHA512
 #define USE_MD5
-#endif
-
-#if (defined(__APPLE__) && defined(__MACH__)) && !defined(_USE_CORECRYPTO) && !defined(_USE_LIBTOMCRYPT)
-#include <CommonCrypto/CommonDigest.h>
-#endif
 
 #if !defined(_USE_CORECRYPTO)
 #define USE_RIPEMD160
@@ -166,13 +160,6 @@ extern "C"
 #endif
 #ifdef USE_RIPEMD128
 		struct rmd128_state rmd128;
-#endif
-#if (defined(__APPLE__) && defined(__MACH__)) && !defined(_USE_CORECRYPTO) && !defined(_USE_LIBTOMCRYPT)
-        /* CommonCrypto */
-        CC_MD5_CTX md5;
-        CC_SHA1_CTX sha1;
-        CC_SHA256_CTX sha256;
-        CC_SHA512_CTX sha512;
 #endif
 #ifdef USE_RIPEMD160
 		struct rmd160_state rmd160;
