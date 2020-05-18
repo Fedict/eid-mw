@@ -70,14 +70,14 @@
   - robot
   - linux
   script:
-  - xvfb-run actiona -e -x $CI_PROJECT_DIR/eid-browser-tests/Linux/test/firefoxTest.ascr
+  - xvfb-run actiona -e -x $CI_PROJECT_DIR/tests/browsertests/firefoxTest.ascr
 
 .validation:linux:google:
   tags:
   - robot
   - linux
   script:
-  - xvfb-run actiona -e -x $CI_PROJECT_DIR/eid-browser-tests/Linux/test/googleTest.ascr
+  - xvfb-run actiona -e -x $CI_PROJECT_DIR/tests/browsertests/googleTest.ascr
 
 .repro:debian:
   tags:
