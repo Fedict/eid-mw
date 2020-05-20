@@ -110,111 +110,21 @@
                 <subParameter name="value" code="0">entering pin</subParameter>
             </parameter>
         </action>
-        <action name="ActionKey">
-            <exception id="0" action="0" line=""/>
+        <action name="">
+	    <exception id="0" action="0" line=""/>
             <exception id="1" action="0" line=""/>
             <exception id="2" action="1" line=""/>
             <exception id="32" action="0" line=""/>
-            <exception id="33" action="0" line=""/>
-            <parameter name="action">
-                <subParameter name="value" code="0">pressRelease</subParameter>
-            </parameter>
-            <parameter name="alt">
-                <subParameter name="value" code="0">false</subParameter>
-            </parameter>
-            <parameter name="amount">
-                <subParameter name="value" code="0">2</subParameter>
-            </parameter>
-            <parameter name="ctrl">
-                <subParameter name="value" code="0">false</subParameter>
-            </parameter>
-            <parameter name="key">
-                <subParameter name="isQtKey" code="0">false</subParameter>
-                <subParameter name="key" code="0">numpad0</subParameter>
-            </parameter>
-            <parameter name="meta">
-                <subParameter name="value" code="0">false</subParameter>
+	    <parameter name="noUnicodeCharacters">
+                <subParameter name="value" code="0">0</subParameter>
             </parameter>
             <parameter name="pause">
-                <subParameter name="value" code="0">10</subParameter>
+                <subParameter name="value" code="0">0</subParameter>
             </parameter>
-            <parameter name="shift">
-                <subParameter name="value" code="0">false</subParameter>
+            <parameter name="text">
+                <subParameter name="value" code="0">0075</subParameter>
             </parameter>
-            <parameter name="type">
-                <subParameter name="value" code="0">Win32</subParameter>
-            </parameter>
-        </action>
-        <action name="ActionKey">
-            <exception id="0" action="0" line=""/>
-            <exception id="1" action="0" line=""/>
-            <exception id="2" action="1" line=""/>
-            <exception id="32" action="0" line=""/>
-            <exception id="33" action="0" line=""/>
-            <parameter name="action">
-                <subParameter name="value" code="0">pressRelease</subParameter>
-            </parameter>
-            <parameter name="alt">
-                <subParameter name="value" code="0">false</subParameter>
-            </parameter>
-            <parameter name="amount">
-                <subParameter name="value" code="0">1</subParameter>
-            </parameter>
-            <parameter name="ctrl">
-                <subParameter name="value" code="0">false</subParameter>
-            </parameter>
-            <parameter name="key">
-                <subParameter name="isQtKey" code="0">false</subParameter>
-                <subParameter name="key" code="0">numpad7</subParameter>
-            </parameter>
-            <parameter name="meta">
-                <subParameter name="value" code="0">false</subParameter>
-            </parameter>
-            <parameter name="pause">
-                <subParameter name="value" code="0">10</subParameter>
-            </parameter>
-            <parameter name="shift">
-                <subParameter name="value" code="0">false</subParameter>
-            </parameter>
-            <parameter name="type">
-                <subParameter name="value" code="0">Win32</subParameter>
-            </parameter>
-        </action>
-        <action name="ActionKey">
-            <exception id="0" action="0" line=""/>
-            <exception id="1" action="0" line=""/>
-            <exception id="2" action="1" line=""/>
-            <exception id="32" action="0" line=""/>
-            <exception id="33" action="0" line=""/>
-            <parameter name="action">
-                <subParameter name="value" code="0">pressRelease</subParameter>
-            </parameter>
-            <parameter name="alt">
-                <subParameter name="value" code="0">false</subParameter>
-            </parameter>
-            <parameter name="amount">
-                <subParameter name="value" code="0">1</subParameter>
-            </parameter>
-            <parameter name="ctrl">
-                <subParameter name="value" code="0">false</subParameter>
-            </parameter>
-            <parameter name="key">
-                <subParameter name="isQtKey" code="0">false</subParameter>
-                <subParameter name="key" code="0">numpad5</subParameter>
-            </parameter>
-            <parameter name="meta">
-                <subParameter name="value" code="0">false</subParameter>
-            </parameter>
-            <parameter name="pause">
-                <subParameter name="value" code="0">10</subParameter>
-            </parameter>
-            <parameter name="shift">
-                <subParameter name="value" code="0">false</subParameter>
-            </parameter>
-            <parameter name="type">
-                <subParameter name="value" code="0">Win32</subParameter>
-            </parameter>
-        </action>
+	</action>
         <action name="ActionKey">
             <exception id="0" action="0" line=""/>
             <exception id="1" action="0" line=""/>
