@@ -69,6 +69,8 @@
   tags:
   - robot
   - linux
+  before_script:
+  - killall Xvfb || true
   script:
   - xvfb-run actiona -e -x $CI_PROJECT_DIR/tests/browsertests/firefoxTest.ascr
 

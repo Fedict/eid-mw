@@ -396,6 +396,17 @@ validate:validation:linux:google:
   - build:ubuntu_lts_64
   - build:ubuntu_lts_32
 
+validate:validation:linux:firefox:
+  stage: validate
+  extends: .validation:linux:firefox
+  dependencies:
+  - build:ubuntu_oldlts_32
+  - build:ubuntu_oldlts_64
+  - build:ubuntu_stable_32 
+  - build:ubuntu_stable_64
+  - build:ubuntu_lts_64
+  - build:ubuntu_lts_32
+
 ####################################################################
 # Stage "build-repository": copy binaries into a repository layout #
 ####################################################################
