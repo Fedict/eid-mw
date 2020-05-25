@@ -2,13 +2,13 @@
 <scriptfile>
     <settings program="actiona" version="3.10.0" scriptVersion="1.1.0" os="GNU/Linux"/>
     <actions>
-        <action name="ActionConsole" version="1.0.0"/>
+        <action name="ActionDetachedCommand" version="1.0.0"/>
         <action name="ActionPause" version="1.0.0"/>
         <action name="ActionWindow" version="1.0.0"/>
-        <action name="ActionDetachedCommand" version="1.0.0"/>
         <action name="ActionWindowCondition" version="1.0.0"/>
         <action name="ActionKey" version="1.0.0"/>
-        <action name="ActionGoto" version="1.0.0"/>
+        <action name="ActionWriteText" version="1.0.0"/>
+        <action name="ActionConsole" version="1.0.0"/>
     </actions>
     <parameters/>
     <resources/>
@@ -110,13 +110,13 @@
                 <subParameter name="value" code="0">entering pin</subParameter>
             </parameter>
         </action>
-        <action name="">
-	    <exception id="0" action="0" line=""/>
+        <action name="ActionWriteText">
+            <exception id="0" action="0" line=""/>
             <exception id="1" action="0" line=""/>
             <exception id="2" action="1" line=""/>
             <exception id="32" action="0" line=""/>
-	    <parameter name="noUnicodeCharacters">
-                <subParameter name="value" code="0">0</subParameter>
+            <parameter name="noUnicodeCharacters">
+                <subParameter name="value" code="0">false</subParameter>
             </parameter>
             <parameter name="pause">
                 <subParameter name="value" code="0">0</subParameter>
@@ -124,7 +124,7 @@
             <parameter name="text">
                 <subParameter name="value" code="0">0075</subParameter>
             </parameter>
-	</action>
+        </action>
         <action name="ActionKey">
             <exception id="0" action="0" line=""/>
             <exception id="1" action="0" line=""/>
@@ -171,10 +171,10 @@
                 <subParameter name="value" code="0">seconds</subParameter>
             </parameter>
         </action>
-        <action name="ActionWindowCondition">
+        <action name="ActionWindowCondition" timeout="60000">
             <exception id="0" action="0" line=""/>
             <exception id="1" action="0" line=""/>
-            <exception id="2" action="1" line=""/>
+            <exception id="2" action="0" line=""/>
             <parameter name="condition">
                 <subParameter name="value" code="0">exists</subParameter>
             </parameter>
@@ -182,11 +182,11 @@
                 <subParameter name="value" code="0"></subParameter>
             </parameter>
             <parameter name="ifFalse">
-                <subParameter name="action" code="0">goto</subParameter>
-                <subParameter name="line" code="0">013</subParameter>
+                <subParameter name="action" code="0">wait</subParameter>
+                <subParameter name="line" code="0">efefef</subParameter>
             </parameter>
             <parameter name="ifTrue">
-                <subParameter name="action" code="0">goto</subParameter>
+                <subParameter name="action" code="0">do_nothing</subParameter>
                 <subParameter name="line" code="0">015</subParameter>
             </parameter>
             <parameter name="position">
@@ -209,25 +209,6 @@
             </parameter>
             <parameter name="yCoordinate">
                 <subParameter name="value" code="0"></subParameter>
-            </parameter>
-        </action>
-        <action name="ActionConsole">
-            <exception id="0" action="0" line=""/>
-            <exception id="1" action="0" line=""/>
-            <exception id="2" action="1" line=""/>
-            <parameter name="output">
-                <subParameter name="value" code="0">error</subParameter>
-            </parameter>
-            <parameter name="text">
-                <subParameter name="value" code="0">error window</subParameter>
-            </parameter>
-        </action>
-        <action name="ActionGoto">
-            <exception id="0" action="0" line=""/>
-            <exception id="1" action="0" line=""/>
-            <exception id="2" action="1" line=""/>
-            <parameter name="line">
-                <subParameter name="value" code="0">017</subParameter>
             </parameter>
         </action>
         <action name="ActionPause">
