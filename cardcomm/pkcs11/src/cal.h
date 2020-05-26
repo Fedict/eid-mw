@@ -137,7 +137,6 @@ extern "C"
 	{ CKA_ENCRYPT,          ( CK_VOID_PTR ) NULL, 0 },  \
 	{ CKA_VERIFY,           ( CK_VOID_PTR ) NULL, 0 },  \
 	{ CKA_WRAP,             ( CK_VOID_PTR ) NULL, 0 },  \
-	{ CKA_VALUE,			( CK_VOID_PTR ) NULL, 0 },  \
 	{ CKA_EC_PARAMS,        ( CK_VOID_PTR ) NULL, 0 },  \
 	{ CKA_EC_POINT,			( CK_VOID_PTR ) NULL, 0 },  \
 	{ CKA_DERIVE,			( CK_VOID_PTR ) NULL, 0 }   \

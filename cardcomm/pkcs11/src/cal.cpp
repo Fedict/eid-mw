@@ -1972,6 +1972,13 @@ CK_RV cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT * pObject)
 					if (ret != CKR_OK)
 						goto cleanup;
 				}
+				else
+				{
+					if (certinfo.l_curve > 0)
+						ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_EC_PARAMS, (CK_VOID_PTR)certinfo.mod, (CK_ULONG)certinfo.l_mod);
+					if (ret != CKR_OK)
+						goto cleanup;
+				}
 				pPrivKeyObject->state = P11_CACHED;
 			}
 			if (pPubKeyObject != NULL)
@@ -2007,12 +2014,19 @@ CK_RV cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT * pObject)
 						ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_PUBLIC_EXPONENT, (CK_VOID_PTR)certinfo.exp, certinfo.l_exp);
 					if (ret != CKR_OK)
 						goto cleanup;
-				}
 
-				if (certinfo.l_pkinfo > 0)
-					ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_VALUE, (CK_VOID_PTR)certinfo.pkinfo, certinfo.l_pkinfo);
-				if (ret != CKR_OK)
-					goto cleanup;
+					if (certinfo.l_pkinfo > 0)
+						ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_VALUE, (CK_VOID_PTR)certinfo.pkinfo, certinfo.l_pkinfo);
+					if (ret != CKR_OK)
+						goto cleanup;
+				}
+				else
+				{
+					if (certinfo.l_pkinfo > 0)
+						ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_EC_POINT, (CK_VOID_PTR)certinfo.pkinfo, certinfo.l_pkinfo);
+					if (ret != CKR_OK)
+						goto cleanup;
+				}
 
 				//TODO test if we can set the trusted flag...
 				ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_TRUSTED, (CK_VOID_PTR) & btrue, sizeof(btrue));
