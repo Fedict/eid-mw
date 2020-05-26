@@ -149,10 +149,15 @@ int cert_get_info(const unsigned char *pcert, unsigned int lcert, T_CERT_INFO *i
 
 		}
 		else if (item.l_data == sizeof(OID_EC_PUBLIC_KEY) - 1 && memcmp(item.p_data, OID_EC_PUBLIC_KEY, item.l_data) == 0){
-			/* EC public key curve; no CKA argument to store it*/
-			//ret = asn1_get_item(pcert, lcert, X509_EC_CURVE, &item);
-			//if (ret)
-			//	return(ret);
+			ret = asn1_get_item(pcert, lcert, X509_EC_CURVE, &item, 1);
+			if (ret)
+				return(ret);
+			info->curve;
+			info->curve = malloc(item.l_raw);
+			if (info->curve == NULL)
+				return(E_X509_ALLOC);
+			memcpy(info->curve, item.p_raw, item.l_raw);
+			info->l_curve = item.l_raw;
 
 			/* EC public key; */
 			ret = asn1_get_item(pcert, lcert, X509_PKINFO, &item, 0);

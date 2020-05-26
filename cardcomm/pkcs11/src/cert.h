@@ -115,6 +115,8 @@ extern "C"
 		unsigned int l_validfrom;
 		char *validto;
 		unsigned int l_validto;
+		char *curve;
+		unsigned int l_curve;
 	} T_CERT_INFO;
 
 
