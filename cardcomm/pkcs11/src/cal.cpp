@@ -1975,7 +1975,7 @@ CK_RV cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT * pObject)
 				else
 				{
 					if (certinfo.l_curve > 0)
-						ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_EC_PARAMS, (CK_VOID_PTR)certinfo.mod, (CK_ULONG)certinfo.l_mod);
+						ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_EC_PARAMS, (CK_VOID_PTR)certinfo.curve, (CK_ULONG)certinfo.l_curve);
 					if (ret != CKR_OK)
 						goto cleanup;
 				}
@@ -2022,6 +2022,11 @@ CK_RV cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT * pObject)
 				}
 				else
 				{
+					if (certinfo.l_curve > 0)
+						ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_EC_PARAMS, (CK_VOID_PTR)certinfo.curve, (CK_ULONG)certinfo.l_curve);
+					if (ret != CKR_OK)
+						goto cleanup;
+
 					if (certinfo.l_pkinfo > 0)
 						ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_EC_POINT, (CK_VOID_PTR)certinfo.pkinfo, certinfo.l_pkinfo);
 					if (ret != CKR_OK)
