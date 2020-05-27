@@ -1062,7 +1062,7 @@ namespace eIDMW
 			// and 521. Figure out what the right size is
 			// from the actual card, rather than hardcoding.
 			// For now this will work, however.
-			return 256;
+			return 384;
 		}
 		if (m_ucAppletVersion >= 0x17)
 		{
