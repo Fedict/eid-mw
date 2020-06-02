@@ -200,14 +200,19 @@ for (iIndex=1; iIndex < iPath; iIndex++)
 	/*      if (l_len == 0)
 			 indefinite = 1; */
 		  iLengthLen = 0;   
-		  for (j=0; j < l_len; j++)     //add all length-bytes
-			 {
-			 p_cDat++;
-			 if (p_cDat > p_cEnd)
-				return (E_ASN_INCOMPLETE);
-			 iLengthLen = (iLengthLen << 8) | *p_cDat;
-			 }
+		  for (j = 0; j < l_len; j++)     //add all length-bytes
+		  {	  
+			  if (p_cDat >= p_cEnd)
+			  {
+				  return (E_ASN_INCOMPLETE);
+			  }
+			  else
+			  {
+				  p_cDat++;
+				  iLengthLen = (iLengthLen << 8) | *p_cDat;
+			  }
 		  }
+	   }
 
 	   /* skip iNumTag, length and data to get next item */
 	   p_cDat = p_cDat + iLengthLen + 1;
