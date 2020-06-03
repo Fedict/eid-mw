@@ -145,7 +145,7 @@ namespace eIDMW
 
 	unsigned long CPKCS15::PrivKeyCount()
 	{
-		return keymap[m_poCard->GetAppletVersion()].size();
+		return (unsigned long)(keymap[m_poCard->GetAppletVersion()].size());
 	}
 
 	tPrivKey CPKCS15::GetPrivKey(unsigned long ulIndex)
