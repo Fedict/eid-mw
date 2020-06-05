@@ -238,9 +238,9 @@ then
   #create a backup copy, in case the stapling goes wrong
   cp -R "$DMG_NAME"  "$DMG_BACKUP_NAME"
 
-  echo "********** waiting 20 sec **********"
-  #wait 20 seconds to give the notarization service some time to make the ticket available online (otherwise stapling will fail)
-  sleep 20
+  echo "********** waiting 120 sec **********"
+  #wait 120 seconds to give the notarization service some time to make the ticket available online (otherwise stapling will fail)
+  sleep 120
 
   echo "********** check notarization history **********"
   /usr/bin/xcrun altool --notarization-history 0 -u "$AC_USERNAME" -p "@keychain:altool"
