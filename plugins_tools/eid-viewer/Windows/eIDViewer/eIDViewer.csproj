@@ -182,6 +182,7 @@
     <EmbeddedResource Include="Resources\Certs\belgiumrca2.pem" />
     <EmbeddedResource Include="Resources\Certs\belgiumrca3.pem" />
     <EmbeddedResource Include="Resources\Certs\belgiumrca4.pem" />
+    <EmbeddedResource Include="Resources\Certs\belgiumrca6.pem" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
