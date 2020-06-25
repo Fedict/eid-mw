@@ -41,7 +41,7 @@ namespace eIDMW
 //	const unsigned long TOKENFLAG_PRNGENERATION = 0x00000004;
 //	const unsigned long TOKENFLAG_EIDCOMPLIANT = 0x00000008;
 
-	typedef struct
+	typedef struct PKCSFile
 	{
 		bool isRead;
 		std::string path;
