@@ -166,9 +166,9 @@
     if ('0' <= digit && digit <= '9')
         return digit - '0';
     else if ('A' <= digit && digit <= 'F')
-        return digit - 'A' + 0x10;
+        return digit - 'A' + 0x0A;
     else if ('a' <= digit && digit <= 'f')
-        return digit - 'a' + 0x10;
+        return digit - 'a' + 0x0A;
     else {
         os_log_error(OS_LOG_DEFAULT, "BEID impossible PIN digit enterred");
         return 0xFF;
