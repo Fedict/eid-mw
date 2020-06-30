@@ -74,7 +74,7 @@
 #define BEID_FIELD_TAG_ID_Vat1					0x17
 #define BEID_FIELD_TAG_ID_Vat2					0x18
 #define BEID_FIELD_TAG_ID_RegionalFileNumber	0x19
-#define BEID_FIELD_TAG_ID_BasicKeyHash			0x20
+#define BEID_FIELD_TAG_ID_BasicKeyHash			0x1A
 
 #define BEID_FIELD_TAG_ADDR_Version				0x00
 #define BEID_FIELD_TAG_ADDR_Street				0x01
