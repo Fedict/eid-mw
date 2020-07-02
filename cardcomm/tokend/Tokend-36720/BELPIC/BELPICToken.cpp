@@ -385,9 +385,9 @@ uint8_t BELPICToken::pinDigit(uint8_t digit)
 	if ('0' <= digit && digit <= '9')
 		return digit - '0';
 	else if ('A' <= digit && digit <= 'F')
-		return digit - 'A' + 0x10;
+		return digit - 'A' + 0x0A;
 	else if ('a' <= digit && digit <= 'f')
-		return digit - 'a' + 0x10;
+		return digit - 'a' + 0x0A;
 	else
 		CssmError::throwMe(CSSM_ERRCODE_SAMPLE_VALUE_NOT_SUPPORTED);
 }
