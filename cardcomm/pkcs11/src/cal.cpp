@@ -1793,6 +1793,27 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 					break;
 				}
 				/* Falls through */
+			case CACHED_DATA_TYPE_BASIC_KEY_FILE:
+				plabel = BEID_LABEL_BASIC_KEY;
+				pobjectID = BEID_OBJECTID_BASIC_KEY_FILE;
+				oFileData = poCard->ReadCardFile(BEID_FILE_BASIC_KEY);
+				ret = p11_add_slot_ID_object(pSlot, ID_DATA,
+					sizeof(ID_DATA) / sizeof(CK_ATTRIBUTE),
+					CK_TRUE,
+					CKO_DATA,
+					CK_FALSE,
+					&hObject,
+					(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),
+					(CK_VOID_PTR)oFileData.GetBytes(), (CK_ULONG)oFileData.Size(),
+					(CK_VOID_PTR)pobjectID, (CK_ULONG)strlen(BEID_OBJECTID_BASIC_KEY_FILE),
+					CK_FALSE);
+				if (ret)
+					goto cleanup;
+				if (dataType != CACHED_DATA_TYPE_ALL_DATA)
+				{
+					break;
+				}
+				/* Falls through */
 			default:
 				break;
 		}

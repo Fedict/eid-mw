@@ -266,6 +266,7 @@ extern "C"
 #define BEID_OBJECTID_RNCERT					"rncert"
 #define BEID_OBJECTID_SIGN_DATA_FILE			"sign_data_file"
 #define BEID_OBJECTID_SIGN_ADDRESS_FILE			"sign_address_file"
+#define BEID_OBJECTID_BASIC_KEY_FILE			"basic_key_file"
 //to give the hidden record objects their own (hidden/undocumented) CKA_OBJECT_ID
 //this "record" CKA_OBJECT_ID is not meant to (and can not) be used to retrieve all hidden objects
 #define BEID_OBJECTID_RECORD					"record"
@@ -282,9 +283,9 @@ extern "C"
 #define BEID_LABEL_CARD_DATA		"CARD_DATA"
 #define BEID_LABEL_CERT_RN			"CERT_RN_FILE"
 //#define BEID_LABEL_CERT_RNCA          "CERT_RNCA_FILE"
-
 #define BEID_LABEL_SGN_RN			"SIGN_DATA_FILE"
 #define BEID_LABEL_SGN_ADDRESS		"SIGN_ADDRESS_FILE"
+#define BEID_LABEL_BASIC_KEY		"BASIC_KEY_FILE"
 
 	typedef enum {
 		BEID_PIN_READ_EF,
