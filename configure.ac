@@ -88,6 +88,17 @@ esac
 AM_CONDITIONAL([FUZZING], [test x$fuzzer != xno])
 AM_CONDITIONAL([FUZZ_AFL], [test x$fuzzer = xafl])
 
+AC_ARG_ENABLE([overly-pedantic-desktop-checker],
+	[AS_HELP_STRING([--enable-overly-pedantic-desktop-checker],[Some distributions have a .desktop file checker that is overly pedantic. Generate a .desktop file for eid-viewer that passes this checker at the cost of producing a somewhat less accurate location for the eid viewer in the menu system.])]
+	[overly_pedantic=$withval],
+	[overly_pedantic=no]
+)
+if [ "$overly_pedantic" = "yes" ]; then
+	AC_DEFINE_UNQUOTED([VIEWER_CATEGORIES], [Utility;FileTools;], [Set to the categories for the eid-viewer .desktop file])
+else
+	AC_DEFINE_UNQUOTED([VIEWER_CATEGORIES], [Office;Viewer;])
+fi
+
 AC_ARG_WITH([gtkvers],
 	[AS_HELP_STRING([--with-gtkvers],[select GTK version to use [default: 3 if available, falls back to 2 if not]; --without-gtkvers disables GTK altogether [note: this implies --disable-dialogs].])],
 	[gtkvers=$withval],[gtkvers=detect])
