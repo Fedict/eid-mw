@@ -1607,6 +1607,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 	BEID_DATA_LABELS_NAME ADDRESS_LABELS[] = BEID_ADDRESS_DATA_LABELS;
 	int i = 0;
 	int nrOfItems = 0;
+	unsigned char ucAppletVersion = 0;
 
 	CK_ULONG hObject = 0;
 
@@ -1628,172 +1629,176 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 		CCard* poCard = oReader.GetCard();
 		switch (dataType)
 		{
-			case CACHED_DATA_TYPE_ALL_DATA:
-			case CACHED_DATA_TYPE_ID:
-				oFileData = poCard->ReadCardFile(BEID_FILE_ID);
+		case CACHED_DATA_TYPE_ALL_DATA:
+		case CACHED_DATA_TYPE_ID:
+			oFileData = poCard->ReadCardFile(BEID_FILE_ID);
 
-//				dataSize = fread((void *)buffer,1,4096, BEIDfile);
-//				fclose(BEIDfile);
-//				oFileData.Append(buffer, dataSize);
+			//				dataSize = fread((void *)buffer,1,4096, BEIDfile);
+			//				fclose(BEIDfile);
+			//				oFileData.Append(buffer, dataSize);
 
-				plabel = BEID_LABEL_DATA_FILE;
-				pobjectID = (char *) BEID_OBJECTID_ID;
-				/* XXX the const-ness of pobjectID and plabel should
-				 * ideally not be cast away, but it goes pretty deep.
-				 * Not Now(TM). */
-				ret = p11_add_slot_ID_object(pSlot, ID_DATA,
-							     sizeof(ID_DATA) / sizeof(CK_ATTRIBUTE),
-							     CK_TRUE,
-							     CKO_DATA,
-							     CK_FALSE,
-							     &hObject,
-							     (CK_VOID_PTR) plabel, (CK_ULONG) strlen(plabel),
-							     (CK_VOID_PTR) oFileData.GetBytes(), (CK_ULONG) oFileData.Size(),
-							     (CK_VOID_PTR) pobjectID, (CK_ULONG) strlen (pobjectID),
-								 CK_FALSE);
-				if (ret)
-					goto cleanup;
+			plabel = BEID_LABEL_DATA_FILE;
+			pobjectID = (char *)BEID_OBJECTID_ID;
+			/* XXX the const-ness of pobjectID and plabel should
+			 * ideally not be cast away, but it goes pretty deep.
+			 * Not Now(TM). */
+			ret = p11_add_slot_ID_object(pSlot, ID_DATA,
+				sizeof(ID_DATA) / sizeof(CK_ATTRIBUTE),
+				CK_TRUE,
+				CKO_DATA,
+				CK_FALSE,
+				&hObject,
+				(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),
+				(CK_VOID_PTR)oFileData.GetBytes(), (CK_ULONG)oFileData.Size(),
+				(CK_VOID_PTR)pobjectID, (CK_ULONG)strlen(pobjectID),
+				CK_FALSE);
+			if (ret)
+				goto cleanup;
 
-				oTLVBuffer.ParseTLV(oFileData.GetBytes(), oFileData.Size());
+			oTLVBuffer.ParseTLV(oFileData.GetBytes(), oFileData.Size());
 
-				nrOfItems = sizeof(ID_LABELS)/sizeof(BEID_DATA_LABELS_NAME);
+			nrOfItems = sizeof(ID_LABELS) / sizeof(BEID_DATA_LABELS_NAME);
 
-				for (i = 0; i < nrOfItems; i++)
-				{
-					ulLen = sizeof(cBuffer);
-					memset(cBuffer, 0, ulLen);
-					if(oTLVBuffer.FillUTF8Data(ID_LABELS[i].tag, cBuffer, &ulLen)) {
-						plabel = ID_LABELS[i].name;
-						ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA) / sizeof(CK_ATTRIBUTE),
-									     CK_TRUE, CKO_DATA, CK_FALSE, &hObject, (CK_VOID_PTR)plabel,
-									     (CK_ULONG)strlen(plabel), (CK_VOID_PTR)cBuffer, ulLen,
-									     (CK_VOID_PTR) pobjectID, (CK_ULONG)strlen(pobjectID), CK_FALSE);
-						if (ret)
-							goto cleanup;
-					}
+			for (i = 0; i < nrOfItems; i++)
+			{
+				ulLen = sizeof(cBuffer);
+				memset(cBuffer, 0, ulLen);
+				if (oTLVBuffer.FillUTF8Data(ID_LABELS[i].tag, cBuffer, &ulLen)) {
+					plabel = ID_LABELS[i].name;
+					ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA) / sizeof(CK_ATTRIBUTE),
+						CK_TRUE, CKO_DATA, CK_FALSE, &hObject, (CK_VOID_PTR)plabel,
+						(CK_ULONG)strlen(plabel), (CK_VOID_PTR)cBuffer, ulLen,
+						(CK_VOID_PTR)pobjectID, (CK_ULONG)strlen(pobjectID), CK_FALSE);
+					if (ret)
+						goto cleanup;
 				}
-				if (dataType != CACHED_DATA_TYPE_ALL_DATA)
-				{
-					break;
+			}
+			if (dataType != CACHED_DATA_TYPE_ALL_DATA)
+			{
+				break;
+			}
+			/* Falls through */
+		case CACHED_DATA_TYPE_ADDRESS:
+			oFileData = poCard->ReadCardFile(BEID_FILE_ADDRESS);
+			plabel = BEID_LABEL_ADDRESS_FILE;
+			pobjectID = BEID_OBJECTID_ADDRESS;
+			ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA) / sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA,
+				CK_FALSE, &hObject, (CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),
+				(CK_VOID_PTR)oFileData.GetBytes(), (CK_ULONG)oFileData.Size(),
+				(CK_VOID_PTR)pobjectID, (CK_ULONG)strlen(pobjectID), CK_FALSE);
+			if (ret)
+				goto cleanup;
+			oTLVBufferAddress.ParseTLV(oFileData.GetBytes(),
+				oFileData.Size());
+			nrOfItems = sizeof(ADDRESS_LABELS) / sizeof(BEID_DATA_LABELS_NAME);
+			for (i = 0; i < nrOfItems; i++)
+			{
+				ulLen = sizeof(cBuffer);
+				memset(cBuffer, 0, ulLen);
+				if (oTLVBufferAddress.FillUTF8Data(ADDRESS_LABELS[i].tag, cBuffer, &ulLen)) {
+					plabel = ADDRESS_LABELS[i].name;
+					ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA) / sizeof(CK_ATTRIBUTE), CK_TRUE,
+						CKO_DATA, CK_FALSE, &hObject, (CK_VOID_PTR)plabel,
+						(CK_ULONG)strlen(plabel), (CK_VOID_PTR)cBuffer, ulLen,
+						(CK_VOID_PTR)pobjectID, (CK_ULONG)strlen(pobjectID), CK_FALSE);
+					if (ret)
+						goto cleanup;
 				}
-				/* Falls through */
-			case CACHED_DATA_TYPE_ADDRESS:
-				oFileData = poCard->ReadCardFile(BEID_FILE_ADDRESS);
-				plabel = BEID_LABEL_ADDRESS_FILE;
-				pobjectID = BEID_OBJECTID_ADDRESS;
-				ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA) / sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_DATA,
-							     CK_FALSE, &hObject, (CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),
-							     (CK_VOID_PTR)oFileData.GetBytes(), (CK_ULONG)oFileData.Size(),
-							     (CK_VOID_PTR)pobjectID, (CK_ULONG)strlen(pobjectID), CK_FALSE);
-				if (ret)
-					goto cleanup;
-				oTLVBufferAddress.ParseTLV(oFileData.GetBytes(),
-							   oFileData.Size());
-				nrOfItems = sizeof(ADDRESS_LABELS)/sizeof(BEID_DATA_LABELS_NAME);
-				for (i = 0; i < nrOfItems; i++)
-				{
-					ulLen = sizeof(cBuffer);
-					memset(cBuffer, 0, ulLen);
-					if(oTLVBufferAddress.FillUTF8Data(ADDRESS_LABELS[i].tag, cBuffer, &ulLen)) {
-						plabel = ADDRESS_LABELS[i].name;
-						ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA) / sizeof(CK_ATTRIBUTE), CK_TRUE,
-									     CKO_DATA, CK_FALSE, &hObject, (CK_VOID_PTR)plabel,
-									     (CK_ULONG)strlen(plabel), (CK_VOID_PTR)cBuffer, ulLen,
-									     (CK_VOID_PTR)pobjectID, (CK_ULONG)strlen(pobjectID), CK_FALSE);
-						if (ret)
-							goto cleanup;
-					}
-				}
-				if (dataType != CACHED_DATA_TYPE_ALL_DATA)
-				{
-					break;
-				}
-				/* Falls through */
-			case CACHED_DATA_TYPE_PHOTO:
-				plabel = BEID_LABEL_PHOTO;
-				pobjectID = BEID_OBJECTID_PHOTO;
-				oFileData = poCard->ReadCardFile(BEID_FILE_PHOTO);
-				ret = p11_add_slot_ID_object(pSlot, ID_DATA,
-							     sizeof(ID_DATA) / sizeof(CK_ATTRIBUTE),
-							     CK_TRUE,
-							     CKO_DATA,
-							     CK_FALSE,
-							     &hObject,
-							     (CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),
-							     (CK_VOID_PTR)oFileData.GetBytes(), (CK_ULONG)oFileData.Size(),
-							     (CK_VOID_PTR)pobjectID, (CK_ULONG)strlen(BEID_OBJECTID_PHOTO),
-								 CK_FALSE);
-				if (ret)
-					goto cleanup;
-				if (dataType != CACHED_DATA_TYPE_ALL_DATA)
-				{
-					break;
-				}
-				/* Falls through */
-			case CACHED_DATA_TYPE_RNCERT:
-				oFileData = poCard->ReadCardFile(BEID_FILE_CERT_RRN);
-				plabel = BEID_LABEL_CERT_RN;
-				pobjectID = BEID_OBJECTID_RNCERT;
-				ret = p11_add_slot_ID_object(pSlot, ID_DATA,
-							     sizeof(ID_DATA) / sizeof(CK_ATTRIBUTE),
-							     CK_TRUE,
-							     CKO_DATA,
-							     CK_FALSE,
-							     &hObject,
-							     (CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),
-							     (CK_VOID_PTR)oFileData.GetBytes(), (CK_ULONG)oFileData.Size(),
-							     (CK_VOID_PTR)pobjectID, (CK_ULONG)strlen(BEID_OBJECTID_RNCERT),
-								 CK_FALSE);
-				if (ret)
-					goto cleanup;
-				if (dataType != CACHED_DATA_TYPE_ALL_DATA)
-				{
-					break;
-				}
-				/* Falls through */
-			case CACHED_DATA_TYPE_SIGN_DATA_FILE:
-				plabel = BEID_LABEL_SGN_RN;
-				oFileData = poCard->ReadCardFile(BEID_FILE_ID_SIGN);
-				ret = p11_add_slot_ID_object(pSlot, ID_DATA,
-							     sizeof(ID_DATA) / sizeof(CK_ATTRIBUTE),
-							     CK_TRUE,
-							     CKO_DATA,
-							     CK_FALSE,
-							     &hObject,
-							     (CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),
-							     (CK_VOID_PTR)oFileData.GetBytes(), (CK_ULONG)oFileData.Size(),
-							     (CK_VOID_PTR)BEID_OBJECTID_SIGN_DATA_FILE,
-							     (CK_ULONG) strlen(BEID_OBJECTID_SIGN_DATA_FILE),
-								 CK_FALSE);
-				if (ret)
-					goto cleanup;
-				if (dataType != CACHED_DATA_TYPE_ALL_DATA)
-				{
-					break;
-				}
-				/* Falls through */
-			case CACHED_DATA_TYPE_SIGN_ADDRESS_FILE:
-				plabel = BEID_LABEL_SGN_ADDRESS;
-				oFileData = poCard->ReadCardFile(BEID_FILE_ADDRESS_SIGN);
-				ret = p11_add_slot_ID_object(pSlot, ID_DATA,
-							     sizeof(ID_DATA) / sizeof(CK_ATTRIBUTE),
-							     CK_TRUE,
-							     CKO_DATA,
-							     CK_FALSE,
-							     &hObject, 
-								 (CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),
-							     (CK_VOID_PTR)oFileData.GetBytes(),
-							     (CK_ULONG)oFileData.Size(),
-							     (CK_VOID_PTR)BEID_OBJECTID_SIGN_ADDRESS_FILE, (CK_ULONG)strlen(BEID_OBJECTID_SIGN_ADDRESS_FILE),
-								 CK_FALSE);
-				if (ret)
-					goto cleanup;
-				if (dataType != CACHED_DATA_TYPE_ALL_DATA)
-				{
-					break;
-				}
-				/* Falls through */
-			case CACHED_DATA_TYPE_BASIC_KEY_FILE:
+			}
+			if (dataType != CACHED_DATA_TYPE_ALL_DATA)
+			{
+				break;
+			}
+			/* Falls through */
+		case CACHED_DATA_TYPE_PHOTO:
+			plabel = BEID_LABEL_PHOTO;
+			pobjectID = BEID_OBJECTID_PHOTO;
+			oFileData = poCard->ReadCardFile(BEID_FILE_PHOTO);
+			ret = p11_add_slot_ID_object(pSlot, ID_DATA,
+				sizeof(ID_DATA) / sizeof(CK_ATTRIBUTE),
+				CK_TRUE,
+				CKO_DATA,
+				CK_FALSE,
+				&hObject,
+				(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),
+				(CK_VOID_PTR)oFileData.GetBytes(), (CK_ULONG)oFileData.Size(),
+				(CK_VOID_PTR)pobjectID, (CK_ULONG)strlen(BEID_OBJECTID_PHOTO),
+				CK_FALSE);
+			if (ret)
+				goto cleanup;
+			if (dataType != CACHED_DATA_TYPE_ALL_DATA)
+			{
+				break;
+			}
+			/* Falls through */
+		case CACHED_DATA_TYPE_RNCERT:
+			oFileData = poCard->ReadCardFile(BEID_FILE_CERT_RRN);
+			plabel = BEID_LABEL_CERT_RN;
+			pobjectID = BEID_OBJECTID_RNCERT;
+			ret = p11_add_slot_ID_object(pSlot, ID_DATA,
+				sizeof(ID_DATA) / sizeof(CK_ATTRIBUTE),
+				CK_TRUE,
+				CKO_DATA,
+				CK_FALSE,
+				&hObject,
+				(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),
+				(CK_VOID_PTR)oFileData.GetBytes(), (CK_ULONG)oFileData.Size(),
+				(CK_VOID_PTR)pobjectID, (CK_ULONG)strlen(BEID_OBJECTID_RNCERT),
+				CK_FALSE);
+			if (ret)
+				goto cleanup;
+			if (dataType != CACHED_DATA_TYPE_ALL_DATA)
+			{
+				break;
+			}
+			/* Falls through */
+		case CACHED_DATA_TYPE_SIGN_DATA_FILE:
+			plabel = BEID_LABEL_SGN_RN;
+			oFileData = poCard->ReadCardFile(BEID_FILE_ID_SIGN);
+			ret = p11_add_slot_ID_object(pSlot, ID_DATA,
+				sizeof(ID_DATA) / sizeof(CK_ATTRIBUTE),
+				CK_TRUE,
+				CKO_DATA,
+				CK_FALSE,
+				&hObject,
+				(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),
+				(CK_VOID_PTR)oFileData.GetBytes(), (CK_ULONG)oFileData.Size(),
+				(CK_VOID_PTR)BEID_OBJECTID_SIGN_DATA_FILE,
+				(CK_ULONG)strlen(BEID_OBJECTID_SIGN_DATA_FILE),
+				CK_FALSE);
+			if (ret)
+				goto cleanup;
+			if (dataType != CACHED_DATA_TYPE_ALL_DATA)
+			{
+				break;
+			}
+			/* Falls through */
+		case CACHED_DATA_TYPE_SIGN_ADDRESS_FILE:
+			plabel = BEID_LABEL_SGN_ADDRESS;
+			oFileData = poCard->ReadCardFile(BEID_FILE_ADDRESS_SIGN);
+			ret = p11_add_slot_ID_object(pSlot, ID_DATA,
+				sizeof(ID_DATA) / sizeof(CK_ATTRIBUTE),
+				CK_TRUE,
+				CKO_DATA,
+				CK_FALSE,
+				&hObject,
+				(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),
+				(CK_VOID_PTR)oFileData.GetBytes(),
+				(CK_ULONG)oFileData.Size(),
+				(CK_VOID_PTR)BEID_OBJECTID_SIGN_ADDRESS_FILE, (CK_ULONG)strlen(BEID_OBJECTID_SIGN_ADDRESS_FILE),
+				CK_FALSE);
+			if (ret)
+				goto cleanup;
+			if (dataType != CACHED_DATA_TYPE_ALL_DATA)
+			{
+				break;
+			}
+			/* Falls through */
+		case CACHED_DATA_TYPE_BASIC_KEY_FILE:
+			ucAppletVersion = poCard->GetAppletVersion();
+
+			if (ucAppletVersion >= 0x18)
+			{
 				plabel = BEID_LABEL_BASIC_KEY;
 				pobjectID = BEID_OBJECTID_BASIC_KEY_FILE;
 				oFileData = poCard->ReadCardFile(BEID_FILE_BASIC_KEY);
@@ -1809,20 +1814,21 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 					CK_FALSE);
 				if (ret)
 					goto cleanup;
-				if (dataType != CACHED_DATA_TYPE_ALL_DATA)
-				{
-					break;
-				}
-				/* Falls through */
-			default:
+			}
+			if (dataType != CACHED_DATA_TYPE_ALL_DATA)
+			{
 				break;
+			}
+			/* Falls through */
+		default:
+			break;
 		}
 	}
-	catch(CMWException &e)
+	catch (CMWException &e)
 	{
 		return (cal_translate_error(WHERE, e.GetError()));
 	}
-	catch( ...)
+	catch (...)
 	{
 		//ret = -1;
 		log_trace(WHERE, "E: unknown exception thrown");
