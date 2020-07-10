@@ -1,1 +1,1 @@
-In this directory, the trusted certificates (.pem) from \plugins_tools\eid-viewer\certs will be copied.
+In this directory, the trusted certificates (.pem) from \plugins_tools\eid-viewer\certs will be copied by the eIDViewer Visual Studio project.

@@ -1,0 +1,625 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="PKCS11_FF_DEBUG|Win32">
+      <Configuration>PKCS11_FF_DEBUG</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="PKCS11_FF_DEBUG|x64">
+      <Configuration>PKCS11_FF_DEBUG</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="PKCS11_FF_Release|Win32">
+      <Configuration>PKCS11_FF_Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="PKCS11_FF_Release|x64">
+      <Configuration>PKCS11_FF_Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>pkcs11</ProjectName>
+    <ProjectGuid>{12F6CD4F-FC01-4E0A-AE06-F7A315094DFE}</ProjectGuid>
+    <RootNamespace>beidpkcs11</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_DEBUG|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_DEBUG|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_DEBUG|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_DEBUG|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Binaries\$(Platform)_$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Platform)_$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Binaries\$(Platform)_$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)_$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Binaries\$(Platform)_$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_Release|Win32'">Binaries\$(Platform)_$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_DEBUG|Win32'">Binaries\$(Platform)_$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Platform)_$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_Release|Win32'">$(Platform)_$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_DEBUG|Win32'">$(Platform)_$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_Release|Win32'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_DEBUG|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Binaries\$(Platform)_$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_Release|x64'">Binaries\$(Platform)_$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_DEBUG|x64'">Binaries\$(Platform)_$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)_$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_Release|x64'">$(Platform)_$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_DEBUG|x64'">$(Platform)_$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_Release|x64'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_DEBUG|x64'">true</LinkIncremental>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">beid$(ProjectName)</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_Release|x64'">beid_ff_$(ProjectName)</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_DEBUG|x64'">beid_ff_$(ProjectName)</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">beid$(ProjectName)D</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">beid$(ProjectName)</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_Release|Win32'">beid_ff_$(ProjectName)</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_DEBUG|Win32'">beid_ff_$(ProjectName)D</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">beid$(ProjectName)D</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\src;..\src\common;..\src\common\libtomcrypt;..\src\cardlayer\cardpluginbeid;..\src\cardlayer;..\src\dialogs\dialogswin32;..\src\dialogs;..\..\..\doc\sdk\include\v240;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;BEID_OLD_PINPAD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+    <Link>
+      <AdditionalDependencies>winscard.lib;User32.lib;Gdi32.lib;Advapi32.lib;Shell32.lib</AdditionalDependencies>
+      <OutputFile>Binaries/$(Platform)_$(Configuration)/beid$(ProjectName)D.dll</OutputFile>
+      <AdditionalLibraryDirectories>Binaries/$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>
+      </Message>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\src;..\src\common;..\src\common\libtomcrypt;..\src\cardlayer\cardpluginbeid;..\src\cardlayer;..\src\dialogs\dialogswin32;..\src\dialogs;..\..\..\doc\sdk\include\v240;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;BEID_OLD_PINPAD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>BEID_35;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+    <Link>
+      <AdditionalDependencies>winscard.lib;User32.lib;Gdi32.lib;Advapi32.lib;Shell32.lib</AdditionalDependencies>
+      <OutputFile>Binaries/$(Platform)_$(Configuration)/beid$(ProjectName)D.dll</OutputFile>
+      <AdditionalLibraryDirectories>Binaries/$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>
+      </Message>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <AdditionalIncludeDirectories>..\src;..\src\common;..\src\common\libtomcrypt;..\src\cardlayer\cardpluginbeid;..\src\cardlayer;..\src\dialogs\dialogswin32;..\src\dialogs;..\..\..\doc\sdk\include\v240;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;BEID_OLD_PINPAD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <AdditionalOptions>/w35045 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+    <Link>
+      <AdditionalDependencies>winscard.lib;User32.lib;Gdi32.lib;Advapi32.lib;Shell32.lib</AdditionalDependencies>
+      <OutputFile>Binaries/$(Platform)_$(Configuration)/beid$(ProjectName).dll</OutputFile>
+      <AdditionalLibraryDirectories>Binaries/$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>
+      </Message>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <AdditionalIncludeDirectories>..\src;..\src\common;..\src\common\libtomcrypt;..\src\cardlayer\cardpluginbeid;..\src\cardlayer;..\src\dialogs\dialogswin32;..\src\dialogs;..\..\..\doc\sdk\include\v240;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>PKCS11_FF;WIN32;NDEBUG;_WINDOWS;_USRDLL;BEID_OLD_PINPAD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+    <Link>
+      <AdditionalDependencies>winscard.lib;User32.lib;Gdi32.lib;Advapi32.lib;Shell32.lib</AdditionalDependencies>
+      <OutputFile>Binaries/$(Platform)_$(Configuration)/beid_ff_$(ProjectName).dll</OutputFile>
+      <AdditionalLibraryDirectories>Binaries/$(Platform)_$(Configuration);Binaries/$(Platform)_Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>
+      </Message>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_DEBUG|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\src;..\src\common;..\src\common\libtomcrypt;..\src\cardlayer\cardpluginbeid;..\src\cardlayer;..\src\dialogs\dialogswin32;..\src\dialogs;..\..\..\doc\sdk\include\v240;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PKCS11_FF;BEID_OLD_PINPAD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <MinimalRebuild>true</MinimalRebuild>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+    <Link>
+      <AdditionalDependencies>winscard.lib;User32.lib;Gdi32.lib;Advapi32.lib;Shell32.lib</AdditionalDependencies>
+      <OutputFile>Binaries/$(Platform)_$(Configuration)/beid_ff_$(ProjectName)D.dll</OutputFile>
+      <AdditionalLibraryDirectories>Binaries/$(Platform)_$(Configuration);Binaries/$(Platform)_Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>
+      </Message>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <AdditionalIncludeDirectories>..\src;..\src\common;..\src\common\libtomcrypt;..\src\cardlayer\cardpluginbeid;..\src\cardlayer;..\src\dialogs\dialogswin32;..\src\dialogs;..\..\..\doc\sdk\include\v240;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;BEID_OLD_PINPAD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <AdditionalOptions>/w35045 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>BEID_35;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+    <Link>
+      <AdditionalDependencies>winscard.lib;User32.lib;Gdi32.lib;Advapi32.lib;Shell32.lib</AdditionalDependencies>
+      <OutputFile>Binaries/$(Platform)_$(Configuration)/beid$(ProjectName).dll</OutputFile>
+      <AdditionalLibraryDirectories>Binaries/$(Platform)_$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>
+      </Message>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_Release|x64'">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <AdditionalIncludeDirectories>..\src;..\src\common;..\src\common\libtomcrypt;..\src\cardlayer\cardpluginbeid;..\src\cardlayer;..\src\dialogs\dialogswin32;..\src\dialogs;..\..\..\doc\sdk\include\v240;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>PKCS11_FF;WIN32;NDEBUG;_WINDOWS;_USRDLL;BEID_OLD_PINPAD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>BEID_35;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+    <Link>
+      <AdditionalDependencies>winscard.lib;User32.lib;Gdi32.lib;Advapi32.lib;Shell32.lib</AdditionalDependencies>
+      <OutputFile>Binaries/$(Platform)_$(Configuration)/beid_ff_$(ProjectName).dll</OutputFile>
+      <AdditionalLibraryDirectories>Binaries/$(Platform)_$(Configuration);Binaries/$(Platform)_Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>
+      </Message>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='PKCS11_FF_DEBUG|x64'">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\src;..\src\common;..\src\common\libtomcrypt;..\src\cardlayer\cardpluginbeid;..\src\cardlayer;..\src\dialogs\dialogswin32;..\src\dialogs;..\..\..\doc\sdk\include\v240;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PKCS11_FF;BEID_OLD_PINPAD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <OmitFramePointers>false</OmitFramePointers>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>BEID_35;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+    <Link>
+      <AdditionalDependencies>winscard.lib;User32.lib;Gdi32.lib;Advapi32.lib;Shell32.lib</AdditionalDependencies>
+      <OutputFile>Binaries/$(Platform)_$(Configuration)/beid_ff_$(ProjectName).dll</OutputFile>
+      <AdditionalLibraryDirectories>Binaries/$(Platform)_$(Configuration);Binaries/$(Platform)_Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>
+      </Message>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\asn1.c" />
+    <ClCompile Include="..\src\cal.cpp" />
+    <ClCompile Include="..\src\cardlayer\card.cpp" />
+    <ClCompile Include="..\src\cardlayer\cardfactory.cpp" />
+    <ClCompile Include="..\src\cardlayer\cardlayer.cpp" />
+    <ClCompile Include="..\src\cardlayer\old\PinpadLibOldBeid.cpp" />
+    <ClCompile Include="..\src\cardlayer\pcsc.cpp" />
+    <ClCompile Include="..\src\cardlayer\pinpad.cpp" />
+    <ClCompile Include="..\src\cardlayer\pinpadlib.cpp" />
+    <ClCompile Include="..\src\cardlayer\pkcs15.cpp" />
+    <ClCompile Include="..\src\cardlayer\pkcs15parser.cpp" />
+    <ClCompile Include="..\src\cardlayer\reader.cpp" />
+    <ClCompile Include="..\src\cardlayer\readersinfo.cpp" />
+    <ClCompile Include="..\src\cert.c" />
+    <ClCompile Include="..\src\common\bytearray.cpp" />
+    <ClCompile Include="..\src\common\configcommon.cpp" />
+    <ClCompile Include="..\src\common\configreg.cpp" />
+    <ClCompile Include="..\src\common\dynamiclib.cpp" />
+    <ClCompile Include="..\src\common\hash.cpp" />
+    <ClCompile Include="..\src\common\libtomcrypt\md5.c" />
+    <ClCompile Include="..\src\common\libtomcrypt\rmd160.c" />
+    <ClCompile Include="..\src\common\libtomcrypt\sha1.c" />
+    <ClCompile Include="..\src\common\libtomcrypt\sha256.c" />
+    <ClCompile Include="..\src\common\libtomcrypt\sha384.c" />
+    <ClCompile Include="..\src\common\libtomcrypt\sha512.c" />
+    <ClCompile Include="..\src\common\log.cpp" />
+    <ClCompile Include="..\src\common\logbase.cpp" />
+    <ClCompile Include="..\src\common\mutex.cpp">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\src;..\src\common;..\src\common\libtomcrypt;..\src\cardlayer\cardpluginbeid;..\cardlayer\src;..\src\dialogs\dialogswin32;..\src\dialogs;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ClCompile Include="..\src\common\mwexception.cpp" />
+    <ClCompile Include="..\src\common\thread.cpp" />
+    <ClCompile Include="..\src\common\tlv.cpp" />
+    <ClCompile Include="..\src\common\tlvbuffer.cpp" />
+    <ClCompile Include="..\src\common\util.cpp" />
+    <ClCompile Include="..\src\dialogs\dialogswin32\dlgswin32.cpp" />
+    <ClCompile Include="..\src\dialogs\dialogswin32\dlgwndaskaccess.cpp" />
+    <ClCompile Include="..\src\dialogs\dialogswin32\dlgwndaskpin.cpp" />
+    <ClCompile Include="..\src\dialogs\dialogswin32\dlgwndaskpins.cpp" />
+    <ClCompile Include="..\src\dialogs\dialogswin32\dlgwndbadpin.cpp" />
+    <ClCompile Include="..\src\dialogs\dialogswin32\dlgwndbase.cpp" />
+    <ClCompile Include="..\src\dialogs\dialogswin32\dlgwndmodal.cpp" />
+    <ClCompile Include="..\src\dialogs\dialogswin32\dlgwndpinpadinfo.cpp" />
+    <ClCompile Include="..\src\dialogs\langutil.cpp" />
+    <ClCompile Include="..\src\encrypt.c" />
+    <ClCompile Include="..\src\general.c" />
+    <ClCompile Include="..\src\object.c" />
+    <ClCompile Include="..\src\p11.c" />
+    <ClCompile Include="..\src\phash.cpp" />
+    <ClCompile Include="..\src\pkcs11log.c" />
+    <ClCompile Include="..\src\pkcs11util.cpp" />
+    <ClCompile Include="..\src\session.c" />
+    <ClCompile Include="..\src\sign.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\beid_p11.h" />
+    <ClInclude Include="..\src\cal.h" />
+    <ClInclude Include="..\src\cardlayer\card.h" />
+    <ClInclude Include="..\src\cardlayer\cardfactory.h" />
+    <ClInclude Include="..\src\cardlayer\cardlayer.h" />
+    <ClInclude Include="..\src\cardlayer\cardlayerconst.h" />
+    <ClInclude Include="..\src\cardlayer\internalconst.h" />
+    <ClInclude Include="..\src\cardlayer\old\PinpadLibOldBeid.h" />
+    <ClInclude Include="..\src\cardlayer\old\scr.h" />
+    <ClInclude Include="..\src\cardlayer\p15objects.h" />
+    <ClInclude Include="..\src\cardlayer\pcsc.h" />
+    <ClInclude Include="..\src\cardlayer\pinpad.h" />
+    <ClInclude Include="..\src\cardlayer\pinpad2.h" />
+    <ClInclude Include="..\src\cardlayer\pinpadlib.h" />
+    <ClInclude Include="..\src\cardlayer\pkcs15.h" />
+    <ClInclude Include="..\src\cardlayer\pkcs15parser.h" />
+    <ClInclude Include="..\src\cardlayer\reader.h" />
+    <ClInclude Include="..\src\cardlayer\readersinfo.h" />
+    <ClInclude Include="..\src\cert.h" />
+    <ClInclude Include="..\src\common\beidversions.h" />
+    <ClInclude Include="..\src\common\bytearray.h" />
+    <ClInclude Include="..\src\common\configuration.h" />
+    <ClInclude Include="..\src\common\dynamiclib.h" />
+    <ClInclude Include="..\src\common\eiderrors.h" />
+    <ClInclude Include="..\src\common\hash.h" />
+    <ClInclude Include="..\src\common\libtomcrypt\tomcrypt_argchk.h" />
+    <ClInclude Include="..\src\common\libtomcrypt\tomcrypt_cfg.h" />
+    <ClInclude Include="..\src\common\libtomcrypt\tomcrypt_hash.h" />
+    <ClInclude Include="..\src\common\libtomcrypt\tomcrypt_macros.h" />
+    <ClInclude Include="..\src\common\log.h" />
+    <ClInclude Include="..\src\common\logbase.h" />
+    <ClInclude Include="..\src\common\mutex.h" />
+    <ClInclude Include="..\src\common\mwexception.h" />
+    <ClInclude Include="..\src\common\thread.h" />
+    <ClInclude Include="..\src\common\threaddefines.h" />
+    <ClInclude Include="..\src\common\tlv.h" />
+    <ClInclude Include="..\src\common\tlvbuffer.h" />
+    <ClInclude Include="..\src\common\util.h" />
+    <ClInclude Include="..\src\dialogs\dialogs.h" />
+    <ClInclude Include="..\src\dialogs\dialogswin32\dlgwndaskaccess.h" />
+    <ClInclude Include="..\src\dialogs\dialogswin32\dlgwndaskpin.h" />
+    <ClInclude Include="..\src\dialogs\dialogswin32\dlgwndaskpins.h" />
+    <ClInclude Include="..\src\dialogs\dialogswin32\dlgwndbadpin.h" />
+    <ClInclude Include="..\src\dialogs\dialogswin32\dlgwndbase.h" />
+    <ClInclude Include="..\src\dialogs\dialogswin32\dlgwndmodal.h" />
+    <ClInclude Include="..\src\dialogs\dialogswin32\dlgwndpinpadinfo.h" />
+    <ClInclude Include="..\src\dialogs\dialogswin32\resource.h" />
+    <ClInclude Include="..\src\dialogs\dialogswin32\stdafx.h" />
+    <ClInclude Include="..\src\dialogs\language.h" />
+    <ClInclude Include="..\src\dialogs\langutil.h" />
+    <ClInclude Include="..\src\p11.h" />
+    <ClInclude Include="..\src\phash.h" />
+    <ClInclude Include="..\src\include\rsaref220\pkcs11t.h" />
+    <ClInclude Include="..\src\util.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="beidpkcs11.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\src\common\beid_registry.reg" />
+    <None Include="ClassDiagram3.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\src\dialogs\dialogswin32\images\ICO_BELPIC.ico" />
+    <Image Include="..\src\dialogs\dialogswin32\images\ICO_CARD_INFO_64x64.bmp" />
+    <Image Include="..\src\dialogs\dialogswin32\images\ICO_CARD_NOK_64x64.bmp" />
+    <Image Include="..\src\dialogs\dialogswin32\images\ICO_CARD_PIN_128x128.bmp" />
+    <Image Include="..\src\dialogs\dialogswin32\images\ICO_CARD_QUESTION_64x64.bmp" />
+    <Image Include="..\src\dialogs\dialogswin32\images\ICO_CARD_SIGN_128x128.bmp" />
+    <Image Include="..\src\dialogs\dialogswin32\images\ICO_CARD_WARNING_64x64.bmp" />
+    <Image Include="..\src\dialogs\dialogswin32\images\KeyPadButton.bmp" />
+    <Image Include="..\src\dialogs\dialogswin32\images\KeyPadButton0.bmp" />
+    <Image Include="..\src\dialogs\dialogswin32\images\KeyPadButton1.bmp" />
+    <Image Include="..\src\dialogs\dialogswin32\images\KeyPadButton2.bmp" />
+    <Image Include="..\src\dialogs\dialogswin32\images\KeyPadButton3.bmp" />
+    <Image Include="..\src\dialogs\dialogswin32\images\KeyPadButton4.bmp" />
+    <Image Include="..\src\dialogs\dialogswin32\images\KeyPadButton5.bmp" />
+    <Image Include="..\src\dialogs\dialogswin32\images\KeyPadButton6.bmp" />
+    <Image Include="..\src\dialogs\dialogswin32\images\KeyPadButton7.bmp" />
+    <Image Include="..\src\dialogs\dialogswin32\images\KeyPadButton8.bmp" />
+    <Image Include="..\src\dialogs\dialogswin32\images\KeyPadButton9.bmp" />
+    <Image Include="..\src\dialogs\dialogswin32\images\KeyPadButtonCE.bmp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

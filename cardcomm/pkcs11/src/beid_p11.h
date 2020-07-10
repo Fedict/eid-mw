@@ -47,6 +47,7 @@
 #define BEID_FILE_PHOTO					"3F00DF014035"
 #define BEID_FILE_CERT_RRN				"3F00DF00503C"
 #define BEID_FILE_CERT_RRNCA			"3F00DF00503D"
+#define BEID_FILE_BASIC_KEY				"3F00DF014040"
 
 #define BEID_FIELD_TAG_ID_Version				0x00
 #define BEID_FIELD_TAG_ID_CardNr				0x01
@@ -74,7 +75,7 @@
 #define BEID_FIELD_TAG_ID_Vat1					0x17
 #define BEID_FIELD_TAG_ID_Vat2					0x18
 #define BEID_FIELD_TAG_ID_RegionalFileNumber	0x19
-#define BEID_FIELD_TAG_ID_BasicKeyHash			0x20
+#define BEID_FIELD_TAG_ID_BasicKeyHash			0x1A
 
 #define BEID_FIELD_TAG_ADDR_Version				0x00
 #define BEID_FIELD_TAG_ADDR_Street				0x01

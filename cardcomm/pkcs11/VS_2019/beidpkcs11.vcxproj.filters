@@ -1,0 +1,415 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\src\common\bytearray.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\configcommon.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\configreg.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\hash.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\log.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\logbase.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\mutex.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\util.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cardlayer\card.cpp">
+      <Filter>Cardlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cardlayer\cardfactory.cpp">
+      <Filter>Cardlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cardlayer\cardlayer.cpp">
+      <Filter>Cardlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dialogs\dialogswin32\dlgswin32.cpp">
+      <Filter>Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dialogs\dialogswin32\dlgwndaskaccess.cpp">
+      <Filter>Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dialogs\dialogswin32\dlgwndaskpin.cpp">
+      <Filter>Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dialogs\dialogswin32\dlgwndaskpins.cpp">
+      <Filter>Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dialogs\dialogswin32\dlgwndbadpin.cpp">
+      <Filter>Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dialogs\dialogswin32\dlgwndbase.cpp">
+      <Filter>Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dialogs\dialogswin32\dlgwndmodal.cpp">
+      <Filter>Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dialogs\dialogswin32\dlgwndpinpadinfo.cpp">
+      <Filter>Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\asn1.c">
+      <Filter>Pkcs11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cal.cpp">
+      <Filter>Pkcs11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cert.c">
+      <Filter>Pkcs11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\dynamiclib.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\general.c">
+      <Filter>Pkcs11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\encrypt.c">
+      <Filter>Pkcs11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dialogs\langutil.cpp">
+      <Filter>Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\libtomcrypt\md5.c">
+      <Filter>Common\LibTomCrypt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\mwexception.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\object.c">
+      <Filter>Pkcs11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\p11.c">
+      <Filter>Pkcs11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cardlayer\pcsc.cpp">
+      <Filter>Cardlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\phash.cpp">
+      <Filter>Pkcs11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cardlayer\pinpad.cpp">
+      <Filter>Cardlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cardlayer\pinpadlib.cpp">
+      <Filter>Cardlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cardlayer\old\PinpadLibOldBeid.cpp">
+      <Filter>Cardlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\pkcs11log.c">
+      <Filter>Pkcs11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\pkcs11util.cpp">
+      <Filter>Pkcs11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cardlayer\pkcs15.cpp">
+      <Filter>Cardlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cardlayer\pkcs15parser.cpp">
+      <Filter>Cardlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cardlayer\reader.cpp">
+      <Filter>Cardlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cardlayer\readersinfo.cpp">
+      <Filter>Cardlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\libtomcrypt\rmd160.c">
+      <Filter>Common\LibTomCrypt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\session.c">
+      <Filter>Pkcs11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\libtomcrypt\sha1.c">
+      <Filter>Common\LibTomCrypt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\libtomcrypt\sha256.c">
+      <Filter>Common\LibTomCrypt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\libtomcrypt\sha384.c">
+      <Filter>Common\LibTomCrypt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\libtomcrypt\sha512.c">
+      <Filter>Common\LibTomCrypt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\sign.c">
+      <Filter>Pkcs11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\thread.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\tlv.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\tlvbuffer.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\common\bytearray.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\configuration.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\hash.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\log.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\logbase.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\mutex.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\util.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\beidversions.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cardlayer\card.h">
+      <Filter>Cardlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cardlayer\cardfactory.h">
+      <Filter>Cardlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cardlayer\cardlayer.h">
+      <Filter>Cardlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cardlayer\cardlayerconst.h">
+      <Filter>Cardlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dialogs\dialogs.h">
+      <Filter>Dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dialogs\dialogswin32\dlgwndaskaccess.h">
+      <Filter>Dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dialogs\dialogswin32\dlgwndaskpin.h">
+      <Filter>Dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dialogs\dialogswin32\dlgwndaskpins.h">
+      <Filter>Dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dialogs\dialogswin32\dlgwndbadpin.h">
+      <Filter>Dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dialogs\dialogswin32\dlgwndbase.h">
+      <Filter>Dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dialogs\dialogswin32\dlgwndmodal.h">
+      <Filter>Dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dialogs\dialogswin32\dlgwndpinpadinfo.h">
+      <Filter>Dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\beid_p11.h">
+      <Filter>Pkcs11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cert.h">
+      <Filter>Pkcs11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cal.h">
+      <Filter>Pkcs11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\eiderrors.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\dynamiclib.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cardlayer\internalconst.h">
+      <Filter>Cardlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dialogs\language.h">
+      <Filter>Dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dialogs\langutil.h">
+      <Filter>Dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\mwexception.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\p11.h">
+      <Filter>Pkcs11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cardlayer\pcsc.h">
+      <Filter>Cardlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cardlayer\p15objects.h">
+      <Filter>Cardlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\phash.h">
+      <Filter>Pkcs11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cardlayer\old\PinpadLibOldBeid.h">
+      <Filter>Cardlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cardlayer\pinpad.h">
+      <Filter>Cardlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cardlayer\pinpad2.h">
+      <Filter>Cardlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cardlayer\pinpadlib.h">
+      <Filter>Cardlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\include\rsaref220\pkcs11t.h">
+      <Filter>Pkcs11\Pkcs11_standard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cardlayer\readersinfo.h">
+      <Filter>Cardlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cardlayer\pkcs15.h">
+      <Filter>Cardlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cardlayer\pkcs15parser.h">
+      <Filter>Cardlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cardlayer\reader.h">
+      <Filter>Cardlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dialogs\dialogswin32\resource.h">
+      <Filter>Dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cardlayer\old\scr.h">
+      <Filter>Cardlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\dialogs\dialogswin32\stdafx.h">
+      <Filter>Dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\thread.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\threaddefines.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\tlv.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\tlvbuffer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\libtomcrypt\tomcrypt_macros.h">
+      <Filter>Common\LibTomCrypt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\libtomcrypt\tomcrypt_argchk.h">
+      <Filter>Common\LibTomCrypt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\libtomcrypt\tomcrypt_cfg.h">
+      <Filter>Common\LibTomCrypt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\libtomcrypt\tomcrypt_hash.h">
+      <Filter>Common\LibTomCrypt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\util.h">
+      <Filter>Pkcs11</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\src\dialogs\dialogswin32\images\ICO_BELPIC.ico">
+      <Filter>Dialogs\Icons</Filter>
+    </Image>
+    <Image Include="..\src\dialogs\dialogswin32\images\ICO_CARD_INFO_64x64.bmp">
+      <Filter>Dialogs\Icons</Filter>
+    </Image>
+    <Image Include="..\src\dialogs\dialogswin32\images\ICO_CARD_NOK_64x64.bmp">
+      <Filter>Dialogs\Icons</Filter>
+    </Image>
+    <Image Include="..\src\dialogs\dialogswin32\images\ICO_CARD_PIN_128x128.bmp">
+      <Filter>Dialogs\Icons</Filter>
+    </Image>
+    <Image Include="..\src\dialogs\dialogswin32\images\ICO_CARD_QUESTION_64x64.bmp">
+      <Filter>Dialogs\Icons</Filter>
+    </Image>
+    <Image Include="..\src\dialogs\dialogswin32\images\ICO_CARD_SIGN_128x128.bmp">
+      <Filter>Dialogs\Icons</Filter>
+    </Image>
+    <Image Include="..\src\dialogs\dialogswin32\images\ICO_CARD_WARNING_64x64.bmp">
+      <Filter>Dialogs\Icons</Filter>
+    </Image>
+    <Image Include="..\src\dialogs\dialogswin32\images\KeyPadButton.bmp">
+      <Filter>Dialogs\Icons</Filter>
+    </Image>
+    <Image Include="..\src\dialogs\dialogswin32\images\KeyPadButton0.bmp">
+      <Filter>Dialogs\Icons</Filter>
+    </Image>
+    <Image Include="..\src\dialogs\dialogswin32\images\KeyPadButton1.bmp">
+      <Filter>Dialogs\Icons</Filter>
+    </Image>
+    <Image Include="..\src\dialogs\dialogswin32\images\KeyPadButton2.bmp">
+      <Filter>Dialogs\Icons</Filter>
+    </Image>
+    <Image Include="..\src\dialogs\dialogswin32\images\KeyPadButton3.bmp">
+      <Filter>Dialogs\Icons</Filter>
+    </Image>
+    <Image Include="..\src\dialogs\dialogswin32\images\KeyPadButton4.bmp">
+      <Filter>Dialogs\Icons</Filter>
+    </Image>
+    <Image Include="..\src\dialogs\dialogswin32\images\KeyPadButton5.bmp">
+      <Filter>Dialogs\Icons</Filter>
+    </Image>
+    <Image Include="..\src\dialogs\dialogswin32\images\KeyPadButton6.bmp">
+      <Filter>Dialogs\Icons</Filter>
+    </Image>
+    <Image Include="..\src\dialogs\dialogswin32\images\KeyPadButton7.bmp">
+      <Filter>Dialogs\Icons</Filter>
+    </Image>
+    <Image Include="..\src\dialogs\dialogswin32\images\KeyPadButton8.bmp">
+      <Filter>Dialogs\Icons</Filter>
+    </Image>
+    <Image Include="..\src\dialogs\dialogswin32\images\KeyPadButton9.bmp">
+      <Filter>Dialogs\Icons</Filter>
+    </Image>
+    <Image Include="..\src\dialogs\dialogswin32\images\KeyPadButtonCE.bmp">
+      <Filter>Dialogs\Icons</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>{8779b4bf-1d5c-415b-b3e7-3ae37d9b9581}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Cardlayer">
+      <UniqueIdentifier>{91cdc724-c904-412f-9dce-d9559c68b411}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialogs">
+      <UniqueIdentifier>{58d42979-b45f-44e9-aeb5-eb698f20dd98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialogs\Icons">
+      <UniqueIdentifier>{36ad2a9b-45d7-49c3-95da-9615cce0be86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pkcs11">
+      <UniqueIdentifier>{a3ac402e-4118-45ad-b474-58fe20680b83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\LibTomCrypt">
+      <UniqueIdentifier>{34c81207-fd0b-48ad-8579-4063cbb0fd4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pkcs11\Pkcs11_standard">
+      <UniqueIdentifier>{e0464b9b-521a-4c19-a06b-3206ecca3f02}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\src\common\beid_registry.reg">
+      <Filter>Common</Filter>
+    </None>
+    <None Include="ClassDiagram3.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="beidpkcs11.rc">
+      <Filter>Pkcs11</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

@@ -372,7 +372,8 @@ namespace eIDViewer
             bool foundEmbeddedRootCA = false;
             string[] embeddedRootCAs = { "eIDViewer.Resources.Certs.belgiumrca2.pem",
                                          "eIDViewer.Resources.Certs.belgiumrca3.pem",
-                                         "eIDViewer.Resources.Certs.belgiumrca4.pem"};
+                                         "eIDViewer.Resources.Certs.belgiumrca4.pem",
+                                         "eIDViewer.Resources.Certs.belgiumrca6.pem"};
 
             if( (rootCertOnCard == null) || (rootViewModel == null) )
             {

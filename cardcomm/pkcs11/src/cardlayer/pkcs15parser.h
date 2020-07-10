@@ -28,7 +28,7 @@
 namespace eIDMW
 {
 
-	typedef struct
+	typedef struct commonObject
 	{
 		std::string csLabel;
 		unsigned long ulFlags;
