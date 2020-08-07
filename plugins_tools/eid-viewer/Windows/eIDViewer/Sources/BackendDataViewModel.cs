@@ -1188,6 +1188,12 @@ namespace eIDViewer
             intermediateCA_cert = null;
             RN_cert = null;
 
+            dataFile = null;
+            addressFile = null;
+            dataSignFile = null;
+            addressSignFile = null;
+            photoFile = null;
+            photo_hash = null;
             basicKeyHash = null;
             basicKeyFile = null;
         }
