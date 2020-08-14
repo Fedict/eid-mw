@@ -666,6 +666,10 @@ namespace eIDViewer
                 {
                     hashAlg = "SHA256";
                 }
+                else if (photo_hash.Length == 48)
+                {
+                    hashAlg = "SHA384";
+                }
                 else
                 {
                     return false;
