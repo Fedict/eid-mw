@@ -56,6 +56,6 @@ TEST_FUNC(scardcom_common){
 
 	fclose(tfile);
 	remove("testfile.txt");
-	return TEST_RV_OK;
+	return TEST_RV_SKIP;
  }
 	
