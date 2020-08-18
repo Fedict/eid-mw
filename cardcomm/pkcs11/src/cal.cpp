@@ -126,7 +126,7 @@ CK_RV cal_init()
 	try
 	{
 		oCardLayer = new CCardLayer();
-		oReadersInfo = new CReadersInfo();
+		oReadersInfo = new CReadersInfo(oCardLayer->ListReaders());
 	}
 	catch(CMWException &e)
 	{
