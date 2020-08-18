@@ -1,4 +1,4 @@
-TESTS = eject_card init_finalize wrong_init fork_init double_init getinfo funclist slotlist slotinfo tkinfo slotevent mechlist mechinfo sessions sessions_nocard sessioninfo login login_state nonsensible objects readdata readdata_limited readdata_sequence digest threads sign sign_state ordering
+TESTS = eject_card init_finalize wrong_init fork_init double_init getinfo funclist slotlist slotinfo tkinfo slotevent mechlist mechinfo sessions sessions_nocard sessioninfo login login_state nonsensible objects readdata readdata_limited readdata_sequence digest threads sign sign_state ordering cardcom_common
 if JPEG
 TESTS += decode_photo
 endif
@@ -102,3 +102,6 @@ sign_state_LDADD = $(COMMON_LIB)
 
 wrong_init_SOURCES = wrong_init.c
 wrong_init_LDADD = $(COMMON_LIB)
+
+cardcom_common_SOURCES = cardcom_common.c
+cardcom_common_LDADD = $(COMMON_LIB)
