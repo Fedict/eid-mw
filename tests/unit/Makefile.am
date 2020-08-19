@@ -14,6 +14,7 @@ AM_CFLAGS = -I$(top_srcdir)/doc/sdk/include/v240 -I$(top_srcdir)/plugins_tools/u
 if NO_DIALOGS
 AM_CFLAGS += -DNO_DIALOGS
 endif
+AM_CXXFLAGS = $(AM_CFLAGS)
 
 eject_card_SOURCES = eject.c
 eject_card_LDADD = $(COMMON_LIB)
@@ -103,5 +104,6 @@ sign_state_LDADD = $(COMMON_LIB)
 wrong_init_SOURCES = wrong_init.c
 wrong_init_LDADD = $(COMMON_LIB)
 
-cardcom_common_SOURCES = cardcom_common.c
+cardcom_common_SOURCES = cardcom_common.cpp
+cardcom_common_CXXFLAGS = -I$(top_srcdir)/cardcomm/pkcs11/src $(AM_CXXFLAGS)
 cardcom_common_LDADD = $(COMMON_LIB)
