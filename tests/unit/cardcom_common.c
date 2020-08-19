@@ -28,27 +28,22 @@
 #endif
 #include <stdio.h>
 #include "testlib.h"
-
-#include <string> 
-#include <string.h>
-#include <typeinfo>
-#include <iostream>
-
-
+/*#include "common.h"*/
 TEST_FUNC(scardcom_common){
-	if (typeid(wstring_From_string(std::string ("teststring"))).name() =! "wstring"){ 
+	return TEST_RV_SKIP;
+	/*if (typename(wstring_From_string("teststring")) =! TYPE_WSTRING){ 
 		printf("not ok\n");
 		return TEST_RV_FAIL;
 	}	
 
-	std::wstring testw = wstring_From_string(std::string ("teststring"));	
-	if (typeid(string_From_wstring(testw)).name =! "string"){ 
+	std::wstring testw = wstring_From_string("teststring");	
+	if (typename(string_From_wstring(testw)) =! TYPE_STRING){ 
 		printf("not ok\n");
 		return TEST_RV_FAIL;
 	}
 
 	FILE *tfile = NULL
-	tfile.fopen("testfile.txt","a")
+	tfile.fopen("testfile.txt","w+")
 	if (_wfopen_s(tfile, wstring_From_string(std::string ("testfile.txt")), ...) > 0 ){
 		printf("not ok\n");
 		return TEST_RV_FAIL;
@@ -56,6 +51,6 @@ TEST_FUNC(scardcom_common){
 
 	fclose(tfile);
 	remove("testfile.txt");
-	return TEST_RV_SKIP;
+	return TEST_RV_SKIP;*/
  }
 	
