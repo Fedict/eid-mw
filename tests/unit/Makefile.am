@@ -6,7 +6,8 @@ check_PROGRAMS = $(TESTS)
 
 CLEANFILES=foto.jpg
 
-COMMON_LIB = libtestlib.la $(top_builddir)/cardcomm/pkcs11/src/libbeidpkcs11.la
+P11_LIB = libtestlib.la $(top_builddir)/cardcomm/pkcs11/src/libbeidpkcs11.la
+COMMON_LIB = $(top_builddir)/cardcomm/pkcs11/src/libbeidcommon.la
 noinst_LTLIBRARIES = libtestlib.la
 libtestlib_la_SOURCES = testlib.h testlib.c serial_linux.c serial_io.h
 
@@ -18,4 +19,4 @@ AM_CXXFLAGS = $(AM_CFLAGS)
 
 cardcom_common_SOURCES = cardcom_common.cpp
 cardcom_common_CXXFLAGS = -I$(top_srcdir)/cardcomm/pkcs11/src $(AM_CXXFLAGS)
-cardcom_common_LDADD = $(COMMON_LIB)
+cardcom_common_LDADD = $(P11_LIB) $(COMMON_LIB)
