@@ -35,13 +35,17 @@
 
 TEST_FUNC(scardcom_common){
 	std::string tstring = std::string("teststring");
-	if (typeid(wstring_From_string(tstring)).name() != "wstring"){ 
-		std::cout << typeid(wstring_From_string(tstring)).name();
+	std::wstring wchecker;
+	if (typeid(wstring_From_string(tstring)) !=  typeid(wchecker)){ 
+		std::cout << typeid(wstring_From_string(tstring)).name() << std::endl;
+		return TEST_RV_FAIL;
 	}	
 
 	std::wstring testw = wstring_From_string("teststring");	
-	if (typeid(string_From_wstring(testw)).name() != "string"){ 
-		std::cout << typeid(string_From_wstring(testw)).name();
+	std::string schecker;
+	if (typeid(string_From_wstring(testw)) != typeid(schecker)){ 
+		std::cout << typeid(string_From_wstring(testw)).name() << std::endl;
+		return TEST_RV_FAIL;
 	}
 
 	FILE * tfile = fopen("testfile.txt","w+");
@@ -53,9 +57,10 @@ TEST_FUNC(scardcom_common){
 	const wchar_t * filename = wFilename.c_str();
 	if (_wfopen_s(fPointer, filename, mode) > 0 ){
 		printf("could not open file");
+		return TEST_RV_FAIL;
 	}
 	fclose(tfile);
 	remove("testfile.txt");
-	return TEST_RV_SKIP;
+	return TEST_RV_OK;
  }
 	
