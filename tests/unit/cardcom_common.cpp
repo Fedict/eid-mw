@@ -37,14 +37,14 @@ TEST_FUNC(scardcom_common){
 	std::string tstring = std::string("teststring");
 	std::wstring wchecker;
 	if (typeid(wstring_From_string(tstring)) !=  typeid(wchecker)){ 
-		std::cout << typeid(wstring_From_string(tstring)).name() << std::endl;
+		std::cout << "wstring expected but returned type: " <<typeid(wstring_From_string(tstring)).name() << std::endl;
 		return TEST_RV_FAIL;
 	}	
 
 	std::wstring testw = wstring_From_string("teststring");	
 	std::string schecker;
 	if (typeid(string_From_wstring(testw)) != typeid(schecker)){ 
-		std::cout << typeid(string_From_wstring(testw)).name() << std::endl;
+		std::cout << "string expected but returned type: " <<typeid(string_From_wstring(testw)).name() << std::endl;
 		return TEST_RV_FAIL;
 	}
 
@@ -61,6 +61,8 @@ TEST_FUNC(scardcom_common){
 	}
 	fclose(tfile);
 	remove("testfile.txt");
+	
+	
 	return TEST_RV_OK;
  }
 	
