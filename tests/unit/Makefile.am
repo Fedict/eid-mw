@@ -1,4 +1,4 @@
-TESTS = eject_card init_finalize wrong_init fork_init double_init getinfo funclist slotlist slotinfo tkinfo slotevent mechlist mechinfo sessions sessions_nocard sessioninfo login login_state nonsensible objects readdata readdata_limited readdata_sequence digest threads sign sign_state ordering #cardcom_common
+TESTS = eject_card init_finalize wrong_init fork_init double_init getinfo funclist slotlist slotinfo tkinfo slotevent mechlist mechinfo sessions sessions_nocard sessioninfo login login_state nonsensible objects readdata readdata_limited readdata_sequence digest threads sign sign_state ordering cardcom_common bad_login
 if JPEG
 TESTS += decode_photo
 endif
@@ -108,3 +108,10 @@ wrong_init_LDADD = $(P11_LIB)
 cardcom_common_SOURCES = cardcom_common.cpp
 cardcom_common_CXXFLAGS = -I$(top_srcdir)/cardcomm/pkcs11/src $(AM_CXXFLAGS)
 cardcom_common_LDADD = $(P11_LIB) $(COMMON_LIB)
+
+bad_login_SOURCES = bad_login.c
+bad_login_LDADD = $(P11_LIB)
+
+dialogs_SOURCES = dialogs.cpp
+dialogs_CXXFLAGS = -I$(top_srcdir)/cardcomm/pkcs11/src $(AM_CXXFLAGS)
+dialogs_LDADD = $(P11_LIB) $(COMMON_LIB)
