@@ -36,7 +36,7 @@ static CK_RV notify_login(CK_SESSION_HANDLE handle EIDT_UNUSED, CK_NOTIFICATION 
 	return CKR_OK;
 }
 
-TEST_FUNC(sdialogs) {
+TEST_FUNC(sbadlogin) {
 	//badpin (usage, pinname, remainingtries)
 	CK_SLOT_ID slot;
 	CK_SESSION_HANDLE handle = 0;
@@ -46,11 +46,14 @@ TEST_FUNC(sdialogs) {
 		{ CKR_PIN_INCORRECT, TEST_RV_OK },
 		{ CKR_FUNCTION_CANCELED, TEST_RV_SKIP },
 		{ CKR_OK, TEST_RV_FAIL },
-		/*	{ DLG_OK, TEST_RV_OK }, */
 	};
 	ckrv_mod m_nlogin[] = {
 		{ CKR_USER_NOT_LOGGED_IN, TEST_RV_OK },
 		{ CKR_OK, TEST_RV_FAIL },
+	};
+	ckrv_mod m_glogin[] = {
+		{ CKR_USER_NOT_LOGGED_IN, TEST_RV_SKIP },
+		{ CKR_OK, TEST_RV_OK },
 	};
 	ckrv_mod m_nsession[] = {
 		{ CKR_SESSION_HANDLE_INVALID, TEST_RV_OK },
@@ -68,55 +71,58 @@ TEST_FUNC(sdialogs) {
 	}
 
 	check_rv_long(C_Logout(handle), m_nsession);
+	check_rv(C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, notify_login, &handle));
+	check_rv(C_GetSessionInfo(handle, &sinfo));
+	printf("State: %lu\n", sinfo.state);
+	printf("Flags: %#08lx\n", sinfo.flags);
 
-	if(have_robot()) {
-		check_rv(C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &handle));
-		if(!have_pin() || !can_enter_pin(slot)) {
-			fprintf(stderr, "cannot test login without the ability to enter a 	pin code\n");
-        		check_rv(C_Finalize(NULL_PTR));
-			return TEST_RV_SKIP;
-		}
-		printf("entering wrong pin \n");
-		check_rv_long(C_Login(handle, CKU_USER, NULL_PTR, 0), m);
-		robot_remove_card();
-		C_CloseSession(handle);
+	if(!have_pin() || !can_enter_pin(slot)) {
+		fprintf(stderr, "cannot test login without the ability to enter a 	pin code\n");
+        	check_rv(C_Finalize(NULL_PTR));
+		return TEST_RV_SKIP;
 	}
-	else{
-		check_rv(C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, notify_login, &handle));
+	check_rv_long(C_Logout(handle), m_nlogin);
+	
+	if (have_robot() && !is_manual_robot()){
+		char * goodpin = getenv("EID_PIN_CODE");
+		setenv("EID_PIN_CODE","4444",1);
+		check_rv_long(C_Login(handle, CKU_USER, NULL_PTR, 0), m);
+	
 		check_rv(C_GetSessionInfo(handle, &sinfo));
 		printf("State: %lu\n", sinfo.state);
 		printf("Flags: %#08lx\n", sinfo.flags);
-
-		if(!have_pin() || !can_enter_pin(slot)) {
-			fprintf(stderr, "cannot test login without the ability to enter a 	pin code\n");
-        		check_rv(C_Finalize(NULL_PTR));
-			return TEST_RV_SKIP;
-		}
-		check_rv_long(C_Logout(handle), m_nlogin);
-		printf("entering wrong pin \n");
-		check_rv_long(C_Login(handle, CKU_USER, NULL_PTR, 0), m);
+		
+		setenv("EID_PIN_CODE",goodpin,1);
+		check_rv_long(C_Login(handle, CKU_USER, NULL_PTR, 0), m_glogin);
+		
 		check_rv(C_GetSessionInfo(handle, &sinfo));
-
 		printf("State: %lu\n", sinfo.state);
 		printf("Flags: %#08lx\n", sinfo.flags);
-
-		check_rv(C_CloseSession(handle));
 	}
-
+	else{	
+	
+		printf("entering wrong pin , watch out, after to many times card gets locked\n");
+		check_rv_long(C_Login(handle, CKU_USER, NULL_PTR, 0), m);
+		
+		check_rv(C_GetSessionInfo(handle, &sinfo));
+		printf("State: %lu\n", sinfo.state);
+		printf("Flags: %#08lx\n", sinfo.flags);
+	
+		printf("entering correct pin , to reset the attempts counter\n"); 
+		check_rv_long(C_Login(handle, CKU_USER, NULL_PTR, 0), m_glogin);
+		
+		check_rv(C_GetSessionInfo(handle, &sinfo));
+		printf("State: %lu\n", sinfo.state);
+		printf("Flags: %#08lx\n", sinfo.flags);
+	}
+		
+	check_rv_long(C_Logout(handle), m_glogin);
+		
+	check_rv(C_CloseSession(handle));
 	check_rv(C_Finalize(NULL_PTR));
 
 	return TEST_RV_OK;
-/*
-do:
-askpin (operation, usage, pinname, pin1, buffer1, pin2, buffer2) 
 
-not:
-displaypinpadinfo()
-closepinpadinfo()
-
-??
-askaccess()
-*/	
 }
 	
 	
