@@ -349,3 +349,38 @@ char* eid_vwr_x509_get_details(const void* certificate, size_t certlen) {
 
 	return rv;
 }
+
+enum eid_vwr_result eid_vwr_verify_root_cert(const void *certificate, size_t certlen) {
+	X509 *cert_i = NULL;
+	X509_STORE *store = NULL;
+	X509_LOOKUP *lookup = NULL;
+	X509_OBJECT *store_key = X509_OBJECT_new();
+	enum eid_vwr_result ret;
+
+	store = X509_STORE_new();
+	if(!(lookup = X509_STORE_add_lookup(store, X509_LOOKUP_hash_dir()))) {
+		be_log(EID_VWR_LOG_COARSE, "Root certificate verification failed: could not open trust store");
+		ret = EID_VWR_RES_UNKNOWN;
+		goto out;
+	}
+	X509_LOOKUP_add_dir(lookup, CERTTRUSTDIR, X509_FILETYPE_PEM);
+	if(d2i_X509(&cert_i, (const unsigned char**)&certificate, certlen) == NULL) {
+		be_log(EID_VWR_LOG_NORMAL, "Root certificate verification failed: could not parse root certificate");
+		ret = EID_VWR_RES_WARNING;
+		goto out;
+	}
+	if(X509_LOOKUP_by_subject(lookup, X509_LU_X509, X509_get_subject_name(cert_i), store_key) != 1){
+		be_log(EID_VWR_LOG_COARSE, "Root certificate verification failed: root certificate not found in trust store");
+		ret = EID_VWR_RES_FAILED;
+		goto out;
+	}
+	if(X509_cmp(cert_i, X509_OBJECT_get0_X509(store_key)) != 0) {
+		be_log(EID_VWR_LOG_COARSE, "Root certificate verification failed: found root certificate does not match certificate from truststore");
+		ret = EID_VWR_RES_FAILED;
+		goto out;
+	}
+	ret = EID_VWR_RES_SUCCESS;
+out:
+	X509_OBJECT_free(store_key);
+	return ret;
+}
