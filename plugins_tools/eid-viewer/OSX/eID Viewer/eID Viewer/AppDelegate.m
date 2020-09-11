@@ -485,28 +485,34 @@
 -(void)changeLogLevel:(NSPopUpButton *)logLevel {
 	[[NSUserDefaults standardUserDefaults] setInteger:[logLevel indexOfSelectedItem] forKey:@"log_level"];
 }
+#define maybe_fail(r, c, j) if(((r) = (c)) == eIDResultFailed) { have_fail = true; if(j) goto failed; }
 -(IBAction)validateNow:(id)sender {
 	NSData* ca = [_certstore certificateForKey:@"CA"];
-	eIDResult resCa = [eIDOSLayerBackend validateIntCert:ca withCa:[_certstore certificateForKey:@"Root"]];
-	eIDResult resSig = [eIDOSLayerBackend validateCert:[_certstore certificateForKey:@"Signature"] withCa:ca];
-	eIDResult resAuth = [eIDOSLayerBackend validateCert:[_certstore certificateForKey:@"Authentication"] withCa:ca];
-	eIDResult resRRN = [eIDOSLayerBackend validateRrnCert:[_certstore certificateForKey:@"CERT_RN_FILE"]];
-	eIDResult resParents;
-	if(resSig == resAuth) {
-		resParents = resSig;
-	} else {
-		if(resSig < resAuth) {
-			resParents = resSig;
-		} else {
-			resParents = resAuth;
-		}
+	bool have_fail = false;
+	eIDResult resRoot = eIDResultUnknown,
+		resCa = eIDResultUnknown,
+		resSig = eIDResultUnknown,
+		resAuth = eIDResultUnknown,
+		resRRN = eIDResultUnknown;
+	maybe_fail(resRoot, [eIDOSLayerBackend validateRootCert:[_certstore certificateForKey:@"Root"]], true);
+	maybe_fail(resRRN, [eIDOSLayerBackend validateRrnCert:[_certstore certificateForKey:@"CERT_RN_FILE"]], false);
+	maybe_fail(resCa, [eIDOSLayerBackend validateIntCert:ca withCa:[_certstore certificateForKey:@"Root"]], true);
+	maybe_fail(resSig, [eIDOSLayerBackend validateCert:[_certstore certificateForKey:@"Signature"] withCa:ca], true);
+	maybe_fail(resAuth, [eIDOSLayerBackend validateCert:[_certstore certificateForKey:@"Authentication"] withCa:ca], true);
+failed:
+	if(resCa != eIDResultSuccess && resSig == eIDResultSuccess) {
+		resSig = resCa;
 	}
-	[_certstore setValid:resParents forKey:@"Root"];
+	if(resCa != eIDResultSuccess && resAuth == eIDResultSuccess) {
+		resAuth = resCa;
+	}
+#undef maybe_fail
+	[_certstore setValid:resRoot forKey:@"Root"];
 	[_certstore setValid:resCa forKey:@"CA"];
 	[_certstore setValid:resRRN forKey:@"CERT_RN_FILE"];
 	[_certstore setValid:resAuth forKey:@"Authentication"];
 	[_certstore setValid:resSig forKey:@"Signature"];
-	if(resParents == eIDResultFailed || resRRN == eIDResultFailed) {
+	if(have_fail) {
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			NSAlert* error = [[NSAlert alloc ] init];
 			[error setAlertStyle:NSWarningAlertStyle];
