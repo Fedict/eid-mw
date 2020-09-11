@@ -257,6 +257,9 @@
 			name = @"certificate_checked";
 			break;
 		case eIDResultUnknown:
+			name = @"certificate_large";
+			break;
+		case eIDResultWarning:
 			name = @"certificate_warn";
 			break;
 	}
