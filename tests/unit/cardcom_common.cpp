@@ -34,14 +34,14 @@
 #include <iostream>
 
 TEST_FUNC(scardcom_common){
-	std::string tstring = std::string("teststring");
-	std::wstring wchecker;
-	if (typeid(wstring_From_string(tstring)) !=  typeid(wchecker)){ 
+	string tstring = "teststring";
+	std::wstring wschecker;
+	if (typeid(wstring_From_string(tstring)) !=  typeid(wschecker)){ 
 		std::cout << "wstring expected but returned type: " <<typeid(wstring_From_string(tstring)).name() << std::endl;
 		return TEST_RV_FAIL;
 	}	
 
-	std::wstring testw = wstring_From_string("teststring");	
+	std::wstring testw = L"teststring";	
 	std::string schecker;
 	if (typeid(string_From_wstring(testw)) != typeid(schecker)){ 
 		std::cout << "string expected but returned type: " <<typeid(string_From_wstring(testw)).name() << std::endl;
@@ -50,18 +50,15 @@ TEST_FUNC(scardcom_common){
 
 	FILE * tfile = fopen("testfile.txt","w+");
 	FILE ** fPointer = new FILE *;
-	*fPointer = tfile;
-	std::wstring wmode = wstring_From_string("a");	
-        const wchar_t * mode = wmode.c_str();
-	std::wstring wFilename = wstring_From_string(std::string ("testfile.txt"));
-	const wchar_t * filename = wFilename.c_str();
+	*fPointer = tfile;	
+        const wchar_t * mode = L"w+";
+	const wchar_t * filename = L"testfile.txt";
 	if (_wfopen_s(fPointer, filename, mode) > 0 ){
 		printf("could not open file");
 		return TEST_RV_FAIL;
 	}
 	fclose(tfile);
 	remove("testfile.txt");
-	
 	
 	return TEST_RV_OK;
  }
