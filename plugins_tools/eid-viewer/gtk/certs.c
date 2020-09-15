@@ -256,10 +256,10 @@ static enum eid_vwr_result check_cert(char* which) {
 	GtkTreeIter *cert_iter = get_iter_for(which);
 	GtkTreeIter *ca_iter;
 	GByteArray *cert, *ca_cert;
-	GValue *val_cert, *val_ca, *val_root;
-	GValue *val_tcert, *val_tca, *val_troot;
-	int *col_cert, *col_ca, *col_root;
-	int *col_tcert, *col_tca, *col_troot;
+	GValue *val_cert;
+	GValue *val_tcert;
+	int *col_cert;
+	int *col_tcert;
 	enum eid_vwr_result verify_result;
 
 	if(strcmp(which, "CA")==0) {
@@ -284,6 +284,8 @@ static enum eid_vwr_result check_cert(char* which) {
 		verify_result = eid_vwr_verify_rrncert(cert->data, cert->len);
 	} else if(strcmp(which, "CA") == 0) {
 		verify_result = eid_vwr_verify_int_cert(cert->data, cert->len, ca_cert->data, ca_cert->len, perform_http_request, free);
+	} else if(strcmp(which, "Root") == 0) {
+		verify_result = eid_vwr_verify_root_cert(cert->data, cert->len);
 	} else {
 		verify_result = eid_vwr_verify_cert(cert->data, cert->len, ca_cert->data, ca_cert->len, perform_ocsp_request, free);
 	}
@@ -297,9 +299,13 @@ static enum eid_vwr_result check_cert(char* which) {
 			g_value_set_instance(val_cert, bad_certificate);
 			g_value_set_string(val_tcert, _("NOT TRUSTED"));
 			break;
-		case EID_VWR_RES_UNKNOWN:
+		case EID_VWR_RES_WARNING:
 			g_value_set_instance(val_cert, warn_certificate);
 			g_value_set_string(val_tcert, _("validation failed"));
+			break;
+		case EID_VWR_RES_UNKNOWN:
+			g_value_set_instance(val_cert, unchecked_certificate);
+			g_value_set_string(val_tcert, "");
 			break;
 		default:
 			free(val_cert);
@@ -308,30 +314,8 @@ static enum eid_vwr_result check_cert(char* which) {
 			free(col_tcert);
 			return verify_result;
 	}
-	col_ca = malloc(sizeof(int));
-	val_ca = calloc(sizeof(GValue), 1);
-	col_tca = malloc(sizeof(int));
-	val_tca = calloc(sizeof(GValue), 1);
-	col_root = malloc(sizeof(int));
-	val_root = calloc(sizeof(GValue), 1);
-	col_troot = malloc(sizeof(int));
-	val_troot = calloc(sizeof(GValue), 1);
-	*col_ca = *col_root = *col_cert;
-	*col_tca = *col_troot = *col_tcert;
-	g_value_init(val_ca, GDK_TYPE_PIXBUF);
-	g_value_copy(val_cert, val_ca);
-	g_value_init(val_root, GDK_TYPE_PIXBUF);
-	g_value_copy(val_cert, val_root);
-	g_value_init(val_tca, G_TYPE_STRING);
-	g_value_copy(val_tcert, val_tca);
-	g_value_init(val_troot, G_TYPE_STRING);
-	g_value_copy(val_tcert, val_troot);
 	tst_set(which, col_cert, val_cert, 1);
 	tst_set(which, col_tcert, val_tcert, 1);
-	tst_set("CA", col_ca, val_ca, 1);
-	tst_set("CA", col_tca, val_tca, 1);
-	tst_set("Root", col_root, val_root, 1);
-	tst_set("Root", col_troot, val_troot, 1);
 
 	g_main_context_invoke(NULL, trigger_update_info, NULL);
 
@@ -360,7 +344,8 @@ static void* check_certs_thread(void* splat G_GNUC_UNUSED) {
 		return NULL;
 	}
 
-	res = check_cert("CA");
+	res = check_cert("Root");
+	res = worst(res, check_cert("CA"));
 	if(iters[Signature] != NULL) {
 		res = worst(res, check_cert("Signature"));
 	}
