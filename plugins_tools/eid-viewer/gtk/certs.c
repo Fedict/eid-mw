@@ -262,7 +262,7 @@ static enum eid_vwr_result check_cert(char* which) {
 	int *col_tcert;
 	enum eid_vwr_result verify_result;
 
-	if(strcmp(which, "CA")==0) {
+	if((strcmp(which, "CA")==0) || (strcmp(which, "CERT_RN_FILE") == 0)) {
 		ca_iter = get_iter_for("Root");
 	} else {
 		ca_iter = get_iter_for("CA");
@@ -281,7 +281,7 @@ static enum eid_vwr_result check_cert(char* which) {
 	*col_tcert = CERT_COL_VALIDITY;
 	g_value_init(val_tcert, G_TYPE_STRING);
 	if(strcmp(which, "CERT_RN_FILE") == 0) {
-		verify_result = eid_vwr_verify_rrncert(cert->data, cert->len);
+		verify_result = eid_vwr_verify_rrncert(cert->data, cert->len, ca_cert->data, ca_cert->len);
 	} else if(strcmp(which, "CA") == 0) {
 		verify_result = eid_vwr_verify_int_cert(cert->data, cert->len, ca_cert->data, ca_cert->len, perform_http_request, free);
 	} else if(strcmp(which, "Root") == 0) {
@@ -327,6 +327,7 @@ static enum eid_vwr_result check_cert(char* which) {
 static void* check_certs_thread(void* splat G_GNUC_UNUSED) {
 	static pthread_once_t once = PTHREAD_ONCE_INIT;
 	enum eid_vwr_result res = EID_VWR_RES_UNKNOWN;
+	enum eid_vwr_result res_root = EID_VWR_RES_UNKNOWN;
 
 	pthread_once(&once, create_proxy_factory);
 	if(!pf) {
@@ -344,7 +345,7 @@ static void* check_certs_thread(void* splat G_GNUC_UNUSED) {
 		return NULL;
 	}
 
-	res = check_cert("Root");
+	res_root = res = check_cert("Root");
 	res = worst(res, check_cert("CA"));
 	if(iters[Signature] != NULL) {
 		res = worst(res, check_cert("Signature"));
@@ -353,7 +354,8 @@ static void* check_certs_thread(void* splat G_GNUC_UNUSED) {
 		res = worst(res, check_cert("Authentication"));
 	}
 	if(iters[CERT_RN_FILE] != NULL) {
-		res = worst(res, check_cert("CERT_RN_FILE"));
+		res_root = worst(res_root, check_cert("CERT_RN_FILE"));
+		res = worst(res, res_root);
 	}
 	if(res == EID_VWR_RES_FAILED) {
 		uilog(EID_VWR_LOG_ERROR, _("One or more certificates of the certificates on this card were found to be invalid or revoked. For more information, please see the log tab"));

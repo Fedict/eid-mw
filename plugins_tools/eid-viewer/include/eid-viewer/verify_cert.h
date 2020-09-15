@@ -111,7 +111,10 @@ extern "C"
   */
 	DllExport enum eid_vwr_result eid_vwr_verify_rrncert(const void
 							     *certificate,
-							     size_t certlen);
+							     size_t certlen,
+							     const void
+							     *root_cert,
+							     size_t rootlen);
 /**
   * \brief Verify the validity of the root certificate
   *
