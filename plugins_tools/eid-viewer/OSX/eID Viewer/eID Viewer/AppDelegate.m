@@ -488,15 +488,16 @@
 #define maybe_fail(r, c, j) if(((r) = (c)) == eIDResultFailed) { have_fail = true; if(j) goto failed; }
 -(IBAction)validateNow:(id)sender {
 	NSData* ca = [_certstore certificateForKey:@"CA"];
+	NSData* root = [_certstore certificateForKey:@"Root"];
 	bool have_fail = false;
 	eIDResult resRoot = eIDResultUnknown,
 		resCa = eIDResultUnknown,
 		resSig = eIDResultUnknown,
 		resAuth = eIDResultUnknown,
 		resRRN = eIDResultUnknown;
-	maybe_fail(resRoot, [eIDOSLayerBackend validateRootCert:[_certstore certificateForKey:@"Root"]], true);
-	maybe_fail(resRRN, [eIDOSLayerBackend validateRrnCert:[_certstore certificateForKey:@"CERT_RN_FILE"]], false);
-	maybe_fail(resCa, [eIDOSLayerBackend validateIntCert:ca withCa:[_certstore certificateForKey:@"Root"]], true);
+	maybe_fail(resRoot, [eIDOSLayerBackend validateRootCert:root], true);
+	maybe_fail(resRRN, [eIDOSLayerBackend validateRrnCert:[_certstore certificateForKey:@"CERT_RN_FILE"] withRoot:root], false);
+	maybe_fail(resCa, [eIDOSLayerBackend validateIntCert:ca withCa:root], true);
 	maybe_fail(resSig, [eIDOSLayerBackend validateCert:[_certstore certificateForKey:@"Signature"] withCa:ca], true);
 	maybe_fail(resAuth, [eIDOSLayerBackend validateCert:[_certstore certificateForKey:@"Authentication"] withCa:ca], true);
 failed:

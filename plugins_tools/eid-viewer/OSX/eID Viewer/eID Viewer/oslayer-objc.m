@@ -176,8 +176,8 @@ static void osl_objc_free_ocsp_request(void* data) {
 	}
 	return (eIDResult)eid_vwr_verify_root_cert([certificate bytes], [certificate length]);
 }
-+(eIDResult)validateRrnCert:(NSData *)certificate {
-	return (eIDResult)eid_vwr_verify_rrncert([certificate bytes], [certificate length]);
++(eIDResult)validateRrnCert:(NSData *)certificate withRoot:(NSData *) root {
+	return (eIDResult)eid_vwr_verify_rrncert([certificate bytes], [certificate length], [root bytes], [root length]);
 }
 +(void)setReaderAuto:(BOOL)automatic {
 	eid_vwr_be_select_slot(automatic ? CK_TRUE : CK_FALSE, 0);
