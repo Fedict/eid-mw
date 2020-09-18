@@ -398,8 +398,12 @@ enum eid_vwr_result eid_vwr_verify_root_cert(const void *certificate, size_t cer
 		ret = EID_VWR_RES_FAILED;
 		goto out;
 	}
-	if(X509_cmp(cert_i, X509_OBJECT_get0_X509(store_key)) != 0) {
-		be_log(EID_VWR_LOG_COARSE, "Root certificate verification failed: found root certificate does not match certificate from truststore");
+	EVP_PKEY *cert_key = X509_get0_pubkey(cert_i);
+	X509 *store_cert = X509_OBJECT_get0_X509(store_key);
+	EVP_PKEY *trusted_key = X509_get0_pubkey(store_cert);
+	int cmp_val;
+	if((cmp_val = EVP_PKEY_cmp(cert_key, trusted_key)) != 1) {
+		be_log(EID_VWR_LOG_COARSE, "Root certificate verification failed: public key of root certificate does not match public key of certificate from truststore");
 		ret = EID_VWR_RES_FAILED;
 		goto out;
 	}
