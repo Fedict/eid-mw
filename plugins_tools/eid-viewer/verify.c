@@ -338,7 +338,10 @@ enum eid_vwr_result eid_vwr_verify_rrncert(const void* certificate, size_t certl
 		ret = EID_VWR_RES_WARNING;
 		goto exit;
 	}
-	if(X509_cmp(root_i, X509_OBJECT_get0_X509(root_object)) != 0) {
+	EVP_PKEY *cert_key = X509_get0_pubkey(root_i);
+	X509 *store_cert = X509_OBJECT_get0_X509(root_object);
+	EVP_PKEY *trusted_key = X509_get0_pubkey(store_cert);
+	if(EVP_PKEY_cmp(trusted_key, cert_key) != 1) {
 		be_log(EID_VWR_LOG_COARSE, "RRN certificate verification failed: root certificate on card is not RRN certificate issuer");
 		ret = EID_VWR_RES_WARNING;
 		goto exit;
