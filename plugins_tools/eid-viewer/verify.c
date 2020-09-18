@@ -27,6 +27,11 @@
 #define X509_get0_extensions(ce) ((ce)->cert_info->extensions)
 
 #define X509_get0_tbs_sigalg(ci) ((ci)->sig_alg)
+#define X509_OBJECT_new() calloc(sizeof(X509_OBJECT), 1)
+#define X509_OBJECT_free(o) free(o)
+#define X509_get0_pubkey(x) (x->cert_info->key->pkey)
+#define X509_OBJECT_get0_X509(o) (o->data.x509)
+
 #define algobjcast(obj) ((ASN1_OBJECT**)obj)
 #define ppvalcast(obj) ((void**)obj)
 
