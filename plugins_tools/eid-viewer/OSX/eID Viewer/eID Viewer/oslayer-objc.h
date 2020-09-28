@@ -1,7 +1,7 @@
 #include <BeidView/oslayer.h>
 
 /**
- * \defgroup ObjC Objective-C wrapper API (OSX only)
+ * \defgroup ObjC Objective-C wrapper API (macOS only)
  *
  * @{
  */
