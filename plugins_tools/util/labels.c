@@ -54,9 +54,7 @@ static struct {
 	{ TEXT("carddata_appl_lifecycle"),	CK_FALSE, CK_TRUE, CK_TRUE, NULL },
 	{ TEXT("carddata_pkcs1_support"),	CK_FALSE, CK_TRUE, CK_TRUE, NULL },
 	{ TEXT("carddata_key_exchange_version"),CK_FALSE, CK_TRUE, CK_TRUE, NULL },
-	{ TEXT("carddata_pin_authentication_counter"), CK_FALSE, CK_TRUE, CK_TRUE, NULL },
-	{ TEXT("carddata_pin_nonrepudiation_counter"), CK_FALSE, CK_TRUE, CK_TRUE, NULL },
-	{ TEXT("carddata_pin_read_ef_counter"),	CK_FALSE, CK_TRUE, CK_TRUE, NULL },
+	{ TEXT("carddata_pin_counter"),         CK_FALSE, CK_TRUE, CK_TRUE, NULL },
 	{ TEXT("DATA_FILE"),			CK_FALSE, CK_TRUE, CK_TRUE, NULL },
 	{ TEXT("card_number"),			CK_TRUE, CK_TRUE, CK_TRUE, NULL },
 	{ TEXT("chip_number"),			CK_FALSE, CK_TRUE, CK_TRUE, NULL },
@@ -97,6 +95,8 @@ static struct {
 	{ TEXT("CA"),				CK_FALSE, CK_TRUE, CK_TRUE, NULL },
 	{ TEXT("xml_file_version"),		CK_TRUE, CK_FALSE, CK_FALSE, NULL }, // virtual label only used when reading an XML file
 	{ TEXT("xml"),				CK_TRUE, CK_FALSE, CK_FALSE, NULL }, // virtual label only used when reading an XML file
+	{ TEXT("BASIC_KEY_FILE"),		CK_FALSE, CK_TRUE, CK_TRUE, NULL },
+	{ TEXT("basic_key_hash"),		CK_FALSE, CK_TRUE, CK_TRUE, NULL },
 	{ NULL,					0, 0, 0, NULL },
 };
 
