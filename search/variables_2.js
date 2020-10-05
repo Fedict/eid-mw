@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['imagedata',['imagedata',['../structeid__vwr__preview.html#ac5931eafe74be1dd46ac23a6b9a8b861',1,'eid_vwr_preview']]],
-  ['imagelen',['imagelen',['../structeid__vwr__preview.html#ab0b22568f6c29ad09082e3608ff484c5',1,'eid_vwr_preview']]]
+  ['have_5fdata',['have_data',['../structeid__vwr__preview.html#a33a7f0129ac3761440b32861a352f467',1,'eid_vwr_preview']]]
 ];

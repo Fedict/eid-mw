@@ -87,6 +87,8 @@ Data Structures</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeid__vwr__preview.html">eid_vwr_preview</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeid__vwr__challenge__responsedata.html">eid_vwr_challenge_responsedata</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -134,7 +136,8 @@ Enumerations</h2></td></tr>
 <a class="el" href="group___c___a_p_i.html#gga32abb45fcb0a67a1482290d7ab12839eab4d2a37f9ade383bbda57ad21b52d323">STATE_NO_TOKEN</a>, 
 <a class="el" href="group___c___a_p_i.html#gga32abb45fcb0a67a1482290d7ab12839eafd636b2347b09712b5613f25961bbf1d">STATE_NO_READER</a>, 
 <br />
-&#160;&#160;<a class="el" href="group___c___a_p_i.html#gga32abb45fcb0a67a1482290d7ab12839ea12b3f4849becdabdc8b0b0e0f27ddb65">STATE_TOKEN_IDLE</a>
+&#160;&#160;<a class="el" href="group___c___a_p_i.html#gga32abb45fcb0a67a1482290d7ab12839ea12b3f4849becdabdc8b0b0e0f27ddb65">STATE_TOKEN_IDLE</a>, 
+<a class="el" href="group___c___a_p_i.html#gga32abb45fcb0a67a1482290d7ab12839ea527fddf3c02824f6954eabdf66819412">STATE_TOKEN_CHALLENGE</a>
 <br />
  }<tr class="memdesc:ga32abb45fcb0a67a1482290d7ab12839e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Possible states.  <a href="group___c___a_p_i.html#ga32abb45fcb0a67a1482290d7ab12839e">More...</a><br /></td></tr>
 </td></tr>
@@ -155,6 +158,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gac7a99faa43e0f723b56931d1d13dc13a"><td class="memItemLeft" align="right" valign="top">DllExport void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c___a_p_i.html#gac7a99faa43e0f723b56931d1d13dc13a">eid_vwr_pinop</a> (enum <a class="el" href="group___c___a_p_i.html#gad19893db2805ad8851ad127820a1450f">eid_vwr_pinops</a> op)</td></tr>
 <tr class="memdesc:gac7a99faa43e0f723b56931d1d13dc13a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform a PIN operation.  <a href="#gac7a99faa43e0f723b56931d1d13dc13a">More...</a><br /></td></tr>
 <tr class="separator:gac7a99faa43e0f723b56931d1d13dc13a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad7e74b30de194b2ef224c14a4f907259"><td class="memItemLeft" align="right" valign="top">DllExport int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c___a_p_i.html#gad7e74b30de194b2ef224c14a4f907259">eid_vwr_challenge</a> (const unsigned char *challenge, int challengelen)</td></tr>
+<tr class="memdesc:gad7e74b30de194b2ef224c14a4f907259"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform an internal authenticate operation on the card.  <a href="#gad7e74b30de194b2ef224c14a4f907259">More...</a><br /></td></tr>
+<tr class="separator:gad7e74b30de194b2ef224c14a4f907259"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2caa7ca6dcd1f1b6439e2b7d9cea75ed"><td class="memItemLeft" align="right" valign="top">DllExport int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c___a_p_i.html#ga2caa7ca6dcd1f1b6439e2b7d9cea75ed">eid_vwr_createcallbacks</a> (struct <a class="el" href="structeid__vwr__ui__callbacks.html">eid_vwr_ui_callbacks</a> *cb)</td></tr>
 <tr class="memdesc:ga2caa7ca6dcd1f1b6439e2b7d9cea75ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the callbacks.  <a href="#ga2caa7ca6dcd1f1b6439e2b7d9cea75ed">More...</a><br /></td></tr>
 <tr class="separator:ga2caa7ca6dcd1f1b6439e2b7d9cea75ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -376,6 +382,8 @@ Functions</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="gga32abb45fcb0a67a1482290d7ab12839ea12b3f4849becdabdc8b0b0e0f27ddb65"></a>STATE_TOKEN_IDLE&#160;</td><td class="fielddoc"><p>not performing any action in the taoken_wait state </p>
 </td></tr>
+<tr><td class="fieldname"><a id="gga32abb45fcb0a67a1482290d7ab12839ea527fddf3c02824f6954eabdf66819412"></a>STATE_TOKEN_CHALLENGE&#160;</td><td class="fielddoc"><p>Performing a challenge operation. </p>
+</td></tr>
 </table>
 
 </div>
@@ -564,6 +572,44 @@ Functions</h2></td></tr>
 
 <p>Create the <a class="el" href="structeid__vwr__ui__callbacks.html" title="Callbacks which the backend can perform towards the UI. ">eid_vwr_ui_callbacks</a> struct. </p>
 <p>While it is possible, in theory, to create the struct by malloc()ing it manually, doing so will fail when the eid-viewer library is updated and a new callback function is added. For this reason, applications that want to continue working with future versions of the library without compatibility issues <em>must</em> use this function to allocate a correctly-sized structure. </p><dl class="section return"><dt>Returns</dt><dd>an allocated <a class="el" href="structeid__vwr__ui__callbacks.html" title="Callbacks which the backend can perform towards the UI. ">eid_vwr_ui_callbacks</a> struct, with all members set to NULL. </dd></dl>
+
+</div>
+</div>
+<a id="gad7e74b30de194b2ef224c14a4f907259"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad7e74b30de194b2ef224c14a4f907259">&#9670;&nbsp;</a></span>eid_vwr_challenge()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">DllExport int eid_vwr_challenge </td>
+          <td>(</td>
+          <td class="paramtype">const unsigned char *&#160;</td>
+          <td class="paramname"><em>challenge</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>challengelen</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Perform an internal authenticate operation on the card. </p>
+<p>If the state machine is currently in the TOKEN_WAIT state, issue an internal authenticate operation. In all other cases, does nothing.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">challenge</td><td>the challenge send to the card. </td></tr>
+    <tr><td class="paramname">challengelen</td><td>the length of the challenge, in bytes. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['description',['description',['../struct__slotdesc.html#a490cfe0d8223a55ca6242ba677cb83f1',1,'_slotdesc::description()'],['../structe_i_d_viewer_1_1eid__slotdesc.html#a23af17c78302b71c14ef38ea40b8d1d7',1,'eIDViewer.eid_slotdesc.description()']]]
+  ['challenge',['challenge',['../structeid__vwr__challenge__responsedata.html#ac27105565a1164bec9b64bb7162f24be',1,'eid_vwr_challenge_responsedata']]],
+  ['challenge_5fresult',['challenge_result',['../structeid__vwr__ui__callbacks.html#a5223b38a6f51e739b008dac058e8c979',1,'eid_vwr_ui_callbacks']]],
+  ['challengelen',['challengelen',['../structeid__vwr__challenge__responsedata.html#a82fb68dc81f6369a43479ec68fafe6fe',1,'eid_vwr_challenge_responsedata']]]
 ];

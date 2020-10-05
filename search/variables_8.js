@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['version',['version',['../structeid__vwr__ui__callbacks.html#aad880fc4455c253781e8968f2239d56f',1,'eid_vwr_ui_callbacks']]]
+  ['slot',['slot',['../struct__slotdesc.html#a170ed9a334429e4680c497ba260cc680',1,'_slotdesc::slot()'],['../structe_i_d_viewer_1_1eid__slotdesc.html#aa974399ebe6639cadc4aad8efff4b24e',1,'eIDViewer.eid_slotdesc.slot()']]]
 ];

@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['log',['log',['../structeid__vwr__ui__callbacks.html#ac5b8c4f8e2a0a57739f3af7cddcc370c',1,'eid_vwr_ui_callbacks']]],
-  ['logv',['logv',['../structeid__vwr__ui__callbacks.html#a94b40f36a6eb1418b57b596e1b2846ae',1,'eid_vwr_ui_callbacks']]]
+  ['imagedata',['imagedata',['../structeid__vwr__preview.html#ac5931eafe74be1dd46ac23a6b9a8b861',1,'eid_vwr_preview']]],
+  ['imagelen',['imagelen',['../structeid__vwr__preview.html#ab0b22568f6c29ad09082e3608ff484c5',1,'eid_vwr_preview']]]
 ];

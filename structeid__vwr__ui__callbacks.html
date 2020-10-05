@@ -100,12 +100,41 @@ Data Fields</h2></td></tr>
 <tr class="memitem:a7bf96d764dab0560eb606c8893e538c5"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeid__vwr__ui__callbacks.html#a7bf96d764dab0560eb606c8893e538c5">readers_changed</a> )(unsigned long nreaders, <a class="el" href="struct__slotdesc.html">slotdesc</a> *slots)</td></tr>
 <tr class="memdesc:a7bf96d764dab0560eb606c8893e538c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of known readers has changed.  <a href="#a7bf96d764dab0560eb606c8893e538c5">More...</a><br /></td></tr>
 <tr class="separator:a7bf96d764dab0560eb606c8893e538c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5223b38a6f51e739b008dac058e8c979"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeid__vwr__ui__callbacks.html#a5223b38a6f51e739b008dac058e8c979">challenge_result</a> )(const unsigned char *response, int responselen, enum <a class="el" href="group___c___a_p_i.html#ga77019cfe7dce20ab31a5b2c9da3ebfc6">eid_vwr_result</a> res)</td></tr>
+<tr class="memdesc:a5223b38a6f51e739b008dac058e8c979"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the result of a challenge operation.  <a href="#a5223b38a6f51e739b008dac058e8c979">More...</a><br /></td></tr>
+<tr class="separator:a5223b38a6f51e739b008dac058e8c979"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Callbacks which the backend can perform towards the UI. </p>
 <p>To ensure forward compatibility, a UI implementation <em>must</em> call <a class="el" href="group___c___a_p_i.html#ga8ff602c0d9f7ef27e489c0bf57971f6b" title="Create the eid_vwr_ui_callbacks struct. ">eid_vwr_cbstruct()</a> to allocate an <a class="el" href="structeid__vwr__ui__callbacks.html" title="Callbacks which the backend can perform towards the UI. ">eid_vwr_ui_callbacks</a> struct. Failure to do so may result in crashes in future versions of the eid-viewer library.</p>
 <p>An implementation may leave one or more of the below function pointers empty (i.e., at NULL). If this happens, the backend will simply not issue that event. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
+<a id="a5223b38a6f51e739b008dac058e8c979"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5223b38a6f51e739b008dac058e8c979">&#9670;&nbsp;</a></span>challenge_result</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void(* challenge_result) (const unsigned char *response, int responselen, enum <a class="el" href="group___c___a_p_i.html#ga77019cfe7dce20ab31a5b2c9da3ebfc6">eid_vwr_result</a> res)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return the result of a challenge operation. </p>
+<p>When the user interface calls <a class="el" href="group___c___a_p_i.html#gad7e74b30de194b2ef224c14a4f907259" title="Perform an internal authenticate operation on the card. ">eid_vwr_challenge()</a>, then at some later point this function may be called with the result of the requested PIN operation.</p>
+<p>If the state machine is not in the TOKEN_WAIT state when <a class="el" href="group___c___a_p_i.html#gad7e74b30de194b2ef224c14a4f907259" title="Perform an internal authenticate operation on the card. ">eid_vwr_challenge()</a> was called, this event will never be fired.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">response</td><td>the response calculated by the card. </td></tr>
+    <tr><td class="paramname">responselen</td><td>the length of the response, in bytes. </td></tr>
+    <tr><td class="paramname">res</td><td>the result of the operation </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ac5b8c4f8e2a0a57739f3af7cddcc370c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac5b8c4f8e2a0a57739f3af7cddcc370c">&#9670;&nbsp;</a></span>log</h2>
 
