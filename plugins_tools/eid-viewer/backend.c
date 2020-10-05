@@ -104,7 +104,7 @@ int eid_vwr_challenge(const unsigned char* data, int datalen) {
 		if (datalen > 0)
 		{
 			//copy the challenge in case the UI drops it
-			pchallengedata->challenge = malloc(datalen, 1);
+			pchallengedata->challenge = malloc(datalen);
 			if (pchallengedata->challenge != NULL)
 			{
 				memcpy(pchallengedata->challenge, data, datalen);
