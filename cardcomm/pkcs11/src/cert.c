@@ -152,7 +152,7 @@ int cert_get_info(const unsigned char *pcert, unsigned int lcert, T_CERT_INFO *i
 			ret = asn1_get_item(pcert, lcert, X509_EC_CURVE, &item, 1);
 			if (ret)
 				return(ret);
-			info->curve;
+
 			info->curve = malloc(item.l_raw);
 			if (info->curve == NULL)
 				return(E_X509_ALLOC);

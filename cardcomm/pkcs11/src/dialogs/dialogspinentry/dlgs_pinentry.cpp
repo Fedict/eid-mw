@@ -195,7 +195,9 @@ DlgRet eIDMW::DlgAskPins(DlgPinOperation operation, DlgPinUsage usage, const wch
 
 DlgRet eIDMW::DlgBadPin(DlgPinUsage usage, const wchar_t *csPinName, unsigned long ulRemainingTries) {
 	gpg_error_t r;
-	DlgRet rv = setup_dialog(_("beID: Incorrect PIN Code"), n_("You have entered an incorrect eID %ls code.\nPlease note that at the next incorrect entry your PIN code will be blocked.","You have entered an incorrect eID %ls code.\nPlease note that you have only %d attempts left before your PIN is blocked.", ulRemainingTries), csPinName, false, true);
+	char *prompt;
+	asprintf(&prompt, n_("You have entered an incorrect eID %%ls code.\nPlease note that at the next incorrect entry your PIN code will be blocked.","You have entered an incorrect eID %%ls code.\nPlease note that you have only %d attempts left before your PIN is blocked.", ulRemainingTries), (int)ulRemainingTries);
+	DlgRet rv = setup_dialog(_("beID: Incorrect PIN Code"), prompt, csPinName, false, true);
 	if(rv != DLG_OK) return rv;
 
 	if((r = assuan_transact(ctx, "MESSAGE", NULL, NULL, NULL, NULL, NULL, NULL))) {

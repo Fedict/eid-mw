@@ -1,0 +1,29 @@
+name: Generate docs
+on:
+  push:
+    branches: [ master ]
+jobs:
+  generate-docs:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: update apt cache
+      run: sudo apt-get update
+    - name: install prereqs
+      env: 
+        DEBIAN_FRONTEND: noninteractive
+      run: sudo apt-get -y install plantuml doxygen autoconf libassuan-dev libtool pkg-config autoconf-archive libpcsclite-dev libssl-dev libcurl4-openssl-dev
+    - name: bootstrap
+      run: ./bootstrap.sh
+    - name: configure
+      run: ./configure --without-gtkvers --disable-dependency-tracking
+    - name: make
+      run: make -j $(( ($(nproc) * 2) - ($(nproc) / 2) ))
+    - name: run doxygen
+      working-directory: doc/sdk/eidviewer
+      run: doxygen Doxyfile
+    - name: publish
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./doc/sdk/eidviewer/html

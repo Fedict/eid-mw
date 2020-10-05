@@ -63,7 +63,8 @@ enum eid_vwr_result
 {
 	EID_VWR_RES_FAILED,  ///< operation failed
 	EID_VWR_RES_SUCCESS, ///< the operation returned successfully
-	EID_VWR_RES_UNKNOWN  ///< the operation did not finish
+	EID_VWR_RES_UNKNOWN, ///< the operation did not finish
+	EID_VWR_RES_WARNING, ///< the operation finished with warnings
 };
 
 /** \brief Possible states.
