@@ -12,13 +12,10 @@ jobs:
     - name: install prereqs
       env: 
         DEBIAN_FRONTEND: noninteractive
-      run: sudo apt-get -y install plantuml doxygen autoconf libassuan-dev libtool pkg-config autoconf-archive libpcsclite-dev libssl-dev libcurl4-openssl-dev
-    - name: bootstrap
-      run: ./bootstrap.sh
-    - name: configure
-      run: ./configure --without-gtkvers --disable-dependency-tracking
-    - name: make
-      run: make -j $(( ($(nproc) * 2) - ($(nproc) / 2) ))
+      run: sudo apt-get -y install plantuml doxygen
+    - name: run plantuml
+      working-directory: plugins_tools/eid-viewer/uml
+      run: plantuml -o $(pwd) be-statemach-docs.puml
     - name: run doxygen
       working-directory: doc/sdk/eidviewer
       run: doxygen Doxyfile
