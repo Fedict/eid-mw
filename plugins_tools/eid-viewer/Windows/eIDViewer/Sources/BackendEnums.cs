@@ -90,6 +90,7 @@ namespace eIDViewer
         STATE_NO_TOKEN, ///< We don't have a card, and we also don't have a file.
         STATE_NO_READER, ///< We don't have a reader (yet?)
         STATE_TOKEN_IDLE, /// < done reading identity data and certificates
+        STATE_TOKEN_CHALLENGE, ///< Performing a challenge operation
 
         STATE_COUNT,
     };
