@@ -2096,7 +2096,56 @@ CK_RV cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT * pObject)
 #undef WHERE
 
 
+#define WHERE "cal_challenge()"
+CK_RV cal_challenge(CK_SLOT_ID hSlot, P11_SIGN_DATA * pSignData, unsigned char *in,
+	unsigned long l_in, unsigned char *out, unsigned long *l_out)
+{
+	CK_RV ret = 0;
+	CByteArray oData(in, l_in);
+	CByteArray oDataOut;
+	P11_SLOT *pSlot = NULL;
 
+	pSlot = p11_get_slot(hSlot);
+	if (pSlot == NULL)
+	{
+		log_trace(WHERE, "E: Invalid slot (%lu)", hSlot);
+		return (CKR_SLOT_ID_INVALID);
+	}
+	std::string szReader = pSlot->name;
+
+	//the caller is responsible for filling in/ checking the length
+	try
+	{
+		CReader & oReader = oCardLayer->getReader(szReader);
+		CCard* poCard = oReader.GetCard();
+
+		if (pSignData->mechanism != CKM_ECDSA_SHA384)
+		{
+			ret = CKR_MECHANISM_INVALID;
+			goto cleanup;
+		}
+
+		oDataOut = poCard->CardChallenge(oData);
+	}
+	catch (CMWException & e)
+	{
+		return (cal_translate_error(WHERE, e.GetError()));
+	}
+	catch (...)
+	{
+		log_trace(WHERE, "E: unkown exception thrown");
+		return (CKR_FUNCTION_FAILED);
+	}
+
+	*l_out = oDataOut.Size();
+	memcpy(out, oDataOut.GetBytes(), *l_out);
+
+cleanup:
+
+	return (ret);
+}
+
+#undef WHERE
 
 
 #define WHERE "cal_sign()"
@@ -2207,7 +2256,6 @@ CK_RV cal_sign(CK_SLOT_ID hSlot, P11_SIGN_DATA * pSignData, unsigned char *in,
 }
 
 #undef WHERE
-
 
 
 #define WHERE "cal_validate_session()"

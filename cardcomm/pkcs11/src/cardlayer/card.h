@@ -86,6 +86,9 @@ namespace eIDMW
 		/* Sign data. If necessary, a PIN will be asked */
 		CByteArray CardSign(const tPrivKey & key, unsigned long algo, const CByteArray & oData);
 
+		/* Challenge the card*/
+		CByteArray CardChallenge(const CByteArray & oData);
+
 		/** Start a transaction on the card. Can be called
 			recursively, maintains a counter */
 		void Lock();
