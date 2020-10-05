@@ -264,9 +264,9 @@ struct eid_vwr_preview
 /** Struct used by challenge handler */
 struct eid_vwr_challenge_responsedata
 {
-	const unsigned char* challenge;     ///< the challenge as a byte array
+	unsigned char* challenge;     ///< the challenge as a byte array
 	size_t challengelen;				///< length of the challenge
-	const unsigned char* response;      ///< the response as a byte array
+	unsigned char* response;      ///< the response as a byte array
 	size_t responselen;					///< length of the response
 	enum eid_vwr_result result;
 };
