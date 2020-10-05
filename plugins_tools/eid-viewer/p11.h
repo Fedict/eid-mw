@@ -21,6 +21,7 @@
 #define EIDV_RV_OK 0
 #define EIDV_RV_FAIL -1
 #define EIDV_RV_TERMINATE -2
+#define EIDV_RV_MEM_FAIL -3
 
 #ifdef WIN32
 //event waited for by the mainloop, before checking the reader states
@@ -47,6 +48,7 @@ int eid_vwr_p11_open_session(void *slot);
 int eid_vwr_p11_close_session(void);
 int eid_vwr_p11_finalize_find(void);
 int eid_vwr_p11_do_pinop(void *);
+int eid_vwr_p11_do_challenge(void* data);
 int eid_vwr_p11_leave_pinop(void);
 int eid_vwr_p11_select_slot(CK_BBOOL automatic, CK_SLOT_ID manualslot);
 int eid_vwr_p11_name_slots(struct _slotdesc *slots, CK_ULONG_PTR len);

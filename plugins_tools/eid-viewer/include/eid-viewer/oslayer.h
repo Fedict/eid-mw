@@ -89,6 +89,7 @@ enum eid_vwr_states
 	STATE_NO_TOKEN,	     ///< We don't have a card, and we also don't have a file.
 	STATE_NO_READER,     ///< We don't have a reader (yet?)
 	STATE_TOKEN_IDLE,	 ///<not performing any action in the taoken_wait state
+	STATE_TOKEN_CHALLENGE, ///< Performing a challenge operation
 
 	STATE_COUNT,
 };
@@ -234,6 +235,21 @@ struct eid_vwr_ui_callbacks
 	  * all known readers
 	  */
 	void (*readers_changed) (unsigned long nreaders, slotdesc * slots);
+
+	/** \brief Return the result of a challenge operation
+	  *
+	  * When the user interface calls eid_vwr_challenge(), then at some
+	  * later point this function may be called with the result of
+	  * the requested PIN operation.
+	  *
+	  * If the state machine is not in the TOKEN_WAIT state when
+	  * eid_vwr_challenge() was called, this event will never be fired.
+	  *
+	  * \param response the response calculated by the card.
+	  * \param responselen the length of the response, in bytes.
+	  * \param res the result of the operation
+	  */
+	void(*challenge_result)(const unsigned char* response, int responselen, enum eid_vwr_result res);
 };
 
 /** Struct used by preview handler */
@@ -242,6 +258,16 @@ struct eid_vwr_preview
 	void *imagedata;     ///< JPEG photo of the inspected XML file
 	size_t imagelen;     ///< length of imagedata
 	int have_data;	     ///< nonzero if there is actually any data
+};
+
+/** Struct used by challenge handler */
+struct eid_vwr_challenge_responsedata
+{
+	const unsigned char* challenge;     ///< the challenge as a byte array
+	size_t challengelen;				///< length of the challenge
+	const unsigned char* response;      ///< the response as a byte array
+	size_t responselen;					///< length of the response
+	enum eid_vwr_result result;
 };
 
 /** \brief Perform a PIN operation
@@ -254,6 +280,18 @@ struct eid_vwr_preview
   * change the PIN code.
   */
 DllExport void eid_vwr_pinop(enum eid_vwr_pinops op);
+
+
+/** \brief Perform an internal authenticate operation on the card
+  *
+  * If the state machine is currently in the TOKEN_WAIT state, issue an 
+  * internal authenticate operation. In all other cases, does nothing.
+  *
+  * \param challenge the challenge send to the card.
+  * \param challengelen the length of the challenge, in bytes.
+  */
+DllExport int eid_vwr_challenge(const unsigned char* challenge, int challengelen);
+
 
 /** \brief Initialize the callbacks
   * 

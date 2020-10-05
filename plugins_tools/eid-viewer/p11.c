@@ -382,6 +382,108 @@ int eid_vwr_p11_leave_pinop() {
 	return 0;
 }
 
+/* Do the actual perform challenge operation. 
+ * Separate helper function for the function below,
+ * because PKCS#11 "failed" message does not match state machine
+ * "failed" message, and otherwise we can't use our check_rv() macro
+ */
+static int eid_vwr_p11_do_challenge_real(struct eid_vwr_challenge_responsedata *p) {
+
+	/** Struct used by challenge handler */
+	//struct eid_vwr_challenge_responseedata response;
+
+	CK_ULONG data_class = CKO_DATA;
+	CK_ULONG attribute_len = 2; //the number of attributes in the search template below
+	//the searchtemplate that will be used to initialize the search
+	CK_ATTRIBUTE attributes[2] = { {CKA_CLASS,&data_class,sizeof(CK_ULONG)},
+	{CKA_LABEL,"BASIC_KEY_FILE",(CK_ULONG)strlen("BASIC_KEY_FILE")} };
+	//prepare the findobjects function to find all objects with attributes 
+	//CKA_CLASS set to CKO_DATA and with CKA_LABEL set to BASIC_KEY_FILE
+
+	CK_ULONG ulMaxObjectCount = 1;//we want max one object returned
+	CK_ULONG ulObjectCount = 0;	//returns the number of objects found
+	CK_OBJECT_HANDLE hKey;
+	//retrieve the data object with label "BASIC_KEY_FILE" 
+	check_rv(C_FindObjectsInit(session, attributes, attribute_len));
+
+	CK_RV retval = C_FindObjects(session, &hKey, ulMaxObjectCount, &ulObjectCount);
+	if (retval != CKR_OK)
+	{
+		be_log(EID_VWR_LOG_DETAIL, TEXT(EID_S_FORMAT) TEXT(":C_FindObjects found return value of 0x%2x"), retval);
+		C_FindObjectsFinal(session);
+		return retval;
+	}
+	if ((ulObjectCount == 0) || (hKey == NULL_PTR))
+	{
+		//no "BASIC_KEY_FILE" object was found
+		be_log(EID_VWR_LOG_DETAIL, TEXT(EID_S_FORMAT) TEXT(":C_FindObjects did not find object with label BASIC_KEY_FILE"));
+		check_rv(C_FindObjectsFinal(session));
+		p->response = NULL_PTR;
+		p->responselen = 0;
+		p->result = EID_VWR_RES_FAILED;
+	}
+	else
+	{
+		//"BASIC_KEY_FILE" object was found, now sign the challenge with the card key
+		check_rv(C_FindObjectsFinal(session));
+
+		//use the CKM_ECDSA_SHA384 mechanism for the challenge
+		CK_MECHANISM mechanism = { CKM_ECDSA_SHA384, NULL_PTR, 0 };
+
+		//initialize the signature operation
+		check_rv(C_SignInit(session, &mechanism, hKey));
+
+		check_rv(C_Sign(session, p->challenge, (CK_ULONG)p->challengelen, p->response, &(p->responselen)));
+
+		p->result = EID_VWR_RES_SUCCESS;
+	}
+
+	//put the EVENT_CHALLENGE_READY on the event queu
+	sm_handle_event(EVENT_CHALLENGE_READY, NULL, NULL, NULL);
+
+	return CKR_OK;
+}
+
+/* Called by state machine when a "perform challenge operation" action was
+ * requested */
+int eid_vwr_p11_do_challenge(void* data) {
+	int retval = EIDV_RV_MEM_FAIL;
+	struct eid_vwr_challenge_responsedata *p = (struct eid_vwr_challenge_responsedata*) data;
+	CK_ULONG signLength;
+	CK_BYTE_PTR signature;
+
+	//we currently only support SHA384 hashes
+	if (p->challengelen == 48)
+	{
+		signature = calloc(96, 1);
+		signLength = 96;
+		p->response = signature;
+		p->responselen = signLength;
+
+		if (signature != NULL)
+		{
+			retval = eid_vwr_p11_do_challenge_real(p);
+			if (retval == CKR_OK) {
+				be_challengeresult(p->response, p->responselen, p->result);
+			}
+			free(signature);
+		}
+		else {
+			be_log(EID_VWR_LOG_ERROR, TEXT("Memory allocation error in backend"));
+		}
+	}
+	else {
+		be_log(EID_VWR_LOG_ERROR, TEXT("only 48 byte challenges are supported"));
+		retval = EIDV_RV_FAIL;
+	}
+	if (retval != CKR_OK)
+	{
+		//always report back to the UI
+		be_challengeresult(NULL, 0, EID_VWR_RES_FAILED);
+	}
+	return retval;
+}
+
 int eid_vwr_p11_check_version(void* data EIDV_UNUSED) {
 	CK_INFO info;
 	check_rv(C_GetInfo(&info));
