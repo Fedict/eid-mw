@@ -1,4 +1,4 @@
-TESTS = cardevent deserialize serialize init pinop
+TESTS = cardevent deserialize serialize init pinop states
 check_PROGRAMS = $(TESTS)
 
 export EID_XSDLOC = $(srcdir)/../xml/eidv4.xsd
@@ -22,5 +22,9 @@ init_LDADD = $(COMMON_LIB)
 
 pinop_SOURCES = pinop.c $(COMMON_SRCS)
 pinop_LDADD = $(COMMON_LIB)
+
+states_SOURCES = states.c $(COMMON_SRCS)
+states_CPPFLAGS = -DSRCDIR='"$(srcdir)"'
+states_LDADD = $(COMMON_LIB)
 
 EXTRA_DIST = 67.06.30-296.59.eid
