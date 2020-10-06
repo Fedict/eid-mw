@@ -428,7 +428,7 @@ static int eid_vwr_p11_do_challenge_real(struct eid_vwr_challenge_responsedata *
 		check_rv(C_FindObjectsFinal(session));
 
 		//use the CKM_ECDSA_SHA384 mechanism for the challenge
-		CK_MECHANISM mechanism = { CKM_ECDSA_SHA384, NULL_PTR, 0 };
+		CK_MECHANISM mechanism = { CKM_ECDSA, NULL_PTR, 0 };
 
 		//initialize the signature operation
 		check_rv(C_SignInit(session, &mechanism, hKey));

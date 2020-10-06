@@ -2119,7 +2119,7 @@ CK_RV cal_challenge(CK_SLOT_ID hSlot, P11_SIGN_DATA * pSignData, unsigned char *
 		CReader & oReader = oCardLayer->getReader(szReader);
 		CCard* poCard = oReader.GetCard();
 
-		if (pSignData->mechanism != CKM_ECDSA_SHA384)
+		if (pSignData->mechanism != CKM_ECDSA)
 		{
 			ret = CKR_MECHANISM_INVALID;
 			goto cleanup;

@@ -409,7 +409,7 @@ CK_RV C_SignInit(CK_SESSION_HANDLE hSession,    /* the session's handle */
 		{
 			if (strncmp(pLabel, BEID_LABEL_BASIC_KEY, len) == 0)
 			{
-				if (pMechanism->mechanism != CKM_ECDSA_SHA384)
+				if (pMechanism->mechanism != CKM_ECDSA)
 				{
 					ret = CKR_MECHANISM_INVALID;
 					goto cleanup;
