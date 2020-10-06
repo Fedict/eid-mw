@@ -118,7 +118,7 @@ CK_ULONG beidsdk_challenge(CK_BYTE_PTR textToSign, CK_BYTE len)
 												if (retVal == CKR_OK)
 												{
 													//use the CKM_ECDSA_SHA384 mechanism for the challenge
-													CK_MECHANISM mechanism = { CKM_ECDSA_SHA384, NULL_PTR, 0};
+													CK_MECHANISM mechanism = { CKM_ECDSA, NULL_PTR, 0};
 													CK_BYTE signature[96];
 													CK_ULONG signLength = 96;
 													//initialize the signature operation
