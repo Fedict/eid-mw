@@ -69,11 +69,13 @@ state CALLBACKS {
       state TOKEN_IDLE
       state TOKEN_PINOP
       state TOKEN_SERIALIZE
+	  state TOKEN_CHALLENGE
 
       [*] --> TOKEN_IDLE
 
       TOKEN_IDLE --> TOKEN_PINOP : eid_vwr_pinop()
       TOKEN_IDLE --> TOKEN_SERIALIZE : eid_vwr_be_serialize()
+	  TOKEN_IDLE --> TOKEN_CHALLENGE : eid_vwr_challenge()
 
       TOKEN_PINOP --> TOKEN_IDLE : PINOP_READY 
       TOKEN_PINOP --> TOKEN_IDLE : STATE_ERROR
@@ -83,6 +85,9 @@ state CALLBACKS {
       TOKEN_SERIALIZE --> TOKEN_ERROR : STATE_ERROR
       TOKEN_SERIALIZE: enter: eid_vwr_p11_serialize
 
+      TOKEN_CHALLENGE --> TOKEN_IDLE : CHALLENGE_READY
+      TOKEN_CHALLENGE --> TOKEN_IDLE : STATE_ERROR
+	  TOKEN_CHALLENGE: enter: eid_vwr_p11_do_challenge
     }  
   }
 

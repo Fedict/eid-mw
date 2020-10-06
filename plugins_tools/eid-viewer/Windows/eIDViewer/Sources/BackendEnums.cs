@@ -57,18 +57,19 @@ namespace eIDViewer
     /** Possible languages. */
     public enum eid_vwr_langs
     {
-        EID_VWR_LANG_NONE, ///< No language has yet been selected. Used as initializer.
-        EID_VWR_LANG_DE, ///< German
-        EID_VWR_LANG_EN, ///< English
-        EID_VWR_LANG_FR, ///< French
-        EID_VWR_LANG_NL, ///< Dutch
+        EID_VWR_LANG_NONE,  ///< No language has yet been selected. Used as initializer.
+        EID_VWR_LANG_DE,    ///< German
+        EID_VWR_LANG_EN,    ///< English
+        EID_VWR_LANG_FR,    ///< French
+        EID_VWR_LANG_NL,    ///< Dutch
     };
 
     public enum eid_vwr_result
     {
-        EID_VWR_RES_FAILED,
-        EID_VWR_RES_SUCCESS,
-	EID_VWR_RES_UNKNOWN,
+        EID_VWR_RES_FAILED,     ///< operation failed
+        EID_VWR_RES_SUCCESS,    ///< the operation returned successfully
+	    EID_VWR_RES_UNKNOWN,    ///< the operation did not finish
+        EID_VWR_RES_WARNING,    ///< the operation finished with warnings
     };
 
     public enum eid_vwr_states
@@ -90,6 +91,7 @@ namespace eIDViewer
         STATE_NO_TOKEN, ///< We don't have a card, and we also don't have a file.
         STATE_NO_READER, ///< We don't have a reader (yet?)
         STATE_TOKEN_IDLE, /// < done reading identity data and certificates
+        STATE_TOKEN_CHALLENGE, ///< Performing a challenge operation
 
         STATE_COUNT,
     };

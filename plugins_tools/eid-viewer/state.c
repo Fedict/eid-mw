@@ -31,6 +31,8 @@ static const EID_CHAR* state_to_name(enum eid_vwr_states state) {
 	STATE_NAME(CARD_INVALID);
 	STATE_NAME(NO_READER);
 	STATE_NAME(NO_TOKEN);
+	STATE_NAME(TOKEN_CHALLENGE);
+
 #undef STATE_NAME
 	default:
 		return TEXT("unknown state");
@@ -56,6 +58,9 @@ static const EID_CHAR* event_to_name(enum eid_vwr_state_event event) {
 	EVENT_NAME(READER_FOUND);
 	EVENT_NAME(DEVICE_CHANGED);
 	EVENT_NAME(READER_LOST);
+	EVENT_NAME(DO_CHALLENGE);
+	EVENT_NAME(CHALLENGE_READY);
+
 #undef EVENT_NAME
 	default:
 		return TEXT("unknown event");
@@ -180,6 +185,7 @@ void sm_init() {
 	states[STATE_TOKEN_WAIT].first_child = &(states[STATE_TOKEN_IDLE]);
 	states[STATE_TOKEN_WAIT].out[EVENT_DO_PINOP] = &(states[STATE_TOKEN_PINOP]);
 	states[STATE_TOKEN_WAIT].out[EVENT_SERIALIZE] = &(states[STATE_TOKEN_SERIALIZE]);
+	states[STATE_TOKEN_WAIT].out[EVENT_DO_CHALLENGE] = &(states[STATE_TOKEN_CHALLENGE]);
 
 	states[STATE_TOKEN_IDLE].parent = &(states[STATE_TOKEN_WAIT]);
 
@@ -193,6 +199,11 @@ void sm_init() {
 	states[STATE_TOKEN_SERIALIZE].enter = (int(*)(void*))eid_vwr_serialize;
 	states[STATE_TOKEN_SERIALIZE].out[EVENT_SERIALIZE_READY] = &(states[STATE_TOKEN_IDLE]);
 	states[STATE_TOKEN_SERIALIZE].out[EVENT_STATE_ERROR] = &(states[STATE_TOKEN_ERROR]);
+
+	states[STATE_TOKEN_CHALLENGE].parent = &(states[STATE_TOKEN_WAIT]);
+	states[STATE_TOKEN_CHALLENGE].enter = eid_vwr_p11_do_challenge;
+	states[STATE_TOKEN_CHALLENGE].out[EVENT_CHALLENGE_READY] = &(states[STATE_TOKEN_IDLE]);
+	states[STATE_TOKEN_CHALLENGE].out[EVENT_STATE_ERROR] = &(states[STATE_TOKEN_IDLE]);
 
 	states[STATE_NO_TOKEN].parent = &(states[STATE_CALLBACKS]);
 	states[STATE_NO_TOKEN].enter = source_none;

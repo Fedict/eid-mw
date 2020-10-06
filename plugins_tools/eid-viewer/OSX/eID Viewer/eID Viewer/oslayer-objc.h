@@ -1,7 +1,7 @@
 #include <BeidView/oslayer.h>
 
 /**
- * \defgroup ObjC Objective-C wrapper API (OSX only)
+ * \defgroup ObjC Objective-C wrapper API (macOS only)
  *
  * @{
  */
@@ -100,7 +100,7 @@ typedef NS_ENUM(NSInteger, eIDResult)
 +(void) closeFile;								///< calls eid_vwr_close_file()
 +(void) setInvalid;								///< calls eid_vwr_be_set_invalid()
 +(eIDResult) validateCert:(NSData *) certificate withCa:(NSData *) ca;		///< calls eid_vwr_verify_cert() with valid perform_ocsp_request and free_ocsp_request function pointers
-+(eIDResult) validateRrnCert:(NSData *) certificate;				///< calls eid_vwr_verify_rrncert()
++(eIDResult) validateRrnCert:(NSData *) certificate withRoot:(NSData *) root;
 +(eIDResult) validateRootCert:(NSData *) certificate;				///< calls eid_vwr_verify_root_cert()
 +(eIDResult) validateIntCert:(NSData *) certificate withCa:(NSData *)ca;	///< calls eid_vwr_verify_int_cert() with valid perform_http_request and free_http_request function pointers
 +(void) selectReader:(NSInteger) readerNumber;					///< calls eid_vwr_be_select_slot() with 0 as the first parameter, and the given reader number as the second parameter.

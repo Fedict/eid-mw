@@ -38,7 +38,8 @@ int eid_vwr_set_cbfuncs(void(*newsrc)(enum eid_vwr_source source), // data sourc
 			//void(*logv)(enum eid_vwr_loglevel loglevel, const char* line, va_list ap), // log a string using varargs. Note: a UI needs to implement only one of log() or logv(); the backend will use whichever is implemented.
 			void(*newstate)(enum eid_vwr_states states), // issued at state machine transition
 			void(*pinop_result)(enum eid_vwr_pinops pinops, enum eid_vwr_result result), // issued when a PIN operation finished.
-			void(*readers_changed)(unsigned long nreaders, slotdesc* slots)
+			void(*readers_changed)(unsigned long nreaders, slotdesc* slots),
+			void(*challenge_result) (const unsigned char *result, int resultlen, enum eid_vwr_result) // issued when the response to the challenge has been calculated by the card
 ) {
 
 	struct eid_vwr_ui_callbacks* cb_ = eid_vwr_cbstruct();
@@ -50,6 +51,7 @@ int eid_vwr_set_cbfuncs(void(*newsrc)(enum eid_vwr_source source), // data sourc
 	cb_->newstate = newstate;
 	cb_->pinop_result = pinop_result;
 	cb_->readers_changed = readers_changed;
+	cb_->challenge_result = challenge_result;
 
 	return eid_vwr_createcallbacks(cb_);
 }
@@ -60,6 +62,10 @@ int eid_vwr_set_cbfuncs(void(*newsrc)(enum eid_vwr_source source), // data sourc
 
 struct eid_vwr_ui_callbacks* eid_vwr_cbstruct() {
 	struct eid_vwr_ui_callbacks* retval = (struct eid_vwr_ui_callbacks*)calloc(sizeof(struct eid_vwr_ui_callbacks), 1);
+	//version 0 was the initial backend version
+	//version 1 includes the challenge/response features of the applet 1.8 cards
+
+	retval->version = 1;
 	return retval;
 }
 
@@ -69,6 +75,52 @@ struct eid_vwr_ui_callbacks* eid_vwr_cbstruct() {
 void eid_vwr_pinop(enum eid_vwr_pinops op) {
 	sm_handle_event(EVENT_DO_PINOP, (void*)op, NULL, NULL);
 	return;
+}
+
+void eid_free_challenge_response(void* data)
+{
+	struct eid_vwr_challenge_responsedata* pchallengedata = (struct eid_vwr_challenge_responsedata*) data;
+
+	if (pchallengedata->challenge != NULL)
+	{
+		free(pchallengedata->challenge);
+	}
+	if (pchallengedata != NULL)
+	{
+		free(pchallengedata);
+	}
+}
+
+/* Let the card prove itself by performing an internal authenticate. Caller: UI. */
+int eid_vwr_challenge(const unsigned char* data, int datalen) {
+
+	int retVal = EIDV_RV_MEM_FAIL;
+	//initialize new memory with zero's
+	struct eid_vwr_challenge_responsedata* pchallengedata = (struct eid_vwr_challenge_responsedata*)calloc(sizeof(struct eid_vwr_challenge_responsedata), 1);
+
+	if(pchallengedata != NULL)
+	{
+		//MS: If size is 0, malloc allocates a zero-length item in the heap and returns a valid pointer to that item
+		if (datalen > 0)
+		{
+			//copy the challenge in case the UI drops it
+			pchallengedata->challenge = malloc(datalen);
+			if (pchallengedata->challenge != NULL)
+			{
+				memcpy(pchallengedata->challenge, data, datalen);
+				pchallengedata->challengelen = datalen;
+				sm_handle_event(EVENT_DO_CHALLENGE, (void*)pchallengedata, eid_free_challenge_response, NULL);
+				retVal = EIDV_RV_OK;
+			}
+			else
+			{
+				pchallengedata->challengelen = 0;				
+				free(pchallengedata);				
+			}
+		}
+	}
+	
+	return retVal;
 }
 
 /* Actually assign the callbacks to the correct static variable. Caller: state machine. */
@@ -181,6 +233,13 @@ int be_newbindata(const EID_CHAR* label, const unsigned char* data, int datalen)
 int be_pinresult(enum eid_vwr_pinops p, enum eid_vwr_result res) {
 	NEED_CB_FUNC(pinop_result);
 	cb->pinop_result(p, res);
+	return EIDV_RV_OK;
+}
+
+/* Send the result of a challenge operation to the UI. Caller: p11.c */
+int be_challengeresult(const unsigned char* data, int datalen, enum eid_vwr_result res) {
+	NEED_CB_FUNC(challenge_result);
+	cb->challenge_result(data, datalen, res);
 	return EIDV_RV_OK;
 }
 

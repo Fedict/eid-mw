@@ -323,6 +323,8 @@ extern "C"
 	CK_RV cal_sign(CK_SLOT_ID hSlot, P11_SIGN_DATA * pSignData,
 		       unsigned char *in, unsigned long l_in,
 		       unsigned char *out, unsigned long *l_out);
+	CK_RV cal_challenge(CK_SLOT_ID hSlot, P11_SIGN_DATA * pSignData, unsigned char *in,
+		unsigned long l_in, unsigned char *out, unsigned long *l_out);
 	CK_RV cal_validate_session(P11_SESSION * pSession);
 	CK_RV cal_update_token(CK_SLOT_ID hSlot, int *pStatus, int bPresenceOnly);
 	CK_RV cal_wait_for_slot_event(int block);

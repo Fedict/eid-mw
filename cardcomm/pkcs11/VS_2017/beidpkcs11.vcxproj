@@ -536,6 +536,7 @@
     <ClCompile Include="..\src\sign.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\doc\sdk\include\v240\pkcs11t.h" />
     <ClInclude Include="..\src\beid_p11.h" />
     <ClInclude Include="..\src\cal.h" />
     <ClInclude Include="..\src\cardlayer\card.h" />
@@ -588,7 +589,6 @@
     <ClInclude Include="..\src\dialogs\langutil.h" />
     <ClInclude Include="..\src\p11.h" />
     <ClInclude Include="..\src\phash.h" />
-    <ClInclude Include="..\src\include\rsaref220\pkcs11t.h" />
     <ClInclude Include="..\src\util.h" />
   </ItemGroup>
   <ItemGroup>

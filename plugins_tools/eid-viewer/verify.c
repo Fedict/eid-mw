@@ -27,6 +27,11 @@
 #define X509_get0_extensions(ce) ((ce)->cert_info->extensions)
 
 #define X509_get0_tbs_sigalg(ci) ((ci)->sig_alg)
+#define X509_OBJECT_new() calloc(sizeof(X509_OBJECT), 1)
+#define X509_OBJECT_free(o) free(o)
+#define X509_get0_pubkey(x) (x->cert_info->key->pkey)
+#define X509_OBJECT_get0_X509(o) (o->data.x509)
+
 #define algobjcast(obj) ((ASN1_OBJECT**)obj)
 #define ppvalcast(obj) ((void**)obj)
 
@@ -292,11 +297,13 @@ exit:
 	return ret;
 }
 
-enum eid_vwr_result eid_vwr_verify_rrncert(const void* certificate, size_t certlen) {
+enum eid_vwr_result eid_vwr_verify_rrncert(const void* certificate, size_t certlen, const void *root_cert, size_t root_len) {
 	X509 *cert_i = NULL;
+	X509 *root_i = NULL;
 	X509_STORE *store = NULL;
 	X509_LOOKUP *lookup = NULL;
 	X509_STORE_CTX *ctx = NULL;
+	X509_OBJECT *root_object = X509_OBJECT_new();
 	enum eid_vwr_result ret = EID_VWR_RES_UNKNOWN;
 
 	store = X509_STORE_new();
@@ -323,6 +330,25 @@ enum eid_vwr_result eid_vwr_verify_rrncert(const void* certificate, size_t certl
 	if(X509_verify_cert(ctx) != 1) {
 		log_ssl_error("RRN certificate verification failed: invalid signature, or invalid root certificate.");
 		ret = EID_VWR_RES_FAILED;
+		goto exit;
+	}
+
+	if(d2i_X509(&root_i, (const unsigned char**)&root_cert, root_len) == NULL) {
+		be_log(EID_VWR_LOG_NORMAL, "RRN certificate verification failed: Could not parse root certificate");
+		ret = EID_VWR_RES_WARNING;
+		goto exit;
+	}
+	if(X509_LOOKUP_by_subject(lookup, X509_LU_X509, X509_get_issuer_name(cert_i), root_object) != 1) {
+		be_log(EID_VWR_LOG_NORMAL, "RRN certificate verification verification WARNING: root certificate not found in trust store (should not happen)");
+		ret = EID_VWR_RES_WARNING;
+		goto exit;
+	}
+	EVP_PKEY *cert_key = X509_get0_pubkey(root_i);
+	X509 *store_cert = X509_OBJECT_get0_X509(root_object);
+	EVP_PKEY *trusted_key = X509_get0_pubkey(store_cert);
+	if(EVP_PKEY_cmp(trusted_key, cert_key) != 1) {
+		be_log(EID_VWR_LOG_COARSE, "RRN certificate verification failed: root certificate on card is not RRN certificate issuer");
+		ret = EID_VWR_RES_WARNING;
 		goto exit;
 	}
 	ret = EID_VWR_RES_SUCCESS;
@@ -375,13 +401,16 @@ enum eid_vwr_result eid_vwr_verify_root_cert(const void *certificate, size_t cer
 		ret = EID_VWR_RES_WARNING;
 		goto out;
 	}
-	if(X509_LOOKUP_by_subject(lookup, X509_LU_X509, X509_get_subject_name(cert_i), store_key) != 1){
+	if(X509_LOOKUP_by_subject(lookup, X509_LU_X509, X509_get_subject_name(cert_i), store_key) != 1) {
 		be_log(EID_VWR_LOG_COARSE, "Root certificate verification failed: root certificate not found in trust store");
 		ret = EID_VWR_RES_FAILED;
 		goto out;
 	}
-	if(X509_cmp(cert_i, X509_OBJECT_get0_X509(store_key)) != 0) {
-		be_log(EID_VWR_LOG_COARSE, "Root certificate verification failed: found root certificate does not match certificate from truststore");
+	EVP_PKEY *cert_key = X509_get0_pubkey(cert_i);
+	X509 *store_cert = X509_OBJECT_get0_X509(store_key);
+	EVP_PKEY *trusted_key = X509_get0_pubkey(store_cert);
+	if(EVP_PKEY_cmp(cert_key, trusted_key) != 1) {
+		be_log(EID_VWR_LOG_COARSE, "Root certificate verification failed: public key of root certificate does not match public key of certificate from truststore");
 		ret = EID_VWR_RES_FAILED;
 		goto out;
 	}

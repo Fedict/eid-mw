@@ -111,7 +111,10 @@ extern "C"
   */
 	DllExport enum eid_vwr_result eid_vwr_verify_rrncert(const void
 							     *certificate,
-							     size_t certlen);
+							     size_t certlen,
+							     const void
+							     *root_cert,
+							     size_t rootlen);
 /**
   * \brief Verify the validity of the root certificate
   *
@@ -120,7 +123,8 @@ extern "C"
   *
   * \param certificate the X.509 certificate to check, in DER format
   * \param certlen the length (in bytes) of certificate.
- */
+  * \since v5.0
+  */
 	DllExport enum eid_vwr_result eid_vwr_verify_root_cert(const void *certificate, size_t certlen);
 /**
   * \brief Produce a human-readable version of the certificate.

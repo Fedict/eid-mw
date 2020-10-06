@@ -330,6 +330,8 @@ namespace eIDViewer
 
         public bool VerifyRootCAvsEmbeddedRootCA(ref X509Certificate2 rootCertOnCard, string embeddedRootCA)
         {
+            return true;//for testing
+            /*
             bool foundEmbeddedRootCA = false;
             try
             {
@@ -363,7 +365,7 @@ namespace eIDViewer
             {
                 this.WriteLog("An error occurred comparing the Belgium rootCA on the card with the ones in the EIDViewer\n" + e.ToString(), eid_vwr_loglevel.EID_VWR_LOG_ERROR);
             }
-            return foundEmbeddedRootCA;
+            return foundEmbeddedRootCA;*/
         }
 
 
@@ -445,9 +447,9 @@ namespace eIDViewer
             try
             {     
                 if (leafCertificate != null)
-                {                  
+                {
                     //alter how the chain is built/validated.
-                    chain.ChainPolicy.RevocationMode = X509RevocationMode.Online;
+                    chain.ChainPolicy.RevocationMode = X509RevocationMode.NoCheck;//for testing X509RevocationMode.Online;
                     chain.ChainPolicy.RevocationFlag = X509RevocationFlag.ExcludeRoot;
                     // Set the time span that may elapse during online revocation verification or downloading the certificate revocation list (CRL).
                     TimeSpan verificationTime = new TimeSpan(0, 0, 10);
@@ -634,6 +636,7 @@ namespace eIDViewer
 
         public bool IsBasicKeyOK()
         {
+
             if (basicKeyHash != null)
             {
                 //only verify the basic key when it is present
@@ -649,6 +652,27 @@ namespace eIDViewer
                 {
                     this.WriteLog("public basic key doesn't match the hash in the ID file \n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
                     return false;
+                }
+                else
+                {
+                    //public basic key is correct, now check if the card contains the matching private key
+                    challenge = new byte[48];
+
+                    Random rnd = new Random();
+                    rnd.NextBytes(challenge);
+
+                    SHA384 sha = new SHA384CryptoServiceProvider();
+                    byte[] challenge_hash = sha.ComputeHash(challenge, 0,48);
+                    byte challenge_hash_len = 48;
+
+                    if (eIDViewer.NativeMethods.DoChallenge(challenge_hash, challenge_hash_len) == 0)
+                    {
+                        this.WriteLog("validating the card authenticity: challenging the card basic key \n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
+                    }
+                    else
+                    {
+                        this.WriteLog("validating the card authenticity: backend failed sending challenge to the card \n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
+                    }
                 }
             }
             return true;
@@ -981,7 +1005,7 @@ namespace eIDViewer
         private byte[] photoFile;
         private byte[] photo_hash;
         private byte[] basicKeyHash;
-        private byte[] basicKeyFile;
+        public byte[] basicKeyFile;
 
         public void StoreBinData(string label, byte[] data, int datalen)
         {
@@ -1879,6 +1903,16 @@ namespace eIDViewer
             }
         }
 
-        
+        private byte[] _challenge = null;
+        public byte[] challenge
+        {
+            get { return _challenge; }
+            set
+            {
+                _challenge = value;
+                this.NotifyPropertyChanged("challenge");
+            }
+        }
+
     }
 }
