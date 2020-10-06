@@ -72,12 +72,12 @@ enum eid_vwr_result eid_vwr_verify_int_cert(const void *certificate, size_t cert
 
 	if(d2i_X509(&cert_i, (const unsigned char**)&certificate, certlen) == NULL) {
 		log_ssl_error("Could not parse certificate");
-		ret = EID_VWR_RES_FAILED;
+		ret = EID_VWR_RES_WARNING;
 		goto exit;
 	}
 	if(d2i_X509(&ca_i, (const unsigned char**)&ca, calen) == NULL) {
 		log_ssl_error("Could not parse root certificate");
-		ret = EID_VWR_RES_FAILED;
+		ret = EID_VWR_RES_WARNING;
 		goto exit;
 	}
 	exts = X509_get0_extensions(cert_i);
@@ -156,12 +156,12 @@ enum eid_vwr_result eid_vwr_verify_cert(const void *certificate, size_t certlen,
 
 	if(d2i_X509(&cert_i, (const unsigned char**)&certificate, certlen) == NULL) {
 		log_ssl_error("Could not parse entity certificate");
-		ret = EID_VWR_RES_FAILED;
+		ret = EID_VWR_RES_WARNING;
 		goto exit;
 	}
 	if(d2i_X509(&ca_i, (const unsigned char**)&ca, calen) == NULL) {
 		log_ssl_error("Could not parse CA certificate");
-		ret = EID_VWR_RES_FAILED;
+		ret = EID_VWR_RES_WARNING;
 		goto exit;
 	}
 	exts = X509_get0_extensions(cert_i);
@@ -223,7 +223,7 @@ enum eid_vwr_result eid_vwr_verify_cert(const void *certificate, size_t certlen,
 	response = perform_ocsp_request(url, data, len, &len, &ocsp_handle);
 	if(!response) {
 		free_ocsp_request(ocsp_handle);
-		// we couldn't do an OCSP request, so retain the UNKNOWN status
+		ret = EID_VWR_RES_UNKNOWN;
 		goto exit;
 	}
 
@@ -232,19 +232,23 @@ enum eid_vwr_result eid_vwr_verify_cert(const void *certificate, size_t certlen,
 		case OCSP_RESPONSE_STATUS_SUCCESSFUL:
 			break;
 		case OCSP_RESPONSE_STATUS_MALFORMEDREQUEST:
+			ret = EID_VWR_RES_UNKNOWN;
 			status_string = "malformed request"; break;
 		case OCSP_RESPONSE_STATUS_INTERNALERROR:
+			ret = EID_VWR_RES_UNKNOWN;
 			status_string = "internal error"; break;
 		case OCSP_RESPONSE_STATUS_TRYLATER:
+			ret = EID_VWR_RES_UNKNOWN;
 			status_string = "try again later"; break;
 		case OCSP_RESPONSE_STATUS_SIGREQUIRED:
+			ret = EID_VWR_RES_UNKNOWN;
 			status_string = "signature required"; break;
 		case OCSP_RESPONSE_STATUS_UNAUTHORIZED:
-			status_string = "invalid certificate, algorithm, or root certificate"; break;
+			ret = EID_VWR_RES_FAILED;
+			status_string = "invalid certificate, algorithm, or root or intermediate certificate"; break;
 	}
 	if(status_string != NULL) {
 		be_log(EID_VWR_LOG_COARSE, "eID certificate check failed: %s", status_string);
-		ret = EID_VWR_RES_FAILED;
 		goto exit;
 	}
 	bresp = OCSP_response_get1_basic(resp);
@@ -254,15 +258,17 @@ enum eid_vwr_result eid_vwr_verify_cert(const void *certificate, size_t certlen,
 		case V_OCSP_CERTSTATUS_GOOD:
 			break;
 		case V_OCSP_CERTSTATUS_REVOKED:
+			ret = EID_VWR_RES_FAILED;
 			status_string = "revoked"; break;
 		case V_OCSP_CERTSTATUS_UNKNOWN:
+			ret = EID_VWR_RES_WARNING;
 			status_string = "unknown"; break;
 		default:
+			ret = EID_VWR_RES_FAILED;
 			status_string = "weird"; break;
 	}
 	if(status_string != NULL) {
 		be_log(EID_VWR_LOG_NORMAL, "eID certificate %s", status_string);
-		ret = EID_VWR_RES_FAILED;
 		goto exit;
 	}
 	store = X509_STORE_new();
@@ -303,7 +309,7 @@ enum eid_vwr_result eid_vwr_verify_rrncert(const void* certificate, size_t certl
 
 	if(d2i_X509(&cert_i, (const unsigned char**)&certificate, certlen) == NULL) {
 		be_log(EID_VWR_LOG_NORMAL, "RRN certificate verification failed: Could not parse RRN certificate");
-		ret = EID_VWR_RES_UNKNOWN;
+		ret = EID_VWR_RES_WARNING;
 		goto exit;
 	}
 
@@ -348,4 +354,39 @@ char* eid_vwr_x509_get_details(const void* certificate, size_t certlen) {
 	BIO_free(b);
 
 	return rv;
+}
+
+enum eid_vwr_result eid_vwr_verify_root_cert(const void *certificate, size_t certlen) {
+	X509 *cert_i = NULL;
+	X509_STORE *store = NULL;
+	X509_LOOKUP *lookup = NULL;
+	X509_OBJECT *store_key = X509_OBJECT_new();
+	enum eid_vwr_result ret;
+
+	store = X509_STORE_new();
+	if(!(lookup = X509_STORE_add_lookup(store, X509_LOOKUP_hash_dir()))) {
+		be_log(EID_VWR_LOG_COARSE, "Root certificate verification failed: could not open trust store");
+		ret = EID_VWR_RES_UNKNOWN;
+		goto out;
+	}
+	X509_LOOKUP_add_dir(lookup, CERTTRUSTDIR, X509_FILETYPE_PEM);
+	if(d2i_X509(&cert_i, (const unsigned char**)&certificate, certlen) == NULL) {
+		be_log(EID_VWR_LOG_NORMAL, "Root certificate verification failed: could not parse root certificate");
+		ret = EID_VWR_RES_WARNING;
+		goto out;
+	}
+	if(X509_LOOKUP_by_subject(lookup, X509_LU_X509, X509_get_subject_name(cert_i), store_key) != 1){
+		be_log(EID_VWR_LOG_COARSE, "Root certificate verification failed: root certificate not found in trust store");
+		ret = EID_VWR_RES_FAILED;
+		goto out;
+	}
+	if(X509_cmp(cert_i, X509_OBJECT_get0_X509(store_key)) != 0) {
+		be_log(EID_VWR_LOG_COARSE, "Root certificate verification failed: found root certificate does not match certificate from truststore");
+		ret = EID_VWR_RES_FAILED;
+		goto out;
+	}
+	ret = EID_VWR_RES_SUCCESS;
+out:
+	X509_OBJECT_free(store_key);
+	return ret;
 }

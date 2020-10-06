@@ -67,6 +67,7 @@ typedef NS_ENUM(NSInteger, eIDResult)
 	eIDResultFailed = EID_VWR_RES_FAILED,
 	eIDResultSuccess = EID_VWR_RES_SUCCESS,
 	eIDResultUnknown = EID_VWR_RES_UNKNOWN,
+	eIDResultWarning = EID_VWR_RES_WARNING,
 };
 
 /** \brief Protocol for implementing a UI.
@@ -100,6 +101,7 @@ typedef NS_ENUM(NSInteger, eIDResult)
 +(void) setInvalid;								///< calls eid_vwr_be_set_invalid()
 +(eIDResult) validateCert:(NSData *) certificate withCa:(NSData *) ca;		///< calls eid_vwr_verify_cert() with valid perform_ocsp_request and free_ocsp_request function pointers
 +(eIDResult) validateRrnCert:(NSData *) certificate;				///< calls eid_vwr_verify_rrncert()
++(eIDResult) validateRootCert:(NSData *) certificate;				///< calls eid_vwr_verify_root_cert()
 +(eIDResult) validateIntCert:(NSData *) certificate withCa:(NSData *)ca;	///< calls eid_vwr_verify_int_cert() with valid perform_http_request and free_http_request function pointers
 +(void) selectReader:(NSInteger) readerNumber;					///< calls eid_vwr_be_select_slot() with 0 as the first parameter, and the given reader number as the second parameter.
 +(void) setReaderAuto:(BOOL) automatic;						///< calls eid_vwr_be_select_slot with nonzero (if YES) or zero (if NO) as the first parameter, and 0 as the second parameter.
