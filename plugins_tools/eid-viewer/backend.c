@@ -113,10 +113,13 @@ int eid_vwr_challenge(const unsigned char* data, int datalen) {
 				retVal = EIDV_RV_OK;
 			}
 			else
-			{
-				pchallengedata->challengelen = 0;				
+			{			
 				free(pchallengedata);				
 			}
+		}
+		else
+		{
+			free(pchallengedata);
 		}
 	}
 	
