@@ -60,6 +60,11 @@ TEST_FUNC(sign_state) {
 		{ CKR_OK, TEST_RV_FAIL },
 		{ CKR_KEY_HANDLE_INVALID, TEST_RV_OK },
 	};
+	ckrv_mod m_n_init[] = {
+		{ CKR_OK, TEST_RV_FAIL },
+		{ CKR_OPERATION_NOT_INITIALIZED, TEST_RV_OK },
+		
+	};
 
 
 	if(!have_robot()) {
@@ -107,7 +112,9 @@ TEST_FUNC(sign_state) {
 	} else {
 		mech.mechanism = CKM_ECDSA_SHA256;
 	}
-
+	
+	check_rv_long(C_Sign(session, data, sizeof(data), NULL, &sig_len), m_n_init)
+	
 	check_rv(C_SignInit(session, &mech, privatekey));
 
 	robot_remove_card();
