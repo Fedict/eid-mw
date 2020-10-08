@@ -106,7 +106,7 @@ TEST_FUNC(states) {
 		return TEST_RV_SKIP;
 	}
 	cb = createcbs();
-	orig_bindata = cb->nebindata;
+	orig_bindata = cb->newbindata;
 	cb->newbindata = mybindata;
 	verbose_assert(cb != NULL);
 	cb->pinop_result = pinop_result;
@@ -197,7 +197,7 @@ TEST_FUNC(states) {
 	SLEEP(5);
 	
 	printf("test for challenge (only run with a card v1.8)\n");
-	if(have_keyhash){
+	/*if(have_keyhash){
 		const unsigned char* challenge = "ch4113n9";
 		int lenght = 8;
 		eid_vwr_challenge(challenge, lenght);
@@ -205,7 +205,7 @@ TEST_FUNC(states) {
 		verbose_assert(flags[STATE_TOKEN_CHALLENGE]);
 		clearflags();
 		SLEEP(5);
-	}
+	}*/
 	
 	eid_vwr_be_set_invalid();
 	SLEEP(5);
