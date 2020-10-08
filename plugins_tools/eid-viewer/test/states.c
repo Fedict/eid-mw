@@ -17,7 +17,7 @@ static void (*orig_bindata)(const EID_CHAR*, const unsigned char*,int) = NULL;
 
 static void mybindata (const EID_CHAR* label, const unsigned char *data, int datalen){
 	orig_bindata(label, data, datalen);
-	if EID_STRCMP(label, TEXT(""))){
+	if (EID_STRCMP(label, TEXT(""))){
 		have_keyhash = true;
 	}
 }
@@ -106,6 +106,8 @@ TEST_FUNC(states) {
 		return TEST_RV_SKIP;
 	}
 	cb = createcbs();
+	orig_bindata = cb->nebindata;
+	cb->newbindata = mybindata;
 	verbose_assert(cb != NULL);
 	cb->pinop_result = pinop_result;
 	cb->newstate = newstate;
@@ -193,6 +195,17 @@ TEST_FUNC(states) {
 	}
 	clearflags();
 	SLEEP(5);
+	
+	printf("test for challenge (only run with a card v1.8)\n");
+	if(have_keyhash){
+		const unsigned char* challenge = "ch4113n9";
+		int lenght = 8;
+		eid_vwr_challenge(challenge, lenght);
+		SLEEP(5);
+		verbose_assert(flags[STATE_TOKEN_CHALLENGE]);
+		clearflags();
+		SLEEP(5);
+	}
 	
 	eid_vwr_be_set_invalid();
 	SLEEP(5);
