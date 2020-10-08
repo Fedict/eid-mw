@@ -5,12 +5,27 @@
 #include <eid-viewer/macros.h>
 #include <stdlib.h>
 #include <pthread.h>
+#include <unistd.h>
 #include "common.h"
 
 pthread_barrier_t barrier;
 
 static enum eid_vwr_states curstate;
 static bool flags[STATE_COUNT];
+static bool have_keyhash = false;
+static void (*orig_bindata)(const EID_CHAR*, const unsigned char*,int) = NULL;
+
+static void mybindata (const EID_CHAR* label, const unsigned char *data, int datalen){
+	orig_bindata(label, data, datalen);
+	if EID_STRCMP(label, TEXT(""))){
+		have_keyhash = true;
+	}
+}
+
+static void pinop_result(enum eid_vwr_pinops p, enum eid_vwr_result res) {
+	verbose_assert(p == EID_VWR_PINOP_TEST);
+	verbose_assert(res == EID_VWR_RES_SUCCESS);
+}
 static void newstate(enum eid_vwr_states s) {
 	curstate = s;
 	flags[s] = true;
@@ -34,13 +49,13 @@ static void newstate(enum eid_vwr_states s) {
 		printf("token found\n");
 		break;
 	case STATE_TOKEN_ID:
-		printf("token found reading id data\n");
+		printf("token found, reading id data\n");
 		break;
 	case STATE_TOKEN_CERTS:
-		printf("token found reading certificates data\n");
+		printf("token found, reading certificates data\n");
 		break;
 	case STATE_TOKEN_WAIT:
-		printf("token found and waiting on action\n");
+		printf("token found, waiting on action\n");
 		break;
 	case STATE_TOKEN_IDLE:
 		printf("no action given durin token wait(child of wait)\n");
@@ -50,6 +65,9 @@ static void newstate(enum eid_vwr_states s) {
 		break;
 	case STATE_TOKEN_SERIALIZE:
 		printf("saving data to a file\n");
+		break;
+	case STATE_TOKEN_CHALLENGE:
+		printf("performing a challenge");
 		break;
 	case STATE_TOKEN_ERROR:
 		printf("error occured with card\n");
@@ -89,6 +107,7 @@ TEST_FUNC(states) {
 	}
 	cb = createcbs();
 	verbose_assert(cb != NULL);
+	cb->pinop_result = pinop_result;
 	cb->newstate = newstate;
 	verbose_assert(eid_vwr_createcallbacks(cb) == 0);
 	
@@ -120,7 +139,7 @@ TEST_FUNC(states) {
 	clearflags();
 	
 	if (is_manual_robot()){
-		printf("wrong card test : do you want to continue?\n");
+		printf("wrong card test : do you want to continue? y/n\n");
 		char character = 'n';
 		if (scanf("%c",&character) != EOF && character == 'y')
 		{
@@ -132,7 +151,7 @@ TEST_FUNC(states) {
 			verbose_assert(curstate == STATE_TOKEN_ERROR);
 			clearflags();
 			robot_remove_card();
-			SLEEP(5);
+			SLEEP(10);
 			verbose_assert(flags[STATE_NO_TOKEN]);
 			verbose_assert(flags[STATE_READY]);
 			clearflags();		
@@ -143,7 +162,7 @@ TEST_FUNC(states) {
 	printf("right card test\n");
 	newstate(curstate);
 	robot_insert_card();
-	SLEEP(10);
+	SLEEP(15);
 	newstate(curstate);
 	verbose_assert(flags[STATE_TOKEN]);
 	verbose_assert(flags[STATE_TOKEN_ID]);
@@ -152,11 +171,34 @@ TEST_FUNC(states) {
 	verbose_assert(curstate == STATE_TOKEN_IDLE);
 	clearflags();
 	
+	if(!can_enter_pin(0)) {
+		printf("Cannot do PIN tests without PIN code...\n");
+		exit(TEST_RV_SKIP);
+	}
+	eid_vwr_pinop(EID_VWR_PINOP_TEST);
+	SLEEP(5);
+	verbose_assert(flags[STATE_TOKEN_PINOP]);
+	clearflags();
+	SLEEP(5);
+	
+	const EID_CHAR* name = "test.xml";
+	eid_vwr_be_serialize(name);
+	SLEEP(5);
+	newstate(curstate);
+	verbose_assert(flags[STATE_TOKEN_SERIALIZE]);
+	verbose_assert(access(name,F_OK) == 0);
+	if (remove(name)!=0){
+		printf("problem removing file");
+		return TEST_RV_SKIP;
+	}
+	clearflags();
+	SLEEP(5);
+	
 	eid_vwr_be_set_invalid();
 	SLEEP(5);
 	newstate(curstate);
 	verbose_assert(curstate == STATE_CARD_INVALID);
-	
+		
 	SLEEP(10);
 	return TEST_RV_OK;
 }
