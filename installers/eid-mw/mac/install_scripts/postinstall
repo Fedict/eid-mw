@@ -5,21 +5,44 @@ source ./set_eidmw_version.sh
 
 echo $MWVER
 
-#update the links
+#update the links in /Library/Belgium Identity Card/Pkcs11/
+if test -e "/Library/Belgium Identity Card/Pkcs11/libbeidpkcs11.$MWVER2.dylib"; then
+	unlink "/Library/Belgium Identity Card/Pkcs11/libbeidpkcs11.$MWVER2.dylib"
+fi
+ln -fs "/Library/Belgium Identity Card/Pkcs11/libbeidpkcs11.$MWVER3.dylib" "/Library/Belgium Identity Card/Pkcs11/libbeidpkcs11.$MWVER2.dylib"
+
+if test -e "/Library/Belgium Identity Card/Pkcs11/libbeidpkcs11.$MWVER1.dylib"; then
+	unlink "/Library/Belgium Identity Card/Pkcs11/libbeidpkcs11.$MWVER1.dylib"
+fi
+ln -fs "/Library/Belgium Identity Card/Pkcs11/libbeidpkcs11.$MWVER2.dylib" "/Library/Belgium Identity Card/Pkcs11/libbeidpkcs11.$MWVER1.dylib"
+
+if test -e "/Library/Belgium Identity Card/Pkcs11/libbeidpkcs11.dylib"; then
+	unlink "/Library/Belgium Identity Card/Pkcs11/libbeidpkcs11.dylib"
+fi
+ln -fs "/Library/Belgium Identity Card/Pkcs11/libbeidpkcs11.$MWVER1.dylib" "/Library/Belgium Identity Card/Pkcs11/libbeidpkcs11.dylib"
+
+
+#update the links in /usr/local/lib (for backwards compatibility)
 if test -e /usr/local/lib/libbeidpkcs11.$MWVER2.dylib; then
 	unlink /usr/local/lib/libbeidpkcs11.$MWVER2.dylib
 fi
-ln -fs /usr/local/lib/libbeidpkcs11.$MWVER3.dylib /usr/local/lib/libbeidpkcs11.$MWVER2.dylib
+ln -fs "/Library/Belgium Identity Card/Pkcs11/libbeidpkcs11.$MWVER3.dylib" /usr/local/lib/libbeidpkcs11.$MWVER2.dylib
 
 if test -e /usr/local/lib/libbeidpkcs11.$MWVER1.dylib; then
 	unlink /usr/local/lib/libbeidpkcs11.$MWVER1.dylib
 fi
-ln -fs /usr/local/lib/libbeidpkcs11.$MWVER2.dylib /usr/local/lib/libbeidpkcs11.$MWVER1.dylib
+ln -fs "/Library/Belgium Identity Card/Pkcs11/libbeidpkcs11.$MWVER2.dylib" /usr/local/lib/libbeidpkcs11.$MWVER1.dylib
 
 if test -e /usr/local/lib/libbeidpkcs11.dylib; then
 	unlink /usr/local/lib/libbeidpkcs11.dylib
 fi
-ln -fs /usr/local/lib/libbeidpkcs11.$MWVER1.dylib /usr/local/lib/libbeidpkcs11.dylib
+ln -fs "/Library/Belgium Identity Card/Pkcs11/libbeidpkcs11.$MWVER1.dylib" /usr/local/lib/libbeidpkcs11.dylib
+
+if test -e /usr/local/lib/beid-pkcs11.bundle; then
+	unlink /usr/local/lib/beid-pkcs11.bundle
+fi
+ln -fs "/Library/Belgium Identity Card/Pkcs11/beid-pkcs11.bundle" /usr/local/lib/beid-pkcs11.bundle
+
 
 #correct the org.opensc.pcscd.autostart name if needed (add .plist)
 if test -e /Library/LaunchDaemons/org.opensc.pcscd.autostart; then

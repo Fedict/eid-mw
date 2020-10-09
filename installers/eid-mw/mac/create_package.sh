@@ -63,7 +63,7 @@ RESOURCES_DIR="$RELEASE_DIR/resources"
 INSTALL_SCRIPTS_DIR="$RELEASE_DIR/install_scripts"
 
 #pkcs11_inst dir, where our pkcs11 lib will be placed
-PKCS11_INST_DIR="$ROOT_DIR/usr/local/lib"
+PKCS11_INST_DIR="$ROOT_DIR/Library/Belgium Identity Card/Pkcs11"
 MOZ_PKCS11_MANIFEST_DIR="$ROOT_DIR/Library/Application Support/Mozilla/PKCS11Modules"
 #licenses dir, where our licences will be placed
 LICENSES_DIR="$ROOT_DIR/Library/Belgium Identity Card/Licenses"
@@ -128,12 +128,12 @@ mkdir -p "$MOZ_PKCS11_MANIFEST_DIR"
 if [ "$EIDMW_BUILD_CONFIG" = "Export" ]
 then
 	codesign --timestamp --force -o runtime --sign "Developer ID Application" -v ../../../release/libbeidpkcs11.$REL_VERSION.dylib
-	cp ../../../release/libbeidpkcs11.$REL_VERSION.dylib $PKCS11_INST_DIR
+	cp ../../../release/libbeidpkcs11.$REL_VERSION.dylib "$PKCS11_INST_DIR"
 else
-	cp $PKCS11_DYLIB_PATH $PKCS11_INST_DIR
+	cp $PKCS11_DYLIB_PATH "$PKCS11_INST_DIR"
 fi
 #copy pkcs11 bundle
-cp -R ./Packages/beid-pkcs11.bundle $PKCS11_INST_DIR
+cp -R ./Packages/beid-pkcs11.bundle "$PKCS11_INST_DIR"
 #make relative symbolic link from bundle to the dylib
 mkdir -p "$PKCS11_INST_DIR/beid-pkcs11.bundle/Contents/MacOS/"
 ln -s ../../../libbeidpkcs11.$REL_VERSION.dylib "$PKCS11_INST_DIR/beid-pkcs11.bundle/Contents/MacOS/libbeidpkcs11.dylib"
@@ -144,7 +144,7 @@ cat > "$MOZ_PKCS11_MANIFEST_DIR/beidpkcs11.json" <<EOF
   "name": "beidpkcs11",
   "description": "Belgium eID PKCS#11 Module",
   "type": "pkcs11",
-  "path": "/usr/local/lib/beid-pkcs11.bundle/Contents/MacOS/libbeidpkcs11.dylib",
+  "path": "/Library/Belgium Identity Card/Pkcs11/beid-pkcs11.bundle/Contents/MacOS/libbeidpkcs11.dylib",
   "allowed_extensions": ["belgiumeid@eid.belgium.be"]
 }
 EOF
