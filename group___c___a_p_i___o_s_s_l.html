@@ -113,6 +113,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga46eec63386a142aa8b30603abe0dc458"><td class="memItemLeft" align="right" valign="top">DllExport char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c___a_p_i___o_s_s_l.html#ga46eec63386a142aa8b30603abe0dc458">eid_vwr_x509_get_details</a> (const void *certificate, size_t certlen)</td></tr>
 <tr class="memdesc:ga46eec63386a142aa8b30603abe0dc458"><td class="mdescLeft">&#160;</td><td class="mdescRight">Produce a human-readable version of the certificate.  <a href="#ga46eec63386a142aa8b30603abe0dc458">More...</a><br /></td></tr>
 <tr class="separator:ga46eec63386a142aa8b30603abe0dc458"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaec12821158ba5368f921bc64462fdc6d"><td class="memItemLeft" align="right" valign="top">DllExport void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c___a_p_i___o_s_s_l.html#gaec12821158ba5368f921bc64462fdc6d">eid_vwr_check_signature</a> (const void *pubkey, size_t pubkeylen, const void *signature, size_t siglen, const void *data, size_t datalen)</td></tr>
+<tr class="memdesc:gaec12821158ba5368f921bc64462fdc6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">helper function to verify that an ECDSA signature is correct.  <a href="#gaec12821158ba5368f921bc64462fdc6d">More...</a><br /></td></tr>
+<tr class="separator:gaec12821158ba5368f921bc64462fdc6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>These functions are available on GNU/Linux and OS X <em>only</em>. </p>
@@ -139,6 +142,70 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="gaec12821158ba5368f921bc64462fdc6d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaec12821158ba5368f921bc64462fdc6d">&#9670;&nbsp;</a></span>eid_vwr_check_signature()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">DllExport void eid_vwr_check_signature </td>
+          <td>(</td>
+          <td class="paramtype">const void *&#160;</td>
+          <td class="paramname"><em>pubkey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>pubkeylen</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const void *&#160;</td>
+          <td class="paramname"><em>signature</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>siglen</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const void *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>datalen</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>helper function to verify that an ECDSA signature is correct. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pubkey</td><td>the public (ECDSA) key to be used, in X9.62 raw format </td></tr>
+    <tr><td class="paramname">pubkeylen</td><td>the length of pubkey </td></tr>
+    <tr><td class="paramname">signature</td><td>the signature to verify </td></tr>
+    <tr><td class="paramname">siglen</td><td>the length of signature</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>this method <em>only</em> verifies that the signature is correct, nothing more; notably, it does <em>not</em> verify that the key is trusted or anything of the sorts. </dd></dl>
+
+</div>
+</div>
 <a id="ga24dc34db17d3e78c188f81062f1f0254"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga24dc34db17d3e78c188f81062f1f0254">&#9670;&nbsp;</a></span>eid_vwr_describe_cert()</h2>
 
