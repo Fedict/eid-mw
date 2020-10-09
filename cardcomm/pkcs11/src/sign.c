@@ -335,214 +335,270 @@ return ret;
 
 #define WHERE "C_SignInit()"
 CK_RV C_SignInit(CK_SESSION_HANDLE hSession,    /* the session's handle */
-                 CK_MECHANISM_PTR  pMechanism,  /* the signature mechanism */
-                 CK_OBJECT_HANDLE  hKey)        /* handle of the signature key */
+	CK_MECHANISM_PTR  pMechanism,  /* the signature mechanism */
+	CK_OBJECT_HANDLE  hKey)        /* handle of the signature key */
 {
-   CK_RV ret;
-   P11_SESSION *pSession = NULL;
-   P11_SLOT    *pSlot = NULL;
-   P11_SIGN_DATA *pSignData = NULL;
-   P11_OBJECT  *pObject = NULL;
+	CK_RV ret;
+	P11_SESSION *pSession = NULL;
+	P11_SLOT    *pSlot = NULL;
+	P11_SIGN_DATA *pSignData = NULL;
+	P11_OBJECT  *pObject = NULL;
 
-   CK_BBOOL       *pcan_sign = NULL;
-   CK_KEY_TYPE    *pkeytype = NULL;
-   CK_ULONG       *pmodsize = NULL;
-   CK_ULONG	  modsize = 768; // TODO: do not hardcode length of P-384 signatures
-   CK_ULONG       *pid = NULL;
-   CK_ULONG       *pclass = NULL;
-   CK_ULONG len = 0;
-   CK_MECHANISM_TYPE_PTR  pMechanismsSupported = NULL;
-   CK_ULONG ulSupportedMechLen = 0;
-   CK_ULONG ulcounter = 0;
-   int ihash;
+	CK_UTF8CHAR		*pLabel = NULL;
+	CK_BBOOL       *pcan_sign = NULL;
+	CK_KEY_TYPE    *pkeytype = NULL;
+	CK_ULONG       *pmodsize = NULL;
+	CK_ULONG	  modsize = 768; // TODO: do not hardcode length of P-384 signatures
+	CK_ULONG       *pid = NULL;
+	CK_ULONG       *pclass = NULL;
+	CK_ULONG len = 0;
+	CK_MECHANISM_TYPE_PTR  pMechanismsSupported = NULL;
+	CK_ULONG ulSupportedMechLen = 0;
+	CK_ULONG ulcounter = 0;
+	int ihash;
 
 	if (p11_get_init() != BEIDP11_INITIALIZED)
 	{
 		log_trace(WHERE, "I: leave, CKR_CRYPTOKI_NOT_INITIALIZED");
 		return (CKR_CRYPTOKI_NOT_INITIALIZED);
-	}		
+	}
 
-   p11_lock();
+	p11_lock();
 
-	 log_trace(WHERE, "I: enter");
+	log_trace(WHERE, "I: enter");
 
-   ret = p11_get_session(hSession, &pSession);
-   if (ret)
-      {
-      log_trace(WHERE, "E: Invalid session handle (%lu)", hSession);
-      goto cleanup;
-      }
+	ret = p11_get_session(hSession, &pSession);
+	if (ret)
+	{
+		log_trace(WHERE, "E: Invalid session handle (%lu)", hSession);
+		goto cleanup;
+	}
 
-   //is there an active sign operation for this session
-   if (pSession->Operation[P11_OPERATION_SIGN].active)
-      {
-      log_trace(WHERE, "W: Session %lu: sign operation allready exists", hSession);
-      ret = CKR_OPERATION_ACTIVE;
-      goto cleanup;
-      }
+	//is there an active sign operation for this session
+	if (pSession->Operation[P11_OPERATION_SIGN].active)
+	{
+		log_trace(WHERE, "W: Session %lu: sign operation allready exists", hSession);
+		ret = CKR_OPERATION_ACTIVE;
+		goto cleanup;
+	}
 
-   pSlot = p11_get_slot(pSession->hslot);
-   if (pSlot == NULL)
-      {
-      log_trace(WHERE, "E: Slot not found for session %lu", hSession);
-      ret = CKR_SESSION_HANDLE_INVALID;
-      goto cleanup;
-      }
+	pSlot = p11_get_slot(pSession->hslot);
+	if (pSlot == NULL)
+	{
+		log_trace(WHERE, "E: Slot not found for session %lu", hSession);
+		ret = CKR_SESSION_HANDLE_INVALID;
+		goto cleanup;
+	}
 
-   if(!(pSlot->ulCardDataCached & CACHED_DATA_TYPE_CDF))
-   {
-	   log_trace(WHERE, "E: Key handle but no CDF read yet!");
-	   ret = CKR_KEY_HANDLE_INVALID;
-	   goto cleanup;
-   }
+
+	//check for the special case were an internal authenticate is requested in stead of a compute digital signature
+	//in this case, the object that contains the basic key file will be presented
+	//only algoritm supported atm is SHA-2-384-ECDSA
+	pObject = p11_get_slot_object(pSlot, hKey);
+	if (pObject == NULL || pObject->count == 0)
+	{
+		log_trace(WHERE, "E: invalid key handle");
+		ret = CKR_KEY_HANDLE_INVALID;
+		goto cleanup;
+	}
+
+	ret = p11_get_attribute_value(pObject->pAttr, pObject->count, CKA_LABEL, (CK_VOID_PTR *)&pLabel, &len);
+	if ((ret == 0) && (len > 0))
+	{
+		if (len == strlen(BEID_LABEL_BASIC_KEY))
+		{
+			if (strncmp(pLabel, BEID_LABEL_BASIC_KEY, len) == 0)
+			{
+				if (pMechanism->mechanism != CKM_ECDSA)
+				{
+					ret = CKR_MECHANISM_INVALID;
+					goto cleanup;
+				}
+
+				/* init sign (internal authenticate) operation */
+				if ((pSignData = pSession->Operation[P11_OPERATION_SIGN].pData) == NULL)
+				{
+					pSignData = pSession->Operation[P11_OPERATION_SIGN].pData = (P11_SIGN_DATA *)malloc(sizeof(P11_SIGN_DATA));
+					if (pSignData == NULL)
+					{
+						log_trace(WHERE, "E: error allocating memory");
+						ret = CKR_HOST_MEMORY;
+						goto cleanup;
+					}
+				}
+
+				memset(pSignData, 0, sizeof(P11_SIGN_DATA));
+
+				pSignData->mechanism = pMechanism->mechanism;
+				pSignData->hKey = hKey;
+				pSignData->l_sign = (modsize + 7) / 8;
+				pSignData->id = 129;//0x81
+
+				pSession->Operation[P11_OPERATION_SIGN].active = 1;
+				ret = CKR_OK;
+				goto cleanup;
+				//end of special case "challenge"
+			}
+		}
+	}
+
+
+
+	if (!(pSlot->ulCardDataCached & CACHED_DATA_TYPE_CDF))
+	{
+		log_trace(WHERE, "E: Key handle but no CDF read yet!");
+		ret = CKR_KEY_HANDLE_INVALID;
+		goto cleanup;
+	}
 
 #ifndef PKCS11_FF
-   ret = cal_init_objects(pSlot);
-   if(ret != CKR_OK)
-   {
-	   log_trace(WHERE, "E: cal_init_objects() returns %s_", log_map_error(ret));
-   }
+	ret = cal_init_objects(pSlot);
+	if (ret != CKR_OK)
+	{
+		log_trace(WHERE, "E: cal_init_objects() returns %s_", log_map_error(ret));
+	}
 #endif
 
-   //check mechanism
-   //since this module is only for BEID, we check for RSA here and we do not check the device capabilities
-   //check mechanism table for signing depending on token in slot
+	//check mechanism
+	//since this module is only for BEID, we check for RSA here and we do not check the device capabilities
+	//check mechanism table for signing depending on token in slot
 
-	 //get number of mechanisms
+	  //get number of mechanisms
+	ret = cal_get_mechanism_list(pSession->hslot, pMechanismsSupported, &ulSupportedMechLen);
+	if (ret != CKR_OK)
+	{
+		log_trace(WHERE, "E: cal_get_mechanism_list(slotid=%lu) returns %s", pSession->hslot, log_map_error(ret));
+		goto cleanup;
+	}
+
+	//get the mechanisms list
+	pMechanismsSupported = (CK_MECHANISM_TYPE_PTR)malloc(sizeof(CK_MECHANISM_TYPE)*ulSupportedMechLen);
+	if (pMechanismsSupported != NULL)
+	{
 		ret = cal_get_mechanism_list(pSession->hslot, pMechanismsSupported, &ulSupportedMechLen);
 		if (ret != CKR_OK)
-   {
-			log_trace(WHERE, "E: cal_get_mechanism_list(slotid=%lu) returns %s", pSession->hslot, log_map_error(ret));
-			goto cleanup;
-   }
-
-		//get the mechanisms list
-		pMechanismsSupported = (CK_MECHANISM_TYPE_PTR) malloc (sizeof(CK_MECHANISM_TYPE)*ulSupportedMechLen);
-		if(pMechanismsSupported != NULL)
 		{
-			ret = cal_get_mechanism_list(pSession->hslot, pMechanismsSupported, &ulSupportedMechLen);
-			if (ret != CKR_OK)
-			{
-				log_trace(WHERE, "E: cal_get_mechanism_list(slotid=%lu) returns %s", pSession->hslot, log_map_error(ret));
-				free(pMechanismsSupported);
-				goto cleanup;
-			}
-
-			ret = CKR_MECHANISM_INVALID;
-
-			for(ulcounter = 0; ulcounter < ulSupportedMechLen ; ulcounter++)
-			{
-				if(pMechanismsSupported[ulcounter] == pMechanism->mechanism)
-				{
-					ret = CKR_OK;
-					break;
-				}
-			}
-			if(ret == CKR_MECHANISM_INVALID)
-			{
-				free(pMechanismsSupported);
-				goto cleanup;  
-			}
+			log_trace(WHERE, "E: cal_get_mechanism_list(slotid=%lu) returns %s", pSession->hslot, log_map_error(ret));
 			free(pMechanismsSupported);
+			goto cleanup;
 		}
 
-   switch(pMechanism->mechanism)
-      {
-      case CKM_MD5_RSA_PKCS:
-      case CKM_SHA1_RSA_PKCS:
-      case CKM_RIPEMD160_RSA_PKCS:
-      case CKM_SHA256_RSA_PKCS:
-      case CKM_SHA384_RSA_PKCS:
-      case CKM_SHA512_RSA_PKCS: 
-      case CKM_SHA1_RSA_PKCS_PSS:
-      case CKM_SHA256_RSA_PKCS_PSS:
-      case CKM_ECDSA_SHA256:
-      case CKM_ECDSA_SHA384:
-      case CKM_ECDSA_SHA512:
-      	ihash = 1; break;
-      case CKM_RSA_PKCS:
-      case CKM_ECDSA:
-      	ihash = 0; break;
-      default: 
-         ret = CKR_MECHANISM_INVALID;
-         goto cleanup;            
-      }
+		ret = CKR_MECHANISM_INVALID;
 
-   //can we use the object for signing?
-   pObject = p11_get_slot_object(pSlot, hKey);
-   if (pObject == NULL || pObject->count == 0)
-      {
-      log_trace(WHERE, "E: invalid key handle");
-      ret = CKR_KEY_HANDLE_INVALID;
-      goto cleanup;
-      }
+		for (ulcounter = 0; ulcounter < ulSupportedMechLen; ulcounter++)
+		{
+			if (pMechanismsSupported[ulcounter] == pMechanism->mechanism)
+			{
+				ret = CKR_OK;
+				break;
+			}
+		}
+		if (ret == CKR_MECHANISM_INVALID)
+		{
+			free(pMechanismsSupported);
+			goto cleanup;
+		}
+		free(pMechanismsSupported);
+	}
 
-   //check class, keytype and sign attribute CKO_PRIV_KEY
-   /* CKR_KEY_TYPE_INCONSISTENT has higher rank than CKR_KEY_FUNCTION_NOT_PERMITTED */
-   ret = p11_get_attribute_value(pObject->pAttr, pObject->count, CKA_KEY_TYPE, (CK_VOID_PTR*) &pkeytype, &len);
-   if (ret || (len != sizeof(CK_KEY_TYPE)) || (*pkeytype != CKK_RSA && *pkeytype != CKK_EC))
-      {
-      log_trace(WHERE, "E: Wrong keytype");
-      ret = CKR_KEY_TYPE_INCONSISTENT;
-      goto cleanup;
-      }
+	switch (pMechanism->mechanism)
+	{
+	case CKM_MD5_RSA_PKCS:
+	case CKM_SHA1_RSA_PKCS:
+	case CKM_RIPEMD160_RSA_PKCS:
+	case CKM_SHA256_RSA_PKCS:
+	case CKM_SHA384_RSA_PKCS:
+	case CKM_SHA512_RSA_PKCS:
+	case CKM_SHA1_RSA_PKCS_PSS:
+	case CKM_SHA256_RSA_PKCS_PSS:
+	case CKM_ECDSA_SHA256:
+	case CKM_ECDSA_SHA384:
+	case CKM_ECDSA_SHA512:
+		ihash = 1; break;
+	case CKM_RSA_PKCS:
+	case CKM_ECDSA:
+		ihash = 0; break;
+	default:
+		ret = CKR_MECHANISM_INVALID;
+		goto cleanup;
+	}
 
-   ret = p11_get_attribute_value(pObject->pAttr, pObject->count, CKA_CLASS, (CK_VOID_PTR*) &pclass, &len);
-   if (ret || (len != sizeof(CK_ULONG)) || (*pclass != CKO_PRIVATE_KEY))
-      {
-      log_trace(WHERE, "E: Key is not CKO_PRIVATE_KEY");
-      ret = CKR_KEY_FUNCTION_NOT_PERMITTED;
-      goto cleanup;
-      }
+	//can we use the object for signing?
+	pObject = p11_get_slot_object(pSlot, hKey);
+	if (pObject == NULL || pObject->count == 0)
+	{
+		log_trace(WHERE, "E: invalid key handle");
+		ret = CKR_KEY_HANDLE_INVALID;
+		goto cleanup;
+	}
 
-   ret = p11_get_attribute_value(pObject->pAttr, pObject->count, CKA_SIGN, (CK_VOID_PTR*) &pcan_sign, &len);
-   if (ret || (len != sizeof(CK_BBOOL)) || (*pcan_sign != CK_TRUE))
-      {
-      log_trace(WHERE, "E: Key cannot be used for signing");
-      ret = CKR_KEY_FUNCTION_NOT_PERMITTED;
-      goto cleanup;
-      }
+	//check class, keytype and sign attribute CKO_PRIV_KEY
+	/* CKR_KEY_TYPE_INCONSISTENT has higher rank than CKR_KEY_FUNCTION_NOT_PERMITTED */
+	ret = p11_get_attribute_value(pObject->pAttr, pObject->count, CKA_KEY_TYPE, (CK_VOID_PTR*)&pkeytype, &len);
+	if (ret || (len != sizeof(CK_KEY_TYPE)) || (*pkeytype != CKK_RSA && *pkeytype != CKK_EC))
+	{
+		log_trace(WHERE, "E: Wrong keytype");
+		ret = CKR_KEY_TYPE_INCONSISTENT;
+		goto cleanup;
+	}
 
-   if(*pkeytype == CKK_RSA) {
-	   ret = p11_get_attribute_value(pObject->pAttr, pObject->count, CKA_MODULUS_BITS, (CK_VOID_PTR*) &pmodsize, &len);
-	   if (ret || (len != sizeof(CK_ULONG)) )
-	      {
-	      log_trace(WHERE, "E: Lengh not defined for modulus bits for private key");
-	      ret = CKR_FUNCTION_FAILED;
-	      goto cleanup;
-	      }
-   } else {
-     pmodsize = &modsize;
-   }
+	ret = p11_get_attribute_value(pObject->pAttr, pObject->count, CKA_CLASS, (CK_VOID_PTR*)&pclass, &len);
+	if (ret || (len != sizeof(CK_ULONG)) || (*pclass != CKO_PRIVATE_KEY))
+	{
+		log_trace(WHERE, "E: Key is not CKO_PRIVATE_KEY");
+		ret = CKR_KEY_FUNCTION_NOT_PERMITTED;
+		goto cleanup;
+	}
 
-   /* get ID to identify signature key */
-   /* at this time, id should be available, otherwise, device is not connected and objects are not initialized */
-   ret = p11_get_attribute_value(pObject->pAttr, pObject->count, CKA_ID, (CK_VOID_PTR*) &pid, &len);
-   if (ret || (len != sizeof(CK_ULONG)))
-      {
-      log_trace(WHERE, "E: ID missing for key");
-      ret = CKR_FUNCTION_FAILED;
-      goto cleanup;
-      }
+	ret = p11_get_attribute_value(pObject->pAttr, pObject->count, CKA_SIGN, (CK_VOID_PTR*)&pcan_sign, &len);
+	if (ret || (len != sizeof(CK_BBOOL)) || (*pcan_sign != CK_TRUE))
+	{
+		log_trace(WHERE, "E: Key cannot be used for signing");
+		ret = CKR_KEY_FUNCTION_NOT_PERMITTED;
+		goto cleanup;
+	}
 
-   /* init sign operation */
-   if((pSignData = pSession->Operation[P11_OPERATION_SIGN].pData) == NULL)
-      {
-      pSignData = pSession->Operation[P11_OPERATION_SIGN].pData = (P11_SIGN_DATA *) malloc (sizeof(P11_SIGN_DATA));
-      if (pSignData == NULL)
-         {
-         log_trace( WHERE, "E: error allocating memory");
-         ret = CKR_HOST_MEMORY;
-         goto cleanup;
-         }
-      }
+	if (*pkeytype == CKK_RSA) {
+		ret = p11_get_attribute_value(pObject->pAttr, pObject->count, CKA_MODULUS_BITS, (CK_VOID_PTR*)&pmodsize, &len);
+		if (ret || (len != sizeof(CK_ULONG)))
+		{
+			log_trace(WHERE, "E: Lengh not defined for modulus bits for private key");
+			ret = CKR_FUNCTION_FAILED;
+			goto cleanup;
+		}
+	}
+	else {
+		pmodsize = &modsize;
+	}
 
-   memset(pSignData, 0, sizeof(P11_SIGN_DATA));
+	/* get ID to identify signature key */
+	/* at this time, id should be available, otherwise, device is not connected and objects are not initialized */
+	ret = p11_get_attribute_value(pObject->pAttr, pObject->count, CKA_ID, (CK_VOID_PTR*)&pid, &len);
+	if (ret || (len != sizeof(CK_ULONG)))
+	{
+		log_trace(WHERE, "E: ID missing for key");
+		ret = CKR_FUNCTION_FAILED;
+		goto cleanup;
+	}
 
-   pSignData->mechanism = pMechanism->mechanism;
-   pSignData->hKey = hKey;
-   pSignData->l_sign = (*pmodsize+7)/8;
-   pSignData->id = *pid;
+	/* init sign operation */
+	if ((pSignData = pSession->Operation[P11_OPERATION_SIGN].pData) == NULL)
+	{
+		pSignData = pSession->Operation[P11_OPERATION_SIGN].pData = (P11_SIGN_DATA *)malloc(sizeof(P11_SIGN_DATA));
+		if (pSignData == NULL)
+		{
+			log_trace(WHERE, "E: error allocating memory");
+			ret = CKR_HOST_MEMORY;
+			goto cleanup;
+		}
+	}
+
+	memset(pSignData, 0, sizeof(P11_SIGN_DATA));
+
+	pSignData->mechanism = pMechanism->mechanism;
+	pSignData->hKey = hKey;
+	pSignData->l_sign = (*pmodsize + 7) / 8;
+	pSignData->id = *pid;
 
    if (ihash)
       {
@@ -667,6 +723,14 @@ CK_RV C_Sign(CK_SESSION_HANDLE hSession,        /* the session's handle */
       memcpy(pDigest, pData, ulDataLen);
       ulDigestLen = ulDataLen;
       }
+
+   //check if we need to do an internal authenticate in stead of a compute digital signature
+   if (pSignData->id == 129)//0x81
+   {
+	   ret = cal_challenge(pSession->hslot, pSignData, pDigest, ulDigestLen, pSignature, pulSignatureLen);
+	   goto cleanup;
+   }
+
 
    /* do the signing (and add pkcs headers first if needed) */
    ret = cal_sign(pSession->hslot, pSignData, pDigest, ulDigestLen, pSignature, pulSignatureLen);

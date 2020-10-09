@@ -102,56 +102,29 @@ Section "Belgium Eid Viewer" BeidViewer
 	SetOutPath "$INSTDIR"
 	CreateDirectory "$INSTDIR\log"
 		
-	${If} ${RunningX64}
-		ClearErrors
-		StrCpy $FileToCopy "$INSTDIR\BeidViewer64.msi"
-		File "..\eid-viewer\Windows\bin\x64\BeidViewer64.msi"
-		IfErrors 0 +2
-			Call ErrorHandler_file
-		ClearErrors
-		
-		StrCpy $LogFile "$INSTDIR\log\install_eidviewer_log.txt"
+	ClearErrors
+	StrCpy $FileToCopy "$INSTDIR\BeidViewer.msi"
+	File "..\eid-viewer\Windows\bin\BeidViewer.msi"
+	IfErrors 0 +2
+		Call ErrorHandler_file
+	ClearErrors
 
-		ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeidViewer64.msi"' $MsiResponse
-		${Switch} $MsiResponse
-			${Case} 0
-			${Case} 3010 
-				;3010 is 'success, but reboot requiered'
-				;set 1 for testing, 0 otherwise
-				StrCpy $InstallFailed 0
-			${Break}
-			${Default}
-				StrCpy $InstallFailed $MsiResponse
-		${EndSwitch}
+	StrCpy $LogFile "$INSTDIR\log\install_eidviewer_log.txt"
 
-		Delete "$INSTDIR\BeidViewer64.msi"	
-		
-	${Else}				
-		ClearErrors
-		StrCpy $FileToCopy "$INSTDIR\BeidViewer.msi"
-		File "..\eid-viewer\Windows\bin\BeidViewer.msi"
-		IfErrors 0 +2
-			Call ErrorHandler_file
-		ClearErrors
-		
-		StrCpy $LogFile "$INSTDIR\log\install_eidviewer_log.txt"
+	ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeidViewer.msi"' $MsiResponse
+	${Switch} $MsiResponse
+		${Case} 0
+		${Case} 3010 
+			;3010 is 'success, but reboot requiered'
+			;set 1 for testing, 0 otherwise
+			StrCpy $InstallFailed 0
+		${Break}
+		${Default}
+			StrCpy $InstallFailed $MsiResponse
+	${EndSwitch}
 
-		ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeidViewer.msi"' $MsiResponse
-		${Switch} $MsiResponse
-			${Case} 0
-			${Case} 3010 
-				;3010 is 'success, but reboot requiered'
-				;set 1 for testing, 0 otherwise
-				StrCpy $InstallFailed 0
-			${Break}
-			${Default}
-				StrCpy $InstallFailed $MsiResponse
-		${EndSwitch}
-
-		Delete "$INSTDIR\BeidViewer.msi"
-		
-	${EndIf}
-	
+	Delete "$INSTDIR\BeidViewer.msi"
+  
 SectionEnd
 
 Function ErrorHandler_file

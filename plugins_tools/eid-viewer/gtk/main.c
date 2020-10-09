@@ -446,7 +446,6 @@ int main(int argc, char** argv) {
 	GtkWidget *window;
 	GtkAccelGroup *group;
 	struct eid_vwr_ui_callbacks* cb;
-	GdkPixbuf *logo;
 	GError* err = NULL;
 
 	/* The GNU implementation of setlocale() ignores whatever we

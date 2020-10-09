@@ -330,6 +330,8 @@ namespace eIDViewer
 
         public bool VerifyRootCAvsEmbeddedRootCA(ref X509Certificate2 rootCertOnCard, string embeddedRootCA)
         {
+            return true;//for testing
+            /*
             bool foundEmbeddedRootCA = false;
             try
             {
@@ -363,7 +365,7 @@ namespace eIDViewer
             {
                 this.WriteLog("An error occurred comparing the Belgium rootCA on the card with the ones in the EIDViewer\n" + e.ToString(), eid_vwr_loglevel.EID_VWR_LOG_ERROR);
             }
-            return foundEmbeddedRootCA;
+            return foundEmbeddedRootCA;*/
         }
 
 
@@ -445,9 +447,9 @@ namespace eIDViewer
             try
             {     
                 if (leafCertificate != null)
-                {                  
+                {
                     //alter how the chain is built/validated.
-                    chain.ChainPolicy.RevocationMode = X509RevocationMode.Online;
+                    chain.ChainPolicy.RevocationMode = X509RevocationMode.NoCheck;//for testing X509RevocationMode.Online;
                     chain.ChainPolicy.RevocationFlag = X509RevocationFlag.ExcludeRoot;
                     // Set the time span that may elapse during online revocation verification or downloading the certificate revocation list (CRL).
                     TimeSpan verificationTime = new TimeSpan(0, 0, 10);
@@ -618,7 +620,7 @@ namespace eIDViewer
 
         public void VerifyAllData()
         {
-            if(IsVerifiedDataOK() == false)
+            if( (IsVerifiedDataOK() == false) || (IsBasicKeyOK() == false) )
             {
                 ResetDataValues();
                 eid_data_ready = false;
@@ -632,6 +634,50 @@ namespace eIDViewer
             }
         }
 
+        public bool IsBasicKeyOK()
+        {
+
+            if (basicKeyHash != null)
+            {
+                //only verify the basic key when it is present
+
+                if ( (basicKeyHash.Length != 48) || (basicKeyFile == null) )
+                {
+                    //only hashAlg used is SHA384
+                    //if we have a basic key hash in the signed ID FILE, the card needs to have a matching basic key file
+                    return false;
+                }
+                //check if the public basic key corresponds with the basic key hash in the identity file
+                if (CheckShaHash(basicKeyFile, basicKeyHash) != true)
+                {
+                    this.WriteLog("public basic key doesn't match the hash in the ID file \n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+                    return false;
+                }
+                else
+                {
+                    //public basic key is correct, now check if the card contains the matching private key
+                    challenge = new byte[48];
+
+                    Random rnd = new Random();
+                    rnd.NextBytes(challenge);
+
+                    SHA384 sha = new SHA384CryptoServiceProvider();
+                    byte[] challenge_hash = sha.ComputeHash(challenge, 0,48);
+                    byte challenge_hash_len = 48;
+
+                    if (eIDViewer.NativeMethods.DoChallenge(challenge_hash, challenge_hash_len) == 0)
+                    {
+                        this.WriteLog("validating the card authenticity: challenging the card basic key \n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
+                    }
+                    else
+                    {
+                        this.WriteLog("validating the card authenticity: backend failed sending challenge to the card \n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
+                    }
+                }
+            }
+            return true;
+        }
+
         public bool IsVerifiedDataOK( )
         {
             string hashAlg;
@@ -643,6 +689,10 @@ namespace eIDViewer
                 else if (photo_hash.Length == 32)
                 {
                     hashAlg = "SHA256";
+                }
+                else if (photo_hash.Length == 48)
+                {
+                    hashAlg = "SHA384";
                 }
                 else
                 {
@@ -945,7 +995,7 @@ namespace eIDViewer
                 ForeignersFieldPresent(); }
             else if (String.Equals(label, "regional_file_number", StringComparison.Ordinal))
             { regional_file_number = data;
-                ForeignersFieldPresent(); }
+                ForeignersFieldPresent(); }   
         }
 
         private byte[] dataFile;
@@ -954,6 +1004,8 @@ namespace eIDViewer
         private byte[] addressSignFile;
         private byte[] photoFile;
         private byte[] photo_hash;
+        private byte[] basicKeyHash;
+        public byte[] basicKeyFile;
 
         public void StoreBinData(string label, byte[] data, int datalen)
         {
@@ -1052,6 +1104,20 @@ namespace eIDViewer
                 {
                     carddata_appl_version = data[0];
                 }
+                else if (String.Equals(label, "basic_key_hash", StringComparison.Ordinal))
+                {
+                    basicKeyHash = new byte[datalen];
+                    data.CopyTo(basicKeyHash, 0);
+                    progress_info = "read the identity data file";
+                    progress += 1;
+                }
+                else if (String.Equals(label, "BASIC_KEY_FILE", StringComparison.Ordinal))
+                {
+                    basicKeyFile = new byte[datalen];
+                    data.CopyTo(basicKeyFile, 0);
+                    progress_info = "read the identity data file";
+                    progress += 1;
+                }
             }
             catch (Exception e)
             {
@@ -1148,7 +1214,16 @@ namespace eIDViewer
             signature_cert = null;
             rootCA_cert = null;
             intermediateCA_cert = null;
-            RN_cert = null; 
+            RN_cert = null;
+
+            dataFile = null;
+            addressFile = null;
+            dataSignFile = null;
+            addressSignFile = null;
+            photoFile = null;
+            photo_hash = null;
+            basicKeyHash = null;
+            basicKeyFile = null;
         }
 
         public void WriteLog(String logLine, eid_vwr_loglevel loglevelofLine)
@@ -1828,6 +1903,16 @@ namespace eIDViewer
             }
         }
 
-        
+        private byte[] _challenge = null;
+        public byte[] challenge
+        {
+            get { return _challenge; }
+            set
+            {
+                _challenge = value;
+                this.NotifyPropertyChanged("challenge");
+            }
+        }
+
     }
 }

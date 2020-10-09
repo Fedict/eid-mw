@@ -11,6 +11,8 @@ using System.Threading;
 using System.Windows.Input;
 using System.Globalization;
 using System.Windows;
+using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 
 
 /*
@@ -39,6 +41,7 @@ namespace eIDViewer
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         private delegate void Cbnewbindata([MarshalAs(UnmanagedType.LPWStr)] string label, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)] byte[] data, int datalen);
+        //size param (int datalen) has index 2
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         private delegate void Cblog(eid_vwr_loglevel logLevel, [MarshalAs(UnmanagedType.LPWStr)] string str);
@@ -56,6 +59,10 @@ namespace eIDViewer
         private delegate void CbReaders_changed(UInt32 nreaders, IntPtr slotList);
         //private delegate void CbReaders_changed(UInt32 nreaders, eid_slotdesc[] slotList);
 
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        private delegate void Cbchallenge_result([MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 1)] byte[] data, int datalen, eid_vwr_result result);
+        //size param (int datalen) has index 1
+
         public static BackendDataViewModel theData { get; set; }
 
         //list all functions of the C backend we need to call
@@ -68,10 +75,12 @@ namespace eIDViewer
         private static Cbnewstate mynewstate = NativeMethods.CSCbnewstate;
         private static Cbpinop_result mypinopresult = NativeMethods.CSCbpinopResult;
         private static CbReaders_changed myReadersChanged = NativeMethods.CbReadersChanged;
+        private static Cbchallenge_result mychallengeresult = NativeMethods.CSCbchallengeResult;
 
         [DllImport("eIDViewerBackend.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         private static extern int eid_vwr_set_cbfuncs(CbNewSrc theCbNewSrc, CbNewStringData theCbNewStringData,
-            Cbnewbindata theCbnewbindata, Cblog theCbLog, Cbnewstate theCbnewstate, Cbpinop_result theCbpinopResult, CbReaders_changed theCbReadersChanged);
+            Cbnewbindata theCbnewbindata, Cblog theCbLog, Cbnewstate theCbnewstate, Cbpinop_result theCbpinopResult,
+            CbReaders_changed theCbReadersChanged, Cbchallenge_result thechallengeresult);
 
         [DllImport("eIDViewerBackend.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         private static extern int eid_vwr_pinop(eid_vwr_pinops pinop);
@@ -98,13 +107,16 @@ namespace eIDViewer
         [DllImport("eIDViewerBackend.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         private static extern void eid_vwr_close_file();
 
+        [DllImport("eIDViewerBackend.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        private static extern int eid_vwr_challenge(byte[] challenge, [MarshalAs(UnmanagedType.I4)] int challengelen);
+
         //void(*readers_changed)(unsigned long nreaders, slotdesc* slots)
         public static void Init()
         {
             try
             {
                 eid_vwr_set_cbfuncs(mynewsrc, mystringdata,
-                    mybindata, mylog, mynewstate, mypinopresult, myReadersChanged);
+                    mybindata, mylog, mynewstate, mypinopresult, myReadersChanged, mychallengeresult);
 
                 theData.cardreader_icon = new BitmapImage(new Uri("Resources/Images/state_noreaders.png", UriKind.Relative));
                 /*
@@ -357,6 +369,98 @@ namespace eIDViewer
             }
         }
 
+        private static void CSCbchallengeResult([MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 1)] byte[] signature, int signaturelen, eid_vwr_result result)
+        {
+            try
+            {
+                theData.WriteLog("CSCbchallengeResult called, result = " + result.ToString() + "\n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
+
+                switch (result)
+                {
+                    //in case the function failed, we should not generate an error
+                    case eid_vwr_result.EID_VWR_RES_SUCCESS:
+                        //verify the response
+
+                        /* Offset       ENCODING                                            ASN.1 Syntax
+                         * 
+                         *  00          30 76                                               -- SEQUENCE LENGTH
+                            02                  30 10                                       -- SEQUENCE LENGTH
+                                                                                            Label
+                            04                          06 07                               -- OBJECT_ID LENGTH
+                                                        2A 86 48 CE 3D 02 01                EcPublicKey (1 2 840 10045 2 1)
+                            
+                            0D                          06 05                               -- OBJECT_ID LENGTH
+                            0F                          2B 81 04 00 22                      Secp384r1 (1 3 132 0 34)
+                           
+                            14                  03 62                                       -- BIT_STRING (98 bytes) LENGTH
+                            16                          00                                  -- no bits unused in the final byte
+                            17                          04                                  compression byte
+                            18                          {48 bytes}                          -- X coordinate
+                            48                          {48 bytes}                          -- Y coordinate
+                         * */
+
+                        //For now: No real parsing here, only accepting the above fixed format
+                        //Will add the parsing in pkcs#11, or here, later
+                        if(theData.basicKeyFile.Length != 0x78)
+                        {
+                            //File for supported format is incorrect, cannot verify, exit
+                        }
+
+                        byte[] KeyParams = new byte[5];
+                        byte[] Secp384r1 = { 0x2B, 0x81, 0x04, 0x00, 0x22 };
+
+                        byte[] KeyValue_X = new byte[48];
+                        byte[] KeyValue_Y = new byte[48];
+
+                        Array.Copy(theData.basicKeyFile, 0x0F, KeyParams, 0, 5);
+
+                        ECParameters parameters = new ECParameters();
+                        if (System.Collections.StructuralComparisons.StructuralEqualityComparer.Equals(KeyParams, Secp384r1))
+                        {
+                            //Fill in parameters named curve:
+                            //Create a named curve using the specified Oid object.
+                            System.Security.Cryptography.Oid cardP384oid = new Oid("ECDSA_P384");
+                            parameters.Curve = ECCurve.CreateFromOid(cardP384oid);
+
+                            Array.Copy(theData.basicKeyFile, 0x18, KeyValue_X, 0, 48);
+                            Array.Copy(theData.basicKeyFile, 0x48, KeyValue_Y, 0, 48);
+
+                            //Fill in parameters public key (Q)
+                            System.Security.Cryptography.ECPoint Q;
+                            Q.X = KeyValue_X;
+                            Q.Y = KeyValue_Y;
+
+                            parameters.Q = Q;
+                        }
+                        else
+                        {
+                            //not supported, cannot verify, exit
+                        }
+
+                        ECDsa dsa = ECDsa.Create(parameters);
+                        if (dsa.VerifyData(theData.challenge, signature, HashAlgorithmName.SHA384))
+                            Console.WriteLine("Data is good");
+                        else
+                            Console.WriteLine("Data is bad");
+
+                        break;
+                    case eid_vwr_result.EID_VWR_RES_FAILED:
+                        //mark the verification as not happened
+                        theData.WriteLog("CSCbchallengeResult encountered an error, key verification could not start \n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+                theData.WriteLog("CSCbchallengeResult encountered an error " + e.ToString() + "\n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+            }
+        }
+
+        private static X509Certificate2 X509Certificate2(string v1, string v2)
+        {
+            throw new NotImplementedException();
+        }
+
         public static void DoPinop(eid_vwr_pinops pinop)
         {            
             try
@@ -367,6 +471,20 @@ namespace eIDViewer
             {
                 MessageBox.Show("eid_vwr_pinop " + e.ToString() + "\n", "eID Viewer Backend Error");
                 theData.WriteLog("eid_vwr_pinop " + e.ToString() + "\n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+            }
+        }
+
+        public static int DoChallenge(byte[] challenge, int challengelen)
+        {
+            try
+            {
+                return eid_vwr_challenge(challenge, challengelen);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("eid_vwr_challenge " + e.ToString() + "\n", "eID Viewer Backend Error");
+                theData.WriteLog("eid_vwr_challenge " + e.ToString() + "\n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+                return -1;
             }
         }
 

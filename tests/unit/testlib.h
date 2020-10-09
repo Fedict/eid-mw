@@ -148,6 +148,8 @@ int sessions(void);
 int sessions_nocard(void);
 int sessioninfo(void);
 int slogin(void);
+int scardcom_common(void);
+int sbadlogin(void);
 int nonsensible(void);
 int objects(void);
 int readdata(void);

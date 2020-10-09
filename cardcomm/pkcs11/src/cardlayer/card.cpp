@@ -1013,6 +1013,35 @@ namespace eIDMW
 		return oResp;
 	}
 
+	CByteArray CCard::CardChallenge(const CByteArray & oData)
+	{
+		//disabled autlock for testing: otherwise Windows only gives us 5 seconds while holding the card, and we like more for debugging
+		CAutoLock autolock(this);
+
+		CByteArray oAPDU(7 + oData.Size());
+
+		oAPDU.Append(0x00);		//	CLA ‘00’ or ‘10’(chaining)
+		oAPDU.Append(0x88);		//	INS ‘88’ (Internal authenticate)
+		oAPDU.Append(0x02);		//	P1 Algorithm reference(ECDSA SHA-2-384)
+		oAPDU.Append(0x81);		//	P2 Private key reference(‘81’(basic key)
+		oAPDU.Append((unsigned char)oData.Size() + 2); // length of following bytes
+		oAPDU.Append(0x94);		//	Tag (for challenge is 0x94)
+		oAPDU.Append((unsigned char)oData.Size()); // Length of data
+		oAPDU.Append(oData);	// data
+
+		CByteArray oResp = SendAPDU(oAPDU);
+	
+		unsigned long ulSW12 = getSW12(oResp);
+
+		if (ulSW12 != 0x9000) {
+			throw CMWEXCEPTION(m_poPCSC->SW12ToErr(ulSW12));
+		}
+
+		// Remove SW1-SW2 from the response
+		oResp.Chop(2);
+		return oResp;
+	}
+
 	bool CCard::ShouldSelectApplet(unsigned char ins, unsigned long ulSW12)
 	{
 		if (m_selectAppletMode != TRY_SELECT_APPLET)

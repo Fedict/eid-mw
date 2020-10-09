@@ -68,4 +68,6 @@ int main(void) {
 	[eIDOsLayerBackend mainloop];
 }
 ~~~~~~~~~~~~
+
+More details are in the \ref ObjC "Objective-C API overview"
 */

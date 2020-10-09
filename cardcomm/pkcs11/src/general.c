@@ -613,7 +613,7 @@ cleanup:
 
 
 CK_FUNCTION_LIST pkcs11_function_list = {
-	{ 2, 20 },
+	{ 2, 40 },
 	C_Initialize,
 	C_Finalize,
 	C_GetInfo,
