@@ -2,6 +2,7 @@
 #define EID_VWR_DATAVERIFY_H
 
 #include <eid-viewer/macros.h>
+#include <eid-viewer/oslayer.h>
 
 /**
   * \brief Check that the data on the card is correctly signed.
@@ -49,5 +50,10 @@ DllExport int eid_vwr_check_data_validity(const void *photo, int plen,
 				const void *addrfile, int addfilelen,
 				const void *addrsig, int addsiglen,
 				const void *rrncert, int certlen);
-int eid_vwr_verify_card(void *data);
+DllExport int eid_vwr_verify_card(void *data);
+
+DllExport void eid_vwr_check_signature(const void* pubkey, size_t pubkeylen,
+				const void* sig, size_t siglen, const void* data,
+				size_t datalen);
+DllExport void eid_vwr_challenge_result(const unsigned char *response, int responselen, enum eid_vwr_result res);
 #endif
