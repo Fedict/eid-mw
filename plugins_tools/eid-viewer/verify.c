@@ -34,6 +34,9 @@
 #define X509_get0_pubkey(x) (x->cert_info->key->pkey)
 #define X509_OBJECT_get0_X509(o) (o->data.x509)
 
+#define EVP_MD_CTX_new EVP_MD_CTX_create
+#define EVP_MD_CTX_free EVP_MD_CTX_destroy
+
 #define algobjcast(obj) ((ASN1_OBJECT**)obj)
 #define ppvalcast(obj) ((void**)obj)
 
