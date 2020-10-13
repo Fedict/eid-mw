@@ -7,6 +7,7 @@
 #include <pthread.h>
 
 #include <eid-viewer/oslayer.h>
+#include <eid-viewer/verify_cert.h>
 #include "viewer_glade.h"
 #include "gettext.h"
 #include "gtk_globals.h"
@@ -21,6 +22,7 @@
 #include "prefs.h"
 #include "print.h"
 #include "gtk_main.h"
+#include "dataverify.h"
 
 #if GTK_CHECK_VERSION(3, 96, 0)
 #define gtk_style_context_get_color(ct, s, cr) gtk_style_context_get_color(ct, cr)
@@ -485,6 +487,11 @@ int main(int argc, char** argv) {
 	cb->newstate = newstate;
 	cb->pinop_result = pinop_result;
 	cb->readers_changed = readers_changed;
+	if(cb->version >= 1) {
+		cb->challenge_result = eid_vwr_challenge_result;
+	} else {
+		uilog(EID_VWR_LOG_DETAIL, "Unexpected version of libeidviewer: callback version incorrect. Ignoring challenge.");
+	}
 	eid_vwr_createcallbacks(cb);
 
 	eid_vwr_init_crypto();

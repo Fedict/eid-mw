@@ -4,12 +4,15 @@
 #include <openssl/pem.h>
 #include <openssl/crypto.h>
 #include <openssl/opensslv.h>
+#include <openssl/rand.h>
 #include <eid-viewer/certhelpers.h>
 #include <stdbool.h>
 #include <string.h>
 #include <assert.h>
+#include <pthread.h>
 #include "cache.h"
 #include "dataverify.h"
+#include "state.h"
 
 #include "backend.h"
 
@@ -19,6 +22,8 @@
 #define EVP_MD_CTX_new EVP_MD_CTX_create
 #define EVP_MD_CTX_free EVP_MD_CTX_destroy
 #endif
+
+pthread_once_t once_rand_init = PTHREAD_ONCE_INIT;
 
 void eid_vwr_init_crypto() {
 	ERR_load_crypto_strings();
@@ -252,6 +257,75 @@ void eid_vwr_dumpcert(int fd, const void* derdata, int len, enum dump_type how) 
 	}
 }
 
+static unsigned char random_buffer[SHA384_DIGEST_LENGTH];
+
+void eid_vwr_challenge_result(const unsigned char *response, int responselen, enum eid_vwr_result res) {
+	if(res != EID_VWR_RES_SUCCESS) {
+		be_log(EID_VWR_LOG_DETAIL, "Basic key challenge failed, marking data as invalid");
+		sm_handle_event(EVENT_DATA_INVALID, NULL, NULL, NULL);
+		return;
+	}
+	const struct eid_vwr_cache_item *basic_key = cache_get_data("BASIC_KEY_FILE");
+	eid_vwr_check_signature(basic_key->data, basic_key->len, response, responselen, random_buffer, sizeof random_buffer);
+}
+
+static void init_random(void) {
+	if(RAND_load_file("/dev/random", 32) != 32) {
+		be_log(EID_VWR_LOG_ERROR, "Could not initialize randomizer; possibly unsafe random in use");
+	}
+}
+
+#define ossl_check(f,m) if((f) != 1) {be_log(EID_VWR_LOG_ERROR, m); goto error; }
+static void do_challenge(void) {
+	// Initialize OpenSSL's randomizer with secure random, if not already done
+	pthread_once(&once_rand_init, init_random);
+
+	// Make sure that the basic key file and basic key hash match
+	const struct eid_vwr_cache_item *basic_key = cache_get_data("BASIC_KEY_FILE");
+	const struct eid_vwr_cache_item *key_hash = cache_get_data("basic_key_hash");
+	EVP_MD_CTX *key_ctx = EVP_MD_CTX_new();
+	EVP_MD_CTX *chal_ctx = NULL;
+	unsigned char digest[SHA384_DIGEST_LENGTH];
+	unsigned int size = 0;
+
+	if(key_hash->len != SHA384_DIGEST_LENGTH) {
+		be_log(EID_VWR_LOG_DETAIL, "Could not compare basic key hash: unexpected hash length");
+		goto end;
+	}
+
+	// Verify that basic key matches its hash
+	ossl_check(EVP_DigestInit(key_ctx, EVP_sha384()), "Could not compare basic key hash: could not initialize hash");
+	ossl_check(EVP_DigestUpdate(key_ctx, basic_key->data, basic_key->len), "Could not compare basic key hash: could not hash key");
+	ossl_check(EVP_DigestFinal_ex(key_ctx, digest, &size), "Could not compare basic key hash: could not retrieve hash");
+	if(size != key_hash->len) {
+		be_log(EID_VWR_LOG_ERROR, "Could not compare basic key hash: hash length does not match");
+		goto error;
+	}
+	if(memcmp(key_hash->data, digest, size)) {
+		be_log(EID_VWR_LOG_ERROR, "Basic key does not match basic key fingerprint. Is this a forged ID card?");
+		goto error;
+	}
+
+	// Generate a nonce, and have the card sign the hash of that nonce
+	ossl_check(RAND_bytes(random_buffer, sizeof random_buffer), "Could not perform basic key challenge: could not retrieve random data");
+	chal_ctx = EVP_MD_CTX_new();
+	ossl_check(EVP_DigestInit(chal_ctx, EVP_sha384()), "Could not perform basic key challenge: could not initialize hash");
+	ossl_check(EVP_DigestUpdate(chal_ctx, random_buffer, sizeof random_buffer), "Could not perform basic key challenge: could not hash random bytes");
+	ossl_check(EVP_DigestFinal_ex(chal_ctx, digest, &size), "Could not perform basic key challenge: could not retrieve hash");
+	eid_vwr_challenge(digest, size);
+
+	goto end;
+error:
+	sm_handle_event(EVENT_DATA_INVALID, NULL, NULL, NULL);
+end:
+	if(chal_ctx != NULL) {
+		EVP_MD_CTX_free(chal_ctx);
+	}
+	EVP_MD_CTX_free(key_ctx);
+	return;
+}
+#undef ossl_check
+
 int eid_vwr_verify_card(void* d EIDV_UNUSED) {
 	const struct eid_vwr_cache_item *photo, *phash, *data, *datsig, *address, *adsig, *cert;
 
@@ -264,11 +338,17 @@ int eid_vwr_verify_card(void* d EIDV_UNUSED) {
 	GET(adsig, "SIGN_ADDRESS_FILE");
 	GET(cert, "CERT_RN_FILE");
 #undef GET
-	return 1 - eid_vwr_check_data_validity(photo->data, photo->len,
+	if(eid_vwr_check_data_validity(photo->data, photo->len,
 			phash->data, phash->len,
 			data->data, data->len,
 			datsig->data, datsig->len,
 			address->data, address->len,
 			adsig->data, adsig->len,
-			cert->data, cert->len);
+			cert->data, cert->len) != 0) {
+		return 0;
+	}
+	if(cache_have_label("basic_key_hash")) {
+		do_challenge();
+	}
+	return 1;
 }

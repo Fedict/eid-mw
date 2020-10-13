@@ -4,13 +4,15 @@
 
 #include <openssl/err.h>
 #include <openssl/ocsp.h>
-#include <openssl/x509.h>
 #include <openssl/opensslv.h>
+#include <openssl/x509.h>
 
 #include <assert.h>
 
 #include <string.h>
 #include <stdint.h>
+
+#include "state.h"
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -31,6 +33,9 @@
 #define X509_OBJECT_free(o) free(o)
 #define X509_get0_pubkey(x) (x->cert_info->key->pkey)
 #define X509_OBJECT_get0_X509(o) (o->data.x509)
+
+#define EVP_MD_CTX_new EVP_MD_CTX_create
+#define EVP_MD_CTX_free EVP_MD_CTX_destroy
 
 #define algobjcast(obj) ((ASN1_OBJECT**)obj)
 #define ppvalcast(obj) ((void**)obj)
@@ -418,4 +423,52 @@ enum eid_vwr_result eid_vwr_verify_root_cert(const void *certificate, size_t cer
 out:
 	X509_OBJECT_free(store_key);
 	return ret;
+}
+
+void eid_vwr_check_signature(const void* pubkey, size_t pubkeylen, const void* sig, size_t siglen, const void* data, size_t datalen) {
+	EVP_PKEY *pk = d2i_PUBKEY(NULL, (const unsigned char**)(&pubkey), pubkeylen);
+	EVP_MD_CTX *mdctx = EVP_MD_CTX_new();
+	EVP_PKEY_CTX *pctx;
+	const EVP_MD *md = EVP_sha384();
+	unsigned char *dersig = NULL;
+	if(EVP_DigestVerifyInit(mdctx, &pctx, md, NULL, pk) != 1) {
+		be_log(EID_VWR_LOG_ERROR, "Initialization for basic key validation failed");
+		goto err;
+	}
+	if(EVP_DigestVerifyUpdate(mdctx, (const unsigned char*)data, datalen) != 1) {
+		be_log(EID_VWR_LOG_ERROR, "Hashing for basic key validation failed");
+		goto err;
+	}
+	ECDSA_SIG *ec_sig;
+	BIGNUM *r;
+	BIGNUM *s;
+	ec_sig = ECDSA_SIG_new();
+	if((r = BN_bin2bn(sig, siglen / 2, NULL)) == NULL) {
+		be_log(EID_VWR_LOG_ERROR, "Could not convert R part of basic key signature");
+		goto err;
+	}
+	if((s = BN_bin2bn(sig + (siglen / 2), siglen / 2, NULL)) == NULL) {
+		be_log(EID_VWR_LOG_ERROR, "Could not convert S part of basic key signature");
+		goto err;
+	}
+	siglen = i2d_ECDSA_SIG(ec_sig, NULL);
+	dersig = malloc(siglen);
+	siglen = i2d_ECDSA_SIG(ec_sig, &dersig);
+	if(EVP_DigestVerifyFinal(mdctx, dersig, siglen) != 1) {
+		be_log(EID_VWR_LOG_ERROR, "Basic key signature fails validation. Is this a forged eID card?");
+		goto err;
+	}
+	goto end;
+err:
+	sm_handle_event(EVENT_DATA_INVALID, NULL, NULL, NULL);
+end:
+	if(dersig) {
+		free(dersig);
+	}
+	if(ec_sig) {
+		ECDSA_SIG_free(ec_sig);
+	}
+	EVP_MD_CTX_free(mdctx);
+	EVP_PKEY_free(pk);
+	return;
 }
