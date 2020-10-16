@@ -18,9 +18,7 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
-#include <iostream>
-#include <map>
-#include <array>
+
 #include "pkcs15.h"
 #include "pkcs15parser.h"
 #include "card.h"
@@ -29,7 +27,6 @@ namespace eIDMW
 {
 
 	const static tCert CertInvalid = { false, "", 0, 0, 0, 0, false, false, "" };
-
 	const static tPrivKey PrivKeyInvalid = { false, "", 0, 0, 0, 0, 0, RSA };
 
 	static tPrivKey KeysBeidV11[2] = { {true, "Authentication", 0, 2, 4,   130, 128, RSA},{true, "Signature",      1, 3, 512, 131, 128, RSA} };
@@ -43,7 +40,6 @@ namespace eIDMW
 
 	CPKCS15::CPKCS15(void) :m_poParser(NULL), m_poCard(NULL)
 	{
-
 		Clear();
 	}
 
