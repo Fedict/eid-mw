@@ -799,7 +799,7 @@ CK_RV cal_init_objects(P11_SLOT * pSlot)
 		CReader & oReader = oCardLayer->getReader(szReader);
 		CCard* poCard = oReader.GetCard();
 
-		/* add all certificate objects from card */
+		// add all certificate objects from card 
 		for (certCounter = 0; certCounter < poCard->CertCount(); certCounter++)
 		{
 			CertId = (CK_ULONG)poCard->GetCert(certCounter).ulID;
@@ -811,27 +811,25 @@ CK_RV cal_init_objects(P11_SLOT * pSlot)
 				goto cleanup;
 			pObject = p11_get_slot_object(pSlot, hObject);
 
-			ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_CERTIFICATE_TYPE, (CK_VOID_PTR) & certType, sizeof(CK_ULONG));
+			ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_CERTIFICATE_TYPE, (CK_VOID_PTR)& certType, sizeof(CK_ULONG));
 			if (ret != CKR_OK)
 				goto cleanup;
-			ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_LABEL, (CK_VOID_PTR) clabel, (CK_ULONG)strlen(clabel));
+			ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_LABEL, (CK_VOID_PTR)clabel, (CK_ULONG)strlen(clabel));
 			if (ret != CKR_OK)
 				goto cleanup;
+		}
 
-			//only add keys that have a matching cert
-			for (keyCounter = 0; keyCounter < poCard->PrivKeyCount(); keyCounter++)
-			{
-				/***************/
-				/* Private key */
+		// add all key objects from card 
+		// also add keys without a matching certificate (i.e. the card key used to authenticate the v1.8 EC card)
+		for (keyCounter = 0; keyCounter < poCard->PrivKeyCount(); keyCounter++)
+		{
+			/***************/
+			/* Private key */
+			/***************/
+			tPrivKey key = poCard->GetPrivKey(keyCounter);
+			keytype = (key.keyType == RSA ? CKK_RSA : CKK_EC);
 
-				/***************/
-				tPrivKey key = poCard->GetPrivKey(keyCounter);
-				keytype = (key.keyType == RSA ? CKK_RSA : CKK_EC);
-
-				KeyId = (CK_ULONG) key.ulID;
-
-				if (KeyId == CertId)
-				{
+			KeyId = (CK_ULONG)key.ulID;
 
 					sprintf_s(clabel, sizeof(clabel), "%s", key.csLabel.c_str());
 
@@ -846,89 +844,88 @@ CK_RV cal_init_objects(P11_SLOT * pSlot)
 							goto cleanup;
 					}
 
-					//put some other attribute items allready so the key can be used for signing
-					pObject = p11_get_slot_object(pSlot, hObject);
+			//put some other attribute items allready so the key can be used for signing or challenging
+			pObject = p11_get_slot_object(pSlot, hObject);
 
-					ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_LABEL, (CK_VOID_PTR) clabel, (CK_ULONG) strlen(clabel));
-					if (ret != CKR_OK)
-						goto cleanup;
+			ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_LABEL, (CK_VOID_PTR)clabel, (CK_ULONG)strlen(clabel));
+			if (ret != CKR_OK)
+				goto cleanup;
 
-					ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_KEY_TYPE, (CK_VOID_PTR) & keytype, sizeof(CK_KEY_TYPE));
-					if (ret != CKR_OK)
-						goto cleanup;
+			ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_KEY_TYPE, (CK_VOID_PTR)& keytype, sizeof(CK_KEY_TYPE));
+			if (ret != CKR_OK)
+				goto cleanup;
 
-					//TODO if (ulKeyUsage & SIGN)
-					{
-						ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_SIGN, (CK_VOID_PTR) & btrue, sizeof(btrue));
-						if (ret != CKR_OK)
-							goto cleanup;
-					}
-
-					//TODO error in cal, size is in bits allready
-					if(key.keyType == RSA) {
-						modsize = key.ulKeyLenBytes * 8;
-						ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_MODULUS_BITS, (CK_VOID_PTR) & modsize, sizeof(CK_ULONG));
-						if (ret != CKR_OK)
-							goto cleanup;
-					}
-					//in case keyType == EC, do not pre-fill the CKA_EC_PARAMS with { 0x06, 0x05, 0x2b, 0x81, 0x04, 0x00, 0x22 }
-					//we'll read the EC curve from the matching certificate later
-					/*else { // if (key.keyType == EC)
-						unsigned char ECCurve[] = { 0x06, 0x05, 0x2b, 0x81, 0x04, 0x00, 0x22 };
-						ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_EC_PARAMS, (CK_VOID_PTR)& ECCurve, sizeof(ECCurve));
-						if (ret != CKR_OK)
-							goto cleanup;
-					}*/
-					ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_EXTRACTABLE, (CK_VOID_PTR) & bfalse, sizeof(bfalse));
-					if (ret != CKR_OK)
-						goto cleanup;
-					ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_DERIVE, (CK_VOID_PTR) & bfalse, sizeof(bfalse));
-					if (ret != CKR_OK)
-						goto cleanup;
-
-					/**************************************************/
-					/* Public key corresponding to private key object */
-
-					/**************************************************/
-
-					if (key.keyType == RSA) {
-						ret = p11_add_slot_object(pSlot, PUB_KEY_RSA, sizeof(PUB_KEY_RSA) / sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_PUBLIC_KEY, KeyId, CK_FALSE, &hObject);
-						if (ret != CKR_OK)
-							goto cleanup;
-					}
-					else { //if (key.keyType == EC) 
-						ret = p11_add_slot_object(pSlot, PUB_KEY_EC, sizeof(PUB_KEY_EC) / sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_PUBLIC_KEY, KeyId, CK_FALSE, &hObject);
-						if (ret != CKR_OK)
-							goto cleanup;
-					}
-
-					pObject = p11_get_slot_object(pSlot, hObject);
-
-					sprintf_s(clabel, sizeof(clabel), "%s", key.csLabel.c_str());
-					ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_LABEL, (CK_VOID_PTR) clabel, (CK_ULONG) strlen(clabel));
-					if (ret != CKR_OK)
-						goto cleanup;
-					ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_KEY_TYPE, (CK_VOID_PTR) & keytype, sizeof(CK_KEY_TYPE));
-					if (ret != CKR_OK)
-						goto cleanup;
-					if(key.keyType == RSA) {
-						ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_MODULUS_BITS, (CK_VOID_PTR) & modsize, sizeof(CK_ULONG));
-						if (ret != CKR_OK)
-							goto cleanup;
-					}
-					//in case keyType == EC, do not pre-fill the CKA_EC_PARAMS with { 0x06, 0x05, 0x2b, 0x81, 0x04, 0x00, 0x22 }
-					//we'll read the EC curve from the matching certificate later
-					/*else {// if (key.keyType == EC) 
-						unsigned char ECCurve[] = { 0x06, 0x05, 0x2b, 0x81, 0x04, 0x00, 0x22 };
-						ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_EC_PARAMS, (CK_VOID_PTR)& ECCurve, sizeof(ECCurve));
-						if (ret != CKR_OK)
-							goto cleanup;
-					}*/
-					ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_DERIVE, (CK_VOID_PTR) & bfalse, sizeof(bfalse));
-					if (ret != CKR_OK)
-						goto cleanup;
-				}
+			//TODO if (ulKeyUsage & SIGN)
+			{
+				ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_SIGN, (CK_VOID_PTR)& btrue, sizeof(btrue));
+				if (ret != CKR_OK)
+					goto cleanup;
 			}
+
+			//TODO error in cal, size is in bits allready
+			if (key.keyType == RSA) {
+				modsize = key.ulKeyLenBytes * 8;
+				ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_MODULUS_BITS, (CK_VOID_PTR)& modsize, sizeof(CK_ULONG));
+				if (ret != CKR_OK)
+					goto cleanup;
+			}
+			//in case keyType == EC, do not pre-fill the CKA_EC_PARAMS with { 0x06, 0x05, 0x2b, 0x81, 0x04, 0x00, 0x22 }
+			//we'll read the EC curve from the matching certificate later
+			/*else { // if (key.keyType == EC)
+				unsigned char ECCurve[] = { 0x06, 0x05, 0x2b, 0x81, 0x04, 0x00, 0x22 };
+				ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_EC_PARAMS, (CK_VOID_PTR)& ECCurve, sizeof(ECCurve));
+				if (ret != CKR_OK)
+					goto cleanup;
+			}*/
+			ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_EXTRACTABLE, (CK_VOID_PTR)& bfalse, sizeof(bfalse));
+			if (ret != CKR_OK)
+				goto cleanup;
+			ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_DERIVE, (CK_VOID_PTR)& bfalse, sizeof(bfalse));
+			if (ret != CKR_OK)
+				goto cleanup;
+
+			/**************************************************/
+			/* Public key corresponding to private key object */
+
+			/**************************************************/
+
+			if (key.keyType == RSA) {
+				ret = p11_add_slot_object(pSlot, PUB_KEY_RSA, sizeof(PUB_KEY_RSA) / sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_PUBLIC_KEY, KeyId, CK_FALSE, &hObject);
+				if (ret != CKR_OK)
+					goto cleanup;
+			}
+			else { //if (key.keyType == EC) 
+				ret = p11_add_slot_object(pSlot, PUB_KEY_EC, sizeof(PUB_KEY_EC) / sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_PUBLIC_KEY, KeyId, CK_FALSE, &hObject);
+				if (ret != CKR_OK)
+					goto cleanup;
+			}
+
+			pObject = p11_get_slot_object(pSlot, hObject);
+
+			sprintf_s(clabel, sizeof(clabel), "%s", key.csLabel.c_str());
+			ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_LABEL, (CK_VOID_PTR)clabel, (CK_ULONG)strlen(clabel));
+			if (ret != CKR_OK)
+				goto cleanup;
+			ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_KEY_TYPE, (CK_VOID_PTR)& keytype, sizeof(CK_KEY_TYPE));
+			if (ret != CKR_OK)
+				goto cleanup;
+			if (key.keyType == RSA) {
+				ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_MODULUS_BITS, (CK_VOID_PTR)& modsize, sizeof(CK_ULONG));
+				if (ret != CKR_OK)
+					goto cleanup;
+			}
+			//in case keyType == EC, do not pre-fill the CKA_EC_PARAMS with { 0x06, 0x05, 0x2b, 0x81, 0x04, 0x00, 0x22 }
+			//we'll read the EC curve from the matching certificate later
+			/*else {// if (key.keyType == EC)
+				unsigned char ECCurve[] = { 0x06, 0x05, 0x2b, 0x81, 0x04, 0x00, 0x22 };
+				ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_EC_PARAMS, (CK_VOID_PTR)& ECCurve, sizeof(ECCurve));
+				if (ret != CKR_OK)
+					goto cleanup;
+			}*/
+			ret = p11_set_attribute_value(pObject->pAttr, pObject->count, CKA_DERIVE, (CK_VOID_PTR)& bfalse, sizeof(bfalse));
+			if (ret != CKR_OK)
+				goto cleanup;
+			//}
 		}
 	}
 	catch(CMWException &e)
