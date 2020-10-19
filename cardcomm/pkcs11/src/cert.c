@@ -197,6 +197,8 @@ void cert_free_info(T_CERT_INFO *info)
 			free(info->validfrom);
 		if(info->validto != NULL)
 			free(info->validto);
+		if (info->curve != NULL)
+			free(info->curve);
 	}
 }
 
