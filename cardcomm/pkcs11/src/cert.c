@@ -178,27 +178,26 @@ int cert_get_info(const unsigned char *pcert, unsigned int lcert, T_CERT_INFO *i
 	return (0);
 }
 
+void free_info_member(char* pcInfo_member)
+{
+	if (pcInfo_member != NULL)
+	{
+		free(pcInfo_member);
+		pcInfo_member = NULL;
+	}
+}
 
 void cert_free_info(T_CERT_INFO *info)
 {
 	if(info != NULL)
 	{
-		if(info->subject != NULL)
-			free(info->subject);
-		if(info->issuer != NULL)
-			free(info->issuer);
-		if(info->mod != NULL)
-			free(info->mod);
-		if(info->pkinfo != NULL)
-			free(info->pkinfo);
-		if(info->serial != NULL)
-			free(info->serial);
-		if(info->validfrom != NULL)
-			free(info->validfrom);
-		if(info->validto != NULL)
-			free(info->validto);
-		if (info->curve != NULL)
-			free(info->curve);
+		free_info_member(info->issuer);
+		free_info_member(info->mod);
+		free_info_member(info->pkinfo);
+		free_info_member(info->serial);
+		free_info_member(info->validfrom);
+		free_info_member(info->validto);
+		free_info_member(info->curve);
 	}
 }
 
