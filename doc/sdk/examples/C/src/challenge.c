@@ -21,6 +21,7 @@
 #include "base.h"					
 
 CK_ULONG beidsdk_sign(CK_CHAR_PTR textToSign);
+CK_ULONG beidsdk_challenge(CK_BYTE_PTR textToSign, CK_BYTE len);
 
 int main() {
 	CK_ULONG retval = CKR_OK;
@@ -96,28 +97,28 @@ CK_ULONG beidsdk_challenge(CK_BYTE_PTR textToSign, CK_BYTE len)
 									retVal = (pFunctions->C_OpenSession)(slotIds[slotIdx], CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session_handle);
 									if (retVal == CKR_OK)
 									{
-										CK_ULONG data_class = CKO_DATA;
+										CK_ULONG data_class = CKO_PRIVATE_KEY;
 										CK_ULONG attribute_len = 2; //the number of attributes in the search template below
 										//the searchtemplate that will be used to initialize the search
 										CK_ATTRIBUTE attributes[2] = {	{CKA_CLASS,&data_class,sizeof(CK_ULONG)},
-										{CKA_LABEL,"BASIC_KEY_FILE",(CK_ULONG) strlen("BASIC_KEY_FILE")}};
+										{CKA_LABEL,"Card",(CK_ULONG) strlen("Card")}};
 										//prepare the findobjects function to find all objects with attributes 
-										//CKA_CLASS set to CKO_DATA and with CKA_LABEL set to BASIC_KEY_FILE
+										//CKA_CLASS set to CKO_DATA and with CKA_LABEL set to "Card"
 										retVal = (pFunctions->C_FindObjectsInit)(session_handle, attributes, attribute_len); 
 										if (retVal == CKR_OK)
 										{
 											CK_ULONG ulMaxObjectCount = 1;//we want max one object returned
-											CK_ULONG ulObjectCount;	//returns the number of objects found
+											CK_ULONG ulObjectCount = 0;	//returns the number of objects found
 											CK_OBJECT_HANDLE hKey;
-											//retrieve the data object with label "BASIC_KEY_FILE" 
+											//retrieve the private key object with label "Card" 
 											retVal = (pFunctions->C_FindObjects)(session_handle, &hKey,ulMaxObjectCount,&ulObjectCount); 
-											if (retVal == CKR_OK)
+											if ( (retVal == CKR_OK) && (ulObjectCount > 0) )
 											{
 												//terminate the search
 												retVal = (pFunctions->C_FindObjectsFinal)(session_handle); 
 												if (retVal == CKR_OK)
 												{
-													//use the CKM_ECDSA_SHA384 mechanism for the challenge
+													//use the CKM_ECDSA mechanism for the challenge
 													CK_MECHANISM mechanism = { CKM_ECDSA, NULL_PTR, 0};
 													CK_BYTE signature[96];
 													CK_ULONG signLength = 96;
