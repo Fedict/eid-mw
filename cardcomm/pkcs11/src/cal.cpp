@@ -2074,39 +2074,52 @@ CK_RV cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT * pObject)
 		}
 		else if (pPubKeyObject != NULL)// no matching cert found, check if a public key was found (card key)
 		{
-		//verify if its the card public key
-		if(*pID != poCard->GetCardKeyID())
-			goto cleanup;
-		
-		//read file
-		CByteArray oCardKeyData = poCard->ReadCardFile(BEID_FILE_BASIC_KEY);
-
-		//parse file
-		if (key_get_info(oCardKeyData.GetBytes(), (unsigned int)oCardKeyData.Size(), &keyinfo) < 0)
-		{
-			// ASN.1 parser failed. Assume hardware failure.
-			log_trace(WHERE, "E: key_get_info failed");
-			ret = CKR_DEVICE_ERROR;
-			goto cleanup;
-		}
-
-		//store data in attributes
-		key = poCard->GetPrivKeyByID(*pID); //get the matching private key to check the keytype
-
-		if (key.keyType == EC)
-		{
-			if (keyinfo.l_curve > 0)
-				ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_EC_PARAMS, (CK_VOID_PTR)keyinfo.curve, (CK_ULONG)keyinfo.l_curve);
-			if (ret != CKR_OK)
+			//verify if its the card key
+			if (*pID != poCard->GetCardKeyID())
 				goto cleanup;
 
-			if (keyinfo.l_pkinfo > 0)
-				ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_EC_POINT, (CK_VOID_PTR)keyinfo.pkinfo, keyinfo.l_pkinfo);
-			if (ret != CKR_OK)
-				goto cleanup;
+			//read file
+			CByteArray oCardKeyData = poCard->ReadCardFile(BEID_FILE_BASIC_KEY);
 
+			//parse file
+			if (key_get_info(oCardKeyData.GetBytes(), (unsigned int)oCardKeyData.Size(), &keyinfo) < 0)
+			{
+				// ASN.1 parser failed. Assume hardware failure.
+				log_trace(WHERE, "E: key_get_info failed");
+				ret = CKR_DEVICE_ERROR;
+				goto cleanup;
+			}
+
+			//store data in attributes
+			key = poCard->GetPrivKeyByID(*pID); //get the matching private key to check the keytype
+
+			if (key.keyType == EC)
+			{
+				// set the public key object
+				if (keyinfo.l_curve > 0)
+					ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_EC_PARAMS, (CK_VOID_PTR)keyinfo.curve, (CK_ULONG)keyinfo.l_curve);
+				if (ret != CKR_OK)
+					goto cleanup;
+
+				if (keyinfo.l_pkinfo > 0)
+					ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_EC_POINT, (CK_VOID_PTR)keyinfo.pkinfo, keyinfo.l_pkinfo);
+				if (ret != CKR_OK)
+					goto cleanup;
+			}
 			pPubKeyObject->state = P11_CACHED;
-		}
+
+			if (pPrivKeyObject != NULL)
+			{
+				// set the private key object
+				if (key.keyType == EC)
+				{
+					if (keyinfo.l_curve > 0)
+						ret = p11_set_attribute_value(pPrivKeyObject->pAttr, pPrivKeyObject->count, CKA_EC_PARAMS, (CK_VOID_PTR)keyinfo.curve, (CK_ULONG)keyinfo.l_curve);
+					if (ret != CKR_OK)
+						goto cleanup;
+				}
+				pPrivKeyObject->state = P11_CACHED;
+			}
 		}
 	}
 	catch (CMWException &e)
