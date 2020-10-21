@@ -831,13 +831,13 @@ CK_RV cal_init_objects(P11_SLOT * pSlot)
 
 			KeyId = (CK_ULONG)key.ulID;
 
-					sprintf_s(clabel, sizeof(clabel), "%s", key.csLabel.c_str());
+			sprintf_s(clabel, sizeof(clabel), "%s", key.csLabel.c_str());
 
-					if (key.keyType == RSA) {
-						ret = p11_add_slot_object(pSlot, PRV_KEY_RSA, sizeof(PRV_KEY_RSA) / sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_PRIVATE_KEY, KeyId, CK_TRUE, &hObject);
-						if (ret != CKR_OK)
-							goto cleanup;
-					}
+			if (key.keyType == RSA) {
+				ret = p11_add_slot_object(pSlot, PRV_KEY_RSA, sizeof(PRV_KEY_RSA) / sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_PRIVATE_KEY, KeyId, CK_TRUE, &hObject);
+				if (ret != CKR_OK)
+					goto cleanup;
+			}
 					else { //if (key.keyType == EC) 
 						ret = p11_add_slot_object(pSlot, PRV_KEY_EC, sizeof(PRV_KEY_EC) / sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_PRIVATE_KEY, KeyId, CK_TRUE, &hObject);
 						if (ret != CKR_OK)
@@ -1859,6 +1859,7 @@ CK_RV cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT * pObject)
 	P11_OBJECT *pPubKeyObject = NULL;
 	P11_OBJECT *pPrivKeyObject = NULL;
 	T_CERT_INFO certinfo;
+	T_KEY_INFO keyinfo;
 	CByteArray oCertData;
 	tCert cert;
 	tPrivKey key;
@@ -1867,6 +1868,8 @@ CK_RV cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT * pObject)
 	P11_SLOT *pSlot = NULL;
 
 	memset(&certinfo, 0, sizeof(T_CERT_INFO));
+	memset(&keyinfo, 0, sizeof(T_KEY_INFO));
+
 	pSlot = p11_get_slot(hSlot);
 	if (pSlot == NULL)
 	{
@@ -1910,14 +1913,13 @@ CK_RV cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT * pObject)
 
 	p11_find_slot_object(pSlot, CKO_CERTIFICATE, *pID, &pCertObject);
 
-
-
-	if (pCertObject != NULL)
+	try
 	{
-		try
+		CReader & oReader = oCardLayer->getReader(szReader);
+		CCard* poCard = oReader.GetCard();
+
+		if (pCertObject != NULL)
 		{
-			CReader & oReader = oCardLayer->getReader(szReader);
-			CCard* poCard = oReader.GetCard();
 
 			cert = poCard->GetCertByID(*pID);
 
@@ -1930,7 +1932,7 @@ CK_RV cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT * pObject)
 				return (CKR_DEVICE_ERROR);
 			}
 
-            //at least 64K Bytes as size (unsigned int) will suffice for cert length
+			//at least 64K Bytes as size (unsigned int) will suffice for cert length
 			if (cert_get_info(oCertData.GetBytes(), (unsigned int)(oCertData.Size()), &certinfo) < 0)
 			{
 				// ASN.1 parser failed. Assume hardware failure.
@@ -1939,23 +1941,23 @@ CK_RV cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT * pObject)
 				goto cleanup;
 			}
 
-			ret = p11_set_attribute_value(pCertObject->pAttr, pCertObject->count, CKA_SUBJECT, (CK_VOID_PTR) certinfo.subject, (CK_ULONG) certinfo.l_subject);
+			ret = p11_set_attribute_value(pCertObject->pAttr, pCertObject->count, CKA_SUBJECT, (CK_VOID_PTR)certinfo.subject, (CK_ULONG)certinfo.l_subject);
 			if (ret != CKR_OK)
 				goto cleanup;
 
-			ret = p11_set_attribute_value(pCertObject->pAttr, pCertObject->count, CKA_ISSUER, (CK_VOID_PTR) certinfo.issuer, (CK_ULONG) certinfo.l_issuer);
+			ret = p11_set_attribute_value(pCertObject->pAttr, pCertObject->count, CKA_ISSUER, (CK_VOID_PTR)certinfo.issuer, (CK_ULONG)certinfo.l_issuer);
 			if (ret != CKR_OK)
 				goto cleanup;
 
-			ret = p11_set_attribute_value(pCertObject->pAttr, pCertObject->count, CKA_SERIAL_NUMBER, (CK_VOID_PTR) certinfo.serial, (CK_ULONG) certinfo.l_serial);
+			ret = p11_set_attribute_value(pCertObject->pAttr, pCertObject->count, CKA_SERIAL_NUMBER, (CK_VOID_PTR)certinfo.serial, (CK_ULONG)certinfo.l_serial);
 			if (ret != CKR_OK)
 				goto cleanup;
 			//use real length from decoder here instead of lg from cal
-			ret = p11_set_attribute_value(pCertObject->pAttr, pCertObject->count, CKA_VALUE, (CK_VOID_PTR) oCertData.GetBytes(), (CK_ULONG) certinfo.lcert);
+			ret = p11_set_attribute_value(pCertObject->pAttr, pCertObject->count, CKA_VALUE, (CK_VOID_PTR)oCertData.GetBytes(), (CK_ULONG)certinfo.lcert);
 			if (ret != CKR_OK)
 				goto cleanup;
 			//TODO Check this in the cal if we can be sure that the certificate can be trusted and not be modified on the card
-			ret = p11_set_attribute_value(pCertObject->pAttr, pCertObject->count, CKA_TRUSTED, (CK_VOID_PTR) & btrue, sizeof(btrue));
+			ret = p11_set_attribute_value(pCertObject->pAttr, pCertObject->count, CKA_TRUSTED, (CK_VOID_PTR)& btrue, sizeof(btrue));
 			if (ret != CKR_OK)
 				goto cleanup;
 
@@ -2008,19 +2010,19 @@ CK_RV cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT * pObject)
 			}
 			if (pPubKeyObject != NULL)
 			{
-				ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_SENSITIVE, (CK_VOID_PTR) & btrue, sizeof(btrue));
+				ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_SENSITIVE, (CK_VOID_PTR)& btrue, sizeof(btrue));
 				if (ret != CKR_OK)
 					goto cleanup;
 
-				ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_VERIFY, (CK_VOID_PTR) & btrue, sizeof(btrue));
+				ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_VERIFY, (CK_VOID_PTR)& btrue, sizeof(btrue));
 				if (ret != CKR_OK)
 					goto cleanup;
 
-				ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_ENCRYPT, (CK_VOID_PTR) & bfalse, sizeof(bfalse));
+				ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_ENCRYPT, (CK_VOID_PTR)& bfalse, sizeof(bfalse));
 				if (ret != CKR_OK)
 					goto cleanup;
 
-				ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_WRAP, (CK_VOID_PTR) & bfalse, sizeof(CK_BBOOL));
+				ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_WRAP, (CK_VOID_PTR)& bfalse, sizeof(CK_BBOOL));
 				if (ret != CKR_OK)
 					goto cleanup;
 
@@ -2059,34 +2061,75 @@ CK_RV cal_read_object(CK_SLOT_ID hSlot, P11_OBJECT * pObject)
 				}
 
 				//TODO test if we can set the trusted flag...
-				ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_TRUSTED, (CK_VOID_PTR) & btrue, sizeof(btrue));
+				ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_TRUSTED, (CK_VOID_PTR)& btrue, sizeof(btrue));
 				if (ret != CKR_OK)
 					goto cleanup;
 
 				pPubKeyObject->state = P11_CACHED;
 			}
 		}
-		catch(CMWException &e)
+		else if (pPubKeyObject != NULL)// no matching cert found, check if a public key was found (card key)
 		{
-			cert_free_info(&certinfo);
-			return (cal_translate_error(WHERE, e.GetError()));
+		//verify if its the card public key
+		if(*pID != poCard->GetCardKeyID())
+			goto cleanup;
+		
+		//read file
+		CByteArray oCardKeyData = poCard->ReadCardFile(BEID_FILE_BASIC_KEY);
+
+		//parse file
+		if (key_get_info(oCardKeyData.GetBytes(), (unsigned int)oCardKeyData.Size(), &keyinfo) < 0)
+		{
+			// ASN.1 parser failed. Assume hardware failure.
+			log_trace(WHERE, "E: key_get_info failed");
+			ret = CKR_DEVICE_ERROR;
+			goto cleanup;
 		}
-		catch( ...)
+
+		//store data in attributes
+		key = poCard->GetPrivKeyByID(*pID); //get the matching private key to check the keytype
+
+		if (key.keyType == EC)
 		{
-			log_trace(WHERE, "E: unkown exception thrown");
-			cert_free_info(&certinfo);
-			return (CKR_FUNCTION_FAILED);
+			if (keyinfo.l_curve > 0)
+				ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_EC_PARAMS, (CK_VOID_PTR)keyinfo.curve, (CK_ULONG)keyinfo.l_curve);
+			if (ret != CKR_OK)
+				goto cleanup;
+
+			if (keyinfo.l_pkinfo > 0)
+				ret = p11_set_attribute_value(pPubKeyObject->pAttr, pPubKeyObject->count, CKA_EC_POINT, (CK_VOID_PTR)keyinfo.pkinfo, keyinfo.l_pkinfo);
+			if (ret != CKR_OK)
+				goto cleanup;
+
+			pPubKeyObject->state = P11_CACHED;
+		}
 		}
 	}
+	catch (CMWException &e)
+	{
+		cert_free_info(&certinfo);
+		key_free_info(&keyinfo);
+		return (cal_translate_error(WHERE, e.GetError()));
+	}
+	catch (...)
+	{
+		log_trace(WHERE, "E: unkown exception thrown");
+		cert_free_info(&certinfo);
+		key_free_info(&keyinfo);
+		return (CKR_FUNCTION_FAILED);
+	}
+
 	if (ret != 0)
 	{
 		log_trace(WHERE, "E: ret is 0x%0lx", ret);
 		cert_free_info(&certinfo);
+		key_free_info(&keyinfo);
 		return (CKR_DEVICE_ERROR);
 	}
 
-      cleanup:
+ cleanup:
 	cert_free_info(&certinfo);
+	key_free_info(&keyinfo);
 	return (ret);
 }
 

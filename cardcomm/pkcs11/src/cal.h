@@ -259,6 +259,10 @@ extern "C"
 
 #define BEID_LABEL_ATR							"ATR"
 
+#define BEID_LABEL_KEY_CARD						"Card"
+#define BEID_LABEL_KEY_AUTHENTICATION			"Authentication"
+#define BEID_LABEL_KEY_NONREP					"Signature"
+
 #define BEID_OBJECTID_ID						"id"
 #define BEID_OBJECTID_ADDRESS					"address"
 #define BEID_OBJECTID_PHOTO						"photo"
