@@ -286,6 +286,11 @@ namespace eIDMW
 		return m_oPKCS15.GetPrivKeyByID(ulID);
 	}
 
+	unsigned long CCard::GetCardKeyID(void)
+	{
+		return m_oPKCS15.GetCardKeyID();
+	}
+
 	unsigned long CCard::GetCardSupportedAlgorithms()
 	{
 		unsigned long algos = GetSupportedAlgorithms();
