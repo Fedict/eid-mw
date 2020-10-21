@@ -838,11 +838,15 @@ CK_RV cal_init_objects(P11_SLOT * pSlot)
 				if (ret != CKR_OK)
 					goto cleanup;
 			}
-					else { //if (key.keyType == EC) 
-						ret = p11_add_slot_object(pSlot, PRV_KEY_EC, sizeof(PRV_KEY_EC) / sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_PRIVATE_KEY, KeyId, CK_TRUE, &hObject);
-						if (ret != CKR_OK)
-							goto cleanup;
-					}
+			else if (key.keyType == EC) {
+				ret = p11_add_slot_object(pSlot, PRV_KEY_EC, sizeof(PRV_KEY_EC) / sizeof(CK_ATTRIBUTE), CK_TRUE, CKO_PRIVATE_KEY, KeyId, CK_TRUE, &hObject);
+				if (ret != CKR_OK)
+					goto cleanup;
+			}
+			else {
+				//skip this key, we only support RSA and EC
+				continue;
+			}
 
 			//put some other attribute items allready so the key can be used for signing or challenging
 			pObject = p11_get_slot_object(pSlot, hObject);
