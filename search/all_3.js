@@ -19,6 +19,7 @@ var searchData=
   ['changepinbutton',['changePinButton',['../classe_i_d_viewer_1_1_resources_1_1_card_tab_string_resources.html#a38add5cb2a98f58912a0abde30cf1946',1,'eIDViewer::Resources::CardTabStringResources']]],
   ['chipnumberlabel',['chipNumberLabel',['../classe_i_d_viewer_1_1_resources_1_1_card_tab_string_resources.html#a2bd18ecddd6e55e9c7479b311b0460f8',1,'eIDViewer::Resources::CardTabStringResources']]],
   ['ckrv_5fmod',['ckrv_mod',['../structckrv__mod.html',1,'']]],
+  ['ckrvdecode',['ckrvdecode',['../structckrvdecode.html',1,'']]],
   ['closefile',['closeFile',['../interfacee_i_d_o_s_layer_backend.html#ab2ff17b940ae7aca4827d832ceeaeda4',1,'eIDOSLayerBackend']]],
   ['coat_5fof_5farms_5fjpg_5flocation',['coat_of_arms_jpg_location',['../classe_i_d_viewer_1_1_resources_1_1_application_string_resources.html#af175f8906511b134649e0135c7bbd508',1,'eIDViewer::Resources::ApplicationStringResources']]],
   ['conversionworker',['ConversionWorker',['../class_conversion_worker.html',1,'']]],
