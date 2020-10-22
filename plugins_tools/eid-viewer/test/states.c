@@ -1,14 +1,22 @@
-#include <unix.h>
-#include <pkcs11.h>
+#define _CRT_SECURE_NO_WARNINGS
+
+#ifdef WIN32
+#include <win32.h>
+#pragma pack(push, cryptoki, 1)
+#include "pkcs11.h"
+#pragma pack(pop, cryptoki)
+#include <io.h>
+#else
+#include "unix.h"
+#include "pkcs11.h"
+#include <unistd.h>
+#endif
 #include <testlib.h>
 #include <eid-viewer/oslayer.h>
 #include <eid-viewer/macros.h>
 #include <stdlib.h>
-#include <pthread.h>
-#include <unistd.h>
 #include "common.h"
 
-pthread_barrier_t barrier;
 
 static enum eid_vwr_states curstate;
 static bool flags[STATE_COUNT];
@@ -95,8 +103,6 @@ static void clearflags(){
 }
 TEST_FUNC(states) {
 	struct eid_vwr_ui_callbacks* cb;
-	int i;
-	pthread_barrier_init(&barrier, NULL, 2);
 	cursrc = EID_VWR_SRC_UNKNOWN;
 	if(!can_confirm()) {
 		printf("Cannot do eID viewer tests without confirmation dialogs...\n");
@@ -126,7 +132,7 @@ TEST_FUNC(states) {
 	clearflags();
 	
 	newstate(curstate);
-	eid_vwr_be_deserialize(SRCDIR "/67.06.30-296.59.eid");
+	eid_vwr_be_deserialize( L"../67.06.30-296.59.eid");
 	SLEEP(5);
 	newstate(curstate);
 	verbose_assert(flags[STATE_FILE]);
@@ -183,12 +189,16 @@ TEST_FUNC(states) {
 	clearflags();
 	SLEEP(5);
 	
-	const EID_CHAR* name = "test.xml";
+	const EID_CHAR* name = L"test.xml";
 	eid_vwr_be_serialize(name);
 	SLEEP(5);
 	newstate(curstate);
 	verbose_assert(flags[STATE_TOKEN_SERIALIZE]);
-	verbose_assert(access(name,F_OK) == 0);
+#ifdef WIN32
+	vebose_assert(INVALID_FILE_ATTRIBUTES != GetFileAttributes(name));
+#else
+	verbose_assert(access(name, F_OK) == 0);
+#endif 
 	if (remove(name)!=0){
 		printf("problem removing file");
 		return TEST_RV_SKIP;
