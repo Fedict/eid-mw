@@ -537,6 +537,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\doc\sdk\include\v240\pkcs11t.h" />
+    <ClInclude Include="..\src\beidlabels.h" />
     <ClInclude Include="..\src\beid_p11.h" />
     <ClInclude Include="..\src\cal.h" />
     <ClInclude Include="..\src\cardlayer\card.h" />

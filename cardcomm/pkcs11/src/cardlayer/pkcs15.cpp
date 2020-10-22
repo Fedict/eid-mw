@@ -22,6 +22,7 @@
 #include "pkcs15.h"
 #include "pkcs15parser.h"
 #include "card.h"
+#include "beidlabels.h"
 
 namespace eIDMW
 {
@@ -30,13 +31,15 @@ namespace eIDMW
 	const static tPrivKey PrivKeyInvalid = { false, "", 0, 0, 0, 0, 0, RSA };
 	const unsigned long CARD_KEY_ID = 1;
 
-	static tPrivKey KeysBeidV11[2] = {	{true, "Authentication", 0, 2, 4,   130, 128, RSA},
-										{true, "Signature",      1, 3, 512, 131, 128, RSA} };
-	static tPrivKey KeysBeidV17[2] = {	{true, "Authentication", 0, 2, 4,   130, 256, RSA},
-										{true, "Signature",      1, 3, 512, 131, 256, RSA} };
-	static tPrivKey KeysBeidV18[3] = {	{true, "Authentication", 0, 2, 4,   130, 48,  EC},
-										{true, "Signature",      1, 3, 512, 131, 48,  EC},
-										{true, "Card",   0, CARD_KEY_ID, 2, 129, 48,  EC} };
+	static tPrivKey KeysBeidV11[2] = {	{true, "Authentication", 0, 2, 4,   130, 128, RSA},				//the "Authentication" string is hardcoded here, but could also be fetched from the CDF
+										{true, "Signature",      1, 3, 512, 131, 128, RSA} };			//the "Signature" string is hardcoded here, but could also be fetched from the CDF
+	static tPrivKey KeysBeidV17[2] = {	{true, "Authentication", 0, 2, 4,   130, 256, RSA},				//the "Authentication" string is hardcoded here, but could also be fetched from the CDF
+										{true, "Signature",      1, 3, 512, 131, 256, RSA} };			//the "Signature" string is hardcoded here, but could also be fetched from the CDF
+	static tPrivKey KeysBeidV18[3] = {	{true, "Authentication", 0, 2, 4,   130, 48,  EC},				//the "Authentication" string is hardcoded here, but could also be fetched from the CDF
+										{true, "Signature",      1, 3, 512, 131, 48,  EC},				//the "Signature" string is hardcoded here, but could also be fetched from the CDF
+										{true, BEID_LABEL_KEY_CARD,   0, CARD_KEY_ID, 2, 129, 48,  EC} };	//this key object is only meant to be used by the pkcs#11 SDK (for a card challenge),
+																											//it is not really part of the card PKI and cannot be fetched from the CDF
+
 	const std::string defaultEFTokenInfo = "3F00DF005032";
 
 	const std::string AODFPath = "3F00DF005034";
