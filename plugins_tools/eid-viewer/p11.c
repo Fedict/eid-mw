@@ -392,18 +392,18 @@ static int eid_vwr_p11_do_challenge_real(struct eid_vwr_challenge_responsedata *
 	/** Struct used by challenge handler */
 	//struct eid_vwr_challenge_responseedata response;
 
-	CK_ULONG data_class = CKO_DATA;
+	CK_ULONG data_class = CKO_PRIVATE_KEY;
 	CK_ULONG attribute_len = 2; //the number of attributes in the search template below
 	//the searchtemplate that will be used to initialize the search
 	CK_ATTRIBUTE attributes[2] = { {CKA_CLASS,&data_class,sizeof(CK_ULONG)},
-	{CKA_LABEL,"BASIC_KEY_FILE",(CK_ULONG)strlen("BASIC_KEY_FILE")} };
+	{CKA_LABEL,"Card",(CK_ULONG)strlen("Card")} };
 	//prepare the findobjects function to find all objects with attributes 
-	//CKA_CLASS set to CKO_DATA and with CKA_LABEL set to BASIC_KEY_FILE
+	//CKA_CLASS set to CKO_PUBLIC_KEY and with CKA_LABEL set to "Card"
 
 	CK_ULONG ulMaxObjectCount = 1;//we want max one object returned
 	CK_ULONG ulObjectCount = 0;	//returns the number of objects found
 	CK_OBJECT_HANDLE hKey;
-	//retrieve the data object with label "BASIC_KEY_FILE" 
+	//retrieve the object with label "Card" 
 	check_rv(C_FindObjectsInit(session, attributes, attribute_len));
 
 	CK_RV retval = C_FindObjects(session, &hKey, ulMaxObjectCount, &ulObjectCount);
@@ -415,8 +415,8 @@ static int eid_vwr_p11_do_challenge_real(struct eid_vwr_challenge_responsedata *
 	}
 	if ((ulObjectCount == 0) || (hKey == NULL_PTR))
 	{
-		//no "BASIC_KEY_FILE" object was found
-		be_log(EID_VWR_LOG_DETAIL, TEXT(EID_S_FORMAT) TEXT(":C_FindObjects did not find object with label BASIC_KEY_FILE"));
+		//no "Card" object was found
+		be_log(EID_VWR_LOG_DETAIL, TEXT(EID_S_FORMAT) TEXT(":C_FindObjects did not find object with label Card"));
 		check_rv(C_FindObjectsFinal(session));
 		p->response = NULL_PTR;
 		p->responselen = 0;
@@ -424,10 +424,10 @@ static int eid_vwr_p11_do_challenge_real(struct eid_vwr_challenge_responsedata *
 	}
 	else
 	{
-		//"BASIC_KEY_FILE" object was found, now sign the challenge with the card key
+		//"Card" object was found, now sign the challenge with the card key
 		check_rv(C_FindObjectsFinal(session));
 
-		//use the CKM_ECDSA_SHA384 mechanism for the challenge
+		//use the CKM_ECDSA mechanism for the challenge
 		CK_MECHANISM mechanism = { CKM_ECDSA, NULL_PTR, 0 };
 
 		//initialize the signature operation

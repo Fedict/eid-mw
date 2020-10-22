@@ -72,18 +72,22 @@ public:
 
 		void Clear(CCard * poCard = NULL);
 		void SetCard(CCard * poCard);
+		void SetKeys(void);
 
-		unsigned long CertCount();
+		unsigned long CertCount(void);
 		tCert GetCert(unsigned long ulIndex);
 		tCert GetCertByID(unsigned long ulID);
 
-		unsigned long PrivKeyCount();
+		unsigned long PrivKeyCount(void);
 		tPrivKey GetPrivKey(unsigned long ulIndex);
 		tPrivKey GetPrivKeyByID(unsigned long ulID);
+		unsigned long GetCardKeyID(void);
 
 private:
 		CCard * m_poCard;
 		PKCS15Parser *m_poParser;
+		tPrivKey* m_poKeysBeid;
+		unsigned long m_ulKeyCount;
 
 #ifdef WIN32
 // Get rid of warnings like "warning C4251: 'eIDMW::CPKCS15::m_oPins' : class 'std::vector<_Ty>'

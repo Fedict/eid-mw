@@ -119,10 +119,24 @@ extern "C"
 		unsigned int l_curve;
 	} T_CERT_INFO;
 
+	typedef struct
+	{
+		unsigned int lkey;
+		char *mod;
+		unsigned int l_mod;
+		char *exp;
+		unsigned int l_exp;
+		char *pkinfo;
+		unsigned int l_pkinfo;
+		char *curve;
+		unsigned int l_curve;
+	} T_KEY_INFO;
 
-	int cert_get_info(const unsigned char *pcert, unsigned int lcert,
-			  T_CERT_INFO * info);
+	int cert_get_info(const unsigned char *pcert, unsigned int lcert, T_CERT_INFO * info);
 	void cert_free_info(T_CERT_INFO * info);
+
+	int key_get_info(const unsigned char *pkey, unsigned int lkey, T_KEY_INFO * info);
+	void key_free_info(T_KEY_INFO * info);
 
 #ifdef __cplusplus
 }

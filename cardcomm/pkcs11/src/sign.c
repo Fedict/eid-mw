@@ -393,7 +393,7 @@ CK_RV C_SignInit(CK_SESSION_HANDLE hSession,    /* the session's handle */
 
 	//check for the special case were an internal authenticate is requested in stead of a compute digital signature
 	//in this case, the object that contains the basic key file will be presented
-	//only algoritm supported atm is SHA-2-384-ECDSA
+	//only algoritm supported atm is ECDSA on a 48 bytes value
 	pObject = p11_get_slot_object(pSlot, hKey);
 	if (pObject == NULL || pObject->count == 0)
 	{
@@ -405,9 +405,9 @@ CK_RV C_SignInit(CK_SESSION_HANDLE hSession,    /* the session's handle */
 	ret = p11_get_attribute_value(pObject->pAttr, pObject->count, CKA_LABEL, (CK_VOID_PTR *)&pLabel, &len);
 	if ((ret == 0) && (len > 0))
 	{
-		if (len == strlen(BEID_LABEL_BASIC_KEY))
+		if (len == strlen(BEID_LABEL_KEY_CARD))
 		{
-			if (strncmp(pLabel, BEID_LABEL_BASIC_KEY, len) == 0)
+			if (strncmp(pLabel, BEID_LABEL_KEY_CARD, len) == 0)
 			{
 				if (pMechanism->mechanism != CKM_ECDSA)
 				{

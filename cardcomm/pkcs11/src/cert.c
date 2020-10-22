@@ -174,29 +174,110 @@ int cert_get_info(const unsigned char *pcert, unsigned int lcert, T_CERT_INFO *i
 		}		
 	}
 
-
 	return (0);
 }
 
+void free_info_member(char* pcInfo_member)
+{
+	if (pcInfo_member != NULL)
+	{
+		free(pcInfo_member);
+		pcInfo_member = NULL;
+	}
+}
 
 void cert_free_info(T_CERT_INFO *info)
 {
 	if(info != NULL)
 	{
-		if(info->subject != NULL)
-			free(info->subject);
-		if(info->issuer != NULL)
-			free(info->issuer);
-		if(info->mod != NULL)
-			free(info->mod);
-		if(info->pkinfo != NULL)
-			free(info->pkinfo);
-		if(info->serial != NULL)
-			free(info->serial);
-		if(info->validfrom != NULL)
-			free(info->validfrom);
-		if(info->validto != NULL)
-			free(info->validto);
+		free_info_member(info->issuer);
+		free_info_member(info->mod);
+		free_info_member(info->pkinfo);
+		free_info_member(info->serial);
+		free_info_member(info->validfrom);
+		free_info_member(info->validto);
+		free_info_member(info->curve);
 	}
 }
 
+
+//The card public key is stored on applet 1.8 cards in the following format:
+/* Offset       ENCODING                                            ASN.1 Syntax
+ *
+ *  00          30 76                                               -- SEQUENCE LENGTH
+	02                  30 10                                       -- SEQUENCE LENGTH
+																	Label
+	04                          06 07                               -- OBJECT_ID LENGTH
+								2A 86 48 CE 3D 02 01                EcPublicKey (1 2 840 10045 2 1)
+
+	0D                          06 05                               -- OBJECT_ID LENGTH
+	0F                          2B 81 04 00 22                      Secp384r1 (1 3 132 0 34)
+
+	14                  03 62                                       -- BIT_STRING (98 bytes) LENGTH
+	16                          00                                  -- no bits unused in the final byte
+	17                          04                                  compression byte
+	18                          {48 bytes}                          -- X coordinate
+	48                          {48 bytes}                          -- Y coordinate
+ * */
+
+
+int key_get_info(const unsigned char *pkey, unsigned int lkey, T_KEY_INFO * info)
+{
+	int ret = 0;
+	ASN1_ITEM item;
+
+	//should be done already
+	memset(info, 0, sizeof(T_KEY_INFO));
+
+	//verify size of public key file
+	ret = asn1_get_item(pkey, lkey, "\1", &item, 1);
+	if (ret)
+		return(ret);
+	if (item.l_raw <= lkey)
+		lkey = info->lkey = item.l_raw;
+	else
+		return (E_X509_INCOMPLETE);
+
+	// check for key type
+	ret = asn1_get_item(pkey, lkey, "\1\1\1", &item, 1);
+
+
+	//verify if the key is an EcPublicKey
+	if (item.l_data == sizeof(OID_EC_PUBLIC_KEY) - 1 && memcmp(item.p_data, OID_EC_PUBLIC_KEY, item.l_data) == 0) {
+		//get the curve
+		ret = asn1_get_item(pkey, lkey, "\1\1\2", &item, 1);
+		if (ret)
+			return(ret);
+
+		info->curve = malloc(item.l_raw);
+		if (info->curve == NULL)
+			return(E_X509_ALLOC);
+		memcpy(info->curve, item.p_raw, item.l_raw);
+		info->l_curve = item.l_raw;
+
+		/* EC public key; */
+		ret = asn1_get_item(pkey, lkey, "\1\2", &item, 0);
+		if (ret)
+			return(ret);
+		info->pkinfo = malloc(item.l_data);
+		if (info->pkinfo == NULL)
+			return(E_X509_ALLOC);
+		memcpy(info->pkinfo, item.p_data, item.l_data);
+		info->l_pkinfo = item.l_data;
+	}
+	else
+	{
+		//we currently only support EC card keys
+		return(E_X509_UNKNOWN_KEYTYPE);
+	}
+
+	return (0);
+}
+void key_free_info(T_KEY_INFO * info)
+{
+	if (info != NULL)
+	{
+		free_info_member(info->pkinfo);
+		free_info_member(info->curve);
+	}
+}

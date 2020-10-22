@@ -163,6 +163,9 @@ namespace eIDMW
 		/** If bValid == false, then no PIN with this ID was found */
 		tPrivKey GetPrivKeyByID(unsigned long ulID);
 
+		/* return the ID of the cardKey*/
+		unsigned long CCard::GetCardKeyID(void);
+
 		/** Return the output of the GET_CARD_DATA command to
 		the eID card (or nothing if it's not an eID card) */
 		/** Returns 3 bytes:

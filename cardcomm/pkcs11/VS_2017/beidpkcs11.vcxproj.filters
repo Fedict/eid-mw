@@ -318,6 +318,9 @@
     <ClInclude Include="..\..\..\doc\sdk\include\v240\pkcs11t.h">
       <Filter>Pkcs11\Pkcs11_standard</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\beidlabels.h">
+      <Filter>Pkcs11</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\src\dialogs\dialogswin32\images\ICO_BELPIC.ico">

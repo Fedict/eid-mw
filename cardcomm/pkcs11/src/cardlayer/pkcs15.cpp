@@ -18,26 +18,27 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
-#include <iostream>
-#include <map>
-#include <array>
+
 #include "pkcs15.h"
 #include "pkcs15parser.h"
 #include "card.h"
+#include "beidlabels.h"
 
 namespace eIDMW
 {
 
 	const static tCert CertInvalid = { false, "", 0, 0, 0, 0, false, false, "" };
-
-	const static tPrivKey KeyAuthBeidV11 = { true, "Authentication", 0, 2, 4,   130, 128, RSA };
-	const static tPrivKey KeySignBeidV11 = { true, "Signature",      1, 3, 512, 131, 128, RSA };
-	const static tPrivKey KeyAuthBeidV17 = { true, "Authentication", 0, 2, 4,   130, 256, RSA };
-	const static tPrivKey KeySignBeidV17 = { true, "Signature",      1, 3, 512, 131, 256, RSA };
-	const static tPrivKey KeyAuthBeidV18 = { true, "Authentication", 0, 2, 4,   130, 48,  EC };
-	const static tPrivKey KeySignBeidV18 = { true, "Signature",      1, 3, 512, 131, 48,  EC };
 	const static tPrivKey PrivKeyInvalid = { false, "", 0, 0, 0, 0, 0, RSA };
-	std::map<unsigned char, std::array<tPrivKey, 2> > keymap;
+	const unsigned long CARD_KEY_ID = 1;
+
+	static tPrivKey KeysBeidV11[2] = {	{true, "Authentication", 0, 2, 4,   130, 128, RSA},				//the "Authentication" string is hardcoded here, but could also be fetched from the CDF
+										{true, "Signature",      1, 3, 512, 131, 128, RSA} };			//the "Signature" string is hardcoded here, but could also be fetched from the CDF
+	static tPrivKey KeysBeidV17[2] = {	{true, "Authentication", 0, 2, 4,   130, 256, RSA},				//the "Authentication" string is hardcoded here, but could also be fetched from the CDF
+										{true, "Signature",      1, 3, 512, 131, 256, RSA} };			//the "Signature" string is hardcoded here, but could also be fetched from the CDF
+	static tPrivKey KeysBeidV18[3] = {	{true, "Authentication", 0, 2, 4,   130, 48,  EC},				//the "Authentication" string is hardcoded here, but could also be fetched from the CDF
+										{true, "Signature",      1, 3, 512, 131, 48,  EC},				//the "Signature" string is hardcoded here, but could also be fetched from the CDF
+										{true, BEID_LABEL_KEY_CARD,   0, CARD_KEY_ID, 2, 129, 48,  EC} };	//this key object is only meant to be used by the pkcs#11 SDK (for a card challenge),
+																											//it is not really part of the card PKI and cannot be fetched from the CDF
 
 	const std::string defaultEFTokenInfo = "3F00DF005032";
 
@@ -47,20 +48,6 @@ namespace eIDMW
 
 	CPKCS15::CPKCS15(void) :m_poParser(NULL), m_poCard(NULL)
 	{
-		if(keymap.empty()) {
-			std::array<tPrivKey, 2> v11;
-			v11[0] = KeyAuthBeidV11;
-			v11[1] = KeySignBeidV11;
-			keymap[0x01] = v11;
-			std::array<tPrivKey, 2> v17;
-			v17[0] = KeyAuthBeidV17;
-			v17[1] = KeySignBeidV17;
-			keymap[0x17] = v17;
-			std::array<tPrivKey, 2> v18;
-			v18[0] = KeyAuthBeidV18;
-			v18[1] = KeySignBeidV18;
-			keymap[0x18] = v18;
-		}
 		Clear();
 	}
 
@@ -70,7 +57,7 @@ namespace eIDMW
 
 	void CPKCS15::Clear(CCard *poCard)
 	{
-		m_poCard = poCard;
+		SetCard(poCard);
 
 		// clear everything
 		//m_csSerial = "";
@@ -86,11 +73,42 @@ namespace eIDMW
 		m_xAODF.setDefault(AODFPath);
 		m_xCDF.setDefault(CDFPath);
 		m_xPrKDF.setDefault(PrKDFPath);
+
+		m_poKeysBeid = NULL;
+		m_ulKeyCount = 0;
 	}
 
 	void CPKCS15::SetCard(CCard *poCard)
 	{
 		m_poCard = poCard;
+		SetKeys();
+	}
+
+	void CPKCS15::SetKeys(void)
+	{
+		if (m_poCard != NULL)
+		{
+			unsigned char ucAppletVersion = m_poCard->GetAppletVersion();
+			switch (ucAppletVersion)
+			{
+			case 0x11:
+				m_poKeysBeid = KeysBeidV11;
+				m_ulKeyCount = 2;
+				break;
+			case 0x17:
+				m_poKeysBeid = KeysBeidV17;
+				m_ulKeyCount = 2;
+				break;
+			case 0x18:
+				m_poKeysBeid = KeysBeidV18;
+				m_ulKeyCount = 3;
+				break;
+			default:
+				m_poKeysBeid = NULL;
+				m_ulKeyCount = 0;
+				break;
+			}
+		}
 	}
 
 	//serial number is already retrieved by Get Card Data in the CCard constructor: m_oCardData = SendAPDU(0x80, 0xE4, 0x00, 0x00, 0x1C);
@@ -142,28 +160,38 @@ namespace eIDMW
 		return CertInvalid;
 	}
 
-
 	unsigned long CPKCS15::PrivKeyCount()
 	{
-		return (unsigned long)(keymap[m_poCard->GetAppletVersion()].size());
+		return m_ulKeyCount;
 	}
 
 	tPrivKey CPKCS15::GetPrivKey(unsigned long ulIndex)
 	{
-		if(keymap.find(m_poCard->GetAppletVersion()) != keymap.end()) {
-			return keymap[m_poCard->GetAppletVersion()][ulIndex];
+		if ( (m_poKeysBeid != NULL) && (ulIndex <= m_ulKeyCount) )
+		{
+			return m_poKeysBeid[ulIndex];
 		}
 		return PrivKeyInvalid;
 	}
 
 	tPrivKey CPKCS15::GetPrivKeyByID(unsigned long ulID)
 	{
-		unsigned char vers = m_poCard->GetAppletVersion();
-		for (std::array<tPrivKey, 2>::const_iterator ik = keymap[vers].begin();
-			ik != keymap[vers].end(); ++ik) {
-			if (ik->ulID == ulID) return *ik;
+		if (m_poKeysBeid != NULL)
+		{
+			for (unsigned long ulCounter = 0; ulCounter <= m_ulKeyCount; ulCounter++)
+			{
+				if (m_poKeysBeid[ulCounter].ulID == ulID)
+				{
+					return m_poKeysBeid[ulCounter];
+				}
+			}
 		}
 		return PrivKeyInvalid;
+	}
+
+	unsigned long CPKCS15::GetCardKeyID()
+	{
+		return CARD_KEY_ID;
 	}
 
 	void CPKCS15::ReadLevel3(tPKCSFileName name) {
