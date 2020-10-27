@@ -1,6 +1,15 @@
-#include <unix.h>
-#include <pkcs11.h>
-#include <testlib.h>
+#ifdef WIN32
+#include <win32.h>
+#pragma pack(push, cryptoki, 1)
+#include "pkcs11.h"
+#pragma pack(pop, cryptoki)
+#include <io.h>
+#else
+#include "unix.h"
+#include "pkcs11.h"
+#include <unistd.h>
+#endif
+#include "testlib2.h"
 #include <eid-viewer/oslayer.h>
 #include <stdlib.h>
 

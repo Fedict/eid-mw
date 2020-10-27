@@ -27,7 +27,7 @@
 
 #include "stdafx.h"
 #include <stdio.h>
-#include "testlib.h"
+#include "testlib2.h"
 #include "logtest.h"
 
 
@@ -59,14 +59,14 @@ int	_tmain(int argc, _TCHAR* argv[]){
 	errno_t error;
 
 	eIDTest eIDTests[] = {
-		{0,true, "states", &states },
+		{0,true, "states", &states }
 	};
 	nrofTests = (sizeof(eIDTests) / sizeof(eIDTest));
 
 	if(argc >=2)
 		eid_robot_style = argv[1];
 
-	if(argc >=3)
+	if (argc >= 3)
 		eid_dialogs_style = argv[2];
 
 	if(argc >=4)

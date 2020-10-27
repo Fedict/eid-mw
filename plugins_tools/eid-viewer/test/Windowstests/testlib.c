@@ -202,12 +202,14 @@ CK_BBOOL open_reader_robot(char *envvar) {
 CK_BBOOL have_robot() {
 #ifdef WIN32
 	wchar_t* envvar = eid_robot_style;
+#else
+	char* envvar = getenv("EID_ROBOT_STYLE");
+#endif
 	if(envvar == NULL) {
 		robot_type = ROBOT_NONE;
 		return CK_FALSE;
 	}
-	if(!strncmp(envvar, L"fedict", strlen("fedict"))) 
-	{
+	if(!strncmp(envvar, L"fedict", strlen("fedict"))) {
 		robot_type = ROBOT_AUTO;
 		return open_robot(envvar);
 	}
@@ -220,27 +222,6 @@ CK_BBOOL have_robot() {
 		return CK_TRUE;
 	}
 	return CK_FALSE;
-#else
-	char* envvar = getenv("EID_ROBOT_STYLE");
-	if (envvar == NULL) {
-		robot_type = ROBOT_NONE;
-		return CK_FALSE;
-	}
-	if (!strncmp(envvar, "fedict", strlen("fedict")))
-	{
-		robot_type = ROBOT_AUTO;
-		return open_robot(envvar);
-}
-	if (!strncmp(envvar, "zetes", strlen("zetes"))) {
-		robot_type = ROBOT_AUTO_2;
-		return open_robot(envvar);
-	}
-	if (!strcmp(envvar, "manual")) {
-		robot_type = ROBOT_MECHANICAL_TURK;
-		return CK_TRUE;
-	}
-	return CK_FALSE;
-#endif
 }
 
 CK_BBOOL have_reader_robot(void) {
@@ -273,6 +254,9 @@ CK_BBOOL have_reader_robot(void) {
 CK_BBOOL want_dialogs() {
 #ifdef WIN32
 	wchar_t* envvar = eid_dialogs_style;
+#else
+	char* envvar = getenv("EID_DIALOGS_STYLE");
+#endif
 #ifdef NO_DIALOGS
 	dialogs_type = DIALOGS_NOPIN;
 #else
@@ -290,28 +274,8 @@ CK_BBOOL want_dialogs() {
 	if(dialogs_type == DIALOGS_AVOID) {
 		return CK_FALSE;
 	}
+
 	return CK_TRUE;
-#else
-	char* envvar = getenv("EID_DIALOGS_STYLE");
-#ifdef NO_DIALOGS
-	dialogs_type = DIALOGS_NOPIN;
-#else
-	dialogs_type = DIALOGS_AVOID;
-#endif
-	if (envvar == NULL) {
-		return CK_FALSE;
-	}
-	if (!strcmp(envvar, "nopin", strlen("nopin"))) {
-		dialogs_type = DIALOGS_NOPIN;
-	}
-	if (!strcmp(envvar, "ok", strlen("ok"))) {
-		dialogs_type = DIALOGS_OK;
-	}
-	if (dialogs_type == DIALOGS_AVOID) {
-		return CK_FALSE;
-	}
-	return CK_TRUE;
-#endif
 }
 
 CK_BBOOL have_pin() {

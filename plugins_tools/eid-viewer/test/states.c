@@ -1,5 +1,3 @@
-#define _CRT_SECURE_NO_WARNINGS
-
 #ifdef WIN32
 #include <win32.h>
 #pragma pack(push, cryptoki, 1)
@@ -11,7 +9,7 @@
 #include "pkcs11.h"
 #include <unistd.h>
 #endif
-#include <testlib.h>
+#include "testlib2.h"
 #include <eid-viewer/oslayer.h>
 #include <eid-viewer/macros.h>
 #include <stdlib.h>
@@ -109,6 +107,7 @@ TEST_FUNC(states) {
 		return TEST_RV_SKIP;
 	}
 	if(!have_robot()) {
+		printf("no robot");
 		return TEST_RV_SKIP;
 	}
 	cb = createcbs();
@@ -119,13 +118,17 @@ TEST_FUNC(states) {
 	cb->newstate = newstate;
 	verbose_assert(eid_vwr_createcallbacks(cb) == 0);
 	
+#ifndef WIN32
 	robot_remove_reader();
-	SLEEP(10);
+	SLEEP(20);
 	verbose_assert(flags[STATE_CALLBACKS]);
 	verbose_assert(flags[STATE_NO_TOKEN]);
+	newstate(curstate);
 	verbose_assert(curstate == STATE_NO_READER);
 	clearflags();
-	
+#endif
+
+
 	robot_insert_reader();
 	SLEEP(10);
 	verbose_assert(curstate == STATE_READY);
@@ -139,10 +142,16 @@ TEST_FUNC(states) {
 	verbose_assert(flags[STATE_FILE_READING]);
 	verbose_assert(curstate == STATE_FILE_WAIT);
 	eid_vwr_close_file ();
-	SLEEP(3);
+	SLEEP(10);
 	newstate(curstate);
+
+#ifdef WIN32
+	robot_remove_reader();
+	SLEEP(10);
+#endif
 	verbose_assert(flags[STATE_NO_TOKEN]);
 	verbose_assert(flags[STATE_NO_READER]);
+	newstate(curstate);
 	verbose_assert(curstate == STATE_READY);
 	clearflags();
 	
@@ -170,7 +179,7 @@ TEST_FUNC(states) {
 	printf("right card test\n");
 	newstate(curstate);
 	robot_insert_card();
-	SLEEP(15);
+	SLEEP(40);
 	newstate(curstate);
 	verbose_assert(flags[STATE_TOKEN]);
 	verbose_assert(flags[STATE_TOKEN_ID]);
@@ -179,6 +188,7 @@ TEST_FUNC(states) {
 	verbose_assert(curstate == STATE_TOKEN_IDLE);
 	clearflags();
 	
+#ifndef WIN32
 	if(!can_enter_pin(0)) {
 		printf("Cannot do PIN tests without PIN code...\n");
 		exit(TEST_RV_SKIP);
@@ -186,36 +196,42 @@ TEST_FUNC(states) {
 	eid_vwr_pinop(EID_VWR_PINOP_TEST);
 	SLEEP(5);
 	verbose_assert(flags[STATE_TOKEN_PINOP]);
+#endif
 	clearflags();
 	SLEEP(5);
-	
+
 	const EID_CHAR* name = L"test.xml";
 	eid_vwr_be_serialize(name);
 	SLEEP(5);
 	newstate(curstate);
 	verbose_assert(flags[STATE_TOKEN_SERIALIZE]);
 #ifdef WIN32
-	vebose_assert(INVALID_FILE_ATTRIBUTES != GetFileAttributes(name));
-#else
-	verbose_assert(access(name, F_OK) == 0);
-#endif 
-	if (remove(name)!=0){
+	verbose_assert(INVALID_FILE_ATTRIBUTES != GetFileAttributes(name));
+	if (_wremove(name) != 0) {
 		printf("problem removing file");
 		return TEST_RV_SKIP;
 	}
+#else
+	verbose_assert(access(name, F_OK) == 0);
+	if (remove(name) != 0) {
+		printf("problem removing file");
+		return TEST_RV_SKIP;
+	}
+#endif 
+	
 	clearflags();
 	SLEEP(5);
 	
 	printf("test for challenge (only run with a card v1.8)\n");
-	/*if(have_keyhash){
-		const unsigned char* challenge = "ch4113n9";
-		int lenght = 8;
+	if(have_keyhash){
+		const unsigned char* challenge = "123456789012345678901234567890123456789012345678";
+		int lenght = 48;
 		eid_vwr_challenge(challenge, lenght);
 		SLEEP(5);
 		verbose_assert(flags[STATE_TOKEN_CHALLENGE]);
 		clearflags();
 		SLEEP(5);
-	}*/
+	}
 	
 	eid_vwr_be_set_invalid();
 	SLEEP(5);

@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{49aababd-93ce-4e32-944e-61323f02c4d4}</ProjectGuid>
-    <RootNamespace>viewertest</RootNamespace>
+    <ProjectGuid>{a72f9556-33e1-49e3-a51a-885909e309f9}</ProjectGuid>
+    <RootNamespace>Windowstests</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -86,13 +86,15 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;TEST_NO_ABORT</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\..\..\..\doc\sdk\include\v240;..\..\;..\..\..\..\tests\unit;..\..\..\util;..\..\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\..\doc\sdk\include\v240;..\..\;..\..\..\util;..\..\include;.\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>beidpkcs11D.lib;eidviewerbackend.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\..\cardcomm\pkcs11\VS_2019\Binaries\Win32_Debug;..\..\..\..\plugins_tools\eid-viewer\Windows\eIDViewerBackend\VS_2017\Binaries\Win32_Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -140,17 +142,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\common.c" />
     <ClCompile Include="..\states.c" />
-    <ClCompile Include="..\testlib.c" />
     <ClCompile Include="logtest.c" />
+    <ClCompile Include="serial_windows.c" />
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="testlib.c" />
+    <ClCompile Include="Windowstests.cpp" />
     <ClCompile Include="winmain.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\testlib.h" />
+    <ClInclude Include="..\common.h" />
     <ClInclude Include="logtest.h" />
+    <ClInclude Include="serial_io.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="testlib2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

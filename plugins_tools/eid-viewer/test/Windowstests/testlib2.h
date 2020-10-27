@@ -4,6 +4,7 @@
 #include <assert.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <pkcs11t.h>
 
 #define TEST_RV_SKIP 77		// defined by automake
 #define TEST_RV_FAIL 1
@@ -133,36 +134,6 @@ extern enum dialogs_type dialogs_type;
 int find_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR slot);
 
 /* function definitions for tests that exist */
-int scardcom_common(void);
-int init_finalize(void);
-int getinfo(void);
-int funclist(void);
-int slotlist(void);
-int slotinfo(void);
-int tkinfo(void);
-int double_init(void);
-int fork_init(void);
-int slotevent(void);
-int mechlist(void);
-int mechinfo(void);
-int sessions(void);
-int sessions_nocard(void);
-int sessioninfo(void);
-int slogin(void);
-int sbadlogin(void);
-int nonsensible(void);
-int objects(void);
-int readdata(void);
-int readdata_limited(void);
-int readdata_sequence(void);
-int digest(void);
-int threads(void);
-int sign(void);
-int sign_state(void);
-int decode_photo(void);
-int ordering(void);
-int wrong_init(void);
-int login_state(void);
-int eject(void);
+int states(void);
 
 #endif
