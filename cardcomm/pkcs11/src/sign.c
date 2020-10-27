@@ -407,7 +407,7 @@ CK_RV C_SignInit(CK_SESSION_HANDLE hSession,    /* the session's handle */
 	{
 		if (len == strlen(BEID_LABEL_KEY_CARD))
 		{
-			if (strncmp(pLabel, BEID_LABEL_KEY_CARD, len) == 0)
+			if (memcmp(BEID_LABEL_KEY_CARD, pLabel, len) == 0)
 			{
 				if (pMechanism->mechanism != CKM_ECDSA)
 				{

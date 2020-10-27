@@ -164,7 +164,7 @@ namespace eIDMW
 		tPrivKey GetPrivKeyByID(unsigned long ulID);
 
 		/* return the ID of the cardKey*/
-		unsigned long CCard::GetCardKeyID(void);
+		unsigned long GetCardKeyID(void);
 
 		/** Return the output of the GET_CARD_DATA command to
 		the eID card (or nothing if it's not an eID card) */
