@@ -27,12 +27,12 @@
 
 #include "stdafx.h"
 #include <stdio.h>
-#include "testlib2.h"
+#include "../testlib2.h"
 #include "logtest.h"
 
 
 _TCHAR* eid_robot_style = NULL;
-_TCHAR*	eid_dialogs_style = NULL;
+_TCHAR* eid_dialogs_style = NULL;
 _TCHAR* eid_builtin_reader = NULL;
 
 /*

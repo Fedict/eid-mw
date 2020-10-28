@@ -135,7 +135,11 @@ TEST_FUNC(states) {
 	clearflags();
 	
 	newstate(curstate);
+	#ifdef WIN32
 	eid_vwr_be_deserialize( L"../67.06.30-296.59.eid");
+	#else 
+	eid_vwr_be_deserialize( "./67.06.30-296.59.eid");
+	#endif
 	SLEEP(5);
 	newstate(curstate);
 	verbose_assert(flags[STATE_FILE]);
@@ -199,8 +203,11 @@ TEST_FUNC(states) {
 #endif
 	clearflags();
 	SLEEP(5);
-
+	#ifdef WIN32
 	const EID_CHAR* name = L"test.xml";
+	#else 
+	const EID_CHAR* name = "test.xml";
+	#endif
 	eid_vwr_be_serialize(name);
 	SLEEP(5);
 	newstate(curstate);

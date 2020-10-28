@@ -31,13 +31,14 @@
 #include <unistd.h>
 #include <pkcs11.h>
 #endif
+#include "testlib2.h"
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
 #include <stdbool.h>
 #include <errno.h>
-#include "testlib2.h"
+
 
 #include "serial_io.h"
 
