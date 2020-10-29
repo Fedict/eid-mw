@@ -20,7 +20,7 @@
 #ifndef WIN32
 #include <unix.h>
 #include <pkcs11.h>
-#include <common / mw_util.h>
+#include <common/mw_util.h>
 #include <stdio.h>
 #include "testlib.h"
 #include <string>
