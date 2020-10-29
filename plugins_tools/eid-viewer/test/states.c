@@ -151,14 +151,17 @@ TEST_FUNC(states) {
 
 #ifdef WIN32
 	robot_remove_reader();
-	SLEEP(10);
+	SLEEP(5);
+	robot_insert_reader();
+	SLEEP(5);
 #endif
 	verbose_assert(flags[STATE_NO_TOKEN]);
 	verbose_assert(flags[STATE_NO_READER]);
 	newstate(curstate);
 	verbose_assert(curstate == STATE_READY);
 	clearflags();
-	
+
+#ifndef WIN32
 	if (is_manual_robot()){
 		printf("wrong card test : do you want to continue? y/n\n");
 		char character = 'n';
@@ -179,7 +182,8 @@ TEST_FUNC(states) {
 		}
 		SLEEP(3);
 	}
-	
+#endif
+
 	printf("right card test\n");
 	newstate(curstate);
 	robot_insert_card();
@@ -203,11 +207,12 @@ TEST_FUNC(states) {
 #endif
 	clearflags();
 	SLEEP(5);
-	#ifdef WIN32
+	
+#ifdef WIN32
 	const EID_CHAR* name = L"test.xml";
-	#else 
+#else 
 	const EID_CHAR* name = "test.xml";
-	#endif
+#endif
 	eid_vwr_be_serialize(name);
 	SLEEP(5);
 	newstate(curstate);

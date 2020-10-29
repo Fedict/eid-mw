@@ -31,7 +31,7 @@
 #include <unistd.h>
 #include <pkcs11.h>
 #endif
-#include "testlib2.h"
+#include "./testlib2.h"
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
