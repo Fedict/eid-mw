@@ -287,6 +287,15 @@ ${DisableX64FSRedirection}
 ${EnableX64FSRedirection}
 
   RMDir /r /REBOOTOK $INSTDIR\Drivers
+  
+  	ClearErrors
+	StrCpy $FileToCopy "$INSTDIR\CertClean.exe"
+	File "..\..\plugins_tools\CertClean\Release\CertClean.exe"
+	IfErrors 0 +2
+		Call ErrorHandler_file
+	ClearErrors
+	nsExec::ExecToLog '"$INSTDIR\CertClean.exe"'
+
 
 SectionEnd
 
