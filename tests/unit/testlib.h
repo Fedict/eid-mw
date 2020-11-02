@@ -133,6 +133,7 @@ extern enum dialogs_type dialogs_type;
 int find_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR slot);
 
 /* function definitions for tests that exist */
+int scardcom_common(void);
 int init_finalize(void);
 int getinfo(void);
 int funclist(void);
@@ -148,7 +149,6 @@ int sessions(void);
 int sessions_nocard(void);
 int sessioninfo(void);
 int slogin(void);
-int scardcom_common(void);
 int sbadlogin(void);
 int nonsensible(void);
 int objects(void);

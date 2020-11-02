@@ -71,6 +71,7 @@ TEST_FUNC(sign_state) {
 		printf("Robot not present, can't do this test...\n");
 		return TEST_RV_SKIP;
 	}
+	check_rv_long(C_Sign(NULL, data, sizeof(data), NULL, &sig_len), m_p11_noinit);
 
 	check_rv(C_Initialize(NULL_PTR));
 
@@ -113,7 +114,7 @@ TEST_FUNC(sign_state) {
 		mech.mechanism = CKM_ECDSA_SHA256;
 	}
 	
-	check_rv_long(C_Sign(session, data, sizeof(data), NULL, &sig_len), m_n_init)
+	check_rv_long(C_Sign(session, data, sizeof(data), NULL, &sig_len), m_n_init);
 	
 	check_rv(C_SignInit(session, &mech, privatekey));
 
@@ -156,8 +157,11 @@ TEST_FUNC(sign_state) {
 
 	check_rv_long(C_Sign(session, data, sizeof(data), NULL, &sig_len), m_is_rmvd);
 
-	check_rv(C_FindObjectsFinal(session));
-
+	if (C_FindObjectsFinal(session)!=CKR_OK && C_FindObjectsFinal(session)!=CKR_DEVICE_REMOVED){
+		printf("not missing device or not ok\n");
+		return TEST_RV_FAIL; 
+	}
+	
 	check_rv(C_Finalize(NULL_PTR));
 
 	return TEST_RV_OK;

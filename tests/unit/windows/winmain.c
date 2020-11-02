@@ -62,7 +62,6 @@ int	_tmain(int argc, _TCHAR* argv[]){
 		{0,true, "eject cardreaders before using them", &eject},
 		{0,true, "initialize_finalize",&init_finalize},
 		{0,true, "getinfo",&getinfo},
-		{0,true, "funclist",&funclist},
 		{0,true, "slotlist",&slotlist},
 		{0,true, "slotinfo",&slotinfo},
 		{0,true, "tkinfo",&tkinfo},
@@ -74,6 +73,7 @@ int	_tmain(int argc, _TCHAR* argv[]){
 		{0,true, "sessions_nocard",&sessions_nocard},
 		{0,true, "sessioninfo",&sessioninfo},
 		{0,true, "slogin",&slogin},
+		{0,true, "sbadlogin",&sbadlogin},
 		{0,true, "nonsensible",&nonsensible},
 		{0,true, "objects",&objects},
 		{0,true, "readdata",&readdata},
@@ -85,7 +85,7 @@ int	_tmain(int argc, _TCHAR* argv[]){
 		{0,true, "decode_photo",&decode_photo},
 		{0,true, "ordering",&ordering},
 		{0,true, "wrong_init", &wrong_init},
-		{0,true, "login_state", &login_state},
+		{0,true, "login_state", &login_state}
 	};
 	nrofTests = (sizeof(eIDTests) / sizeof(eIDTest));
 

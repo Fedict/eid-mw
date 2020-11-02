@@ -133,6 +133,13 @@ extern enum dialogs_type dialogs_type;
 int find_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR slot);
 
 /* function definitions for tests that exist */
+#ifndef WIN32
+int cardevent(void);
+int deserialize(void);
+int serialize(void);
+int init(void);
+int pinop(void);
+#endif
 int states(void);
 
 #endif

@@ -15,6 +15,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Windowstests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\states.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -24,7 +27,13 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\common.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="winmain.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="serial_windows.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\testlib.c">
@@ -33,16 +42,22 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="logtest.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="targetver.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\testlib.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\common.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="serial_io.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\testlib2.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

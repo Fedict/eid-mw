@@ -82,10 +82,13 @@ TEST_FUNC(sbadlogin) {
 		return TEST_RV_SKIP;
 	}
 	check_rv_long(C_Logout(handle), m_nlogin);
-	
+	#ifdef __linux__
 	if (have_robot() && !is_manual_robot()){
+
 		char * goodpin = getenv("EID_PIN_CODE");
+
 		setenv("EID_PIN_CODE","4444",1);
+		
 		check_rv_long(C_Login(handle, CKU_USER, NULL_PTR, 0), m);
 	
 		check_rv(C_GetSessionInfo(handle, &sinfo));
@@ -99,22 +102,27 @@ TEST_FUNC(sbadlogin) {
 		printf("State: %lu\n", sinfo.state);
 		printf("Flags: %#08lx\n", sinfo.flags);
 	}
-	else{	
-	
+
+	else {
+#endif
+
 		printf("entering wrong pin , watch out, after to many times card gets locked\n");
 		check_rv_long(C_Login(handle, CKU_USER, NULL_PTR, 0), m);
-		
+
 		check_rv(C_GetSessionInfo(handle, &sinfo));
 		printf("State: %lu\n", sinfo.state);
 		printf("Flags: %#08lx\n", sinfo.flags);
-	
-		printf("entering correct pin , to reset the attempts counter\n"); 
+
+		printf("entering correct pin , to reset the attempts counter\n");
 		check_rv_long(C_Login(handle, CKU_USER, NULL_PTR, 0), m_glogin);
-		
+
 		check_rv(C_GetSessionInfo(handle, &sinfo));
 		printf("State: %lu\n", sinfo.state);
 		printf("Flags: %#08lx\n", sinfo.flags);
+#ifdef __linux__
 	}
+#endif
+	
 		
 	check_rv_long(C_Logout(handle), m_glogin);
 		

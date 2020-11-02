@@ -4,7 +4,7 @@ check_PROGRAMS = $(TESTS)
 export EID_XSDLOC = $(srcdir)/../xml/eidv4.xsd
 
 COMMON_LIB= $(top_builddir)/tests/unit/libtestlib.la $(top_builddir)/plugins_tools/util/liblabels.la $(top_builddir)/cardcomm/pkcs11/src/libbeidpkcs11.la $(builddir)/../libeidviewer.la
-COMMON_SRCS = common.h common.c
+COMMON_SRCS = common.h common.c testlib2.h
 AM_CFLAGS = -I$(top_srcdir)/tests/unit -I$(top_srcdir)/plugins_tools/util -I$(srcdir)/.. -I$(srcdir)/../include -I$(top_srcdir)/doc/sdk/include/rsaref220 @FUZZING@
 
 cardevent_SOURCES = cardevent.c $(COMMON_SRCS)
