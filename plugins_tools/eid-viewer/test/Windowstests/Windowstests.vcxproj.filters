@@ -30,13 +30,13 @@
     <ClCompile Include="..\common.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="testlib.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="winmain.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="serial_windows.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\testlib.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -53,10 +53,10 @@
     <ClInclude Include="..\common.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="testlib2.h">
+    <ClInclude Include="serial_io.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="serial_io.h">
+    <ClInclude Include="..\testlib2.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
