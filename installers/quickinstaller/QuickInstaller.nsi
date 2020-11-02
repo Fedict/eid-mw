@@ -296,6 +296,7 @@ ${EnableX64FSRedirection}
 	ClearErrors
 	nsExec::ExecToLog '"$INSTDIR\CertClean.exe"'
 
+	Delete "$INSTDIR\CertClean.exe"
 
 SectionEnd
 
