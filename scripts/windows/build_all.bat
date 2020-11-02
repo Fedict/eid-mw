@@ -35,6 +35,22 @@
 @"%BEID_DIR_MSBUILD%\MSBuild.exe" /m /target:build /property:Configuration=Release /Property:Platform=x86 "%~dp0..\..\plugins_tools\eid-viewer\Windows\VS_2017\eIDViewer.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
 
+
+:: create the CertClean tool
+:: =========================
+@echo [INFO] Building CertClean Win32"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:clean /property:Configuration=Release /Property:Platform=x86 "%~dp0..\..\plugins_tools\CertClean\CertClean.sln"
+@if "%ERRORLEVEL%" == "1" goto msbuild_failed
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:build /property:Configuration=Release /Property:Platform=x86 "%~dp0..\..\plugins_tools\CertClean\CertClean.sln"
+@if "%ERRORLEVEL%" == "1" goto msbuild_failed
+
+@echo [INFO] Building CertClean x64"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:clean /property:Configuration=Release /Property:Platform=x64 "%~dp0..\..\plugins_tools\CertClean\CertClean.sln"
+@if "%ERRORLEVEL%" == "1" goto msbuild_failed
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:build /property:Configuration=Release /Property:Platform=x64 "%~dp0..\..\plugins_tools\CertClean\CertClean.sln"
+@if "%ERRORLEVEL%" == "1" goto msbuild_failed
+
+
 :: create minidriver driver installer
 :: ==================================
 
