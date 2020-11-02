@@ -18,14 +18,6 @@ int main()
 /* Search for, and remove if found, all Root signed Belgium root Ca certificates*/
 
 	HCERTSTORE		hMemoryStore = NULL;   // memory store handle
-	//current use store
-	hMemoryStore = CertOpenSystemStoreA((HCRYPTPROV)NULL, "CA");
-	if (hMemoryStore != NULL)
-	{
-		printf("Opened Current User CA store\n");
-		CleanRSFromMemStore(hMemoryStore);
-		CertCloseStore(hMemoryStore, CERT_CLOSE_STORE_FORCE_FLAG);
-	}
 
 	//local machine store
 	hMemoryStore = CertOpenStore(CERT_STORE_PROV_SYSTEM_A, X509_ASN_ENCODING | PKCS_7_ASN_ENCODING, (HCRYPTPROV_LEGACY)NULL,
@@ -35,8 +27,18 @@ int main()
 		printf("Opened Local Machine CA store\n");
 		CleanRSFromMemStore(hMemoryStore);
 		CertCloseStore(hMemoryStore, CERT_CLOSE_STORE_FORCE_FLAG);
+		hMemoryStore = NULL;
 	}
-	hMemoryStore = NULL;
+
+	//current use store
+	hMemoryStore = CertOpenSystemStoreA((HCRYPTPROV)NULL, "CA");
+	if (hMemoryStore != NULL)
+	{
+		printf("Opened Current User CA store\n");
+		CleanRSFromMemStore(hMemoryStore);
+		CertCloseStore(hMemoryStore, CERT_CLOSE_STORE_FORCE_FLAG);
+		hMemoryStore = NULL;
+	}
 
 	return retVal;
 }
