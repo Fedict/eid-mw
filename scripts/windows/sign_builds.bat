@@ -19,6 +19,15 @@ call "%~dp0.\set_eidmw_version.cmd"
 call "%~dp0.\package_minidriver.bat"
 
 
+:: sign the 32bit version of the CertClean tool
+:: ============================================
+@echo [INFO] sign the CertClean tool x86
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\plugins_tools\CertClean\Release\CertClean.exe"
+
+@if "%ERRORLEVEL%" == "1" goto signtool_failed
+@echo [INFO] copy the signed CertClean tool
+copy %~dp0..\..\plugins_tools\CertClean\Release\CertClean.exe %~dp0
+
 :: sign pkcs11
 :: ===========
 @echo [INFO] Sign the pkcs11 dll, 32bit
