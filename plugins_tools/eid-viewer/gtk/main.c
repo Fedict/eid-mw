@@ -132,6 +132,7 @@ static void newstate(enum eid_vwr_states s) {
 			g_object_set_threaded(pintest, "sensitive", (void*)TRUE, NULL);
 			g_object_set_threaded(pinchg, "sensitive", (void*)TRUE, NULL);
 			g_object_set_data_threaded(validate, "want_active", (void*)TRUE, NULL);
+			eid_vwr_maybe_perform_challenge();
 			if(want_verify) {
 				validate_all(NULL, NULL);
 			} else {

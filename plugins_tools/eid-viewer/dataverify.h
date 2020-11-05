@@ -52,6 +52,19 @@ DllExport int eid_vwr_check_data_validity(const void *photo, int plen,
 				const void *rrncert, int certlen);
 DllExport int eid_vwr_verify_card(void *data);
 
+/**
+  * \brief On cards that support it perform a basic key challenge.
+  *
+  * This verifies that a basic key is present (it only is on v1.8
+  * cards). If it is, it validates that the key matches its hash in the
+  * identity file, and then initiates a challenge to the card. The
+  * result of the challenge will be returned using
+  * eid_vwr_ui_callbacks::challenge_result.
+  *
+  * \note this will only work when in the TOKEN_WAIT state.
+  */
+DllExport void eid_vwr_maybe_perform_challenge(void);
+
 DllExport void eid_vwr_check_signature(const void* pubkey, size_t pubkeylen,
 				const void* sig, size_t siglen, const void* data,
 				size_t datalen);
