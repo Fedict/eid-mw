@@ -41,6 +41,11 @@
 #define ppvalcast(obj) ((void**)obj)
 
 #define OCSP_resp_get0_certs(bresp) ((bresp)->certs)
+int ECDSA_SIG_set0(ECDSA_SIG* sig, BIGNUM *r, BIGNUM *s) {
+	sig->r = r;
+	sig->s = s;
+	return 1;
+}
 #else
 #define algobjcast(obj) ((const ASN1_OBJECT**)obj)
 #define ppvalcast(obj) ((const void**)obj)
