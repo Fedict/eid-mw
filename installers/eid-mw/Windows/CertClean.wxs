@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  <?include ..\..\..\scripts\windows\eidmw_revision.wxs ?>
+
+  <?define var.OfficialProductVersion =$(var.BaseVersion1).$(var.BaseVersion2).$(var.BaseVersion3)?>
+  <?define var.ProductVersion =$(var.BaseVersion1).$(var.BaseVersion2).$(var.RevisionNumber)?>
+  <?define var.FullProductVersion =$(var.OfficialProductVersion).$(var.RevisionNumber)?>
+
+  <?define var.UpgradeCode ={6A18DA74-DB86-4937-832E-4F14446FC6C0}?>
+  <?define var.ProductGuid ={98F221C1-1D82-475D-8916-F2A7D950$(var.RevisionNumber)}?>
+  
+  <?define var.ProductName =Belgium e-ID certclean $(var.OfficialProductVersion) (build $(var.RevisionNumber))?>
+  <?define var.PackageCode="*"?>
+
+  <Product Id="$(var.ProductGuid)"
+           Name="$(var.ProductName)"
+           Language="!(loc.Lang)"
+           Codepage="1252"
+           Version="$(var.ProductVersion)"
+           Manufacturer="Belgian Government"
+           UpgradeCode="$(var.UpgradeCode)">
+	
+	<!-- InstallerVersion="405"(v4.5) Released with Vista Service Pack 2, or update for Windows XP(SP2, SP3) -->		
+    <Package Id="$(var.PackageCode)"
+             InstallerVersion="405" 
+             Keywords="Belgium e-ID certclean"
+             Platform="x86"
+             Manufacturer="Belgian Government"
+             Compressed="yes"
+             InstallPrivileges="elevated"
+    />
+
+    <?if $(var.Lang) = "nl"?>
+    <WixVariable Id="WixUILicenseRtf" Value="..\..\..\doc\licenses\Dutch\License_nl.rtf" />
+    <?elseif $(var.Lang) = "fr"?>
+    <WixVariable Id="WixUILicenseRtf" Value="..\..\..\doc\licenses\French\License_fr.rtf" />
+    <?elseif $(var.Lang) = "de"?>
+    <WixVariable Id="WixUILicenseRtf" Value="..\..\..\doc\licenses\German\License_de.rtf" />
+    <?else?>
+    <WixVariable Id="WixUILicenseRtf" Value="..\..\..\doc\licenses\English\License_en.rtf" />
+    <?endif?>
+
+    <WixVariable Id="WixUIBannerBmp" Value="..\..\bannrbmp.bmp" />
+    <WixVariable Id="WixUIDialogBmp" Value="..\..\dlgbmp.bmp" />
+
+    <Condition Message="!(loc.MinOs)">
+      <![CDATA[
+      Installed
+      OR ((VersionNT = 500) and (ServicePackLevel > 3))
+      OR ((VersionNT = 501) and (ServicePackLevel > 1))
+      OR (VersionNT > 501)
+      ]]>
+    </Condition>
+
+	<Media Id="1" Cabinet="CertClean.cab" EmbedCab="yes" />
+
+    <Icon Id="eid.ico" SourceFile="..\..\eid.ico"/>
+
+    <Property Id="ARPPRODUCTICON" Value="eid.ico" />
+    <Property Id="ARPURLINFOABOUT" Value="https://eid.belgium.be"/>
+
+    <Property Id="ALLUSERS" Value="1" />
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="APPLICATIONROOTFOLDER" Name="Belgium Identity Card">
+		</Directory>
+      </Directory>
+	</Directory>
+	
+    <DirectoryRef Id="APPLICATIONROOTFOLDER">
+
+      <Component Id="Icon" Guid="{5B657BAD-8CFC-4E42-AF8C-13338C50D784}" SharedDllRefCount="no">
+        <File Id="eid.ico" Name="eid.ico" KeyPath="yes" Source="..\..\eid.ico" />
+      </Component>
+
+      <Component Id="License" Guid="{C00AF621-E882-4805-BA9C-B90AA5DBBCB6}" SharedDllRefCount="no" Win64="no">
+        <File Id="License_en.rtf" Name="License_en.rtf" KeyPath="yes" Source="..\..\..\doc\licenses\English\License_en.rtf" />
+        <File Id="License_nl.rtf" Name="License_nl.rtf" KeyPath="no" Source="..\..\..\doc\licenses\Dutch\License_nl.rtf" />
+        <File Id="License_fr.rtf" Name="License_fr.rtf" KeyPath="no" Source="..\..\..\doc\licenses\French\License_fr.rtf" />
+        <File Id="License_de.rtf" Name="License_de.rtf" KeyPath="no" Source="..\..\..\doc\licenses\German\License_de.rtf" />
+      </Component>
+
+    </DirectoryRef>
+
+    <Feature Id="BeidRuntime"
+             Title="eID certclean"
+             Description="cleans RS Belgium root CA's from Windows CA cert stores"
+             Absent="disallow"
+             Level="1"
+             >
+
+      <!-- Program Files -->
+      <ComponentRef Id="Icon" />
+      <ComponentRef Id="License"/>
+	  
+	  </Feature>
+
+    <UI>
+      <UIRef Id="WixUI_FeatureTree" />
+      <Property Id="WIXUI_INSTALLDIR" Value="APPLICATIONROOTFOLDER" />
+      <UIRef Id="WixUI_ErrorProgressText" />
+    </UI>
+
+    <Binary Id="BEID_CERTCLEAN" SourceFile="..\..\..\plugins_tools\CertClean\Release\certclean.exe"/>
+
+    <CustomAction Id="BeidCertCleanup_system"
+              BinaryKey="BEID_CERTCLEAN"
+              ExeCommand=""
+              Impersonate="no"
+              Return="check"
+              Execute="deferred"
+    />
+	
+	<CustomAction Id="BeidCertCleanup_user"
+              BinaryKey="BEID_CERTCLEAN"
+              ExeCommand=""
+              Impersonate="yes"
+              Return="check"
+              Execute="immediate"
+    />
+
+    <CustomAction Id="IsPrivileged" Error="!(loc.AdminNeeded)" />
+
+
+    <InstallExecuteSequence>
+
+      <Custom Action="IsPrivileged" Before="LaunchConditions">Not Privileged</Custom>
+
+      <Custom Action="BeidCertCleanup_system" After="InstallInitialize"></Custom>
+	  <Custom Action="BeidCertCleanup_user" After="InstallInitialize"></Custom>
+
+    </InstallExecuteSequence>
+
+  </Product>
+</Wix>
