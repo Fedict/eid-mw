@@ -326,6 +326,12 @@ end:
 }
 #undef ossl_check
 
+void eid_vwr_maybe_perform_challenge() {
+	if(cache_have_label("basic_key_hash")) {
+		do_challenge();
+	}
+}
+
 int eid_vwr_verify_card(void* d EIDV_UNUSED) {
 	const struct eid_vwr_cache_item *photo, *phash, *data, *datsig, *address, *adsig, *cert;
 

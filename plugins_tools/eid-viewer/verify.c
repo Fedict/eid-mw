@@ -430,7 +430,7 @@ void eid_vwr_check_signature(const void* pubkey, size_t pubkeylen, const void* s
 	EVP_MD_CTX *mdctx = EVP_MD_CTX_new();
 	EVP_PKEY_CTX *pctx;
 	const EVP_MD *md = EVP_sha384();
-	unsigned char *dersig = NULL;
+	unsigned char *ptr, *dersig = NULL;
 	if(EVP_DigestVerifyInit(mdctx, &pctx, md, NULL, pk) != 1) {
 		be_log(EID_VWR_LOG_ERROR, "Initialization for basic key validation failed");
 		goto err;
@@ -439,10 +439,9 @@ void eid_vwr_check_signature(const void* pubkey, size_t pubkeylen, const void* s
 		be_log(EID_VWR_LOG_ERROR, "Hashing for basic key validation failed");
 		goto err;
 	}
-	ECDSA_SIG *ec_sig;
+	ECDSA_SIG *ec_sig = ECDSA_SIG_new();
 	BIGNUM *r;
 	BIGNUM *s;
-	ec_sig = ECDSA_SIG_new();
 	if((r = BN_bin2bn(sig, siglen / 2, NULL)) == NULL) {
 		be_log(EID_VWR_LOG_ERROR, "Could not convert R part of basic key signature");
 		goto err;
@@ -451,9 +450,14 @@ void eid_vwr_check_signature(const void* pubkey, size_t pubkeylen, const void* s
 		be_log(EID_VWR_LOG_ERROR, "Could not convert S part of basic key signature");
 		goto err;
 	}
+	if(ECDSA_SIG_set0(ec_sig, r, s) == 0) {
+		be_log(EID_VWR_LOG_ERROR, "Could not verify basic key signature: invalid values");
+		goto err;
+	}
 	siglen = i2d_ECDSA_SIG(ec_sig, NULL);
-	dersig = malloc(siglen);
+	ptr = dersig = malloc(siglen);
 	siglen = i2d_ECDSA_SIG(ec_sig, &dersig);
+	dersig = ptr;
 	if(EVP_DigestVerifyFinal(mdctx, dersig, siglen) != 1) {
 		be_log(EID_VWR_LOG_ERROR, "Basic key signature fails validation. Is this a forged eID card?");
 		goto err;
