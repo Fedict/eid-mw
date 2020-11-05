@@ -1,0 +1,5 @@
+#!/bin/bash
+
+pkgutil --forget be.eid.certclean
+
+echo "certclean postinstall succeeded"

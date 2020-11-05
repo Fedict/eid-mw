@@ -10,6 +10,10 @@ source set_eidmw_username.sh
 EIDVIEWER_DMG="eID Viewer-$REL_VERSION.dmg"
 EIDVIEWER_BACKUP_DMG="eID Viewer-$REL_VERSION-backup.dmg"
 
+Echo "********** cleaning up previous build folders **********"
+rm -rf ../../Release
+rm -rf ../../DerivedData
+
 rm -rf release-viewer
 mkdir -p release-viewer
 rm -f tmp-eidviewer.dmg
