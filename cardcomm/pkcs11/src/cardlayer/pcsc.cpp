@@ -261,7 +261,10 @@ namespace eIDMW
 
 		long lRet = SCardGetStatusChange(m_hContext, 0, &xReaderState, 1);
 		if (SCARD_S_SUCCESS != lRet)
+		{
+			MWLOG(LEV_ERROR, MOD_CAL, L"    SCardGetStatusChange returned: 0x%0x", lRet);
 			throw CMWEXCEPTION(PcscToErr(lRet));
+		}
 
 		return (xReaderState.dwEventState & SCARD_STATE_PRESENT) == SCARD_STATE_PRESENT;
 	}
@@ -384,8 +387,7 @@ namespace eIDMW
 		if (iStatusCount < 5 || SCARD_S_SUCCESS != lRet)
 		{
 			iStatusCount++;
-			MWLOG(LEV_DEBUG, MOD_CAL,
-			      L"    SCardStatus(0x%0x): 0x%0x", hCard, lRet);
+			MWLOG(LEV_DEBUG, MOD_CAL, L"    SCardStatus(0x%0x): 0x%0x", hCard, lRet);
 		}
 
 		return SCARD_S_SUCCESS == lRet;
@@ -700,7 +702,10 @@ namespace eIDMW
 			if ((long) SCARD_E_TIMEOUT != lRet)
 			{
 				if (SCARD_S_SUCCESS != lRet)
+				{
+					MWLOG(LEV_DEBUG, MOD_CAL, L"    SCardGetStatusChange returns: 0x%0x", lRet);
 					throw CMWEXCEPTION(PcscToErr(lRet));
+				}
 			}
 		}
 		while ((lRet == SCARD_E_TIMEOUT)

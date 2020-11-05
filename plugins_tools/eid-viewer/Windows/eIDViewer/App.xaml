@@ -42,7 +42,5 @@
             </Setter>
         </Style>
         <clr:String x:Key="GlobalString">#FFE5E5E5</clr:String>
-        <SolidColorBrush x:Key="DefaultBackground" Color="#FFE5E5E5"/>
-        <SolidColorBrush x:Key="TestBackground" Color="Aquamarine"/>
     </Application.Resources>
 </Application>

@@ -129,7 +129,7 @@ public:
 		//checks if the pcsc service is running
 		//long PCSCServiceRunning(bool* pRunning);
 
-		//attempt to start the pcsc service is if ain't running yet
+		//attempt to start the pcsc service if it ain't running yet
 		//void StartPCSCService();
 
 		bool Status(const std::string & csReader);
@@ -166,11 +166,11 @@ public:
 		//unsigned long GetContext();
 		SCARDCONTEXT GetContext();
 
-		long SW12ToErr(unsigned long ulSW12);
+		long SW12ToErr(unsigned long ulSW12);		
 
-private:
+private:	
+
 		long PcscToErr(unsigned long lRet);
-
 		//unsigned long m_hContext;
 		SCARDCONTEXT m_hContext;
 
