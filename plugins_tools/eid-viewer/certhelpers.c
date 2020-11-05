@@ -338,17 +338,11 @@ int eid_vwr_verify_card(void* d EIDV_UNUSED) {
 	GET(adsig, "SIGN_ADDRESS_FILE");
 	GET(cert, "CERT_RN_FILE");
 #undef GET
-	if(eid_vwr_check_data_validity(photo->data, photo->len,
+	return 1 - eid_vwr_check_data_validity(photo->data, photo->len,
 			phash->data, phash->len,
 			data->data, data->len,
 			datsig->data, datsig->len,
 			address->data, address->len,
 			adsig->data, adsig->len,
-			cert->data, cert->len) != 0) {
-		return 0;
-	}
-	if(cache_have_label("basic_key_hash")) {
-		do_challenge();
-	}
-	return 1;
+			cert->data, cert->len);
 }
