@@ -7,12 +7,24 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CertClean", "CertClean.vcxp
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		AllUsers_debug|x64 = AllUsers_debug|x64
+		AllUsers_debug|x86 = AllUsers_debug|x86
+		AllUsers_Release|x64 = AllUsers_Release|x64
+		AllUsers_Release|x86 = AllUsers_Release|x86
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CB9555F2-A4C3-422F-A9BB-C5C7E06A2664}.AllUsers_debug|x64.ActiveCfg = AllUsers_debug|x64
+		{CB9555F2-A4C3-422F-A9BB-C5C7E06A2664}.AllUsers_debug|x64.Build.0 = AllUsers_debug|x64
+		{CB9555F2-A4C3-422F-A9BB-C5C7E06A2664}.AllUsers_debug|x86.ActiveCfg = AllUsers_debug|Win32
+		{CB9555F2-A4C3-422F-A9BB-C5C7E06A2664}.AllUsers_debug|x86.Build.0 = AllUsers_debug|Win32
+		{CB9555F2-A4C3-422F-A9BB-C5C7E06A2664}.AllUsers_Release|x64.ActiveCfg = AllUsers_Release|x64
+		{CB9555F2-A4C3-422F-A9BB-C5C7E06A2664}.AllUsers_Release|x64.Build.0 = AllUsers_Release|x64
+		{CB9555F2-A4C3-422F-A9BB-C5C7E06A2664}.AllUsers_Release|x86.ActiveCfg = AllUsers_Release|Win32
+		{CB9555F2-A4C3-422F-A9BB-C5C7E06A2664}.AllUsers_Release|x86.Build.0 = AllUsers_Release|Win32
 		{CB9555F2-A4C3-422F-A9BB-C5C7E06A2664}.Debug|x64.ActiveCfg = Debug|x64
 		{CB9555F2-A4C3-422F-A9BB-C5C7E06A2664}.Debug|x64.Build.0 = Debug|x64
 		{CB9555F2-A4C3-422F-A9BB-C5C7E06A2664}.Debug|x86.ActiveCfg = Debug|Win32
