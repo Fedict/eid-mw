@@ -432,7 +432,7 @@ out:
 
 void eid_vwr_check_signature(const void* pubkey, size_t pubkeylen, const void* sig, size_t siglen, const void* data, size_t datalen) {
 	EVP_PKEY *pk = d2i_PUBKEY(NULL, (const unsigned char**)(&pubkey), pubkeylen);
-	EC_KEY *eckey = EVP_PKEY_get0_EC_KEY(pk);
+	EC_KEY *eckey = EVP_PKEY_get1_EC_KEY(pk);
 	ECDSA_SIG *ec_sig = ECDSA_SIG_new();
 	BIGNUM *r;
 	BIGNUM *s;
@@ -458,5 +458,6 @@ err:
 end:
 	ECDSA_SIG_free(ec_sig);
 	EVP_PKEY_free(pk);
+	EC_KEY_free(eckey);
 	return;
 }
