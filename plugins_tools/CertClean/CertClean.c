@@ -28,7 +28,7 @@ int main()
 
 /*
 	Search for, and remove if found, all Root signed Belgium root Ca certificates
-	from HKLM and all users' cert stores
+	from HKLM, HKCU and all other users' cert stores
 	*/
 int CleanAllUsers(void)
 {
@@ -43,6 +43,16 @@ int CleanAllUsers(void)
 	if (hMemoryStore != NULL)
 	{
 		printf("Opened Local Machine CA store\n");
+		CleanRSFromMemStore(hMemoryStore);
+		CertCloseStore(hMemoryStore, CERT_CLOSE_STORE_FORCE_FLAG);
+		hMemoryStore = NULL;
+	}
+
+	//current use store
+	hMemoryStore = CertOpenSystemStoreA((HCRYPTPROV)NULL, "CA");
+	if (hMemoryStore != NULL)
+	{
+		printf("Opened Current User CA store\n");
 		CleanRSFromMemStore(hMemoryStore);
 		CertCloseStore(hMemoryStore, CERT_CLOSE_STORE_FORCE_FLAG);
 		hMemoryStore = NULL;
