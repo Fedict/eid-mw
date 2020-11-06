@@ -284,7 +284,6 @@ static void do_challenge(void) {
 	const struct eid_vwr_cache_item *basic_key = cache_get_data("BASIC_KEY_FILE");
 	const struct eid_vwr_cache_item *key_hash = cache_get_data("basic_key_hash");
 	EVP_MD_CTX *key_ctx = EVP_MD_CTX_new();
-	EVP_MD_CTX *chal_ctx = NULL;
 	unsigned char digest[SHA384_DIGEST_LENGTH];
 	unsigned int size = 0;
 
@@ -308,19 +307,12 @@ static void do_challenge(void) {
 
 	// Generate a nonce, and have the card sign the hash of that nonce
 	ossl_check(RAND_bytes(random_buffer, sizeof random_buffer), "Could not perform basic key challenge: could not retrieve random data");
-	chal_ctx = EVP_MD_CTX_new();
-	ossl_check(EVP_DigestInit(chal_ctx, EVP_sha384()), "Could not perform basic key challenge: could not initialize hash");
-	ossl_check(EVP_DigestUpdate(chal_ctx, random_buffer, sizeof random_buffer), "Could not perform basic key challenge: could not hash random bytes");
-	ossl_check(EVP_DigestFinal_ex(chal_ctx, digest, &size), "Could not perform basic key challenge: could not retrieve hash");
-	eid_vwr_challenge(digest, size);
+	eid_vwr_challenge(random_buffer, sizeof random_buffer);
 
 	goto end;
 error:
 	sm_handle_event(EVENT_DATA_INVALID, NULL, NULL, NULL);
 end:
-	if(chal_ctx != NULL) {
-		EVP_MD_CTX_free(chal_ctx);
-	}
 	EVP_MD_CTX_free(key_ctx);
 	return;
 }
