@@ -432,18 +432,7 @@ out:
 
 void eid_vwr_check_signature(const void* pubkey, size_t pubkeylen, const void* sig, size_t siglen, const void* data, size_t datalen) {
 	EVP_PKEY *pk = d2i_PUBKEY(NULL, (const unsigned char**)(&pubkey), pubkeylen);
-	EVP_MD_CTX *mdctx = EVP_MD_CTX_new();
-	EVP_PKEY_CTX *pctx;
-	const EVP_MD *md = EVP_sha384();
-	unsigned char *ptr, *dersig = NULL;
-	if(EVP_DigestVerifyInit(mdctx, &pctx, md, NULL, pk) != 1) {
-		be_log(EID_VWR_LOG_ERROR, "Initialization for basic key validation failed");
-		goto err;
-	}
-	if(EVP_DigestVerifyUpdate(mdctx, (const unsigned char*)data, datalen) != 1) {
-		be_log(EID_VWR_LOG_ERROR, "Hashing for basic key validation failed");
-		goto err;
-	}
+	EC_KEY *eckey = EVP_PKEY_get0_EC_KEY(pk);
 	ECDSA_SIG *ec_sig = ECDSA_SIG_new();
 	BIGNUM *r;
 	BIGNUM *s;
@@ -459,25 +448,15 @@ void eid_vwr_check_signature(const void* pubkey, size_t pubkeylen, const void* s
 		be_log(EID_VWR_LOG_ERROR, "Could not verify basic key signature: invalid values");
 		goto err;
 	}
-	siglen = i2d_ECDSA_SIG(ec_sig, NULL);
-	ptr = dersig = malloc(siglen);
-	siglen = i2d_ECDSA_SIG(ec_sig, &dersig);
-	dersig = ptr;
-	if(EVP_DigestVerifyFinal(mdctx, dersig, siglen) != 1) {
-		be_log(EID_VWR_LOG_ERROR, "Basic key signature fails validation. Is this a forged eID card?");
+	if(ECDSA_do_verify(data, datalen, ec_sig, eckey) != 1) {
+		be_log(EID_VWR_LOG_ERROR, "Basic key signature fails verification. Is this a forged eID card?");
 		goto err;
 	}
 	goto end;
 err:
 	sm_handle_event(EVENT_DATA_INVALID, NULL, NULL, NULL);
 end:
-	if(dersig) {
-		free(dersig);
-	}
-	if(ec_sig) {
-		ECDSA_SIG_free(ec_sig);
-	}
-	EVP_MD_CTX_free(mdctx);
+	ECDSA_SIG_free(ec_sig);
 	EVP_PKEY_free(pk);
 	return;
 }
