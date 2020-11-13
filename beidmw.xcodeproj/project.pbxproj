@@ -1557,7 +1557,6 @@
 				SDKROOT = macosx;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = dynamic;
 				STRIP_INSTALLED_PRODUCT = NO;
-				VALID_ARCHS = x86_64;
 			};
 			name = Debug;
 		};
@@ -1622,7 +1621,6 @@
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = macosx;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = dynamic;
-				VALID_ARCHS = x86_64;
 			};
 			name = Release;
 		};
@@ -1978,7 +1976,6 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				"USER_HEADER_SEARCH_PATHS[arch=*]" = "${PROJECT_DIR}/cardcomm/pkcs11/src";
-				VALID_ARCHS = x86_64;
 			};
 			name = Debug;
 		};
@@ -2023,7 +2020,6 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				"USER_HEADER_SEARCH_PATHS[arch=*]" = "${PROJECT_DIR}/cardcomm/pkcs11/src";
-				VALID_ARCHS = x86_64;
 				ZERO_LINK = NO;
 			};
 			name = Release;

@@ -361,7 +361,6 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
-				VALID_ARCHS = x86_64;
 			};
 			name = Debug;
 		};
@@ -413,7 +412,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
-				VALID_ARCHS = x86_64;
 			};
 			name = Release;
 		};
