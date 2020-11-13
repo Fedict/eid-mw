@@ -89,7 +89,7 @@ static void uistatus(gboolean spin, char* data, ...) {
 
 /* Handle "state changed" elements */
 static void newstate(enum eid_vwr_states s) {
-	GObject *open, *save, *print, *close, *pintest, *pinchg, *validate;
+	GObject *open, *save, *print, *close, *pintest, *pinchg, *validate, *basic;
 #define want_verify (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "validate_always"))))
 	open = gtk_builder_get_object(builder, "mi_file_open");
 	save = gtk_builder_get_object(builder, "mi_file_saveas");
@@ -98,6 +98,7 @@ static void newstate(enum eid_vwr_states s) {
 	pintest = gtk_builder_get_object(builder, "pintestbut");
 	pinchg = gtk_builder_get_object(builder, "pinchangebut");
 	validate = gtk_builder_get_object(builder, "validate_now");
+	basic = gtk_builder_get_object(builder, "basictestbut");
 
 	g_object_set_threaded(open, "sensitive", (void*)FALSE, NULL);
 	g_object_set_threaded(close, "sensitive", (void*)FALSE, NULL);
@@ -106,6 +107,7 @@ static void newstate(enum eid_vwr_states s) {
 	g_object_set_threaded(pintest, "sensitive", (void*)FALSE, NULL);
 	g_object_set_threaded(pinchg, "sensitive", (void*)FALSE, NULL);
 	g_object_set_threaded(validate, "sensitive", (void*)FALSE, NULL);
+	g_object_set_threaded(basic, "sensitive", (void*)FALSE, NULL);
 	g_object_set_data_threaded(validate, "want_active", (void*)FALSE, NULL);
 	switch(s) {
 		case STATE_LIBOPEN:
@@ -132,7 +134,9 @@ static void newstate(enum eid_vwr_states s) {
 			g_object_set_threaded(pintest, "sensitive", (void*)TRUE, NULL);
 			g_object_set_threaded(pinchg, "sensitive", (void*)TRUE, NULL);
 			g_object_set_data_threaded(validate, "want_active", (void*)TRUE, NULL);
-			eid_vwr_maybe_perform_challenge();
+			if(g_hash_table_contains(touched_labels, "basic_key_hash")) {
+				g_object_set_threaded(basic, "sensitive", (void*)TRUE, NULL);
+			}
 			if(want_verify) {
 				validate_all(NULL, NULL);
 			} else {
@@ -215,10 +219,11 @@ static void newbindata(const char* label, const unsigned char* data, int datalen
 }
 
 /* Helper function for newsrc() */
-static void cleardata(gpointer key, gpointer value, gpointer user_data G_GNUC_UNUSED) {
+static gboolean cleardata(gpointer key, gpointer value, gpointer user_data G_GNUC_UNUSED) {
 	clearfunc func = (clearfunc)value;
 	char* k = key;
 	func(k);
+	return TRUE;
 }
 
 /* Handle the "new source" event from the state machine */
@@ -322,6 +327,8 @@ static void connect_signals(GtkWidget* window) {
 	g_signal_connect(signaltmp, "clicked", G_CALLBACK(validate_all), NULL);
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "validate_always"));
 	g_signal_connect(signaltmp, "toggled", G_CALLBACK(validate_toggle), NULL);
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "basictestbut"));
+	g_signal_connect(signaltmp, "clicked", G_CALLBACK(eid_vwr_maybe_perform_challenge), NULL);
 
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "cert_paned"));
 	g_settings_bind(get_prefs(), "cert-paned-pos", signaltmp, "position", 0);
@@ -351,6 +358,38 @@ static void show_date_state(char* label, void* data, int length G_GNUC_UNUSED) {
 	gtk_label_set_attributes(l, attrs);
 }
 
+static void clear_basic_valid(const char *label G_GNUC_UNUSED) {
+	PangoAttrList *attrs = pango_attr_list_new();
+	PangoAttribute *attr;
+	GdkRGBA color;
+	GtkLabel *l = GTK_LABEL(gtk_builder_get_object(builder, "basic_key_hash"));
+	GtkStyleContext *style = gtk_widget_get_style_context(GTK_WIDGET(l));
+
+	gtk_style_context_get_color(style, GTK_STATE_FLAG_NORMAL, &color);
+	attr = pango_attr_foreground_new(color.red * G_MAXUINT16, color.green * G_MAXUINT16, color.blue * G_MAXUINT16);
+	pango_attr_list_insert(attrs, attr);
+	gtk_label_set_attributes(l, attrs);
+}
+
+static void set_basic_valid(char* label, void* data, int length G_GNUC_UNUSED) {
+	GtkLabel *l = GTK_LABEL(gtk_builder_get_object(builder, "basic_key_hash"));
+	PangoAttrList *attrs = pango_attr_list_new();
+	PangoAttribute *attr;
+	int *ptr = data;
+
+	gboolean is_valid = (*ptr) == 1 ? TRUE : FALSE;
+	if(is_valid) {
+		// set to green
+		attr = pango_attr_foreground_new(0, G_MAXUINT16, 0);
+	} else {
+		// set to red
+		attr = pango_attr_foreground_new(G_MAXUINT16, 0, 0);
+	}
+	pango_attr_list_insert(attrs, attr);
+	gtk_label_set_attributes(l, attrs);
+	g_hash_table_insert(touched_labels, label, clear_basic_valid);
+}
+
 static void toggleclear(const char* l) {
 	GtkToggleButton* tb = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, l));
 	gtk_toggle_button_set_active(tb, FALSE);
@@ -360,6 +399,16 @@ static void set_family(char* label G_GNUC_UNUSED, void* data G_GNUC_UNUSED, int 
 	GtkCheckButton* cb = GTK_CHECK_BUTTON(gtk_builder_get_object(builder, "member_of_family"));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(cb), TRUE);
 	g_hash_table_insert(touched_labels, g_strdup("member_of_family"), toggleclear);
+}
+
+static void set_hex(char* label, void* data, int length) {
+	char string[length * 2 + 1];
+	unsigned char *source = (unsigned char*)data;
+	for(int i=0; i < length; i+=2) {
+		snprintf(&string[i], 3, "%02x", (unsigned int)(source[i/2]));
+	}
+	string[length * 2] = '\0';
+	newstringdata(label, string);
 }
 
 /* Initialize the hash table for binary data */
@@ -378,6 +427,8 @@ static void bindata_init() {
 	g_hash_table_insert(binhash, "certimage", show_cert_image);
 	g_hash_table_insert(binhash, "document_type_raw", update_doctype);
 	g_hash_table_insert(binhash, "member_of_family", set_family);
+	g_hash_table_insert(binhash, "basic_key_hash", set_hex);
+	g_hash_table_insert(binhash, "basic_key_verify:valid", set_basic_valid);
 }
 
 /* Helper function for update_info() */

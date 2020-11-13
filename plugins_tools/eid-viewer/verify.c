@@ -436,6 +436,7 @@ void eid_vwr_check_signature(const void* pubkey, size_t pubkeylen, const void* s
 	ECDSA_SIG *ec_sig = ECDSA_SIG_new();
 	BIGNUM *r;
 	BIGNUM *s;
+	int result = 0;
 	if((r = BN_bin2bn(sig, siglen / 2, NULL)) == NULL) {
 		be_log(EID_VWR_LOG_ERROR, "Could not convert R part of basic key signature");
 		goto err;
@@ -452,10 +453,12 @@ void eid_vwr_check_signature(const void* pubkey, size_t pubkeylen, const void* s
 		be_log(EID_VWR_LOG_ERROR, "Basic key signature fails verification. Is this a forged eID card?");
 		goto err;
 	}
+	result = 1;
 	goto end;
 err:
 	sm_handle_event(EVENT_DATA_INVALID, NULL, NULL, NULL);
 end:
+	be_newbindata(TEXT("basic_key_verify:valid"), (void*)&result, sizeof result);
 	ECDSA_SIG_free(ec_sig);
 	EVP_PKEY_free(pk);
 	EC_KEY_free(eckey);
