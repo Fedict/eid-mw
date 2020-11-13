@@ -26,4 +26,10 @@ if test -e /Library/LaunchDaemons/org.opensc.pcscd.autostart; then
  mv /Library/LaunchDaemons/org.opensc.pcscd.autostart /Library/LaunchDaemons/org.opensc.pcscd.autostart.plist;
 fi
 
+#Remove all root signed Belgian root CA's from the keychains, using the default search list
+
+security delete-certificate -Z CFFA9C01EC59C29E718D0DD0EF5479F09B51C95780AFB7BD69D3C8054AFE4D28
+security delete-certificate -Z F75A4D49A52B043FC7324B8F263AC8A9B7BD22A328868588BDFC937D3C396EB6
+security delete-certificate -Z 8460CCAEA91B0E805AB51C7CD46DDF2E8C1C494806D88B1FE2ED313D1D487E2E
+
 echo "postinstall succeeded"
