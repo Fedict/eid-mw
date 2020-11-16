@@ -1,5 +1,10 @@
 #!/bin/bash
-# Remove previous version of the BEIDTokenApp.App if it exists
+# Remove previous version of the BEIDToken.App if it exists
+if test -e "/Library/Belgium Identity Card/BEIDToken.App"; then
+    rm -rf "/Library/Belgium Identity Card/BEIDToken.App"
+fi
+
+# Remove old version named BEIDTokenApp.App if it exists
 if test -e "/Library/Belgium Identity Card/BEIDTokenApp.App"; then
 	rm -rf "/Library/Belgium Identity Card/BEIDTokenApp.App"
 fi
