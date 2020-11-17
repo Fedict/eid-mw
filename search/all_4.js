@@ -9,6 +9,8 @@ var searchData=
   ['detailed_5finformation',['Detailed_Information',['../classe_i_d_viewer_1_1_resources_1_1_certificate_tab_string_resources.html#ae74ec61967ddbc36bb279f4691543040',1,'eIDViewer::Resources::CertificateTabStringResources']]],
   ['dobparser',['DobParser',['../class_dob_parser.html',1,'']]],
   ['dobwriter',['DobWriter',['../class_dob_writer.html',1,'']]],
+  ['dochallenge_3a',['doChallenge:',['../interfacee_i_d_o_s_layer_backend.html#ae68aae9aa1c80d9ab467b9c03cb8d5b8',1,'eIDOSLayerBackend']]],
+  ['dochallengeinternal',['doChallengeInternal',['../interfacee_i_d_o_s_layer_backend.html#a2105a8605b9a9d0817d6c9bf12c42e25',1,'eIDOSLayerBackend']]],
   ['doctypeconvertor',['DocTypeConvertor',['../class_doc_type_convertor.html',1,'']]],
   ['draggingimage',['DraggingImage',['../interface_dragging_image.html',1,'']]],
   ['dump_5fder',['DUMP_DER',['../group___c___a_p_i___o_s_s_l.html#gga2dac6438ec9ab6b51e7346427a1157d8a657d9ec867a5a58c3252acc8e2980c1b',1,'certhelpers.h']]],

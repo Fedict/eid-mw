@@ -140,6 +140,14 @@ Class Methods</h2></td></tr>
 (void)&#160;</td><td class="memItemRight" valign="bottom">+ <a class="el" href="interfacee_i_d_o_s_layer_backend.html#a29233556c19174cf9581f8c80dcc8323">setReaderAuto:</a></td></tr>
 <tr class="memdesc:a29233556c19174cf9581f8c80dcc8323"><td class="mdescLeft">&#160;</td><td class="mdescRight">calls eid_vwr_be_select_slot with nonzero (if YES) or zero (if NO) as the first parameter, and 0 as the second parameter. <br /></td></tr>
 <tr class="separator:a29233556c19174cf9581f8c80dcc8323"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2105a8605b9a9d0817d6c9bf12c42e25"><td class="memItemLeft" align="right" valign="top"><a id="a2105a8605b9a9d0817d6c9bf12c42e25"></a>
+(void)&#160;</td><td class="memItemRight" valign="bottom">+ <a class="el" href="interfacee_i_d_o_s_layer_backend.html#a2105a8605b9a9d0817d6c9bf12c42e25">doChallengeInternal</a></td></tr>
+<tr class="memdesc:a2105a8605b9a9d0817d6c9bf12c42e25"><td class="mdescLeft">&#160;</td><td class="mdescRight">calls <a class="el" href="group___c___a_p_i.html#gad7e74b30de194b2ef224c14a4f907259" title="Perform an internal authenticate operation on the card. ">eid_vwr_challenge()</a> with random data, to be used when useDefaultChallengeResult returns YES. <br /></td></tr>
+<tr class="separator:a2105a8605b9a9d0817d6c9bf12c42e25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae68aae9aa1c80d9ab467b9c03cb8d5b8"><td class="memItemLeft" align="right" valign="top"><a id="ae68aae9aa1c80d9ab467b9c03cb8d5b8"></a>
+(void)&#160;</td><td class="memItemRight" valign="bottom">+ <a class="el" href="interfacee_i_d_o_s_layer_backend.html#ae68aae9aa1c80d9ab467b9c03cb8d5b8">doChallenge:</a></td></tr>
+<tr class="memdesc:ae68aae9aa1c80d9ab467b9c03cb8d5b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">calls <a class="el" href="group___c___a_p_i.html#gad7e74b30de194b2ef224c14a4f907259" title="Perform an internal authenticate operation on the card. ">eid_vwr_challenge()</a> <br /></td></tr>
+<tr class="separator:ae68aae9aa1c80d9ab467b9c03cb8d5b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class method-only class which wraps the corresponding C-only APIs for the benefit of ObjC applications. </p>
