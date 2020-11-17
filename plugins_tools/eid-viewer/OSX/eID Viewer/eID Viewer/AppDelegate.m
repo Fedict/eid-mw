@@ -32,11 +32,13 @@
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender;
 - (IBAction)closeDetail:(id)sender;
 - (BOOL)application:(NSApplication*)sender openFile:(nonnull NSString *)filename;
+- (IBAction)basicKeyCheck:(id)sender;
 
 @property CertificateStore *certstore;
 @property NSDictionary *bindict;
 @property NSMutableDictionary *viewdict;
 @property NSArray *readerSelections;
+@property BOOL hasBasicKey;
 @property (weak) IBOutlet NSImageView *photoview;
 @property (weak) IBOutlet NSImageView *certview;
 @property (weak) IBOutlet NSWindow *window;
@@ -69,6 +71,7 @@
 @property (weak) IBOutlet NSLayoutConstraint *verticalLineBottomConstraint;
 @property (weak) IBOutlet NSButton *memberOfFamilyState;
 @property (weak) IBOutlet NSImageView *readerLogo;
+@property (weak) IBOutlet NSButton *BasicKeyButton;
 
 @end
 
@@ -76,6 +79,15 @@
 -(BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender {
 	return YES;
 }
+
+- (IBAction)basicKeyCheck:(id)sender {
+	[eIDOSLayerBackend doChallengeInternal];
+}
+
+-(BOOL) useDefaultChallengeResult {
+	return YES;
+}
+
 - (BOOL)application:(NSApplication*)sender openFile:(nonnull NSString *)filename {
 	[eIDOSLayerBackend deserialize:[NSURL URLWithString:filename]];
 	return YES;
@@ -140,17 +152,18 @@
 }
 - (void)newsrc:(eIDSource)which {
 	[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-        [self.photoview setImage:nil];
-        [self.certview setImage:nil];
-        [self.certstore clear];
-        [self.viewdict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
+		[self.photoview setImage:nil];
+		[self.certview setImage:nil];
+		[self.certstore clear];
+		[self.viewdict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
 			if(![obj isKindOfClass:[NSTextField class]]) {
 				return;
 			}
 			NSTextField* tf = (NSTextField*)obj;
 			[tf setStringValue:@""];
+			[tf setTextColor:NULL];
 		}];
-        [self.memberOfFamilyState setState:NSOffState];
+		[self.memberOfFamilyState setState:NSOffState];
 	}];
 }
 - (void)newbindata:(NSData *)data withLabel:(NSString *)label {
@@ -170,9 +183,11 @@
 	BOOL doValidateNow = NO;
 	BOOL sheet = NO;
 	BOOL dnd = NO;
+	BOOL doTest = NO;
 	switch(state) {
 		case eIDStateReady:
 			fileOpen = YES;
+			[self setHasBasicKey:NO];
 			break;
 		case eIDStateNoReader:
 			fileOpen = YES;
@@ -189,6 +204,7 @@
 			validate = YES;
 			dnd = YES;
 			doValidateNow = YES;
+			doTest = YES;
 			break;
 		case eIDStateFileWait:
 			fileClose = YES;
@@ -225,6 +241,11 @@
 		[self.pinop_ctrl setEnabled:pinops];
 		[self.alwaysValidate setEnabled:validate];
 		[self.validateNow setEnabled:validate];
+		if([self hasBasicKey] && doTest) {
+			[self.BasicKeyButton setEnabled:YES];
+		} else {
+			[self.BasicKeyButton setEnabled:NO];
+		}
 		if(sheet && ![self sheetIsActive]) {
 			[self.spinner startAnimation:self];
 			[self.window beginSheet:self.CardReadSheet completionHandler:nil];
@@ -341,6 +362,8 @@
 		    self, @"certimage",
 		    self, @"document_type_raw",
 		    self, @"member_of_family",
+		    self, @"basic_key_hash",
+		    self, @"basic_key_verify:valid",
 		    nil];
 	_viewdict = [[NSMutableDictionary alloc] init];
 	[_CertificatesView setDataSource:_certstore];
@@ -438,6 +461,16 @@
 		[self log:msg withLevel:eIDLogLevelDetail];
 	}];
 }
+-(void)setHex:(NSData *)data forLabel:(NSString *)label withUi:(AppDelegate *)ui {
+	size_t length = [data length];
+	char string[length * 2 + 1];
+	const unsigned char *source = [data bytes];
+	for(int i = 0; i<length; i+=2) {
+		snprintf(&string[i], 3, "%02x", (unsigned int)(source[i/2]));
+	}
+	string[length * 2] = '\0';
+	[ui newstringdata:[NSString stringWithCString:string encoding:NSUTF8StringEncoding] withLabel:label];
+}
 -(void)handle_bin_data:(NSData *)data forLabel:(NSString *)label withUi:(AppDelegate *)ui {
 	assert(ui == self);
 	if([label isEqualToString:@"certimage"]) {
@@ -447,6 +480,19 @@
 	if([label isEqualToString:@"member_of_family"]) {
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			[self.memberOfFamilyState setState:NSOnState];
+		}];
+		return;
+	}
+	if([label isEqualToString:@"basic_key_hash"]) {
+		[self setHex:data forLabel:label withUi:ui];
+		[self setHasBasicKey:YES];
+	}
+	if([label isEqualToString:@"basic_key_verify:valid"]) {
+		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+			NSTextField *t = (NSTextField*)[self searchObjectById:@"basic_key_hash" ofClass:[NSTextField class] forUpdate:NO];
+			int a;
+			[data getBytes:&a length:sizeof(a)];
+			[t setTextColor:(a == 1 ? [NSColor systemGreenColor] : [NSColor systemRedColor])];
 		}];
 	}
 	if([label isEqualToString:@"document_type_raw"]) {

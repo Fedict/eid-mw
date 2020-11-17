@@ -82,6 +82,8 @@ typedef NS_ENUM(NSInteger, eIDResult)
 -(void) newstate:(eIDState) state;						///< called by eid_vwr_ui_callbacks::newstate()
 -(void) pinop_result:(eIDResult) result forOperation:(eIDPinOp) operation;	///< called by eid_vwr_ui_callbacks::pinop_result()
 -(void) readersFound:(NSArray *) readers withSlotNumbers:(NSArray *) slots;	///< called by eid_vwr_ui_callbacks::readers_changed()
+-(void) challengeResult:(eIDResult)result withResponse:(NSData*)response;	///< called by eid_vwr_ui_callbacks::challenge_result()
+-(BOOL) useDefaultChallengeResult;						///< if this returns YES, use eid_vwr_challenge_result() instead of a custom implementation
 @end
 
 /** Class method-only class which wraps the corresponding C-only APIs for the
@@ -106,6 +108,8 @@ typedef NS_ENUM(NSInteger, eIDResult)
 +(void) selectReader:(NSInteger) readerNumber;					///< calls eid_vwr_be_select_slot() with 0 as the first parameter, and the given reader number as the second parameter.
 +(void) setReaderAuto:(BOOL) automatic;						///< calls eid_vwr_be_select_slot with nonzero (if YES) or zero (if NO) as the first parameter, and 0 as the second parameter.
 +(NSString *) getCertDetail:(NSData *) certificate;
++(void)doChallengeInternal;							///< calls eid_vwr_challenge() with random data, to be used when useDefaultChallengeResult returns YES.
++(void)doChallenge:(NSData*)challenge;						///< calls eid_vwr_challenge()
 @end
 
 /**@}*/

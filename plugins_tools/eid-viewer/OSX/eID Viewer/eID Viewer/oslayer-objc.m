@@ -2,6 +2,7 @@
 #include <state.h>
 #include <pthread.h>
 #include "verify_cert.h"
+#include "dataverify.h"
 #include "p11.h"
 
 static id <eIDOSLayerUI>currUi = nil;
@@ -86,6 +87,12 @@ static void osl_objc_free_ocsp_request(void* data) {
 	free(data);
 }
 
+static void osl_objc_challenge_result(const unsigned char *response, int responselen, enum eid_vwr_result result) {
+	NSData *resp = [NSData dataWithBytes:response length:responselen];
+	eIDResult res = (eIDResult) result;
+	[currUi challengeResult:res withResponse:resp];
+}
+
 @implementation eIDOSLayerBackend
 +(void)pinop:(eIDPinOp)which {
 	eid_vwr_pinop((enum eid_vwr_pinops)which);
@@ -113,6 +120,11 @@ static void osl_objc_free_ocsp_request(void* data) {
 	}
 	if([ui respondsToSelector:@selector(readersFound:withSlotNumbers:)]) {
 		cb->readers_changed = osl_objc_readers_found;
+	}
+	if([ui respondsToSelector:@selector(useDefaultChallengeResult)]) {
+		cb->challenge_result = eid_vwr_challenge_result;
+	} else if([ui respondsToSelector:@selector(challengeResult:withResponse:)]) {
+		cb->challenge_result = osl_objc_challenge_result;
 	}
 	currUi = ui;
 	rv = eid_vwr_createcallbacks(cb);
@@ -159,13 +171,13 @@ static void osl_objc_free_ocsp_request(void* data) {
 	return [NSData dataWithBytes:xml length:strlen(xml)];
 }
 +(eIDResult)validateCert:(NSData*)certificate withCa:(NSData*)ca {
-	if(certificate == nil) {
+	if(certificate == nil || ca == nil) {
 		return eIDResultUnknown;
 	}
 	return (eIDResult)eid_vwr_verify_cert([certificate bytes], [certificate length], [ca bytes], [ca length],osl_objc_perform_ocsp_request, osl_objc_free_ocsp_request);
 }
 +(eIDResult)validateIntCert:(NSData *)certificate withCa:(NSData *)ca {
-	if(certificate == nil) {
+	if(certificate == nil || ca == nil) {
 		return eIDResultUnknown;
 	}
 	return (eIDResult)eid_vwr_verify_int_cert([certificate bytes], [certificate length], [ca bytes], [ca length], osl_objc_perform_http_request, osl_objc_free_ocsp_request);
@@ -177,6 +189,9 @@ static void osl_objc_free_ocsp_request(void* data) {
 	return (eIDResult)eid_vwr_verify_root_cert([certificate bytes], [certificate length]);
 }
 +(eIDResult)validateRrnCert:(NSData *)certificate withRoot:(NSData *) root {
+	if(certificate == nil || root == nil) {
+		return eIDResultUnknown;
+	}
 	return (eIDResult)eid_vwr_verify_rrncert([certificate bytes], [certificate length], [root bytes], [root length]);
 }
 +(void)setReaderAuto:(BOOL)automatic {
@@ -193,5 +208,11 @@ static void osl_objc_free_ocsp_request(void* data) {
 	NSString* rv = [NSString stringWithUTF8String:details];
 	free(details);
 	return rv;
+}
++(void)doChallenge:(NSData*)challenge {
+	eid_vwr_challenge([challenge bytes], (int)[challenge length]);
+}
++(void)doChallengeInternal {
+	eid_vwr_maybe_perform_challenge();
 }
 @end

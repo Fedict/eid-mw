@@ -9,8 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "AppDelegate.h"
 
-@ protocol binhandler < NSObject > -(void) handle_bin_data:(NSData *)
-     data forLabel:(NSString *)
-     label withUi:(AppDelegate *) ui;
-
+@ protocol binhandler<NSObject>
+-(void) handle_bin_data:(NSData *)data forLabel:(NSString *)label withUi:(AppDelegate *)ui;
 @end
