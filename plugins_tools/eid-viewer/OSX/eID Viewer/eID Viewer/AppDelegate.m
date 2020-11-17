@@ -40,6 +40,7 @@
 @property (weak) IBOutlet NSImageView *certview;
 @property (weak) IBOutlet NSWindow *window;
 @property (weak) IBOutlet NSWindow *CardReadSheet;
+@property BOOL sheetIsActive;
 @property (weak) IBOutlet NSView *IdentityTab;
 @property (weak) IBOutlet NSView *CardPinTab;
 @property (weak) IBOutlet NSView *CertificatesTab;
@@ -213,13 +214,16 @@
 		[_pinop_ctrl setEnabled:pinops];
 		[_alwaysValidate setEnabled:validate];
 		[_validateNow setEnabled:validate];
-		if(sheet) {
-			[_spinner startAnimation:self];
-			[_window beginSheet:_CardReadSheet completionHandler:nil];
-		} else {
-			[_window endSheet:_CardReadSheet];
-			[_CardReadSheet orderOut:_window];
-			[_spinner stopAnimation:self];
+		if(sheet && ![self sheetIsActive]) {
+			[self.spinner startAnimation:self];
+			[self.window beginSheet:self.CardReadSheet completionHandler:nil];
+			[self setSheetIsActive:YES];
+		}
+		if(!sheet && [self sheetIsActive]) {
+			[self.window endSheet:self.CardReadSheet];
+			[self.CardReadSheet orderOut:self.window];
+			[self.spinner stopAnimation:self];
+			[self setSheetIsActive:NO];
 		}
 		if(doValidateNow && ([_alwaysValidate state] == NSOnState)) {
 			[self validateNow:nil];
@@ -326,6 +330,7 @@
 	_viewdict = [[NSMutableDictionary alloc] init];
 	[_CertificatesView setDataSource:_certstore];
 	[_CertificatesView setDelegate:_certstore];
+	[self setSheetIsActive:NO];
 
 	// Load preferences (language, log level)
 	NSUserDefaults* prefs = [NSUserDefaults standardUserDefaults];
