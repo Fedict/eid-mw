@@ -2,7 +2,7 @@
 #include <state.h>
 #include <pthread.h>
 #include "verify_cert.h"
-#include "p11.h"
+#include <p11.h>
 
 static id <eIDOSLayerUI>currUi = nil;
 
