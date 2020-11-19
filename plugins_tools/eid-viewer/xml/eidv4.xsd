@@ -38,13 +38,14 @@
     <xsd:attribute name="version" use="optional">
       <xsd:simpleType>
         <xsd:restriction base="xsd:string">
-          <xsd:enumeration value="4.1" />
+          <xsd:enumeration value="4.2" />
         </xsd:restriction>
       </xsd:simpleType>
     </xsd:attribute>
   </xsd:complexType>
   <xsd:element name="middlenames" type="xsd:string" />
   <xsd:element name="workpermit" type="workpermitType" />
+  <xsd:element name="brexit" type="brexitTypeType" />
   <xsd:complexType name="identityType">
     <xsd:sequence>
       <xsd:element name="name" type="xsd:string" />
@@ -100,6 +101,20 @@
       </xsd:simpleType>
     </xsd:attribute>
   </xsd:complexType>
+  <xsd:complexType name="brexitType">
+    <xsd:attribute name="mention1" use="required">
+      <xsd:simpleType>
+        <xsd:restriction base="xsd:string">
+	  <xsd:enumeration value="Article 18(1) Agreement" />
+	</xsd:restriction>
+	<xsd:attribute name="mention2" use="optional">
+      <xsd:simpleType>
+        <xsd:restriction base="xsd:string">
+	  <xsd:enumeration value="Permanent stay" />
+	</xsd:restriction>
+      </xsd:simpleType>
+    </xsd:attribute>
+  </xsd:complexType>
   <xsd:simpleType name="specType">
     <xsd:restriction base="xsd:string">
       <xsd:enumeration value="NO_STATUS" />
@@ -119,6 +134,7 @@
     <xsd:sequence>
       <xsd:element name="deliverymunicipality" />
       <xsd:element ref="workpermit" minOccurs="0" />
+	  <xsd:element ref="brexit" minOccurs="0" />
     </xsd:sequence>
     <xsd:attribute name="documenttype" type="doctypeType" use="required"/>
     <xsd:attribute name="cardnumber" type="cardnumType" use="required"/>
