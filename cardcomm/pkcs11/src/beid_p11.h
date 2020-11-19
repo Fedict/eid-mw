@@ -76,6 +76,8 @@
 #define BEID_FIELD_TAG_ID_Vat2					0x18
 #define BEID_FIELD_TAG_ID_RegionalFileNumber	0x19
 #define BEID_FIELD_TAG_ID_BasicKeyHash			0x1A
+#define BEID_FIELD_TAG_ID_BrexitMention1		0x1B
+#define BEID_FIELD_TAG_ID_BrexitMention2		0x1C
 
 #define BEID_FIELD_TAG_ADDR_Version				0x00
 #define BEID_FIELD_TAG_ADDR_Street				0x01
