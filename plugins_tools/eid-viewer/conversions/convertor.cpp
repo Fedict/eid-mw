@@ -20,6 +20,8 @@
 #include "booldecode.h"
 #include <eid-util/utftranslate.h>
 #include "cppeidstring.h"
+#include "brexitment1conv.h"
+#include "brexitment2conv.h"
 
 #include <map>
 #include <string>
@@ -45,6 +47,8 @@ Convertor::Convertor()
 		convertors[TEXT("gender")] = new GenderConvertor();
 		convertors[TEXT("special_organisation")] = new SpecOrgConvertor();
 		convertors[TEXT("work_permit_mention")] = new WorkPermitConvertor();
+		convertors[TEXT("brexit_mention_1")] = new BrexitMention1Convertor();
+		convertors[TEXT("brexit_mention_2")] = new BrexitMention2Convertor();
 	}
 	if (to_xml.empty())
 	{
@@ -58,6 +62,8 @@ Convertor::Convertor()
 		to_xml[TEXT("special_organisation")] = new XmlSpecOrgConvertor();
 		to_xml[TEXT("work_permit_mention")] = new XmlWorkPermitConvertor();
 		to_xml[TEXT("member_of_family")] = new ToXmlMemberOfFamilyConvertor();
+		to_xml[TEXT("brexit_mention_1")] = new XmlBrexitMention1Convertor();
+		to_xml[TEXT("brexit_mention_2")] = new XmlBrexitMention2Convertor();
 	}
 	if (from_xml.empty())
 	{
@@ -72,6 +78,8 @@ Convertor::Convertor()
 		from_xml[TEXT("work_permit_mention")] = new XmlWorkPermitConvertor();
 		from_xml[TEXT("xml_file_version")] = new XmlFileversConvertor(); // hack to produce an error message when file is opened that was created by a more recent version of eID Viewer
 		from_xml[TEXT("member_of_family")] = new BoolDecodeConvertor();
+		from_xml[TEXT("brexit_mention_1")] = new XmlBrexitMention1Convertor();
+		from_xml[TEXT("brexit_mention_2")] = new XmlBrexitMention2Convertor();
 	}
 }
 
