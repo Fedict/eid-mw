@@ -45,8 +45,8 @@ struct attribute_desc workpermit_attributes[] = {
 
 /* Attributes of the <brexit> element */
 struct attribute_desc brexit_attributes[] = {
-	{TEXT("mention1"), TEXT("brexit_mention1"), 1},
-	{TEXT("mention2"), TEXT("brexit_mention2"), 0},
+	{TEXT("mention1"), TEXT("brexit_mention_1"), 1},
+	{TEXT("mention2"), TEXT("brexit_mention_2"), 0},
 	{NULL, NULL, 0},
 };
 
