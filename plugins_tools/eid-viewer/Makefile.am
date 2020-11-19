@@ -48,6 +48,8 @@ libeidviewer_la_SOURCES = \
 	backend.h \
 	cache.h \
 	cache/cache.cpp \
+	conversions/art18conv.cpp \
+	conversions/art18conv.h \
 	conversions/bbannumconv.h \
 	conversions/bbannumconv.cpp \
 	conversions/genderconv.h \
