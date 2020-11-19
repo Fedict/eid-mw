@@ -88,15 +88,17 @@ static struct {
 	{ TEXT("PHOTO_FILE"),			CK_FALSE, CK_TRUE, CK_TRUE, NULL },
 	{ TEXT("CERT_RN_FILE"),			CK_FALSE, CK_TRUE, CK_TRUE, NULL },
 	{ TEXT("SIGN_DATA_FILE"),		CK_FALSE, CK_TRUE, CK_TRUE, NULL },
-	{ TEXT("SIGN_ADDRESS_FILE"),		CK_FALSE, CK_TRUE, CK_TRUE, NULL },
+	{ TEXT("SIGN_ADDRESS_FILE"),	CK_FALSE, CK_TRUE, CK_TRUE, NULL },
 	{ TEXT("Authentication"),		CK_FALSE, CK_TRUE, CK_TRUE, NULL },
 	{ TEXT("Signature"),			CK_FALSE, CK_TRUE, CK_TRUE, NULL },
-	{ TEXT("Root"),				CK_FALSE, CK_TRUE, CK_TRUE, NULL },
-	{ TEXT("CA"),				CK_FALSE, CK_TRUE, CK_TRUE, NULL },
+	{ TEXT("Root"),					CK_FALSE, CK_TRUE, CK_TRUE, NULL },
+	{ TEXT("CA"),					CK_FALSE, CK_TRUE, CK_TRUE, NULL },
 	{ TEXT("xml_file_version"),		CK_TRUE, CK_FALSE, CK_FALSE, NULL }, // virtual label only used when reading an XML file
-	{ TEXT("xml"),				CK_TRUE, CK_FALSE, CK_FALSE, NULL }, // virtual label only used when reading an XML file
+	{ TEXT("xml"),					CK_TRUE, CK_FALSE, CK_FALSE, NULL }, // virtual label only used when reading an XML file
 	{ TEXT("BASIC_KEY_FILE"),		CK_FALSE, CK_TRUE, CK_TRUE, NULL },
 	{ TEXT("basic_key_hash"),		CK_FALSE, CK_TRUE, CK_TRUE, NULL },
+	{ TEXT("brexit_mention_1"),		CK_TRUE, CK_FALSE, CK_TRUE, TEXT("4.2") },
+	{ TEXT("brexit_mention_2"),		CK_TRUE, CK_FALSE, CK_TRUE, TEXT("4.2") },
 	{ NULL,					0, 0, 0, NULL },
 };
 
