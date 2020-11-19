@@ -1,8 +1,8 @@
-﻿#include "art18conv.h"
+﻿#include "brexitment1conv.h"
 
-std::map < eid_vwr_langs, std::map <char, EID_STRING> > Art18Convertor::conversions;
+std::map < eid_vwr_langs, std::map <char, EID_STRING> > BrexitMention1Convertor::conversions;
 
-Art18Convertor::Art18Convertor() {
+BrexitMention1Convertor::BrexitMention1Convertor() {
 	if(conversions.size() == 0)
 	{
 		conversions[EID_VWR_LANG_DE]['B'] = TEXT("Artikel 18(1) Vereinbarung");
@@ -12,14 +12,14 @@ Art18Convertor::Art18Convertor() {
 	}
 }
 
-EID_STRING Art18Convertor::convert(const void *normal) {
+EID_STRING BrexitMention1Convertor::convert(const void *normal) {
 	const char *norm = (const char*)normal;
 	return conversions[target_][*norm];
 }
 
-std::map < EID_STRING, EID_STRING > XmlArt18Convertor::conversions;
+std::map < EID_STRING, EID_STRING > XmlBrexitMention1Convertor::conversions;
 
-XmlArt18Convertor::XmlArt18Convertor() {
+XmlBrexitMention1Convertor::XmlBrexitMention1Convertor() {
 	if(conversions.size() == 0)
 	{
 		conversions[TEXT("B")] = TEXT("Article 18(1) Agreement");
@@ -27,7 +27,7 @@ XmlArt18Convertor::XmlArt18Convertor() {
 	}
 }
 
-EID_STRING XmlArt18Convertor::convert(const void *normal) {
+EID_STRING XmlBrexitMention1Convertor::convert(const void *normal) {
 	EID_STRING norm((const EID_CHAR *) normal);
 	return conversions[norm];
 }

@@ -1,20 +1,20 @@
 #include "convworker.h"
 #include <map>
 
-class PermStayConvertor:public ConversionWorker
+class BrexitMention2Convertor :public ConversionWorker
 {
 private:
 	static std::map < eid_vwr_langs, std::map <char, EID_STRING > > conversions;
 public:
-	PermStayConvertor();
+	BrexitMention2Convertor();
 	virtual EID_STRING convert(const void *normal);
 };
 
-class XmlPermStayConvertor :public ConversionWorker
+class XmlBrexitMention2Convertor :public ConversionWorker
 {
 private:
 	static std::map < EID_STRING, EID_STRING > conversions;
 public:
-	XmlPermStayConvertor();
+	XmlBrexitMention2Convertor();
 	virtual EID_STRING convert(const void *original);
 };
