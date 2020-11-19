@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['permstayconvertor',['PermStayConvertor',['../class_perm_stay_convertor.html',1,'']]],
   ['photo',['Photo',['../classe_i_d_viewer_1_1_resources_1_1_identity_tab_string_resources.html#a8a3c1c547c163bccf6d0638b7c6fba86',1,'eIDViewer::Resources::IdentityTabStringResources']]],
   ['photo_5finfo',['photo_info',['../structphoto__info.html',1,'']]],
   ['photohandler',['photohandler',['../classphotohandler.html',1,'']]],
