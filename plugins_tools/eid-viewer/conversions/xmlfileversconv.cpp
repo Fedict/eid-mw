@@ -15,7 +15,7 @@ XmlFileversConvertor::XmlFileversConvertor() {
 EID_STRING XmlFileversConvertor::convert(const void *original) {
 	EID_STRING orig((const EID_CHAR*)original);
 
-	if(orig.compare(TEXT("4.1")) != 0) {
+	if(orig.compare(TEXT("4.2")) > 0) {
 		be_log(EID_VWR_LOG_ERROR, msgs_[target_]);
 	}
 	return orig;
