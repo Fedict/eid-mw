@@ -11,6 +11,7 @@
 #import "photohandler.h"
 #import "PrintOperation.h"
 #import "ReaderMenuItem.h"
+#import "ValidityTree.h"
 
 #include <eid-util/utftranslate.h>
 #include <eid-util/labels.h>
@@ -33,8 +34,10 @@
 - (IBAction)closeDetail:(id)sender;
 - (BOOL)application:(NSApplication*)sender openFile:(nonnull NSString *)filename;
 - (IBAction)basicKeyCheck:(id)sender;
+- (IBAction)doValidation:(id)sender;
 
 @property CertificateStore *certstore;
+@property ValidityTree *validitytree;
 @property NSDictionary *bindict;
 @property NSMutableDictionary *viewdict;
 @property NSArray *readerSelections;
@@ -50,11 +53,13 @@
 @property (unsafe_unretained) IBOutlet NSTextView *logItem;
 @property (weak) IBOutlet NSPopUpButton *logLevel;
 @property (weak) IBOutlet NSOutlineView *CertificatesView;
+@property (weak) IBOutlet NSOutlineView *ValidityView;
 @property (weak) IBOutlet NSView *printop_view;
 @property (weak) IBOutlet NSView *foreigner_printop_view;
 @property (weak) IBOutlet NSProgressIndicator *spinner;
 @property (weak) IBOutlet NSButton *alwaysValidate;
 @property (weak) IBOutlet NSButton *validateNow;
+@property (weak) IBOutlet NSTreeController *validityController;
 
 @property (weak) IBOutlet NSMenuItem *menu_file_open;
 @property (weak) IBOutlet NSMenuItem *menu_file_close;
@@ -78,6 +83,14 @@
 @implementation AppDelegate
 -(BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender {
 	return YES;
+}
+
+- (IBAction)doValidation:(NSSegmentedControl*)sender {
+	if([sender selectedSegment] == 0) {
+		[self basicKeyCheck:sender];
+	} else {
+		[self validateNow:sender];
+	}
 }
 
 - (IBAction)basicKeyCheck:(id)sender {
@@ -368,6 +381,8 @@
 	_viewdict = [[NSMutableDictionary alloc] init];
 	[_CertificatesView setDataSource:_certstore];
 	[_CertificatesView setDelegate:_certstore];
+	[self setValiditytree:[[ValidityTree alloc]initWithOutlineView:_ValidityView]];
+	[_ValidityView setDataSource:_validitytree];
 	[self setSheetIsActive:NO];
 
 	// Load preferences (language, log level)
@@ -404,6 +419,10 @@
 	[_logLevel selectItemAtIndex:level];
 	[eIDOSLayerBackend setLang:langcode];
 	[eIDOSLayerBackend setUi:self];
+	NSImage *img = [[NSImage alloc] initByReferencingFile:[[NSBundle mainBundle]pathForResource:@"status_unknown" ofType:@"png"]];
+	if(!img) {
+		img = [[NSImage alloc] initWithSize:NSMakeSize(10, 10)];
+	}
 }
 - (void)setLanguage:(NSMenuItem *)sender {
 	NSString* keyeq = sender.keyEquivalent;

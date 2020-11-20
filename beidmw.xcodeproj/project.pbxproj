@@ -101,6 +101,10 @@
 		65E2354E19A7DE9D00C33AAC /* ordering.c in Sources */ = {isa = PBXBuildFile; fileRef = 65CC20ED19A7DE4E0089CD13 /* ordering.c */; };
 		65EABAF31C621FB400034337 /* labels.c in Sources */ = {isa = PBXBuildFile; fileRef = 65EABAED1C621F3D00034337 /* labels.c */; };
 		65F3F0231BE237480073F2A3 /* readdata_sequence.c in Sources */ = {isa = PBXBuildFile; fileRef = 65F3F0211BE236680073F2A3 /* readdata_sequence.c */; };
+		6C2F311C2567CF93003516E9 /* ValidityTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C2F311B2567CF93003516E9 /* ValidityTree.m */; };
+		6C2F31222567F3D0003516E9 /* warning_large.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C2F311F2567F3D0003516E9 /* warning_large.png */; };
+		6C2F31232567F3D0003516E9 /* stop_large.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C2F31202567F3D0003516E9 /* stop_large.png */; };
+		6C2F31242567F3D0003516E9 /* checkmark_large.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C2F31212567F3D0003516E9 /* checkmark_large.png */; };
 		6CAFE1D821DF86E40078C7E2 /* pkcs11.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CAFE1D521DF86E40078C7E2 /* pkcs11.h */; };
 		6CAFE1D921DF86E40078C7E2 /* pkcs11t.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CAFE1D621DF86E40078C7E2 /* pkcs11t.h */; };
 		6CAFE1DA21DF86E40078C7E2 /* pkcs11f.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CAFE1D721DF86E40078C7E2 /* pkcs11f.h */; };
@@ -430,6 +434,11 @@
 		65EABAEE1C621F3D00034337 /* labels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = labels.h; path = "plugins_tools/util/eid-util/labels.h"; sourceTree = "<group>"; };
 		65EABAEF1C621F3D00034337 /* utftranslate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = utftranslate.h; path = "plugins_tools/util/eid-util/utftranslate.h"; sourceTree = "<group>"; };
 		65F3F0211BE236680073F2A3 /* readdata_sequence.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = readdata_sequence.c; path = tests/unit/readdata_sequence.c; sourceTree = "<group>"; };
+		6C2F311A2567CF93003516E9 /* ValidityTree.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ValidityTree.h; sourceTree = "<group>"; };
+		6C2F311B2567CF93003516E9 /* ValidityTree.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ValidityTree.m; sourceTree = "<group>"; };
+		6C2F311F2567F3D0003516E9 /* warning_large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = warning_large.png; path = "plugins_tools/eid-viewer/resources/warning_large.png"; sourceTree = SOURCE_ROOT; };
+		6C2F31202567F3D0003516E9 /* stop_large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = stop_large.png; path = "plugins_tools/eid-viewer/resources/stop_large.png"; sourceTree = SOURCE_ROOT; };
+		6C2F31212567F3D0003516E9 /* checkmark_large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = checkmark_large.png; path = "plugins_tools/eid-viewer/resources/checkmark_large.png"; sourceTree = SOURCE_ROOT; };
 		6CAFE1D521DF86E40078C7E2 /* pkcs11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pkcs11.h; sourceTree = "<group>"; };
 		6CAFE1D621DF86E40078C7E2 /* pkcs11t.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pkcs11t.h; sourceTree = "<group>"; };
 		6CAFE1D721DF86E40078C7E2 /* pkcs11f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pkcs11f.h; sourceTree = "<group>"; };
@@ -663,6 +672,8 @@
 				651DDF301FEA843D00C4961E /* MainMenu.xib */,
 				651DDF331FEA843D00C4961E /* Info.plist */,
 				651DDF341FEA843D00C4961E /* main.m */,
+				6C2F311A2567CF93003516E9 /* ValidityTree.h */,
+				6C2F311B2567CF93003516E9 /* ValidityTree.m */,
 			);
 			name = "eID Viewer";
 			path = "plugins_tools/eid-viewer/OSX/eID Viewer/eID Viewer";
@@ -829,6 +840,9 @@
 		65F8CC2B1FEBBE79006C30B6 /* Supporting files */ = {
 			isa = PBXGroup;
 			children = (
+				6C2F31212567F3D0003516E9 /* checkmark_large.png */,
+				6C2F31202567F3D0003516E9 /* stop_large.png */,
+				6C2F311F2567F3D0003516E9 /* warning_large.png */,
 				6CD1B8C221A5A6470005F6E9 /* state_error.png */,
 				6CD1B8C321A5A6470005F6E9 /* state_noreaders.png */,
 				6CD1B8BD21A5A61A0005F6E9 /* certificate_bad.png */,
@@ -1246,10 +1260,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				659FD58C1FEA919100E4AF83 /* eidv4.xsd in Resources */,
+				6C2F31232567F3D0003516E9 /* stop_large.png in Resources */,
+				6C2F31222567F3D0003516E9 /* warning_large.png in Resources */,
 				659FD5971FEA927200E4AF83 /* coat_of_arms_en.jpg in Resources */,
 				651DDF5D1FEA85AE00C4961E /* Images.xcassets in Resources */,
 				6CD1B8C521A5A6470005F6E9 /* state_noreaders.png in Resources */,
 				659FD5961FEA926F00E4AF83 /* coat_of_arms_de.jpg in Resources */,
+				6C2F31242567F3D0003516E9 /* checkmark_large.png in Resources */,
 				6CD1B8C921A5A65B0005F6E9 /* certificate_warn.png in Resources */,
 				659FD5991FEA927800E4AF83 /* coat_of_arms_nl.jpg in Resources */,
 				651DDF5E1FEA85C400C4961E /* certs in Resources */,
@@ -1317,6 +1334,7 @@
 				651DDF351FEA843D00C4961E /* main.m in Sources */,
 				651DDF581FEA850F00C4961E /* ReaderMenuItem.m in Sources */,
 				651DDF2D1FEA843D00C4961E /* AppDelegate.m in Sources */,
+				6C2F311C2567CF93003516E9 /* ValidityTree.m in Sources */,
 				651DDF571FEA850900C4961E /* PrintOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
