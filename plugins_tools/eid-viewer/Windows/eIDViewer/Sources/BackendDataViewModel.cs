@@ -330,8 +330,6 @@ namespace eIDViewer
 
         public bool VerifyRootCAvsEmbeddedRootCA(ref X509Certificate2 rootCertOnCard, string embeddedRootCA)
         {
-            return true;//for testing
-            /*
             bool foundEmbeddedRootCA = false;
             try
             {
@@ -365,7 +363,7 @@ namespace eIDViewer
             {
                 this.WriteLog("An error occurred comparing the Belgium rootCA on the card with the ones in the EIDViewer\n" + e.ToString(), eid_vwr_loglevel.EID_VWR_LOG_ERROR);
             }
-            return foundEmbeddedRootCA;*/
+            return foundEmbeddedRootCA;
         }
 
 
@@ -449,7 +447,7 @@ namespace eIDViewer
                 if (leafCertificate != null)
                 {
                     //alter how the chain is built/validated.
-                    chain.ChainPolicy.RevocationMode = X509RevocationMode.NoCheck;//for testing X509RevocationMode.Online;
+                    chain.ChainPolicy.RevocationMode = X509RevocationMode.Online;//.NoCheck for testing X509RevocationMode.Online;
                     chain.ChainPolicy.RevocationFlag = X509RevocationFlag.ExcludeRoot;
                     // Set the time span that may elapse during online revocation verification or downloading the certificate revocation list (CRL).
                     TimeSpan verificationTime = new TimeSpan(0, 0, 10);
