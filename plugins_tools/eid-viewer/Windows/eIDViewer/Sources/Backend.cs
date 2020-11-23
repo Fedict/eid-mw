@@ -404,6 +404,8 @@ namespace eIDViewer
                         if(theData.basicKeyFile.Length != 0x78)
                         {
                             //File for supported format is incorrect, cannot verify, exit
+                            theData.WriteLog("CSCbchallengeResult encountered an error (basicKeyFile.Length != 0x78)\n , key verification could not start \n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+                            return;
                         }
 
                         byte[] KeyParams = new byte[5];
@@ -439,9 +441,13 @@ namespace eIDViewer
 
                         ECDsa dsa = ECDsa.Create(parameters);
                         if (dsa.VerifyData(theData.challenge, signature, HashAlgorithmName.SHA384))
-                            Console.WriteLine("Data is good");
+                        {
+                            theData.WriteLog("CSCbchallengeResult: verified the challenge response successfully \n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
+                        }
                         else
-                            Console.WriteLine("Data is bad");
+                        {
+                            theData.WriteLog("CSCbchallengeResult: the challenge response was incorrect \n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+                        }
 
                         break;
                     case eid_vwr_result.EID_VWR_RES_FAILED:
