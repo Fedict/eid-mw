@@ -36,6 +36,10 @@ DocTypeConvertor::DocTypeConvertor()
 		conversions[EID_VWR_LANG_DE][TEXT("18")] = TEXT("Daueraufenthaltskarte f\u00fcr Familienangeh\u00f6rige eines Unionsb\u00fcrgers");
 		// European blue card H
 		conversions[EID_VWR_LANG_DE][TEXT("19")] = TEXT("Blaue Karte EU");
+		// card I");
+		conversions[EID_VWR_LANG_NL][TEXT("20")] = TEXT("I. ICT");
+		// card J");
+		conversions[EID_VWR_LANG_NL][TEXT("21")] = TEXT("J. Mobile ICT");
 
 		conversions[EID_VWR_LANG_EN][TEXT("1")] = TEXT("IDENTITY CARD");
 		conversions[EID_VWR_LANG_EN][TEXT("6")] = TEXT("KIDS CARD");
@@ -63,6 +67,10 @@ DocTypeConvertor::DocTypeConvertor()
 		conversions[EID_VWR_LANG_EN][TEXT("18")] = TEXT("Permanent residence card of a family member of a Union citizen");
 		// European blue card H
 		conversions[EID_VWR_LANG_EN][TEXT("19")] = TEXT("EU Blue Card");
+		// card I");
+		conversions[EID_VWR_LANG_NL][TEXT("20")] = TEXT("I. ICT");
+		// card J");
+		conversions[EID_VWR_LANG_NL][TEXT("21")] = TEXT("J. Mobile ICT");
 
 		conversions[EID_VWR_LANG_FR][TEXT("1")] = TEXT("CARTE D'IDENTITE");
 		conversions[EID_VWR_LANG_FR][TEXT("6")] = TEXT("CARTE POUR ENFANTS");
@@ -90,6 +98,10 @@ DocTypeConvertor::DocTypeConvertor()
 		conversions[EID_VWR_LANG_FR][TEXT("18")] = TEXT("Carte de s\u00e9jour permanent de membre de la famille d\u2019un citoyen de l\u2019Union");
 		// European blue card H
 		conversions[EID_VWR_LANG_FR][TEXT("19")] = TEXT("Carte bleue europ\u00e9enne");
+		// card I");
+		conversions[EID_VWR_LANG_NL][TEXT("20")] = TEXT("I. ICT");
+		// card J");
+		conversions[EID_VWR_LANG_NL][TEXT("21")] = TEXT("J. Mobile ICT");
 
 		conversions[EID_VWR_LANG_NL][TEXT("1")] = TEXT("IDENTITEITSKAART");
 		conversions[EID_VWR_LANG_NL][TEXT("6")] = TEXT("KIDS KAART");
@@ -117,6 +129,10 @@ DocTypeConvertor::DocTypeConvertor()
 		conversions[EID_VWR_LANG_NL][TEXT("18")] = TEXT("Duurzame verblijfskaart van een familielid van een burger van de Unie");
 		// European blue card H");
 		conversions[EID_VWR_LANG_NL][TEXT("19")] = TEXT("Europese blauwe kaart");
+		// card I");
+		conversions[EID_VWR_LANG_NL][TEXT("20")] = TEXT("I. ICT");
+		// card J");
+		conversions[EID_VWR_LANG_NL][TEXT("21")] = TEXT("J. Mobile ICT");
 	}
 }
 
