@@ -38,6 +38,7 @@
     <xsd:attribute name="version" use="optional">
       <xsd:simpleType>
         <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="4.1" />
           <xsd:enumeration value="4.2" />
         </xsd:restriction>
       </xsd:simpleType>
@@ -105,9 +106,11 @@
     <xsd:attribute name="mention1" use="required">
       <xsd:simpleType>
         <xsd:restriction base="xsd:string">
-	  <xsd:enumeration value="Article 18(1) Agreement" />
-	</xsd:restriction>
-	<xsd:attribute name="mention2" use="optional">
+          <xsd:enumeration value="Article 18(1) Agreement" />
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:attribute>
+    <xsd:attribute name="mention2" use="optional">
       <xsd:simpleType>
         <xsd:restriction base="xsd:string">
 	  <xsd:enumeration value="Permanent stay" />
