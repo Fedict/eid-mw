@@ -61,7 +61,7 @@ Package: libbeidpkcs11-bin
 Section: libs
 Multi-Arch: foreign
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libnss3-tools
+Depends: ${shlibs:Depends}, ${misc:Depends}, libnss3-tools, binutils
 Replaces: eid-mw (<< 4.0.6r1508)
 Description: helper programs for libbeidpkcs11-0
  The libbeidpkcs11 library sometimes needs to pop up a few dialog boxes
