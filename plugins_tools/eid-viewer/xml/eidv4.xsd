@@ -46,7 +46,7 @@
   </xsd:complexType>
   <xsd:element name="middlenames" type="xsd:string" />
   <xsd:element name="workpermit" type="workpermitType" />
-  <xsd:element name="brexit" type="brexitTypeType" />
+  <xsd:element name="brexit" type="brexitType" />
   <xsd:complexType name="identityType">
     <xsd:sequence>
       <xsd:element name="name" type="xsd:string" />
