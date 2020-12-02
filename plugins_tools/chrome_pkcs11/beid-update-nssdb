@@ -23,32 +23,46 @@
 # THE SOFTWARE.
 #
 # Changes to deal with BeID rather than EstEID:
-# Copyright(c) Wouter Verhelst, 2018
+# Copyright(c) Wouter Verhelst, 2018-2020
 
-NSSDB=$HOME/.pki/nssdb
-MODUTIL="/usr/bin/modutil -force -dbdir sql:$NSSDB"
-CERTUTIL="/usr/bin/certutil -d sql:$NSSDB"
 LIBS=$(ld --verbose | grep SEARCH | awk '{ gsub(/;/,"\n"); print }' | awk -F '\"' '/SEARCH_DIR\(\"=?/ { gsub(/=/,""); print $2 }')
 PKCS11=libbeidpkcs11.so.0
 
-if [ ! -f $NSSDB/cert9.db ]; then
-    echo "Initializing new database"
-    mkdir -p $NSSDB
-    $CERTUTIL -N --empty-password
+if [ -z "$HOME" ]; then
+	echo "E: need HOME to be set (it isn't)" >&2
+	exit 1
 fi
+
+if [ ! -f $HOME/.pki/nssdb/cert9.db ]; then
+    echo "Initializing new database"
+    mkdir -p $HOME/.pki/nssdb
+    certutil -d sql:$HOME/.pki/nssdb -N --empty-password
+fi
+
+# Skip the Firefox directory, since we use the Firefox add-on for those.
+NSSDBS=$HOME/.pki/nssdb
+NSSDBS+=$(for dir in $(find $HOME/.thunderbird -name cert9.db); do echo " " $(dirname $dir); done)
+echo "Configuring ${NSSDBS}"
+P11LOC=""
 
 for DIR in $LIBS; do
     LIB=$DIR/$PKCS11
     if [ -f $LIB ]; then
-        echo "Found PKCS#11 library at: $LIB"
-        if grep -q library=$LIB $NSSDB/pkcs11.txt; then
-            echo "ID-card support for Google Chrome/Chromium/Opera already enabled"
-        else
-            echo "Enabling ID-card functionality in Google Chrome/Chromium/Opera via $LIB"
-            $MODUTIL -delete "Belgium eID"
-            $MODUTIL -add "Belgium eID" -libfile $LIB -mechanisms FRIENDLY
-        fi
-        exit
+	echo "Found PKCS#11 library at: $LIB"
+	P11LOC=$LIB
     fi
 done
-echo "Can't find $PKCS11"
+
+if [ -z "$P11LOC" ]; then
+	echo "E: Can't find $PKCS11" >&2
+	exit 1
+fi
+for NSSDB in $NSSDBS; do
+    if grep -q library=$P11LOC $NSSDB/pkcs11.txt; then
+        echo "ID-card support in $NSSDB already enabled"
+    else
+        echo "Enabling ID-card functionality in $NSSDB via $P11LOC"
+        modutil -force -dbdir sql:$NSSDB -delete "Belgium eID"
+        modutil -force -dbdir sql:$NSSDB -add "Belgium eID" -libfile $P11LOC -mechanisms FRIENDLY
+    fi
+done
