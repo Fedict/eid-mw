@@ -387,7 +387,7 @@ static void set_basic_valid(char* label, void* data, int length G_GNUC_UNUSED) {
 	}
 	pango_attr_list_insert(attrs, attr);
 	gtk_label_set_attributes(l, attrs);
-	g_hash_table_insert(touched_labels, label, clear_basic_valid);
+	g_hash_table_insert(touched_labels, g_strdup(label), clear_basic_valid);
 }
 
 static void toggleclear(const char* l) {
