@@ -32,19 +32,10 @@
              InstallPrivileges="elevated"
     />
 
-    <Upgrade Id="$(var.UpgradeCode)">
-      <UpgradeVersion Minimum="$(var.ProductVersion)"
-                      IncludeMinimum="no"
-                      OnlyDetect="yes"
-                      Property="NEWPRODUCTFOUND"
-      />
-      <UpgradeVersion Minimum="3.5.0"
-                      IncludeMinimum="yes"
-                      Maximum="$(var.ProductVersion)"
-                      IncludeMaximum="no"
-                      Property="UPGRADEFOUND"
-      />
-    </Upgrade>
+	<MajorUpgrade 
+		AllowDowngrades="no" 
+		DowngradeErrorMessage="error 1638: Newer version eID Middleware found"
+		/>
 
     <?if $(var.Lang) = "nl"?>
     <WixVariable Id="WixUILicenseRtf" Value="..\..\..\doc\licenses\Dutch\License_nl.rtf" />
@@ -347,7 +338,6 @@
     <InstallExecuteSequence>
       <Custom Action="IsPrivileged" Before="LaunchConditions">Not Privileged</Custom>
       <Custom Action="SetARPINSTALLLOCATION" After="InstallValidate"></Custom>
-      <RemoveExistingProducts After="InstallExecute" />
     </InstallExecuteSequence>
 
   </Product>
