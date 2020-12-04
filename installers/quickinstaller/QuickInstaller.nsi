@@ -154,7 +154,7 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 				!insertmacro GetFirstLineOfFile $TempFile $firstLine
 				DetailPrint "MSI error 1612, count = $firstLine"
 				StrCmp "$firstLine" "" +2 0	
-				StrCmp "$firstLine" "0" 0 MSI_1612_Error_64			
+				StrCmp "$firstLine" "0" 0 MSI_1612_Error_64				
 			${Break}
 			${Case} 1612
 			MSI_1612_Error_64:
@@ -198,7 +198,7 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 				!insertmacro GetFirstLineOfFile $TempFile $firstLine
 				DetailPrint "MSI error 1612, count = $firstLine"
 				StrCmp "$firstLine" "" +2 0	
-				StrCmp "$firstLine" "0" 0 MSI_1612_Error_32			
+				StrCmp "$firstLine" "0" 0 MSI_1612_Error_32
 			${Break}
 			${Case} 1612
 			MSI_1612_Error_32:
@@ -233,7 +233,24 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 			;the installer is already running in another instance	
 			MessageBox MB_OK "$(ls_errorinstallmsi_1618) $\r$\n $(ls_error) = $MsiResponse"	
 			StrCpy $InstallFailed $MsiResponse
-		${Break}			
+		${Break}	
+		${Case} 1603
+			;general failure, parse through the log file to find the root cause
+			;1638: check if downgrade install was attempted and blocked
+				ExecWait 'cmd.exe /C FIND "error 1638" "$LogFile" | FIND /C "error 1638" > "$TempFile"' $retval
+				!insertmacro GetFirstLineOfFile $TempFile $firstLine
+				DetailPrint "a newer version of the eID middleware has been detected"
+				StrCmp "$firstLine" "" +2 0	
+				StrCmp "$firstLine" "0" 0 MSI_1638_Error
+		${Break}
+		${Case} 1638
+			MSI_1638_Error:
+				DetailPrint "$(ls_errorinstallmsi_1638) $\r$\n $(ls_error) = $MsiResponse"
+				;Another version of this product is already installed. Installation of this version cannot continue.
+				;To configure or remove the existing version of this product, use Add/Remove Programs in Control Panel.
+				MessageBox MB_OK "$(ls_errorinstallmsi_1638)$\r$\n$\r$\n $(ls_error) = $MsiResponse"	
+			StrCpy $InstallFailed 1638
+			${Break}
 		${Default}
 			StrCpy $InstallFailed $MsiResponse
 			;Call ErrorHandler_msiexec
@@ -462,8 +479,12 @@ Function nsdInstallCheck
 	CreateFont $Font_Info "Arial" "9" "500" ;/UNDERLINE
 	SendMessage $Label ${WM_SETFont} $Font_Info 1
 	SetCtlColors $Label 0x008080 transparent
-	
+
+${If} $InstallFailed == 1638	
+	${NSD_CreateLabel} 0 70% 100% 36u "$(ls_errorinstallmsi_1638)"
+${Else}
 	${NSD_CreateLabel} 0 70% 100% 36u "$(ls_install_failed_info)"
+${EndIf}	
 	Pop $Label
 	${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
 	CreateFont $Font_Info "Arial" "9" "500" ;/UNDERLINE
