@@ -239,6 +239,11 @@ LangString ls_errorinstallmsi_1638 ${LANG_FRENCH} "Une version supérieure du mid
 LangString ls_errorinstallmsi_1638 ${LANG_DUTCH} "Een hogere versie van de eID Middleware is al geïnstalleerd. $\nOm de bestaande versie van dit product te verwijderen, $\ngebruikt u Programma's toevoegen/verwijderen in het Configuratiescherm."
 LangString ls_errorinstallmsi_1638 ${LANG_GERMAN} "Eine höhere Version der eID Middleware ist bereits installiert. $\nUm die vorhandene Version dieses Produkts zu entfernen, $\nverwenden Sie Programme hinzufügen/entfernen in der Systemsteuerung."
 
+LangString ls_errorinstallmsi_viewer_1638 ${LANG_ENGLISH} "A higher version of the eID Viewer is already installed. $\nTo remove the existing version of this product,$\nuse Add/Remove Programs in Control Panel."
+LangString ls_errorinstallmsi_viewer_1638 ${LANG_FRENCH} "Une version supérieure de l’eID Viewer est déjà installée. $\nPour supprimer la version existante de ce produit, $\nutilisez Ajout/Suppression de programmes dans le Panneau de configuration."
+LangString ls_errorinstallmsi_viewer_1638 ${LANG_DUTCH} "Een hogere versie van de eID Viewer is al geïnstalleerd. $\nOm de bestaande versie van dit product te verwijderen, $\ngebruikt u Programma's toevoegen/verwijderen in het Configuratiescherm."
+LangString ls_errorinstallmsi_viewer_1638 ${LANG_GERMAN} "Eine höhere Version der eID Viewer ist bereits installiert. $\nUm die vorhandene Version dieses Produkts zu entfernen, $\nverwenden Sie Programme hinzufügen/entfernen in der Systemsteuerung."
+
 ;LangString ls_errorinstallmsi_1612_FAQurl ${LANG_ENGLISH} "https://eid.belgium.be/en/technical-documentation#7567"
 ;LangString ls_errorinstallmsi_1612_FAQurl ${LANG_FRENCH} "https://eid.belgium.be/fr/technical-documentation#7565"
 ;LangString ls_errorinstallmsi_1612_FAQurl ${LANG_DUTCH} "https://eid.belgium.be/nl/technische-documentatie#7564"

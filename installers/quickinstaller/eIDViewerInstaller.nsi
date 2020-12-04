@@ -8,7 +8,7 @@
 !include "eidmw_version.nsh"
 !include WinVer.nsh
 !include "buttons.nsh"
-
+!include "fileSearch.nsh"
 
 ;--------------------------------
 ;General
@@ -50,6 +50,9 @@ Var FileToCopy
 Var LogFile
 Var MsiResponse
 Var InstallFailed
+Var retval
+Var TempFile
+Var firstLine
 
 ;--------------------------------
 	;Interface Settings
@@ -110,6 +113,7 @@ Section "Belgium Eid Viewer" BeidViewer
 	ClearErrors
 
 	StrCpy $LogFile "$INSTDIR\log\install_eidviewer_log.txt"
+	StrCpy $TempFile "$INSTDIR\log\viewer_error_count.txt"
 
 	ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeidViewer.msi"' $MsiResponse
 	${Switch} $MsiResponse
@@ -118,6 +122,23 @@ Section "Belgium Eid Viewer" BeidViewer
 			;3010 is 'success, but reboot requiered'
 			;set 1 for testing, 0 otherwise
 			StrCpy $InstallFailed 0
+		${Break}
+		${Case} 1603
+			;general failure, parse through the log file to find the root cause
+			;1638: check if downgrade install was attempted and blocked
+				ExecWait 'cmd.exe /C FIND "error 1638" "$LogFile" | FIND /C "error 1638" > "$TempFile"' $retval
+				!insertmacro GetFirstLineOfFile $TempFile $firstLine
+				DetailPrint "a newer version of the eID Viewer has been detected"
+				StrCmp "$firstLine" "" +2 0	
+				StrCmp "$firstLine" "0" 0 MSI_1638_Error
+		${Break}
+		${Case} 1638
+			MSI_1638_Error:
+				DetailPrint "$(ls_errorinstallmsi_viewer_1638) $\r$\n $(ls_error) = $MsiResponse"
+				;Another version of this product is already installed. Installation of this version cannot continue.
+				;To configure or remove the existing version of this product, use Add/Remove Programs in Control Panel.
+				MessageBox MB_OK "$(ls_errorinstallmsi_viewer_1638)$\r$\n$\r$\n $(ls_error) = $MsiResponse"	
+				StrCpy $InstallFailed 1638
 		${Break}
 		${Default}
 			StrCpy $InstallFailed $MsiResponse
