@@ -101,6 +101,10 @@
 		65E2354E19A7DE9D00C33AAC /* ordering.c in Sources */ = {isa = PBXBuildFile; fileRef = 65CC20ED19A7DE4E0089CD13 /* ordering.c */; };
 		65EABAF31C621FB400034337 /* labels.c in Sources */ = {isa = PBXBuildFile; fileRef = 65EABAED1C621F3D00034337 /* labels.c */; };
 		65F3F0231BE237480073F2A3 /* readdata_sequence.c in Sources */ = {isa = PBXBuildFile; fileRef = 65F3F0211BE236680073F2A3 /* readdata_sequence.c */; };
+		6C22BB69257E619400E72FF2 /* brexitment1conv.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C22BB64257E619400E72FF2 /* brexitment1conv.h */; };
+		6C22BB6A257E619400E72FF2 /* brexitment1conv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6C22BB66257E619400E72FF2 /* brexitment1conv.cpp */; };
+		6C22BB6B257E619400E72FF2 /* brexitment2conv.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C22BB67257E619400E72FF2 /* brexitment2conv.h */; };
+		6C22BB6C257E619400E72FF2 /* brexitment2conv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6C22BB68257E619400E72FF2 /* brexitment2conv.cpp */; };
 		6CAFE1D821DF86E40078C7E2 /* pkcs11.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CAFE1D521DF86E40078C7E2 /* pkcs11.h */; };
 		6CAFE1D921DF86E40078C7E2 /* pkcs11t.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CAFE1D621DF86E40078C7E2 /* pkcs11t.h */; };
 		6CAFE1DA21DF86E40078C7E2 /* pkcs11f.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CAFE1D721DF86E40078C7E2 /* pkcs11f.h */; };
@@ -430,6 +434,10 @@
 		65EABAEE1C621F3D00034337 /* labels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = labels.h; path = "plugins_tools/util/eid-util/labels.h"; sourceTree = "<group>"; };
 		65EABAEF1C621F3D00034337 /* utftranslate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = utftranslate.h; path = "plugins_tools/util/eid-util/utftranslate.h"; sourceTree = "<group>"; };
 		65F3F0211BE236680073F2A3 /* readdata_sequence.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = readdata_sequence.c; path = tests/unit/readdata_sequence.c; sourceTree = "<group>"; };
+		6C22BB64257E619400E72FF2 /* brexitment1conv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = brexitment1conv.h; sourceTree = "<group>"; };
+		6C22BB66257E619400E72FF2 /* brexitment1conv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = brexitment1conv.cpp; sourceTree = "<group>"; };
+		6C22BB67257E619400E72FF2 /* brexitment2conv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = brexitment2conv.h; sourceTree = "<group>"; };
+		6C22BB68257E619400E72FF2 /* brexitment2conv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = brexitment2conv.cpp; sourceTree = "<group>"; };
 		6CAFE1D521DF86E40078C7E2 /* pkcs11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pkcs11.h; sourceTree = "<group>"; };
 		6CAFE1D621DF86E40078C7E2 /* pkcs11t.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pkcs11t.h; sourceTree = "<group>"; };
 		6CAFE1D721DF86E40078C7E2 /* pkcs11f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pkcs11f.h; sourceTree = "<group>"; };
@@ -717,6 +725,10 @@
 		65270A0C1FE976B7004F326D /* conversions */ = {
 			isa = PBXGroup;
 			children = (
+				6C22BB66257E619400E72FF2 /* brexitment1conv.cpp */,
+				6C22BB64257E619400E72FF2 /* brexitment1conv.h */,
+				6C22BB68257E619400E72FF2 /* brexitment2conv.cpp */,
+				6C22BB67257E619400E72FF2 /* brexitment2conv.h */,
 				8BC8E00F210216900026D6AB /* booldecode.cpp */,
 				8BC8E010210216900026D6AB /* booldecode.h */,
 				8BC8E011210216900026D6AB /* toxmlmemberoffamilyconv.cpp */,
@@ -1020,6 +1032,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C22BB69257E619400E72FF2 /* brexitment1conv.h in Headers */,
 				652709FE1FE975A1004F326D /* BeidView.h in Headers */,
 				65270A3B1FE97991004F326D /* utftranslate.h in Headers */,
 				65270A3C1FE97991004F326D /* oslayer-objc.h in Headers */,
@@ -1027,6 +1040,7 @@
 				65270A3E1FE97991004F326D /* eid-viewer.h in Headers */,
 				65314FBD2080E9E20079D0B0 /* workpermitconv.h in Headers */,
 				65270A3F1FE97991004F326D /* macros.h in Headers */,
+				6C22BB6B257E619400E72FF2 /* brexitment2conv.h in Headers */,
 				8BD62CA221021C7000C28B6D /* xmlfileversconv.h in Headers */,
 				65270A401FE97991004F326D /* oslayer.h in Headers */,
 				8BD62CA121021C6300C28B6D /* toxmlmemberoffamilyconv.h in Headers */,
@@ -1330,6 +1344,7 @@
 				65270A311FE976BE004F326D /* cache.cpp in Sources */,
 				65270A0A1FE9761A004F326D /* trustdirname.m in Sources */,
 				65270A681FE97A2B004F326D /* convertor.cpp in Sources */,
+				6C22BB6A257E619400E72FF2 /* brexitment1conv.cpp in Sources */,
 				65314FBC2080E9E10079D0B0 /* workpermitconv.cpp in Sources */,
 				65270A2F1FE976BE004F326D /* certhelpers.c in Sources */,
 				65270A391FE976BE004F326D /* p11.c in Sources */,
@@ -1342,6 +1357,7 @@
 				65270A2D1FE976BE004F326D /* oslayer.c in Sources */,
 				65270A2E1FE976BE004F326D /* backend.c in Sources */,
 				65270A791FE97A2B004F326D /* valdate.cpp in Sources */,
+				6C22BB6C257E619400E72FF2 /* brexitment2conv.cpp in Sources */,
 				65270A781FE97A2B004F326D /* specorgconv.cpp in Sources */,
 				65270A6C1FE97A2B004F326D /* xmldoctypeconv.cpp in Sources */,
 				65270A371FE976BE004F326D /* verify.c in Sources */,
