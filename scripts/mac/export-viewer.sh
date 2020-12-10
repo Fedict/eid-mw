@@ -48,8 +48,8 @@ xcrun altool --notarization-history 0 -u "$AC_USERNAME" -p "@keychain:altool"
 #create a backup copy, in case the stapling goes wrong
 cp -R "$EIDVIEWER_DMG"  "$EIDVIEWER_BACKUP_DMG"
 
-echo "********** sleep 20 seconds before trying to staple **********"
-sleep 20
+echo "********** sleep 200 seconds before trying to staple **********"
+sleep 200
 
 
 echo "********** staple the notarization ticket to the DMG **********"
