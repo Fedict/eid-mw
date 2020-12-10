@@ -8,3 +8,6 @@ fi
 if test -e "/Library/BelgiumIdentityCard"; then
 	rm -rf "/Library/BelgiumIdentityCard"
 fi
+if test -e "/usr/local/lib/beid-pkcs11.bundle"; then
+    rm -rf "/usr/local/lib/beid-pkcs11.bundle"
+fi
