@@ -18,14 +18,12 @@ then
 	DIST=$1
 fi
 shift
+mkdir -p /srv/chroot
 case $DIST in
 	debian)
-		/usr/local/bin/download-debuerreotype-tarball.sh $CODE $ARCH
-		schroot --directory=/ -c source:$CODE-$ARCH-sbuild apt-get update
-		schroot --directory=/ -c source:$CODE-$ARCH-sbuild -- apt-get -y install
+		sbuild-createchroot --arch=$ARCH $CODE /srv/chroot/$CODE http://deb.debian.org/debian
 	;;
 	ubuntu)
-		mkdir -p /srv/chroot
 		sbuild-createchroot --arch=$ARCH $CODE /srv/chroot/$CODE http://archive.ubuntu.com/ubuntu /usr/share/debootstrap/scripts/gutsy
 	;;
 	*)
