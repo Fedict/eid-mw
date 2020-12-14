@@ -1,7 +1,19 @@
 var modname = "beidpkcs11";
+var oldmodname = "beidpkcs11_old";
 async function installPKCS11Module() {
   if(typeof browser.pkcs11 !== 'undefined') {
     var res;
+    try {
+      res = await browser.pkcs11.isModuleInstalled(oldmodname);
+      console.log("old module installed: ", res);
+      if(res) {
+        browser.pkcs11.uninstallModule(oldmodname);
+        console.log("removed old module");
+      }
+    } catch (err) {
+      console.log("could not check for/remove old module: ");
+      console.log(err);
+    }
     try {
       var platform = await browser.runtime.getPlatformInfo();
       if(platform.os === "win") {
