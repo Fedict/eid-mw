@@ -142,17 +142,6 @@ ln -s ../../../libbeidpkcs11.$REL_VERSION.dylib "$PKCS11_INST_DIR/beid-pkcs11.bu
 cat > "$MOZ_PKCS11_MANIFEST_DIR/beidpkcs11.json" <<EOF
 {
   "name": "beidpkcs11",
-  "description": "Belgium eID PKCS#11 Module v2",
-  "type": "pkcs11",
-  "path": "/Library/Belgium Identity Card/Pkcs11/beid-pkcs11.bundle/Contents/MacOS/libbeidpkcs11.dylib",
-  "allowed_extensions": ["belgiumeid@eid.belgium.be"]
-}
-EOF
-
-# Create PKCS#11-old manifest file for Mozilla, so addon knows to remove the old plugin and FF does not pop-up warning
-cat > "$MOZ_PKCS11_MANIFEST_DIR/beidpkcs11_old.json" <<EOF
-{
-  "name": "beidpkcs11_old",
   "description": "Belgium eID PKCS#11 Module",
   "type": "pkcs11",
   "path": "/usr/local/lib/beid-pkcs11.bundle/Contents/MacOS/libbeidpkcs11.dylib",
