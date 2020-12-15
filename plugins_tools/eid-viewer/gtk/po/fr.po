@@ -150,7 +150,7 @@ msgstr "Une erreur s'est produite pendant la modification du code PIN"
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:340
 msgid "https://eid.belgium.be/en/question-and-answer"
-msgstr "https://eid.belgium.be/fr/questons-et-reponses"
+msgstr "https://eid.belgium.be/fr/questions-et-reponses"
 
 #: plugins_tools/eid-viewer/gtk/gtkui.c:342
 msgid "https://iamapps.belgium.be/tma/"
