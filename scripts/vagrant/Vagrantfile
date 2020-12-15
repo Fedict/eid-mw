@@ -1,0 +1,36 @@
+Vagrant.configure("2") do |config|
+  grouphash = {
+      "debuntu" => [ "debian9", "debian10", "ubuntu1804", "ubuntu2004", "ubuntu2010" ],
+      "debian" => [ "debian9", "debian10" ],
+      "ubuntu" => [ "ubuntu1804", "ubuntu2004", "ubuntu2010" ],
+      "fedora" => [ "fedora32", "fedora33" ],
+      "centos" => [ "centos7", "centos8" ],
+      "suse" => [ "opensuse15" ],
+    }
+  genericmachines = [ "debian9", "debian10",
+	"ubuntu1804", "ubuntu2004", "ubuntu2010", "fedora32",
+	"fedora33", "opensuse15", "centos7", "centos8" ]
+  genericmachines.each do |machine|
+    config.vm.define machine do |config|
+      config.vm.box = "generic/#{machine}"
+    end
+  end
+  config.vm.define "windows" do |config|
+    config.vm.box = "peru/windows-10-enterprise-x64-eval"
+    config.vm.provision :file, source: "./Belgium-eID-QuickInstaller.exe", destination: "C:\\tmp\\"
+    config.vm.provision :shell, inline: "Get-Location | select -ExpandProperty Path"
+    config.vm.provision :shell, inline: "C:\\tmp\\Belgium-eID-QuickInstaller.exe"
+  end
+  config.vm.provision :file, source: "./eid-archive.deb", destination: "eid-archive.deb"
+  config.vm.provision :file, source: "./eid-archive-fedora.rpm", destination: "eid-archive-fedora.rpm"
+  config.vm.provision :file, source: "./eid-archive-suse.rpm", destination: "eid-archive-suse.rpm"
+  config.vm.provision :file, source: "./eid-archive-el.rpm", destination: "eid-archive-el.rpm"
+  config.vm.provision :ansible do |ansible|
+    ansible.become = true
+    ansible.groups = grouphash
+    ansible.playbook = "eid-playbook.yml"
+  end
+  config.vm.provider :libvirt do |libvirt|
+    libvirt.smartcard :mode => 'passthrough', :type => 'spicevmc'
+  end
+end

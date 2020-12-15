@@ -1,0 +1,87 @@
+---
+- name: install eID on Debian and derivatives
+  hosts: debuntu
+  tasks:
+  - name: install eid-archive
+    become: yes
+    apt:
+      deb: ./eid-archive.deb
+  - name: install eid-mw and eid-viewer
+    become: yes
+    apt:
+      update_cache: yes
+      name:
+      - eid-mw
+      - eid-viewer
+      state: latest
+
+- name: install eID on Fedora
+  hosts: fedora
+  tasks:
+  - name: install eid-archive
+    become: yes
+    dnf:
+      disable_gpg_check: yes
+      name: 
+      - ./eid-archive-fedora.rpm
+  - name: install eid-mw and eid-viewer
+    become: yes
+    dnf:
+      name:
+      - eid-mw
+      - eid-viewer
+      state: latest
+
+- name: install eID on Suse
+  hosts: suse
+  tasks:
+  - name: install eid-archive
+    become: yes
+    zypper:
+      name:
+      - ./eid-archive-suse.rpm
+  - name: install eid-mw and eid-viewer
+    become: yes
+    zypper:
+      name:
+      - eid-mw
+      - eid-viewer
+      disable_recommends: no
+
+- name: install eID on CentOS
+  hosts: centos
+  tasks:
+  - name: install eid-archive
+    become: yes
+    yum:
+      name:
+      - ./eid-archive-el.rpm
+  - name: install eid-mw and eid-viewer
+    become: yes
+    yum:
+      name:
+      - eid-mw
+      - eid-viewer
+
+- name: install graphical environment on Debian
+  hosts: debian
+  tasks:
+  - name: install desktop task
+    become: yes
+    apt:
+      name: task-desktop
+      state: present
+  - name: ensure gdm is running
+    become: yes
+    systemd:
+      name: gdm
+      state: started
+
+- name: install graphical environment on Ubuntu
+  hosts: ubuntu
+  tasks:
+  - name: install ubuntu desktop environment
+    become: yes
+    apt:
+      name: ubuntu-desktop
+      state: present
