@@ -653,6 +653,9 @@ namespace eIDViewer
                 }
                 else
                 {
+                    /* temporary disable this check, only 5000 challenges can be requested without PIN
+                     * probably we'll make this an optional check in the viewer
+                     * 
                     //public basic key is correct, now check if the card contains the matching private key
                     challenge = new byte[48];
 
@@ -671,6 +674,7 @@ namespace eIDViewer
                     {
                         this.WriteLog("validating the card authenticity: backend failed sending challenge to the card \n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
                     }
+                    */
                 }
             }
             return true;
