@@ -37,9 +37,9 @@ DocTypeConvertor::DocTypeConvertor()
 		// European blue card H
 		conversions[EID_VWR_LANG_DE][TEXT("19")] = TEXT("Blaue Karte EU");
 		// card I");
-		conversions[EID_VWR_LANG_NL][TEXT("20")] = TEXT("I. ICT");
+		conversions[EID_VWR_LANG_DE][TEXT("20")] = TEXT("I. ICT");
 		// card J");
-		conversions[EID_VWR_LANG_NL][TEXT("21")] = TEXT("J. Mobile ICT");
+		conversions[EID_VWR_LANG_DE][TEXT("21")] = TEXT("J. Mobile ICT");
 
 		conversions[EID_VWR_LANG_EN][TEXT("1")] = TEXT("IDENTITY CARD");
 		conversions[EID_VWR_LANG_EN][TEXT("6")] = TEXT("KIDS CARD");
@@ -68,9 +68,9 @@ DocTypeConvertor::DocTypeConvertor()
 		// European blue card H
 		conversions[EID_VWR_LANG_EN][TEXT("19")] = TEXT("EU Blue Card");
 		// card I");
-		conversions[EID_VWR_LANG_NL][TEXT("20")] = TEXT("I. ICT");
+		conversions[EID_VWR_LANG_EN][TEXT("20")] = TEXT("I. ICT");
 		// card J");
-		conversions[EID_VWR_LANG_NL][TEXT("21")] = TEXT("J. Mobile ICT");
+		conversions[EID_VWR_LANG_EN][TEXT("21")] = TEXT("J. Mobile ICT");
 
 		conversions[EID_VWR_LANG_FR][TEXT("1")] = TEXT("CARTE D'IDENTITE");
 		conversions[EID_VWR_LANG_FR][TEXT("6")] = TEXT("CARTE POUR ENFANTS");
@@ -99,9 +99,9 @@ DocTypeConvertor::DocTypeConvertor()
 		// European blue card H
 		conversions[EID_VWR_LANG_FR][TEXT("19")] = TEXT("Carte bleue europ\u00e9enne");
 		// card I");
-		conversions[EID_VWR_LANG_NL][TEXT("20")] = TEXT("I. ICT");
+		conversions[EID_VWR_LANG_FR][TEXT("20")] = TEXT("I. ICT");
 		// card J");
-		conversions[EID_VWR_LANG_NL][TEXT("21")] = TEXT("J. Mobile ICT");
+		conversions[EID_VWR_LANG_FR][TEXT("21")] = TEXT("J. Mobile ICT");
 
 		conversions[EID_VWR_LANG_NL][TEXT("1")] = TEXT("IDENTITEITSKAART");
 		conversions[EID_VWR_LANG_NL][TEXT("6")] = TEXT("KIDS KAART");
