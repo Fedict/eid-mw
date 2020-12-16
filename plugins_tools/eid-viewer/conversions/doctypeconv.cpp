@@ -40,6 +40,10 @@ DocTypeConvertor::DocTypeConvertor()
 		conversions[EID_VWR_LANG_DE][TEXT("20")] = TEXT("I. ICT");
 		// card J");
 		conversions[EID_VWR_LANG_DE][TEXT("21")] = TEXT("J. Mobile ICT");
+		// card M");
+		conversions[EID_VWR_LANG_DE][TEXT("22")] = TEXT("AUFENTHALSTITEL");
+		// card N");
+		conversions[EID_VWR_LANG_DE][TEXT("23")] = TEXT("KLEINEN GRENZVERKEHR");
 
 		conversions[EID_VWR_LANG_EN][TEXT("1")] = TEXT("IDENTITY CARD");
 		conversions[EID_VWR_LANG_EN][TEXT("6")] = TEXT("KIDS CARD");
@@ -71,6 +75,10 @@ DocTypeConvertor::DocTypeConvertor()
 		conversions[EID_VWR_LANG_EN][TEXT("20")] = TEXT("I. ICT");
 		// card J");
 		conversions[EID_VWR_LANG_EN][TEXT("21")] = TEXT("J. Mobile ICT");
+		// card M");
+		conversions[EID_VWR_LANG_EN][TEXT("22")] = TEXT("RESIDENCE PERMIT");
+		// card N");
+		conversions[EID_VWR_LANG_EN][TEXT("23")] = TEXT("LOCAL BORDER TRAFFIC");
 
 		conversions[EID_VWR_LANG_FR][TEXT("1")] = TEXT("CARTE D'IDENTITE");
 		conversions[EID_VWR_LANG_FR][TEXT("6")] = TEXT("CARTE POUR ENFANTS");
@@ -102,6 +110,10 @@ DocTypeConvertor::DocTypeConvertor()
 		conversions[EID_VWR_LANG_FR][TEXT("20")] = TEXT("I. ICT");
 		// card J");
 		conversions[EID_VWR_LANG_FR][TEXT("21")] = TEXT("J. Mobile ICT");
+		// card M");
+		conversions[EID_VWR_LANG_FR][TEXT("22")] = TEXT("TITRE DE SEJOUR");
+		// card N");
+		conversions[EID_VWR_LANG_FR][TEXT("23")] = TEXT("PETIT TRAFIC FRONTALIER");
 
 		conversions[EID_VWR_LANG_NL][TEXT("1")] = TEXT("IDENTITEITSKAART");
 		conversions[EID_VWR_LANG_NL][TEXT("6")] = TEXT("KIDS KAART");
@@ -133,6 +145,10 @@ DocTypeConvertor::DocTypeConvertor()
 		conversions[EID_VWR_LANG_NL][TEXT("20")] = TEXT("I. ICT");
 		// card J");
 		conversions[EID_VWR_LANG_NL][TEXT("21")] = TEXT("J. Mobile ICT");
+		// card M");
+		conversions[EID_VWR_LANG_NL][TEXT("22")] = TEXT("VERBLIJFSTITEL");
+		// card N");
+		conversions[EID_VWR_LANG_NL][TEXT("23")] = TEXT("KLEIN GRENSVERKEER");
 	}
 }
 
