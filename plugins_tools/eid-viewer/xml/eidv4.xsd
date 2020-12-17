@@ -160,6 +160,10 @@
       <xsd:enumeration value="foreigner_f" />
       <xsd:enumeration value="foreigner_f_plus" />
       <xsd:enumeration value="european_blue_card_h" />
+	  <xsd:enumeration value="ict_i" />
+      <xsd:enumeration value="mobile_ict_j" />
+      <xsd:enumeration value="foreigner_m" />
+      <xsd:enumeration value="foreigner_n" />
     </xsd:restriction>
   </xsd:simpleType>
   <xsd:simpleType name="cardnumType">
