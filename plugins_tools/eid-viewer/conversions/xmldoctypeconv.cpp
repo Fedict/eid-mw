@@ -21,6 +21,8 @@ XmlDoctypeConvertor::XmlDoctypeConvertor()
 		conversions[TEXT("19")] = TEXT("european_blue_card_h");
 		conversions[TEXT("20")] = TEXT("ict_i");
 		conversions[TEXT("21")] = TEXT("mobile_ict_j");
+		conversions[TEXT("22")] = TEXT("foreigner_m");
+		conversions[TEXT("23")] = TEXT("foreigner_n");
 		conversions[TEXT("belgian_citizen")] = TEXT("1");
 		conversions[TEXT("kids_card")] = TEXT("6");
 		conversions[TEXT("bootstrap_card")] = TEXT("7");
@@ -36,6 +38,8 @@ XmlDoctypeConvertor::XmlDoctypeConvertor()
 		conversions[TEXT("european_blue_card_h")] = TEXT("19");
 		conversions[TEXT("ict_i")] = TEXT("20");
 		conversions[TEXT("mobile_ict_j")] = TEXT("21");
+		conversions[TEXT("foreigner_m")] = TEXT("22");
+		conversions[TEXT("foreigner_n")] = TEXT("23");
 	}
 }
 
