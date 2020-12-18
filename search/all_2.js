@@ -6,6 +6,7 @@ var searchData=
   ['bbannumberconvertor',['BBANNumberConvertor',['../class_b_b_a_n_number_convertor.html',1,'']]],
   ['belgium',['Belgium',['../classe_i_d_viewer_1_1_resources_1_1_application_string_resources.html#a7c045fffe7dd1a41cbe384267bd9d1f1',1,'eIDViewer::Resources::ApplicationStringResources']]],
   ['booldecodeconvertor',['BoolDecodeConvertor',['../class_bool_decode_convertor.html',1,'']]],
+  ['brexit_5fmentions',['Brexit_mentions',['../classe_i_d_viewer_1_1_resources_1_1_identity_tab_string_resources.html#a0a6aafb0aa1d1da66584218931fe9482',1,'eIDViewer::Resources::IdentityTabStringResources']]],
   ['brexitmention1convertor',['BrexitMention1Convertor',['../class_brexit_mention1_convertor.html',1,'']]],
   ['brexitmention2convertor',['BrexitMention2Convertor',['../class_brexit_mention2_convertor.html',1,'']]]
 ];
