@@ -933,6 +933,11 @@ namespace eIDViewer
             foreigner_fields_height_double = 42;
         }
 
+        private void BrexitFieldPresent()
+        {
+            brexit_fields_height = 26;
+        }
+
         public void StoreStringData(string label, string data)
         {
 
@@ -1000,10 +1005,10 @@ namespace eIDViewer
                 ForeignersFieldPresent(); }
             else if (String.Equals(label, "brexit_mention_1", StringComparison.Ordinal))
             { brexit_mention1 = data;
-                ForeignersFieldPresent(); }
+                BrexitFieldPresent(); }
             else if (String.Equals(label, "brexit_mention_2", StringComparison.Ordinal))
             { brexit_mention2 = data;
-                ForeignersFieldPresent(); }
+                BrexitFieldPresent(); }
         }
 
         private byte[] dataFile;
@@ -1208,6 +1213,7 @@ namespace eIDViewer
             HideProgressBar();
             foreigner_fields_height = 0;
             foreigner_fields_height_double = 0;
+            brexit_fields_height = 0;
             pinop_ready = false;
             open_enabled = true;
 
@@ -1744,6 +1750,17 @@ namespace eIDViewer
             {
                 _foreigner_fields_height_double = value;
                 this.NotifyPropertyChanged("foreigner_fields_height_double");
+            }
+        }
+
+        private int _brexit_fields_height;
+        public int brexit_fields_height
+        {
+            get { return _brexit_fields_height; }
+            set
+            {
+                _brexit_fields_height = value;
+                this.NotifyPropertyChanged("brexit_fields_height");
             }
         }
 
