@@ -997,7 +997,13 @@ namespace eIDViewer
                 ForeignersFieldPresent(); }
             else if (String.Equals(label, "regional_file_number", StringComparison.Ordinal))
             { regional_file_number = data;
-                ForeignersFieldPresent(); }   
+                ForeignersFieldPresent(); }
+            else if (String.Equals(label, "brexit_mention_1", StringComparison.Ordinal))
+            { brexit_mention1 = data;
+                ForeignersFieldPresent(); }
+            else if (String.Equals(label, "brexit_mention_2", StringComparison.Ordinal))
+            { brexit_mention2 = data;
+                ForeignersFieldPresent(); }
         }
 
         private byte[] dataFile;
@@ -1195,6 +1201,8 @@ namespace eIDViewer
             employers_vat_number1 = "-";
             employers_vat_number2 = "-";
             regional_file_number = "-";
+            brexit_mention1 = "-";
+            brexit_mention2 = "-";
             eid_card_present = false;
             progress = 0;
             HideProgressBar();
@@ -1693,6 +1701,29 @@ namespace eIDViewer
                 this.NotifyPropertyChanged("regional_file_number");
             }
         }
+
+        private string _brexit_mention1;
+        public string brexit_mention1
+        {
+            get { return _brexit_mention1; }
+            set
+            {
+                _brexit_mention1 = value;
+                this.NotifyPropertyChanged("brexit_mention1");
+            }
+        }
+
+        private string _brexit_mention2;
+        public string brexit_mention2
+        {
+            get { return _brexit_mention2; }
+            set
+            {
+                _brexit_mention2 = value;
+                this.NotifyPropertyChanged("brexit_mention2");
+            }
+        }
+
 
         private int _foreigner_fields_height;
         public int foreigner_fields_height
