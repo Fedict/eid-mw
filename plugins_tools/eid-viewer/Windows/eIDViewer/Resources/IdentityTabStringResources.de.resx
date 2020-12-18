@@ -249,4 +249,7 @@ ZDU-Nummer des Arbeitgebers (2):</value>
   <data name="Photo" xml:space="preserve">
     <value>foto</value>
   </data>
+  <data name="Brexit_mentions" xml:space="preserve">
+    <value>Brexit Erwähnungen:</value>
+  </data>
 </root>

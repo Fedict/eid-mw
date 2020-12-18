@@ -249,4 +249,7 @@ van de werkgever (2):</value>
   <data name="Photo" xml:space="preserve">
     <value>foto</value>
   </data>
+  <data name="Brexit_mentions" xml:space="preserve">
+    <value>Brexit vermeldingen:</value>
+  </data>
 </root>

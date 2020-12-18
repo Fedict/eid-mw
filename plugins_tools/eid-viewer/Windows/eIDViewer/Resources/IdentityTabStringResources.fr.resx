@@ -249,4 +249,7 @@ BCE de l’employeur (2):</value>
   <data name="Photo" xml:space="preserve">
     <value>photo</value>
   </data>
+  <data name="Brexit_mentions" xml:space="preserve">
+    <value>Mentions du Brexit:</value>
+  </data>
 </root>

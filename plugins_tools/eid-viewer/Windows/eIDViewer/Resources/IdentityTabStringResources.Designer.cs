@@ -61,6 +61,15 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Brexit Mentions:.
+        /// </summary>
+        public static string Brexit_mentions {
+            get {
+                return ResourceManager.GetString("Brexit_mentions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date of birth:.
         /// </summary>
         public static string DateOfBirthLabel {
