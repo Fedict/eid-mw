@@ -78,7 +78,7 @@
     <IntDir>$(Platform)_$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>Binaries\$(Platform)_$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)\..\eIDViewer\bin\$(Configuration)\</OutDir>
     <IntDir>$(Platform)_$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -101,7 +101,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>beid_ff_pkcs11D.lib;Xmllite.lib;Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\..\..\..\cardcomm\pkcs11\VS_2017\Binaries\Win32_PKCS11_FF_DEBUG\</AdditionalLibraryDirectories>
-      <OutputFile>$(SolutionDir)\..\eIDViewer\bin\Debug\$(TargetName)$(TargetExt)</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
