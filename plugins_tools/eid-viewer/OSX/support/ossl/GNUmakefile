@@ -1,7 +1,7 @@
 OSSL_VERSION=1.1.1i
 TP_DIR=../../../../../../ThirdParty
 
-build: openssl/libcrypto.a
+build: openssl/libcrypto.a openssl/include/openssl/opensslconf.h
 
 clean:
 	rm -rf configured openssl openssl-$(OSSL_VERSION) openssl-$(OSSL_VERSION).tar.gz openssl-arm64 openssl-x86_64
@@ -17,6 +17,12 @@ openssl/Configure: openssl
 
 openssl-%: openssl
 	mkdir -p $@
+
+# OpenSSL needs this file, but it just so happens that it's the same for
+# both x86 and arm64, so...
+openssl/include/openssl/opensslconf.h: configured
+	diff -q openssl-x86_64/include/openssl/opensslconf.h openssl-arm64/include/openssl/opensslconf.h
+	cp -a openssl-x86_64/include/openssl/opensslconf.h openssl/include/openssl/opensslconf.h
 
 openssl/lib%.a: openssl-x86_64/lib%.a openssl-arm64/lib%.a
 	lipo -create -output $@ $^
