@@ -4,7 +4,7 @@ TP_DIR=../../../../../../ThirdParty
 build: builddir/libxml2.la libxml2
 
 clean:
-	rm -rf config.stamp libxml2 libxml2-$(XML2_VERSION).tar.gz builddir
+	rm -rf config.stamp libxml2 libxml2-$(XML2_VERSION) libxml2-$(XML2_VERSION).tar.gz builddir
 
 libxml2-$(XML2_VERSION).tar.gz:
 	if [ -f $(TP_DIR)/libxml2-$(XML2_VERSION).tar.gz ]; then \
