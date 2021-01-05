@@ -1,10 +1,10 @@
 XML2_VERSION=2.9.10
 TP_DIR=../../../../../../ThirdParty
 
-build: builddir/libxml2.la libxml2
+build: builddir/.libs/libxml2.a
 
 clean:
-	rm -rf config.stamp libxml2 libxml2-$(XML2_VERSION) libxml2-$(XML2_VERSION).tar.gz builddir
+	rm -rf config.stamp libxml2 libxml2-$(XML2_VERSION) libxml2-$(XML2_VERSION).tar.gz builddir-x86_64 builddir-arm64 builddir
 
 libxml2-$(XML2_VERSION).tar.gz:
 	if [ -f $(TP_DIR)/libxml2-$(XML2_VERSION).tar.gz ]; then \
@@ -15,21 +15,28 @@ libxml2-$(XML2_VERSION).tar.gz:
 	fi
 
 libxml2-$(XML2_VERSION)/configure: libxml2-$(XML2_VERSION)
-libxml2: libxml2-$(XML2_VERSION)
-	ln -sf libxml2-$(XML2_VERSION) libxml2
+libxml2-%: libxml2-$(XML2_VERSION)
+	mkdir -p $@
 
 libxml2-$(XML2_VERSION): libxml2-$(XML2_VERSION).tar.gz
 	tar xvzf libxml2-$(XML2_VERSION).tar.gz
 
-builddir/config.status: builddir/.exists
-	cd builddir; ../libxml2-$(XML2_VERSION)/configure --disable-shared --enable-static CFLAGS='-mmacosx-version-min=10.7'
+builddir-x86_64/config.status: builddir-x86_64/.exists libxml2-$(XML2_VERSION)/configure
+	cd builddir-x86_64; ../libxml2-$(XML2_VERSION)/configure --disable-shared --enable-static CFLAGS='-target x86_64-apple-macos10.9 -mmacosx-version-min=10.9' --host=x86_64-apple-darwin --without-lzma
+builddir-arm64/config.status: builddir-arm64/.exists libxml2-$(XML2_VERSION)/configure
+	cd builddir-arm64; ../libxml2-$(XML2_VERSION)/configure --disable-shared --enable-static CFLAGS='-target arm64-apple-macos11 -mmacosx-version-min=11' --host=aarch64-apple-darwin --without-lzma
 
-builddir/.exists: libxml2-$(XML2_VERSION)
-	rm -rf builddir
-	mkdir builddir
-	touch builddir/.exists
+builddir-%/.exists: libxml2-$(XML2_VERSION)
+	rm -rf $(dir $@)
+	mkdir $(dir $@)
+	touch $@
 
-builddir/libxml2.la: builddir/config.status
-	$(MAKE) -C builddir
+builddir/.libs/libxml2.a: builddir-x86_64/.libs/libxml2.a builddir-arm64/.libs/libxml2.a
+	mkdir -p $(dir $@)
+	lipo -create -output $@ $^
+
+builddir-%/.libs/libxml2.a: builddir-%/libxml2.la
+builddir-%/libxml2.la: builddir-%/config.status
+	$(MAKE) -C $(dir $@)
 
 .SECONDARY: builddir/config.status builddir/.exists
