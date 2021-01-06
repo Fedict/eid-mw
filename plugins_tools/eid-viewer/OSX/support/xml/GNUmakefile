@@ -3,6 +3,12 @@ TP_DIR=../../../../../../ThirdParty
 
 build: builddir/.libs/libxml2.a
 
+ifeq ($(ARCHS),)
+ARCHS=x86_64 arm64
+endif
+BUILDDIRS=$(addprefix builddir-,$(ARCHS))
+LIBS=$(addsuffix /.libs/libxml2.a,$(BUILDDIRS))
+
 clean:
 	rm -rf config.stamp libxml2 libxml2-$(XML2_VERSION) libxml2-$(XML2_VERSION).tar.gz builddir-x86_64 builddir-arm64 builddir
 
@@ -27,15 +33,16 @@ builddir-arm64/config.status: builddir-arm64/.exists libxml2-$(XML2_VERSION)/con
 	cd builddir-arm64; ../libxml2-$(XML2_VERSION)/configure --disable-shared --enable-static CFLAGS='-target arm64-apple-macos11 -mmacosx-version-min=11' --host=aarch64-apple-darwin --without-lzma
 
 builddir-%/.exists: libxml2-$(XML2_VERSION)
-	rm -rf $(dir $@)
-	mkdir $(dir $@)
+	mkdir -p $(dir $@)
 	touch $@
 
-builddir/.libs/libxml2.a: builddir-x86_64/.libs/libxml2.a builddir-arm64/.libs/libxml2.a
+builddir/.libs/libxml2.a: $(LIBS)
 	mkdir -p $(dir $@)
 	lipo -create -output $@ $^
 
-builddir-%/.libs/libxml2.a: builddir-%/libxml2.la
+builddir-x86_64/.libs/libxml2.a: builddir-x86_64/libxml2.la
+builddir-arm64/.libs/libxml2.a: builddir-arm64/libxml2.la
+
 builddir-%/libxml2.la: builddir-%/config.status
 	$(MAKE) -C $(dir $@)
 
