@@ -340,6 +340,9 @@
 /* Class = "NSTextFieldCell"; title = "Street:"; ObjectID = "KPC-H5-3XA"; */
 "KPC-H5-3XA.title" = "Straat:";
 
+/* Class = "NSTextFieldCell"; title = "Brexit mentions:"; ObjectID = "KU6-Vz-V1i"; */
+"KU6-Vz-V1i.title" = "Brexit vermeldingen:";
+
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "kZU-gG-wde"; */
 "kZU-gG-wde.placeholderString" = "-";
 
