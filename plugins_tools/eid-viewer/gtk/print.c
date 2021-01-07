@@ -31,40 +31,42 @@ static struct field {
 	int group;
 	char* printlabel;
 	char* p11label;
+	char* p11label2;
 } regularfields[] = {
-	{ 1, N_("Name:"), "surname" },
-	{ 1, N_("Given names:"), "firstnames" },
-	{ 1, N_("Place of birth:"), "location_of_birth" },
-	{ 1, N_("Date of birth:"), "date_of_birth" },
-	{ 1, N_("Sex:"), "gender" },
-	{ 1, N_("Nationality:"), "nationality" },
-	{ 1, N_("National number:"), "national_number" },
-	{ 2, N_("Title:"), "nobility" },
-	{ 2, N_("Special status:"), "special_status" },
-	{ 3, N_("Street:"), "address_street_and_number" },
-	{ 3, N_("Postal code:"), "address_zip" },
-	{ 3, N_("Municipality:"), "address_municipality" },
-	{ 4, N_("Card number:"), "card_number" },
-	{ 4, N_("Place of issue:"), "issuing_municipality" },
-	{ 4, N_("Chip number:"), "chip_number" },
-	{ 4, N_("Valid from:"), "validity_begin_date" },
-	{ 4, N_("Valid until:"), "validity_end_date" },
+	{ 1, N_("Name:"), "surname", NULL },
+	{ 1, N_("Given names:"), "firstnames", "first_letter_of_third_given_name" },
+	{ 1, N_("Place of birth:"), "location_of_birth", NULL },
+	{ 1, N_("Date of birth:"), "date_of_birth", NULL },
+	{ 1, N_("Sex:"), "gender", NULL },
+	{ 1, N_("Nationality:"), "nationality", NULL },
+	{ 1, N_("National number:"), "national_number", NULL },
+	{ 2, N_("Title:"), "nobility", NULL },
+	{ 2, N_("Special status:"), "special_status", NULL },
+	{ 3, N_("Street:"), "address_street_and_number", NULL },
+	{ 3, N_("Postal code:"), "address_zip", NULL },
+	{ 3, N_("Municipality:"), "address_municipality", NULL },
+	{ 4, N_("Card number:"), "card_number", NULL },
+	{ 4, N_("Place of issue:"), "issuing_municipality", NULL },
+	{ 4, N_("Chip number:"), "chip_number", NULL },
+	{ 4, N_("Valid from:"), "validity_begin_date", NULL },
+	{ 4, N_("Valid until:"), "validity_end_date", NULL },
 };
 
 static struct field foreignerfields[] = {
-	{ 5, N_("Member of family:"), "member_of_family" },
-	{ 5, N_("Organization:"), "special_organization" },
-	{ 5, N_("Duplicata:"), "duplicata" },
-	{ 5, N_("Date and country of protection:"), "date_and_country_of_protection" },
-	{ 5, N_("Work permit mention:"), "work_permit_type" },
-	{ 5, N_("Employer's VAT number (1):"), "employer_vat_1" },
-	{ 5, N_("Employer's VAT number (2):"), "employer_vat_2" },
-	{ 5, N_("Regional file number:"), "regional_file_number" },
+	{ 5, N_("Member of family:"), "member_of_family", NULL },
+	{ 5, N_("Organization:"), "special_organization", NULL },
+	{ 5, N_("Duplicata:"), "duplicata", NULL },
+	{ 5, N_("Date and country of protection:"), "date_and_country_of_protection", NULL },
+	{ 5, N_("Work permit mention:"), "work_permit_type", NULL },
+	{ 5, N_("Employer's VAT number (1):"), "employer_vat_1", NULL },
+	{ 5, N_("Employer's VAT number (2):"), "employer_vat_2", NULL },
+	{ 5, N_("Regional file number:"), "regional_file_number", NULL },
+	{ 5, N_("Brexit mentions:"), "brexit_mention_1", "brexit_mention_2" },
 };
 
 static struct field printfields[] = {
-	{ 6, N_("Printed:"), "printdate" },
-	{ 6, N_("Printed by:"), "printby" },
+	{ 6, N_("Printed:"), "printdate", NULL },
+	{ 6, N_("Printed by:"), "printby", NULL },
 };
 
 /* Show the photo on the right location on the page */
@@ -246,9 +248,19 @@ static void draw_page(GtkPrintOperation* print G_GNUC_UNUSED, GtkPrintContext* c
 			for(j=0; j<sizes[i]; j++) {
 				gint width, height;
 				GObject *obj = gtk_builder_get_object(builder, allfields[i][j].p11label);
+				GObject *obj2 = NULL;
+				if(allfields[i][j].p11label2 != NULL) {
+					obj2 = gtk_builder_get_object(builder, allfields[i][j].p11label2);
+				}
 
 				if(GTK_IS_LABEL(obj)) {
-					pango_layout_set_text(data, gtk_label_get_text(GTK_LABEL(obj)), -1);
+					gchar* text = g_strdup(gtk_label_get_text(GTK_LABEL(obj)));
+					if(obj2 != NULL) {
+						gchar *tmp = text;
+						text = g_strdup_printf("%s %s", tmp, gtk_label_get_text(GTK_LABEL(obj2)));
+						g_free(tmp);
+					}
+					pango_layout_set_text(data, text, -1);
 				} else { // checkbox
 					if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(obj))) {
 						pango_layout_set_text(data, "🗸", -1);
