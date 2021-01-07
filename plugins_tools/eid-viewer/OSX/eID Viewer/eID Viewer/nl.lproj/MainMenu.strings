@@ -10,26 +10,23 @@
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "0lh-0e-3pp"; */
 "0lh-0e-3pp.placeholderString" = "-";
 
-/* Class = "NSWindow"; title = "Window"; ObjectID = "1TP-On-3Kg"; */
-"1TP-On-3Kg.title" = "Window";
-
-/* Class = "NSMenuItem"; title = "eID Viewer"; ObjectID = "1Xt-HY-uBw"; */
-"1Xt-HY-uBw.title" = "eID Viewer";
-
 /* Class = "NSSegmentedCell"; 1fk-Wt-tsG.ibShadowedLabels[0] = "Test PIN"; ObjectID = "1fk-Wt-tsG"; */
 "1fk-Wt-tsG.ibShadowedLabels[0]" = "Pincode verifiëren";
 
 /* Class = "NSSegmentedCell"; 1fk-Wt-tsG.ibShadowedLabels[1] = "Change PIN"; ObjectID = "1fk-Wt-tsG"; */
 "1fk-Wt-tsG.ibShadowedLabels[1]" = "Pincode wijzigen";
 
-/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "2II-ef-jvH"; */
-"2II-ef-jvH.placeholderString" = "-";
+/* Class = "NSWindow"; title = "Window"; ObjectID = "1TP-On-3Kg"; */
+"1TP-On-3Kg.title" = "Window";
 
-/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "2Yv-uW-wEG"; */
-"2Yv-uW-wEG.placeholderString" = "-";
+/* Class = "NSMenuItem"; title = "eID Viewer"; ObjectID = "1Xt-HY-uBw"; */
+"1Xt-HY-uBw.title" = "eID Viewer";
 
 /* Class = "NSTextFieldCell"; title = "Chip number:"; ObjectID = "2gP-Hs-M1w"; */
 "2gP-Hs-M1w.title" = "Chip nummer:";
+
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "2II-ef-jvH"; */
+"2II-ef-jvH.placeholderString" = "-";
 
 /* Class = "NSTextFieldCell"; title = "Valid from:"; ObjectID = "2ly-GQ-L95"; */
 "2ly-GQ-L95.title" = "Geldig van:";
@@ -40,11 +37,14 @@
 /* Class = "NSTextFieldCell"; title = "Chip number:"; ObjectID = "2vN-4t-STd"; */
 "2vN-4t-STd.title" = "Chip nummer:";
 
-/* Class = "NSTabViewItem"; label = "Log"; ObjectID = "3Pf-c1-Y7s"; */
-"3Pf-c1-Y7s.label" = "Log";
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "2Yv-uW-wEG"; */
+"2Yv-uW-wEG.placeholderString" = "-";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "3gn-cj-42f"; */
 "3gn-cj-42f.placeholderString" = "-";
+
+/* Class = "NSTabViewItem"; label = "Log"; ObjectID = "3Pf-c1-Y7s"; */
+"3Pf-c1-Y7s.label" = "Log";
 
 /* Class = "NSTextFieldCell"; title = "Card number:"; ObjectID = "3ta-Y3-CdH"; */
 "3ta-Y3-CdH.title" = "Kaart nummer:";
@@ -52,23 +52,23 @@
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "4I2-ZH-MJS"; */
 "4I2-ZH-MJS.placeholderString" = "-";
 
-/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "4sG-Sn-9Sh"; */
-"4sG-Sn-9Sh.placeholderString" = "-";
-
 /* Class = "NSMenuItem"; title = "Quit eID Viewer"; ObjectID = "4sb-4s-VLi"; */
 "4sb-4s-VLi.title" = "eID Viewer afsluiten";
 
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "4sG-Sn-9Sh"; */
+"4sG-Sn-9Sh.placeholderString" = "-";
+
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "4zA-Ye-VVg"; */
 "4zA-Ye-VVg.placeholderString" = "-";
+
+/* Class = "NSMenuItem"; title = "About eID Viewer"; ObjectID = "5kV-Vb-QxS"; */
+"5kV-Vb-QxS.title" = "Over eID Viewer";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "5S7-c0-Xqi"; */
 "5S7-c0-Xqi.placeholderString" = "-";
 
 /* Class = "NSTextFieldCell"; title = "Special status:"; ObjectID = "5Vw-My-1Tv"; */
 "5Vw-My-1Tv.title" = "Speciale status:";
-
-/* Class = "NSMenuItem"; title = "About eID Viewer"; ObjectID = "5kV-Vb-QxS"; */
-"5kV-Vb-QxS.title" = "Over eID Viewer";
 
 /* Class = "NSTextFieldCell"; title = "Valid until:"; ObjectID = "5z6-dU-xhN"; */
 "5z6-dU-xhN.title" = "Geldig tot:";
@@ -82,23 +82,26 @@
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "6t2-pk-eWL"; */
 "6t2-pk-eWL.placeholderString" = "-";
 
-/* Class = "NSTextFieldCell"; title = "Name:"; ObjectID = "7Ds-Vy-Vec"; */
-"7Ds-Vy-Vec.title" = "Naam:";
-
-/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "7NP-uC-fQ2"; */
-"7NP-uC-fQ2.placeholderString" = "-";
-
 /* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "07a-eo-rRJ"; */
 "07a-eo-rRJ.title" = "Textcel";
 
 /* Class = "NSTextFieldCell"; title = "Trust:"; ObjectID = "7cm-Dx-bkF"; */
 "7cm-Dx-bkF.title" = "Vertrouwen:";
 
+/* Class = "NSTextFieldCell"; title = "Name:"; ObjectID = "7Ds-Vy-Vec"; */
+"7Ds-Vy-Vec.title" = "Naam:";
+
 /* Class = "NSTextFieldCell"; title = "Street:"; ObjectID = "7gl-wy-PVb"; */
 "7gl-wy-PVb.title" = "Straat:";
 
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "7NP-uC-fQ2"; */
+"7NP-uC-fQ2.placeholderString" = "-";
+
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "8Lw-Zo-LkV"; */
 "8Lw-Zo-LkV.placeholderString" = "-";
+
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "8nN-Wk-ZVM"; */
+"8nN-Wk-ZVM.placeholderString" = "-";
 
 /* Class = "NSTextFieldCell"; title = "Place of birth:"; ObjectID = "8PF-7w-W1f"; */
 "8PF-7w-W1f.title" = "Geboortedatum:";
@@ -108,9 +111,6 @@
 
 /* Class = "NSMenuItem"; title = "Français"; ObjectID = "8Xd-Uv-Ytb"; */
 "8Xd-Uv-Ytb.title" = "Français";
-
-/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "8nN-Wk-ZVM"; */
-"8nN-Wk-ZVM.placeholderString" = "-";
 
 /* Class = "NSTextFieldCell"; title = "Given names:"; ObjectID = "9mr-Oa-QVJ"; */
 "9mr-Oa-QVJ.title" = "Voornamen:";
@@ -142,8 +142,35 @@
 /* Class = "NSMenuItem"; title = "Reader selection"; ObjectID = "997-Qu-fV1"; */
 "997-Qu-fV1.title" = "Kaartlezerselectie";
 
+/* Class = "NSMenuItem"; title = "Warning"; ObjectID = "a4x-Kn-S3D"; */
+"a4x-Kn-S3D.title" = "Waarschuwing";
+
+/* Class = "NSTextFieldCell"; title = "Place of issue:"; ObjectID = "a60-kY-4le"; */
+"a60-kY-4le.title" = "Plaats van uitgifte:";
+
+/* Class = "NSTextFieldCell"; title = "Sex:"; ObjectID = "aEO-AU-Lj7"; */
+"aEO-AU-Lj7.title" = "Geslacht:";
+
+/* Class = "NSTextFieldCell"; title = "Work permit mention:"; ObjectID = "ajG-qo-rNj"; */
+"ajG-qo-rNj.title" = "Work permit mention:";
+
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "Al9-Qa-Q3f"; */
+"Al9-Qa-Q3f.placeholderString" = "-";
+
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "apI-qA-FAh"; */
+"apI-qA-FAh.placeholderString" = "-";
+
 /* Class = "NSTextFieldCell"; title = "Nationality:"; ObjectID = "AQC-gz-L4L"; */
 "AQC-gz-L4L.title" = "Nationaliteit:";
+
+/* Class = "NSMenuItem"; title = "Print…"; ObjectID = "aTl-1u-JFS"; */
+"aTl-1u-JFS.title" = "Afdrukken…";
+
+/* Class = "NSMenuItem"; title = "Window"; ObjectID = "aUF-d1-5bR"; */
+"aUF-d1-5bR.title" = "Venster";
+
+/* Class = "NSTextFieldCell"; title = "Special status:"; ObjectID = "av8-ep-9bB"; */
+"av8-ep-9bB.title" = "Speciale status:";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "AWP-3W-RKv"; */
 "AWP-3W-RKv.placeholderString" = "-";
@@ -151,20 +178,38 @@
 /* Class = "NSMenu"; title = "Main Menu"; ObjectID = "AYu-sK-qS6"; */
 "AYu-sK-qS6.title" = "Hoofdmenu";
 
-/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "Al9-Qa-Q3f"; */
-"Al9-Qa-Q3f.placeholderString" = "-";
-
 /* Class = "NSTextFieldCell"; title = "Employer's VAT number (2):"; ObjectID = "Azr-wO-2T2"; */
 "Azr-wO-2T2.title" = "BTW-nummer werkgever (2):";
 
-/* Class = "NSMenuItem"; title = "Preferences…"; ObjectID = "BOF-NM-1cW"; */
-"BOF-NM-1cW.title" = "Voorkeuren…";
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "b86-cc-Kkl"; */
+"b86-cc-Kkl.placeholderString" = "-";
+
+/* Class = "NSTextFieldCell"; title = "Special organization:"; ObjectID = "bGw-oH-xkv"; */
+"bGw-oH-xkv.title" = "Speciale organisatie:";
+
+/* Class = "NSMenu"; title = "File"; ObjectID = "bib-Uj-vzu"; */
+"bib-Uj-vzu.title" = "Bestand";
 
 /* Class = "NSTextFieldCell"; title = "Special status:"; ObjectID = "Bje-6L-Van"; */
 "Bje-6L-Van.title" = "Speciale status:";
 
+/* Class = "NSMenuItem"; title = "Preferences…"; ObjectID = "BOF-NM-1cW"; */
+"BOF-NM-1cW.title" = "Voorkeuren…";
+
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "br4-QF-0nX"; */
+"br4-QF-0nX.placeholderString" = "-";
+
+/* Class = "NSTextFieldCell"; title = "Street:"; ObjectID = "bz9-5g-wez"; */
+"bz9-5g-wez.title" = "Straat:";
+
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "bzd-tP-vCa"; */
+"bzd-tP-vCa.placeholderString" = "-";
+
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "C3z-ec-Spe"; */
 "C3z-ec-Spe.placeholderString" = "-";
+
+/* Class = "NSTextFieldCell"; title = "Date of birth:"; ObjectID = "c5C-u3-sAP"; */
+"c5C-u3-sAP.title" = "Geboortedatum:";
 
 /* Class = "NSTextFieldCell"; title = "Valid until:"; ObjectID = "Cnx-oC-rJ5"; */
 "Cnx-oC-rJ5.title" = "Geldig tot:";
@@ -178,8 +223,23 @@
 /* Class = "NSTextFieldCell"; title = "Name:"; ObjectID = "DBz-iU-5O7"; */
 "DBz-iU-5O7.title" = "Naam:";
 
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "dhS-8B-cyZ"; */
+"dhS-8B-cyZ.placeholderString" = "-";
+
+/* Class = "NSMenuItem"; title = "File"; ObjectID = "dMs-cI-mzQ"; */
+"dMs-cI-mzQ.title" = "Bestand";
+
 /* Class = "NSMenuItem"; title = "Close"; ObjectID = "DVo-aG-piG"; */
 "DVo-aG-piG.title" = "Sluiten";
+
+/* Class = "NSMenuItem"; title = "Detailed information..."; ObjectID = "dyA-Hf-sf0"; */
+"dyA-Hf-sf0.title" = "Gedetailleerde informatie...";
+
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "edC-Ka-Qw1"; */
+"edC-Ka-Qw1.placeholderString" = "-";
+
+/* Class = "NSTextFieldCell"; title = "Postal code:"; ObjectID = "eIi-C8-04B"; */
+"eIi-C8-04B.title" = "Postcode:";
 
 /* Class = "NSTextFieldCell"; title = "Place of issue:"; ObjectID = "EJc-zi-h6r"; */
 "EJc-zi-h6r.title" = "Plaats van uitgifte:";
@@ -187,11 +247,23 @@
 /* Class = "NSTextFieldCell"; title = "Municipality:"; ObjectID = "EOO-Fg-dHa"; */
 "EOO-Fg-dHa.title" = "Gemeente:";
 
-/* Class = "NSTextFieldCell"; title = "Certificate"; ObjectID = "EWX-mV-sXX"; */
-"EWX-mV-sXX.title" = "Certificaat";
+/* Class = "NSMenuItem"; title = "Language"; ObjectID = "eWg-zO-bzv"; */
+"eWg-zO-bzv.title" = "Taal";
 
 /* Class = "NSMenu"; title = "Help"; ObjectID = "F2S-fz-NVQ"; */
 "F2S-fz-NVQ.title" = "Help";
+
+/* Class = "NSSegmentedCell"; f7q-4j-TGg.ibShadowedLabels[0] = "Clear Log"; ObjectID = "f7q-4j-TGg"; */
+"f7q-4j-TGg.ibShadowedLabels[0]" = "Log wissen";
+
+/* Class = "NSSegmentedCell"; f7q-4j-TGg.ibShadowedLabels[1] = "Copy Log To Clipboard"; ObjectID = "f7q-4j-TGg"; */
+"f7q-4j-TGg.ibShadowedLabels[1]" = "Log naar klembord kopiëren";
+
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "f9r-Ux-HAC"; */
+"f9r-Ux-HAC.placeholderString" = "-";
+
+/* Class = "NSTextFieldCell"; title = "Sex:"; ObjectID = "fIg-oA-7a6"; */
+"fIg-oA-7a6.title" = "Geslacht:";
 
 /* Class = "NSTextFieldCell"; title = "Valid from:"; ObjectID = "FKY-D7-GGe"; */
 "FKY-D7-GGe.title" = "Geldig van:";
@@ -199,8 +271,14 @@
 /* Class = "NSMenuItem"; title = "Normal"; ObjectID = "Fme-4t-8wK"; */
 "Fme-4t-8wK.title" = "Normaal";
 
-/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "GVo-vP-1Se"; */
-"GVo-vP-1Se.placeholderString" = "-";
+/* Class = "NSButtonCell"; title = "Validate now"; ObjectID = "fPW-Dr-YAR"; */
+"fPW-Dr-YAR.title" = "Nu valideren";
+
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "fXl-ZB-AqV"; */
+"fXl-ZB-AqV.placeholderString" = "-";
+
+/* Class = "NSTextFieldCell"; title = "Date of birth:"; ObjectID = "g5I-Uh-cq7"; */
+"g5I-Uh-cq7.title" = "Geboortedatum:";
 
 /* Class = "NSTextFieldCell"; title = "Name:"; ObjectID = "GsW-12-QJy"; */
 "GsW-12-QJy.title" = "Naam:";
@@ -208,44 +286,62 @@
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "Gvc-Pb-JpW"; */
 "Gvc-Pb-JpW.placeholderString" = "-";
 
-/* Class = "NSMenuItem"; title = "Export to PEM file..."; ObjectID = "HVD-VU-hFe"; */
-"HVD-VU-hFe.title" = "Exporteren naar PEM-bestand...";
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "GVo-vP-1Se"; */
+"GVo-vP-1Se.placeholderString" = "-";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "Hai-Pb-JKx"; */
 "Hai-Pb-JKx.placeholderString" = "-";
 
+/* Class = "NSMenuItem"; title = "Detail"; ObjectID = "hRa-Yu-bbZ"; */
+"hRa-Yu-bbZ.title" = "Detail";
+
+/* Class = "NSMenuItem"; title = "Export to PEM file..."; ObjectID = "HVD-VU-hFe"; */
+"HVD-VU-hFe.title" = "Exporteren naar PEM-bestand...";
+
 /* Class = "NSTextFieldCell"; title = "Member of family:"; ObjectID = "Hx8-u0-Ait"; */
 "Hx8-u0-Ait.title" = "Familielid:";
+
+/* Class = "NSMenu"; title = "Services"; ObjectID = "hz9-B4-Xy5"; */
+"hz9-B4-Xy5.title" = "Diensten";
 
 /* Class = "NSMenuItem"; title = "Open…"; ObjectID = "IAo-SY-fd9"; */
 "IAo-SY-fd9.title" = "Openen…";
 
-/* Class = "NSTextFieldCell"; title = "Printed by:"; ObjectID = "JKo-wG-zbj"; */
-"JKo-wG-zbj.title" = "Afgedrukt door:";
+/* Class = "NSTextFieldCell"; title = "Date of birth:"; ObjectID = "iMC-QE-mrT"; */
+"iMC-QE-mrT.title" = "Geboortedatum:";
+
+/* Class = "NSTextFieldCell"; title = "Valid until:"; ObjectID = "iTE-Mk-NP6"; */
+"iTE-Mk-NP6.title" = "Geldig tot:";
+
+/* Class = "NSTextFieldCell"; title = "National number:"; ObjectID = "jDm-iW-ecx"; */
+"jDm-iW-ecx.title" = "Nationaal nummer:";
 
 /* Class = "NSTextFieldCell"; title = "Valid until:"; ObjectID = "JfV-jr-2PG"; */
 "JfV-jr-2PG.title" = "Geldig tot:";
 
+/* Class = "NSTextFieldCell"; title = "Printed by:"; ObjectID = "JKo-wG-zbj"; */
+"JKo-wG-zbj.title" = "Afgedrukt door:";
+
+/* Class = "NSTextFieldCell"; title = "Municipality:"; ObjectID = "jRa-UX-QXr"; */
+"jRa-UX-QXr.title" = "Gemeente:";
+
 /* Class = "NSTextFieldCell"; title = "Work permit mention:"; ObjectID = "K60-eO-FbH"; */
 "K60-eO-FbH.title" = "Work permit mentions:";
-
-/* Class = "NSTextFieldCell"; title = "Street:"; ObjectID = "KPC-H5-3XA"; */
-"KPC-H5-3XA.title" = "Straat:";
 
 /* Class = "NSMenuItem"; title = "Show All"; ObjectID = "Kd2-mp-pUS"; */
 "Kd2-mp-pUS.title" = "Alles tonen";
 
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "klq-VJ-f7O"; */
+"klq-VJ-f7O.placeholderString" = "-";
+
 /* Class = "NSTextFieldCell"; title = "Valid from:"; ObjectID = "Kp1-4p-A2D"; */
 "Kp1-4p-A2D.title" = "Geldig van:";
 
-/* Class = "NSMenuItem"; title = "Bring All to Front"; ObjectID = "LE2-aR-0XJ"; */
-"LE2-aR-0XJ.title" = "Alles op voorgrond";
+/* Class = "NSTextFieldCell"; title = "Street:"; ObjectID = "KPC-H5-3XA"; */
+"KPC-H5-3XA.title" = "Straat:";
 
-/* Class = "NSMenuItem"; title = "Frequently Asked Questions..."; ObjectID = "LIr-jk-FtC"; */
-"LIr-jk-FtC.title" = "Veelgestelde vragen...";
-
-/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "LJh-Dh-dMy"; */
-"LJh-Dh-dMy.placeholderString" = "-";
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "kZU-gG-wde"; */
+"kZU-gG-wde.placeholderString" = "-";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "LaX-z8-D8m"; */
 "LaX-z8-D8m.placeholderString" = "-";
@@ -253,17 +349,44 @@
 /* Class = "NSMenuItem"; title = "Automatic"; ObjectID = "LcD-R6-Nvz"; */
 "LcD-R6-Nvz.title" = "Automatisch";
 
+/* Class = "NSMenuItem"; title = "Bring All to Front"; ObjectID = "LE2-aR-0XJ"; */
+"LE2-aR-0XJ.title" = "Alles op voorgrond";
+
+/* Class = "NSMenuItem"; title = "Frequently Asked Questions..."; ObjectID = "LIr-jk-FtC"; */
+"LIr-jk-FtC.title" = "Veelgestelde vragen...";
+
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "Lj9-7P-I8X"; */
 "Lj9-7P-I8X.placeholderString" = "-";
+
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "LJh-Dh-dMy"; */
+"LJh-Dh-dMy.placeholderString" = "-";
 
 /* Class = "NSTextFieldCell"; title = "Chip number:"; ObjectID = "Lnq-zk-ckh"; */
 "Lnq-zk-ckh.title" = "Chip nummer:";
 
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "lU7-R3-db7"; */
+"lU7-R3-db7.placeholderString" = "-";
+
 /* Class = "NSTextFieldCell"; title = "National number:"; ObjectID = "Lut-kf-HNc"; */
 "Lut-kf-HNc.title" = "Nationaal nummer:";
 
+/* Class = "NSMenuItem"; title = "Export Chain to PEM file..."; ObjectID = "lxJ-yv-7p4"; */
+"lxJ-yv-7p4.title" = "Keten naar PEM-bestand exporteren...";
+
+/* Class = "NSTextFieldCell"; title = "Nationality:"; ObjectID = "m9D-6v-f5l"; */
+"m9D-6v-f5l.title" = "Nationaliteit:";
+
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "Mgi-5v-Mxz"; */
 "Mgi-5v-Mxz.placeholderString" = "-";
+
+/* Class = "NSMenuItem"; title = "Nederlands"; ObjectID = "mrE-xY-icY"; */
+"mrE-xY-icY.title" = "Nederlands";
+
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "nAB-Lm-9UB"; */
+"nAB-Lm-9UB.placeholderString" = "-";
+
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "nDz-ak-r4z"; */
+"nDz-ak-r4z.placeholderString" = "-";
 
 /* Class = "NSTextFieldCell"; title = "Printed:"; ObjectID = "NHM-7n-ZDj"; */
 "NHM-7n-ZDj.title" = "Afgedrukt:";
@@ -271,8 +394,20 @@
 /* Class = "NSMenuItem"; title = "Services"; ObjectID = "NMo-om-nkz"; */
 "NMo-om-nkz.title" = "Diensten";
 
+/* Class = "NSTextFieldCell"; title = "Card number:"; ObjectID = "nqh-df-BFt"; */
+"nqh-df-BFt.title" = "Kaartnummer:";
+
+/* Class = "NSButtonCell"; title = "Always validate certificate trust"; ObjectID = "nYB-fR-NCY"; */
+"nYB-fR-NCY.title" = "Certificaatbetrouwbaarheid altijd valideren";
+
+/* Class = "NSTabViewItem"; label = "Certificates"; ObjectID = "Oa8-8H-QZl"; */
+"Oa8-8H-QZl.label" = "Certificaten";
+
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "OIe-oa-EIA"; */
 "OIe-oa-EIA.placeholderString" = "-";
+
+/* Class = "NSMenuItem"; title = "Hide eID Viewer"; ObjectID = "Olw-nP-bQN"; */
+"Olw-nP-bQN.title" = "eID Viewer verbergen";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "OSi-FN-OMD"; */
 "OSi-FN-OMD.placeholderString" = "-";
@@ -280,20 +415,29 @@
 /* Class = "NSMenuItem"; title = "Minimize"; ObjectID = "OY7-WF-poV"; */
 "OY7-WF-poV.title" = "Minimaliseer";
 
-/* Class = "NSTabViewItem"; label = "Certificates"; ObjectID = "Oa8-8H-QZl"; */
-"Oa8-8H-QZl.label" = "Certificaten";
-
-/* Class = "NSMenuItem"; title = "Hide eID Viewer"; ObjectID = "Olw-nP-bQN"; */
-"Olw-nP-bQN.title" = "eID Viewer verbergen";
-
 /* Class = "NSTextFieldCell"; title = "Printed:"; ObjectID = "PcZ-3E-wWg"; */
 "PcZ-3E-wWg.title" = "Afgedrukt:";
+
+/* Class = "NSMenuItem"; title = "Save…"; ObjectID = "pxx-59-PXV"; */
+"pxx-59-PXV.title" = "Opslaan…";
+
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "q8V-A2-wIs"; */
+"q8V-A2-wIs.placeholderString" = "-";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "QAx-tA-Zov"; */
 "QAx-tA-Zov.placeholderString" = "-";
 
 /* Class = "NSTextFieldCell"; title = "Given names:"; ObjectID = "QbL-Kw-AB9"; */
 "QbL-Kw-AB9.title" = "Voornamen:";
+
+/* Class = "NSTextFieldCell"; title = "Valid from:"; ObjectID = "qgY-bn-TbG"; */
+"qgY-bn-TbG.title" = "Geldig van:";
+
+/* Class = "NSMenuItem"; title = "Page Setup…"; ObjectID = "qIS-W8-SiK"; */
+"qIS-W8-SiK.title" = "Pagina-instellingen…";
+
+/* Class = "NSTextFieldCell"; placeholderString = "BELGIUM"; ObjectID = "qQW-ve-OY4"; */
+"qQW-ve-OY4.placeholderString" = "BELGIË";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "Qra-wp-y7A"; */
 "Qra-wp-y7A.placeholderString" = "-";
@@ -310,11 +454,20 @@
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "R8C-Tz-Ico"; */
 "R8C-Tz-Ico.placeholderString" = "-";
 
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "rBB-kJ-Hht"; */
+"rBB-kJ-Hht.placeholderString" = "-";
+
+/* Class = "NSTextFieldCell"; title = "Place of birth:"; ObjectID = "rcT-1p-AbV"; */
+"rcT-1p-AbV.title" = "Geboorteplaats:";
+
 /* Class = "NSMenuItem"; title = "eID Card Test Site..."; ObjectID = "Rev-Bw-YHE"; */
 "Rev-Bw-YHE.title" = "eID-kaart Testsite...";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "Rgb-RV-Wxi"; */
 "Rgb-RV-Wxi.placeholderString" = "-";
+
+/* Class = "NSTextFieldCell"; title = "Place of issue:"; ObjectID = "ruu-Ea-Cd9"; */
+"ruu-Ea-Cd9.title" = "Plaats van uitgifte:";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "Rxa-lT-ij1"; */
 "Rxa-lT-ij1.placeholderString" = "-";
@@ -322,17 +475,11 @@
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "S09-Sf-lPk"; */
 "S09-Sf-lPk.placeholderString" = "-";
 
-/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "SBz-9l-fjt"; */
-"SBz-9l-fjt.placeholderString" = "-";
-
-/* Class = "NSTextFieldCell"; title = "National number:"; ObjectID = "SDe-Jd-84P"; */
-"SDe-Jd-84P.title" = "Nationaal nummer:";
-
-/* Class = "NSTextFieldCell"; title = "Employer's VAT number (1):"; ObjectID = "SN9-Q7-Q0f"; */
-"SN9-Q7-Q0f.title" = "BTW-nummer werkgever (1):";
-
 /* Class = "NSTableColumn"; headerCell.title = "Certificate"; ObjectID = "SbE-j5-DtL"; */
 "SbE-j5-DtL.headerCell.title" = "Certificaat";
+
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "SBz-9l-fjt"; */
+"SBz-9l-fjt.placeholderString" = "-";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "Sc1-02-Ixh"; */
 "Sc1-02-Ixh.placeholderString" = "-";
@@ -340,8 +487,17 @@
 /* Class = "NSTextFieldCell"; title = "Card number:"; ObjectID = "Scq-QJ-B0I"; */
 "Scq-QJ-B0I.title" = "Kaartnummer:";
 
+/* Class = "NSTextFieldCell"; title = "National number:"; ObjectID = "SDe-Jd-84P"; */
+"SDe-Jd-84P.title" = "Nationaal nummer:";
+
+/* Class = "NSTextFieldCell"; title = "Employer's VAT number (1):"; ObjectID = "SN9-Q7-Q0f"; */
+"SN9-Q7-Q0f.title" = "BTW-nummer werkgever (1):";
+
 /* Class = "NSMenuItem"; title = "Export to DER file..."; ObjectID = "SuP-ea-w46"; */
 "SuP-ea-w46.title" = "Exporteren naar DER-bestand...";
+
+/* Class = "NSButtonCell"; title = "OK"; ObjectID = "t0l-zZ-q2E"; */
+"t0l-zZ-q2E.title" = "OK";
 
 /* Class = "NSTextFieldCell"; title = "Member of family:"; ObjectID = "T4a-fU-fO5"; */
 "T4a-fU-fO5.title" = "Familielid:";
@@ -349,14 +505,26 @@
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "T4h-hG-qYW"; */
 "T4h-hG-qYW.placeholderString" = "-";
 
-/* Class = "NSTabViewItem"; label = "Card/PIN"; ObjectID = "TI0-e6-w10"; */
-"TI0-e6-w10.label" = "Kaart/PIN";
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "tAo-G7-chx"; */
+"tAo-G7-chx.placeholderString" = "-";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "Td1-AN-8SS"; */
 "Td1-AN-8SS.placeholderString" = "-";
 
 /* Class = "NSMenu"; title = "Window"; ObjectID = "Td7-aD-5lo"; */
 "Td7-aD-5lo.title" = "Venster";
+
+/* Class = "NSTextFieldCell"; title = "Duplicata:"; ObjectID = "tEb-Jd-2a9"; */
+"tEb-Jd-2a9.title" = "Duplicata:";
+
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "tFb-hl-dlr"; */
+"tFb-hl-dlr.placeholderString" = "-";
+
+/* Class = "NSTabViewItem"; label = "Card/PIN"; ObjectID = "TI0-e6-w10"; */
+"TI0-e6-w10.label" = "Kaart/PIN";
+
+/* Class = "NSTextFieldCell"; title = "Date and country of protection:"; ObjectID = "tp9-V6-5al"; */
+"tp9-V6-5al.title" = "Date and country of protection:";
 
 /* Class = "NSMenuItem"; title = "English"; ObjectID = "Tr5-53-x9e"; */
 "Tr5-53-x9e.title" = "English";
@@ -370,6 +538,15 @@
 /* Class = "NSTextFieldCell"; title = "Reading data from card..."; ObjectID = "UKa-9U-r1R"; */
 "UKa-9U-r1R.title" = "Data wordt van de kaart gelezen...";
 
+/* Class = "NSMenu"; title = "eID Viewer"; ObjectID = "uQy-DD-JDr"; */
+"uQy-DD-JDr.title" = "eID Viewer";
+
+/* Class = "NSMenu"; title = "Reader selection"; ObjectID = "vdP-FZ-jf2"; */
+"vdP-FZ-jf2.title" = "Kaartlezerselectie";
+
+/* Class = "NSMenuItem"; title = "Hide Others"; ObjectID = "Vdr-fp-XzO"; */
+"Vdr-fp-XzO.title" = "Verberg andere";
+
 /* Class = "NSTextFieldCell"; title = "Printed by:"; ObjectID = "VKD-4B-ltv"; */
 "VKD-4B-ltv.title" = "Afgedrukt door:";
 
@@ -382,221 +559,26 @@
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "VYw-86-rmN"; */
 "VYw-86-rmN.placeholderString" = "-";
 
-/* Class = "NSMenuItem"; title = "Hide Others"; ObjectID = "Vdr-fp-XzO"; */
-"Vdr-fp-XzO.title" = "Verberg andere";
-
-/* Class = "NSMenuItem"; title = "Deutsch"; ObjectID = "WdA-BK-ihJ"; */
-"WdA-BK-ihJ.title" = "Deutsch";
-
-/* Class = "NSTextFieldCell"; title = "Special organization:"; ObjectID = "X2q-8l-Xkh"; */
-"X2q-8l-Xkh.title" = "Speciale organisatie:";
-
-/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "XDJ-NF-Xf1"; */
-"XDJ-NF-Xf1.placeholderString" = "-";
-
-/* Class = "NSTextFieldCell"; title = "Title:"; ObjectID = "Xjv-ld-QtT"; */
-"Xjv-ld-QtT.title" = "Titel:";
-
-/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "YGT-8P-JcA"; */
-"YGT-8P-JcA.placeholderString" = "-";
-
-/* Class = "NSMenu"; title = "Language"; ObjectID = "ZEA-Hq-gUH"; */
-"ZEA-Hq-gUH.title" = "Taal";
-
-/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "ZN4-ps-VWl"; */
-"ZN4-ps-VWl.placeholderString" = "-";
-
-/* Class = "NSTextFieldCell"; title = "Duplicata:"; ObjectID = "Zhh-U8-meA"; */
-"Zhh-U8-meA.title" = "Duplicata:";
-
-/* Class = "NSMenuItem"; title = "Warning"; ObjectID = "a4x-Kn-S3D"; */
-"a4x-Kn-S3D.title" = "Waarschuwing";
-
-/* Class = "NSTextFieldCell"; title = "Place of issue:"; ObjectID = "a60-kY-4le"; */
-"a60-kY-4le.title" = "Plaats van uitgifte:";
-
-/* Class = "NSTextFieldCell"; title = "Sex:"; ObjectID = "aEO-AU-Lj7"; */
-"aEO-AU-Lj7.title" = "Geslacht:";
-
-/* Class = "NSMenuItem"; title = "Print…"; ObjectID = "aTl-1u-JFS"; */
-"aTl-1u-JFS.title" = "Afdrukken…";
-
-/* Class = "NSMenuItem"; title = "Window"; ObjectID = "aUF-d1-5bR"; */
-"aUF-d1-5bR.title" = "Venster";
-
-/* Class = "NSTextFieldCell"; title = "Work permit mention:"; ObjectID = "ajG-qo-rNj"; */
-"ajG-qo-rNj.title" = "Work permit mention:";
-
-/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "apI-qA-FAh"; */
-"apI-qA-FAh.placeholderString" = "-";
-
-/* Class = "NSTextFieldCell"; title = "Special status:"; ObjectID = "av8-ep-9bB"; */
-"av8-ep-9bB.title" = "Speciale status:";
-
-/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "b86-cc-Kkl"; */
-"b86-cc-Kkl.placeholderString" = "-";
-
-/* Class = "NSTextFieldCell"; title = "Special organization:"; ObjectID = "bGw-oH-xkv"; */
-"bGw-oH-xkv.title" = "Speciale organisatie:";
-
-/* Class = "NSMenu"; title = "File"; ObjectID = "bib-Uj-vzu"; */
-"bib-Uj-vzu.title" = "Bestand";
-
-/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "br4-QF-0nX"; */
-"br4-QF-0nX.placeholderString" = "-";
-
-/* Class = "NSTextFieldCell"; title = "Street:"; ObjectID = "bz9-5g-wez"; */
-"bz9-5g-wez.title" = "Straat:";
-
-/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "bzd-tP-vCa"; */
-"bzd-tP-vCa.placeholderString" = "-";
-
-/* Class = "NSTextFieldCell"; title = "Date of birth:"; ObjectID = "c5C-u3-sAP"; */
-"c5C-u3-sAP.title" = "Geboortedatum:";
-
-/* Class = "NSMenuItem"; title = "File"; ObjectID = "dMs-cI-mzQ"; */
-"dMs-cI-mzQ.title" = "Bestand";
-
-/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "dhS-8B-cyZ"; */
-"dhS-8B-cyZ.placeholderString" = "-";
-
-/* Class = "NSMenuItem"; title = "Detailed information..."; ObjectID = "dyA-Hf-sf0"; */
-"dyA-Hf-sf0.title" = "Gedetailleerde informatie...";
-
-/* Class = "NSTextFieldCell"; title = "Postal code:"; ObjectID = "eIi-C8-04B"; */
-"eIi-C8-04B.title" = "Postcode:";
-
-/* Class = "NSMenuItem"; title = "Language"; ObjectID = "eWg-zO-bzv"; */
-"eWg-zO-bzv.title" = "Taal";
-
-/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "edC-Ka-Qw1"; */
-"edC-Ka-Qw1.placeholderString" = "-";
-
-/* Class = "NSSegmentedCell"; f7q-4j-TGg.ibShadowedLabels[0] = "Clear Log"; ObjectID = "f7q-4j-TGg"; */
-"f7q-4j-TGg.ibShadowedLabels[0]" = "Log wissen";
-
-/* Class = "NSSegmentedCell"; f7q-4j-TGg.ibShadowedLabels[1] = "Copy Log To Clipboard"; ObjectID = "f7q-4j-TGg"; */
-"f7q-4j-TGg.ibShadowedLabels[1]" = "Log naar klembord kopiëren";
-
-/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "f9r-Ux-HAC"; */
-"f9r-Ux-HAC.placeholderString" = "-";
-
-/* Class = "NSTextFieldCell"; title = "Sex:"; ObjectID = "fIg-oA-7a6"; */
-"fIg-oA-7a6.title" = "Geslacht:";
-
-/* Class = "NSButtonCell"; title = "Validate now"; ObjectID = "fPW-Dr-YAR"; */
-"fPW-Dr-YAR.title" = "Nu valideren";
-
-/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "fXl-ZB-AqV"; */
-"fXl-ZB-AqV.placeholderString" = "-";
-
-/* Class = "NSTextFieldCell"; title = "Date of birth:"; ObjectID = "g5I-Uh-cq7"; */
-"g5I-Uh-cq7.title" = "Geboortedatum:";
-
-/* Class = "NSMenuItem"; title = "Detail"; ObjectID = "hRa-Yu-bbZ"; */
-"hRa-Yu-bbZ.title" = "Detail";
-
-/* Class = "NSMenu"; title = "Services"; ObjectID = "hz9-B4-Xy5"; */
-"hz9-B4-Xy5.title" = "Diensten";
-
-/* Class = "NSTextFieldCell"; title = "Date of birth:"; ObjectID = "iMC-QE-mrT"; */
-"iMC-QE-mrT.title" = "Geboortedatum:";
-
-/* Class = "NSTextFieldCell"; title = "Valid until:"; ObjectID = "iTE-Mk-NP6"; */
-"iTE-Mk-NP6.title" = "Geldig tot:";
-
-/* Class = "NSTextFieldCell"; title = "National number:"; ObjectID = "jDm-iW-ecx"; */
-"jDm-iW-ecx.title" = "Nationaal nummer:";
-
-/* Class = "NSTextFieldCell"; title = "Municipality:"; ObjectID = "jRa-UX-QXr"; */
-"jRa-UX-QXr.title" = "Gemeente:";
-
-/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "kZU-gG-wde"; */
-"kZU-gG-wde.placeholderString" = "-";
-
-/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "klq-VJ-f7O"; */
-"klq-VJ-f7O.placeholderString" = "-";
-
-/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "lU7-R3-db7"; */
-"lU7-R3-db7.placeholderString" = "-";
-
-/* Class = "NSMenuItem"; title = "Export Chain to PEM file..."; ObjectID = "lxJ-yv-7p4"; */
-"lxJ-yv-7p4.title" = "Keten naar PEM-bestand exporteren...";
-
-/* Class = "NSTextFieldCell"; title = "Nationality:"; ObjectID = "m9D-6v-f5l"; */
-"m9D-6v-f5l.title" = "Nationaliteit:";
-
-/* Class = "NSMenuItem"; title = "Nederlands"; ObjectID = "mrE-xY-icY"; */
-"mrE-xY-icY.title" = "Nederlands";
-
-/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "nAB-Lm-9UB"; */
-"nAB-Lm-9UB.placeholderString" = "-";
-
-/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "nDz-ak-r4z"; */
-"nDz-ak-r4z.placeholderString" = "-";
-
-/* Class = "NSButtonCell"; title = "Always validate certificate trust"; ObjectID = "nYB-fR-NCY"; */
-"nYB-fR-NCY.title" = "Certificaatbetrouwbaarheid altijd valideren";
-
-/* Class = "NSTextFieldCell"; title = "Card number:"; ObjectID = "nqh-df-BFt"; */
-"nqh-df-BFt.title" = "Kaartnummer:";
-
-/* Class = "NSMenuItem"; title = "Save…"; ObjectID = "pxx-59-PXV"; */
-"pxx-59-PXV.title" = "Opslaan…";
-
-/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "q8V-A2-wIs"; */
-"q8V-A2-wIs.placeholderString" = "-";
-
-/* Class = "NSMenuItem"; title = "Page Setup…"; ObjectID = "qIS-W8-SiK"; */
-"qIS-W8-SiK.title" = "Pagina-instellingen…";
-
-/* Class = "NSTextFieldCell"; placeholderString = "BELGIUM"; ObjectID = "qQW-ve-OY4"; */
-"qQW-ve-OY4.placeholderString" = "BELGIË";
-
-/* Class = "NSTextFieldCell"; title = "Valid from:"; ObjectID = "qgY-bn-TbG"; */
-"qgY-bn-TbG.title" = "Geldig van:";
-
-/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "rBB-kJ-Hht"; */
-"rBB-kJ-Hht.placeholderString" = "-";
-
-/* Class = "NSTextFieldCell"; title = "Place of birth:"; ObjectID = "rcT-1p-AbV"; */
-"rcT-1p-AbV.title" = "Geboorteplaats:";
-
-/* Class = "NSTextFieldCell"; title = "Place of issue:"; ObjectID = "ruu-Ea-Cd9"; */
-"ruu-Ea-Cd9.title" = "Plaats van uitgifte:";
-
-/* Class = "NSButtonCell"; title = "OK"; ObjectID = "t0l-zZ-q2E"; */
-"t0l-zZ-q2E.title" = "OK";
-
-/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "tAo-G7-chx"; */
-"tAo-G7-chx.placeholderString" = "-";
-
-/* Class = "NSTextFieldCell"; title = "Duplicata:"; ObjectID = "tEb-Jd-2a9"; */
-"tEb-Jd-2a9.title" = "Duplicata:";
-
-/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "tFb-hl-dlr"; */
-"tFb-hl-dlr.placeholderString" = "-";
-
-/* Class = "NSTextFieldCell"; title = "Date and country of protection:"; ObjectID = "tp9-V6-5al"; */
-"tp9-V6-5al.title" = "Date and country of protection:";
-
-/* Class = "NSMenu"; title = "eID Viewer"; ObjectID = "uQy-DD-JDr"; */
-"uQy-DD-JDr.title" = "eID Viewer";
-
-/* Class = "NSMenu"; title = "Reader selection"; ObjectID = "vdP-FZ-jf2"; */
-"vdP-FZ-jf2.title" = "Kaartlezerselectie";
-
 /* Class = "NSTextFieldCell"; title = "Employer's VAT number (2):"; ObjectID = "w0g-nT-jPb"; */
 "w0g-nT-jPb.title" = "BTW-nummer werkgever (2):";
 
 /* Class = "NSTextFieldCell"; placeholderString = "IDENTITY CARD"; ObjectID = "w0u-t2-2FS"; */
 "w0u-t2-2FS.placeholderString" = "IDENTITEITSKAART";
 
+/* Class = "NSMenuItem"; title = "Deutsch"; ObjectID = "WdA-BK-ihJ"; */
+"WdA-BK-ihJ.title" = "Deutsch";
+
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "wk0-KT-q0Z"; */
 "wk0-KT-q0Z.placeholderString" = "-";
 
+/* Class = "NSTextFieldCell"; title = "Brexit mentions:"; ObjectID = "WPD-T6-SDN"; */
+"WPD-T6-SDN.title" = "Brexit vermeldingen:";
+
 /* Class = "NSMenuItem"; title = "Help"; ObjectID = "wpr-3q-Mcd"; */
 "wpr-3q-Mcd.title" = "Help";
+
+/* Class = "NSTextFieldCell"; title = "Special organization:"; ObjectID = "X2q-8l-Xkh"; */
+"X2q-8l-Xkh.title" = "Speciale organisatie:";
 
 /* Class = "NSTextFieldCell"; title = "Regional file number:"; ObjectID = "x6k-fu-9D1"; */
 "x6k-fu-9D1.title" = "Regional file number:";
@@ -604,20 +586,29 @@
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "x7G-Ri-4wJ"; */
 "x7G-Ri-4wJ.placeholderString" = "-";
 
-/* Class = "NSTextFieldCell"; title = "Municipality:"; ObjectID = "xFl-cP-2Ol"; */
-"xFl-cP-2Ol.title" = "Gemeente:";
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "XDJ-NF-Xf1"; */
+"XDJ-NF-Xf1.placeholderString" = "-";
 
 /* Class = "NSTextFieldCell"; title = "Date and country of protection:"; ObjectID = "xep-Ek-qId"; */
 "xep-Ek-qId.title" = "Date and country of protection:";
 
+/* Class = "NSTextFieldCell"; title = "Municipality:"; ObjectID = "xFl-cP-2Ol"; */
+"xFl-cP-2Ol.title" = "Gemeente:";
+
+/* Class = "NSTextFieldCell"; title = "Title:"; ObjectID = "Xjv-ld-QtT"; */
+"Xjv-ld-QtT.title" = "Titel:";
+
 /* Class = "NSTextFieldCell"; title = "Nationality:"; ObjectID = "xw9-Rx-TRb"; */
 "xw9-Rx-TRb.title" = "Nationaliteit:";
+
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "yeu-Ai-H72"; */
+"yeu-Ai-H72.placeholderString" = "-";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "yGp-BC-jlp"; */
 "yGp-BC-jlp.placeholderString" = "-";
 
-/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "yeu-Ai-H72"; */
-"yeu-Ai-H72.placeholderString" = "-";
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "YGT-8P-JcA"; */
+"YGT-8P-JcA.placeholderString" = "-";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "ytY-Qa-k4c"; */
 "ytY-Qa-k4c.placeholderString" = "-";
@@ -625,12 +616,21 @@
 /* Class = "NSTextFieldCell"; placeholderString = "IDENTITY CARD"; ObjectID = "zA0-fy-z1e"; */
 "zA0-fy-z1e.placeholderString" = "IDENTITEITSKAART";
 
-/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "zOa-W6-oXU"; */
-"zOa-W6-oXU.placeholderString" = "-";
+/* Class = "NSMenu"; title = "Language"; ObjectID = "ZEA-Hq-gUH"; */
+"ZEA-Hq-gUH.title" = "Taal";
+
+/* Class = "NSTextFieldCell"; title = "Duplicata:"; ObjectID = "Zhh-U8-meA"; */
+"Zhh-U8-meA.title" = "Duplicata:";
 
 /* Class = "NSTextFieldCell"; title = "Employer's VAT number (1):"; ObjectID = "zjQ-1l-gDp"; */
 "zjQ-1l-gDp.title" = "BTW-nummer werkgever (1):";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "zmd-lf-VkW"; */
 "zmd-lf-VkW.placeholderString" = "-";
+
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "ZN4-ps-VWl"; */
+"ZN4-ps-VWl.placeholderString" = "-";
+
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "zOa-W6-oXU"; */
+"zOa-W6-oXU.placeholderString" = "-";
 
