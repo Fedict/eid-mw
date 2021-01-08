@@ -9,8 +9,10 @@ endif
 BUILDDIRS=$(addprefix builddir-,$(ARCHS))
 LIBS=$(addsuffix /.libs/libxml2.a,$(BUILDDIRS))
 
-clean:
-	rm -rf config.stamp libxml2 libxml2-$(XML2_VERSION) libxml2-$(XML2_VERSION).tar.gz builddir-x86_64 builddir-arm64 builddir
+clean-builds:
+	rm -rf config.stamp libxml2 libxml2-$(XML2_VERSION) builddir-x86_64 builddir-arm64 builddir
+clean: clean-builds
+	rm -rf libxml2-$(XML2_VERSION).tar.gz 
 
 libxml2-$(XML2_VERSION).tar.gz:
 	if [ -f $(TP_DIR)/libxml2-$(XML2_VERSION).tar.gz ]; then \

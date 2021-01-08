@@ -11,8 +11,10 @@ CONFIGURED=$(addprefix configured-, $(ARCHS))
 ARCHCOUNT=$(words $(ARCHS))
 
 build: openssl/libcrypto.a openssl/include/openssl/opensslconf.h
+clean-builds:
+	rm -rf $(CONFIGURED) openssl openssl-$(OSSL_VERSION) openssl-arm64 openssl-x86_64
 clean:
-	rm -rf $(CONFIGURED) openssl openssl-$(OSSL_VERSION) openssl-$(OSSL_VERSION).tar.gz openssl-arm64 openssl-x86_64
+	rm -rf openssl-$(OSSL_VERSION).tar.gz 
 
 configured-x86_64: openssl/Configure openssl-x86_64
 	cd openssl-x86_64; ../openssl/Configure no-shared no-asm -mmacos-version-min=10.9 darwin64-x86_64-cc
