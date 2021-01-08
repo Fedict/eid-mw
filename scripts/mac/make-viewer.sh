@@ -17,6 +17,14 @@ rm -f tmp-eidviewer.dmg
 rm -f "eID Viewer-$REL_VERSION.dmg"
 
 pushd "../../"
+pushd "plugins_tools/eid-viewer/OSX/support"
+pushd "ossl"
+make clean
+popd
+pushd "xml"
+make clean
+popd
+popd
 xcodebuild -project "beidmw.xcodeproj" -target "eID Viewer" -configuration $MAC_BUILD_CONFIG clean
 xcodebuild -project "beidmw.xcodeproj" -target "eID Viewer" -configuration $MAC_BUILD_CONFIG
 popd
