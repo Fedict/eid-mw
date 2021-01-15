@@ -15,22 +15,28 @@ Vagrant.configure("2") do |config|
       config.vm.box = "generic/#{machine}"
     end
   end
-  config.vm.define "windows" do |config|
-    config.vm.box = "peru/windows-10-enterprise-x64-eval"
-    config.vm.provision :file, source: "./Belgium-eID-QuickInstaller.exe", destination: "C:\\tmp\\"
-    config.vm.provision :shell, inline: "Get-Location | select -ExpandProperty Path"
-    config.vm.provision :shell, inline: "C:\\tmp\\Belgium-eID-QuickInstaller.exe"
-  end
-  config.vm.provision :file, source: "./eid-archive.deb", destination: "eid-archive.deb"
-  config.vm.provision :file, source: "./eid-archive-fedora.rpm", destination: "eid-archive-fedora.rpm"
-  config.vm.provision :file, source: "./eid-archive-suse.rpm", destination: "eid-archive-suse.rpm"
-  config.vm.provision :file, source: "./eid-archive-el.rpm", destination: "eid-archive-el.rpm"
-  config.vm.provision :ansible do |ansible|
+  # config.vm.network "forwarded_port", guest: 80, host: 8080
+
+  config.vm.network "public_network"
+
+  config.vm.provision :file, source: "./eid-archive_2020.4_all.deb", destination: "eid-archive.deb"
+  config.vm.provision :file, source: "./google-chrome-stable.deb", destination: "google-chrome-stable.deb"
+  config.vm.provision :file, source: "./eid-archive-fedora-2016-2.noarch.rpm", destination: "eid-archive-fedora.rpm"
+  config.vm.provision :file, source: "./eid-archive-suse-2016-2.noarch.rpm", destination: "eid-archive-suse.rpm"
+  config.vm.provision :file, source: "./eid-archive-el-2016-2.noarch.rpm", destination: "eid-archive-el.rpm"
+  config.vm.provision :file, source: "./google-chrome-stable.rpm", destination: "google-chrome-stable.rpm"
+  config.vm.provision :file, source: "./eid-playbook.yml", destination: "eid-playbook.yml"
+
+  config.vm.provision :ansible_local do |ansible|
+    ansible.install = true
+    ansible.install_mode = :pip
     ansible.become = true
     ansible.groups = grouphash
     ansible.playbook = "eid-playbook.yml"
+    ansible.provisioning_path = "/home/vagrant"
   end
-  config.vm.provider :libvirt do |libvirt|
-    libvirt.smartcard :mode => 'passthrough', :type => 'spicevmc'
+
+  config.vm.provider :virtualbox do |vb|
+     vb.memory = "2048"
   end
 end

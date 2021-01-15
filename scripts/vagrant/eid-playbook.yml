@@ -14,6 +14,30 @@
       - eid-mw
       - eid-viewer
       state: latest
+  
+- name: install git and chrome on Debian and derivatives
+  hosts: debuntu
+  tasks:
+  - name: install git  
+    become: yes
+    apt:
+      name:
+      - git 
+      state: latest  
+  - name: install chrome
+    become: yes
+    apt:
+      deb: ./google-chrome-stable.deb
+
+- name: install actiona on debian and ubuntu 
+  hosts: debuntu
+  tasks:
+  - name: install actiona  
+    become: yes
+    apt:
+      name:
+      - actiona 
+      state: latest  
 
 - name: install eID on Fedora
   hosts: fedora
@@ -32,36 +56,112 @@
       - eid-viewer
       state: latest
 
+- name: install git and chrome on fedora
+  hosts: fedora
+  tasks:
+  - name: install git  
+    become: yes
+    dnf:
+      name:
+      - git 
+      state: latest
+  - name: install google-stable repo
+    become: yes
+    dnf:
+      disable_gpg_check: yes
+      name:
+      - ./google-chrome-stable.rpm
+  - name: install google-stable
+    become: yes
+    dnf:
+     name: 
+     - google-chrome
+     state: latest
+
+- name: install actiona
+  hosts: fedora
+  tasks:
+  - name: install prerequisits
+    become: yes
+    yum:
+      disable_gpg_check: yes
+      name:
+      - qt5-qtbase-devel
+      - qt5-qtx11extras-devel
+      - qt5-qtxmlpatterns-devel
+      - qt5-qtscript-devel
+      - qt5-qttools-devel
+      - libnotify-devel
+      - opencv-devel
+      - libXtst-devel
+      - boost-devel
+      - qt5-qtbase-mysql
+      - gcc-c++
+      - qt5-qtbase-gui
+      - qt5-qttools-static
+      - qt5-qtmultimedia-devel
+      - qt5-qtspeech-devel
+      - libxkbcommon-devel
+  - name: download actiona git
+    git: 
+       repo: "https://github.com/Jmgr/actiona.git"
+       dest: ./tests/actiona
+  - name: qmake actiona
+    command: 
+      chdir: ./tests/actiona
+      cmd: qmake-qt5 -r 
+  - name:  make actiona
+    command:  
+      chdir: ./tests/actiona
+      cmd: make
+ 
 - name: install eID on Suse
   hosts: suse
   tasks:
   - name: install eid-archive
     become: yes
     zypper:
+      disable_gpg_check: yes
       name:
       - ./eid-archive-suse.rpm
   - name: install eid-mw and eid-viewer
     become: yes
     zypper:
+      disable_gpg_check: yes
       name:
       - eid-mw
       - eid-viewer
       disable_recommends: no
 
-- name: install eID on CentOS
-  hosts: centos
+- name: install chrome and git on Suse
+  hosts: suse
   tasks:
-  - name: install eid-archive
+  - name: install chrome repo
     become: yes
-    yum:
+    zypper:
+      disable_gpg_check: yes
       name:
-      - ./eid-archive-el.rpm
-  - name: install eid-mw and eid-viewer
+      - ./google-chrome-stable.rpm
+  - name: install chrome 
     become: yes
-    yum:
+    zypper:
+      disable_gpg_check: yes      
       name:
-      - eid-mw
-      - eid-viewer
+      - google-chrome-stable
+      disable_recommends: no
+  - name: install git
+    become: yes    
+    zypper:
+      name:
+      - git
+
+- name: install git repo for browsertests
+  hosts: all
+  tasks:
+  - name: git clone the browsertest
+    git: 
+       repo: "https://github.com/Fedict/eid-browser-tests.git"
+       dest: ./tests/browsertests
 
 - name: install graphical environment on Debian
   hosts: debian
@@ -85,3 +185,22 @@
     apt:
       name: ubuntu-desktop
       state: present
+  - name: ensure gdm is running
+    become: yes
+    systemd:
+      name: gdm
+      state: started
+
+- name: install graphical environment on fedora
+  hosts: fedora
+  tasks:
+  - name: install fedora desktop environment
+    become: yes
+    dnf:
+      name: '@Basic Desktop'
+      state: present
+  - name: ensure lightdm is running
+    become: yes
+    systemd:
+      name: lightdm
+      state: started
