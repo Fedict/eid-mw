@@ -30,6 +30,7 @@ using Net.Sf.Pkcs11.Objects;
 using Net.Sf.Pkcs11.Wrapper;
 
 using System.Security.Cryptography.X509Certificates;
+using System.Security.Cryptography;
 
 namespace EidSamples
 {
@@ -81,8 +82,22 @@ namespace EidSamples
 
                 if (privatekeys.Length >= 1)
                 {
-                    session.SignInit(new Mechanism(CKM.SHA1_RSA_PKCS), (PrivateKey)privatekeys[0]);
-                    encryptedData = session.Sign(data);
+                    if (privatekeys[0] != null)
+                    {
+                        PrivateKey key = (PrivateKey)privatekeys[0];
+                        if (key.KeyType.KeyType == CKK.EC)
+                        {
+                            SHA384 sha = new SHA384CryptoServiceProvider();
+                            byte[] HashValue = sha.ComputeHash(data);
+                            session.SignInit(new Mechanism(CKM.ECDSA), (PrivateKey)privatekeys[0]);
+                            encryptedData = session.Sign(HashValue);
+                        }
+                        else if (key.KeyType.KeyType == CKK.RSA)
+                        {
+                            session.SignInit(new Mechanism(CKM.SHA1_RSA_PKCS), (PrivateKey)privatekeys[0]);
+                            encryptedData = session.Sign(data);
+                        }
+                    }
                 }
                 
             }
@@ -93,6 +108,4 @@ namespace EidSamples
             }
             return encryptedData;
         }
-        
-    }
-}
+
