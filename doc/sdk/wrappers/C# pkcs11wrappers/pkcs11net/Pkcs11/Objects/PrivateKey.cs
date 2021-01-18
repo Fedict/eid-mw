@@ -121,6 +121,8 @@ namespace Net.Sf.Pkcs11.Objects
             {
                 case CKK.RSA:
                     return RSAPrivateKey.GetInstance(session, hObj);
+                case CKK.ECDSA:
+                    return RSAPrivateKey.GetInstance(session, hObj);
                 case CKK.GOST:
                     return GostPrivateKey.GetInstance(session, hObj);
                 default:

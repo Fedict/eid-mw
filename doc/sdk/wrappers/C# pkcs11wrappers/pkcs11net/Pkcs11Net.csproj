@@ -157,6 +157,8 @@
     <Compile Include="Pkcs11\Objects\Des2SecretKey.cs" />
     <Compile Include="Pkcs11\Objects\Des3SecretKey.cs" />
     <Compile Include="Pkcs11\Objects\DesSecretKey.cs" />
+    <Compile Include="Pkcs11\Objects\ECPrivateKey.cs" />
+    <Compile Include="Pkcs11\Objects\ECPublicKey.cs" />
     <Compile Include="Pkcs11\Objects\GostPrivateKey.cs" />
     <Compile Include="Pkcs11\Objects\GostPublicKey.cs" />
     <Compile Include="Pkcs11\Objects\Mechanism.cs" />
