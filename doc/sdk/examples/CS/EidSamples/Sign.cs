@@ -109,3 +109,49 @@ namespace EidSamples
             return encryptedData;
         }
 
+        /// <summary>
+        /// Challenge an applet 1.8 card
+        /// </summary>
+        /// <param name="data">Data to be signed</param>
+        /// <returns>Signed challenge data.</returns>
+        public byte[] DoChallenge(byte[] data)
+        {
+            if (m == null)
+            {
+                // link with the pkcs11 DLL
+                m = Module.GetInstance(mFileName);
+            } //m.Initialize();
+
+            byte[] encryptedData = null;
+            try
+            {
+                Slot slot = m.GetSlotList(true)[0];
+                Session session = slot.Token.OpenSession(true);
+                ObjectClassAttribute classAttribute = new ObjectClassAttribute(CKO.PRIVATE_KEY);
+                ByteArrayAttribute keyLabelAttribute = new ByteArrayAttribute(CKA.LABEL);
+                keyLabelAttribute.Value = System.Text.Encoding.UTF8.GetBytes("Card");
+
+                session.FindObjectsInit(new P11Attribute[] {
+                     classAttribute,
+                     keyLabelAttribute
+                    }
+                );
+                P11Object[] privatekeys = session.FindObjects(1) as P11Object[];
+                session.FindObjectsFinal();
+
+                if (privatekeys.Length >= 1)
+                {
+                    session.SignInit(new Mechanism(CKM.ECDSA), (PrivateKey)privatekeys[0]);
+                    encryptedData = session.Sign(data);
+                }
+            }
+            finally
+            {
+                m.Dispose();
+                m = null;
+            }
+            return encryptedData;
+        }
+
+    }
+}
