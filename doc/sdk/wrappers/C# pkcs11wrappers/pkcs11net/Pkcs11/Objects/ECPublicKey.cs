@@ -5,7 +5,7 @@ using Net.Sf.Pkcs11.Wrapper;
 namespace Net.Sf.Pkcs11.Objects
 {
 	/// <summary>
-	/// Description of RSAPublicKey.
+	/// Description of ECPublicKey.
 	/// </summary>
 	public class ECPublicKey:PublicKey
 	{		
@@ -32,16 +32,16 @@ namespace Net.Sf.Pkcs11.Objects
 		
 		public static new P11Object GetInstance(Session session, uint hObj)
 		{
-			return new RSAPublicKey(session,hObj) ;
+			return new ECPublicKey(session,hObj) ;
 		}
 		
 		public override void ReadAttributes(Session session)
 		{
 			base.ReadAttributes(session);
 
-            ecparams_ = ReadAttribute(session,HObj,new ByteArrayAttribute(CKA.EC_PARAMS));
+			ecparams_ = ReadAttribute(session,HObj,new ByteArrayAttribute(CKA.EC_PARAMS));
 
-            ecpoint_ = ReadAttribute(session,HObj,new ByteArrayAttribute(CKA.EC_POINT));
+			ecpoint_ = ReadAttribute(session,HObj,new ByteArrayAttribute(CKA.EC_POINT));
 			
 		}
 	}
