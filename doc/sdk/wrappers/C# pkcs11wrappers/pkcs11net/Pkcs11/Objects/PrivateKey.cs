@@ -110,7 +110,6 @@ namespace Net.Sf.Pkcs11.Objects
             alwaysAuthenticate = ReadAttribute(session, HObj, new BooleanAttribute(CKA.ALWAYS_AUTHENTICATE));
         }
 
-
         public static new P11Object GetInstance(Session session, uint hObj)
         {
 
@@ -121,8 +120,8 @@ namespace Net.Sf.Pkcs11.Objects
             {
                 case CKK.RSA:
                     return RSAPrivateKey.GetInstance(session, hObj);
-                case CKK.ECDSA:
-                    return RSAPrivateKey.GetInstance(session, hObj);
+                case CKK.EC:
+                    return ECPrivateKey.GetInstance(session, hObj);
                 case CKK.GOST:
                     return GostPrivateKey.GetInstance(session, hObj);
                 default:
