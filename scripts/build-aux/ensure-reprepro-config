@@ -1,0 +1,92 @@
+#!/usr/bin/perl -w
+
+use strict;
+use warnings;
+
+use Dpkg::Control::HashCore;
+
+my $reprepro_cfg = Dpkg::Control::HashCore->new();
+
+open my $file, "<:encoding(utf-8)", join('/', $ENV{REPREPRO_BASE_DIR}, "conf", "distributions");
+
+my @blocks;
+my @dists_known = qw(UBUNTU_OLDLTS UBUNTU_LTS UBUNTU_STABLE DEBIAN_OLDSTABLE DEBIAN_STABLE MINT_OLDLTS MINT_LTS);
+my %dists;
+my $changed = 0;
+
+while($reprepro_cfg->parse($file)) {
+	push @blocks, $reprepro_cfg;
+	$dists{$reprepro_cfg->{Codename}} = $reprepro_cfg;
+	$reprepro_cfg = Dpkg::Control::HashCore->new();
+}
+my $extra_allow = " ";
+
+foreach my $dist(@dists_known) {
+	my $code = "${dist}_CODE";
+	my $full = "${dist}_FULL";
+	if(!exists($ENV{$code}) || !exists($ENV{$full})) {
+		print "WARNING: couldn't find a value for ${dist}_CODE or ${dist}_FULL, ignoring\n";
+		next;
+	}
+	if(!exists($dists{$ENV{$code}})) {
+		my $new = Dpkg::Control::HashCore->new();
+		$new->{Codename} = $ENV{$code};
+		$new->{Suite} = $ENV{$code};
+		$new->{Origin} = "BOSA";
+		$new->{Label} = "BOSA";
+		$new->{Description} = "BOSA eID packages for " . $ENV{$full} . " - official packages";
+		$new->{Architectures} = "source amd64 i386";
+		if($dist =~ /^DEBIAN/) {
+			$ENV->{Architectures} .= " armhf";
+		}
+		$new->{Components} = "main";
+		$new->{SignWith} = $ENV{GPG_SIGN_KEY_ID};
+		push @blocks, $new;
+		$changed++;
+		$extra_allow .= " " . $ENV{$code};
+	}
+	foreach my $prefix("proposed/", "continuous/", "candidate/") {
+		if(!exists($dists{$prefix . $ENV{$code}})) {
+			my $new = Dpkg::Control::HashCore->new();
+			$new->{Codename} = $prefix . $ENV{$code};
+			$new->{Suite} = "experimental/" . $ENV{$code};
+			$new->{Origin} = "BOSA";
+			$new->{Label} = "BOSA";
+			$new->{Description} = "BOSA eID packages for " . $ENV{$full} . " - unsupported development builds";
+			$new->{Architectures} = "source amd64 i386";
+			if($dist =~ /^DEBIAN/) {
+				$ENV->{Architectures} .= " armhf";
+			}
+			$new->{Components} = "main";
+			$new->{SignWith} = $ENV{GPG_TEST_KEY_ID};
+			push @blocks, $new;
+			$changed++;
+			if($prefix ne "proposed/") {
+				my $dash = $prefix;
+				$dash =~ s,/,-,g;
+				$extra_allow .= " $dash" . $ENV{$code} . ">$prefix" . $ENV{$code};
+			}
+		}
+	}
+}
+
+print "Added $changed blocks\n";
+
+exit 0 unless $changed > 0;
+
+close $file;
+open $file, ">:encoding(utf-8)", join('/', $ENV{REPREPRO_BASE_DIR}, "conf", "distributions");
+
+foreach my $block(@blocks) {
+	$block->output($file);
+	print $file "\n";
+}
+
+close $file;
+
+if(length($extra_allow) > 1) {
+	my $incoming = Dpkg::Control::HashCore->new();
+	$incoming->load($ENV{REPREPRO_BASE_DIR} . "/incoming");
+	$incoming->{Allow} .= $extra_allow;
+	$incoming->save($ENV{REPREPRO_BASE_DIR} . "/incoming");
+}

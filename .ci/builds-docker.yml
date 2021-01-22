@@ -1,0 +1,20 @@
+---
+.docker-base:
+  retry: 1
+  stage: docker
+  image: docker:stable
+  tags:
+  - dind
+  services:
+  - docker:dind
+  variables:
+    IMAGE_TAG: $CI_REGISTRY_IMAGE/$CI_JOB_NAME:$CI_COMMIT_REF_SLUG
+  before_script:
+  - docker info
+  - docker pull $IMAGE_TAG || true
+  script:
+  - cd $LINUX_BASEDIR/.ci/dockerfiles/$CI_JOB_NAME
+  - docker build --pull --cache-from $IMAGE_TAG -t $IMAGE_TAG .
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  - docker push $IMAGE_TAG
+
