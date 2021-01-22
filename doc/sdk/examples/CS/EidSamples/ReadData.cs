@@ -30,6 +30,7 @@ using Net.Sf.Pkcs11.Objects;
 using Net.Sf.Pkcs11.Wrapper;
 
 using System.Security.Cryptography.X509Certificates;
+using PublicKey = Net.Sf.Pkcs11.Objects.PublicKey;
 
 namespace EidSamples
 {
@@ -483,6 +484,62 @@ namespace EidSamples
                 m = null;
             }
             return labels;
+        }
+
+        /// <summary>
+        /// Return raw byte data from objects of object class Public Key
+        /// </summary>
+        /// <param name="PubKeyName">Label value of the key object</param>
+        /// <returns>ECPublicKey object of the public key found</returns>
+        public ECPublicKey GetPublicKey(String PubKeyName)
+        {
+            ECPublicKey eCPublicKey = null;
+            // pkcs11 module init
+            if (m == null)
+            {
+                m = Module.GetInstance(mFileName);
+            }
+            try
+            {
+                // Get the first slot (cardreader) with a token
+                Slot[] slotlist = m.GetSlotList(true);
+                if (slotlist.Length > 0)
+                {
+                    Slot slot = slotlist[0];
+                    Session session = slot.Token.OpenSession(true);
+                    // Search for objects
+                    // First, define a search template 
+
+                    // The label attribute of the objects should equal PubKeyName
+                    ObjectClassAttribute classAttribute = new ObjectClassAttribute(CKO.PUBLIC_KEY);
+                    ByteArrayAttribute keyLabelAttribute = new ByteArrayAttribute(CKA.LABEL);
+                    keyLabelAttribute.Value = System.Text.Encoding.UTF8.GetBytes(PubKeyName);
+
+                    session.FindObjectsInit(new P11Attribute[] { classAttribute, keyLabelAttribute });
+                    //P11Object[] pubkeys = session.FindObjects(1) as P11Object[];
+                    P11Object[] pubkeys = session.FindObjects(1);
+                    session.FindObjectsFinal();
+
+                    if ( (pubkeys.Length == 0) || (pubkeys[0] == null) )
+                    {
+                        Console.WriteLine("Public Key Object not found");
+                        return eCPublicKey;
+                    }
+                    eCPublicKey = (ECPublicKey)pubkeys[0];
+                  //  session.FindObjectsFinal();
+                }
+                else
+                {
+                    Console.WriteLine("No card found\n");
+                }
+            }
+            finally
+            {
+                // pkcs11 finalize
+                m.Dispose();//m.Finalize_();
+                m = null;
+            }
+            return eCPublicKey;
         }
     }
 }

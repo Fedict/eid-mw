@@ -35,11 +35,11 @@ namespace EidSamples
             IntegrityTests it = new IntegrityTests();
             //dt.StoreCertificateRNFile();
             //dt.GetSpecialStatus();
-
-           // it.IntegrityIdentityFile();
+     
+            //it.IntegrityIdentityFile();
             //st.SignSignature();
- //           CertificateValidityTests ct = new CertificateValidityTests();
-  //          ct.ValidityAuthenticationChain();
+            //           CertificateValidityTests ct = new CertificateValidityTests();
+            //          ct.ValidityAuthenticationChain();
             dt.GetSurname();
             /*dt.GetSurname();
             IntegrityIdentityFile
@@ -50,7 +50,9 @@ namespace EidSamples
             dt.GetSurname();
             dt.GetSurname();
             dt.GetSurname();
-            dt.GetCertificateLabels();*/
+            dt.GetCertificateLabels();
+            st.SignAuthentication();
+            st.ChallengeCard();*/
             //duurtijd.Stop();
            // Console.WriteLine(duurtijd.ElapsedMilliseconds.ToString());
         }

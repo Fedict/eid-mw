@@ -120,29 +120,37 @@ namespace EidSamples
             {
                 // link with the pkcs11 DLL
                 m = Module.GetInstance(mFileName);
-            } //m.Initialize();
+            }
 
             byte[] encryptedData = null;
             try
             {
                 Slot slot = m.GetSlotList(true)[0];
+                if (slot == null)
+                {
+                    Console.WriteLine("No Card reader found");
+                }
+                if (slot.Token == null)
+                {
+                    Console.WriteLine("No eID Card Found");
+                }
+
                 Session session = slot.Token.OpenSession(true);
                 ObjectClassAttribute classAttribute = new ObjectClassAttribute(CKO.PRIVATE_KEY);
                 ByteArrayAttribute keyLabelAttribute = new ByteArrayAttribute(CKA.LABEL);
                 keyLabelAttribute.Value = System.Text.Encoding.UTF8.GetBytes("Card");
 
-                session.FindObjectsInit(new P11Attribute[] {
-                     classAttribute,
-                     keyLabelAttribute
-                    }
+                session.FindObjectsInit(new P11Attribute[] {classAttribute,keyLabelAttribute}
                 );
                 P11Object[] privatekeys = session.FindObjects(1) as P11Object[];
                 session.FindObjectsFinal();
 
                 if (privatekeys.Length >= 1)
                 {
+                    SHA384 sha = new SHA384CryptoServiceProvider();
+                    byte[] HashValue = sha.ComputeHash(data);
                     session.SignInit(new Mechanism(CKM.ECDSA), (PrivateKey)privatekeys[0]);
-                    encryptedData = session.Sign(data);
+                    encryptedData = session.Sign(HashValue);
                 }
             }
             finally

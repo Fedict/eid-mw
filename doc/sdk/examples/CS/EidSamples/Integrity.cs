@@ -134,7 +134,78 @@ namespace EidSamples
                 return false;
             }
         }
-       
+
+        /// <summary>
+        /// Verify a card challenge against the card's public key. It is assumed that
+        /// the signature is an EC signature (curve Secp384r1) from a SHA384 hash of the data.
+        /// </summary>
+        /// <param name="data">challenge</param>
+        /// <param name="signature">Signature of the challenge</param>
+        /// <param name="eCPublicKey">ECPublicKey object to verify the signed challenge</param>
+        /// <returns>True if the verification succeeds</returns>
+        public bool VerifyChallenge(byte[] data, byte[] signature, ECPublicKey eCPublicKey)
+        {
+            try
+            {
+
+                    // Offset(dec)       ENCODING            ASN.1 Syntax
+                    //  00               06 05                -- OBJECT_ID LENGTH
+                    //  02               2B 81 04 00 22      Secp384r1(1 3 132 0 34)
+                   byte[] EncodedParamsCurve = eCPublicKey.ECParams.Value;
+
+
+                    // Offset(dec)       ENCODING            ASN.1 Syntax
+                    //  00              04                  compression byte
+                    //  01              { 48 bytes}          --X coordinate
+                    //  49:             { 48 bytes}          --Y coordinate
+                    byte[] EncodedParamsPoint = eCPublicKey.ECPoint.Value;
+
+                    byte[] KeyParams = new byte[5];
+                    byte[] Secp384r1 = { 0x2B, 0x81, 0x04, 0x00, 0x22 };
+
+                    byte[] KeyValue_X = new byte[48];
+                    byte[] KeyValue_Y = new byte[48];
+
+                    Array.Copy(EncodedParamsCurve, 0x02, KeyParams, 0, 5);
+
+                    ECParameters parameters = new ECParameters();
+
+                    //check if the curve is Secp384r1(1 3 132 0 34)
+                    if (System.Collections.StructuralComparisons.StructuralEqualityComparer.Equals(KeyParams, Secp384r1))
+                    {
+                        //Fill in parameters named curve:
+                        //Create a named curve using the specified Oid object.
+                        System.Security.Cryptography.Oid cardP384oid = new Oid("ECDSA_P384");
+                        parameters.Curve = ECCurve.CreateFromOid(cardP384oid);
+
+                        //skip the encoding byte
+                        Array.Copy(EncodedParamsPoint, 0x01, KeyValue_X, 0, 48);
+                        Array.Copy(EncodedParamsPoint, 0x31, KeyValue_Y, 0, 48);
+
+                        //Fill in parameters public key (Q)
+                        System.Security.Cryptography.ECPoint Q;
+                        Q.X = KeyValue_X;
+                        Q.Y = KeyValue_Y;
+
+                        parameters.Q = Q;
+                    }
+                    else
+                    {
+                        //not supported, cannot verify, exit
+                        return false;
+                    }
+
+                    ECDsa dsa = ECDsa.Create(parameters);
+                    // verify signature. assume that the data was SHA384 hashed.
+                    return dsa.VerifyData(data, signature, HashAlgorithmName.SHA384);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error: " + e.Message);
+                return false;
+            }
+        }
+
         /// <summary>
         /// Check a certificate chain. In order to trust the certficate, the root certificate must be
         /// stored in the trusted root certificates store. An online CRL check of the chain will be carried out.
