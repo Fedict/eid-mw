@@ -51,8 +51,8 @@ namespace EidSamples
             dt.GetSurname();
             dt.GetSurname();
             dt.GetCertificateLabels();
-            st.SignAuthentication();
-            st.ChallengeCard();*/
+            st.SignAuthentication();*/
+            st.ChallengeCard();
             //duurtijd.Stop();
            // Console.WriteLine(duurtijd.ElapsedMilliseconds.ToString());
         }
