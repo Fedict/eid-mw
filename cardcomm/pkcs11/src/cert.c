@@ -249,21 +249,24 @@ int key_get_info(const unsigned char *pkey, unsigned int lkey, T_KEY_INFO * info
 		if (ret)
 			return(ret);
 
+		//store the curve info with ASN.1 encoding bytes
 		info->curve = malloc(item.l_raw);
 		if (info->curve == NULL)
 			return(E_X509_ALLOC);
 		memcpy(info->curve, item.p_raw, item.l_raw);
 		info->l_curve = item.l_raw;
 
-		/* EC public key; */
+		//store the card EC public key
 		ret = asn1_get_item(pkey, lkey, "\1\2", &item, 0);
 		if (ret)
 			return(ret);
-		info->pkinfo = malloc(item.l_data);
+		info->pkinfo = malloc(item.l_data - 1); //-1 as the first byte returned of the unparsed ASN.1 bitstring is part of the ASN.1 encoding
+												//it indicates the number of bits in the final byte that are unused, and should be zero for P384 keys
+												//so skip this bit, it is not part of the EC Point.
 		if (info->pkinfo == NULL)
 			return(E_X509_ALLOC);
-		memcpy(info->pkinfo, item.p_data, item.l_data);
-		info->l_pkinfo = item.l_data;
+		memcpy(info->pkinfo, item.p_data + 1, item.l_data - 1); //copy all except the first byte
+		info->l_pkinfo = item.l_data - 1;
 	}
 	else
 	{

@@ -265,8 +265,8 @@ for (; *p_cPath; p_cPath++)
 	   iLen--;
 	   if (!ucParseBitString)
 	   {
-		   /* in case of EC key, there is no further TLV in here, only the public key (preceeded by the compression byte)
-		   so don't try to parse it, but just return it*/
+		   /* in case of EC key, there is no further TLV in here, only the public key (preceeded by the final unused bits byte and the compression byte)
+		   so don't try to parse it, but return it*/
 		   break;
 	   }
    }
@@ -335,7 +335,7 @@ for (; *p_cPath; p_cPath++)
 /* p_data points to element itself after length encoding, not the iNumTag */
 p_xItem->p_data = p_cDat;
 p_xItem->l_data = iLen;
-/* construct tag: bit 1 and 2 for class, bit 3 for primitiv or structured and tagnum�ber from bit 4-32 = 29 bits for number encoding */
+/* construct tag: bit 1 and 2 for class, bit 3 for primitiv or structured and tagnumber from bit 4-32 = 29 bits for number encoding */
 p_xItem->tag = (iClassTag >> 6) | (iTypeTag >> 3 ) | (iNumTag << 3);
 
 p_xItem->p_raw = p_cRawDat;
