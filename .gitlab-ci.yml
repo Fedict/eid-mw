@@ -1,0 +1,471 @@
+---
+stages:
+- docker
+- tests
+- source-package
+- binary-package
+- validate
+- build-repository
+- publish
+
+include:
+- local: .ci/build-configs.yml
+- local: .ci/builds-linux.yml
+- local: .ci/builds-windows.yml
+- local: .ci/builds-macos.yml
+- local: .ci/builds-docker.yml
+
+variables:
+  LINUX_BASEDIR: .
+  WINDOWS_BASEDIR: .
+  MACOS_BASEDIR: .
+
+#######################################
+# Stage "docker": build docker images #
+#######################################
+suse-build:
+  extends: .docker-base
+  only:
+    changes:
+    - .ci/dockerfiles/suse-build/**/*
+    - .ci/builds-docker.yml
+    - .ci/build-configs.yml
+
+fed-build:
+  extends: .docker-base
+  only:
+    changes:
+    - .ci/dockerfiles/fed-build/**/*
+    - .ci/builds-docker.yml
+    - .ci/build-configs.yml
+
+deb-build:
+  extends: .docker-base
+  only:
+    changes:
+    - .ci/dockerfiles/deb-build/**/*
+    - .ci/builds-docker.yml
+    - .ci/build-configs.yml
+
+deb-repro:
+  extends: .docker-base
+  only:
+    changes:
+    - .ci/dockerfiles/deb-repro/**/*
+    - .ci/builds-docker.yml
+    - .ci/build-configs.yml
+
+deb-scan-build:
+  extends: .docker-base
+  only:
+    changes:
+    - .ci/dockerfiles/deb-scan-build/**/*
+    - .ci/builds-docker.yml
+    - .ci/build-configs.yml
+
+deb-sbuild:
+  extends: .docker-base
+  only:
+    changes:
+    - .ci/dockerfiles/deb-sbuild/**/*
+    - .ci/builds-docker.yml
+    - .ci/build-configs.yml
+
+gtk4-build:
+  extends: .docker-base
+  only:
+    changes:
+    - .ci/dockerfiles/gtk4-build/**/*
+    - .ci/builds-docker.yml
+    - .ci/build-configs.yml
+
+##########################################################################################################
+# Stage "tests": run a test battery before doing all the hard work (i.e., try to find any problems ASAP) #
+##########################################################################################################
+test:distcheck:
+  stage: tests
+  extends: .distcheck
+
+test:robot:linux:
+  stage: tests
+  extends: .robot:linux
+
+test:repro:debian:
+  stage: tests
+  extends: .repro:debian
+
+test:scan-build:
+  stage: tests
+  extends: .scan-build
+
+test:gtk4:
+  stage: tests
+  extends: .gtk4
+
+#test:freebsd:
+#  stage: tests
+#  tags:
+#  - freebsd
+#  before_script:
+#  - pushd $LINUX_BASEDIR
+#  - autoreconf -f -i
+#  - popd
+#  script:
+#  - pushd $LINUX_BASEDIR
+#  - ./configure --disable-dependency-tracking --disable-webextension
+#  - make -j $(sysctl -n hw.ncpu)
+#  - make -j $(sysctl -n hw.ncpu) check
+#  - popd
+#  allow_failure: true
+#################################################
+# Stage "source-package": build source packages #
+#################################################
+src:srpm:
+  stage: source-package
+  extends: .srpm
+
+##############################################################
+# Stage "binary-package": build binaries and binary packages #
+##############################################################
+## Debian-based distributions
+.build-deb: &build-deb
+  extends: .build-deb-base
+  dependencies:
+    - test:distcheck
+  stage: binary-package
+
+build:deb_oldstable_32:
+  <<: *build-deb
+  variables:
+    DIST: debian
+    CODE: $DEBIAN_OLDSTABLE_CODE
+    SHORT: deb$DEBIAN_OLDSTABLE_VERSION
+    ARCH: i386
+    TARGET: continuous
+    GIT_STRATEGY: none
+  only:
+    variables:
+    - $DEBIAN_OLDSTABLE_CODE
+build:deb_oldstable_64:
+  <<: *build-deb
+  variables:
+    DIST: debian
+    CODE: $DEBIAN_OLDSTABLE_CODE
+    SHORT: deb$DEBIAN_OLDSTABLE_VERSION
+    ARCH: amd64
+    TARGET: continuous
+    GIT_STRATEGY: none
+  only:
+    variables:
+    - $DEBIAN_OLDSTABLE_CODE
+build:deb_stable_32:
+  <<: *build-deb
+  variables:
+    DIST: debian
+    CODE: $DEBIAN_STABLE_CODE
+    SHORT: deb$DEBIAN_STABLE_VERSION
+    ARCH: i386
+    TARGET: continuous
+    GIT_STRATEGY: none
+  only:
+    variables:
+    - $DEBIAN_STABLE_CODE
+build:deb_stable_64:
+  <<: *build-deb
+  variables:
+    DIST: debian
+    CODE: $DEBIAN_STABLE_CODE
+    SHORT: deb$DEBIAN_STABLE_VERSION
+    ARCH: amd64
+    TARGET: continuous
+    GIT_STRATEGY: none
+  only:
+    variables:
+    - $DEBIAN_STABLE_CODE
+build:sid-32:
+  <<: *build-deb
+  variables:
+    DIST: debian
+    CODE: sid
+    SHORT: sid
+    ARCH: i386
+    TARGET: continuous
+    GIT_STRATEGY: none
+  allow_failure: true
+build:sid-64:
+  <<: *build-deb
+  variables:
+    DIST: debian
+    CODE: sid
+    SHORT: sid
+    ARCH: amd64
+    TARGET: continuous
+    GIT_STRATEGY: none
+  allow_failure: true
+build:ubuntu_oldlts_32:
+  <<: *build-deb
+  variables:
+    DIST: ubuntu
+    CODE: $UBUNTU_OLDLTS_CODE
+    SHORT: u$UBUNTU_OLDLTS_VERSION
+    ARCH: i386
+    TARGET: continuous
+    GIT_STRATEGY: none
+  only:
+    variables:
+    - $UBUNTU_OLDLTS_CODE
+build:ubuntu_oldlts_64:
+  <<: *build-deb
+  variables:
+    DIST: ubuntu
+    CODE: $UBUNTU_OLDLTS_CODE
+    SHORT: u$UBUNTU_OLDLTS_VERSION
+    ARCH: amd64
+    TARGET: continuous
+    GIT_STRATEGY: none
+  only:
+    variables:
+    - $UBUNTU_OLDLTS_CODE
+build:ubuntu_lts_32:
+  <<: *build-deb
+  variables:
+    DIST: ubuntu
+    CODE: $UBUNTU_LTS_CODE
+    SHORT: u$UBUNTU_LTS_VERSION
+    ARCH: i386
+    TARGET: continuous
+    GIT_STRATEGY: none
+  only:
+    variables:
+    - $UBUNTU_LTS_CODE
+build:ubuntu_lts_64:
+  <<: *build-deb
+  variables:
+    DIST: ubuntu
+    CODE: $UBUNTU_LTS_CODE
+    SHORT: u$UBUNTU_LTS_VERSION
+    ARCH: amd64
+    TARGET: continuous
+    GIT_STRATEGY: none
+  only:
+    variables:
+    - $UBUNTU_LTS_CODE
+build:ubuntu_stable_32:
+  <<: *build-deb
+  variables:
+    DIST: ubuntu
+    CODE: $UBUNTU_STABLE_CODE
+    SHORT: u$UBUNTU_STABLE_VERSION
+    ARCH: i386
+    TARGET: continuous
+    GIT_STRATEGY: none
+  only:
+    variables:
+    - $UBUNTU_STABLE_CODE
+build:ubuntu_stable_64:
+  <<: *build-deb
+  variables:
+    DIST: ubuntu
+    CODE: $UBUNTU_STABLE_CODE
+    SHORT: u$UBUNTU_STABLE_VERSION
+    ARCH: amd64
+    TARGET: continuous
+    GIT_STRATEGY: none
+  only:
+    variables:
+    - $UBUNTU_STABLE_CODE
+
+# Fedora-based distributions
+.build-fed: &build-fed
+  extends: .build-fed-base
+  dependencies:
+    - src:srpm
+  stage: binary-package
+build:fedora_oldstable_32:
+  <<: *build-fed
+  variables:
+    DIST: fedora
+    DVER: $FEDORA_OLDSTABLE_VERSION
+    ARCH: i386
+  only:
+    variables:
+    - $FEDORA_OLDSTABLE_VERSION
+build:fedora_oldstable_64:
+  <<: *build-fed
+  variables:
+    DIST: fedora
+    DVER: $FEDORA_OLDSTABLE_VERSION
+    ARCH: x86_64
+  only:
+    variables:
+    - $FEDORA_OLDSTABLE_VERSION
+build:fedora_stable_32:
+  <<: *build-fed
+  variables:
+    DIST: fedora
+    DVER: $FEDORA_STABLE_VERSION
+    ARCH: i386
+  only:
+    variables:
+    - $FEDORA_STABLE_VERSION
+build:fedora_stable_64:
+  <<: *build-fed
+  variables:
+    DIST: fedora
+    DVER: $FEDORA_STABLE_VERSION
+    ARCH: x86_64
+  only:
+    variables:
+    - $FEDORA_STABLE_VERSION
+build:centos_oldstable_64:
+  <<: *build-fed
+  variables:
+    DIST: epel
+    DVER: $CENTOS_OLDSTABLE_VERSION
+    ARCH: x86_64
+  only:
+    variables:
+    - $CENTOS_OLDSTABLE_VERSION
+build:centos_stable_64:
+  <<: *build-fed
+  variables:
+    DIST: epel
+    DVER: $CENTOS_STABLE_VERSION
+    ARCH: x86_64
+  only:
+    variables:
+    - $CENTOS_STABLE_VERSION
+
+# openSUSE-based distributions
+.build-suse: &build-suse
+  extends: .build-suse-base
+  dependencies:
+    - src:srpm
+  stage: binary-package
+build:suse_oldstable:
+  <<: *build-suse
+  variables:
+    DIST: opensuse
+    DVER: $OPENSUSE_OLDSTABLE_VERSION
+    ARCH: x86_64
+  only:
+    variables:
+    - $OPENSUSE_OLDSTABLE_VERSION
+build:suse_stable:
+  <<: *build-suse
+  variables:
+    DIST: opensuse
+    DVER: $OPENSUSE_STABLE_VERSION
+    ARCH: x86_64
+  only:
+    variables:
+    - $OPENSUSE_STABLE_VERSION
+
+# Windows
+build:windows:
+  stage: binary-package
+  extends: .build-windows
+
+# macOS
+build:macos:
+  stage: binary-package
+  extends: .build-macos
+  variables:
+    EIDMW_SIGN_BUILD: 0
+
+validate:robot:windows:
+  stage: validate
+  extends: .robot:windows
+  dependencies:
+  - build:windows
+
+validate:robot:macos:
+  stage: validate
+  extends: .robot:macos
+  dependencies:
+  - build:macos
+
+validate:validation:linux:google:
+  stage: validate
+  extends: .validation:linux:google
+  dependencies:
+  - build:ubuntu_oldlts_32
+  - build:ubuntu_oldlts_64
+  - build:ubuntu_stable_32 
+  - build:ubuntu_stable_64
+  - build:ubuntu_lts_64
+  - build:ubuntu_lts_32
+
+validate:validation:linux:firefox:
+  stage: validate
+  extends: .validation:linux:firefox
+  dependencies:
+  - build:ubuntu_oldlts_32
+  - build:ubuntu_oldlts_64
+  - build:ubuntu_stable_32 
+  - build:ubuntu_stable_64
+  - build:ubuntu_lts_64
+  - build:ubuntu_lts_32
+
+####################################################################
+# Stage "build-repository": copy binaries into a repository layout #
+####################################################################
+repo:inject-debs:
+  dependencies:
+    - build:deb_oldstable_32
+    - build:deb_stable_32
+    - build:sid-32
+    - build:ubuntu_oldlts_32
+    - build:ubuntu_lts_32
+    - build:ubuntu_stable_32
+    - build:deb_oldstable_64
+    - build:deb_stable_64
+    - build:sid-64
+    - build:ubuntu_oldlts_64
+    - build:ubuntu_lts_64
+    - build:ubuntu_stable_64
+  stage: build-repository
+  extends: .inject-debs
+  only:
+    variables:
+    - $CI_COMMIT_REF_NAME == "master"
+    - $CI_COMMIT_REF_NAME == $CANDIDATEBRANCH
+    - $CI_COMMIT_TAG
+
+repo:inject-fed:
+  variables:
+    TARGET: continuous
+  only:
+    variables:
+    - $CI_COMMIT_REF_NAME == "master"
+    - $CI_COMMIT_REF_NAME == $CANDIDATEBRANCH
+    - $CI_COMMIT_TAG
+  dependencies:
+    - build:fedora_oldstable_32
+    - build:fedora_oldstable_64
+    - build:fedora_stable_32
+    - build:fedora_stable_64
+    - build:centos_oldstable_64
+    - build:centos_stable_64
+  stage: build-repository
+  extends: .inject-fed
+
+repo:inject-suse:
+  variables:
+    TARGET: continuous
+  only:
+    variables:
+    - $CI_COMMIT_REF_NAME == "master"
+    - $CI_COMMIT_REF_NAME == $CANDIDATEBRANCH
+    - $CI_COMMIT_TAG
+  dependencies:
+    - build:suse_oldstable
+    - build:suse_stable
+  stage: build-repository
+  extends: .inject-suse
+
+repo:inject-source:
+  dependencies:
+  - test:distcheck
+  stage: build-repository
+  extends: .inject-source

@@ -1,0 +1,38 @@
+---
+.robot:windows:
+  tags:
+  - robot
+  - windows
+  script:
+  - cd %WINDOWS_BASEDIR%\scripts\windows
+  - call build_testsuite.bat
+  - cd
+  - cd ..\..
+  - cd tests\unit\windows\Release
+  - pkcs11_tests.exe zetes:COM4:COM3 nopin
+  allow_failure: true
+
+.build-windows:
+  dependencies: []
+  before_script:
+  - del /q %WINDOWS_BASEDIR%\scripts\windows\*.exe
+  script:
+  - cd %WINDOWS_BASEDIR%\scripts\windows
+  - build_all.bat
+  after_script:
+  - rmdir /s /q products
+  - mkdir products\windows
+  - xcopy %WINDOWS_BASEDIR%\scripts\windows\*.exe products\windows
+  - xcopy %WINDOWS_BASEDIR%\scripts\windows\*.msi products\windows
+  tags:
+  - build
+  - windows
+  allow_failure: true
+  artifacts:
+    when: on_success
+    paths:
+    - products\windows
+    - cardcomm\minidriver\VS_2017\Binaries\*\*.lib
+    - cardcomm\pkcs11\VS_2017\Binaries\*\*.lib
+    - installers\quickinstaller\NSIS_Plugins\beidread\VS_2017\*\*.lib
+    - plugins_tools\eid-viewer\Windows\VS_2017\eIDViewer\bin\*\*.lib

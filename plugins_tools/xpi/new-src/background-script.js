@@ -3,10 +3,11 @@ var oldmodname = "beidpkcs11_old";
 async function installPKCS11Module() {
   if(typeof browser.pkcs11 !== 'undefined') {
     var res;
+    var oldres;
     try {
-      res = await browser.pkcs11.isModuleInstalled(oldmodname);
+      oldres = await browser.pkcs11.isModuleInstalled(oldmodname);
       console.log("old module installed: ", res);
-      if(res) {
+      if(oldres) {
         browser.pkcs11.uninstallModule(oldmodname);
         console.log("removed old module");
       }
@@ -43,17 +44,26 @@ async function installPKCS11Module() {
       res = await browser.pkcs11.installModule(modname, 0x1<<28);
       console.log("installModule result: ", res);
     } catch(err) {
-      console.error("installModule error: ", err);
-      browser.pkcs11.isModuleInstalled("beidp11kit").then(() => {
-        modname = "beidp11kit";
-        console.log("found p11-kit-proxy module, assuming BeID installed through there");
-      }).catch(() => {
+      if(!oldres) {
+        console.error("installModule error: ", err);
+        browser.pkcs11.isModuleInstalled("beidp11kit").then(() => {
+          modname = "beidp11kit";
+          console.log("found p11-kit-proxy module, assuming BeID installed through there");
+        }).catch(() => {
+          browser.notifications.create({
+            "type": "basic",
+            "title": browser.i18n.getMessage("installFailedTitle"),
+            "message": browser.i18n.getMessage("installFailedContent"),
+          })
+        });
+      } else {
         browser.notifications.create({
-          "type": "basic",
-          "title": browser.i18n.getMessage("installFailedTitle"),
-          "message": browser.i18n.getMessage("installFailedContent"),
-        })
-      });
+          "type":"basic",
+          "title": browser.i18n.getMessage("restartRequiredTitle"),
+          "message": browser.i18n.getMessage("restartRequiredContent"),
+        });
+        return;
+      }
     }
   }
 }
