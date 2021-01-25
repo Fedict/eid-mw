@@ -50,7 +50,7 @@
 
 .robot:linux:
   variables:
-    EID_ROBOT_STYLE: zetes:/dev/CARD:/dev/USB
+    EID_ROBOT_STYLE: zetes:/dev/TB3-CARD:/dev/TB3-USB
     EID_DIALOGS_STYLE: nopin
   dependencies: []
   tags:
