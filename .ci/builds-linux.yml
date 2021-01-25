@@ -211,7 +211,8 @@
   image: $CI_REGISTRY_IMAGE/suse-build:$CI_COMMIT_REF_SLUG
   before_script:
     - pushd $LINUX_BASEDIR
-    - VERSHORT=$(git describe --dirty | sed -e 's/-/./g')
+    - VER=$(cat products/srpm/version)
+    - VERSHORT=${VER#*-}
     - popd
   script:
     - http_proxy="$ACNG" build --no-checks --clean -debug --dist sl$DVER --repo http://download.opensuse.org/distribution/leap/$DVER/repo/oss --define "revision $VERSHORT" products/srpm/eid-mw-*.src.rpm
