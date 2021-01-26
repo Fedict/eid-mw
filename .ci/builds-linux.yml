@@ -52,6 +52,8 @@
   variables:
     EID_ROBOT_STYLE: zetes:/dev/TB3-CARD:/dev/TB3-USB
     EID_DIALOGS_STYLE: nopin
+    CFLAGS: "-O0 -g -Wall -fprofile-arcs -ftest-coverage"
+    CXXFLAGS: "-O0 -g -Wall -fprofile-arcs -ftest-coverage"
   dependencies: []
   tags:
   - robot
@@ -62,10 +64,17 @@
   - popd
   script:
   - pushd $LINUX_BASEDIR
-  - ./configure --libexecdir=$(pwd)/scripts/linux/hackbin --disable-pinentry
+  - ./configure --libexecdir=$(pwd)/scripts/linux/hackbin --disable-pinentry CFLAGS='-g -O0 --coverage' CXXFLAGS='-g -O0 --coverage'
   - make -j $(nproc) check
+  - mkdir -p products/reports
+  - gcovr --xml > products/reports/coverage.xml
   - popd
-  allow_failure: true
+  artifacts:
+    paths:
+    - products/reports
+    reports:
+      cobertura: products/reports/coverage.xml
+    when: always
 
 .validation:linux:firefox:
   tags:
