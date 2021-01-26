@@ -10,7 +10,7 @@ cat > "$1" <<EOF
 #define BEID_VERSION_H
 
 #define BEID_COMPANY_NAME "Belgian Government"
-#define BEID_COPYRIGHT "Copyright (c) 2016"
+#define BEID_COPYRIGHT "Copyright (c) 2021"
 #define BEID_PRODUCT_NAME "Belgium eID Middleware"
 #define BEID_PRODUCT_VERSION "$BASE_VERSION1.$BASE_VERSION2.$BASE_VERSION3"
 #define BEID_VERSION_STRING "$BASE_VERSION1, $BASE_VERSION2, $BASE_VERSION3"
