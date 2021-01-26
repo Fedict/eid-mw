@@ -406,6 +406,7 @@ validate:validation:linux:firefox:
   - build:ubuntu_stable_64
   - build:ubuntu_lts_64
   - build:ubuntu_lts_32
+  allow_failure: true
 
 ####################################################################
 # Stage "build-repository": copy binaries into a repository layout #
