@@ -70,9 +70,11 @@
   - gcovr --xml > products/reports/coverage.xml
   - popd
   artifacts:
-    paths: products/reports
+    paths:
+    - products/reports
     reports:
       cobertura: products/reports/coverage.xml
+    when: always
 
 .validation:linux:firefox:
   tags:
