@@ -15,8 +15,14 @@ Vagrant.configure("2") do |config|
       config.vm.box = "generic/#{machine}"
     end
   end
-  # config.vm.network "forwarded_port", guest: 80, host: 8080
 
+  config.vm.provider :virtualbox do |vb|
+     vb.memory = "2048"
+     vb.customize ['modifyvm', :id, '--usb', 'on']
+     vb.customize ['usbfilter', 'add', '0', '--target', :id, '--name', 'ACR38 USB Reader', '--vendorid', '0x072f', '--productid', '0x9000']
+  end
+
+# config.vm.network "forwarded_port", guest: 80, host: 8080
   config.vm.network "public_network"
 
   config.vm.provision :file, source: "./eid-archive_2020.4_all.deb", destination: "eid-archive.deb"
@@ -34,9 +40,5 @@ Vagrant.configure("2") do |config|
     ansible.groups = grouphash
     ansible.playbook = "eid-playbook.yml"
     ansible.provisioning_path = "/home/vagrant"
-  end
-
-  config.vm.provider :virtualbox do |vb|
-     vb.memory = "2048"
   end
 end

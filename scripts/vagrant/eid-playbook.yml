@@ -14,6 +14,13 @@
       - eid-mw
       - eid-viewer
       state: latest
+  - name: install acs card reader
+    become: yes
+    apt:
+      update_cache: yes
+      name:
+      - libacsccid1
+      state: latest
   
 - name: install git and chrome on Debian and derivatives
   hosts: debuntu
@@ -37,7 +44,35 @@
     apt:
       name:
       - actiona 
-      state: latest  
+      state: latest
+
+- name: install graphical environment on Debian
+  hosts: debian
+  tasks:
+  - name: install desktop task
+    become: yes
+    apt:
+      name: task-desktop
+      state: present
+  - name: ensure gdm is running
+    become: yes
+    systemd:
+      name: gdm
+      state: started
+
+- name: install graphical environment on Ubuntu
+  hosts: ubuntu
+  tasks:
+  - name: install ubuntu desktop environment
+    become: yes
+    apt:
+      name: ubuntu-desktop
+      state: present
+  - name: ensure gdm is running
+    become: yes
+    systemd:
+      name: gdm
+      state: started
 
 - name: install eID on Fedora
   hosts: fedora
@@ -54,6 +89,12 @@
       name:
       - eid-mw
       - eid-viewer
+      state: latest
+  - name: install acs based card reader
+    become: yes
+    dnf:
+      name:
+      - pscs-lite-acsccid
       state: latest
 
 - name: install git and chrome on fedora
@@ -114,6 +155,20 @@
     command:  
       chdir: ./tests/actiona
       cmd: make
+
+- name: install graphical environment on fedora
+  hosts: fedora
+  tasks:
+  - name: install fedora desktop environment
+    become: yes
+    dnf:
+      name: '@Basic Desktop'
+      state: present
+  - name: ensure lightdm is running
+    become: yes
+    systemd:
+      name: lightdm
+      state: started
  
 - name: install eID on Suse
   hosts: suse
@@ -131,6 +186,13 @@
       name:
       - eid-mw
       - eid-viewer
+      disable_recommends: no
+  - name: install package acs ccid card reader
+    become: yes
+    zypper:
+      disable_gpg_check: yes
+      name:
+      - pscs-acsccid
       disable_recommends: no
 
 - name: install chrome and git on Suse
@@ -162,45 +224,3 @@
     git: 
        repo: "https://github.com/Fedict/eid-browser-tests.git"
        dest: ./tests/browsertests
-
-- name: install graphical environment on Debian
-  hosts: debian
-  tasks:
-  - name: install desktop task
-    become: yes
-    apt:
-      name: task-desktop
-      state: present
-  - name: ensure gdm is running
-    become: yes
-    systemd:
-      name: gdm
-      state: started
-
-- name: install graphical environment on Ubuntu
-  hosts: ubuntu
-  tasks:
-  - name: install ubuntu desktop environment
-    become: yes
-    apt:
-      name: ubuntu-desktop
-      state: present
-  - name: ensure gdm is running
-    become: yes
-    systemd:
-      name: gdm
-      state: started
-
-- name: install graphical environment on fedora
-  hosts: fedora
-  tasks:
-  - name: install fedora desktop environment
-    become: yes
-    dnf:
-      name: '@Basic Desktop'
-      state: present
-  - name: ensure lightdm is running
-    become: yes
-    systemd:
-      name: lightdm
-      state: started
