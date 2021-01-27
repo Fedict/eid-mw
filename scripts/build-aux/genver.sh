@@ -2,7 +2,7 @@
 
 GITDESC=$(git describe --match="v5*" --dirty 2>/dev/null | sed -e 's/-/./g')
 VERCLEAN=$(echo $GITDESC|sed -Ee 's/^.*v([0-9]+\.[0-9]+(\.[0-9]+|bp|\.pre[0-9]*)).*$/\1/')
-FORCE_VERSION=${FORCE_VERSION:0}
+FORCE_VERSION=${FORCE_VERSION:-0}
 
 GITDESC="$VERCLEAN-$GITDESC"
 
