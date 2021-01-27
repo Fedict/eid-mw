@@ -130,7 +130,7 @@ TEST_FUNC(states) {
 
 
 	robot_insert_reader();
-	SLEEP(10);
+	SLEEP(20);
 	verbose_assert(curstate == STATE_READY);
 	clearflags();
 	
