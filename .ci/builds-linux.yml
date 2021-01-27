@@ -4,6 +4,7 @@
   image: $CI_REGISTRY_IMAGE/deb-build:$CI_COMMIT_REF_SLUG
   variables:
     GIT_DEPTH: 0
+    FORCE_VERSION: 1
   before_script:
   - if [ ! -z "$ACNG" ]; then sed -i -e "s,http://,$ACNG/," /etc/apt/sources.list; else echo "no proxy configured"; fi
   - apt-get update
