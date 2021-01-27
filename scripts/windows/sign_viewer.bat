@@ -135,11 +135,10 @@ goto end_resetpath
 :end_resetpath
 @cd %OUR_CURRENT_PATH%
 
-@echo [INFO] Build_all Done...
+@echo [INFO] Sign_viewer Done...
 @goto end
 
 :err
 @exit /b 1
 
 :end
-
