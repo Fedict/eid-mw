@@ -17,7 +17,7 @@
   script:
   - pushd $LINUX_BASEDIR
   - ./configure
-  - make -j $(nproc) distcheck
+  - make -j distcheck
   - popd
   after_script:
   - mkdir -p products/source
@@ -45,7 +45,7 @@
   script:
   - pushd $LINUX_BASEDIR
   - ./configure --with-gtkvers=4 --disable-pinentry
-  - make -j $(nproc) distcheck
+  - make -j distcheck
   - popd
   allow_failure: true
 
@@ -66,7 +66,7 @@
   script:
   - pushd $LINUX_BASEDIR
   - ./configure --libexecdir=$(pwd)/scripts/linux/hackbin --disable-pinentry CFLAGS='-g -O0 --coverage' CXXFLAGS='-g -O0 --coverage'
-  - make -j $(nproc) check
+  - make -j check
   - mkdir -p products/reports
   - gcovr --xml > products/reports/coverage.xml
   - gcovr --html -o products/reports/coverage.html
@@ -132,7 +132,7 @@
   - popd
   script:
   - pushd $LINUX_BASEDIR
-  - scan-build -disable-checker deadcode.DeadStores --status-bugs -o public make -j $(nproc)
+  - scan-build -disable-checker deadcode.DeadStores --status-bugs -o public make -j
   - popd
   artifacts:
     when: on_failure
