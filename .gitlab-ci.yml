@@ -89,6 +89,7 @@ test:distcheck:
 test:robot:linux:
   stage: tests
   extends: .robot:linux
+  allow_failure: true
 
 test:repro:debian:
   stage: tests
@@ -101,6 +102,10 @@ test:scan-build:
 test:gtk4:
   stage: tests
   extends: .gtk4
+
+test:coverity:linux:
+  stage: tests
+  extends: .coverity:linux
 
 #test:freebsd:
 #  stage: tests
