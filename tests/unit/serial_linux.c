@@ -110,6 +110,7 @@ void serial_free_line(char *line) {
 }
 
 void serial_clear(Serial *port) {
+	sr_wait(2500);
 	while(serial_has_data(port)) {
 		char buf[80];
 		if(read(port->fd, buf, 79) < 0) {
