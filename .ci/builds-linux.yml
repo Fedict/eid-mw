@@ -275,3 +275,21 @@
   - gpg --yes --batch --passphrase "" --default-key $GPG_TEST_KEY_ID --no-tty -b --armor $(basename $SOURCETGZ)
   variables:
     GIT_STRATEGY: none
+
+.coverity:linux:
+  tags:
+  - linux
+  - coverity
+  before_script:
+  - pushd $LINUX_BASEDIR
+  - autoreconf -f -i
+  - rm -rf cov-int
+  - popd
+  script:
+  - pushd $LINUX_BASEDIR
+  - ./configure --libexecdir=$(pwd)/scripts/linux/hackbin --disable-pinentry
+  - cov-build --dir=cov-int make
+  - tar cvaf eid-mw-coverity.tar.gz cov-int
+  - curl --form project=eID+middleware --form token=$COVERITY_TOKEN --form email=wouter.verhelst@fedict.be --form file=@"eid-mw-coverity.tar.gz"; filename="eID middleware.tgz" --form version=$CI_COMMIT_SHA --form description="automatic submission by GitLab CI" https://scan.coverity.com/builds?project=eID+middleware
+  - popd
+  when: manual
