@@ -2,6 +2,7 @@
   tags:
   - docker
   image: $CI_REGISTRY_IMAGE/deb-build:$CI_COMMIT_REF_SLUG
+  retry: 2
   variables:
     GIT_DEPTH: 0
   before_script:
