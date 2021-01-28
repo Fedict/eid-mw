@@ -277,6 +277,8 @@
     GIT_STRATEGY: none
 
 .coverity:linux:
+  variables:
+    PATH: /opt/coverity/bin:/usr/local/bin:/usr/bin:/usr/local/games:/usr/games
   tags:
   - linux
   - coverity
@@ -289,6 +291,7 @@
   - pushd $LINUX_BASEDIR
   - ./configure --libexecdir=$(pwd)/scripts/linux/hackbin --disable-pinentry
   - cov-build --dir=cov-int make
+  - cov-build --dir=cov-int make check
   - tar cvaf eid-mw-coverity.tar.gz cov-int
   - curl --form project=eID+middleware --form token=$COVERITY_TOKEN --form email=wouter.verhelst@fedict.be --form file=@"eid-mw-coverity.tar.gz"; filename="eID middleware.tgz" --form version=$CI_COMMIT_SHA --form description="automatic submission by GitLab CI" https://scan.coverity.com/builds?project=eID+middleware
   - popd
