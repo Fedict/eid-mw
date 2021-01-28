@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if [ -z "$EID_PIN_CODE" ]; then
+	echo "CANCEL"
+else
+	echo $EID_PIN_CODE
+fi
