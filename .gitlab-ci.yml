@@ -103,6 +103,10 @@ test:gtk4:
   stage: tests
   extends: .gtk4
 
+test:coverity:linux:
+  stage: tests
+  extends: .coverity:linux
+
 #test:freebsd:
 #  stage: tests
 #  tags:
