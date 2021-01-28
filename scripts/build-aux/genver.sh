@@ -11,9 +11,8 @@ if [ "$GITDESC" = "-" ]; then
 		GITDESC=$(cat .version)
 	else
 		if [ $FORCE_VERSION -gt 0 ]; then
-			git fetch --all
-			export FORCE_VERSION=0
-			exec $0 "$@"
+			sleep 10
+			exit 1
 		fi
 		GITDESC="0.unknown"
 	fi
