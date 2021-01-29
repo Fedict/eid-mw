@@ -10,11 +10,6 @@ if [ "$GITDESC" = "-" ]; then
 	if [ -f ".version" ]; then
 		GITDESC=$(cat .version)
 	else
-		if [ $FORCE_VERSION -gt 0 ]; then
-			git fetch --all
-			sleep 10
-			FORCE_VERSION=$(( $FORCE_VERSION + 1 )) exec $0 "$@"
-		fi
 		if [ $FORCE_VERSION -gt 1 ]; then
 			sleep 10
 			exit 1
