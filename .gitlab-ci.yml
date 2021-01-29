@@ -380,6 +380,7 @@ build:macos:
 build:freebsd:
   stage: binary-package
   extends: .build-freebsd-base
+  allow_failure: true
 
 validate:robot:windows:
   stage: validate
