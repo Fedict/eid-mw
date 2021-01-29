@@ -379,7 +379,7 @@ build:macos:
     EIDMW_SIGN_BUILD: 0
 
 build:freebsd:
-  stagge: binary-package
+  stage: binary-package
   extends: .build-freebsd-base
 
 validate:robot:windows:
