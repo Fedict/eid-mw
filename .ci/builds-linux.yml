@@ -19,6 +19,7 @@
   - pushd $LINUX_BASEDIR
   - ./configure
   - make -j distcheck
+  - grep -qv unknown .version
   - popd
   after_script:
   - mkdir -p products/source
@@ -28,7 +29,6 @@
   - pushd $LINUX_BASEDIR
   - COMMIT_DATE=$(git log --date=rfc HEAD^..HEAD|grep ^Date|cut -d ' ' -f 2-|sed -e 's/^\s*//')
   - popd
-  - grep -qv unknown products/source/version
   - echo $COMMIT_DATE > products/source/date
   artifacts:
     when:
