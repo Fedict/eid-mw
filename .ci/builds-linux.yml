@@ -180,7 +180,7 @@
   - mkdir -p build
   - pushd build
   - tar xvf ../products/source/eid-mw-${VER}.tar.gz --strip-components=1
-  - ./configure
+  - ./configure --disable-dependency-tracking
   - popd
   script:
   - pushd build
