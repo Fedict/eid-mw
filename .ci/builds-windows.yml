@@ -5,7 +5,7 @@
   - windows
   script:
   - cd $Env:WINDOWS_BASEDIR\scripts\windows
-  - call build_testsuite.bat
+  - ./build_testsuite.bat
   - cd
   - cd ..\..
   - cd tests\unit\windows\Release
@@ -15,12 +15,12 @@
 .build-windows:
   dependencies: []
   before_script:
-  - del /q $Env:WINDOWS_BASEDIR\scripts\windows\*.exe
+  - del $Env:WINDOWS_BASEDIR\scripts\windows\*.exe
   script:
   - cd $Env:WINDOWS_BASEDIR\scripts\windows
-  - build_all.bat
+  - ./build_all.bat
   after_script:
-  - rmdir /s /q products
+  - rmdir /s products
   - mkdir products\windows
   - xcopy $Env:WINDOWS_BASEDIR\scripts\windows\*.exe products\windows
   - xcopy $Env:WINDOWS_BASEDIR\scripts\windows\*.msi products\windows
