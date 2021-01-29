@@ -89,7 +89,6 @@ test:distcheck:
 test:robot:linux:
   stage: tests
   extends: .robot:linux
-  allow_failure: true
 
 test:repro:debian:
   stage: tests
