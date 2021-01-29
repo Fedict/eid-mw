@@ -167,6 +167,27 @@
     paths:
     - products/srpm
 
+.build-freebsd-base:
+  variables:
+    GIT_STRATEGY: none
+  tags:
+  - freebsd
+  before_script:
+  - VER=$(cat products/source/version)
+  - VERSHORT=${VER#*-}
+  - COMMITDATE=$(cat products/source/date)
+  - mkdir -p build
+  - pushd build
+  - tar xvf ../products/source/eid-mw-${VER}.tar.gz --strip-components=1
+  - autoreconf -f -i
+  - ./configure
+  - popd
+  script:
+  - pushd build
+  - make
+  - make check
+  - popd
+
 .build-deb-base:
   before_script:
   - VER=$(cat products/source/version)
