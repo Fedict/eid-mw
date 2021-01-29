@@ -378,6 +378,10 @@ build:macos:
   variables:
     EIDMW_SIGN_BUILD: 0
 
+build:freebsd:
+  stagge: binary-package
+  extends: .build-freebsd-base
+
 validate:robot:windows:
   stage: validate
   extends: .robot:windows
