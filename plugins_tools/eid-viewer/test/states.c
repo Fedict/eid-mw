@@ -233,7 +233,7 @@ TEST_FUNC(states) {
 	
 	clearflags();
 	SLEEP(5);
-	
+	/*
 	printf("test for challenge (only run with a card v1.8)\n");
 	if(have_keyhash){
 		const unsigned char* challenge = "123456789012345678901234567890123456789012345678";
@@ -244,7 +244,7 @@ TEST_FUNC(states) {
 		clearflags();
 		SLEEP(5);
 	}
-	
+	*/
 	eid_vwr_be_set_invalid();
 	SLEEP(5);
 	newstate(curstate);
