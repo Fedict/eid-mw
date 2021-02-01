@@ -106,8 +106,14 @@ static const void* osl_objc_perform_http_request(char* url, long *retlen, void**
 #endif
 	if(respdata != nil) {
 		void *retval = malloc(respdata.length+1);
-		*retlen = (long)respdata.length;
-		*handle = retval;
+        if (retlen != NULL)
+        {
+            *retlen = (long)respdata.length;
+        }
+        if (handle != NULL)
+        {
+            *handle = retval;
+        }
 		[respdata getBytes:retval length:*retlen];
 		return retval;
 	} else {
@@ -116,7 +122,10 @@ static const void* osl_objc_perform_http_request(char* url, long *retlen, void**
 }
 
 static void osl_objc_free_ocsp_request(void* data) {
-	free(data);
+    if (data != NULL)
+    {
+        free(data);
+    }
 }
 
 static void osl_objc_challenge_result(const unsigned char *response, int responselen, enum eid_vwr_result result) {
