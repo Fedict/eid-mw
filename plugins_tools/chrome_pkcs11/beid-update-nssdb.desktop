@@ -1,5 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=Configure Chrome PKCS#11 to include the Belgian eID software
-Exec=/usr/bin/beid-update-nssdb
-NoDisplay=true
