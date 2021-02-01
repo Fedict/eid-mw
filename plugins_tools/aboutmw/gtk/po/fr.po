@@ -1,0 +1,135 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2018 BOSA
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: eid-mw 4.1.1-v4.1.1.4.gc149158.dirty\n"
+"Report-Msgid-Bugs-To: servicedesk@bosa.fgov.be\n"
+"POT-Creation-Date: 2018-12-14 13:54+0100\n"
+"PO-Revision-Date: 2015-02-12 15:47+0100\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: plugins_tools/aboutmw/gtk/about-main.c:65
+#: plugins_tools/aboutmw/gtk/about-main.c:69
+#: plugins_tools/aboutmw/gtk/about-main.c:74
+#: plugins_tools/aboutmw/gtk/about-main.c:81
+#: plugins_tools/aboutmw/gtk/about-main.c:85
+msgid "PCSC daemon status"
+msgstr "Statut service de système PCSC"
+
+#: plugins_tools/aboutmw/gtk/about-main.c:65
+msgid "(check failed)"
+msgstr "(échec du test)"
+
+#: plugins_tools/aboutmw/gtk/about-main.c:69
+#: plugins_tools/aboutmw/gtk/about-main.c:74
+#: plugins_tools/aboutmw/gtk/about-main.c:81
+msgid "(not running)"
+msgstr "(ne tourne pas)"
+
+#: plugins_tools/aboutmw/gtk/about-main.c:84
+#, c-format
+msgid "running; pid: %s"
+msgstr "tourne ; pid : %s"
+
+#: plugins_tools/aboutmw/gtk/about-main.c:99
+#: plugins_tools/aboutmw/gtk/about-main.c:104
+#: plugins_tools/aboutmw/gtk/about-main.c:111
+#: plugins_tools/aboutmw/gtk/about-main.c:114
+msgid "eID Viewer location"
+msgstr "Emplacement eID Viewer"
+
+#: plugins_tools/aboutmw/gtk/about-main.c:99
+#: plugins_tools/aboutmw/gtk/about-main.c:104
+#: plugins_tools/aboutmw/gtk/about-main.c:111
+#: plugins_tools/aboutmw/gtk/about-main.c:178
+#: plugins_tools/aboutmw/gtk/about-main.c:182
+#: plugins_tools/aboutmw/gtk/about-main.c:188
+msgid "(not found)"
+msgstr "(non trouvé)"
+
+#: plugins_tools/aboutmw/gtk/about-main.c:155
+#: plugins_tools/aboutmw/gtk/about-main.c:178
+msgid "32-bit PKCS#11 location"
+msgstr "Emplacement 32 bits PKCS#11"
+
+#: plugins_tools/aboutmw/gtk/about-main.c:160
+#: plugins_tools/aboutmw/gtk/about-main.c:182
+msgid "64-bit PKCS#11 location"
+msgstr "Emplacement 64 bits PKCS#11"
+
+#: plugins_tools/aboutmw/gtk/about-main.c:164
+#: plugins_tools/aboutmw/gtk/about-main.c:188
+msgid "PKCS#11 location"
+msgstr "Emplacement PKCS#11 "
+
+#: plugins_tools/aboutmw/gtk/about-main.c:263
+#: plugins_tools/aboutmw/gtk/about-main.c:266
+#: plugins_tools/aboutmw/gtk/about-main.c:274
+msgid "System architecture"
+msgstr "Architecture du système"
+
+#: plugins_tools/aboutmw/gtk/about-main.c:263
+msgid "64-bit PC"
+msgstr "PC 64 bits"
+
+#: plugins_tools/aboutmw/gtk/about-main.c:266
+msgid "32-bit PC"
+msgstr "PC 32 bits"
+
+#: plugins_tools/aboutmw/gtk/about-main.c:272
+#, c-format
+msgid "Unknown (%s)"
+msgstr "Inconnu (%s)"
+
+#: plugins_tools/aboutmw/gtk/about-main.c:292
+#: plugins_tools/aboutmw/gtk/about-main.c:299
+#: plugins_tools/aboutmw/gtk/about-main.c:304
+msgid "(unknown)"
+msgstr "(inconnu)"
+
+#: plugins_tools/aboutmw/gtk/about-main.c:321
+msgid "Distribution"
+msgstr "Distribution"
+
+#: plugins_tools/aboutmw/gtk/about-main.c:326
+msgid "Distribution version"
+msgstr "Version de distribution"
+
+#: plugins_tools/aboutmw/gtk/about-main.c:331
+msgid "Distribution codename"
+msgstr "Nom de code de distribution"
+
+#: plugins_tools/aboutmw/gtk/about-main.c:365
+msgid "Middleware version"
+msgstr "Version Middleware"
+
+#: plugins_tools/aboutmw/gtk/about-main.c:367
+msgid "Middleware build ID"
+msgstr "ID construction Middleware"
+
+#: plugins_tools/aboutmw/gtk/about-main.c:370
+msgid "Middleware build date"
+msgstr "Date construction MIddleware"
+
+#: plugins_tools/aboutmw/gtk/about-main.c:379
+msgid "Item"
+msgstr "Élément"
+
+#: plugins_tools/aboutmw/gtk/about-main.c:381
+msgid "Value"
+msgstr "Valeur"
+
+#~ msgid "Java version"
+#~ msgstr "version Java"
+
+#~ msgid "(not found; check failed)"
+#~ msgstr "(non trouvé ; échec du test)"
+
+#~ msgid "(not found in path)"
+#~ msgstr "(non trouvé dans le chemin de recherche)"

@@ -1,0 +1,23 @@
+{
+  "extensionName": {
+    "message": "eID Belgien"
+  },
+  "extensionDescription": {
+    "message": "Benutzen Sie den belgischen elektronischen Personalausweis (eID) in Firefox"
+  },
+  "noMiddlewareFoundTitle": {
+    "message": "eID-Software nicht gefunden"
+  },
+  "noMiddlewareFoundContent": {
+    "message": "Es wurde keine ausreichend aktuelle Version der belgischen elektronischen Personalausweis-Software gefunden. Wurde die eID-Software installiert und ist sie aktuell?"
+  },
+  "installFailedTitle": {
+    "message": "Die Installation der eID-Software schlug fehl."
+  },
+  "installFailedContent": {
+    "message": "Die Konfiguration des belgischen elektronischen Personalausweises schlug fehl. Die Software wurde installiert, konnte aber nicht konfiguriert werden."
+  },
+  "installUrl": {
+    "message": "https://eid.belgium.be/de"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "name": "beidpkcs11_32",
+  "description": "32bit pkcs11 module for accessing Belgian eID cards",
+  "type": "pkcs11",
+  "path": "beid_ff_pkcs11_32.dll",
+  "allowed_extensions": ["belgiumeid@eid.belgium.be"]
+}

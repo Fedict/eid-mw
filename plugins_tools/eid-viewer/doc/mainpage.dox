@@ -1,0 +1,73 @@
+/**
+
+\mainpage The eid-viewer library
+
+This library was originally written for the eID Viewer. It allows for
+reading of identity data from an eID card, as well as interacting with
+the .eid XML files that the eID Viewer knows. While this is provided as
+a library to manage identity data and can be used as such, its heritage
+of being the base of an eID Viewer is still visible in some areas.
+
+This is a C API, but wrapper libraries are also available for
+Objective-C (on OS X) and C# (on Windows).
+
+A simple application that works with this library would look like this:
+
+~~~~
+#include <eid-viewer/eid-viewer.h>
+
+void newstringdata(const EID_CHAR* label, const EID_CHAR* data) {
+	printf("Received data with label %s and contents %s\n", label, data);
+}
+
+void newstate(enum eid_vwr_states new_state) {
+	switch(new_state) {
+		case STATE_TOKEN_WAIT:
+			exit(0);
+		default:
+			break;
+	}
+}
+
+int main(void) {
+	struct eid_vwr_ui_callbacks *callbacks = eid_vwr_cbstruct();
+
+	callbacks->newstate = newstate;
+	callbacks->newstringdata = newstringdata;
+
+	eid_vwr_createcallbacks(callbacks);
+
+	eid_vwr_be_mainloop();
+}
+~~~~
+
+For more information, please see the \ref C_API "C API"
+
+The same example in Objective-C would look like:
+
+~~~~~~~~~~~~{.m}
+#import <BeidView/oslayer-objc.h>
+
+@implementation App : NSObject<eIDOSLayerUI>
+-(void)newstate:(eIDState)state {
+	switch(state) {
+		case eIDStateTokenWait:
+			exit(0);
+		default:
+			break;
+	}
+}
+-(void)newstringdata:(NSString *)data withLabel:(NSString *)label{
+	NSLog(@"Received data with label %@ and contents %@", label, data);
+}
+@end
+int main(void) {
+	App* a = [[App alloc]init];
+
+	[eIDOsLayerBackend setUi:a];
+	[eIDOsLayerBackend mainloop];
+}
+~~~~~~~~~~~~
+
+More details are in the \ref ObjC "Objective-C API overview"
+*/

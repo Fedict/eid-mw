@@ -1,0 +1,357 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		65709EA01A69898E006835B8 /* beidversions.h in Headers */ = {isa = PBXBuildFile; fileRef = 65709E9F1A69898E006835B8 /* beidversions.h */; };
+		658054EC1A66C9BB000AEFE0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 658054EB1A66C9BB000AEFE0 /* AppDelegate.m */; };
+		658054EE1A66C9BB000AEFE0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 658054ED1A66C9BB000AEFE0 /* main.m */; };
+		658054F01A66C9BB000AEFE0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 658054EF1A66C9BB000AEFE0 /* Images.xcassets */; };
+		658054F31A66C9BB000AEFE0 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 658054F11A66C9BB000AEFE0 /* MainMenu.xib */; };
+		65CE8EB51A66D5AC00B20669 /* DataItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CE8EB41A66D5AC00B20669 /* DataItem.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		65709E9F1A69898E006835B8 /* beidversions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = beidversions.h; path = ../../../../cardcomm/pkcs11/src/common/beidversions.h; sourceTree = "<group>"; };
+		658054E51A66C9BB000AEFE0 /* eID Middleware.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "eID Middleware.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		658054E91A66C9BB000AEFE0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		658054EA1A66C9BB000AEFE0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		658054EB1A66C9BB000AEFE0 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		658054ED1A66C9BB000AEFE0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		658054EF1A66C9BB000AEFE0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		658054F21A66C9BB000AEFE0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		65CE8EB31A66D5AC00B20669 /* DataItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataItem.h; sourceTree = "<group>"; };
+		65CE8EB41A66D5AC00B20669 /* DataItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataItem.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		658054E21A66C9BB000AEFE0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		658054DC1A66C9BB000AEFE0 = {
+			isa = PBXGroup;
+			children = (
+				65709E9F1A69898E006835B8 /* beidversions.h */,
+				658054E71A66C9BB000AEFE0 /* eID Middleware */,
+				658054E61A66C9BB000AEFE0 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		658054E61A66C9BB000AEFE0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				658054E51A66C9BB000AEFE0 /* eID Middleware.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		658054E71A66C9BB000AEFE0 /* eID Middleware */ = {
+			isa = PBXGroup;
+			children = (
+				658054EA1A66C9BB000AEFE0 /* AppDelegate.h */,
+				658054EB1A66C9BB000AEFE0 /* AppDelegate.m */,
+				65CE8EB31A66D5AC00B20669 /* DataItem.h */,
+				65CE8EB41A66D5AC00B20669 /* DataItem.m */,
+				658054EF1A66C9BB000AEFE0 /* Images.xcassets */,
+				658054F11A66C9BB000AEFE0 /* MainMenu.xib */,
+				658054E81A66C9BB000AEFE0 /* Supporting Files */,
+			);
+			path = "eID Middleware";
+			sourceTree = "<group>";
+		};
+		658054E81A66C9BB000AEFE0 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				658054E91A66C9BB000AEFE0 /* Info.plist */,
+				658054ED1A66C9BB000AEFE0 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		65709E9E1A698963006835B8 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65709EA01A69898E006835B8 /* beidversions.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		658054E41A66C9BB000AEFE0 /* eID Middleware */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 658055021A66C9BB000AEFE0 /* Build configuration list for PBXNativeTarget "eID Middleware" */;
+			buildPhases = (
+				65709E9D1A69895C006835B8 /* ShellScript */,
+				65709E9E1A698963006835B8 /* Headers */,
+				658054E11A66C9BB000AEFE0 /* Sources */,
+				658054E21A66C9BB000AEFE0 /* Frameworks */,
+				658054E31A66C9BB000AEFE0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "eID Middleware";
+			productName = "eID Middleware";
+			productReference = 658054E51A66C9BB000AEFE0 /* eID Middleware.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		658054DD1A66C9BB000AEFE0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1230;
+				ORGANIZATIONNAME = FedICT;
+				TargetAttributes = {
+					658054E41A66C9BB000AEFE0 = {
+						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = YZAQ856TTM;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 658054E01A66C9BB000AEFE0 /* Build configuration list for PBXProject "eID Middleware" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 658054DC1A66C9BB000AEFE0;
+			productRefGroup = 658054E61A66C9BB000AEFE0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				658054E41A66C9BB000AEFE0 /* eID Middleware */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		658054E31A66C9BB000AEFE0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				658054F01A66C9BB000AEFE0 /* Images.xcassets in Resources */,
+				658054F31A66C9BB000AEFE0 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		65709E9D1A69895C006835B8 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "../../../../scripts/mac/create-vers.sh ../../../../cardcomm/pkcs11/src/common/beidversions.h\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		658054E11A66C9BB000AEFE0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				658054EE1A66C9BB000AEFE0 /* main.m in Sources */,
+				65CE8EB51A66D5AC00B20669 /* DataItem.m in Sources */,
+				658054EC1A66C9BB000AEFE0 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		658054F11A66C9BB000AEFE0 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				658054F21A66C9BB000AEFE0 /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		658055001A66C9BB000AEFE0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = YZAQ856TTM;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		658055011A66C9BB000AEFE0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = YZAQ856TTM;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		658055031A66C9BB000AEFE0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "eID Middleware/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 11.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		658055041A66C9BB000AEFE0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "eID Middleware/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 11.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		658054E01A66C9BB000AEFE0 /* Build configuration list for PBXProject "eID Middleware" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				658055001A66C9BB000AEFE0 /* Debug */,
+				658055011A66C9BB000AEFE0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		658055021A66C9BB000AEFE0 /* Build configuration list for PBXNativeTarget "eID Middleware" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				658055031A66C9BB000AEFE0 /* Debug */,
+				658055041A66C9BB000AEFE0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 658054DD1A66C9BB000AEFE0 /* Project object */;
+}

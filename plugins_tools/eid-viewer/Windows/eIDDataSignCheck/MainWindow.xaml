@@ -1,0 +1,24 @@
+﻿<Window x:Class="eIDDataSignCheck.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:eIDDataSignCheck"
+        DataContext="{StaticResource eIDDataSignCheckBackendObj}"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <Button x:Name="ID" Content="ID (4031)" HorizontalAlignment="Left" Margin="27,93,0,0" VerticalAlignment="Top" Width="124" Click="ID_Click"/>
+        <Button x:Name="IDSign" Content="IDSign (4032)" HorizontalAlignment="Left" Margin="27,118,0,0" VerticalAlignment="Top" Width="124" Click="IDSign_Click"/>
+        <Button x:Name="Address" Content="Address (4033)" HorizontalAlignment="Left" Margin="27,143,0,0" VerticalAlignment="Top" Width="124" Click="Address_Click"/>
+        <Button x:Name="AddressSign" Content="AddressSign (4034)" HorizontalAlignment="Left" Margin="27,168,0,0" VerticalAlignment="Top" Width="124" Click="AddressSign_Click"/>
+        <Button x:Name="Photo" Content="Photo (4035)" HorizontalAlignment="Left" Margin="27,193,0,0" VerticalAlignment="Top" Width="124" Click="Photo_Click"/>
+        <Button x:Name="RNCert" Content="RNCert (503C)" HorizontalAlignment="Left" Margin="27,218,0,0" VerticalAlignment="Top" Width="124" Click="RNCert_Click"/>
+        <Button x:Name="VerifyAll" Content="VerifyAll" HorizontalAlignment="Left" Margin="379,261,0,0" VerticalAlignment="Top" Width="75" Click="VerifyAll_Click"/>
+        <CheckBox x:Name="AllValid" Content="AllValid" HorizontalAlignment="Left" Margin="379,286,0,0" VerticalAlignment="Top" IsChecked="{Binding Path=allSignaturesValid, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CheckBoxAsData}"/>
+        <ComboBox x:Name="hashAlgo" SelectionChanged="HashType_OnSelectionChanged" Background="{StaticResource DefaultBackground}" Margin="0,0,370,273" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="120" Height="22" SelectedIndex="0">
+            <ComboBoxItem Content="SHA1" Background="{StaticResource DefaultBackground}"/>
+            <ComboBoxItem Content="SHA256" Background="{StaticResource DefaultBackground}"/>
+        </ComboBox>
+    </Grid>
+</Window>

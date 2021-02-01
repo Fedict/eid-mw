@@ -1,0 +1,21 @@
+#!/bin/sh
+
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+
+cat > eid-viewer.desktop <<EOF
+[Desktop Entry]
+Encoding=UTF-8
+Name=eID Viewer
+Comment=Display and administer your eID card
+Name[nl]=eID Kaartlezer
+Comment[nl]=Weergeven en beheren van uw eID kaart
+Name[fr]=Lecteur de Carte eID
+Comment[fr]=Affichage et gestion de votre carte eID
+GenericName=eid-viewer
+Exec=@bindir@/eid-viewer
+Terminal=false
+Type=Application
+Icon=eid-viewer
+Categories=Office;Viewer;
+EOF
