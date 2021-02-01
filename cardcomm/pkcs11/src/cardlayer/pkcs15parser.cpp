@@ -47,9 +47,9 @@ namespace eIDMW {
 
 
 	/* convert variable length binary bit-stream into int-type */
-	static unsigned int bin2int(const unsigned char *p_ucDat, unsigned int iLen)
+	static unsigned long bin2int(const unsigned char *p_ucDat, unsigned long iLen)
 	{
-		unsigned int uiResult = 0;
+		unsigned long uiResult = 0;
 
 		//parameter check
 		if (iLen > 4)
@@ -65,7 +65,7 @@ namespace eIDMW {
 
 
 	/* convert variable length binary bit-stream into unsigned long-type */
-	static unsigned long bin2ulong(const unsigned char *p_ucDat, unsigned int iLen)
+	static unsigned long bin2ulong(const unsigned char *p_ucDat, unsigned long iLen)
 	{
 		unsigned long ulResult = 0;
 
@@ -83,7 +83,7 @@ namespace eIDMW {
 
 
 
-	static unsigned int p15_bitstring2ul(unsigned char *in, unsigned long l_in)
+	static unsigned long p15_bitstring2ul(unsigned char *in, unsigned long l_in)
 	{
 		unsigned long   lBits = 0L;
 		unsigned char   *p = in + 1;

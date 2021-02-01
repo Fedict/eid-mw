@@ -1,5 +1,3 @@
-::make environment variable changes local (untill endlocal), do not use the delayed environment variable expansion (default setting)
-setlocal disabledelayedexpansion
 :: options for build file
 ::@set DONT_MERGE_VCRT=yes
 
@@ -59,10 +57,40 @@ setlocal disabledelayedexpansion
 
 :: create minidriver driver installer
 :: ==================================
-:: Do not create the minidriver installer, but take the one that is present in %MDRVINSTALLPATH%\beidmdrv\
-:: This can be either the official signed version, or the test signed version
-@echo Skipping building the minidriver INF installer
-@echo Will package the previously build minidriver INF installer
+
+
+:: BuildPath
+set MDRVINSTALLPATH=%~dp0..\..\installers\quickinstaller\Drivers\WINALL
+@echo MDRVINSTALLPATH = %MDRVINSTALLPATH% 
+
+rmdir /s /q %MDRVINSTALLPATH%\beidmdrv
+mkdir %MDRVINSTALLPATH%\beidmdrv
+@echo [INFO] Copying minidriver files..
+
+:: copy inf files
+copy %~dp0..\..\cardcomm\minidriver\makemsi\beidmdrv.inf %MDRVINSTALLPATH%\beidmdrv
+
+:: copy drivers. We use the same files for 32 and 64 bit. But we create architecture dependent MSI's
+copy %~dp0..\..\cardcomm\minidriver\VS_2017\Binaries\Win32_Release\beidmdrv32.dll %MDRVINSTALLPATH%\beidmdrv\beidmdrv32.dll
+copy %~dp0..\..\cardcomm\minidriver\VS_2017\Binaries\x64_Release\beidmdrv64.dll %MDRVINSTALLPATH%\beidmdrv\beidmdrv64.dll
+
+:: copy icon
+:: copy %~dp0..\..\cardcomm\minidriver\img\beid.ico %MDRVINSTALLPATH%\beidmdrv\
+
+:: @echo [INFO] Creating cat file
+:: Create catalog
+"%INF2CAT_PATH%\inf2cat.exe" /driver:%MDRVINSTALLPATH%\beidmdrv\ /os:XP_X86,XP_X64,Vista_X86,Vista_X64,7_X86,7_X64
+@if "%ERRORLEVEL%" == "1" goto inf2cat_failed
+
+@if "%BUILD_ONLY%" == "1" goto end
+:: sign minidriver driver cat file
+:: ===============================
+@echo [INFO] Sign the catalog
+"%SIGNTOOL_PATH%\signtool" sign /a /n "ZetesTestCert" /v "%MDRVINSTALLPATH%\beidmdrv\beidmdrv.cat"
+@if "%ERRORLEVEL%" == "1" goto signtool_failed
+
+:: copy minidriver to quickinstaller's driver folder
+
 
 :: create cert
 :: %SIGNTOOL_PATH%\makecert -r -n CN="ZetesTestCert" -b 01/01/2015 -e 01/01/2020 -ss my -sky signature
@@ -190,4 +218,3 @@ goto end_resetpath
 
 :end
 
-endlocal

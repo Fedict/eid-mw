@@ -1,1 +1,0 @@
-In this directory, the images from \plugins_tools\eid-viewer\resources\images will be copied.

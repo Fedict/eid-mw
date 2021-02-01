@@ -21,6 +21,7 @@
 		86BC84CA1A037FED009E374E /* langutil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86BC84C91A037FED009E374E /* langutil.cpp */; };
 		86F33B101987A6B400E200F0 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86F33B0F1987A6B400E200F0 /* CoreFoundation.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		86F33B131987A6B400E200F0 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 86F33B121987A6B400E200F0 /* main.cpp */; };
+		AB3162F025C76D800002CA2A /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB79E2EF25C72F7E00A7A167 /* libcrypto.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -65,6 +66,7 @@
 		86F33B0C1987A6B400E200F0 /* test_dialogs */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = test_dialogs; sourceTree = BUILT_PRODUCTS_DIR; };
 		86F33B0F1987A6B400E200F0 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		86F33B121987A6B400E200F0 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		AB79E2EF25C72F7E00A7A167 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../../../../../../usr/local/lib/libcrypto.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB3162F025C76D800002CA2A /* libcrypto.a in Frameworks */,
 				86F33B101987A6B400E200F0 /* CoreFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -128,6 +131,7 @@
 		86F33B0E1987A6B400E200F0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AB79E2EF25C72F7E00A7A167 /* libcrypto.a */,
 				86F33B0F1987A6B400E200F0 /* CoreFoundation.framework */,
 			);
 			name = Frameworks;
@@ -173,7 +177,7 @@
 		86F33B041987A6B400E200F0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 1230;
 				ORGANIZATIONNAME = FedICT;
 				TargetAttributes = {
 					86F33B0B1987A6B400E200F0 = {
@@ -188,6 +192,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 86F33B031987A6B400E200F0;
 			productRefGroup = 86F33B0D1987A6B400E200F0 /* Products */;
@@ -244,6 +249,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -288,8 +294,7 @@
 					/System/Library/Frameworks/PCSC.framework/Headers,
 				);
 				MACH_O_TYPE = mh_execute;
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				ONLY_ACTIVE_ARCH = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.1;
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -315,6 +320,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -347,7 +353,7 @@
 					../../src,
 				);
 				MACH_O_TYPE = mh_execute;
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 11.1;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -356,18 +362,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "libc++";
+				CODE_SIGN_IDENTITY = "-";
 				DEVELOPMENT_TEAM = 5CB8NW4G4V;
 				FRAMEWORK_SEARCH_PATHS = "";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					../../cardcomm/pkcs11/src/common,
-					../../cardcomm/pkcs11/src/dialogs,
-					../../cardcomm/pkcs11/src,
+					"$(PROJECT_DIR)/cardcomm/pkcs11/src/common",
+					"$(PROJECT_DIR)/cardcomm/pkcs11/src/dialogs",
+					"$(PROJECT_DIR)/cardcomm/pkcs11/src",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/developer/Documents/eid-mw-master/Debug/",
+					"$(PROJECT_DIR)/Debug/",
+					/usr/local/lib,
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -379,6 +387,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "libc++";
+				CODE_SIGN_IDENTITY = "-";
 				DEVELOPMENT_TEAM = 5CB8NW4G4V;
 				FRAMEWORK_SEARCH_PATHS = "";
 				HEADER_SEARCH_PATHS = (
@@ -390,7 +399,8 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/developer/Documents/eid-mw-master/Debug/",
+					"$(PROJECT_DIR)/Release",
+					/usr/local/lib,
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";

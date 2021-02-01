@@ -39,19 +39,19 @@ extern "C"
 
 	typedef struct ASN1_ITEM
 	{
-		unsigned int tag;	//tag
+		unsigned long tag;	//tag
 		const unsigned char *p_data;	//value data
-		unsigned int l_data;	//value len
-		unsigned int nsubitems;	//number of sub-items (not yet implemented !, always 0)
+		unsigned long l_data;	//value len
+		unsigned long nsubitems;	//number of sub-items (not yet implemented !, always 0)
 		const unsigned char *p_raw;	//total TLV data
-		unsigned int l_raw;	//total TLV len
+		unsigned long l_raw;	//total TLV len
 	} ASN1_ITEM;
 
 
 	typedef struct ASN1_LIST
 	{
-		unsigned int size;
-		unsigned int nitems;
+		unsigned long size;
+		unsigned long nitems;
 		ASN1_ITEM *item;
 	} ASN1_LIST;
 
@@ -144,12 +144,12 @@ extern "C"
 #define OID_BRAINPOOLP512R1	"\x2B\x24\x03\x03\x02\x08\x01\x01\x0D"
 
 /* ASN1 decoding functions */
-	int asn1_get_item(const unsigned char *content, unsigned int len,
+	int asn1_get_item(const unsigned char *content, unsigned long len,
 			  const char *path, ASN1_ITEM * item, unsigned char ucParseBitString);
-	int asn1_find_item(const unsigned char *content, unsigned int len,
-			   unsigned int findtag, ASN1_ITEM * item);
-	int dec_oid(unsigned char *p_data, int l_data, unsigned int *oid,
-		    int l_oid);
+	int asn1_find_item(const unsigned char *content, unsigned long len,
+			   unsigned long findtag, ASN1_ITEM * item);
+	int dec_oid(unsigned char *p_data, long l_data, unsigned long *oid,
+		    long l_oid);
 
 	int asn1_next_item(ASN1_ITEM * p_xLev0,	      /**< In/out: object   */
 

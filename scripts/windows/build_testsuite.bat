@@ -1,5 +1,3 @@
-::make environment variable changes local (untill endlocal), do not use the delayed environment variable expansion (default setting)
-setlocal disabledelayedexpansion
 :: options for build file
 ::@set DONT_MERGE_VCRT=yes
 
@@ -35,4 +33,3 @@ goto end_resetpath
 
 :end
 
-endlocal

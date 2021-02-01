@@ -138,7 +138,7 @@ namespace eIDMW
 		SCARDHANDLE hCard = 0;
 		dwProtocol = 1;
 
-		long lRet = SCardConnect(m_hContext, csReader.c_str(), ulShareMode, ulPreferredProtocols, &hCard, &dwProtocol);
+		long lRet = SCardConnect(m_hContext, csReader.c_str(), (uint32_t)ulShareMode, (uint32_t)ulPreferredProtocols, &hCard, &dwProtocol);
 
 		MWLOG(LEV_DEBUG, MOD_CAL, L"    SCardConnect(%ls): 0x%0x", utilStringWiden(csReader).c_str(), lRet);
 
@@ -241,7 +241,7 @@ namespace eIDMW
 		// It occurs with most readers (some more then others) and depends heavily
 		// on the type of card (e.g. nearly always with the test Kids card).
 		// It seems to be fixed when adding a delay before sending something to the card...
-		CThread::SleepMillisecs(m_ulCardTxDelay);
+		CThread::SleepMillisecs((int)m_ulCardTxDelay);
 
 #ifdef __APPLE__
 		int iRetryCount = 0;
@@ -329,12 +329,12 @@ namespace eIDMW
 
 		if (pucRecv == NULL)
 			throw CMWEXCEPTION(EIDMW_ERR_MEMORY);
-		DWORD dwRecvLen = ulMaxResponseSize;
+		DWORD dwRecvLen = (DWORD)ulMaxResponseSize;
 
 #ifndef __OLD_PCSC_API__
-		long lRet = SCardControl(hCard, ulControl, oCmd.GetBytes(), (DWORD) oCmd.Size(), pucRecv, dwRecvLen, &dwRecvLen);
+		long lRet = SCardControl(hCard, (uint32_t)ulControl, oCmd.GetBytes(), (uint32_t)oCmd.Size(), pucRecv, (uint32_t)dwRecvLen, (uint32_t *)&dwRecvLen);
 #else
-		long lRet = SCardControl((SCARDHANDLE) hCard, oCmd.GetBytes(), (DWORD) oCmd.Size(), pucRecv, &dwRecvLen);
+		long lRet = SCardControl((SCARDHANDLE) hCard, oCmd.GetBytes(), (uint32_t) oCmd.Size(), pucRecv, (uint32_t *)&dwRecvLen);
 #endif
 		if (SCARD_S_SUCCESS != lRet)
 		{
@@ -481,7 +481,7 @@ namespace eIDMW
 
 		do
 		{
-			lRet = SCardGetStatusChange(m_hContext, ulTimeout, txReaderStates, ulReaderCount);
+			lRet = SCardGetStatusChange(m_hContext, (uint32_t)ulTimeout, txReaderStates, (uint32_t)ulReaderCount);
 			MWLOG(LEV_DEBUG, MOD_CAL, L"    SCardGetStatusChange: current status 0x%0x, event status 0x%0x", txReaderStates->dwCurrentState, txReaderStates->dwEventState);
 			if ((long) SCARD_E_TIMEOUT != lRet)
 			{

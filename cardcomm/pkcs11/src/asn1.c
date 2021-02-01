@@ -140,19 +140,19 @@ ftp.rsasecurity.com/pub/pkcs/pkcs-15/pkcs15v1.doc   P15
            >0 : error
 */
 int skip_item(const unsigned char *p_cInDat,      /**< In: ASN-1 data */
-              unsigned int  iInLen,         /**< In: ASN-1 len */ 
-              unsigned int  iPath,          /**< In: Path/Index; 1=first item, 2=second item */
+              unsigned long  iInLen,         /**< In: ASN-1 len */
+              unsigned long iPath,          /**< In: Path/Index; 1=first item, 2=second item */
               const unsigned char **pp_cOutDat,   /**< Out: result ASN-1 data */
-              unsigned int  *l_out          /**< Out: result ASN-1 len */
+              unsigned long *l_out          /**< Out: result ASN-1 len */
               )
 {
-unsigned int    iNumTag =0;
-unsigned int    iLengthLen = 0;     //iTypeTag, iClassTag, 
+unsigned long   iNumTag =0;
+unsigned long   iLengthLen = 0;     //iTypeTag, iClassTag,
 const unsigned char   *p_cDat = p_cInDat;
 const unsigned char   *p_cEnd = p_cInDat + iInLen - 1;  //points to last byte from input stream
-unsigned int    iIndex,j;
-unsigned int    l_tag;
-unsigned int    l_len;
+unsigned long   iIndex,j;
+unsigned long   l_tag;
+unsigned long   l_len;
 
 for (iIndex=1; iIndex < iPath; iIndex++)
    {
@@ -230,23 +230,23 @@ return (0);
 
 
 int asn1_get_item(const unsigned char *p_cInDat,		/**< In: ASN-1 data */
-                  unsigned int        iInLen,			/**< In: ASN-1 len   */
+                  unsigned long       iInLen,			/**< In: ASN-1 len   */
                   const char          *p_cInPath,		/**< In: path  e.g.  "\1\1\2" = 0x01 0x01 0x02 0x00 */
                   ASN1_ITEM           *p_xItem,			/**< Out: object   */
 				  unsigned char		  ucParseBitString	/**< In: whether contents of a BIT STRING should be parsed as ASN.1 **/
                   )
 {
-unsigned int  iClassTag = 0;
-unsigned int  iTypeTag  = 0;
-unsigned int  iNumTag   = 0;
+unsigned long iClassTag = 0;
+unsigned long iTypeTag  = 0;
+unsigned long iNumTag   = 0;
 const unsigned char *p_cDat   = p_cInDat;
 const unsigned char *p_cRawDat= NULL;
-unsigned int  iRawLen   = 0;
-unsigned int  iLen      = iInLen;
-unsigned int  iLengthLen= 0;
+unsigned long iRawLen   = 0;
+unsigned long iLen      = iInLen;
+unsigned long iLengthLen= 0;
 const unsigned char *p_cEnd   = p_cInDat + iInLen - 1;
 const char *p_cPath  = p_cInPath;
-int           iRet      = 0;
+long           iRet      = 0;
 
 memset(p_xItem, 0, sizeof (ASN1_ITEM));
 
@@ -254,7 +254,7 @@ for (; *p_cPath; p_cPath++)
    {
    iRet = skip_item(p_cDat, iLen, *p_cPath, &p_cDat, &iLen);   //goto required item
    if (iRet)
-      return (iRet);
+      return ((int)iRet);
 
    /* check if we are decoding inside a BIT STRING: iNumTag == parent_tag */
    /* first octet of bit string is the number of unused bits at the end of the bitstring */
@@ -363,18 +363,18 @@ int asn1_next_item(ASN1_ITEM          *p_xLev0Item,      /**< In/out: object   *
 
 //preliminary version to find items with particular TAG in linear list of ASN1 items
 int asn1_find_item(const unsigned char *p_cInDat, /**< In: ASN-1 data */
-                   unsigned int iInLen,           /**< In: ASN-1 len   */
-                   unsigned int findtag,          /**< In: tag to look for */
+                   unsigned long iInLen,           /**< In: ASN-1 len   */
+                   unsigned long findtag,          /**< In: tag to look for */
                    ASN1_ITEM *p_xItem             /**< Out: object   */
                    )
 {
-unsigned int  iClassTag = 0;
-unsigned int  iTypeTag  = 0;
-unsigned int  tagnum    = 0;
-unsigned int  iNumTag   = 0;
+unsigned long  iClassTag = 0;
+unsigned long  iTypeTag  = 0;
+unsigned long  tagnum    = 0;
+unsigned long iNumTag   = 0;
 unsigned char *p_cDat = (unsigned char*) p_cInDat;
-unsigned int iLen = iInLen;
-unsigned int iLengthLen = 0;
+unsigned long iLen = iInLen;
+unsigned long iLengthLen = 0;
 unsigned char *p_cEnd = (unsigned char*)p_cInDat + iInLen - 1;
 int found = 0;
 
@@ -449,12 +449,12 @@ return (0);
 
 /* decode asn1 oid to array of numbers */
 int dec_oid( unsigned char *p_data, 
-             int           l_data, 
-             unsigned int  *oid, 
-             int           l_oid)
+             long          l_data,
+             unsigned long *oid,
+             long          l_oid)
 {
-int           len = 0;
-unsigned int  id = 0;
+long          len = 0;
+unsigned long id = 0;
 
 while(l_data > 0 && l_oid > 0)
   {
@@ -477,13 +477,13 @@ while(l_data > 0 && l_oid > 0)
   l_data--;
   }
 
-return(len);
+return((int)len);
 }
 
 
-void asn_ui2bitstring(unsigned int in, unsigned char *out, unsigned int *l_out)
+void asn_ui2bitstring(unsigned long in, unsigned char *out, unsigned long *l_out)
 {
-unsigned int i;
+unsigned long i;
 unsigned char *p = out;
 unsigned char unused_bits = 0;
 
@@ -504,7 +504,7 @@ for (i=0; i<sizeof(in)*8; i++, in >>= 1)
 //unused bits
 *out   = unused_bits % 8;
 //first byte is length of bitstring in octets + 1 byte for unused bits
-*l_out = sizeof(unsigned int) + 1 - unused_bits / 8; 
+*l_out = sizeof(unsigned long) + 1 - unused_bits / 8; 
 
 return;
 }

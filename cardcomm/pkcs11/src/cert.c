@@ -27,7 +27,7 @@
 #include "cert.h"
 
 
-int cert_get_info(const unsigned char *pcert, unsigned int lcert, T_CERT_INFO *info)
+int cert_get_info(const unsigned char *pcert, unsigned long lcert, T_CERT_INFO *info)
 {
 	int ret = 0;
 	ASN1_ITEM item;
@@ -221,7 +221,7 @@ void cert_free_info(T_CERT_INFO *info)
  * */
 
 
-int key_get_info(const unsigned char *pkey, unsigned int lkey, T_KEY_INFO * info)
+int key_get_info(const unsigned char *pkey, unsigned long lkey, T_KEY_INFO * info)
 {
 	int ret = 0;
 	ASN1_ITEM item;

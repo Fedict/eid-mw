@@ -39,7 +39,7 @@ using namespace eIDMW;
 static const unsigned char APPLET_AID[] =
 { 0xA0, 0x00, 0x00, 0x00, 0x30, 0x29, 0x05, 0x70, 0x00, 0xAD, 0x13,
 0x10, 0x01, 0x01, 0xFF };
-static const unsigned char BELPIC_AID[] =
+static const unsigned char __attribute__((unused)) BELPIC_AID[] =
 { 0xA0, 0x00, 0x00, 0x01, 0x77, 0x50, 0x4B, 0x43, 0x53, 0x2D, 0x31,
 0x35 };
 
@@ -582,7 +582,7 @@ namespace eIDMW
 
 				if (ulDelay != 0)
 				{
-					CThread::SleepMillisecs(ulDelay);
+					CThread::SleepMillisecs((int)ulDelay);
 				}
 				return SendAPDU(oNewCmdAPDU);
 			}

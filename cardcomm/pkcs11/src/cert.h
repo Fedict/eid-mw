@@ -98,44 +98,44 @@ extern "C"
 
 	typedef struct
 	{
-		unsigned int lcert;
+		unsigned long lcert;
 		char *subject;
-		unsigned int l_subject;
+		unsigned long l_subject;
 		char *issuer;
-		unsigned int l_issuer;
+		unsigned long l_issuer;
 		char *mod;
-		unsigned int l_mod;
+		unsigned long l_mod;
 		char *exp;
-		unsigned int l_exp;
+		unsigned long l_exp;
 		char *pkinfo;
-		unsigned int l_pkinfo;
+		unsigned long l_pkinfo;
 		char *serial;
-		unsigned int l_serial;
+		unsigned long l_serial;
 		char *validfrom;
-		unsigned int l_validfrom;
+		unsigned long l_validfrom;
 		char *validto;
-		unsigned int l_validto;
+		unsigned long l_validto;
 		char *curve;
-		unsigned int l_curve;
+		unsigned long l_curve;
 	} T_CERT_INFO;
 
 	typedef struct
 	{
-		unsigned int lkey;
+		unsigned long lkey;
 		char *mod;
-		unsigned int l_mod;
+		unsigned long l_mod;
 		char *exp;
-		unsigned int l_exp;
+		unsigned long l_exp;
 		char *pkinfo;
-		unsigned int l_pkinfo;
+		unsigned long l_pkinfo;
 		char *curve;
-		unsigned int l_curve;
+		unsigned long l_curve;
 	} T_KEY_INFO;
 
-	int cert_get_info(const unsigned char *pcert, unsigned int lcert, T_CERT_INFO * info);
+	int cert_get_info(const unsigned char *pcert, unsigned long lcert, T_CERT_INFO * info);
 	void cert_free_info(T_CERT_INFO * info);
 
-	int key_get_info(const unsigned char *pkey, unsigned int lkey, T_KEY_INFO * info);
+	int key_get_info(const unsigned char *pkey, unsigned long lkey, T_KEY_INFO * info);
 	void key_free_info(T_KEY_INFO * info);
 
 #ifdef __cplusplus
