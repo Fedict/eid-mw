@@ -19,6 +19,7 @@
   - pushd $LINUX_BASEDIR
   - ./configure
   - make -j distcheck
+  - grep -qv unknown .version
   - popd
   after_script:
   - mkdir -p products/source
@@ -166,6 +167,26 @@
   artifacts:
     paths:
     - products/srpm
+
+.build-freebsd-base:
+  variables:
+    GIT_STRATEGY: none
+  tags:
+  - freebsd
+  before_script:
+  - VER=$(cat products/source/version)
+  - VERSHORT=${VER#*-}
+  - COMMITDATE=$(cat products/source/date)
+  - mkdir -p build
+  - pushd build
+  - tar xvf ../products/source/eid-mw-${VER}.tar.gz --strip-components=1
+  - ./configure --disable-dependency-tracking
+  - popd
+  script:
+  - pushd build
+  - make
+  - make check
+  - popd
 
 .build-deb-base:
   before_script:

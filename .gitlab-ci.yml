@@ -107,21 +107,6 @@ test:coverity:linux:
   stage: tests
   extends: .coverity:linux
 
-#test:freebsd:
-#  stage: tests
-#  tags:
-#  - freebsd
-#  before_script:
-#  - pushd $LINUX_BASEDIR
-#  - autoreconf -f -i
-#  - popd
-#  script:
-#  - pushd $LINUX_BASEDIR
-#  - ./configure --disable-dependency-tracking --disable-webextension
-#  - make -j $(sysctl -n hw.ncpu)
-#  - make -j $(sysctl -n hw.ncpu) check
-#  - popd
-#  allow_failure: true
 #################################################
 # Stage "source-package": build source packages #
 #################################################
@@ -377,6 +362,11 @@ build:macos:
   extends: .build-macos
   variables:
     EIDMW_SIGN_BUILD: 0
+
+build:freebsd:
+  stage: binary-package
+  extends: .build-freebsd-base
+  allow_failure: true
 
 validate:robot:windows:
   stage: validate
