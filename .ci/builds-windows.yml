@@ -18,6 +18,7 @@
   - del $Env:WINDOWS_BASEDIR\scripts\windows\*.exe
   script:
   - cd $Env:WINDOWS_BASEDIR\scripts\windows
+  - ./build_minidriver.bat
   - ./build_all.bat
   after_script:
   - rmdir /s ./products
