@@ -109,13 +109,23 @@ int eid_vwr_poll() {
 #endif
 
 void eid_vwr_be_serialize(const EID_CHAR* target_file) {
-	EID_CHAR* copy = EID_STRDUP(target_file);
-	sm_handle_event(EVENT_SERIALIZE, copy, free, NULL);
+    if (target_file != NULL)
+    {
+        EID_CHAR* copy = EID_STRDUP(target_file);
+        sm_handle_event(EVENT_SERIALIZE, copy, free, NULL);
+    } else {
+        sm_handle_event(EVENT_SERIALIZE, (EID_CHAR *)target_file, free, NULL);
+    }
 }
 
 void eid_vwr_be_deserialize(const EID_CHAR* source_file) {
-	EID_CHAR* copy = EID_STRDUP(source_file);
-	sm_handle_event(EVENT_OPEN_FILE, copy, free, NULL);
+    if (source_file != NULL)
+    {
+        EID_CHAR* copy = EID_STRDUP(source_file);
+        sm_handle_event(EVENT_OPEN_FILE, copy, free, NULL);
+    } else {
+        sm_handle_event(EVENT_OPEN_FILE, (EID_CHAR *)source_file, free, NULL);
+    }
 }
 
 const char* eid_vwr_be_get_xmlform() {

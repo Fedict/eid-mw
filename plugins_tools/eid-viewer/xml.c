@@ -260,8 +260,12 @@ out:
  * issue events to the UI with new data, and update the cache. */
 int eid_vwr_deserialize(void* data) {
 	xmlTextReaderPtr reader = NULL;
+    if (data == NULL)
+    {
+        return -1;
+    }
 	const char* filename = (const char*)data;
-	int rc;
+	int rc = 0;
 
 	reader = xmlNewTextReaderFilename(filename);
 	if(reader == NULL) {

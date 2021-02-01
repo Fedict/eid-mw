@@ -137,6 +137,7 @@
 		}
 	}];
 }
+
 - (void)saveDocument:(id)sender {
 	NSSavePanel *panel = [NSSavePanel savePanel];
 	[panel setAllowedFileTypes:[NSArray arrayWithObjects: @"be.fedict.eid.eidviewer", nil]];
