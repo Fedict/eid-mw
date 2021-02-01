@@ -1,0 +1,68 @@
+#!/bin/bash
+#
+# The MIT License (MIT)
+#
+# Copyright (c) 2014 Lauri Võsandi
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+#
+# Changes to deal with BeID rather than EstEID:
+# Copyright(c) Wouter Verhelst, 2018-2020
+
+LIBS=$(ld --verbose | grep SEARCH | awk '{ gsub(/;/,"\n"); print }' | awk -F '\"' '/SEARCH_DIR\(\"=?/ { gsub(/=/,""); print $2 }')
+PKCS11=libbeidpkcs11.so.0
+
+if [ -z "$HOME" ]; then
+	echo "E: need HOME to be set (it isn't)" >&2
+	exit 1
+fi
+
+if [ ! -f $HOME/.pki/nssdb/cert9.db ]; then
+    echo "Initializing new database"
+    mkdir -p $HOME/.pki/nssdb
+    certutil -d sql:$HOME/.pki/nssdb -N --empty-password
+fi
+
+# Skip the Firefox directory, since we use the Firefox add-on for those.
+NSSDBS=$HOME/.pki/nssdb
+NSSDBS+=$(for dir in $(find $HOME/.thunderbird -name cert9.db); do echo " " $(dirname $dir); done)
+echo "Configuring ${NSSDBS}"
+P11LOC=""
+
+for DIR in $LIBS; do
+    LIB=$DIR/$PKCS11
+    if [ -f $LIB ]; then
+	echo "Found PKCS#11 library at: $LIB"
+	P11LOC=$LIB
+    fi
+done
+
+if [ -z "$P11LOC" ]; then
+	echo "E: Can't find $PKCS11" >&2
+	exit 1
+fi
+for NSSDB in $NSSDBS; do
+    if grep -q library=$P11LOC $NSSDB/pkcs11.txt; then
+        echo "ID-card support in $NSSDB already enabled"
+    else
+        echo "Enabling ID-card functionality in $NSSDB via $P11LOC"
+        modutil -force -dbdir sql:$NSSDB -delete "Belgium eID"
+        modutil -force -dbdir sql:$NSSDB -add "Belgium eID" -libfile $P11LOC -mechanisms FRIENDLY
+    fi
+done

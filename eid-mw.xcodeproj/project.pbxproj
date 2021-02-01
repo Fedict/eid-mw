@@ -16,6 +16,7 @@
 				AB3162E325C7691B0002CA2A /* PBXTargetDependency */,
 				AB3162E725C7692E0002CA2A /* PBXTargetDependency */,
 				AB3162E525C769270002CA2A /* PBXTargetDependency */,
+				AB47D59325C81AAD00269676 /* PBXTargetDependency */,
 				AB47D57125C8151C00269676 /* PBXTargetDependency */,
 			);
 			name = All;
@@ -305,6 +306,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 2F3883971CF46C6E00F114A7;
 			remoteInfo = BEIDTokenApp;
+		};
+		AB47D59225C81AAD00269676 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB47D55C25C814E000269676 /* BEIDToken.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 2F3883AF1CF46C9D00F114A7;
+			remoteInfo = BEIDToken;
 		};
 		AB79E2FC25C7416A00A7A167 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1628,6 +1636,11 @@
 			isa = PBXTargetDependency;
 			name = BEIDTokenApp;
 			targetProxy = AB47D57025C8151C00269676 /* PBXContainerItemProxy */;
+		};
+		AB47D59325C81AAD00269676 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = BEIDToken;
+			targetProxy = AB47D59225C81AAD00269676 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

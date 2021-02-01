@@ -1,0 +1,95 @@
+@startuml
+title Backend state machine
+
+' This file documents the state machine as implemented in state.c. It
+' can be converted to a diagram by way of PlantUML, see
+' http://plantuml.com/
+
+[*] --> LIBOPEN
+
+LIBOPEN --> CALLBACKS : SET_CALLBACKS
+
+CALLBACKS: enter:C_Initialize()\nexit:C_Finalize()
+state CALLBACKS {
+  state NO_TOKEN
+  state TOKEN
+  state FILE
+  state CARD_INVALID
+
+  [*] --> NO_TOKEN
+
+  NO_TOKEN --> FILE : OPEN_FILE
+  FILE --> NO_TOKEN : CLOSE_FILE
+  FILE --> TOKEN : TOKEN_INSERTED
+  FILE --> NO_TOKEN : STATE_ERROR
+  state FILE {
+    [*] --> FILE_READING
+    FILE_READING: enter: do_parse_file
+    FILE_READING --> FILE_WAIT: READ_READY
+  }
+
+  TOKEN: enter: eid_vwr_p11_open_session\nexit: eid_vwr_p11_close_session
+  TOKEN --> NO_TOKEN : TOKEN_REMOVED
+  TOKEN -down-> CARD_INVALID : DATA_INVALID
+  TOKEN --> NO_READER : READER_LOST
+  CARD_INVALID --> NO_READER : READER_LOST
+' Force the arrow to go down for layout purposes
+
+  CARD_INVALID -left-> NO_TOKEN : TOKEN_REMOVED
+' Force the arrow to go up for layout purposes
+  state NO_TOKEN {
+    state NO_READER
+    state READY
+
+    [*] --> NO_READER
+    NO_READER --> READY : READER_FOUND
+
+    READY --> TOKEN : TOKEN_INSERTED
+    READY: enter: source_none
+    READY --> NO_READER: READER_LOST
+  }
+
+  state TOKEN {
+    state TOKEN_ID
+    state TOKEN_CERTS
+    state TOKEN_ERROR
+    state TOKEN_WAIT
+
+    [*] --> TOKEN_ID
+
+    TOKEN_ID --> TOKEN_CERTS : READ_READY
+    TOKEN_ID --> TOKEN_ERROR : STATE_ERROR
+    TOKEN_ID: enter: eid_vwr_p11_read_id\nexit:eid_vwr_p11_finalize_find
+
+    TOKEN_CERTS --> TOKEN_WAIT : READ_READY
+    TOKEN_CERTS --> TOKEN_ERROR : STATE_ERROR
+    TOKEN_CERTS: enter: eid_vwr_p11_read_certs\nexit:eid_vwr_p11_finalize_find
+ 
+    state TOKEN_WAIT {
+      state TOKEN_IDLE
+      state TOKEN_PINOP
+      state TOKEN_SERIALIZE
+	  state TOKEN_CHALLENGE
+
+      [*] --> TOKEN_IDLE
+
+      TOKEN_IDLE --> TOKEN_PINOP : eid_vwr_pinop()
+      TOKEN_IDLE --> TOKEN_SERIALIZE : eid_vwr_be_serialize()
+	  TOKEN_IDLE --> TOKEN_CHALLENGE : eid_vwr_challenge()
+
+      TOKEN_PINOP --> TOKEN_IDLE : PINOP_READY 
+      TOKEN_PINOP --> TOKEN_IDLE : STATE_ERROR
+      TOKEN_PINOP: enter: eid_vwr_p11_do_pinop\nexit :eid_vwr_p11_leave_pinop
+
+      TOKEN_SERIALIZE --> TOKEN_IDLE : SERIALIZE_READY 
+      TOKEN_SERIALIZE --> TOKEN_ERROR : STATE_ERROR
+      TOKEN_SERIALIZE: enter: eid_vwr_p11_serialize
+
+      TOKEN_CHALLENGE --> TOKEN_IDLE : CHALLENGE_READY
+      TOKEN_CHALLENGE --> TOKEN_IDLE : STATE_ERROR
+	  TOKEN_CHALLENGE: enter: eid_vwr_p11_do_challenge
+    }  
+  }
+
+}
+@enduml
