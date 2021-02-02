@@ -21,7 +21,7 @@
   - ./build_minidriver.bat
   - ./build_all.bat
   after_script:
-  - rmdir /s ./products
+  - Remove-Item -Recurse -Force ./products
   - mkdir products\windows
   - xcopy $Env:WINDOWS_BASEDIR\scripts\windows\*.exe products\windows
   - xcopy $Env:WINDOWS_BASEDIR\scripts\windows\*.msi products\windows
