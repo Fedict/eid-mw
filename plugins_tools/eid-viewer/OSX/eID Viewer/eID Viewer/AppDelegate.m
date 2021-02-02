@@ -12,6 +12,7 @@
 #import "PrintOperation.h"
 #import "ReaderMenuItem.h"
 
+#include <Availability.h>
 #include <eid-util/utftranslate.h>
 #include <eid-util/labels.h>
 
@@ -28,6 +29,7 @@
 - (IBAction)validateNow:(id)sender;
 - (IBAction)changeValidatePolicy:(id)sender;
 - (IBAction)selectAutoReader:(NSMenuItem*)sender;
+- (IBAction)saveDocument:(id)sender;
 - (IBAction)selectManualReader:(NSMenuItem*)sender;
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender;
 - (IBAction)closeDetail:(id)sender;
@@ -89,16 +91,22 @@
 }
 
 - (BOOL)application:(NSApplication*)sender openFile:(nonnull NSString *)filename {
-	[eIDOSLayerBackend deserialize:[NSURL URLWithString:filename]];
-	return YES;
+    if (filename != nil)
+    {
+        [eIDOSLayerBackend deserialize:[NSURL URLWithString:filename]];
+        return YES;
+    }
+
+    return NO;
 }
+
 - (void)log:(NSString *)line withLevel:(eIDLogLevel)level {
 	[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 		if([self.logLevel indexOfSelectedItem] > level) {
 			return;
 		}
-		char l;
-		NSAlert* alert;
+		char l = 0;
+        NSAlert *alert = nil;
 		switch(level) {
 			case eIDLogLevelDetail:
 				l='D';
@@ -117,33 +125,47 @@
 				break;
 		}
 		NSString* output = [NSString stringWithFormat:@"%c: %@\n", l, line];
-#if __MAC_OS_X_VERSION_MIN_REQUIRED__ < 101100
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 101100
         [[self logItem] insertText:output];
 #else
         [[self logItem] insertText:output replacementRange:NSMakeRange([[[self logItem]  string] length], 0)];
 #endif
 	}];
 }
-- (void)file_open:(id)sender {
-	NSOpenPanel *panel = [NSOpenPanel openPanel];
 
-	[panel beginWithCompletionHandler:^(NSInteger result) {
-#if __MAC_OS_X_VERSION_MIN_REQUIRED__ < 101300
-		if(result == NSFileHandlingPanelOKButton) {
+- (void)file_open:(id)sender {
+	NSOpenPanel *panel = nil;
+
+    NSURL *fileURL = [[[NSDocumentController sharedDocumentController] currentDocument] fileURL];
+
+    if (fileURL != nil)
+    {
+        [eIDOSLayerBackend deserialize:fileURL];
+    } else {
+        panel = [NSOpenPanel openPanel];
+
+        [panel beginWithCompletionHandler:^(NSInteger result)
+        {
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 101300
+            if(result == NSFileHandlingPanelOKButton) {
 #else
-        if(result == NSModalResponseOK) {
+            if(result == NSModalResponseOK) {
 #endif
-			[eIDOSLayerBackend deserialize:[[panel URLs]objectAtIndex:0]];
-		}
-	}];
+
+                [eIDOSLayerBackend deserialize:[[panel URLs] objectAtIndex:0]];
+            }
+        }];
+    }
 }
 
-- (void)saveDocument:(id)sender {
+- (void)saveDocument:(id)sender
+{
 	NSSavePanel *panel = [NSSavePanel savePanel];
+    
 	[panel setAllowedFileTypes:[NSArray arrayWithObjects: @"be.fedict.eid.eidviewer", nil]];
 	[panel setNameFieldStringValue:[NSString stringWithFormat:@"%@.eid", [(NSTextField*)[self searchObjectById:@"national_number" ofClass:[NSTextField class] forUpdate:NO] stringValue]]];
 	[panel beginWithCompletionHandler:^(NSInteger result) {
-#if __MAC_OS_X_VERSION_MIN_REQUIRED__ < 101300
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 101300
 		if(result == NSFileHandlingPanelOKButton) {
 #else
         if(result == NSModalResponseOK) {
@@ -421,13 +443,13 @@
 	eIDLogLevel level = [prefs integerForKey:@"log_level"];
 	BOOL alw_val = [prefs boolForKey:@"always_validate"];
 	if(alw_val) {
-#if __MAC_OS_X_VERSION_MIN_REQUIRED__ < 101400
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 101400
 		[_alwaysValidate setState:NSOnState];
 #else
         [_alwaysValidate setState:NSControlStateValueOn];
 #endif
 	} else {
-#if __MAC_OS_X_VERSION_MIN_REQUIRED__ < 101400
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 101400
 		[_alwaysValidate setState:NSOffState];
 #else
         [_alwaysValidate setState:NSControlStateValueOff];
@@ -512,7 +534,7 @@
 	}
 	if([label isEqualToString:@"member_of_family"]) {
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-#if __MAC_OS_X_VERSION_MIN_REQUIRED__ < 101400
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 101400
 			[self.memberOfFamilyState setState:NSOnState];
 #else
             [self.memberOfFamilyState setState:NSControlStateValueOn];
@@ -604,7 +626,7 @@ failed:
 	if(have_fail) {
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			NSAlert* error = [[NSAlert alloc ] init];
-#if __MAC_OS_X_VERSION_MIN_REQUIRED__ < 101200
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 101200
 			[error setAlertStyle:NSWarningAlertStyle];
 #else
             [error setAlertStyle:NSAlertStyleWarning];
@@ -616,7 +638,7 @@ failed:
 	}
 }
 -(void)changeValidatePolicy:(id)sender {
-#if __MAC_OS_X_VERSION_MIN_REQUIRED__ < 101400
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 101400
 	BOOL on = ([_alwaysValidate state] == NSOnState);
 #else
     BOOL on = ([_alwaysValidate state] == NSControlStateValueOn);
@@ -632,13 +654,13 @@ failed:
 		return;
 	}
 	for(int i=0; i<[_readerSelections count]; i++) {
-#if __MAC_OS_X_VERSION_MIN_REQUIRED__ < 101400
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 101400
 		[[_readerSelections objectAtIndex:i] setState:NSOffState];
 #else
         [[_readerSelections objectAtIndex:i] setState:NSControlStateValueOff];
 #endif
 	}
-#if __MAC_OS_X_VERSION_MIN_REQUIRED__ < 101400
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 101400
 	[sender setState:NSOnState];
 #else
     [sender setState:NSControlStateValueOn];
@@ -646,19 +668,19 @@ failed:
 	[eIDOSLayerBackend setReaderAuto:YES];
 }
 -(IBAction)selectManualReader:(ReaderMenuItem*)sender {
-#if __MAC_OS_X_VERSION_MIN_REQUIRED__ < 101400
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 101400
 	[_menu_file_reader_auto setState: NSOffState];
 #else
     [_menu_file_reader_auto setState: NSControlStateValueOff];
 #endif
 	for(int i=0; i<[_readerSelections count]; i++) {
-#if __MAC_OS_X_VERSION_MIN_REQUIRED__ < 101400
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 101400
         [[_readerSelections objectAtIndex:i] setState:NSOffState];
 #else
 		[[_readerSelections objectAtIndex:i] setState:NSControlStateValueOff];
 #endif
 	}
-#if __MAC_OS_X_VERSION_MIN_REQUIRED__ < 101400
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 101400
     [sender setState:NSOnState];
 #else
 	[sender setState:NSControlStateValueOn];

@@ -372,12 +372,14 @@ exit_loop:
  * state or one of its parents */
 int sm_state_is_active(enum eid_vwr_states s) {
 	struct state* ptr = curstate;
-	while(ptr && ptr->me != s) {
+	
+    while ((ptr) && (ptr->me != s)) {
 		ptr = ptr->parent;
 	}
-	if(ptr) {
+
+    if (ptr) {
 		return 1;
-	} else {
-		return 0;
 	}
+
+    return 0;
 }

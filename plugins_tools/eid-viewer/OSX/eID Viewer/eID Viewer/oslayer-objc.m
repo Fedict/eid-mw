@@ -1,4 +1,5 @@
 #import "oslayer-objc.h"
+#include <Availability.h>
 #include <state.h>
 #include <pthread.h>
 #include "verify_cert.h"
@@ -53,7 +54,7 @@ static const void* osl_objc_perform_ocsp_request(char* url, void* data, long len
 	[req setValue:@"application/ocsp-request" forHTTPHeaderField: @"Content-Type"];
 	req.HTTPBody = dat;
 	req.HTTPMethod = @"POST";
-#if __MAC_OS_X_VERSION_MIN_REQUIRED__ >= 101100
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= 101100
     __block NSURLResponse* resp = nil;
     __block NSError *err = nil;
     __block NSData *respdata = nil;
@@ -85,7 +86,7 @@ static const void* osl_objc_perform_ocsp_request(char* url, void* data, long len
 
 static const void* osl_objc_perform_http_request(char* url, long *retlen, void** handle) {
 	NSURLRequest* req = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithCString:url encoding:NSUTF8StringEncoding]]];
-#if __MAC_OS_X_VERSION_MIN_REQUIRED__ >= 101100
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= 101100
     __block NSURLResponse* resp = nil;
     __block NSError *err = nil;
     __block NSData *respdata = nil;
