@@ -30,7 +30,7 @@
   stage: docker
   tags:
   - windows
-  - docker-build
+  - docker
   variables:
     IMAGE_TAG: $CI_REGISTRY_IMAGE/$CI_JOB_NAME:$CI_COMMIT_REF_SLUG
   before_script:
