@@ -18,9 +18,9 @@
   - del $Env:WINDOWS_BASEDIR\scripts\windows\*.exe
   script:
   - cd $Env:WINDOWS_BASEDIR\scripts\windows
+  - ./build_minidriver.bat
   - ./build_all.bat
   after_script:
-  - rmdir /s ./products
   - mkdir products\windows
   - xcopy $Env:WINDOWS_BASEDIR\scripts\windows\*.exe products\windows
   - xcopy $Env:WINDOWS_BASEDIR\scripts\windows\*.msi products\windows
@@ -36,3 +36,12 @@
     - cardcomm\pkcs11\VS_2017\Binaries\*\*.lib
     - installers\quickinstaller\NSIS_Plugins\beidread\VS_2017\*\*.lib
     - plugins_tools\eid-viewer\Windows\VS_2017\eIDViewer\bin\*\*.lib
+
+#.validation:windows:dllinstall:
+#  tags:
+#  - windows
+#  script: 
+#  - products\windows\*.exe
+#  - run products\windows\*.msi
+#  - "C:\Program Files (x86)\AutoIt3\AutoIt3.exe" %WINDOWS_BASEDIR%\tests\installtest\dlltest.au3  
+

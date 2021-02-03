@@ -380,6 +380,13 @@ validate:robot:macos:
   dependencies:
   - build:macos
 
+#validate:validation:windows:dllinstall:
+#  stage: validate
+#  extends: .validation:windows:dllinstall
+#  dependencies:
+#  - build:windows
+#  allow_failure: true
+
 validate:validation:linux:google:
   stage: validate
   extends: .validation:linux:google
