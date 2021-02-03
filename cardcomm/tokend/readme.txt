@@ -1,5 +1,5 @@
 A tokend (Mac OS 10.4 and up) is like a CSP for
-Windows' CryptoAPI frramework: it provides crypto
+Windows' CryptoAPI framework: it provides crypto
 support (authentication/signatures in the case of
 an eID card) to applications that use the Apple's
 CDSA framework (Safari, Entourage, ..)

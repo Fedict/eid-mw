@@ -2,14 +2,14 @@
 <scriptfile>
     <settings program="actiona" version="3.10.1" scriptVersion="1.1.0" os="GNU/Linux"/>
     <actions>
-        <action name="ActionWindow" version="1.0.0"/>
         <action name="ActionDetachedCommand" version="1.0.0"/>
         <action name="ActionPause" version="1.0.0"/>
-        <action name="ActionWindowCondition" version="1.0.0"/>
         <action name="ActionKey" version="1.0.0"/>
         <action name="ActionGoto" version="1.0.0"/>
         <action name="ActionCode" version="1.0.0"/>
         <action name="ActionWriteText" version="1.0.0"/>
+        <action name="ActionWindowCondition" version="1.0.0"/>
+        <action name="ActionWindow" version="1.0.0"/>
     </actions>
     <parameters/>
     <resources/>
@@ -37,7 +37,7 @@
             <exception id="1" action="0" line=""/>
             <exception id="2" action="1" line=""/>
             <parameter name="duration">
-                <subParameter name="value" code="0">20</subParameter>
+                <subParameter name="value" code="0">15</subParameter>
             </parameter>
             <parameter name="unit">
                 <subParameter name="value" code="0">seconds</subParameter>
@@ -181,7 +181,7 @@ logfile.close();</subParameter>
                 <subParameter name="value" code="0">seconds</subParameter>
             </parameter>
         </action>
-        <action name="ActionWindowCondition" timeout="60000">
+        <action name="ActionWindowCondition" timeout="30000">
             <exception id="0" action="0" line=""/>
             <exception id="1" action="0" line=""/>
             <exception id="2" action="0" line=""/>
@@ -310,7 +310,7 @@ logfile.open(logpath,File.WriteOnly |  File.Text  | File.Append);
 now = new Date();
 logfile.writeText(&quot;\n&quot;);
 logfile.writeText(now);
-logfile.writeText(&quot;: exiting browser&quot;);
+logfile.writeText(&quot;: exiting browser\n&quot;);
 logfile.close();</subParameter>
             </parameter>
         </action>
@@ -319,7 +319,7 @@ logfile.close();</subParameter>
             <exception id="1" action="0" line=""/>
             <exception id="2" action="1" line=""/>
             <parameter name="duration">
-                <subParameter name="value" code="0">30</subParameter>
+                <subParameter name="value" code="0">15</subParameter>
             </parameter>
             <parameter name="unit">
                 <subParameter name="value" code="0">seconds</subParameter>
