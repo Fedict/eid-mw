@@ -89,6 +89,7 @@ test:distcheck:
 test:robot:linux:
   stage: tests
   extends: .robot:linux
+  allow_failure: true
 
 test:repro:debian:
   stage: tests
@@ -102,21 +103,10 @@ test:gtk4:
   stage: tests
   extends: .gtk4
 
-#test:freebsd:
-#  stage: tests
-#  tags:
-#  - freebsd
-#  before_script:
-#  - pushd $LINUX_BASEDIR
-#  - autoreconf -f -i
-#  - popd
-#  script:
-#  - pushd $LINUX_BASEDIR
-#  - ./configure --disable-dependency-tracking --disable-webextension
-#  - make -j $(sysctl -n hw.ncpu)
-#  - make -j $(sysctl -n hw.ncpu) check
-#  - popd
-#  allow_failure: true
+test:coverity:linux:
+  stage: tests
+  extends: .coverity:linux
+
 #################################################
 # Stage "source-package": build source packages #
 #################################################
@@ -373,6 +363,11 @@ build:macos:
   variables:
     EIDMW_SIGN_BUILD: 0
 
+build:freebsd:
+  stage: binary-package
+  extends: .build-freebsd-base
+  allow_failure: true
+
 validate:robot:windows:
   stage: validate
   extends: .robot:windows
@@ -384,6 +379,13 @@ validate:robot:macos:
   extends: .robot:macos
   dependencies:
   - build:macos
+
+#validate:validation:windows:dllinstall:
+#  stage: validate
+#  extends: .validation:windows:dllinstall
+#  dependencies:
+#  - build:windows
+#  allow_failure: true
 
 validate:validation:linux:google:
   stage: validate

@@ -1,53 +1,38 @@
 OSSL_VERSION=1.1.1i
 TP_DIR=../../../../../../ThirdParty
 
-ifeq ($(ARCHS),)
-ARCHS=x86_64 arm64
-endif
-
-BUILDS=$(addprefix openssl-, $(ARCHS))
-CRYPTOLIBS=$(addsuffix /libcrypto.a,$(BUILDS))
-CONFIGURED=$(addprefix configured-, $(ARCHS))
-ARCHCOUNT=$(words $(ARCHS))
-
 build: openssl/libcrypto.a openssl/include/openssl/opensslconf.h
+
 clean-builds:
 	rm -rf $(CONFIGURED) openssl openssl-$(OSSL_VERSION) openssl-arm64 openssl-x86_64
 clean:
 	rm -rf openssl-$(OSSL_VERSION).tar.gz 
 
-configured-x86_64: openssl/Configure openssl-x86_64
-	cd openssl-x86_64; ../openssl/Configure no-shared no-asm -mmacos-version-min=10.9 darwin64-x86_64-cc
-	$(MAKE) -C openssl-x86_64 depend
-	touch $@
-
-configured-arm64: openssl/Configure openssl-arm64
+configured: openssl/Configure openssl-x86_64 openssl-arm64
+	cd openssl-x86_64; ../openssl/Configure no-shared no-asm -mmacosx-version-min=10.9 darwin64-x86_64-cc
 	cd openssl-arm64; ../openssl/Configure no-shared no-asm -mmacosx-version-min=11 darwin64-arm64-cc
+	$(MAKE) -C openssl-x86_64 depend
 	$(MAKE) -C openssl-arm64 depend
-	touch $@
-
-configured: $(CONFIGURED)
+	touch configured
 
 openssl/Configure: openssl
 
 openssl-%: openssl
 	mkdir -p $@
 
-openssl/include/openssl/opensslconf.h: $(CRYPTOLIBS)
 # OpenSSL needs this file, but it just so happens that it's the same for
 # both x86 and arm64, so...
-ifeq ($(ARCHCOUNT),2)
+openssl/include/openssl/opensslconf.h: configured
 	diff -q openssl-x86_64/include/openssl/opensslconf.h openssl-arm64/include/openssl/opensslconf.h
-endif
-	cp -a openssl-$(word 1,$(ARCHS))/include/openssl/opensslconf.h openssl/include/openssl/opensslconf.h
+	cp -a openssl-x86_64/include/openssl/opensslconf.h openssl/include/openssl/opensslconf.h
 
-openssl/libcrypto.a: $(CRYPTOLIBS)
+openssl/lib%.a: openssl-x86_64/lib%.a openssl-arm64/lib%.a
 	lipo -create -output $@ $^
 
-openssl-x86_64/libcrypto.a openssl-x86_64/include/openssl/opensslconf.h: configured-x86_64
+openssl-x86_64/lib%.a: configured
 	$(MAKE) -C openssl-x86_64
 
-openssl-arm64/libcrypto.a openssl-arm64/include/openssl/opensslconf.h: configured-arm64
+openssl-arm64/lib%.a: configured
 	$(MAKE) -C openssl-arm64
 
 openssl: openssl-$(OSSL_VERSION)

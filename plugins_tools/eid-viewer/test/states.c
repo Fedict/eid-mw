@@ -110,6 +110,8 @@ TEST_FUNC(states) {
 		printf("no robot");
 		return TEST_RV_SKIP;
 	}
+	robot_remove_card();
+	robot_remove_reader();
 	cb = createcbs();
 	orig_bindata = cb->newbindata;
 	cb->newbindata = mybindata;
@@ -119,7 +121,7 @@ TEST_FUNC(states) {
 	verbose_assert(eid_vwr_createcallbacks(cb) == 0);
 	
 #ifndef WIN32
-	robot_remove_reader();
+
 	SLEEP(20);
 	verbose_assert(flags[STATE_CALLBACKS]);
 	verbose_assert(flags[STATE_NO_TOKEN]);
@@ -128,9 +130,8 @@ TEST_FUNC(states) {
 	clearflags();
 #endif
 
-
 	robot_insert_reader();
-	SLEEP(10);
+	SLEEP(20);
 	verbose_assert(curstate == STATE_READY);
 	clearflags();
 	
@@ -233,8 +234,8 @@ TEST_FUNC(states) {
 	
 	clearflags();
 	SLEEP(5);
-	
-	printf("test for challenge (only run with a card v1.8)\n");
+	/*
+	printf("test for challenge(only run with a card v1.8)\n");
 	if(have_keyhash){
 		const unsigned char* challenge = "123456789012345678901234567890123456789012345678";
 		int lenght = 48;
@@ -244,7 +245,7 @@ TEST_FUNC(states) {
 		clearflags();
 		SLEEP(5);
 	}
-	
+	*/
 	eid_vwr_be_set_invalid();
 	SLEEP(5);
 	newstate(curstate);

@@ -639,10 +639,16 @@ namespace eIDViewer
             {
                 //only verify the basic key when it is present
 
-                if ( (basicKeyHash.Length != 48) || (basicKeyFile == null) )
+                if (basicKeyHash.Length != 48)
                 {
                     //only hashAlg used is SHA384
+                    this.WriteLog("public basic key hash is present, but it is not 48 bytes long \n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+                    return false;
+                }
+                if (basicKeyFile == null)
+                {
                     //if we have a basic key hash in the signed ID FILE, the card needs to have a matching basic key file
+                    this.WriteLog("public basic key hash is present, but no matching basic key file is present\n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
                     return false;
                 }
                 //check if the public basic key corresponds with the basic key hash in the identity file

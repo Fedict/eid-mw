@@ -2,6 +2,7 @@
   tags:
   - docker
   image: $CI_REGISTRY_IMAGE/deb-build:$CI_COMMIT_REF_SLUG
+  retry: 2
   variables:
     GIT_DEPTH: 0
   before_script:
@@ -9,6 +10,7 @@
   - apt-get update
   - apt-get -y install --no-install-recommends autoconf autoconf-archive automake libtool libpcsclite-dev libp11-kit-dev libgtk-3-dev libassuan-dev libgpg-error-dev libssl-dev libxml2-dev libcurl4-openssl-dev libproxy-dev plantuml zip gettext build-essential g++ git graphviz
   - pushd $LINUX_BASEDIR
+  - FORCE_VERSION=1 scripts/build-aux/genver.sh
   - autoreconf -f -i
   - popd
   - rm -rf products
@@ -16,7 +18,8 @@
   script:
   - pushd $LINUX_BASEDIR
   - ./configure
-  - make -j $(nproc) distcheck
+  - make -j distcheck
+  - grep -qv unknown .version
   - popd
   after_script:
   - mkdir -p products/source
@@ -44,7 +47,7 @@
   script:
   - pushd $LINUX_BASEDIR
   - ./configure --with-gtkvers=4 --disable-pinentry
-  - make -j $(nproc) distcheck
+  - make -j distcheck
   - popd
   allow_failure: true
 
@@ -65,9 +68,10 @@
   script:
   - pushd $LINUX_BASEDIR
   - ./configure --libexecdir=$(pwd)/scripts/linux/hackbin --disable-pinentry CFLAGS='-g -O0 --coverage' CXXFLAGS='-g -O0 --coverage'
-  - make -j $(nproc) check
+  - make -j check
   - mkdir -p products/reports
   - gcovr --xml > products/reports/coverage.xml
+  - gcovr --html -o products/reports/coverage.html
   - popd
   artifacts:
     paths:
@@ -130,7 +134,7 @@
   - popd
   script:
   - pushd $LINUX_BASEDIR
-  - scan-build -disable-checker deadcode.DeadStores --status-bugs -o public make -j $(nproc)
+  - scan-build -disable-checker deadcode.DeadStores --status-bugs -o public make -j
   - popd
   artifacts:
     when: on_failure
@@ -163,6 +167,26 @@
   artifacts:
     paths:
     - products/srpm
+
+.build-freebsd-base:
+  variables:
+    GIT_STRATEGY: none
+  tags:
+  - freebsd
+  before_script:
+  - VER=$(cat products/source/version)
+  - VERSHORT=${VER#*-}
+  - COMMITDATE=$(cat products/source/date)
+  - mkdir -p build
+  - pushd build
+  - tar xvf ../products/source/eid-mw-${VER}.tar.gz --strip-components=1
+  - ./configure --disable-dependency-tracking
+  - popd
+  script:
+  - pushd build
+  - make
+  - make check
+  - popd
 
 .build-deb-base:
   before_script:
@@ -273,3 +297,24 @@
   - gpg --yes --batch --passphrase "" --default-key $GPG_TEST_KEY_ID --no-tty -b --armor $(basename $SOURCETGZ)
   variables:
     GIT_STRATEGY: none
+
+.coverity:linux:
+  variables:
+    PATH: /opt/coverity/bin:/usr/local/bin:/usr/bin:/usr/local/games:/usr/games
+  tags:
+  - linux
+  - coverity
+  before_script:
+  - pushd $LINUX_BASEDIR
+  - autoreconf -f -i
+  - rm -rf cov-int
+  - popd
+  script:
+  - pushd $LINUX_BASEDIR
+  - ./configure --libexecdir=$(pwd)/scripts/linux/hackbin --disable-pinentry
+  - cov-build --dir=cov-int make
+  - cov-build --dir=cov-int make check
+  - tar cvaf eid-mw-coverity.tar.gz cov-int
+  - curl --form project=eID+middleware --form token=$COVERITY_TOKEN --form email=wouter.verhelst@fedict.be --form file=@"eid-mw-coverity.tar.gz"; filename="eID middleware.tgz" --form version=$CI_COMMIT_SHA --form description="automatic submission by GitLab CI" https://scan.coverity.com/builds?project=eID+middleware
+  - popd
+  when: manual

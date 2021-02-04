@@ -4,8 +4,8 @@
   - robot
   - windows
   script:
-  - cd %WINDOWS_BASEDIR%\scripts\windows
-  - call build_testsuite.bat
+  - cd $Env:WINDOWS_BASEDIR\scripts\windows
+  - ./build_testsuite.bat
   - cd
   - cd ..\..
   - cd tests\unit\windows\Release
@@ -15,15 +15,15 @@
 .build-windows:
   dependencies: []
   before_script:
-  - del /q %WINDOWS_BASEDIR%\scripts\windows\*.exe
+  - del $Env:WINDOWS_BASEDIR\scripts\windows\*.exe
   script:
-  - cd %WINDOWS_BASEDIR%\scripts\windows
-  - build_all.bat
+  - cd $Env:WINDOWS_BASEDIR\scripts\windows
+  - ./build_minidriver.bat
+  - ./build_all.bat
   after_script:
-  - rmdir /s /q products
   - mkdir products\windows
-  - xcopy %WINDOWS_BASEDIR%\scripts\windows\*.exe products\windows
-  - xcopy %WINDOWS_BASEDIR%\scripts\windows\*.msi products\windows
+  - xcopy $Env:WINDOWS_BASEDIR\scripts\windows\*.exe products\windows
+  - xcopy $Env:WINDOWS_BASEDIR\scripts\windows\*.msi products\windows
   tags:
   - build
   - windows
@@ -36,3 +36,12 @@
     - cardcomm\pkcs11\VS_2017\Binaries\*\*.lib
     - installers\quickinstaller\NSIS_Plugins\beidread\VS_2017\*\*.lib
     - plugins_tools\eid-viewer\Windows\VS_2017\eIDViewer\bin\*\*.lib
+
+#.validation:windows:dllinstall:
+#  tags:
+#  - windows
+#  script: 
+#  - products\windows\*.exe
+#  - run products\windows\*.msi
+#  - "C:\Program Files (x86)\AutoIt3\AutoIt3.exe" %WINDOWS_BASEDIR%\tests\installtest\dlltest.au3  
+

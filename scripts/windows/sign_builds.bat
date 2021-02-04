@@ -8,6 +8,9 @@ call "%~dp0.\sign_eidmw.bat"
 call "%~dp0.\sign_viewer.bat"
 @if %ERRORLEVEL%==1 goto sign_viewer_failed
 
+@echo [INFO] signing builds done
+@goto end
+
 
 :sign_eidmw_failed
 @echo [ERR ] error running script sign_eidmw.bat
@@ -17,9 +20,6 @@ call "%~dp0.\sign_viewer.bat"
 @echo [ERR ] error running script sign_viewer.bat
 @goto err
 
-
-@echo [INFO] signing builds done
-@goto end
 
 :err
 @exit /b 1
