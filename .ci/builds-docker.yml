@@ -38,6 +38,6 @@
   - docker pull $Env:IMAGE_TAG; $LASTEXITCODE=0
   script:
   - cd $Env:WINDOWS_BASEDIR\.ci\dockerfiles\$Env:CI_JOB_NAME
-  - docker build --pull --cache-from $Env:IMAGE_TAG -t $Env:IMAGE_TAG -e WINDOWS_CONTAINER_VERSION=$Env:WINDOWS_CONTAINER_VERSION .
+  - docker build --pull --cache-from $Env:IMAGE_TAG -t $Env:IMAGE_TAG --build-arg WINDOWS_CONTAINER_VERSION=$Env:WINDOWS_CONTAINER_VERSION .
   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   - docker push $IMAGE_TAG
