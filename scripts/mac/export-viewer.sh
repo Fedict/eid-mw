@@ -15,8 +15,18 @@ mkdir -p release-viewer
 rm -f tmp-eidviewer.dmg
 rm -f "eID Viewer-$REL_VERSION.dmg"
 
-echo "********** archive and export (in post-archive script) eID Viewer **********"
+echo "********** clean existing dependencies (xml, ossl) of the eID Viewer **********"
 pushd "../../"
+pushd "plugins_tools/eid-viewer/OSX/support"
+pushd "ossl"
+make clean-builds
+popd
+pushd "xml"
+make clean-builds
+popd
+popd
+
+echo "********** archive and export (in post-archive script) eID Viewer **********"
 xcodebuild -project "beidmw.xcodeproj" -scheme "eID Viewer" -configuration Release clean archive
 popd
 
