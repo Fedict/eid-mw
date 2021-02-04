@@ -4,7 +4,7 @@ RUN powershell -command set-executionpolicy Bypass -Scope process -Force; \
     iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 RUN choco install -y "visualstudio2019buildtools"
 RUN choco install -y "visualstudio2019-workload-vctools"
-RUN choco install -y "visualstuiod2019-workload-manageddesktopbuildtools"
+RUN choco install -y "visualstudio2019-workload-manageddesktopbuildtools"
 RUN choco install -y "nsis"
 # DotNet 3.5 doesn't install properly through chocolatey, and wix requires it,
 # so...
