@@ -10,5 +10,7 @@ RUN choco install -y "nsis"
 # so...
 #RUN choco install -y "wixtoolset"
 RUN powershell -command Add-WindowsCapability -Name Net-Framework-Core -Online
-RUN powershell -command Invoke-WebRequest https://github.com/wixtoolset/wix3/releases/download/wix3112rtm/wix311.exe -OutFile C:\\wix311.exe; \
-    C:\\wix311.exe /install /quiet /norestart
+RUN powershell -command Invoke-WebRequest https://github.com/wixtoolset/wix3/releases/download/wix3112rtm/wix311-binaries.zip -OutFile C:\\wix311-binaries.zip; \
+    Expand-Archive -LiteralPath C:\\wix311-binaries.zip -DestinatinPath C:\\wix; \
+    Remove-Item -Path C:\\wix311-binaries.zip -Force -Recurse
+ENV WIX=C:\\wix
