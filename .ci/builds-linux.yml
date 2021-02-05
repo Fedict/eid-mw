@@ -1,6 +1,7 @@
 .distcheck:
   tags:
   - docker
+  - linux
   image: $CI_REGISTRY_IMAGE/deb-build:$CI_COMMIT_REF_SLUG
   retry: 2
   variables:
@@ -39,6 +40,7 @@
 .gtk4:
   tags:
   - docker
+  - linux
   image: $CI_REGISTRY_IMAGE/gtk4-build:$CI_COMMIT_REF_SLUG
   before_script:
   - pushd $LINUX_BASEDIR
@@ -136,6 +138,7 @@
 .repro:debian:
   tags:
   - docker
+  - linux
   image: $CI_REGISTRY_IMAGE/deb-repro:$CI_COMMIT_REF_SLUG
   dependencies: []
   before_script:
@@ -158,6 +161,7 @@
 .scan-build:
   tags:
     - docker
+    - linux
   image: $CI_REGISTRY_IMAGE/deb-scan-build:$CI_COMMIT_REF_SLUG
   before_script:
   - if [ ! -z "$ACNG" ]; then sed -i -e "s,http://,$ACNG/," /etc/apt/sources.list; else echo "no proxy configured"; fi
@@ -181,6 +185,7 @@
     GIT_STRATEGY: none
   tags:
     - docker
+    - linux
   image: $CI_REGISTRY_IMAGE/fed-build:$CI_COMMIT_REF_SLUG
   before_script:
   - dnf -y install rpm-build git rpmdevtools
@@ -251,12 +256,14 @@
       on_success
   tags:
   - docker
+  - linux
   image: $CI_REGISTRY_IMAGE/deb-sbuild:$CI_COMMIT_REF_SLUG
 
 .build-fed-base:
   retry: 2
   tags:
   - docker
+  - linux
   image: $CI_REGISTRY_IMAGE/fed-build:$CI_COMMIT_REF_SLUG
   before_script:
   - dnf -y install mock git
@@ -278,6 +285,7 @@
   retry: 2
   tags:
     - docker
+    - linux
   image: $CI_REGISTRY_IMAGE/suse-build:$CI_COMMIT_REF_SLUG
   before_script:
     - VER=$(cat products/srpm/version)
