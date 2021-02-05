@@ -37,7 +37,8 @@ builddir/.libs/libxml2.a: builddir-x86_64/.libs/libxml2.a builddir-arm64/.libs/l
 	mkdir -p $(dir $@)
 	lipo -create -output $@ $^
 
-builddir-%/.libs/libxml2.a: builddir-%/libxml2.la
+builddir-x86_64/.libs/libxml2.a: builddir-x86_64/libxml2.la
+builddir-arm64/.libs/libxml2.a: builddir-arm64/libxml2.la
 builddir-%/libxml2.la: builddir-%/config.status
 	$(MAKE) -C $(dir $@)
 
