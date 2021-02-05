@@ -14,6 +14,7 @@
 
 .build-windows:
   dependencies: []
+  image: $CI_REGISTRY_IMAGE/build-windows:$CI_COMMIT_REF_SLUG
   before_script:
   - del $Env:WINDOWS_BASEDIR\scripts\windows\*.exe
   script:
@@ -25,7 +26,7 @@
   - xcopy $Env:WINDOWS_BASEDIR\scripts\windows\*.exe products\windows
   - xcopy $Env:WINDOWS_BASEDIR\scripts\windows\*.msi products\windows
   tags:
-  - build
+  - docker
   - windows
   allow_failure: true
   artifacts:
