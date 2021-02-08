@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 GITDESC=$(git describe --match="v5*" --all --dirty | sed -e 's,^tags/,,g;s/-/./g')
 VERCLEAN=$(echo $GITDESC|sed -Ee 's/^.*v([0-9]+\.[0-9]+(\.[0-9]+|bp|\.pre[0-9]*)).*$/\1/')
