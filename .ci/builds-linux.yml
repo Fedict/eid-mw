@@ -51,6 +51,32 @@
   - popd
   allow_failure: true
 
+.nogtk:
+  tags:
+  - docker
+  image: $CI_REGISTRY_IMAGE/deb-build:$CI_COMMIT_REF_SLUG
+  before_script:
+  - pushd $LINUX_BASEDIR
+  - autoreconf -f -i
+  - popd
+  script:
+  - pushd $LINUX_BASEDIR
+  - ./configure --without-gtkvers
+  - make check
+
+.nodialogs:
+  tags:
+  - docker
+  image: $CI_REGISTRY_IMAGE/deb-build:$CI_COMMIT_REF_SLUG
+  before_script:
+  - pushd $LINUX_BASEDIR
+  - autoreconf -f -i
+  - popd
+  script:
+  - pushd $LINUX_BASEDIR
+  - ./configure --disable-dialogs
+  - make check
+
 .robot:linux:
   variables:
     EID_ROBOT_STYLE: zetes:/dev/TB3-CARD:/dev/TB3-USB

@@ -103,6 +103,14 @@ test:gtk4:
   stage: tests
   extends: .gtk4
 
+test:nogtk:
+  stage: tests
+  extends: .nogtk
+
+test:nodialogs:
+  stage: tests
+  extends: .nodialogs
+
 test:coverity:linux:
   stage: tests
   extends: .coverity:linux
