@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eid-mw 4.2.0-v4.2.0.dirty\n"
 "Report-Msgid-Bugs-To: servicedesk@bosa.fgov.be\n"
-"POT-Creation-Date: 2018-12-20 10:20+0100\n"
+"POT-Creation-Date: 2021-02-11 10:09+0200\n"
 "PO-Revision-Date: 2017-01-27 14:24+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -18,94 +18,103 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.8.11\n"
 
-#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-askaccess.c:51
+#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-askaccess.c:65
 #, c-format
 msgid ""
 "The application [%s] wants to access the eID card. Do you want to accept it?"
 msgstr ""
 "Die Anwendung [%s] will auf die eID-Karte zugreifen. Möchten Sie akzeptieren?"
 
-#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-askaccess.c:58
+#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-askaccess.c:72
 msgid "beID: Card Access"
 msgstr "beID: Kartenzugriff"
 
-#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-askpin.c:203
-#, c-format
+#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-askpin.c:240
+#, fuzzy, c-format
 msgid ""
 "The application\n"
 "[%s]\n"
-"requests your eID PIN code."
+"requests your eID %s code."
 msgstr ""
 "Die Anwendung\n"
 "[%s]\n"
 "fragt um Ihren eID PIN-code"
 
-#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-askpin.c:218
-#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-spr-askpin.c:78
+#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-askpin.c:249
+#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-changepin.c:186
+msgid "_Cancel"
+msgstr ""
+
+#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-askpin.c:252
+#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-changepin.c:189
+msgid "_OK"
+msgstr ""
+
+#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-askpin.c:255
+#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-spr-askpin.c:93
 msgid "beID: PIN Code Required"
 msgstr "beID: PIN Code Required"
 
-#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-badpin.c:52
+#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-badpin.c:66
 #, c-format
 msgid ""
-"You have entered an incorrect PIN code.\n"
+"You have entered an incorrect %s code.\n"
 "Please note that at the next incorrect entry your PIN code will be blocked."
 msgid_plural ""
-"You have entered an incorrect PIN code.\n"
+"You have entered an incorrect %s code.\n"
 "Please note that you have only %d attempts left before your PIN is blocked."
 msgstr[0] ""
 msgstr[1] ""
 
-#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-badpin.c:61
+#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-badpin.c:75
 msgid "beID: Incorrect PIN Code"
 msgstr ""
 
-#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-changepin.c:165
-#, c-format
+#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-changepin.c:177
+#, fuzzy, c-format
 msgid ""
 "Request from Application [%s]:\n"
 "\n"
-"Please enter your current eID PIN, followed by your new eID PIN (twice)"
+"Please enter your current eID %s, followed by your new eID %s (twice)"
 msgstr ""
 "Anfrage von Anwendug [%s]:\n"
 "\n"
 "Bitte geben Sie ihren bestehenden eID PIN-Code, gefolgt von Ihrem neuen eID "
 "PIN-Code (zwei mal), ein"
 
-#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-changepin.c:180
-#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-spr-changepin.c:78
+#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-changepin.c:192
+#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-spr-changepin.c:93
 msgid "beID: Change PIN Code"
 msgstr "beID: PIN Code ändern"
 
-#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-changepin.c:189
+#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-changepin.c:203
 msgid "Current PIN:"
 msgstr "Aktueller PIN-Code:"
 
-#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-changepin.c:190
+#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-changepin.c:204
 msgid "New PIN:"
 msgstr "Neuer PIN-Code:"
 
-#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-changepin.c:191
+#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-changepin.c:205
 msgid "New PIN (again):"
 msgstr "Neuer PIN-Code (noch einmal):"
 
-#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-spr-askpin.c:75
-#, c-format
+#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-spr-askpin.c:90
+#, fuzzy, c-format
 msgid ""
-"The application [%s] requests your eID PIN code on the secure pinpad "
-"reader:\n"
+"The application [%s] requests your eID %s code on the secure pinpad reader:\n"
 "[%s]..."
 msgstr ""
 "Die Anwendung [%s] fragt um Ihren eID PIN-Code auf dem sicheren "
 "Kartenleser:\n"
 "[%s]..."
 
-#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-spr-changepin.c:75
-#, c-format
+#: cardcomm/pkcs11/src/dialogs/dialogsgtk/beid-spr-changepin.c:90
+#, fuzzy, c-format
 msgid ""
 "Request from Application [%s]:\n"
 "\n"
-"Please change your eID PIN code on the secure pinpad reader:\n"
+"Please change your eID %s code on the secure pinpad reader:\n"
 "[%s]..."
 msgstr ""
 "Anfrage von Anwendug [%s]:\n"

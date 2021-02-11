@@ -1,7 +1,7 @@
 # English translations for eid-mw package.
-# Copyright (C) 2018 BOSA
+# Copyright (C) 2021 BOSA
 # This file is distributed under the same license as the eid-mw package.
-# Automatically generated, 2018.
+# Automatically generated, 2021.
 #
 # All this catalog "translates" are quotation characters.
 # The msgids must be ASCII and therefore cannot contain real quotation
@@ -30,10 +30,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: eid-mw 4.4.10-v4.4.10.160.g7d9f474a.dirty\n"
+"Project-Id-Version: eid-mw 5.0.12-v5.0.12.59.g20a3e2c3.dirty\n"
 "Report-Msgid-Bugs-To: servicedesk@bosa.fgov.be\n"
-"POT-Creation-Date: 2018-12-14 13:54+0100\n"
-"PO-Revision-Date: 2018-12-14 13:54+0100\n"
+"POT-Creation-Date: 2021-02-11 10:09+0200\n"
+"PO-Revision-Date: 2021-02-11 10:09+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: en@boldquot\n"
@@ -42,113 +42,117 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:65
-#: plugins_tools/aboutmw/gtk/about-main.c:69
-#: plugins_tools/aboutmw/gtk/about-main.c:74
-#: plugins_tools/aboutmw/gtk/about-main.c:81
-#: plugins_tools/aboutmw/gtk/about-main.c:85
+#: plugins_tools/aboutmw/gtk/about-main.c:83
+#: plugins_tools/aboutmw/gtk/about-main.c:87
+#: plugins_tools/aboutmw/gtk/about-main.c:92
+#: plugins_tools/aboutmw/gtk/about-main.c:99
+#: plugins_tools/aboutmw/gtk/about-main.c:103
 msgid "PCSC daemon status"
 msgstr "PCSC daemon status"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:65
+#: plugins_tools/aboutmw/gtk/about-main.c:83
 msgid "(check failed)"
 msgstr "(check failed)"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:69
-#: plugins_tools/aboutmw/gtk/about-main.c:74
-#: plugins_tools/aboutmw/gtk/about-main.c:81
+#: plugins_tools/aboutmw/gtk/about-main.c:87
+#: plugins_tools/aboutmw/gtk/about-main.c:92
+#: plugins_tools/aboutmw/gtk/about-main.c:99
 msgid "(not running)"
 msgstr "(not running)"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:84
+#: plugins_tools/aboutmw/gtk/about-main.c:102
 #, c-format
 msgid "running; pid: %s"
 msgstr "running; pid: %s"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:99
-#: plugins_tools/aboutmw/gtk/about-main.c:104
-#: plugins_tools/aboutmw/gtk/about-main.c:111
-#: plugins_tools/aboutmw/gtk/about-main.c:114
+#: plugins_tools/aboutmw/gtk/about-main.c:117
+#: plugins_tools/aboutmw/gtk/about-main.c:122
+#: plugins_tools/aboutmw/gtk/about-main.c:129
+#: plugins_tools/aboutmw/gtk/about-main.c:132
 msgid "eID Viewer location"
 msgstr "eID Viewer location"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:99
-#: plugins_tools/aboutmw/gtk/about-main.c:104
-#: plugins_tools/aboutmw/gtk/about-main.c:111
-#: plugins_tools/aboutmw/gtk/about-main.c:178
-#: plugins_tools/aboutmw/gtk/about-main.c:182
-#: plugins_tools/aboutmw/gtk/about-main.c:188
+#: plugins_tools/aboutmw/gtk/about-main.c:117
+#: plugins_tools/aboutmw/gtk/about-main.c:122
+#: plugins_tools/aboutmw/gtk/about-main.c:129
+#: plugins_tools/aboutmw/gtk/about-main.c:196
+#: plugins_tools/aboutmw/gtk/about-main.c:200
+#: plugins_tools/aboutmw/gtk/about-main.c:206
 msgid "(not found)"
 msgstr "(not found)"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:155
-#: plugins_tools/aboutmw/gtk/about-main.c:178
+#: plugins_tools/aboutmw/gtk/about-main.c:173
+#: plugins_tools/aboutmw/gtk/about-main.c:196
 msgid "32-bit PKCS#11 location"
 msgstr "32-bit PKCS#11 location"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:160
-#: plugins_tools/aboutmw/gtk/about-main.c:182
+#: plugins_tools/aboutmw/gtk/about-main.c:178
+#: plugins_tools/aboutmw/gtk/about-main.c:200
 msgid "64-bit PKCS#11 location"
 msgstr "64-bit PKCS#11 location"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:164
-#: plugins_tools/aboutmw/gtk/about-main.c:188
+#: plugins_tools/aboutmw/gtk/about-main.c:182
+#: plugins_tools/aboutmw/gtk/about-main.c:206
 msgid "PKCS#11 location"
 msgstr "PKCS#11 location"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:263
-#: plugins_tools/aboutmw/gtk/about-main.c:266
-#: plugins_tools/aboutmw/gtk/about-main.c:274
+#: plugins_tools/aboutmw/gtk/about-main.c:220
+msgid "GTK library version"
+msgstr "GTK library version"
+
+#: plugins_tools/aboutmw/gtk/about-main.c:292
+#: plugins_tools/aboutmw/gtk/about-main.c:295
+#: plugins_tools/aboutmw/gtk/about-main.c:303
 msgid "System architecture"
 msgstr "System architecture"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:263
+#: plugins_tools/aboutmw/gtk/about-main.c:292
 msgid "64-bit PC"
 msgstr "64-bit PC"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:266
+#: plugins_tools/aboutmw/gtk/about-main.c:295
 msgid "32-bit PC"
 msgstr "32-bit PC"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:272
+#: plugins_tools/aboutmw/gtk/about-main.c:301
 #, c-format
 msgid "Unknown (%s)"
 msgstr "Unknown (%s)"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:292
-#: plugins_tools/aboutmw/gtk/about-main.c:299
-#: plugins_tools/aboutmw/gtk/about-main.c:304
+#: plugins_tools/aboutmw/gtk/about-main.c:321
+#: plugins_tools/aboutmw/gtk/about-main.c:328
+#: plugins_tools/aboutmw/gtk/about-main.c:333
 msgid "(unknown)"
 msgstr "(unknown)"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:321
+#: plugins_tools/aboutmw/gtk/about-main.c:350
 msgid "Distribution"
 msgstr "Distribution"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:326
+#: plugins_tools/aboutmw/gtk/about-main.c:355
 msgid "Distribution version"
 msgstr "Distribution version"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:331
+#: plugins_tools/aboutmw/gtk/about-main.c:360
 msgid "Distribution codename"
 msgstr "Distribution codename"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:365
+#: plugins_tools/aboutmw/gtk/about-main.c:398
 msgid "Middleware version"
 msgstr "Middleware version"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:367
+#: plugins_tools/aboutmw/gtk/about-main.c:400
 msgid "Middleware build ID"
 msgstr "Middleware build ID"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:370
+#: plugins_tools/aboutmw/gtk/about-main.c:403
 msgid "Middleware build date"
 msgstr "Middleware build date"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:379
+#: plugins_tools/aboutmw/gtk/about-main.c:413
 msgid "Item"
 msgstr "Item"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:381
+#: plugins_tools/aboutmw/gtk/about-main.c:415
 msgid "Value"
 msgstr "Value"

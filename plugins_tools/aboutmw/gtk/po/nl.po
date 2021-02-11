@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eid-mw 4.1.1-v4.1.1.dirty\n"
 "Report-Msgid-Bugs-To: servicedesk@bosa.fgov.be\n"
-"POT-Creation-Date: 2018-12-14 13:54+0100\n"
+"POT-Creation-Date: 2021-02-11 10:09+0200\n"
 "PO-Revision-Date: 2015-02-06 13:47+0100\n"
 "Last-Translator: Wouter Verhelst <wouter.verhelst@zetes.com>\n"
 "Language-Team: \n"
@@ -16,114 +16,118 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:65
-#: plugins_tools/aboutmw/gtk/about-main.c:69
-#: plugins_tools/aboutmw/gtk/about-main.c:74
-#: plugins_tools/aboutmw/gtk/about-main.c:81
-#: plugins_tools/aboutmw/gtk/about-main.c:85
+#: plugins_tools/aboutmw/gtk/about-main.c:83
+#: plugins_tools/aboutmw/gtk/about-main.c:87
+#: plugins_tools/aboutmw/gtk/about-main.c:92
+#: plugins_tools/aboutmw/gtk/about-main.c:99
+#: plugins_tools/aboutmw/gtk/about-main.c:103
 msgid "PCSC daemon status"
 msgstr "PCSC systeemdienst status"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:65
+#: plugins_tools/aboutmw/gtk/about-main.c:83
 msgid "(check failed)"
 msgstr "(test mislukt)"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:69
-#: plugins_tools/aboutmw/gtk/about-main.c:74
-#: plugins_tools/aboutmw/gtk/about-main.c:81
+#: plugins_tools/aboutmw/gtk/about-main.c:87
+#: plugins_tools/aboutmw/gtk/about-main.c:92
+#: plugins_tools/aboutmw/gtk/about-main.c:99
 msgid "(not running)"
 msgstr "(draait niet)"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:84
+#: plugins_tools/aboutmw/gtk/about-main.c:102
 #, c-format
 msgid "running; pid: %s"
 msgstr "draait; pid: %s"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:99
-#: plugins_tools/aboutmw/gtk/about-main.c:104
-#: plugins_tools/aboutmw/gtk/about-main.c:111
-#: plugins_tools/aboutmw/gtk/about-main.c:114
+#: plugins_tools/aboutmw/gtk/about-main.c:117
+#: plugins_tools/aboutmw/gtk/about-main.c:122
+#: plugins_tools/aboutmw/gtk/about-main.c:129
+#: plugins_tools/aboutmw/gtk/about-main.c:132
 msgid "eID Viewer location"
 msgstr "eID Viewer-locatie"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:99
-#: plugins_tools/aboutmw/gtk/about-main.c:104
-#: plugins_tools/aboutmw/gtk/about-main.c:111
-#: plugins_tools/aboutmw/gtk/about-main.c:178
-#: plugins_tools/aboutmw/gtk/about-main.c:182
-#: plugins_tools/aboutmw/gtk/about-main.c:188
+#: plugins_tools/aboutmw/gtk/about-main.c:117
+#: plugins_tools/aboutmw/gtk/about-main.c:122
+#: plugins_tools/aboutmw/gtk/about-main.c:129
+#: plugins_tools/aboutmw/gtk/about-main.c:196
+#: plugins_tools/aboutmw/gtk/about-main.c:200
+#: plugins_tools/aboutmw/gtk/about-main.c:206
 msgid "(not found)"
 msgstr "(niet gevonden)"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:155
-#: plugins_tools/aboutmw/gtk/about-main.c:178
+#: plugins_tools/aboutmw/gtk/about-main.c:173
+#: plugins_tools/aboutmw/gtk/about-main.c:196
 msgid "32-bit PKCS#11 location"
 msgstr "32-bit PKCS#11 locatie"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:160
-#: plugins_tools/aboutmw/gtk/about-main.c:182
+#: plugins_tools/aboutmw/gtk/about-main.c:178
+#: plugins_tools/aboutmw/gtk/about-main.c:200
 msgid "64-bit PKCS#11 location"
 msgstr "64-bit PKCS#11 locatie"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:164
-#: plugins_tools/aboutmw/gtk/about-main.c:188
+#: plugins_tools/aboutmw/gtk/about-main.c:182
+#: plugins_tools/aboutmw/gtk/about-main.c:206
 msgid "PKCS#11 location"
 msgstr "PKCS#11 locatie"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:263
-#: plugins_tools/aboutmw/gtk/about-main.c:266
-#: plugins_tools/aboutmw/gtk/about-main.c:274
+#: plugins_tools/aboutmw/gtk/about-main.c:220
+msgid "GTK library version"
+msgstr ""
+
+#: plugins_tools/aboutmw/gtk/about-main.c:292
+#: plugins_tools/aboutmw/gtk/about-main.c:295
+#: plugins_tools/aboutmw/gtk/about-main.c:303
 msgid "System architecture"
 msgstr "Systeemarchitectuur"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:263
+#: plugins_tools/aboutmw/gtk/about-main.c:292
 msgid "64-bit PC"
 msgstr "64-bit PC"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:266
+#: plugins_tools/aboutmw/gtk/about-main.c:295
 msgid "32-bit PC"
 msgstr "32-bit PC"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:272
+#: plugins_tools/aboutmw/gtk/about-main.c:301
 #, c-format
 msgid "Unknown (%s)"
 msgstr "Onbekend (%s)"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:292
-#: plugins_tools/aboutmw/gtk/about-main.c:299
-#: plugins_tools/aboutmw/gtk/about-main.c:304
+#: plugins_tools/aboutmw/gtk/about-main.c:321
+#: plugins_tools/aboutmw/gtk/about-main.c:328
+#: plugins_tools/aboutmw/gtk/about-main.c:333
 msgid "(unknown)"
 msgstr "(onbekend)"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:321
+#: plugins_tools/aboutmw/gtk/about-main.c:350
 msgid "Distribution"
 msgstr "Distributie"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:326
+#: plugins_tools/aboutmw/gtk/about-main.c:355
 msgid "Distribution version"
 msgstr "Distributie-versie"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:331
+#: plugins_tools/aboutmw/gtk/about-main.c:360
 msgid "Distribution codename"
 msgstr "Distributie codenaam"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:365
+#: plugins_tools/aboutmw/gtk/about-main.c:398
 msgid "Middleware version"
 msgstr "Middleware-versie"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:367
+#: plugins_tools/aboutmw/gtk/about-main.c:400
 msgid "Middleware build ID"
 msgstr "Middleware bouw-ID"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:370
+#: plugins_tools/aboutmw/gtk/about-main.c:403
 msgid "Middleware build date"
 msgstr "Middleware bouwdatum"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:379
+#: plugins_tools/aboutmw/gtk/about-main.c:413
 msgid "Item"
 msgstr "Item"
 
-#: plugins_tools/aboutmw/gtk/about-main.c:381
+#: plugins_tools/aboutmw/gtk/about-main.c:415
 msgid "Value"
 msgstr "Waarde"
 
