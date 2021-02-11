@@ -3,7 +3,7 @@ ACLOCAL_AMFLAGS         = -I m4
 SUBDIRS = src signed-build
 
 export XPI_ID = belgiumeid@eid.belgium.be
-export mozext
+export mozext = @mozext@
 export TMPDIR ?= /tmp
 
 if SIGNED
