@@ -2,23 +2,23 @@
 <scriptfile>
     <settings program="actiona" version="3.10.1" scriptVersion="1.1.0" os="GNU/Linux"/>
     <actions>
+        <action name="ActionCode" version="1.0.0"/>
+        <action name="ActionWindow" version="1.0.0"/>
         <action name="ActionDetachedCommand" version="1.0.0"/>
         <action name="ActionPause" version="1.0.0"/>
-        <action name="ActionKey" version="1.0.0"/>
-        <action name="ActionGoto" version="1.0.0"/>
-        <action name="ActionCode" version="1.0.0"/>
-        <action name="ActionWriteText" version="1.0.0"/>
         <action name="ActionWindowCondition" version="1.0.0"/>
-        <action name="ActionWindow" version="1.0.0"/>
+        <action name="ActionGoto" version="1.0.0"/>
+        <action name="ActionKey" version="1.0.0"/>
+        <action name="ActionWriteText" version="1.0.0"/>
     </actions>
     <parameters/>
     <resources/>
     <script pauseBefore="0" pauseAfter="0">
-        <action name="ActionDetachedCommand" pauseAfter="2000">
+        <action name="ActionDetachedCommand" pauseAfter="2000" timeout="20000">
             <exception id="0" action="0" line=""/>
             <exception id="1" action="0" line=""/>
-            <exception id="2" action="1" line=""/>
-            <exception id="32" action="0" line=""/>
+            <exception id="2" action="2" line="014"/>
+            <exception id="32" action="1" line=""/>
             <parameter name="command">
                 <subParameter name="value" code="0">google-chrome</subParameter>
             </parameter>

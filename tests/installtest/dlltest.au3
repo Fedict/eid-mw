@@ -1,5 +1,12 @@
+#RequireAdmin
 #include <File.au3>
 #include <Array.au3>
+
+Func _WinWaitActivate($title,$text,$timeout=0)
+	WinWait($title,$text,$timeout)
+	If Not WinActive($title,$text) Then WinActivate($title,$text)
+	WinWaitActive($title,$text,$timeout)
+EndFunc
 
 Func _Au3RecordSetup()
 Opt('WinWaitDelay',100)
@@ -11,7 +18,7 @@ _AU3RecordSetup()
 
 Func checkFile($location, $file, $installfile, $log)
 
-	$aArray = _FileListToArrayRec($location, $file, $FLTAR_FILES, $FLTAR_RECUR, $FLTAR_NOSORT, $FLTAR_FULLPATH)
+	$dlls = _FileListToArrayRec($location, $file, $FLTAR_FILES, $FLTAR_RECUR, $FLTAR_NOSORT, $FLTAR_FULLPATH)
 	If @error Then
 		_FileWriteLog($log, $file & " not found")
 		$errors = $errors + 1
@@ -34,13 +41,26 @@ Func CheckReg($value, $expected, $log)
 	EndIf
 EndFunc
 
+_Au3RecordSetup()
+
+If $CmdLine[0] <> 1 Then
+   MsgBox(64, "Error", "no file given",3)
+   Exit(1)
+EndIf
 
 Local $logFile = FileOpen(@ScriptDir & "\install.log", 1)
 Static $errors = 0
-Local $installfile = "C:\Users\yannick.schoels\Downloads\Belgium eID-QuickInstaller 5.0.7.5221.exe"
+Local $location = $CmdLine[1]
+$exefiles = _FileListToArrayRec($location, "*.exe", $FLTAR_FILES, $FLTAR_NORECUR, $FLTAR_NOSORT, $FLTAR_FULLPATH)
+If @error Then
+	_FileWriteLog($logFile, "No quickinstaller found")
+	Exit(1)
+Else
+	Local $installfile = $exefiles[1]
+EndIf
 
 Run($installfile)
-_WinWaitActivate("eID Software installation","")
+_WinWaitActivate("eID Software installation","",30)
 Send("{ENTER}")
 Sleep(3000)
 Send("{ENTER}")
@@ -69,7 +89,7 @@ If $errors == 0 Then
   _FileWriteLog($logFile, "test succesfull")
 Else
   MsgBox(64, "warning", "test failed, please check logs",1)
-  _FileWriteLog($logFile, "test failed")
+  _FileWriteLog($logFile, "test failed with " & $errors & "errors")
 EndIf
 $errors = 0
 fileClose($logFile)
