@@ -9,7 +9,7 @@
   - cd
   - cd ..\..
   - cd tests\unit\windows\Release
-  - pkcs11_tests.exe zetes:COM4:COM3 nopin
+  - .\pkcs11_tests.exe zetes:COM4:COM3 nopin
   allow_failure: true
 
 .build-windows:
