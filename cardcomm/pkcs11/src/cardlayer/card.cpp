@@ -25,12 +25,15 @@
 #include "pinpad2.h"
 
 #ifdef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
-static std::string fuzz_path = "";
-static eIDMW::CByteArray fuzz_data = eIDMW::CByteArray();
+#include <map>
+static std::map<std::string, eIDMW::CByteArray> fuzz_map;
+static bool fuzzed_only = true;
 extern "C" {
 	void beid_set_fuzz_data(const uint8_t *data, size_t size, const char *path) {
-		fuzz_path = path;
-		fuzz_data = eIDMW::CByteArray(data, size);
+		fuzz_map[path] = eIDMW::CByteArray(data, size);
+	}
+	void beid_set_fuzzed_only(int fuzzed) {
+		fuzzed_only = fuzzed == 0 ? false : true;
 	}
 }
 #endif
@@ -426,10 +429,12 @@ namespace eIDMW
 	CByteArray CCard::ReadFile(const std::string & csPath, unsigned long ulOffset, unsigned long ulMaxLen)
 	{
 #ifdef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
-		if(csPath == fuzz_path) {
-			return fuzz_data;
+		if(fuzz_map.count(csPath) > 0) {
+			return fuzz_map[csPath];
 		}
-		return CByteArray();
+		if(fuzzed_only) {
+			return CByteArray();
+		}
 #endif
 		CByteArray oData(ulMaxLen);
 		CAutoLock autolock(this);
