@@ -495,12 +495,54 @@ static void setup_treeview() {
 	g_signal_connect(G_OBJECT(tv), "button-press-event", G_CALLBACK(show_menu), NULL);
 }
 
+#ifdef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <dirent.h>
+#include <beid_fuzz.h>
+
+void init_directory(char* name) {
+	DIR *dir = opendir(name);
+	struct dirent *de;
+	while((de = readdir(dir)) != NULL) {
+		gchar *fullname = g_strdup_printf("%s/%s", name, de->d_name);
+		if(de->d_type == DT_UNKNOWN) {
+			struct stat st;
+			lstat(fullname, &st);
+			if(!(st.st_mode & S_IFREG)) {
+				continue;
+			}
+		} else {
+			if(de->d_type != DT_REG) {
+				continue;
+			}
+		}
+		uint8_t buf[65536];
+		ssize_t data_read;
+		int fd = open(fullname, O_RDONLY);
+		data_read = read(fd, buf, sizeof buf);
+		close(fd);
+		beid_set_fuzz_data(buf, data_read, de->d_name);
+	}
+	beid_set_fuzz_only(0);
+}
+#endif
+
 /* Main entry point */
 int main(int argc, char** argv) {
 	GtkWidget *window;
 	GtkAccelGroup *group;
 	struct eid_vwr_ui_callbacks* cb;
 	GError* err = NULL;
+
+#ifdef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
+	if(argc > 1) {
+		init_directory(argv[1]);
+	}
+	argc--; argv++;
+#endif
 
 	/* The GNU implementation of setlocale() ignores whatever we
 	 * specify if the LANGUAGE environment variable has a value, so

@@ -80,6 +80,10 @@ case $fuzzer in
 		CXX=afl-$CXX
 		AC_SUBST(FUZZING,["-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION"])
 	;;
+	build)
+		AC_MSG_RESULT([kinda, build only])
+		AC_SUBST(FUZZING, ["-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION"])
+	;;
 	*)
 		fuzzer=no
 		AC_MSG_RESULT([no])
