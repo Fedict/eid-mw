@@ -1,7 +1,7 @@
 if FUZZING
 TESTS = fuzz_id fuzz_add
 check_PROGRAMS = $(TESTS)
-AM_CFLAGS = -I$(top_srcdir)/doc/sdk/include/rsaref220 -I$(top_srcdir)/cardcomm/pkcs11/src -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
+AM_CFLAGS = -I$(top_srcdir)/doc/sdk/include/rsaref220 -I$(top_srcdir)/cardcomm/pkcs11/src/fuzz -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
 if !FUZZ_AFL
 AM_CFLAGS += -fsanitize=fuzzer,address
 else

@@ -3,8 +3,8 @@ noinst_LTLIBRARIES = libbeidcommon.la
 AM_CFLAGS = -Wall -Wextra -Wno-unused-parameter -fvisibility=hidden -Wno-error=narrowing @FUZZING@
 AM_CXXFLAGS = -Wall -Wextra -Wno-unused-parameter -fvisibility=hidden -Wno-error=narrowing @FUZZING@
 libbeidpkcs11_la_CFLAGS = $(AM_CFLAGS) -DLTC_NO_ASM
-libbeidpkcs11_la_CXXFLAGS = $(AM_CXXFLAGS) -DUSING_DL_OPEN -DEIDMW_CAL_EXPORT -DCAL_BEID -DCARDPLUGIN_IN_CAL -DBEID_35 -DNDEBUG -DBEID_OLD_PINPAD -DLTC_NO_ASM -fvisibility=hidden -I$(srcdir)/common -I$(srcdir)/cardlayer -I$(top_srcdir)/doc/sdk/include/v240 @PCSC_CFLAGS@
-libbeidpkcs11_la_CPPFLAGS = -I$(srcdir)/common -I$(srcdir)/cardlayer -I$(top_srcdir)/doc/sdk/include/v240 @PCSC_CFLAGS@ -DLIBEXECDIR='"$(libexecdir)"' -fvisibility=hidden
+libbeidpkcs11_la_CXXFLAGS = $(AM_CXXFLAGS) -DUSING_DL_OPEN -DEIDMW_CAL_EXPORT -DCAL_BEID -DCARDPLUGIN_IN_CAL -DBEID_35 -DNDEBUG -DBEID_OLD_PINPAD -DLTC_NO_ASM -fvisibility=hidden -I$(srcdir)/common -I$(srcdir)/fuzz -I$(srcdir)/cardlayer -I$(top_srcdir)/doc/sdk/include/v240 @PCSC_CFLAGS@
+libbeidpkcs11_la_CPPFLAGS = -I$(srcdir)/common -I$(srcdir)/fuzz -I$(srcdir)/cardlayer -I$(top_srcdir)/doc/sdk/include/v240 @PCSC_CFLAGS@ -DLIBEXECDIR='"$(libexecdir)"' -fvisibility=hidden
 libbeidpkcs11_la_LIBADD = @PCSC_LIBS@ @DL_LIBS@
 
 libbeidcommon_la_SOURCES = \
@@ -62,7 +62,6 @@ noinst_HEADERS = \
 	cal.h \
 	beidlabels.h \
 	beid_p11.h \
-	beid_fuzz.h \
 	cert.h \
 	asn1.h \
 	util.h \
@@ -147,7 +146,8 @@ noinst_HEADERS = \
 	dialogs/dialogsgtk/single_dialog.h \
 	dialogs/dialogsgtk/parent.h \
 	dialogs/dialogsgtk/gettext.h \
-	dialogs/dialogsgtk/gtk_dialog_names.h
+	dialogs/dialogsgtk/gtk_dialog_names.h \
+	fuzz/beid_fuzz.h
 
 SUBDIRS = cardlayer/uml
 if NO_DIALOGS
