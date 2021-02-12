@@ -196,7 +196,7 @@ int eid_vwr_check_data_validity(const void* photo, int plen,
 	pubkey = X509_get_pubkey(rrncert);
 	if(!verify_once(pubkey, md, datafile, datfilelen, datasig, datsiglen)) {
 		/* Some CA4 cards are re-signed CA3 ones where the photo hash
-		 * is still SHA2, but everything else is SHA256. Try if this is
+		 * is still SHA1, but everything else is SHA256. Try if this is
 		 * such a card. */
 		md = EVP_get_digestbyname("sha1");
 		if(!verify_once(pubkey, md, datafile, datfilelen, datasig, datsiglen)) {
