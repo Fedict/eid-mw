@@ -229,7 +229,7 @@ static gboolean cleardata(gpointer key, gpointer value, gpointer user_data G_GNU
 /* Handle the "new source" event from the state machine */
 static void newsrc(enum eid_vwr_source src) {
 	clear_certdata();
-	g_hash_table_foreach(touched_labels, cleardata, NULL);
+	g_hash_table_foreach(touched_labels, (GHFunc)cleardata, NULL);
 	if(src == EID_VWR_SRC_CARD) {
 		g_object_set_threaded(G_OBJECT(gtk_builder_get_object(builder, "mainwin")), "urgency-hint", (void*)TRUE, NULL);
 	}
