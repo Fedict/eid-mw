@@ -39,9 +39,8 @@
 
 #.validation:windows:dllinstall:
 #  tags:
+#  - tests
 #  - windows
 #  script: 
-#  - products\windows\*.exe
-#  - run products\windows\*.msi
-#  - "C:\Program Files (x86)\AutoIt3\AutoIt3.exe" %WINDOWS_BASEDIR%\tests\installtest\dlltest.au3  
-
+#  - "C:\Program Files (x86)\AutoIt3\AutoIt3.exe" $Env:WINDOWS_BASEDIR\tests\installtest\dlltest.au3  "products\windows"
+#  allow_failure: true
