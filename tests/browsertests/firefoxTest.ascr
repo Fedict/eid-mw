@@ -2,14 +2,14 @@
 <scriptfile>
     <settings program="actiona" version="3.10.1" scriptVersion="1.1.0" os="GNU/Linux"/>
     <actions>
-        <action name="ActionCode" version="1.0.0"/>
-        <action name="ActionOpenURL" version="1.0.0"/>
-        <action name="ActionWindow" version="1.0.0"/>
-        <action name="ActionWindowCondition" version="1.0.0"/>
         <action name="ActionExit" version="1.0.0"/>
         <action name="ActionPause" version="1.0.0"/>
-        <action name="ActionKey" version="1.0.0"/>
+        <action name="ActionOpenURL" version="1.0.0"/>
         <action name="ActionStop" version="1.0.0"/>
+        <action name="ActionCode" version="1.0.0"/>
+        <action name="ActionKey" version="1.0.0"/>
+        <action name="ActionWindow" version="1.0.0"/>
+        <action name="ActionWindowCondition" version="1.0.0"/>
     </actions>
     <parameters/>
     <resources/>
@@ -69,7 +69,7 @@
             <exception id="2" action="1" line=""/>
             <parameter name="code">
                 <subParameter name="value" code="1">var logfile = new File();
-var logpath = &quot;~/tmp/logfile.log&quot;;
+var logpath = &quot;/home/tmp/logfile.log&quot;;
 logfile.open(logpath,File.WriteOnly |  File.Text  | File.Append);
 
 now = new Date();
@@ -94,7 +94,7 @@ logfile.close();</subParameter>
             <exception id="2" action="1" line=""/>
             <parameter name="code">
                 <subParameter name="value" code="1">var logfile = new File();
-var logpath = &quot;~/tmp/logfile.log&quot;;
+var logpath = &quot;/home/tmp/logfile.log&quot;;
 logfile.open(logpath,File.WriteOnly |  File.Text  | File.Append);
 
 now = new Date();
@@ -155,7 +155,7 @@ logfile.close();</subParameter>
             <exception id="2" action="1" line=""/>
             <parameter name="code">
                 <subParameter name="value" code="1">var logfile = new File();
-var logpath = &quot;~/tmp/logfile.log&quot;;
+var logpath = &quot;/home/tmp/logfile.log&quot;;
 logfile.open(logpath,File.WriteOnly |  File.Text  | File.Append);
 
 now = new Date();
@@ -350,7 +350,7 @@ logfile.close();</subParameter>
             <exception id="2" action="1" line=""/>
             <parameter name="code">
                 <subParameter name="value" code="1">var logfile = new File();
-var logpath = &quot;~/tmp/logfile.log&quot;;
+var logpath = &quot;/home/tmp/logfile.log&quot;;
 logfile.open(logpath,File.WriteOnly |  File.Text  | File.Append);
 
 now = new Date();
@@ -386,7 +386,7 @@ logfile.close();</subParameter>
             <exception id="2" action="1" line=""/>
             <parameter name="code">
                 <subParameter name="value" code="1">var logfile = new File();
-var logpath = &quot;~/tmp/logfile.log&quot;;
+var logpath = &quot;/home/tmp/logfile.log&quot;;
 logfile.open(logpath,File.WriteOnly |  File.Text  | File.Append);
 
 now = new Date();
