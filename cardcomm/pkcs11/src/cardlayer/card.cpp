@@ -32,7 +32,7 @@ extern "C" {
 	void beid_set_fuzz_data(const uint8_t *data, size_t size, const char *path) {
 		fuzz_map[path] = eIDMW::CByteArray(data, size);
 	}
-	void beid_set_fuzzed_only(int fuzzed) {
+	void beid_set_fuzz_only(int fuzzed) {
 		fuzzed_only = fuzzed == 0 ? false : true;
 	}
 }
