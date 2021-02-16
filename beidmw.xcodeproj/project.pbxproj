@@ -1297,7 +1297,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "make -C plugins_tools/eid-viewer/OSX/support/ossl -j $(( $(sysctl hw.ncpu | cut -d' ' -f2) * 125 / 100 )) build\nmake -C plugins_tools/eid-viewer/OSX/support/xml -j $(( $(sysctl hw.ncpu | cut -d' ' -f2) * 125 / 100 )) build\n";
+			shellScript = "make -C plugins_tools/eid-viewer/OSX/support/ossl build\nmake -C plugins_tools/eid-viewer/OSX/support/xml build\n";
 		};
 		86C65C5C223913D4001ED3A7 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
