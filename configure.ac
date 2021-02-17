@@ -93,7 +93,7 @@ AM_CONDITIONAL([FUZZING], [test x$fuzzer != xno])
 AM_CONDITIONAL([FUZZ_AFL], [test x$fuzzer = xafl])
 
 AC_ARG_WITH([gtkvers],
-	[AS_HELP_STRING([--with-gtkvers],[select GTK version to use [default: 3 if available, falls back to 2 if not]; --without-gtkvers disables GTK altogether [note: this implies --disable-dialogs].])],
+	[AS_HELP_STRING([--with-gtkvers],[select GTK version to use [default: 3 if available, falls back to 4 if not; note that GTK4 support is incomplete]. --without-gtkvers disables GTK altogether [note: this implies --disable-dialogs].])],
 	[gtkvers=$withval],[gtkvers=detect])
 have_gtk=no
 AC_MSG_CHECKING([for wanted GTK version])
@@ -115,7 +115,7 @@ if test "$have_gtk" = "no"
 then
 	if test "$gtkvers" = 2
 	then
-		AC_MSG_ERROR([Gtk 2 is no longer supported, sorry])
+		AC_MSG_ERROR([GTK 2 is no longer supported, sorry])
 	fi
 fi
 
