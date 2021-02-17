@@ -164,9 +164,7 @@ GLIB_GSETTINGS
 fi
 AM_CONDITIONAL(HAVE_GIO, [test "$HAVE_GIO" = 1])
 
-AC_ARG_ENABLE(p11v220, AS_HELP_STRING([--enable-p11v220], [Enable PKCS#11 v2.20 features (default off, uses PKCS#11 v2.11 instead)]),,[enable_p11v220=no])
-
-AS_IF([test "$enable_p11v220" = "yes"], AC_DEFINE(PKCS11_V2_20,[],[Define this if you want PKCS#11 v2.20 features]))
+AC_DEFINE(PKCS11_V2_20,[],[]))
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_STDBOOL
