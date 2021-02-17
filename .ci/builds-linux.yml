@@ -210,8 +210,8 @@
   - popd
   script:
   - pushd build
-  - make
-  - make check
+  - gmake
+  - gmake check
   - popd
 
 .build-deb-base:
