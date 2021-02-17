@@ -183,7 +183,7 @@ DlgRet eIDMW::DlgAskPins(DlgPinOperation operation, DlgPinUsage usage, const wch
 		MWLOG(LEV_ERROR, MOD_DLG, L"Could not set repeat: %s", gpg_strerror(r));
 		return DLG_ERR;
 	}
-	if ((r = assuan_transact(ctx, "GETPIN", NULL, NULL, NULL, NULL, NULL, NULL))) {
+	if ((r = assuan_transact(ctx, "GETPIN", return_pin, &pin, NULL, NULL, NULL, NULL))) {
 		if(gpg_err_code(r) == GPG_ERR_CANCELED) {
 			return DLG_CANCEL;
 		}
