@@ -326,7 +326,7 @@
 
 .coverity:linux:
   variables:
-    PATH: /opt/coverity/bin:/usr/local/bin:/usr/bin:/usr/local/games:/usr/games
+    PATH: /opt/coverity/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
   tags:
   - linux
   - coverity
