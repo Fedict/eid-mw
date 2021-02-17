@@ -8,8 +8,13 @@
 static assuan_context_t ctx;
 static bool inited = false;
 
+#if ENABLE_NLS
 #define _(s) dgettext("dialogs-beid", (s))
 #define n_(s, p, i) dngettext("dialogs-beid", (s), (p), (i))
+#else
+#define _(s) s
+#define n_(s, p, i) (i == 1 ? s : p)
+#endif
 
 using namespace eIDMW;
 
@@ -69,7 +74,9 @@ static bool setup() {
 				break;
 			}
 		}
+#if ENABLE_NLS
 		bindtextdomain("dialogs-beid", DATAROOTDIR "/locale");
+#endif
 	}
 	inited = true;
 	return false;
