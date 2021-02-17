@@ -164,7 +164,7 @@ GLIB_GSETTINGS
 fi
 AM_CONDITIONAL(HAVE_GIO, [test "$HAVE_GIO" = 1])
 
-AC_DEFINE(PKCS11_V2_20,[],[]))
+AC_DEFINE(PKCS11_V2_20,[],[Needs to always be defined]))
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_STDBOOL
