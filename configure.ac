@@ -186,9 +186,9 @@ AC_CHECK_FUNCS([gethostbyname socket strerror memchr memset mkdir select strchr 
 CFLAGS=$saved_CFLAGS
 
 # we only need libjpeg for the test suite, so don't worry if it's not available...
+PKG_CHECK_MODULES(JPEG, "libjpeg", [HAVE_JPEGLIB=1], [HAVE_JPEGLIB=0])
 AC_CHECK_LIB(jpeg, jpeg_mem_src, [HAVE_JPEGLIB=1; JPEG_LIBS='-ljpeg'], [HAVE_JPEGLIB=0])
 AM_CONDITIONAL([JPEG], [test x$HAVE_JPEGLIB = x1])
-AC_SUBST([JPEG_LIBS])
 AC_DEFINE_UNQUOTED([HAVE_JPEGLIB], $HAVE_JPEGLIB, [Define to 1 if you have libjpeg installed])
 
 PKG_CHECK_MODULES(SSL, "openssl", [HAVE_OPENSSL=1])
