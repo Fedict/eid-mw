@@ -206,7 +206,7 @@
   - mkdir -p build
   - pushd build
   - tar xvf ../products/source/eid-mw-${VER}.tar.gz --strip-components=1
-  - ./configure --disable-dependency-tracking
+  - ./configure --disable-dependency-tracking --disable-nls
   - popd
   script:
   - pushd build
