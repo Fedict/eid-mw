@@ -11,7 +11,7 @@ variables:
   UBUNTU_OLDLTS_FULL: Ubuntu 18.04 "Bionic Beaver"
   MINT_OLDLTS_CODE: tara
   MINT_OLDLTS_VERSION: 19
-  MINT_OLDLTS_FULL: Linux Mint 20
+  MINT_OLDLTS_FULL: Linux Mint 19
   UBUNTU_LTS_CODE: focal
   UBUNTU_LTS_VERSION: 2004
   UBUNTU_LTS_FULL: Ubuntu 20.04 "Focal Fossa"
