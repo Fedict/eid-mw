@@ -20,18 +20,18 @@ do
 	do
 		for arch in ${DISTARCHS[$dist]}
 		do
-			mkdir -p /srv/repo/repo/rpm/$TARGET/${DISTNAMES[$dist]}/$vers/RPMS/$arch
+			mkdir -p $REPO_LOC/rpm/$TARGET/${DISTNAMES[$dist]}/$vers/RPMS/$arch
 			if [ -d products/$dist-$vers-$arch ]
 			then
 				for i in products/$dist-$vers-$arch/*rpm
 				do
-					targetfile=/srv/repo/repo/rpm/$TARGET/${DISTNAMES[$dist]}/$vers/RPMS/$arch/$(basename $i)
+					targetfile=$REPO_LOC/rpm/$TARGET/${DISTNAMES[$dist]}/$vers/RPMS/$arch/$(basename $i)
 					echo "$i => $targetfile"
 					cp $i $targetfile
 					rpmsign --resign --key-id=$GPG_TEST_KEY_ID $targetfile
 				done
 			fi
 		done
-		createrepo /srv/repo/repo/rpm/$TARGET/${DISTNAMES[$dist]}/$vers
+		createrepo $REPO_LOC/rpm/$TARGET/${DISTNAMES[$dist]}/$vers
 	done
 done
