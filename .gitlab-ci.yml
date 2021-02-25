@@ -495,6 +495,8 @@ repo:inject-source:
 # separate steps for that)
 publish:rsync:
   stage: publish
+  tags:
+  - repobuilder
   script:
   - rsync -avr --delete-before $DIST_LOC/continuous $RSYNC_TARGET_DIST/continuous
   - rsync -avr --delete-before $DIST_LOC/releases $RSYNC_TARGET_DIST/releases
