@@ -481,3 +481,25 @@ repo:inject-source:
   - test:distcheck
   stage: build-repository
   extends: .inject-source
+
+# repository rsyncs are staggered:
+# - first, rsync without metadata, so that all the new files appear
+# - next, rsync without exclusions, so that the metadata files appear
+# (but the old files still exist)
+# - Finally, rsync with --delete-before, so that the old files are
+# removed.
+# This should keep the repository consistent while files are being
+# updated.
+# (theoretically it should be possible to combine the last two steps
+# into a single rsync with --delete-after, but it's nice to have
+# separate steps for that)
+publish:rsync:
+  stage: publish
+  tags:
+  - repobuilder
+  script:
+  - rsync -avr --delete-before $DIST_LOC/continuous $RSYNC_TARGET_DIST/continuous
+  - rsync -avr --delete-before $DIST_LOC/releases $RSYNC_TARGET_DIST/releases
+  - rsync -avrLHP --exclude="dists/" --exclude="repomd.xml*" $REPO_LOC $RSYNC_TARGET_FILES
+  - rsync -avrLHP $REPO_LOC $RSYNC_TARGET_FILES
+  - rsync -avrLHP --delete-before $REPO_LOC $RSYNC_TARGET_FILES

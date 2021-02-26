@@ -20,12 +20,12 @@ do
 	do
 		for arch in ${DISTARCHS[$dist]}
 		do
-			mkdir -p /srv/repo/repo/rpm/$TARGET/${DISTNAMES[$dist]}/$vers/RPMS/$arch
+			mkdir -p $REPO_LOC/rpm/$TARGET/${DISTNAMES[$dist]}/$vers/RPMS/$arch
 			if [ -d products/$dist-$vers-$arch ]
 			then
 				for i in products/$dist-$vers-$arch/*
 				do
-					targetfile=/srv/repo/repo/rpm/$TARGET/${DISTNAMES[$dist]}/$vers/RPMS/$arch/$(basename $i)
+					targetfile=$REPO_LOC/rpm/$TARGET/${DISTNAMES[$dist]}/$vers/RPMS/$arch/$(basename $i)
 					if [ "$(basename $i)" != '*' -a "$(basename $targetfile)" != '*' ]; then
 						echo "$i => $targetfile"
 						cp $i $targetfile
@@ -36,7 +36,7 @@ do
 				done
 			fi
 		done
-		createrepo /srv/repo/repo/rpm/$TARGET/$dist/$vers
-		(cd /srv/repo/repo/rpm/$TARGET/$dist/$vers/repodata && gpg --yes --batch --passphrase "" --default-key $GPG_TEST_KEY_ID --no-tty -b --armor repomd.xml)
+		createrepo $REPO_LOC/rpm/$TARGET/$dist/$vers
+		(cd $REPO_LOC/rpm/$TARGET/$dist/$vers/repodata && gpg --yes --batch --passphrase "" --default-key $GPG_TEST_KEY_ID --no-tty -b --armor repomd.xml)
 	done
 done

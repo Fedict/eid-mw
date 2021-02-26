@@ -206,12 +206,12 @@
   - mkdir -p build
   - pushd build
   - tar xvf ../products/source/eid-mw-${VER}.tar.gz --strip-components=1
-  - ./configure --disable-dependency-tracking
+  - ./configure --disable-dependency-tracking --disable-nls
   - popd
   script:
   - pushd build
-  - make
-  - make check
+  - gmake
+  - gmake check
   - popd
 
 .build-deb-base:
@@ -318,15 +318,15 @@
   - VER=$(cat products/source/version)
   - SOURCETGZ=products/source/eid-mw-${VER}.tar.gz
   - SOURCEZIP=products/source/eid-mw-${VER}.zip
-  - cp $SOURCETGZ $SOURCEZIP /srv/dist/eid-mw/continuous/sources/
-  - cd /srv/dist/eid-mw/continuous/sources
+  - cp $SOURCETGZ $SOURCEZIP $DIST_LOC/continuous/sources/
+  - cd $DIST_LOC/continuous/sources
   - gpg --yes --batch --passphrase "" --default-key $GPG_TEST_KEY_ID --no-tty -b --armor $(basename $SOURCETGZ)
   variables:
     GIT_STRATEGY: none
 
 .coverity:linux:
   variables:
-    PATH: /opt/coverity/bin:/usr/local/bin:/usr/bin:/usr/local/games:/usr/games
+    PATH: /opt/coverity/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
   tags:
   - linux
   - coverity
@@ -341,6 +341,6 @@
   - cov-build --dir=cov-int make
   - cov-build --dir=cov-int make check
   - tar cvaf eid-mw-coverity.tar.gz cov-int
-  - curl --form project=eID+middleware --form token=$COVERITY_TOKEN --form email=wouter.verhelst@fedict.be --form file=@"eid-mw-coverity.tar.gz"; filename="eID middleware.tgz" --form version=$CI_COMMIT_SHA --form description="automatic submission by GitLab CI" https://scan.coverity.com/builds?project=eID+middleware
+  - curl --form project=eID+middleware --form token=$COVERITY_TOKEN --form email=wouter.verhelst@fedict.be --form 'file=@"eid-mw-coverity.tar.gz";filename="eID middleware.tgz"' --form version=$CI_COMMIT_SHA --form description="automatic submission by GitLab CI" https://scan.coverity.com/builds?project=eID+middleware
   - popd
   when: manual
