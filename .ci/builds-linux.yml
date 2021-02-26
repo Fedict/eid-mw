@@ -206,7 +206,7 @@
   - mkdir -p build
   - pushd build
   - tar xvf ../products/source/eid-mw-${VER}.tar.gz --strip-components=1
-  - ./configure --disable-dependency-tracking
+  - ./configure --disable-dependency-tracking --disable-nls
   - popd
   script:
   - pushd build
@@ -318,8 +318,8 @@
   - VER=$(cat products/source/version)
   - SOURCETGZ=products/source/eid-mw-${VER}.tar.gz
   - SOURCEZIP=products/source/eid-mw-${VER}.zip
-  - cp $SOURCETGZ $SOURCEZIP /srv/dist/eid-mw/continuous/sources/
-  - cd /srv/dist/eid-mw/continuous/sources
+  - cp $SOURCETGZ $SOURCEZIP $DIST_LOC/continuous/sources/
+  - cd $DIST_LOC/continuous/sources
   - gpg --yes --batch --passphrase "" --default-key $GPG_TEST_KEY_ID --no-tty -b --armor $(basename $SOURCETGZ)
   variables:
     GIT_STRATEGY: none

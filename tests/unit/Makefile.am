@@ -88,6 +88,7 @@ readdata_sequence_LDADD = $(P11_LIB)
 
 decode_photo_SOURCES = decode_photo.c
 decode_photo_LDADD = $(P11_LIB) @JPEG_LIBS@
+decode_photo_CFLAGS = @JPEG_CFLAGS@ $(AM_CFLAGS)
 
 threads_SOURCES = threads.c
 threads_LDADD = $(P11_LIB)

@@ -58,6 +58,7 @@ if(exists($ENV{TARGET}) && length($ENV{TARGET}) > 0) {
 	$released = "r";
 }
 $distribution .= $ENV{CODE};
+$version=~ s/-v/v/;
 
 
 $entry->{header} = "eid-mw ($version-0" . $ENV{SHORT} . "$released-1) $distribution; urgency=low";
