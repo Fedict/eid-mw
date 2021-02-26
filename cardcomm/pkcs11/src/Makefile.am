@@ -207,6 +207,6 @@ metainfodir = $(datarootdir)/metainfo
 dist_metainfo_DATA = be.belgium.eid.eidmw.metainfo.xml
 
 pkcs11_manifestdir = $(prefix)/lib/mozilla/pkcs11-modules
-pkcs11_manifest_DATA = beidpkcs11.json beidp11kit.json
+pkcs11_manifest_DATA = beidpkcs11.json beidpkcs11_alt.json
 
 pkgconfig_DATA=libbeidpkcs11.pc
