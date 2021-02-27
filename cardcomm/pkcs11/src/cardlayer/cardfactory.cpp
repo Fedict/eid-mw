@@ -43,7 +43,7 @@ namespace eIDMW
 
 		if (poPCSC->m_ulConnectionDelay != 0)
 		{
-			CThread::SleepMillisecs(poPCSC->m_ulConnectionDelay);
+			CThread::SleepMillisecs((int)poPCSC->m_ulConnectionDelay);
 		}
 		// Try if we can connect to the card via a normal SCardConnect()
 		SCARDHANDLE hCard = 0;

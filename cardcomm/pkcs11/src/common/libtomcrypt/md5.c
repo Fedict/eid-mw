@@ -84,16 +84,16 @@ static const ulong32 Korder[64] = {
 #else
 
 #define FF(a,b,c,d,M,s,t) \
-    a = (a + F(b,c,d) + M + t); a = ROLc(a, s) + b;
+    a = (a + F(b,c,d) + M + t); a = ROLc((unsigned)a, s) + b;
 
 #define GG(a,b,c,d,M,s,t) \
-    a = (a + G(b,c,d) + M + t); a = ROLc(a, s) + b;
+    a = (a + G(b,c,d) + M + t); a = ROLc((unsigned)a, s) + b;
 
 #define HH(a,b,c,d,M,s,t) \
-    a = (a + H(b,c,d) + M + t); a = ROLc(a, s) + b;
+    a = (a + H(b,c,d) + M + t); a = ROLc((unsigned)a, s) + b;
 
 #define II(a,b,c,d,M,s,t) \
-    a = (a + I(b,c,d) + M + t); a = ROLc(a, s) + b;
+    a = (a + I(b,c,d) + M + t); a = ROLc((unsigned)a, s) + b;
 
 
 #endif   
@@ -104,9 +104,16 @@ static int _md5_compress(hash_state *md, unsigned char *buf)
 static int  md5_compress(hash_state *md, unsigned char *buf)
 #endif
 {
+#ifdef __LP64__
+    ulong64 i, W[16], a, b, c, d;
+#ifdef LTC_SMALL_CODE
+    ulong64 t;
+#endif
+#else
     ulong32 i, W[16], a, b, c, d;
 #ifdef LTC_SMALL_CODE
     ulong32 t;
+#endif
 #endif
 
     /* copy the state into 512-bits into W[0..15] */

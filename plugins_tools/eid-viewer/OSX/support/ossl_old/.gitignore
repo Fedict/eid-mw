@@ -1,0 +1,3 @@
+openssl*
+!*.sha256
+configured

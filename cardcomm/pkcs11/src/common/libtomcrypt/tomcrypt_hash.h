@@ -29,48 +29,100 @@ extern "C"
 
 /* ---- HASH FUNCTIONS ---- */
 #ifdef USE_SHA512
-	struct sha512_state
+#ifdef __LP64__
+struct sha512_state
+{
+    ulong64 length;
+    ulong64 state[8];
+    unsigned long curlen;
+    unsigned char buf[128];
+};
+#else
+    struct sha512_state
 	{
-		ulong64 length, state[8];
+        ulong32 length;
+        ulong32 state[8];
 		unsigned long curlen;
 		unsigned char buf[128];
 	};
 #endif
+#endif
 
 #ifdef USE_SHA256
-	struct sha256_state
+#if __LP64__
+struct sha256_state
+{
+    ulong64 length;
+    ulong64 state[8];
+    ulong64 curlen;
+    unsigned char buf[64];
+};
+#else
+    struct sha256_state
 	{
 		ulong64 length;
-		ulong32 state[8], curlen;
-		unsigned char buf[64];
+        ulong32 state[8];
+        ulong32 curlen;
+        unsigned char buf[64];
 	};
+#endif
 #endif
 
 #ifdef USE_SHA1
 	struct sha1_state
 	{
 		ulong64 length;
-		ulong32 state[5], curlen;
+
+#ifdef __LP64__
+        ulong64 state[5];
+        ulong64 curlen;
+#else
+        ulong32 state[5];
+        ulong32 curlen;
+#endif
+
 		unsigned char buf[64];
 	};
 #endif
 
 #ifdef USE_MD5
+#ifdef __LP64__
+struct md5_state
+{
+    ulong64 length;
+    ulong64 state[4];
+    ulong64 curlen;
+    unsigned char buf[64];
+    };
+#else
 	struct md5_state
 	{
 		ulong64 length;
-		ulong32 state[4], curlen;
+        ulong32 state[4];
+        ulong32 curlen;
 		unsigned char buf[64];
 	};
 #endif
+#endif
 
 #ifdef USE_MD4
+#ifdef __LP64__
+struct md4_state
+{
+    ulong64 length;
+    ulong64 state[4];
+    ulong64 curlen;
+    unsigned char buf[64];
+};
+#else
 	struct md4_state
 	{
 		ulong64 length;
-		ulong32 state[4], curlen;
-		unsigned char buf[64];
+        ulong32 state[4];
+        ulong32 curlen;
+        unsigned char buf[64];
 	};
+#endif
 #endif
 
 #ifdef USE_TIGER

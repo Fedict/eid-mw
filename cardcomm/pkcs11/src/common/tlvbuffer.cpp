@@ -92,9 +92,9 @@ namespace eIDMW
 				}
 				//--- get Length
 //            int iNrBytes = ulLen - ulIndex - 1;     //calculate remaining bytes
-				int iNrBytes = ulLen - ulIndex;	//calculate remaining bytes
+				size_t iNrBytes = ulLen - ulIndex;	//calculate remaining bytes
 
-				if (!TlvDecodeLen(pucData + ulIndex, &iNrBytes, &ulFieldLen))
+				if (!TlvDecodeLen(pucData + ulIndex, (long *)&iNrBytes, &ulFieldLen))
 				{
 					bRet = false;
 					break;
@@ -337,7 +337,7 @@ namespace eIDMW
 		unsigned long lRet = 0;
 		ITMap it;
 		unsigned char ucLenBuffer[5];
-		int iBufLen;
+		long iBufLen = 0;
 
 		for (it = m_oMapTLV.begin(); it != m_oMapTLV.end(); ++it)
 		{
@@ -381,7 +381,7 @@ examples:
  **********************************************************************************************************/
 	bool CTLVBuffer::TlvEncodeLen(unsigned long ulLenVal,	//In: length-value to encode in the TLV-format
 				      unsigned char *pucBufDest,	//In/Out: Destination buffer with the encoded length-stream
-				      int *piBufLen	//In/out: Max buffer length, Out:length of encoded stream
+				      long *piBufLen	//In/out: Max buffer length, Out:length of encoded stream
 		)
 	{
 		int iStreamLen = 1;	//length of the stream
@@ -429,11 +429,11 @@ Decode the length from the TLV format
    
  **********************************************************************************************************/
 	bool CTLVBuffer::TlvDecodeLen(const unsigned char *pucBufSrc,	//In: Source buffer with the encoded length-stream
-				      int *piBufLen,	//In/Out: Maximum length of encoded stream, Out:number of length-bytes
+				      long *piBufLen,	//In/Out: Maximum length of encoded stream, Out:number of length-bytes
 				      unsigned long *pulLenVal	//Out: length-value from the TLV stream
 		)
 	{
-		int iStreamLenMax = 0;	//length of the stream
+		long iStreamLenMax = 0;	//length of the stream
 
 		//--- parameter check   
 		if (pucBufSrc == NULL || piBufLen == NULL || (*piBufLen == 0) || pulLenVal == NULL)
@@ -442,8 +442,15 @@ Decode the length from the TLV format
 		}
 		//--- decode first byte   
 		iStreamLenMax = *piBufLen;
-		*piBufLen = 1;
-		*pulLenVal = 0x7F & *pucBufSrc;
+        if (piBufLen != NULL)
+        {
+            *piBufLen = 1;
+        }
+        
+        if (pulLenVal != NULL)
+        {
+            *pulLenVal = 0x7F & *pucBufSrc;
+        }
 
 		//--- handle additional length bytes   
 		while (*(pucBufSrc++) & 0x80)
@@ -453,7 +460,10 @@ Decode the length from the TLV format
 				return false;
 			}
 
-			*pulLenVal = (*pulLenVal << 7) + (0x7F & *pucBufSrc);
+            if (pulLenVal != NULL)
+            {
+                *pulLenVal = (*pulLenVal << 7) + (0x7F & *pucBufSrc);
+            }
 		}
 		return true;
 	}
@@ -488,7 +498,7 @@ Decode the length from the TLV format
 
 		CByteArray oTempArray;
 		unsigned char ucLenBuffer[4] = { 0 };
-		int iBufLen = sizeof(ucLenBuffer);
+		long iBufLen = sizeof(ucLenBuffer);
 		ITMap it;
 
 		for (it = m_oMapTLV.begin(); it != m_oMapTLV.end(); ++it)

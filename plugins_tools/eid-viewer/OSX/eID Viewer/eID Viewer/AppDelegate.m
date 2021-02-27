@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "CertificateStore.h"
+#import "oslayer-objc.h"
 #import "photohandler.h"
 #import "PrintOperation.h"
 #import "ReaderMenuItem.h"
@@ -89,9 +90,16 @@
 }
 
 - (BOOL)application:(NSApplication*)sender openFile:(nonnull NSString *)filename {
-	[eIDOSLayerBackend deserialize:[NSURL URLWithString:filename]];
-	return YES;
+    if (filename != nil)
+    {
+        [eIDOSLayerBackend deserialize:[NSURL fileURLWithPath:filename]];
+
+        return YES;
+    }
+
+    return NO;
 }
+
 - (void)log:(NSString *)line withLevel:(eIDLogLevel)level {
 	[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 		if([self.logLevel indexOfSelectedItem] > level) {
@@ -117,14 +125,22 @@
 				break;
 		}
 		NSString* output = [NSString stringWithFormat:@"%c: %@\n", l, line];
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 101100
 		[[self logItem] insertText:output];
+#else
+        [[self logItem] insertText:output replacementRange:NSMakeRange([[[self logItem]  string] length], 0)];
+#endif
 	}];
 }
 - (void)file_open:(id)sender {
 	NSOpenPanel *panel = [NSOpenPanel openPanel];
 
 	[panel beginWithCompletionHandler:^(NSInteger result) {
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 101300
 		if(result == NSFileHandlingPanelOKButton) {
+#else
+        if(result == NSModalResponseOK) {
+#endif
 			[eIDOSLayerBackend deserialize:[[panel URLs]objectAtIndex:0]];
 		}
 	}];
@@ -134,7 +150,11 @@
 	[panel setAllowedFileTypes:[NSArray arrayWithObjects: @"be.fedict.eid.eidviewer", nil]];
 	[panel setNameFieldStringValue:[NSString stringWithFormat:@"%@.eid", [(NSTextField*)[self searchObjectById:@"national_number" ofClass:[NSTextField class] forUpdate:NO] stringValue]]];
 	[panel beginWithCompletionHandler:^(NSInteger result) {
-		if(result == NSFileHandlingPanelOKButton) {
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 101300
+        if(result == NSFileHandlingPanelOKButton) {
+#else
+        if(result == NSModalResponseOK) {
+#endif
 			[eIDOSLayerBackend serialize:[panel URL]];
 		}
 	}];
@@ -163,7 +183,11 @@
 			[tf setStringValue:@""];
 			[tf setTextColor:NULL];
 		}];
-		[self.memberOfFamilyState setState:NSOffState];
+#if __MAC_OS_X_VERSION_MIN_REQUIRED < 101400
+        [self.memberOfFamilyState setState:NSOffState];
+#else
+        [self.memberOfFamilyState setState:NSControlStateValueOff];
+#endif
 	}];
 }
 - (void)newbindata:(NSData *)data withLabel:(NSString *)label {
@@ -257,7 +281,11 @@
 			[self.spinner stopAnimation:self];
 			[self setSheetIsActive:NO];
 		}
-		if(doValidateNow && ([self.alwaysValidate state] == NSOnState)) {
+#if __MAC_OS_X_VERSION_MIN_REQUIRED < 101400
+        if(doValidateNow && ([self.alwaysValidate state] == NSOnState)) {
+#else
+        if(doValidateNow && ([self.alwaysValidate state] == NSControlStateValueOn)) {
+#endif
 			[self validateNow:nil];
 		}
 	}];
@@ -320,7 +348,11 @@
 	[_CertDetailView setEditable:YES];
 	[_CertDetailView selectAll:nil];
 	[_CertDetailView delete:nil];
-	[_CertDetailView insertText:details];
+#if __MAC_OS_X_VERSION_MIN_REQUIRED < 101100
+    [_CertDetailView insertText:details];
+#else
+    [_CertDetailView insertText:details replacementRange:NSMakeRange([details length], 0)];
+#endif
 //no more changes
 	[_CertDetailView setEditable:NO];
 }
@@ -395,11 +427,19 @@
 	}
 	eIDLogLevel level = [prefs integerForKey:@"log_level"];
 	BOOL alw_val = [prefs boolForKey:@"always_validate"];
-	if(alw_val) {
-		[_alwaysValidate setState:NSOnState];
-	} else {
-		[_alwaysValidate setState:NSOffState];
-	}
+    if(alw_val) {
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 101400
+        [_alwaysValidate setState:NSOnState];
+#else
+        [_alwaysValidate setState:NSControlStateValueOn];
+#endif
+    } else {
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 101400
+        [_alwaysValidate setState:NSOffState];
+#else
+        [_alwaysValidate setState:NSControlStateValueOff];
+#endif
+    }
 	[self setIsForeignerCard:NO];
 	[_logLevel selectItemAtIndex:level];
 	[eIDOSLayerBackend setLang:langcode];
@@ -479,7 +519,11 @@
 	}
 	if([label isEqualToString:@"member_of_family"]) {
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-			[self.memberOfFamilyState setState:NSOnState];
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 101400
+            [self.memberOfFamilyState setState:NSOnState];
+#else
+            [self.memberOfFamilyState setState:NSControlStateValueOn];
+#endif
 		}];
 		return;
 	}
@@ -567,7 +611,11 @@ failed:
 	if(have_fail) {
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			NSAlert* error = [[NSAlert alloc ] init];
-			[error setAlertStyle:NSWarningAlertStyle];
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 101200
+            [error setAlertStyle:NSWarningAlertStyle];
+#else
+            [error setAlertStyle:NSAlertStyleWarning];
+#endif
 			[error setMessageText:NSLocalizedStringWithDefaultValue(@"InvalidCertsFound", nil, [NSBundle mainBundle], @"One or more of the certificates on this card were found to be invalid or revoked.", "")];
 			[error setInformativeText:NSLocalizedStringWithDefaultValue(@"InvalidCertsMoreInfo", nil, [NSBundle mainBundle], @"For more information, please see the log tab", "")];
 			[error runModal];
@@ -575,7 +623,11 @@ failed:
 	}
 }
 -(void)changeValidatePolicy:(id)sender {
-	BOOL on = ([_alwaysValidate state] == NSOnState);
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 101400
+    BOOL on = ([_alwaysValidate state] == NSOnState);
+#else
+    BOOL on = ([_alwaysValidate state] == NSControlStateValueOn);
+#endif
 	[[NSUserDefaults standardUserDefaults] setBool:on forKey:@"always_validate"];
 	if(on) {
 		[self validateNow:sender];
@@ -587,17 +639,37 @@ failed:
 		return;
 	}
 	for(int i=0; i<[_readerSelections count]; i++) {
-		[[_readerSelections objectAtIndex:i] setState:NSOffState];
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 101400
+        [[_readerSelections objectAtIndex:i] setState:NSOffState];
+#else
+        [[_readerSelections objectAtIndex:i] setState:NSControlStateValueOff];
+#endif
 	}
-	[sender setState:NSOnState];
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 101400
+    [sender setState:NSOnState];
+#else
+    [sender setState:NSControlStateValueOn];
+#endif
 	[eIDOSLayerBackend setReaderAuto:YES];
 }
 -(IBAction)selectManualReader:(ReaderMenuItem*)sender {
-	[_menu_file_reader_auto setState: NSOffState];
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 101400
+    [_menu_file_reader_auto setState: NSOffState];
+#else
+    [_menu_file_reader_auto setState: NSControlStateValueOff];
+#endif
 	for(int i=0; i<[_readerSelections count]; i++) {
-		[[_readerSelections objectAtIndex:i] setState: NSOffState];
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 101400
+        [[_readerSelections objectAtIndex:i] setState:NSOffState];
+#else
+        [[_readerSelections objectAtIndex:i] setState:NSControlStateValueOff];
+#endif
 	}
-	[sender setState:NSOnState];
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 101400
+    [sender setState:NSOnState];
+#else
+    [sender setState:NSControlStateValueOn];
+#endif
 	[eIDOSLayerBackend selectReader:[sender slotNumber]];
 }
 -(void)readersFound:(NSArray *)readers withSlotNumbers:(NSArray *)slots {

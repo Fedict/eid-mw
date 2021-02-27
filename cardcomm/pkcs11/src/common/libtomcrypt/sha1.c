@@ -47,9 +47,9 @@ static int _sha1_compress(hash_state *md, unsigned char *buf)
 static int  sha1_compress(hash_state *md, unsigned char *buf)
 #endif
 {
-    ulong32 a,b,c,d,e,W[80],i;
+    unsigned long a,b,c,d,e,W[80],i;
 #ifdef LTC_SMALL_CODE
-    ulong32 t;
+    unsigned long t;
 #endif
 
     /* copy the state into 512-bits into W[0..15] */
@@ -66,15 +66,15 @@ static int  sha1_compress(hash_state *md, unsigned char *buf)
 
     /* expand it */
     for (i = 16; i < 80; i++) {
-        W[i] = ROL(W[i-3] ^ W[i-8] ^ W[i-14] ^ W[i-16], 1); 
+        W[i] = ROL((unsigned)(W[i-3] ^ W[i-8] ^ W[i-14] ^ W[i-16]), 1); 
     }
 
     /* compress */
     /* round one */
-    #define FF0(a,b,c,d,e,i) e = (ROLc(a, 5) + F0(b,c,d) + e + W[i] + 0x5a827999UL); b = ROLc(b, 30);
-    #define FF1(a,b,c,d,e,i) e = (ROLc(a, 5) + F1(b,c,d) + e + W[i] + 0x6ed9eba1UL); b = ROLc(b, 30);
-    #define FF2(a,b,c,d,e,i) e = (ROLc(a, 5) + F2(b,c,d) + e + W[i] + 0x8f1bbcdcUL); b = ROLc(b, 30);
-    #define FF3(a,b,c,d,e,i) e = (ROLc(a, 5) + F3(b,c,d) + e + W[i] + 0xca62c1d6UL); b = ROLc(b, 30);
+    #define FF0(a,b,c,d,e,i) e = (ROLc(a, 5) + F0(b,c,d) + e + W[i] + 0x5a827999UL); b = ROLc((unsigned)b, 30);
+    #define FF1(a,b,c,d,e,i) e = (ROLc(a, 5) + F1(b,c,d) + e + W[i] + 0x6ed9eba1UL); b = ROLc((unsigned)b, 30);
+    #define FF2(a,b,c,d,e,i) e = (ROLc(a, 5) + F2(b,c,d) + e + W[i] + 0x8f1bbcdcUL); b = ROLc((unsigned)b, 30);
+    #define FF3(a,b,c,d,e,i) e = (ROLc(a, 5) + F3(b,c,d) + e + W[i] + 0xca62c1d6UL); b = ROLc((unsigned)b, 30);
  
 #ifdef LTC_SMALL_CODE
  

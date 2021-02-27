@@ -73,9 +73,10 @@ static int _sha256_compress(hash_state * md, unsigned char *buf)
 static int  sha256_compress(hash_state * md, unsigned char *buf)
 #endif
 {
+#if __LP64__
+    ulong64 S[8], W[64], t0, t1;
+#else
     ulong32 S[8], W[64], t0, t1;
-#ifdef LTC_SMALL_CODE
-    ulong32 t;
 #endif
     int i;
 
