@@ -48,7 +48,7 @@ make_universal:
 	lipo -create -output libressl/libssl.a libressl-x86_64/tls/.libs/libtls.a libressl-arm64/tls/.libs/libtls.a # libressl-i386/tls/.libs/libtls.a libressl-ppc/tls/.libs/libtls.a libressl-ppc64/tls/.libs/libtls.a
 	# Applications
 	lipo -create -output libressl/openssl libressl-x86_64/apps/openssl/.libs/openssl libressl-arm64/apps/openssl/.libs/openssl # libressl-i386/apps/openssl/.libs/openssl libressl-ppc/apps/openssl/.libs/openssl libressl-ppc64/apps/openssl/.libs/openssl
-	lipo -create -output libressl/nc libressl-x86_64/apps/nc/.libs/nc libressl-arm64/apps/nc/.libs/nc # libressl-i386/apps/nc/.libs/nc libressl-ppc/apps/nc/.libs/nc libressl-ppc64/apps/nc/.libs/nc
+#	lipo -create -output libressl/nc libressl-x86_64/apps/nc/.libs/nc libressl-arm64/apps/nc/.libs/nc # libressl-i386/apps/nc/.libs/nc libressl-ppc/apps/nc/.libs/nc libressl-ppc64/apps/nc/.libs/nc
 	lipo -create -output libressl/ocspcheck libressl-x86_64/apps/ocspcheck/.libs/ocspcheck  libressl-arm64/apps/ocspcheck/.libs/ocspcheck # libressl-i386/apps/ocspcheck/.libs/ocspcheck libressl-ppc/apps/ocspcheck/.libs/ocspcheck libressl-ppc64/apps/ocspcheck/.libs/ocspcheck
 	# Dynamic Libraries
 	lipo -create -output libressl/libcrypto.46.dylib libressl-x86_64/crypto/.libs/libcrypto.46.dylib libressl-arm64/crypto/.libs/libcrypto.46.dylib # libressl-i386/crypto/.libs/libcrypto.46.dylib libressl-ppc/crypto/.libs/libcrypto.46.dylib libressl-ppc64/crypto/.libs/libcrypto.46.dylib
