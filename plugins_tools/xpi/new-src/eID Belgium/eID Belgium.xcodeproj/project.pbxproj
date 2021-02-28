@@ -1,0 +1,519 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AB1390C225EC13E6003AED72 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1390C125EC13E6003AED72 /* AppDelegate.m */; };
+		AB1390C525EC13E6003AED72 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB1390C325EC13E6003AED72 /* Main.storyboard */; };
+		AB1390C825EC13E6003AED72 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1390C725EC13E6003AED72 /* ViewController.m */; };
+		AB1390CA25EC13E7003AED72 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB1390C925EC13E7003AED72 /* Assets.xcassets */; };
+		AB1390CD25EC13E7003AED72 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1390CC25EC13E7003AED72 /* main.m */; };
+		AB1390D325EC13E7003AED72 /* eID Belgium Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = AB1390D225EC13E7003AED72 /* eID Belgium Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		AB1390D825EC13E7003AED72 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1390D725EC13E7003AED72 /* Cocoa.framework */; };
+		AB1390DC25EC13E7003AED72 /* SafariWebExtensionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1390DB25EC13E7003AED72 /* SafariWebExtensionHandler.m */; };
+		AB1390EE25EC13E8003AED72 /* background-script.js in Resources */ = {isa = PBXBuildFile; fileRef = AB1390E925EC13E8003AED72 /* background-script.js */; };
+		AB1390EF25EC13E8003AED72 /* eID Belgium in Resources */ = {isa = PBXBuildFile; fileRef = AB1390EA25EC13E8003AED72 /* eID Belgium */; };
+		AB1390F025EC13E8003AED72 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = AB1390EB25EC13E8003AED72 /* manifest.json */; };
+		AB1390F125EC13E8003AED72 /* _locales in Resources */ = {isa = PBXBuildFile; fileRef = AB1390EC25EC13E8003AED72 /* _locales */; };
+		AB1390F225EC13E8003AED72 /* content.js in Resources */ = {isa = PBXBuildFile; fileRef = AB1390ED25EC13E8003AED72 /* content.js */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AB1390D425EC13E7003AED72 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB1390B425EC13E6003AED72 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AB1390D125EC13E7003AED72;
+			remoteInfo = "eID Belgium Extension";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		AB1390E425EC13E7003AED72 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				AB1390D325EC13E7003AED72 /* eID Belgium Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		AB1390BC25EC13E6003AED72 /* eID Belgium.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "eID Belgium.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB1390BF25EC13E6003AED72 /* eID_Belgium.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = eID_Belgium.entitlements; sourceTree = "<group>"; };
+		AB1390C025EC13E6003AED72 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		AB1390C125EC13E6003AED72 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		AB1390C425EC13E6003AED72 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		AB1390C625EC13E6003AED72 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		AB1390C725EC13E6003AED72 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		AB1390C925EC13E7003AED72 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		AB1390CB25EC13E7003AED72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AB1390CC25EC13E7003AED72 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		AB1390D225EC13E7003AED72 /* eID Belgium Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "eID Belgium Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB1390D725EC13E7003AED72 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		AB1390DA25EC13E7003AED72 /* SafariWebExtensionHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SafariWebExtensionHandler.h; sourceTree = "<group>"; };
+		AB1390DB25EC13E7003AED72 /* SafariWebExtensionHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SafariWebExtensionHandler.m; sourceTree = "<group>"; };
+		AB1390DD25EC13E7003AED72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AB1390DE25EC13E7003AED72 /* eID_Belgium_Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = eID_Belgium_Extension.entitlements; sourceTree = "<group>"; };
+		AB1390E925EC13E8003AED72 /* background-script.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = "background-script.js"; path = "../../background-script.js"; sourceTree = "<group>"; };
+		AB1390EA25EC13E8003AED72 /* eID Belgium */ = {isa = PBXFileReference; lastKnownFileType = text; path = "eID Belgium"; sourceTree = SOURCE_ROOT; };
+		AB1390EB25EC13E8003AED72 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = manifest.json; path = ../../manifest.json; sourceTree = "<group>"; };
+		AB1390EC25EC13E8003AED72 /* _locales */ = {isa = PBXFileReference; lastKnownFileType = folder; name = _locales; path = ../../_locales; sourceTree = "<group>"; };
+		AB1390ED25EC13E8003AED72 /* content.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = content.js; path = ../../content.js; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AB1390B925EC13E6003AED72 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AB1390CF25EC13E7003AED72 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB1390D825EC13E7003AED72 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AB1390B325EC13E6003AED72 = {
+			isa = PBXGroup;
+			children = (
+				AB1390BE25EC13E6003AED72 /* eID Belgium */,
+				AB1390D925EC13E7003AED72 /* eID Belgium Extension */,
+				AB1390D625EC13E7003AED72 /* Frameworks */,
+				AB1390BD25EC13E6003AED72 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AB1390BD25EC13E6003AED72 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AB1390BC25EC13E6003AED72 /* eID Belgium.app */,
+				AB1390D225EC13E7003AED72 /* eID Belgium Extension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AB1390BE25EC13E6003AED72 /* eID Belgium */ = {
+			isa = PBXGroup;
+			children = (
+				AB1390BF25EC13E6003AED72 /* eID_Belgium.entitlements */,
+				AB1390C025EC13E6003AED72 /* AppDelegate.h */,
+				AB1390C125EC13E6003AED72 /* AppDelegate.m */,
+				AB1390C325EC13E6003AED72 /* Main.storyboard */,
+				AB1390C625EC13E6003AED72 /* ViewController.h */,
+				AB1390C725EC13E6003AED72 /* ViewController.m */,
+				AB1390C925EC13E7003AED72 /* Assets.xcassets */,
+				AB1390CB25EC13E7003AED72 /* Info.plist */,
+				AB1390CC25EC13E7003AED72 /* main.m */,
+			);
+			path = "eID Belgium";
+			sourceTree = "<group>";
+		};
+		AB1390D625EC13E7003AED72 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AB1390D725EC13E7003AED72 /* Cocoa.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AB1390D925EC13E7003AED72 /* eID Belgium Extension */ = {
+			isa = PBXGroup;
+			children = (
+				AB1390E825EC13E8003AED72 /* Resources */,
+				AB1390DA25EC13E7003AED72 /* SafariWebExtensionHandler.h */,
+				AB1390DB25EC13E7003AED72 /* SafariWebExtensionHandler.m */,
+				AB1390DD25EC13E7003AED72 /* Info.plist */,
+				AB1390DE25EC13E7003AED72 /* eID_Belgium_Extension.entitlements */,
+			);
+			path = "eID Belgium Extension";
+			sourceTree = "<group>";
+		};
+		AB1390E825EC13E8003AED72 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				AB1390E925EC13E8003AED72 /* background-script.js */,
+				AB1390EA25EC13E8003AED72 /* eID Belgium */,
+				AB1390EB25EC13E8003AED72 /* manifest.json */,
+				AB1390EC25EC13E8003AED72 /* _locales */,
+				AB1390ED25EC13E8003AED72 /* content.js */,
+			);
+			name = Resources;
+			path = "eID Belgium Extension";
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AB1390BB25EC13E6003AED72 /* eID Belgium */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AB1390E525EC13E7003AED72 /* Build configuration list for PBXNativeTarget "eID Belgium" */;
+			buildPhases = (
+				AB1390B825EC13E6003AED72 /* Sources */,
+				AB1390B925EC13E6003AED72 /* Frameworks */,
+				AB1390BA25EC13E6003AED72 /* Resources */,
+				AB1390E425EC13E7003AED72 /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AB1390D525EC13E7003AED72 /* PBXTargetDependency */,
+			);
+			name = "eID Belgium";
+			productName = "eID Belgium";
+			productReference = AB1390BC25EC13E6003AED72 /* eID Belgium.app */;
+			productType = "com.apple.product-type.application";
+		};
+		AB1390D125EC13E7003AED72 /* eID Belgium Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AB1390E125EC13E7003AED72 /* Build configuration list for PBXNativeTarget "eID Belgium Extension" */;
+			buildPhases = (
+				AB1390CE25EC13E7003AED72 /* Sources */,
+				AB1390CF25EC13E7003AED72 /* Frameworks */,
+				AB1390D025EC13E7003AED72 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "eID Belgium Extension";
+			productName = "eID Belgium Extension";
+			productReference = AB1390D225EC13E7003AED72 /* eID Belgium Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AB1390B425EC13E6003AED72 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1240;
+				TargetAttributes = {
+					AB1390BB25EC13E6003AED72 = {
+						CreatedOnToolsVersion = 12.4;
+					};
+					AB1390D125EC13E7003AED72 = {
+						CreatedOnToolsVersion = 12.4;
+					};
+				};
+			};
+			buildConfigurationList = AB1390B725EC13E6003AED72 /* Build configuration list for PBXProject "eID Belgium" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AB1390B325EC13E6003AED72;
+			productRefGroup = AB1390BD25EC13E6003AED72 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AB1390BB25EC13E6003AED72 /* eID Belgium */,
+				AB1390D125EC13E7003AED72 /* eID Belgium Extension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AB1390BA25EC13E6003AED72 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB1390CA25EC13E7003AED72 /* Assets.xcassets in Resources */,
+				AB1390C525EC13E6003AED72 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AB1390D025EC13E7003AED72 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB1390EF25EC13E8003AED72 /* eID Belgium in Resources */,
+				AB1390F025EC13E8003AED72 /* manifest.json in Resources */,
+				AB1390F125EC13E8003AED72 /* _locales in Resources */,
+				AB1390EE25EC13E8003AED72 /* background-script.js in Resources */,
+				AB1390F225EC13E8003AED72 /* content.js in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AB1390B825EC13E6003AED72 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB1390C825EC13E6003AED72 /* ViewController.m in Sources */,
+				AB1390CD25EC13E7003AED72 /* main.m in Sources */,
+				AB1390C225EC13E6003AED72 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AB1390CE25EC13E7003AED72 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB1390DC25EC13E7003AED72 /* SafariWebExtensionHandler.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AB1390D525EC13E7003AED72 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AB1390D125EC13E7003AED72 /* eID Belgium Extension */;
+			targetProxy = AB1390D425EC13E7003AED72 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		AB1390C325EC13E6003AED72 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AB1390C425EC13E6003AED72 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		AB1390DF25EC13E7003AED72 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = YZAQ856TTM;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		AB1390E025EC13E7003AED72 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = YZAQ856TTM;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				OTHER_CODE_SIGN_FLAGS = "--timestamp";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		AB1390E225EC13E7003AED72 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "eID Belgium Extension/eID_Belgium_Extension.entitlements";
+				INFOPLIST_FILE = "eID Belgium Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "be.belgium.eid.eID-Belgium.Extension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		AB1390E325EC13E7003AED72 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "eID Belgium Extension/eID_Belgium_Extension.entitlements";
+				INFOPLIST_FILE = "eID Belgium Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "be.belgium.eid.eID-Belgium.Extension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		AB1390E625EC13E7003AED72 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "eID Belgium/eID_Belgium.entitlements";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "eID Belgium/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "be.belgium.eid.eID-Belgium";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		AB1390E725EC13E7003AED72 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "eID Belgium/eID_Belgium.entitlements";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "eID Belgium/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "be.belgium.eid.eID-Belgium";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AB1390B725EC13E6003AED72 /* Build configuration list for PBXProject "eID Belgium" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AB1390DF25EC13E7003AED72 /* Debug */,
+				AB1390E025EC13E7003AED72 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AB1390E125EC13E7003AED72 /* Build configuration list for PBXNativeTarget "eID Belgium Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AB1390E225EC13E7003AED72 /* Debug */,
+				AB1390E325EC13E7003AED72 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AB1390E525EC13E7003AED72 /* Build configuration list for PBXNativeTarget "eID Belgium" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AB1390E625EC13E7003AED72 /* Debug */,
+				AB1390E725EC13E7003AED72 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AB1390B425EC13E6003AED72 /* Project object */;
+}
