@@ -90,3 +90,8 @@ beidpkcs11.sdf
 *.opendb
 *.ipch
 *.user
+plugins_tools/xpi/signed-build/belgiumeid@eid.belgium.be.xpi
+plugins_tools/eid-viewer/OSX/support/ossl/libcrypto.46.dylib
+plugins_tools/eid-viewer/OSX/support/ossl/libssl.dylib
+plugins_tools/eid-viewer/OSX/support/ossl/libtls.dylib
+plugins_tools/xpi/src/xpi46VYl7
