@@ -19,7 +19,7 @@ set MDRVCERTPATH=%~dp0..\..\cardcomm\minidriver\makemsi
 @if %ERRORLEVEL%==1 goto 
 ::sign the certreg tool
 @echo [INFO] sign the certreg tool
-"%SIGNTOOL_PATH%\signtool" sign /as /fd SHA256 /ac "%MDRVCERTPATH%\MSCV-GlobalSign Root CA.cer" /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\plugins_tools\certreg\Release\certreg.exe"
+"%SIGNTOOL_PATH%\signtool" sign /as /fd SHA256 /ac "%MDRVCERTPATH%\MSCV-GlobalSign Root CA.cer" /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://tsa.belgium.be/connect /td SHA256 /v "%~dp0..\..\plugins_tools\certreg\Release\certreg.exe"
 
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
 @echo [INFO] copy the certreg tool
@@ -36,7 +36,7 @@ copy %~dp0..\..\plugins_tools\certreg\Release\certreg.exe %~dp0
 :: sign the nsis installer
 :: =======================
 @echo [INFO] sign nsis installer
-%SIGNTOOL_PATH%\SignTool.exe sign /n /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\installers\quickinstaller\certRegInstaller %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe"
+%SIGNTOOL_PATH%\SignTool.exe sign /n /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://tsa.belgium.be/connect /td SHA256 /v "%~dp0..\..\installers\quickinstaller\certRegInstaller %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe"
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
 @echo [INFO] copy nsis installer
 copy "%~dp0..\..\installers\quickinstaller\certRegInstaller %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe" %~dp0

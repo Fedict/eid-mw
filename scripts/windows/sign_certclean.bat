@@ -25,7 +25,7 @@
 :: sign the 32bit version of the CertClean tool
 :: ============================================
 @echo [INFO] sign the CertClean tool
-"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://timestamp.globalsign.com/?signature=sha2 /td SHA256 /v "%~dp0..\..\plugins_tools\CertClean\Release\CertClean.exe"
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://tsa.belgium.be/connect /td SHA256 /v "%~dp0..\..\plugins_tools\CertClean\Release\CertClean.exe"
 
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
 @echo [INFO] copy the signed CertClean tool
