@@ -634,10 +634,16 @@ namespace eIDViewer
 
         public bool IsBasicKeyOK()
         {
-
-            if (basicKeyHash != null)
+            if ((carddata_appl_version > 0x17) && (basicKeyHash != null))
             {
-                //only verify the basic key when it is present
+                //only verify the basic key when it is present, and never on applet 1.7 cards
+
+                if (basicKeyHash.Length == 0)
+                {
+                    this.WriteLog("public basic key hash is empty\n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
+                    //an empty hash in the ID file, report it as a warning
+                    return true;
+                }
 
                 if (basicKeyHash.Length != 48)
                 {
