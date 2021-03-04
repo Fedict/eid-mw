@@ -41,24 +41,24 @@ set MDRVCERTPATH=%~dp0..\..\cardcomm\minidriver\makemsi
 @echo [INFO] sign eID Viewer msi installer x86
 "%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://tsa.belgium.be/connect /td SHA256 /v "%~dp0..\..\installers\eid-viewer\Windows\bin\BeidViewer.msi"
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
-@echo [INFO] copy 64 bit msi installer
+@echo [INFO] copy 32 bit msi installer
 @copy "%~dp0..\..\installers\eid-viewer\Windows\bin\BeidViewer.msi" "%~dp0\BeidViewer %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.msi"
 
 
-@echo [INFO] Sign the eID Viewer executable and the viewer backend dll x64
-"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://tsa.belgium.be/connect /td SHA256 /v "%~dp0..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\x64\Release\eIDViewer.exe"
-"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://tsa.belgium.be/connect /td SHA256 /v "%~dp0..\..\plugins_tools\eid-viewer\Windows\eIDViewerBackend\VS_2017\Binaries\x64_Release\eIDViewerBackend.dll"
-@if %ERRORLEVEL%==1 goto signtool_failed
-
-@echo [INFO] create eID Viewer msi installer x64
-@call "%~dp0..\..\installers\eid-viewer\Windows\build_msi_eidviewer.cmd"
-@if %ERRORLEVEL%==1 goto end_resetpath_with_error
-
-@echo [INFO] sign eID Viewer msi installer x64
-"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://tsa.belgium.be/connect /td SHA256 /v "%~dp0..\..\installers\eid-viewer\Windows\bin\x64\BeidViewer64.msi"
-@if "%ERRORLEVEL%" == "1" goto signtool_failed
-@echo [INFO] copy 64 bit msi installer
-@copy "%~dp0..\..\installers\eid-viewer\Windows\bin\BeidViewer.msi" "%~dp0\BeidViewer %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.msi"
+::@echo [INFO] Sign the eID Viewer executable and the viewer backend dll x64
+::"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://tsa.belgium.be/connect /td SHA256 /v "%~dp0..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\x64\Release\eIDViewer.exe"
+::"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://tsa.belgium.be/connect /td SHA256 /v "%~dp0..\..\plugins_tools\eid-viewer\Windows\eIDViewerBackend\VS_2017\Binaries\x64_Release\eIDViewerBackend.dll"
+::@if %ERRORLEVEL%==1 goto signtool_failed
+::
+::@echo [INFO] create eID Viewer msi installer x64
+::@call "%~dp0..\..\installers\eid-viewer\Windows\build_msi_eidviewer.cmd"
+::@if %ERRORLEVEL%==1 goto end_resetpath_with_error
+::
+::@echo [INFO] sign eID Viewer msi installer x64
+::"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://tsa.belgium.be/connect /td SHA256 /v "%~dp0..\..\installers\eid-viewer\Windows\bin\x64\BeidViewer64.msi"
+::@if "%ERRORLEVEL%" == "1" goto signtool_failed
+::@echo [INFO] copy 64 bit msi installer
+::@copy "%~dp0..\..\installers\eid-viewer\Windows\bin\BeidViewer.msi" "%~dp0\BeidViewer %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.msi"
 
 
 
