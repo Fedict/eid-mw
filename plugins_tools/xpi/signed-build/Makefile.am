@@ -1,11 +1,11 @@
 XPI_NAME=belgiumeid.xpi
-EXTRA_DIST = eid_belgie-1.0.23.xpi belgium_eid-1.0.29.xpi
+EXTRA_DIST = eid_belgie-1.0.23.xpi belgium_eid-1.0.32.xpi
 if SIGNED
 extensionbase_DATA = $(XPI_ID).xpi
 endif
 
 if WEBEXT
-extension_filename=belgium_eid-1.0.29.xpi
+extension_filename=belgium_eid-1.0.32.xpi
 else
 extension_filename=eid_belgie-1.0.23.xpi
 endif
