@@ -634,21 +634,20 @@ namespace eIDViewer
 
         public bool IsBasicKeyOK()
         {
-            if ((carddata_appl_version > 0x17) && (basicKeyHash != null))
+            //never verify the basic key on applet 1.7 cards
+            if (carddata_appl_version > 0x17 )
             {
-                //only verify the basic key when it is present, and never on applet 1.7 cards
-
-                if (basicKeyHash.Length == 0)
+                if (basicKeyHash == null)
                 {
-                    this.WriteLog("public basic key hash is empty\n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
-                    //an empty hash in the ID file, report it as a warning
-                    return true;
+                    //no basickeyhash field found
+                    this.WriteLog("no public basic key hash is found, but it is mandatory starting from applet 1.8 cards \n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+                    return false;
                 }
 
                 if (basicKeyHash.Length != 48)
                 {
                     //only hashAlg used is SHA384
-                    this.WriteLog("public basic key hash is present, but it is not 48 bytes long \n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+                    this.WriteLog("public basic key hash is present, but it is not 48 bytes long, " + basicKeyHash.Length + " bytes were found\n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
                     return false;
                 }
                 if (basicKeyFile == null)
