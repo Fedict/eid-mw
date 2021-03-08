@@ -190,6 +190,9 @@
 		case eIDResultUnknown:
 			trust = @"";
 			break;
+        case eIDResultWarning:
+            trust = @"Warning";
+            break;
 		case eIDResultSuccess:
 			trust = @"Valid";
 			break;

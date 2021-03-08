@@ -20,10 +20,11 @@
 **************************************************************************** */
 
 #import <Foundation/Foundation.h>
-@ import AppKit;
+#import <AppKit/AppKit.h>
 
-@interface DataItem:NSObject < NSPasteboardWriting >
-	@property NSString * title;
-@property NSString * value;
--(NSString *) description;
+@interface DataItem:NSObject <NSPasteboardWriting>
+@property NSString *title;
+@property NSString *value;
+
+-(NSString *)description;
 @end

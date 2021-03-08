@@ -411,7 +411,7 @@ static int eid_vwr_p11_do_challenge_real(struct eid_vwr_challenge_responsedata *
 	{
 		be_log(EID_VWR_LOG_DETAIL, TEXT(EID_S_FORMAT) TEXT(":C_FindObjects found return value of 0x%2x"), retval);
 		C_FindObjectsFinal(session);
-		return retval;
+		return (int)retval;
 	}
 	if ((ulObjectCount == 0) || (hKey == NULL_PTR))
 	{
@@ -464,7 +464,7 @@ int eid_vwr_p11_do_challenge(void* data) {
 		{
 			retval = eid_vwr_p11_do_challenge_real(p);
 			if (retval == CKR_OK) {
-				be_challengeresult(p->response, p->responselen, p->result);
+				be_challengeresult(p->response, (int)p->responselen, p->result);
 			}
 			free(signature);
 		}

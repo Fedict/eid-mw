@@ -212,7 +212,7 @@ asm("roll %%cl,%0": "=r"(word):"0"(word), "c"(i));
 	return word;
 }
 
-static inline unsigned ROR(unsigned word, int i)
+static inline unsigned ROR(unsigned word, long i)
 {
 asm("rorl %%cl,%0": "=r"(word):"0"(word), "c"(i));
 	return word;
@@ -221,7 +221,7 @@ asm("rorl %%cl,%0": "=r"(word):"0"(word), "c"(i));
 #ifndef LTC_NO_ROLC
 
 #define ROLc(word,i) ({ \
-ulong32 __ROLc_tmp = word; \
+unsigned int __ROLc_tmp = (unsigned int)word; \
 __asm__ ("roll %2, %0" : \
 "=r" (__ROLc_tmp) : \
 "0" (__ROLc_tmp), \
@@ -230,7 +230,7 @@ __ROLc_tmp; \
 })
 
 #define RORc(word,i) ({ \
-ulong32 __RORc_tmp = word; \
+unsigned int __RORc_tmp = (unsigned int)word; \
 __asm__ ("rorl %2, %0" : \
 "=r" (__RORc_tmp) : \
 "0" (__RORc_tmp), \

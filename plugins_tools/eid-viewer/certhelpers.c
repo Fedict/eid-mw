@@ -16,7 +16,7 @@
 
 #include "backend.h"
 
-#if OPENSSL_VERSION_NUMBER < 0x10100000L || defined(LIBRESSL_VERSION_NUMBER)
+#if OPENSSL_VERSION_NUMBER < 0x10000000L
 #define X509_get0_extensions(ce) ((ce)->cert_info->extensions)
 #define ASN1_STRING_get0_data ASN1_STRING_data
 #define EVP_MD_CTX_new EVP_MD_CTX_create

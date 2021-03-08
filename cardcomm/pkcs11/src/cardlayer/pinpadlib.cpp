@@ -64,7 +64,7 @@ CByteArray CPinpadLib::PinCmd(SCARDHANDLE hCard, unsigned long ulControl,
 
 	unsigned char tucOut[258];
 	DWORD dwOutLen = sizeof(tucOut);
-	long lRet = m_ppCmd2(hCard, (int) ulControl, oCmd.GetBytes(), oCmd.Size(),
+	long lRet = m_ppCmd2(hCard, (int) ulControl, oCmd.GetBytes(), (DWORD)oCmd.Size(),
 		tucOut, sizeof(tucOut), &dwOutLen,
 		ucPintype, ucOperation, 0, NULL);
 	if (lRet != SCARD_S_SUCCESS)
@@ -89,7 +89,7 @@ bool CPinpadLib::CheckLib(const std::string & csPinpadDir, const char *csFileNam
 			m_oPinpadLib.Close();
 		else
 		{
-			long lRet = ppInit2(PTEID_MINOR_VERSION, hContext, hCard, csReader,
+			long lRet = ppInit2(PTEID_MINOR_VERSION, (SCARDCONTEXT)hContext, hCard, csReader,
 				ulLanguage, InitGuiInfo(), 0, NULL);
 			if (lRet == SCARD_S_SUCCESS)
 				bRet = true; // OK, the pinpad lib supports this reader

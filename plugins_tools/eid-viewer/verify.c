@@ -25,30 +25,76 @@
 #define CERTTRUSTDIR (DATAROOTDIR "/" PACKAGE_NAME "/trustdir")
 #endif
 
-#if OPENSSL_VERSION_NUMBER < 0x10100000L || defined(LIBRESSL_VERSION_NUMBER)
-#define X509_get0_extensions(ce) ((ce)->cert_info->extensions)
+#if OPENSSL_VERSION_NUMBER < 0x10000000L
+#ifndef X509_get0_extensions
+#define X509_get0_extensions(ce) (ce != NULL) ? ((ce)->cert_info->extensions) : NULL
+#endif
 
-#define X509_get0_tbs_sigalg(ci) ((ci)->sig_alg)
+#ifndef X509_get0_tbs_sigalg
+#define X509_get0_tbs_sigalg(ci) (ci != NULL) ? ((ci)->sig_alg) : NULL
+#endif
+
+#ifndef X509_OBJECT_new
 #define X509_OBJECT_new() calloc(sizeof(X509_OBJECT), 1)
-#define X509_OBJECT_free(o) free(o)
-#define X509_get0_pubkey(x) (x->cert_info->key->pkey)
-#define X509_OBJECT_get0_X509(o) (o->data.x509)
+#endif
 
+#ifndef X509_OBJECT_free
+#define X509_OBJECT_free(o) if (o != NULL) { free(o); }
+#endif
+
+#ifndef X509_get0_pubkey
+#define X509_get0_pubkey(x) (x != NULL) ? (x->cert_info->key->pkey) : NULL
+#endif
+
+#ifndef X509_OBJECT_get0_X509
+#define X509_OBJECT_get0_X509(o) (o != NULL) ? (o->data.x509) : NULL
+#endif
+
+#ifndef EVP_MD_CTX_new
 #define EVP_MD_CTX_new EVP_MD_CTX_create
+#endif
+
+#ifndef EVP_MD_CTX_free
 #define EVP_MD_CTX_free EVP_MD_CTX_destroy
+#endif
 
+#ifndef algobjcast
 #define algobjcast(obj) ((ASN1_OBJECT**)obj)
-#define ppvalcast(obj) ((void**)obj)
+#endif
 
-#define OCSP_resp_get0_certs(bresp) ((bresp)->certs)
+#ifndef ppvalcast
+#define ppvalcast(obj) ((void**)obj)
+#endif
+
+#ifndef OCSP_resp_get0_certs
+#define OCSP_resp_get0_certs(bresp) (bresp != NULL) ? ((bresp)->certs) : NULL
+#endif
+
 int ECDSA_SIG_set0(ECDSA_SIG* sig, BIGNUM *r, BIGNUM *s) {
 	sig->r = r;
 	sig->s = s;
 	return 1;
 }
 #else
+#ifndef X509_OBJECT_new
+#define X509_OBJECT_new() calloc(sizeof(X509_OBJECT), 1)
+#endif
+
+#ifndef X509_OBJECT_free
+#define X509_OBJECT_free(o) if (o != NULL) { free(o); }
+#endif
+
+#ifndef OCSP_resp_get0_certs
+#define OCSP_resp_get0_certs(bresp) (bresp != NULL) ? ((bresp)->certs) : NULL
+#endif
+
+#ifndef algobjcast
 #define algobjcast(obj) ((const ASN1_OBJECT**)obj)
+#endif
+
+#ifndef ppvalcast
 #define ppvalcast(obj) ((const void**)obj)
+#endif
 #endif
 
 // All valid OCSP URLs should have the following as their prefix:
@@ -70,7 +116,7 @@ static void log_ssl_error(char* message) {
 }
 
 enum eid_vwr_result eid_vwr_verify_int_cert(const void *certificate, size_t certlen, const void *ca, size_t calen, const void *(*perform_http_request)(char*, long*, void**), void(*free_http_request)(void*)) {
-#if OPENSSL_VERSION_NUMBER < 0x10100000L || defined(LIBRESSL_VERSION_NUMBER)
+#if OPENSSL_VERSION_NUMBER < 0x10000000L
 	be_log(EID_VWR_LOG_DETAIL, "Ignoring CRL check: OpenSSL 1.1 required");
 	return EID_VWR_RES_UNKNOWN;
 #else
@@ -437,11 +483,11 @@ void eid_vwr_check_signature(const void* pubkey, size_t pubkeylen, const void* s
 	BIGNUM *r;
 	BIGNUM *s;
 	int result = 0;
-	if((r = BN_bin2bn(sig, siglen / 2, NULL)) == NULL) {
+	if((r = BN_bin2bn(sig, (int)(siglen / 2), NULL)) == NULL) {
 		be_log(EID_VWR_LOG_ERROR, "Could not convert R part of basic key signature");
 		goto err;
 	}
-	if((s = BN_bin2bn(sig + (siglen / 2), siglen / 2, NULL)) == NULL) {
+	if((s = BN_bin2bn(sig + (siglen / 2), (int)(siglen / 2), NULL)) == NULL) {
 		be_log(EID_VWR_LOG_ERROR, "Could not convert S part of basic key signature");
 		goto err;
 	}
@@ -449,7 +495,7 @@ void eid_vwr_check_signature(const void* pubkey, size_t pubkeylen, const void* s
 		be_log(EID_VWR_LOG_ERROR, "Could not verify basic key signature: invalid values");
 		goto err;
 	}
-	if(ECDSA_do_verify(data, datalen, ec_sig, eckey) != 1) {
+	if(ECDSA_do_verify(data, (int)datalen, ec_sig, eckey) != 1) {
 		be_log(EID_VWR_LOG_ERROR, "Basic key signature fails verification. Is this a forged eID card?");
 		goto err;
 	}

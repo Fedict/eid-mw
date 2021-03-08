@@ -118,7 +118,7 @@ namespace eIDMW
 		//Wait until the end of the thread
 		while (IsRunning())
 		{
-			SleepMillisecs(ulSleepFrequency);
+			SleepMillisecs((int)ulSleepFrequency);
 		}
 	}
 

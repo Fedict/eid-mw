@@ -122,34 +122,48 @@ void CDynamicLib::PlatformClose()
 #include <Carbon/Carbon.h>
 #include <mach-o/dyld.h>
 
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= 1050
+#include <dlfcn.h>
+#endif
+
 unsigned long CDynamicLib::PlatformOpen(const char *csLibPath)
 {
-	m_module = (struct mach_header *) NSAddImage(csLibPath,
-						     NSADDIMAGE_OPTION_WITH_SEARCHING);
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 1050
+    m_module = (struct mach_header *)NSAddImage(csLibPath,
+                             NSADDIMAGE_OPTION_WITH_SEARCHING);
+#else
+    m_module = dlopen(csLibPath, RTLD_NOW);
+#endif
 
-	return m_module == NULL ? EIDMW_CANT_LOAD_LIB : EIDMW_OK;
+    return (m_module == NULL) ? EIDMW_CANT_LOAD_LIB : EIDMW_OK;
 }
 
 void *CDynamicLib::PlatformGetAddress(const char *csFunctionName)
 {
-	char csSymName[4096];
+    char csSymName[4096];
 
-	csSymName[0] = '_';
-	csSymName[1] = '\0';
-	strncat(csSymName, csFunctionName, sizeof(csSymName) - 2);
-	csSymName[sizeof(csSymName) - 1] = '\0';
+    csSymName[0] = '_';
+    csSymName[1] = '\0';
+    strncat(csSymName, csFunctionName, sizeof(csSymName) - 2);
+    csSymName[sizeof(csSymName) - 1] = '\0';
 
-	NSSymbol nssym = NSLookupSymbolInImage((const struct mach_header *)
-					       m_module, csSymName,
-					       NSLOOKUPSYMBOLINIMAGE_OPTION_BIND_NOW);
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 1050
+    NSSymbol nssym = NSLookupSymbolInImage((const struct mach_header *)
+                           m_module, csSymName,
+                           NSLOOKUPSYMBOLINIMAGE_OPTION_BIND_NOW);
 
-	return nssym == NULL ? NULL : NSAddressOfSymbol(nssym);
+    return (nssym == NULL) ? NULL : NSAddressOfSymbol(nssym);
+#else
+    void *nssym = dlsym(m_module, csSymName);
+
+    return (nssym == NULL) ? NULL : nssym;
+#endif
 }
 
 void CDynamicLib::PlatformClose()
 {
-	// It seems unpossible to unload a library on Mac OS X
-	// http://lists.apple.com/archives/Carbon-development/2004/Mar/msg00250.html
+    // It seems unpossible to unload a library on Mac OS X
+    // http://lists.apple.com/archives/Carbon-development/2004/Mar/msg00250.html
 }
 
 #endif

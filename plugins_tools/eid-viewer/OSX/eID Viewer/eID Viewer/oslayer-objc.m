@@ -1,7 +1,7 @@
 #import "oslayer-objc.h"
 #include <state.h>
 #include <pthread.h>
-#include "verify_cert.h"
+#include <verify_cert.h>
 #include "dataverify.h"
 #include "p11.h"
 
@@ -47,15 +47,58 @@ static void osl_objc_readers_found(unsigned long nreaders, slotdesc* slots) {
 	[currUi readersFound:readerNames withSlotNumbers:slotNumbers];
 }
 
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= 101100
+static NSData *urlSendSynchronousRequest(NSURLRequest *request, NSURLResponse *__autoreleasing *responsePointer, NSError *__autoreleasing *errorPointer)
+{
+    dispatch_semaphore_t semaphore;
+    __block NSData *result = nil;
+
+    semaphore = dispatch_semaphore_create(0);
+
+    void (^completionHandler)(NSData * __nullable data, NSURLResponse * __nullable response, NSError * __nullable error);
+    completionHandler = ^(NSData * __nullable data, NSURLResponse * __nullable response, NSError * __nullable error)
+    {
+        if ( errorPointer != NULL )
+        {
+            *errorPointer = error;
+        }
+
+        if ( responsePointer != NULL )
+        {
+            *responsePointer = response;
+        }
+
+        if ( error == nil )
+        {
+            result = data;
+        }
+
+        dispatch_semaphore_signal(semaphore);
+    };
+
+    [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:completionHandler] resume];
+
+    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+
+    return result;
+}
+#endif
+
 static const void* osl_objc_perform_ocsp_request(char* url, void* data, long len, long* retlen, void** handle) {
 	NSMutableURLRequest* req = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithCString:url encoding:NSUTF8StringEncoding]]];
 	NSData* dat = [NSData dataWithBytes:data length:len];
 	[req setValue:@"application/ocsp-request" forHTTPHeaderField: @"Content-Type"];
 	req.HTTPBody = dat;
 	req.HTTPMethod = @"POST";
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= 101100
+    NSURLResponse *resp = nil;
+    NSError *err = nil;
+    NSData *respdata = urlSendSynchronousRequest(req, &resp, &err);
+#else
 	NSURLResponse* resp;
 	NSError *err;
 	NSData *respdata = [NSURLConnection sendSynchronousRequest:req returningResponse:&resp error:&err];
+#endif
 	if (respdata != nil) {
 		void *retval = malloc(respdata.length);
 		*retlen = (long)respdata.length;
@@ -71,7 +114,11 @@ static const void* osl_objc_perform_http_request(char* url, long *retlen, void**
 	NSURLRequest* req = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithCString:url encoding:NSUTF8StringEncoding]]];
 	NSURLResponse *resp;
 	NSError *err;
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= 101100
+    NSData *respdata = urlSendSynchronousRequest(req, &resp, &err);
+#else
 	NSData *respdata = [NSURLConnection sendSynchronousRequest:req returningResponse:&resp error:&err];
+#endif
 	if(respdata != nil) {
 		void *retval = malloc(respdata.length+1);
 		*retlen = (long)respdata.length;

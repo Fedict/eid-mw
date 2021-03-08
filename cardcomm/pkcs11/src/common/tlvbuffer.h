@@ -79,9 +79,9 @@ private:
 				    unsigned long ulLen);
 
 		bool TlvEncodeLen(unsigned long ulLenVal,
-				  unsigned char *pucBufDest, int *piBufLen);
+				  unsigned char *pucBufDest, long *piBufLen);
 		bool TlvDecodeLen(const unsigned char *pucBufSrc,
-				  int *piBufLen, unsigned long *pulLenVal);
+				  long *piBufLen, unsigned long *pulLenVal);
 
 		static char hexChars[];
 

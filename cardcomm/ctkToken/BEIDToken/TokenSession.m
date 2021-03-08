@@ -661,7 +661,7 @@
         SecAsn1CoderCreate(&coder);
     
         SecAsn1Item dest = {0, nil};
-        OSStatus ortn = SecAsn1EncodeItem(coder, &ecdsa, ECDSATemplate, &dest);
+        /* OSStatus ortn = */ SecAsn1EncodeItem(coder, &ecdsa, ECDSATemplate, &dest);
         
         statResponse = [NSData dataWithBytes:dest.Data length:dest.Length];
 

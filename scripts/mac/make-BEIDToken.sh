@@ -18,7 +18,7 @@ hdiutil create -srcdir release-middleware -volname "eID Middleware" -fs HFS+ -fs
 DEVNAME=$(hdiutil attach -readwrite -noverify -noautoopen "tmp-eidmiddleware.dmg" | egrep '^/dev/' | sed 1q | awk '{print $1}')
 mkdir -p "/Volumes/eID Middleware/.background/"
 cp -a ../../installers/eid-mw/mac/DD/bg.png "/Volumes/eID Middleware/.background/"
-cp -a "../../cardcomm/ctktoken/Release/BEIDTokenApp.app" "/Volumes/eID Middleware/"
+cp -Rf "../../cardcomm/ctkToken/build/Release/BEIDToken.app" "/Volumes/eID Middleware/"
 ln -s /Applications "/Volumes/eID Middleware/ "
 /usr/bin/osascript "../../installers/eid-mw/mac/DD/setlayout.applescript" "eID Middleware" || true
 sleep 4

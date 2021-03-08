@@ -19,7 +19,10 @@
 
 **************************************************************************** */
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
+#import <AppKit/AppKit.h>
 
-@ interface AppDelegate:NSObject < NSApplicationDelegate, NSTableViewDataSource, NSTableViewDelegate >
-	@end
+#include "quarantine.h"
+
+@interface AppDelegate : NSObject <NSApplicationDelegate, NSTableViewDataSource, NSTableViewDelegate>
+@end
