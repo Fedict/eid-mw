@@ -18,9 +18,9 @@ set MDRVCERTPATH=%~dp0..\..\cardcomm\minidriver\makemsi
 :: ===========
 
 @echo [INFO] Sign the pkcs11_ff dll, 32bit
-"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://tsa.belgium.be/connect /td SHA256 /v "%~dp0..\..\cardcomm\pkcs11\VS_2017\Binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll"
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\cardcomm\pkcs11\VS_2017\Binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll"
 @echo [INFO] Sign the pkcs11_ff dll, 64bit
-"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://tsa.belgium.be/connect /td SHA256 /v "%~dp0..\..\cardcomm\pkcs11\VS_2017\Binaries\x64_PKCS11_FF_Release\beid_ff_pkcs11.dll"
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\cardcomm\pkcs11\VS_2017\Binaries\x64_PKCS11_FF_Release\beid_ff_pkcs11.dll"
 
 
 :: create the MSI installers
@@ -30,8 +30,8 @@ set MDRVCERTPATH=%~dp0..\..\cardcomm\minidriver\makemsi
 @cd %~dp0..\..\installers\eid-viewer\Windows
 
 @echo [INFO] Sign the eID Viewer executable and the viewer backend dll x86
-"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://tsa.belgium.be/connect /td SHA256 /v "%~dp0..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\Release\eIDViewer.exe"
-"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://tsa.belgium.be/connect /td SHA256 /v "%~dp0..\..\plugins_tools\eid-viewer\Windows\eIDViewerBackend\VS_2017\Binaries\Win32_Release\eIDViewerBackend.dll"
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\Release\eIDViewer.exe"
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\plugins_tools\eid-viewer\Windows\eIDViewerBackend\VS_2017\Binaries\Win32_Release\eIDViewerBackend.dll"
 @if %ERRORLEVEL%==1 goto signtool_failed
 
 @echo [INFO] create eID Viewer msi installer x86
@@ -39,15 +39,15 @@ set MDRVCERTPATH=%~dp0..\..\cardcomm\minidriver\makemsi
 @if %ERRORLEVEL%==1 goto end_resetpath_with_error
 
 @echo [INFO] sign eID Viewer msi installer x86
-"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://tsa.belgium.be/connect /td SHA256 /v "%~dp0..\..\installers\eid-viewer\Windows\bin\BeidViewer.msi"
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\installers\eid-viewer\Windows\bin\BeidViewer.msi"
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
 @echo [INFO] copy 32 bit msi installer
 @copy "%~dp0..\..\installers\eid-viewer\Windows\bin\BeidViewer.msi" "%~dp0\BeidViewer %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.msi"
 
 
 ::@echo [INFO] Sign the eID Viewer executable and the viewer backend dll x64
-::"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://tsa.belgium.be/connect /td SHA256 /v "%~dp0..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\x64\Release\eIDViewer.exe"
-::"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://tsa.belgium.be/connect /td SHA256 /v "%~dp0..\..\plugins_tools\eid-viewer\Windows\eIDViewerBackend\VS_2017\Binaries\x64_Release\eIDViewerBackend.dll"
+::"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\x64\Release\eIDViewer.exe"
+::"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\plugins_tools\eid-viewer\Windows\eIDViewerBackend\VS_2017\Binaries\x64_Release\eIDViewerBackend.dll"
 ::@if %ERRORLEVEL%==1 goto signtool_failed
 ::
 ::@echo [INFO] create eID Viewer msi installer x64
@@ -55,7 +55,7 @@ set MDRVCERTPATH=%~dp0..\..\cardcomm\minidriver\makemsi
 ::@if %ERRORLEVEL%==1 goto end_resetpath_with_error
 ::
 ::@echo [INFO] sign eID Viewer msi installer x64
-::"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://tsa.belgium.be/connect /td SHA256 /v "%~dp0..\..\installers\eid-viewer\Windows\bin\x64\BeidViewer64.msi"
+::"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\installers\eid-viewer\Windows\bin\x64\BeidViewer64.msi"
 ::@if "%ERRORLEVEL%" == "1" goto signtool_failed
 ::@echo [INFO] copy 64 bit msi installer
 ::@copy "%~dp0..\..\installers\eid-viewer\Windows\bin\BeidViewer.msi" "%~dp0\BeidViewer %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.msi"
@@ -84,14 +84,14 @@ set MDRVCERTPATH=%~dp0..\..\cardcomm\minidriver\makemsi
 :: ==============================
 
 @echo [INFO] sign nsis viewer installer by signing a SHA256 hash of it
-"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://tsa.belgium.be/connect /td SHA256 /v "%~dp0..\..\installers\quickinstaller\Belgium eID Viewer Installer %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe"
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\installers\quickinstaller\Belgium eID Viewer Installer %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe"
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
 
 :: sign the nsis viewer launcher
 :: =============================
 
 @echo [INFO] sign nsis viewer launcher by signing a SHA256 hash of it
-"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://tsa.belgium.be/connect /td SHA256 /v "%~dp0..\..\installers\quickinstaller\Belgium eID Viewer Launcher %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe"
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\installers\quickinstaller\Belgium eID Viewer Launcher %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe"
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
 
 
