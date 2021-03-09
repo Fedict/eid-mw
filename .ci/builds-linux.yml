@@ -106,23 +106,23 @@
       cobertura: products/reports/coverage.xml
     when: always
 
-.validation:linux:firefox:
-  tags:
-  - robot
-  - linux
-  before_script:
-  - killall Xvfb || true
-  script:
-  - xvfb-run actiona -e -x $CI_PROJECT_DIR/tests/browsertests/firefoxTest.ascr
+#.validation:linux:firefox:
+#  tags:
+#  - robot
+#  - linux
+#  before_script:
+#  - killall Xvfb || true
+#  script:
+#  - xvfb-run actiona -e -x $CI_PROJECT_DIR/tests/browsertests/firefoxTest.ascr
 
-.validation:linux:google:
-  tags:
-  - robot
-  - linux
-  before_script:
-  - killall Xvfb || true
-  script:
-  - xvfb-run actiona -e -x $CI_PROJECT_DIR/tests/browsertests/googleTest.ascr
+#.validation:linux:google:
+#  tags:
+#  - robot
+#  - linux
+#  before_script:
+#  - killall Xvfb || true
+#  script:
+#  - xvfb-run actiona -e -x $CI_PROJECT_DIR/tests/browsertests/googleTest.ascr
 
 .repro:debian:
   tags:
