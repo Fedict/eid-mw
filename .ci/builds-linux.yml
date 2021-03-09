@@ -106,23 +106,23 @@
       cobertura: products/reports/coverage.xml
     when: always
 
-.validation:linux:firefox:
-  tags:
-  - robot
-  - linux
-  before_script:
-  - killall Xvfb || true
-  script:
-  - xvfb-run actiona -e -x $CI_PROJECT_DIR/tests/browsertests/firefoxTest.ascr
+#.validation:linux:firefox:
+#  tags:
+#  - robot
+#  - linux
+#  before_script:
+#  - killall Xvfb || true
+#  script:
+#  - xvfb-run actiona -e -x $CI_PROJECT_DIR/tests/browsertests/firefoxTest.ascr
 
-.validation:linux:google:
-  tags:
-  - robot
-  - linux
-  before_script:
-  - killall Xvfb || true
-  script:
-  - xvfb-run actiona -e -x $CI_PROJECT_DIR/tests/browsertests/googleTest.ascr
+#.validation:linux:google:
+#  tags:
+#  - robot
+#  - linux
+#  before_script:
+#  - killall Xvfb || true
+#  script:
+#  - xvfb-run actiona -e -x $CI_PROJECT_DIR/tests/browsertests/googleTest.ascr
 
 .repro:debian:
   tags:
@@ -343,4 +343,3 @@
   - tar cvaf eid-mw-coverity.tar.gz cov-int
   - curl --form project=eID+middleware --form token=$COVERITY_TOKEN --form email=wouter.verhelst@fedict.be --form 'file=@"eid-mw-coverity.tar.gz";filename="eID middleware.tgz"' --form version=$CI_COMMIT_SHA --form description="automatic submission by GitLab CI" https://scan.coverity.com/builds?project=eID+middleware
   - popd
-  when: manual

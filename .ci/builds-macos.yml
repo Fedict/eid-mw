@@ -32,8 +32,6 @@
   - cd $MACOS_BASEDIR/scripts/mac
   - ./make-mac.sh
   - ./make-viewer.sh
-  after_script:
-  - sudo chown -R $USER $MACOS_BASEDIR/installers/eid-mw/mac/release || true
   tags:
   - macos
   - build
