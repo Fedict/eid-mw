@@ -59,7 +59,7 @@ set OUR_CURRENT_PATH="%cd%"
 "%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi"
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
 @echo [INFO] copy 32 bit msi installer
-copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi %~dp0
+copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi %~dp0\BeidMW_32_%BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.msi
 
 @call "%~dp0..\..\installers\eid-mw\Windows\build_msi_eidmw64.cmd"
 @if %ERRORLEVEL%==1 goto signtool_failed
@@ -71,7 +71,7 @@ copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi %~dp0
 "%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_64.msi"
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
 @echo [INFO] copy 64 bit msi installer
-copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_64.msi %~dp0
+copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_64.msi %~dp0\BeidMW_64_%BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.msi
 
 
 @cd "%OUR_CURRENT_PATH%"
