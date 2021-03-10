@@ -19,12 +19,16 @@ then
 fi
 shift
 mkdir -p /srv/chroot
+if [ -z $ACNG ]
+then
+	ACNG=http://
+fi
 case $DIST in
 	debian)
-		sbuild-createchroot --arch=$ARCH $CODE /srv/chroot/$CODE http://deb.debian.org/debian
+		sbuild-createchroot --arch=$ARCH $CODE /srv/chroot/$CODE ${ACNG}deb.debian.org/debian
 	;;
 	ubuntu)
-		sbuild-createchroot --arch=$ARCH $CODE /srv/chroot/$CODE http://archive.ubuntu.com/ubuntu /usr/share/debootstrap/scripts/gutsy
+		sbuild-createchroot --arch=$ARCH $CODE /srv/chroot/$CODE ${ACNG}archive.ubuntu.com/ubuntu /usr/share/debootstrap/scripts/gutsy
 	;;
 	*)
 		echo "E: unknown dist: $DIST" >&2
