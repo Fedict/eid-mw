@@ -108,20 +108,22 @@
 
 #.validation:linux:firefox:
 #  tags:
-#  - robot
+#  - test
 #  - linux
 #  before_script:
 #  - killall Xvfb || true
 #  script:
+#  - s.text.s(pwd).g
 #  - xvfb-run actiona -e -x $CI_PROJECT_DIR/tests/browsertests/firefoxTest.ascr
 
 #.validation:linux:google:
 #  tags:
-#  - robot
+#  - test
 #  - linux
 #  before_script:
 #  - killall Xvfb || true
 #  script:
+#  - s.text.s(pwd).g
 #  - xvfb-run actiona -e -x $CI_PROJECT_DIR/tests/browsertests/googleTest.ascr
 
 .repro:debian:

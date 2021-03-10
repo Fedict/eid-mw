@@ -1,3 +1,20 @@
+.validation:macos:firefox:
+  tags:
+  - test
+  - macos
+  script:
+  - osascript $MACOS_BASEDIR/tests/browsertests/Mac/InstallNightly.applescript
+  - osascript $MACOS_BASEDIR/tests/browsertests/Mac/InstallAddonNightly.applescript
+  - osascript $MACOS_BASEDIR/tests/browsertests/Mac/TestFirefox.applescript "https://pfsense.pass.lan:20443" "0075"
+
+.validation:macos:google:
+  tags:
+  - test
+  - macos
+  script:
+  - osascript $MACOS_BASEDIR/tests/browsertests/Mac/InstallChrome.applescript
+  - osascript $MACOS_BASEDIR/tests/browsertests/Mac/TestChrome.applescript "https://pfsense.pass.lan:20443" "0075"
+
 .robot:macos:
   variables:
     EID_ROBOT_STYLE: $EID_ROBOT_STYLE_MACOS
