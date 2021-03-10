@@ -50,5 +50,11 @@ Run commands:
 certutil -addstore root zeteseidtest.cer
 certutil -addstore TrustedPublisher zeteseidtest.cer
 
-To test sign a document
------------------------
+Build and signing scripts:
+--------------------------
+build_all.bat : builds all (certclean, pkcs11, pkcs11_ff, minidriver, viewer, viewer launcher, msi's and NSIS installers) and signs all with test certificate
+sign_minidriver_cab.bat : signs the minidriver, and creates and signs the minidriver cab file in preparation for attestation signing
+sign_builds.bat : sets the attestation signed minidriver that will be packaged, and signs all dll's and exe's and msi's (also rebuilds installers with signed components)
+
+build_viewer.bat : builds all viewer components and installers and signs them with test certificate
+sign_viewer.bat : signs all viewer related dll's and exe's and msi's (also rebuilds installers with signed components)
