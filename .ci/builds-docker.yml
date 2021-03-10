@@ -2,12 +2,9 @@
 .docker-base:
   retry: 1
   stage: docker
-  image: docker:stable
   tags:
-  - dind
-  services:
-  - name: registry.gitlab.eidmw.dev.pass.lan/eid-mw/eid-mw/docker:dind
-    alias: docker
+  - linux
+  - docker-build
   variables:
     IMAGE_TAG: $CI_REGISTRY_IMAGE/$CI_JOB_NAME:$CI_COMMIT_REF_SLUG
     DOCKER_HOST: tcp://docker:2376/
