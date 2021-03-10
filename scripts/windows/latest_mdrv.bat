@@ -1,11 +1,11 @@
 @SET CORRECT_SHA256_HASH=903bf4a6ef6e2ece1783ed5146340e2d2d12e130abb8f0f14974a5a5098dd5f8
-@SET BEIDMDRV_ZIP=beidmdrv_all.zip
+@SET BEIDMDRV_ZIP=beidmdrv_all_5.0.3.5033.zip
 @echo hash verification current beidmdrv started 
 @echo known hash is %CORRECT_SHA256_HASH%
 
 :: downloading signed minidriver
 ::==============================
-@echo downloading signed minidriver
+@echo downloading signed minidriver %BEIDMDRV_ZIP%
 @call curl -O "https://dist.eid.belgium.be/releases/506/%BEIDMDRV_ZIP%"
 @if %ERRORLEVEL%==1 goto download_failed
 
