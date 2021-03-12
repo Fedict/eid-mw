@@ -7,10 +7,10 @@ on run
 	tell application "System Events"
 		click UI element "Download Chrome Canary" of group 2 of group 3 of UI element 1 of scroll area 1 of group 1 of group 1 of tab group 1 of splitter group 1 of window "Chrome Canary Features For Developers - Google Chrome" of application process "Safari"
 		delay 0.1
-		click UI element "Mac with Intel chip" of group 1 of group 16 of UI element 1 of scroll area 1 of group 1 of group 1 of tab group 1 of splitter group 1 of window "Chrome Canary Features For Developers - Google Chrome" of application process "Safari"
+		click UI element "Mac with Intel chip" of group 1 of group 14 of UI element 1 of scroll area 1 of group 1 of group 1 of tab group 1 of splitter group 1 of window "Chrome Canary Features For Developers - Google Chrome" of application process "Safari"
 	end tell
 	-- allow for download to finish
-	delay 18
+	delay 20
 	do shell script "hdiutil mount ~/Downloads/googlechromecanary.dmg"
 	set canaryapp to "Google Chrome Canary:Google Chrome Canary.app"
 	tell application "Finder"
