@@ -419,19 +419,19 @@ validate:robot:macos:
 #  - build:ubuntu_lts_32
 #  allow_failure: true
 
-#validate:validation:macos:firefox
-#  stage: validate
-#  extends: .validation:macos:firefox
-#  dependencies:
-#  - build:macos
-#  allow_failure: true
+validate:validation:macos:firefox:
+  stage: validate
+  extends: .validation:macos:firefox
+  dependencies:
+  - build:macos
+  allow_failure: true
 
-#validate:validation:macos:google
-#  stage: validate
-#  extends: .validation:macos:google
-#  dependencies:
-#  - build:macos
-#  allow_failure: true
+validate:validation:macos:google:
+  stage: validate
+  extends: .validation:macos:google
+  dependencies:
+  - build:macos
+  allow_failure: true
 
 ####################################################################
 # Stage "build-repository": copy binaries into a repository layout #
