@@ -106,25 +106,25 @@
       cobertura: products/reports/coverage.xml
     when: always
 
-#.validation:linux:firefox:
-#  tags:
-#  - test
-#  - linux
-#  before_script:
-#  - killall Xvfb || true
-#  script:
-#  - s.text.s(pwd).g
-#  - xvfb-run actiona -e -x $CI_PROJECT_DIR/tests/browsertests/firefoxTest.ascr
+.validation:linux:firefox:
+  tags:
+  - test
+  - linux
+  before_script:
+  - killall Xvfb || true
+  script:
+  - cd $CI_PROJECT_DIR/tests/browsertests
+  - xvfb-run actiona -e -x $CI_PROJECT_DIR/tests/browsertests/firefoxTest.ascr
 
-#.validation:linux:google:
-#  tags:
-#  - test
-#  - linux
-#  before_script:
-#  - killall Xvfb || true
-#  script:
-#  - s.text.s(pwd).g
-#  - xvfb-run actiona -e -x $CI_PROJECT_DIR/tests/browsertests/googleTest.ascr
+.validation:linux:google:
+  tags:
+  - test
+  - linux
+  before_script:
+  - killall Xvfb || true
+  script:
+  - cd $CI_PROJECT_DIR/tests/browsertests
+  - xvfb-run actiona -e -x $CI_PROJECT_DIR/tests/browsertests/googleTest.ascr
 
 .repro:debian:
   tags:
