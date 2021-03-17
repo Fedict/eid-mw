@@ -8,8 +8,13 @@
 static assuan_context_t ctx;
 static bool inited = false;
 
+#if ENABLE_NLS
 #define _(s) dgettext("dialogs-beid", (s))
 #define n_(s, p, i) dngettext("dialogs-beid", (s), (p), (i))
+#else
+#define _(s) s
+#define n_(s, p, i) (i == 1 ? s : p)
+#endif
 
 using namespace eIDMW;
 
@@ -69,7 +74,9 @@ static bool setup() {
 				break;
 			}
 		}
+#if ENABLE_NLS
 		bindtextdomain("dialogs-beid", DATAROOTDIR "/locale");
+#endif
 	}
 	inited = true;
 	return false;
@@ -183,7 +190,7 @@ DlgRet eIDMW::DlgAskPins(DlgPinOperation operation, DlgPinUsage usage, const wch
 		MWLOG(LEV_ERROR, MOD_DLG, L"Could not set repeat: %s", gpg_strerror(r));
 		return DLG_ERR;
 	}
-	if ((r = assuan_transact(ctx, "GETPIN", NULL, NULL, NULL, NULL, NULL, NULL))) {
+	if ((r = assuan_transact(ctx, "GETPIN", return_pin, &pin, NULL, NULL, NULL, NULL))) {
 		if(gpg_err_code(r) == GPG_ERR_CANCELED) {
 			return DLG_CANCEL;
 		}

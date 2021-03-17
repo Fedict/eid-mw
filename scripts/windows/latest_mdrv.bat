@@ -1,14 +1,15 @@
-@SET CORRECT_SHA256_HASH=903bf4a6ef6e2ece1783ed5146340e2d2d12e130abb8f0f14974a5a5098dd5f8
+@SET CORRECT_SHA256_HASH=114a8c5141057f38864ef0bd3efb809d8218255e874c19ae6564bdc7df0699b5
+@SET BEIDMDRV_ZIP=beidmdrv_all_5.0.17.5494.zip
 @echo hash verification current beidmdrv started 
 @echo known hash is %CORRECT_SHA256_HASH%
 
 :: downloading signed minidriver
 ::==============================
-@echo downloading signed minidriver
-@call curl -O https://dist.eid.belgium.be/releases/506/beidmdrv_all.zip
+@echo downloading signed minidriver %BEIDMDRV_ZIP%
+@call curl -O "https://dist.eid.belgium.be/releases/5.0.17/%BEIDMDRV_ZIP%"
 @if %ERRORLEVEL%==1 goto download_failed
 
-@FOR /F "tokens=1" %%F IN ('CertUtil.exe -hashfile beidmdrv_all.zip SHA256 ^| find /i /v "SHA256" ^| find /i /v "certutil"') DO (
+@FOR /F "tokens=1" %%F IN ('CertUtil.exe -hashfile %BEIDMDRV_ZIP% SHA256 ^| find /i /v "SHA256" ^| find /i /v "certutil"') DO (
 	SET var=%%F
 )
 
@@ -23,25 +24,26 @@ goto hash_not_ok
 :: extract downloaded minidriver
 ::==============================
 
-powershell Expand-archive beidmdrv_all.zip -DestinationPath .\beidmdrv_dist -Force
+rd /s /q "%~dp0\beidmdrv_dist"
+powershell Expand-archive %BEIDMDRV_ZIP% -DestinationPath .\beidmdrv_dist -Force
 @if %ERRORLEVEL%==1 goto zip_extract_failed
 
 :: copy WIN10 signed minidriver
 ::=============================
 
-del %~dp0..\..\installers\quickinstaller\Drivers\WINALL\beidmdrv\* \q
-rd %~dp0..\..\installers\quickinstaller\Drivers\WINALL\beidmdrv
-mkdir %~dp0..\..\installers\quickinstaller\Drivers\WINALL\beidmdrv
+del /q "%~dp0..\..\installers\quickinstaller\Drivers\WINALL\beidmdrv\*"
+rd "%~dp0..\..\installers\quickinstaller\Drivers\WINALL\beidmdrv"
+mkdir "%~dp0..\..\installers\quickinstaller\Drivers\WINALL\beidmdrv"
 
-copy %~dp0.\beidmdrv_dist\WIN10\* %~dp0..\..\installers\quickinstaller\Drivers\WINALL\beidmdrv
+copy "%~dp0.\beidmdrv_dist\WIN10\*" "%~dp0..\..\installers\quickinstaller\Drivers\WINALL\beidmdrv"
 
 :: copy WIN7 / WIN8.1 signed minidriver
 ::=====================================
-del %~dp0..\..\installers\quickinstaller\Drivers\XP-WIN8\beidmdrv\* \q
-rd %~dp0..\..\installers\quickinstaller\Drivers\XP-WIN8\beidmdrv
-mkdir %~dp0..\..\installers\quickinstaller\Drivers\XP-WIN8\beidmdrv
+del /q "%~dp0..\..\installers\quickinstaller\Drivers\XP-WIN8\beidmdrv\*"
+rd "%~dp0..\..\installers\quickinstaller\Drivers\XP-WIN8\beidmdrv"
+mkdir "%~dp0..\..\installers\quickinstaller\Drivers\XP-WIN8\beidmdrv"
 
-copy %~dp0.\beidmdrv_dist\WIN7_WIN81\* %~dp0..\..\installers\quickinstaller\Drivers\XP-WIN8\beidmdrv
+copy "%~dp0.\beidmdrv_dist\WIN7_WIN81\*" "%~dp0..\..\installers\quickinstaller\Drivers\XP-WIN8\beidmdrv"
 
 goto end:
 
@@ -50,7 +52,7 @@ goto end:
 
 :hash_not_ok
 @echo hash verification failed, deleting what we downloaded
-del beidmdrv_all.zip
+del %BEIDMDRV_ZIP%
 exit /b 1
 
 :download failed
@@ -58,7 +60,7 @@ exit /b 1
 exit /b 1
 
 :zip_extract_failed
-@echo failed extracting beidmdrv_all.zip
+@echo failed extracting %BEIDMDRV_ZIP%
 exit /b 1
 
 

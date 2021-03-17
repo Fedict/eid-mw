@@ -144,6 +144,18 @@ cat > "$MOZ_PKCS11_MANIFEST_DIR/beidpkcs11.json" <<EOF
   "name": "beidpkcs11",
   "description": "Belgium eID PKCS#11 Module",
   "type": "pkcs11",
+  "path": "/Library/Belgium Identity Card/Pkcs11/beid-pkcs11.bundle/Contents/MacOS/libbeidpkcs11.dylib",
+  "allowed_extensions": ["belgiumeid@eid.belgium.be"]
+}
+EOF
+
+# Create PKCS#11 manifest file with alternative diretory for Mozilla
+# our plugin will use this manifest in order to determine if the pkcs11 lib at this location is already loaded
+cat > "$MOZ_PKCS11_MANIFEST_DIR/beidpkcs11_alt.json" <<EOF
+{
+  "name": "beidpkcs11_alt",
+  "description": "Belgium eID PKCS#11 Module",
+  "type": "pkcs11",
   "path": "/usr/local/lib/beid-pkcs11.bundle/Contents/MacOS/libbeidpkcs11.dylib",
   "allowed_extensions": ["belgiumeid@eid.belgium.be"]
 }

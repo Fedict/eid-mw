@@ -1,5 +1,5 @@
 {
-  "name": "beidp11kit",
+  "name": "beidpkcs11_alt",
   "description": "BeID access to check p11-kit installation on failure",
   "path": "p11-kit-proxy.so",
   "type": "pkcs11",

@@ -51,7 +51,7 @@ set OUR_CURRENT_PATH="%cd%"
 @call "%~dp0..\..\installers\eid-viewer\Windows\build_msi_eidviewer.cmd"
 @if %ERRORLEVEL%==1 goto end_resetpath_with_error
 @echo [INFO] sign 32 bit msi installer
-"%SIGNTOOL_PATH%\signtool" sign /a /n "ZetesTestCert" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%~dp0..\..\installers\eid-viewer\Windows\bin\beidViewer.msi"
+"%SIGNTOOL_PATH%\signtool" sign /a /n "ZetesTestCert" /v "%~dp0..\..\installers\eid-viewer\Windows\bin\beidViewer.msi"
 @if %ERRORLEVEL%==1 goto signtool_failed
 @echo [INFO] copy 32 bit msi installer
 copy %~dp0..\..\installers\eid-viewer\Windows\bin\beidViewer.msi %~dp0
@@ -59,7 +59,7 @@ copy %~dp0..\..\installers\eid-viewer\Windows\bin\beidViewer.msi %~dp0
 @call "%~dp0..\..\installers\eid-viewer\Windows\build_msi_eidviewer64.cmd"
 @if %ERRORLEVEL%==1 goto end_resetpath_with_error
 @echo [INFO] sign 64 bit msi installer
-"%SIGNTOOL_PATH%\signtool" sign /a /n "ZetesTestCert" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%~dp0..\..\installers\eid-viewer\Windows\bin\x64\beidViewer64.msi"
+"%SIGNTOOL_PATH%\signtool" sign /a /n "ZetesTestCert" /v "%~dp0..\..\installers\eid-viewer\Windows\bin\x64\beidViewer64.msi"
 @if %ERRORLEVEL%==1 goto signtool_failed
 @echo [INFO] copy 64 bit msi installer
 copy %~dp0..\..\installers\eid-viewer\Windows\bin\x64\beidViewer64.msi %~dp0
@@ -86,11 +86,11 @@ copy %~dp0..\..\installers\eid-viewer\Windows\bin\x64\beidViewer64.msi %~dp0
 :: ========================
 
 @echo [INFO] Sign nsis viewer installer
-"%SIGNTOOL_PATH%\signtool" sign /a /n "ZetesTestCert" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%~dp0..\..\installers\quickinstaller\Belgium eID Viewer Installer %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe"
+"%SIGNTOOL_PATH%\signtool" sign /a /n "ZetesTestCert" /v "%~dp0..\..\installers\quickinstaller\Belgium eID Viewer Installer %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe"
 @if %ERRORLEVEL%==1 goto signtool_failed
 
 @echo [INFO] sign nsis viewer launcher
-"%SIGNTOOL_PATH%\signtool" sign /a /n "ZetesTestCert" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%~dp0..\..\installers\quickinstaller\Belgium eID Viewer Launcher %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe"
+"%SIGNTOOL_PATH%\signtool" sign /a /n "ZetesTestCert" /v "%~dp0..\..\installers\quickinstaller\Belgium eID Viewer Launcher %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe"
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
 
 

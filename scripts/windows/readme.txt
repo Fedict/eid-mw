@@ -31,7 +31,7 @@ Code Signing Certificate for testing
 
 How to create a new code signing certificate/key pair (only written down here for the reference)
 
-1) Make sure you have the tools makecert and pvk2pfx. These tools can be found int the Windows
+1) Make sure you have the tools makecert and pvk2pfx. These tools can be found in the Windows
    Driver Kit (e.g. C:\Program Files (x86)\Windows Kits\10\bin\10.0.17134.0\x64\)
 
 2) To make the keys and the certificate run:
@@ -50,5 +50,12 @@ Run commands:
 certutil -addstore root zeteseidtest.cer
 certutil -addstore TrustedPublisher zeteseidtest.cer
 
-To test sign a document
------------------------
+Build and signing scripts:
+--------------------------
+build_all.bat : builds all (certclean, pkcs11, pkcs11_ff, minidriver, viewer, viewer launcher, msi's and NSIS installers) and signs all with test certificate
+sign_minidriver_cab.bat : signs the minidriver, and creates and signs the minidriver cab file in preparation for attestation signing
+package_minidriver.bat : creates a zip file that contains all attestation signed minidriver files
+sign_builds.bat : sets the attestation signed minidriver that will be packaged, and signs all dll's and exe's and msi's (also rebuilds installers with signed components)
+
+build_viewer.bat : builds all viewer components and installers and signs them with test certificate
+sign_viewer.bat : signs all viewer related dll's and exe's and msi's (also rebuilds installers with signed components)

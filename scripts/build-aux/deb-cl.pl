@@ -50,14 +50,13 @@ if(!defined($version)) {
 }
 my $distribution = "";
 my $released = "";
-print "Environment:";
-print Dumper(\%ENV);
 if(exists($ENV{TARGET}) && length($ENV{TARGET}) > 0) {
 	$distribution = $ENV{TARGET} . "-";
 } else {
 	$released = "r";
 }
 $distribution .= $ENV{CODE};
+$version=~ s/-v/v/;
 
 
 $entry->{header} = "eid-mw ($version-0" . $ENV{SHORT} . "$released-1) $distribution; urgency=low";

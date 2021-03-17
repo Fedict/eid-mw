@@ -93,7 +93,7 @@ AM_CONDITIONAL([FUZZING], [test x$fuzzer != xno])
 AM_CONDITIONAL([FUZZ_AFL], [test x$fuzzer = xafl])
 
 AC_ARG_WITH([gtkvers],
-	[AS_HELP_STRING([--with-gtkvers],[select GTK version to use [default: 3 if available, falls back to 2 if not]; --without-gtkvers disables GTK altogether [note: this implies --disable-dialogs].])],
+	[AS_HELP_STRING([--with-gtkvers],[select GTK version to use [default: 3 if available, falls back to 4 if not; note that GTK4 support is incomplete]. --without-gtkvers disables GTK altogether [note: this implies --disable-dialogs].])],
 	[gtkvers=$withval],[gtkvers=detect])
 have_gtk=no
 AC_MSG_CHECKING([for wanted GTK version])
@@ -115,7 +115,7 @@ if test "$have_gtk" = "no"
 then
 	if test "$gtkvers" = 2
 	then
-		AC_MSG_ERROR([Gtk 2 is no longer supported, sorry])
+		AC_MSG_ERROR([GTK 2 is no longer supported, sorry])
 	fi
 fi
 
@@ -164,9 +164,7 @@ GLIB_GSETTINGS
 fi
 AM_CONDITIONAL(HAVE_GIO, [test "$HAVE_GIO" = 1])
 
-AC_ARG_ENABLE(p11v220, AS_HELP_STRING([--enable-p11v220], [Enable PKCS#11 v2.20 features (default off, uses PKCS#11 v2.11 instead)]),,[enable_p11v220=no])
-
-AS_IF([test "$enable_p11v220" = "yes"], AC_DEFINE(PKCS11_V2_20,[],[Define this if you want PKCS#11 v2.20 features]))
+AC_DEFINE(PKCS11_V2_20,[],[Needs to always be defined])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_STDBOOL
@@ -188,9 +186,9 @@ AC_CHECK_FUNCS([gethostbyname socket strerror memchr memset mkdir select strchr 
 CFLAGS=$saved_CFLAGS
 
 # we only need libjpeg for the test suite, so don't worry if it's not available...
+PKG_CHECK_MODULES(JPEG, "libjpeg", [HAVE_JPEGLIB=1], [HAVE_JPEGLIB=0])
 AC_CHECK_LIB(jpeg, jpeg_mem_src, [HAVE_JPEGLIB=1; JPEG_LIBS='-ljpeg'], [HAVE_JPEGLIB=0])
 AM_CONDITIONAL([JPEG], [test x$HAVE_JPEGLIB = x1])
-AC_SUBST([JPEG_LIBS])
 AC_DEFINE_UNQUOTED([HAVE_JPEGLIB], $HAVE_JPEGLIB, [Define to 1 if you have libjpeg installed])
 
 PKG_CHECK_MODULES(SSL, "openssl", [HAVE_OPENSSL=1])
@@ -247,7 +245,7 @@ AC_CONFIG_FILES([Makefile
 		 cardcomm/pkcs11/src/cardlayer/uml/Makefile
 		 cardcomm/pkcs11/src/libbeidpkcs11.pc
 		 cardcomm/pkcs11/src/beidpkcs11.json
-		 cardcomm/pkcs11/src/beidp11kit.json
+		 cardcomm/pkcs11/src/beidpkcs11_alt.json
 		 cardcomm/pkcs11/src/dialogs/dialogsgtk/po/Makefile.in
 		 doc/sdk/include/v240/Makefile
 		 tests/unit/Makefile

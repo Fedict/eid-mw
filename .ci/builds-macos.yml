@@ -1,3 +1,20 @@
+.validation:macos:firefox:
+  tags:
+  - test
+  - macos
+  script:
+  - osascript $MACOS_BASEDIR/tests/browsertests/Mac/InstallNightly.applescript
+  - osascript $MACOS_BASEDIR/tests/browsertests/Mac/InstallAddonNightly.applescript
+  - osascript $MACOS_BASEDIR/tests/browsertests/Mac/TestFirefox.applescript "https://pfsense.pass.lan:20443" "1234"
+
+.validation:macos:google:
+  tags:
+  - test
+  - macos
+  script:
+  - osascript $MACOS_BASEDIR/tests/browsertests/Mac/InstallChrome.applescript
+  - osascript $MACOS_BASEDIR/tests/browsertests/Mac/TestChrome.applescript "https://pfsense.pass.lan:20443" "1234"
+
 .robot:macos:
   variables:
     EID_ROBOT_STYLE: $EID_ROBOT_STYLE_MACOS
@@ -32,8 +49,6 @@
   - cd $MACOS_BASEDIR/scripts/mac
   - ./make-mac.sh
   - ./make-viewer.sh
-  after_script:
-  - sudo chown -R $USER $MACOS_BASEDIR/installers/eid-mw/mac/release || true
   tags:
   - macos
   - build
