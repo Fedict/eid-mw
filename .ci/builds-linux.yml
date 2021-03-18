@@ -108,7 +108,7 @@
 
 .validation:linux:firefox:
   tags:
-  - test
+  - robot
   - linux
   before_script:
   - killall Xvfb || true
@@ -118,7 +118,7 @@
 
 .validation:linux:google:
   tags:
-  - test
+  - robot
   - linux
   before_script:
   - killall Xvfb || true
