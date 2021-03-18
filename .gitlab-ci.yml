@@ -114,6 +114,7 @@ test:nodialogs:
 test:coverity:linux:
   stage: tests
   extends: .coverity:linux
+  allow_failure: true
 
 #################################################
 # Stage "source-package": build source packages #
