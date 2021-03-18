@@ -2,16 +2,16 @@
 <scriptfile>
     <settings program="actiona" version="3.10.1" scriptVersion="1.1.0" os="GNU/Linux"/>
     <actions>
-        <action name="ActionWriteText" version="1.0.0"/>
         <action name="ActionCode" version="1.0.0"/>
         <action name="ActionStop" version="1.0.0"/>
-        <action name="ActionReadEnvironmentVariable" version="1.0.0"/>
-        <action name="ActionKey" version="1.0.0"/>
-        <action name="ActionPause" version="1.0.0"/>
+        <action name="ActionWriteText" version="1.0.0"/>
+        <action name="ActionOpenURL" version="1.0.0"/>
         <action name="ActionExit" version="1.0.0"/>
         <action name="ActionWindow" version="1.0.0"/>
         <action name="ActionWindowCondition" version="1.0.0"/>
-        <action name="ActionOpenURL" version="1.0.0"/>
+        <action name="ActionPause" version="1.0.0"/>
+        <action name="ActionKey" version="1.0.0"/>
+        <action name="ActionReadEnvironmentVariable" version="1.0.0"/>
     </actions>
     <parameters/>
     <resources/>
@@ -37,6 +37,20 @@
             </parameter>
             <parameter name="variable">
                 <subParameter name="value" code="0">logdir</subParameter>
+            </parameter>
+        </action>
+        <action name="ActionReadEnvironmentVariable">
+            <exception id="0" action="0" line=""/>
+            <exception id="1" action="0" line=""/>
+            <exception id="2" action="1" line=""/>
+            <parameter name="environmentVariableName">
+                <subParameter name="value" code="0">PIN</subParameter>
+            </parameter>
+            <parameter name="mode">
+                <subParameter name="value" code="0">oneVariable</subParameter>
+            </parameter>
+            <parameter name="variable">
+                <subParameter name="value" code="0">PIN</subParameter>
             </parameter>
         </action>
         <action name="ActionWindowCondition" timeout="20000">
@@ -190,7 +204,7 @@ logfile.close();</subParameter>
                 <subParameter name="value" code="0">0</subParameter>
             </parameter>
             <parameter name="text">
-                <subParameter name="value" code="0">1234</subParameter>
+                <subParameter name="value" code="0">$PIN</subParameter>
             </parameter>
         </action>
         <action name="ActionKey">

@@ -113,6 +113,7 @@
   before_script:
   - killall Xvfb || true
   script:
+  - export PIN=1234
   - cd $CI_PROJECT_DIR/tests/browsertests
   - xvfb-run actiona -e -x $CI_PROJECT_DIR/tests/browsertests/firefoxTest.ascr
 
@@ -123,6 +124,7 @@
   before_script:
   - killall Xvfb || true
   script:
+  - export PIN=1234
   - cd $CI_PROJECT_DIR/tests/browsertests
   - xvfb-run actiona -e -x $CI_PROJECT_DIR/tests/browsertests/googleTest.ascr
 
