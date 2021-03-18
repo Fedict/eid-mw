@@ -1,6 +1,6 @@
 .validation:macos:firefox:
   tags:
-  - test
+  - robot
   - macos
   script:
   - osascript $MACOS_BASEDIR/tests/browsertests/Mac/InstallNightly.applescript
@@ -9,7 +9,7 @@
 
 .validation:macos:google:
   tags:
-  - test
+  - robot
   - macos
   script:
   - osascript $MACOS_BASEDIR/tests/browsertests/Mac/InstallChrome.applescript
