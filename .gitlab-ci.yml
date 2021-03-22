@@ -396,6 +396,34 @@ validate:robot:macos:
 #  - build:windows
 #  allow_failure: true
 
+#validate:validation:windows:google:
+#  stage: validate
+#  extends: .validation:windows:google
+#  dependencies:
+#  - build:windows
+#  allow_failure: true
+
+#validate:validation:windows:firefox:
+#  stage: validate
+#  extends: .validation:windows:firefox
+#  dependencies:
+#  - build:windows
+#  allow_failure: true
+
+#validate:validation:windows:edge:
+#  stage: validate
+#  extends: .validation:windows:edge
+#  dependencies:
+#  - build:windows
+#  allow_failure: true
+
+#validate:validation:windows:ie:
+#  stage: validate
+#  extends: .validation:windows:ie
+#  dependencies:
+#  - build:windows
+#  allow_failure: true
+
 validate:validation:linux:google:
   stage: validate
   extends: .validation:linux:google

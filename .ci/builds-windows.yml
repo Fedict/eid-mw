@@ -44,3 +44,38 @@
 #  script: 
 #  - "C:\Program Files (x86)\AutoIt3\AutoIt3.exe" $Env:WINDOWS_BASEDIR\tests\installtest\dlltest.au3  "products\windows"
 #  allow_failure: true
+
+#.validation:windows:google:
+#  tags:
+#  - tests
+#  - windows
+#  script: 
+#  - "C:\Program Files (x86)\AutoIt3\AutoIt3.exe" $Env:WINDOWS_BASEDIR\tests\browsertests\Windows\installgoogle.au3
+#  - "C:\Program Files (x86)\AutoIt3\AutoIt3.exe" $Env:WINDOWS_BASEDIR\tests\browsertests\Windows\testgoogle.au3
+#  allow_failure: true
+
+#.validation:windows:firefox:
+#  tags:
+#  - tests
+#  - windows
+#  script: 
+#  - "C:\Program Files (x86)\AutoIt3\AutoIt3.exe" $Env:WINDOWS_BASEDIR\tests\browsertests\Windows\installfirefox.au3
+#  - "C:\Program Files (x86)\AutoIt3\AutoIt3.exe" $Env:WINDOWS_BASEDIR\tests\browsertests\Windows\installaddon.au3
+#  - "C:\Program Files (x86)\AutoIt3\AutoIt3.exe" $Env:WINDOWS_BASEDIR\tests\browsertests\Windows\testfirefox.au3 
+#  allow_failure: true
+
+#.validation:windows:edge:
+#  tags:
+#  - tests
+#  - windows
+#  script: 
+#  - "C:\Program Files (x86)\AutoIt3\AutoIt3.exe" $Env:WINDOWS_BASEDIR\tests\browsertests\Windows\testedge.au3
+#  allow_failure: true
+
+#.validation:windows:dllinstall:
+#  tags:
+#  - tests
+#  - windows
+#  script: 
+#  - "C:\Program Files (x86)\AutoIt3\AutoIt3.exe" $Env:WINDOWS_BASEDIR\tests\browsertests\Windows\testie.au3
+#  allow_failure: true
