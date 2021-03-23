@@ -8,7 +8,7 @@ declare -A DISTVERS
 declare -A DISTNAMES
 declare -A VERARCHS
 
-DISTS=(fedora epel)
+DISTS="fedora epel"
 
 DISTVERS=([fedora]="$FEDORA_OLDSTABLE_VERSION $FEDORA_STABLE_VERSION" [epel]="$CENTOS_OLDSTABLE_VERSION $CENTOS_STABLE_VERSION")
 DISTNAMES=([fedora]="fedora" [epel]="el")
