@@ -5,7 +5,7 @@ to develop your own application.
 
 They consist of two sets of documents: the PKCS#11 documentation (taken,
 unmodified, from [the OASIS
-website](https://docs.oasis-open.org/pkcs11/), and the files specific to
+website](https://docs.oasis-open.org/pkcs11/)), and the files specific to
 the Belgian eID Card.
 
 The files are:
