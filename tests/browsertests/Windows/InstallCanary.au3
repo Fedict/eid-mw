@@ -1,4 +1,4 @@
-#RequireAdmin
+#AutoIt3Wrapper_Res_requestedExecutionLevel=requireAdministrator
 Func _Au3RecordSetup()
   Opt('WinWaitDelay',100)
   Opt('WinDetectHiddenText',1)
@@ -13,19 +13,12 @@ Func _WinWaitActivate($title, $text, $timeout=0)
   If Not WinActive($title,$text) Then WinActivate($title,$text)
   WinWaitActive($title,$text,$timeout)
 EndFunc
-Run('"C:\Program Files\Internet Explorer\iexplore.exe" "https://download.mozilla.org/?product=firefox-nightly-stub&os=win&lang=en-US"')
-_WinWaitActivate("View Downloads - Internet Explorer","")
-Sleep(100)
-Send("{RIGHT}{SPACE}")
-_WinWaitActivate("Nightly Setup","")
-Send("{SPACE}")
-_WinWaitActivate("Firefox Nightly First Run Page - Nightly","")
-Send("{ALTDOWN}{F4}{ALTUP}")
-Sleep(100)
-If WinExists("Confirm close","") Then
-   WinActivate("Confirm close","")
-   Send("{SPACE}")
+
+_Au3RecordSetup()
+Run('C:\Users\yannick.schoels\Downloads\ChromeSetup.exe')
+If IsAdmin Then
+	MsgBox(0, 'Admin', 'Hello', 2)
 EndIf
-_WinWaitActivate("View Downloads - Internet Explorer","")
+_WinWaitActivate("Welcome to Chrome - Google Chrome","",10)
 Send("{ALTDOWN}{F4}{ALTUP}")
 Exit(0)

@@ -20,21 +20,18 @@ EndFunc
 
 _AU3RecordSetup()
 #endregion --- Internal functions Au3Recorder End ---
-
+Opt("WinTitleMatchMode",2)
 If $CmdLine[0] <> 1 Then
    MsgBox(64, "Error", "Need a PIN code on the command line!")
    Exit(1)
 EndIf
-Run('"C:\Program Files\Internet Explorer\iexplore.exe" "https://latin.grep.be/eidtest/"')
+Run('"C:\Program Files\Internet Explorer\iexplore.exe" "https://pfsense.pass.lan:20443"')
 _WinWaitActivate("Windows Security","")
 If Not WinExists("Windows Security") Then
    Exit(1)
 EndIf
-Send("{ALTDOWN}o{ALTUP}")
-_WinWaitActivate("Windows Security","", 240)
-If Not WinExists("Windows Security") Then
-   Exit(1)
-EndIf
+Send("{ENTER}")
+Sleep(100)
 _WinWaitActivate("Windows Security","", 240)
 Send($CmdLine[1] & "{ENTER}")
 _WinWaitActivate("PHP 7.3.14","",120)

@@ -25,9 +25,10 @@ If $CmdLine[0] <> 1 Then
    MsgBox(64, 'Error', 'Need a PIN code on the command line!')
    Exit(1)
 EndIf
-Run('C:\Program Files\Nightly\firefox.exe')
-_WinWaitActivate("Nightly Start Page - Nightly","")
-Send("{CTRLDOWN}l{CTRLUP}https:{SHIFTDOWN}::{SHIFTUP}test{SHIFTDOWN};{SHIFTUP}eid{SHIFTDOWN};{SHIFTUP}belgium{SHIFTDOWN};{SHIFTUP}be{ENTER}")
+
+Run('C:\Program Files\Firefox Nightly\firefox.exe')
+_WinWaitActivate("Firefox Nightly","")
+Send("https:{SHIFTDOWN}::{SHIFTUP}pfsense{SHIFTDOWN};{SHIFTUP}pass{SHIFTDOWN};{SHIFTUP}lan:20443{ENTER}")
 _WinWaitActivate("User Identification Request","")
 Send("{ENTER}")
 _WinWaitActivate("Asking PIN","", 120)
@@ -35,8 +36,8 @@ If Not WinExists("Asking PIN") Then
    Exit(1)
 EndIf
 Send($CmdLine[1] & "{ENTER}")
-_WinWaitActivate("eID Authenticatie Test - Nightly","", 120)
-If Not WinExists("eID Authenticatie Test - Nightly") Then
+_WinWaitActivate("PHP 7.3.19-1~deb10u1 - phpinfo() — Firefox Nightly","",120)
+If Not WinExists("PHP 7.3.19-1~deb10u1 - phpinfo() — Firefox Nightly") Then
    Exit(2)
 EndIf
 Send("{ALTDOWN}{F4}{ALTUP}")
