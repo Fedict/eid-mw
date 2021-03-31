@@ -30,7 +30,8 @@
 #define WHERE "BeidGetPubKey"
 DWORD BeidGetPubKey(PCARD_DATA  pCardData, DWORD cbCertif, PBYTE pbCertif, DWORD *pcbPubKey, PBYTE *ppbPubKey)
 {
-	DWORD          dwReturn = 0;
+	DWORD			dwReturn = 0;
+	DWORD			dwKeyLen = 0;
 	PCCERT_CONTEXT pCertContext = NULL;
 	VENDOR_SPECIFIC* pVendorSpec = NULL;
 	LPCSTR			lpszStructType = NULL;
@@ -72,10 +73,10 @@ DWORD BeidGetPubKey(PCARD_DATA  pCardData, DWORD cbCertif, PBYTE pbCertif, DWORD
 		//              BCRYPT_ECCKEY_BLOB
 		//              X coord (big endian)
 		//              Y coord (big endian)
-		*pcbPubKey = (((*((*pCertContext).pCertInfo)).SubjectPublicKeyInfo).PublicKey).cbData - 1;
-		LogTrace(LOGTYPE_INFO, WHERE, "PubKey length is %d + 1 compression byte", *pcbPubKey);
-		LogDump((*pcbPubKey)+1, (((*((*pCertContext).pCertInfo)).SubjectPublicKeyInfo).PublicKey).pbData);
-
+		dwKeyLen = (((*((*pCertContext).pCertInfo)).SubjectPublicKeyInfo).PublicKey).cbData - 1;
+		LogTrace(LOGTYPE_INFO, WHERE, "PubKey length is %d + 1 compression byte", dwKeyLen);
+		//LogDump((*pcbPubKey)+1, (((*((*pCertContext).pCertInfo)).SubjectPublicKeyInfo).PublicKey).pbData);
+		
 		//Fill in the BCRYPT_ECCKEY_BLOB
 		//szOID_ECC_PUBLIC_KEY: The unrestricted algorithm identifier: 1.2.840.10045.2.1
 		if (strcmp(((*((*pCertContext).pCertInfo)).SubjectPublicKeyInfo).Algorithm.pszObjId, szOID_ECC_PUBLIC_KEY) == 0)
@@ -107,7 +108,7 @@ DWORD BeidGetPubKey(PCARD_DATA  pCardData, DWORD cbCertif, PBYTE pbCertif, DWORD
 			CLEANUP(SCARD_E_UNEXPECTED);
 		}
 
-		ECCHeader.cbKey = (ULONG)(*pcbPubKey)/2;
+		ECCHeader.cbKey = (ULONG)(dwKeyLen)/2;
 
 		//ECC key structure :
 			//
@@ -123,17 +124,18 @@ DWORD BeidGetPubKey(PCARD_DATA  pCardData, DWORD cbCertif, PBYTE pbCertif, DWORD
 		}
 
 		/* Allocate memory for the target buffer */
-		*ppbPubKey = pCardData->pfnCspAlloc((*pcbPubKey) + sizeof(BCRYPT_ECCKEY_BLOB));
+		*pcbPubKey = dwKeyLen + sizeof(BCRYPT_ECCKEY_BLOB);
+		*ppbPubKey = pCardData->pfnCspAlloc(*pcbPubKey);
 		if (*ppbPubKey == NULL)
 		{
 			LogTrace(LOGTYPE_ERROR, WHERE, "Error allocating memory for [*ppbPubKey]");
 			CLEANUP(SCARD_E_NO_MEMORY);
 		}
-
+		
 		/*copy the BCRYPT_ECCKEY_BLOB*/
 		memcpy(*ppbPubKey, &ECCHeader, sizeof(BCRYPT_ECCKEY_BLOB));
 		/*cat the public key (without the compression byte that precedes it)*/
-		memcpy(*ppbPubKey + sizeof(BCRYPT_ECCKEY_BLOB), (((*((*pCertContext).pCertInfo)).SubjectPublicKeyInfo).PublicKey).pbData + 1, (*pcbPubKey));
+		memcpy(*ppbPubKey + sizeof(BCRYPT_ECCKEY_BLOB), (((*((*pCertContext).pCertInfo)).SubjectPublicKeyInfo).PublicKey).pbData + 1, dwKeyLen);
 
 		CLEANUP(0);
 	}

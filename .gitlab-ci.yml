@@ -114,6 +114,7 @@ test:nodialogs:
 test:coverity:linux:
   stage: tests
   extends: .coverity:linux
+  allow_failure: true
 
 #################################################
 # Stage "source-package": build source packages #
@@ -395,29 +396,71 @@ validate:robot:macos:
 #  - build:windows
 #  allow_failure: true
 
-# validate:validation:linux:google:
+#validate:validation:windows:google:
 #  stage: validate
-#  extends: .validation:linux:google
+#  extends: .validation:windows:google
 #  dependencies:
-#  - build:ubuntu_oldlts_32
-#  - build:ubuntu_oldlts_64
-#  - build:ubuntu_stable_32 
-#  - build:ubuntu_stable_64
-#  - build:ubuntu_lts_64
-#  - build:ubuntu_lts_32
+#  - build:windows
 #  allow_failure: true
 
-# validate:validation:linux:firefox:
+#validate:validation:windows:firefox:
 #  stage: validate
-#  extends: .validation:linux:firefox
+#  extends: .validation:windows:firefox
 #  dependencies:
-#  - build:ubuntu_oldlts_32
-#  - build:ubuntu_oldlts_64
-#  - build:ubuntu_stable_32 
-#  - build:ubuntu_stable_64
-#  - build:ubuntu_lts_64
-#  - build:ubuntu_lts_32
+#  - build:windows
 #  allow_failure: true
+
+#validate:validation:windows:edge:
+#  stage: validate
+#  extends: .validation:windows:edge
+#  dependencies:
+#  - build:windows
+#  allow_failure: true
+
+#validate:validation:windows:ie:
+#  stage: validate
+#  extends: .validation:windows:ie
+#  dependencies:
+#  - build:windows
+#  allow_failure: true
+
+validate:validation:linux:google:
+  stage: validate
+  extends: .validation:linux:google
+  dependencies:
+  - build:ubuntu_oldlts_32
+  - build:ubuntu_oldlts_64
+  - build:ubuntu_stable_32 
+  - build:ubuntu_stable_64
+  - build:ubuntu_lts_64
+  - build:ubuntu_lts_32
+  allow_failure: true
+
+validate:validation:linux:firefox:
+  stage: validate
+  extends: .validation:linux:firefox
+  dependencies:
+  - build:ubuntu_oldlts_32
+  - build:ubuntu_oldlts_64
+  - build:ubuntu_stable_32 
+  - build:ubuntu_stable_64
+  - build:ubuntu_lts_64
+  - build:ubuntu_lts_32
+  allow_failure: true
+
+validate:validation:macos:firefox:
+  stage: validate
+  extends: .validation:macos:firefox
+  dependencies:
+  - build:macos
+  allow_failure: true
+
+validate:validation:macos:google:
+  stage: validate
+  extends: .validation:macos:google
+  dependencies:
+  - build:macos
+  allow_failure: true
 
 ####################################################################
 # Stage "build-repository": copy binaries into a repository layout #
@@ -498,8 +541,8 @@ publish:rsync:
   tags:
   - repobuilder
   script:
-  - rsync -avr --delete-before $DIST_LOC/continuous $RSYNC_TARGET_DIST/continuous
-  - rsync -avr --delete-before $DIST_LOC/releases $RSYNC_TARGET_DIST/releases
+  - rsync -avr --delete-before $DIST_LOC/continuous/ $RSYNC_TARGET_DIST/continuous
+  - rsync -avr --delete-before $DIST_LOC/releases/ $RSYNC_TARGET_DIST/releases
   - rsync -avrLHP --exclude="dists/" --exclude="repomd.xml*" $REPO_LOC $RSYNC_TARGET_FILES
   - rsync -avrLHP $REPO_LOC $RSYNC_TARGET_FILES
   - rsync -avrLHP --delete-before $REPO_LOC $RSYNC_TARGET_FILES

@@ -348,6 +348,7 @@ void do_distro(GtkWidget* top G_GNUC_UNUSED, GtkListStore* data) {
 	dat = get_lsb_info('i');
 	gtk_list_store_append(data, &iter);
 	gtk_list_store_set(data, &iter, 0, _("Distribution"), 1, dat, -1);
+	// dat is allocated by get_lsb_info, so we need to release it.
 	free(dat);
 
 	dat = get_lsb_info('r');

@@ -106,23 +106,27 @@
       cobertura: products/reports/coverage.xml
     when: always
 
-#.validation:linux:firefox:
-#  tags:
-#  - robot
-#  - linux
-#  before_script:
-#  - killall Xvfb || true
-#  script:
-#  - xvfb-run actiona -e -x $CI_PROJECT_DIR/tests/browsertests/firefoxTest.ascr
+.validation:linux:firefox:
+  tags:
+  - robot
+  - linux
+  before_script:
+  - killall Xvfb || true
+  script:
+  - export PIN=1234
+  - cd $CI_PROJECT_DIR/tests/browsertests/Linux/
+  - xvfb-run actiona -e -x $CI_PROJECT_DIR/tests/browsertests/Linux/firefoxTest.ascr
 
-#.validation:linux:google:
-#  tags:
-#  - robot
-#  - linux
-#  before_script:
-#  - killall Xvfb || true
-#  script:
-#  - xvfb-run actiona -e -x $CI_PROJECT_DIR/tests/browsertests/googleTest.ascr
+.validation:linux:google:
+  tags:
+  - robot
+  - linux
+  before_script:
+  - killall Xvfb || true
+  script:
+  - export PIN=1234
+  - cd $CI_PROJECT_DIR/tests/browsertests/Linux/
+  - xvfb-run actiona -e -x $CI_PROJECT_DIR/tests/browsertests/Linux/googleTest.ascr
 
 .repro:debian:
   tags:
@@ -223,7 +227,7 @@
   - cd build && tar xvf ../products/source/eid-mw-${VER}.tar.gz --strip-components=1
   - setup-chroot.sh $CODE $ARCH $DIST
   - if [ $CANDIDATEBRANCH = $CI_COMMIT_REF_NAME ]; then TARGET=candidate; fi
-  - if [ ! -z "$CI_COMMIT_TAG" ]; then TARGET=candidate; fi
+  - if [ ! -z "$CI_COMMIT_TAG" ]; then TARGET=proposed; fi
   - if [ $ARCH = "i386" ]; then DASHA="-A -s"; else DASHA="--no-arch-all --no-source"; fi
   - export DASHA
   - if [ ! -z "$TARGET" ]; then dist="$TARGET-$CODE"; else dist=$CODE; fi
