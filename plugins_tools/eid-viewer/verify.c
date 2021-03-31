@@ -385,7 +385,7 @@ char* eid_vwr_x509_get_details(const void* certificate, size_t certlen) {
 	X509_print_ex(b, cert, 0, 0);
 	BIO_get_mem_ptr(b, &p);
 	rv = malloc(p->length + 1);
-	strncpy(rv, p->data, p->length);
+	strlcpy(rv, p->data, p->length + 1);
 
 	BIO_free(b);
 
