@@ -1,8 +1,10 @@
 on run
+	with timeout of 600 seconds
 	tell application "Safari"
 		activate
 		set URL of front document to "https://download.mozilla.org/?product=firefox-nightly-latest-l10n-ssl&os=osx&lang=nl"
 	end tell
+	end timeout
 	delay 30
 	do shell script "hdiutil mount ~/Downloads/firefox*dmg"
 	delay 5
