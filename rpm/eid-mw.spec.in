@@ -37,6 +37,7 @@ BuildRequires: openssl-perl
 BuildRequires: libcurl-devel
 BuildRequires: libproxy-devel
 BuildRequires: libxml2-devel
+BuildRequires: libbsd-devel
 BuildRequires: openssl
 Conflicts: openct
 
