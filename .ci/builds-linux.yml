@@ -97,7 +97,7 @@
   - make check
   - mkdir -p products/reports
   - gcovr --xml > products/reports/coverage.xml
-  - gcovr --html -o products/reports/coverage.html
+  - gcovr --html-details -o products/reports/coverage.html
   - popd
   artifacts:
     paths:
