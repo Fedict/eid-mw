@@ -97,7 +97,11 @@
   - make check
   - mkdir -p products/reports
   - gcovr --xml > products/reports/coverage.xml
-  - gcovr --html-details -o products/reports/coverage.html
+  - lcov -c -d cardcomm/pkcs11/src --no-external -o cardcomm.info
+  - lcov -c -d tests/unit --no-external -o tests.info
+  - lcov -c -d plugins_tools/eid-viewer --no-external -o viewer.info
+  - lcov -a tests.info -a cardcomm.info -a viewer.info -o coverage.info
+  - genhtml coverage.info -o products/reports/lcov
   - popd
   artifacts:
     paths:
