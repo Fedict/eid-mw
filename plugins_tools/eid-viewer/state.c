@@ -367,17 +367,3 @@ exit_loop:
 	}
 	be_log(EID_VWR_LOG_DETAIL, TEXT("State transition for %s complete"), event_to_name(e));
 }
-
-/* Verify if the given state is active, either because it's the current
- * state or one of its parents */
-int sm_state_is_active(enum eid_vwr_states s) {
-	struct state* ptr = curstate;
-	while(ptr && ptr->me != s) {
-		ptr = ptr->parent;
-	}
-	if(ptr) {
-		return 1;
-	} else {
-		return 0;
-	}
-}
