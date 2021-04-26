@@ -1,12 +1,16 @@
-; APG8201Z.INF
-; Copyright (c) 2013 Advanced Card Systems Ltd.
+; apg8201z.INF
+; Copyright (c) 2017 Advanced Card Systems Ltd.
+; 
+; USB Smart Card Driver for ACS reader
 
 [Version]
-DriverVer=03/06/2013,1.0.0.1
+DriverVer=04/10/2017,2.1.0.0
 Signature="$Windows NT$"
 Class=SmartCardReader
 ClassGuid={50DD5230-BA8A-11D1-BF5D-0000F805F530}
 Provider=%ACS%
+DriverPackageType=PlugAndPlay
+DriverPackageDisplayName=%DriverDisplayName%
 CatalogFile.NT=apg8201z.cat
 
 [SourceDisksNames]
@@ -14,37 +18,77 @@ CatalogFile.NT=apg8201z.cat
 
 [SourceDisksFiles]
 apg8201z.sys  = 1
-apg8201zx64.sys = 1
+apg8201zx64.sys = 1     
 
-[DestinationDirs]
-ACS.Install.CopySYS.NTx86   = 12
-ACS.Install.CopySYS.NTamd64 = 12
-
+[DestinationDirs]  
+ACS.APG8201Z.CopyFiles.NTx86   	    	= 12
+ACS.APG8201Z.CopyFiles.NTamd64		    	= 12
+       
 [Manufacturer]
 %ACS%=ACS,NTamd64
 
-; ================= APG8201 Reader =====================
+; ============================== Readers ==============================    
 
 [ACS]
-%ACS.DeviceDesc% = ACS.Install, USB\VID_072F&PID_8202
+; DisplayName                             Section                         DeviceId
+; -----------                             -------                         --------   
+%ACS.APG8201Z.DevDesc%            =        ACS.APG8201Z,                    USB\VID_072F&PID_8205			;APG8201Z 
+%ACS.APG8201Z.DevDesc%            =        ACS.APG8201Z,                    USB\VID_072F&PID_8202			;APG8201Z        
 
 [ACS.NTamd64]
-%ACS.DeviceDesc% = ACS.Install, USB\VID_072F&PID_8202
+; DisplayName                             Section                          DeviceId
+; -----------                             -------                          --------  
+%ACS.APG8201Z.DevDesc%            =        ACS.APG8201Z,                    USB\VID_072F&PID_8205	  ;APG8201Z
+%ACS.APG8201Z.DevDesc%            =        ACS.APG8201Z,                    USB\VID_072F&PID_8202			;APG8201Z
 
-[ACS.Install.NTx86]
-AddReg    = ACS.Install.AddReg.NT
-CopyFiles = ACS.Install.CopySYS.NTx86
+                      
+; ============================= APG8201Z ==================================
 
-[ACS.Install.NTamd64]
-AddReg    = ACS.Install.AddReg.NT
-CopyFiles = ACS.Install.CopySYS.NTamd64
+[ACS.APG8201Z.NTx86]
+AddReg       = ACS.APG8201Z.AddReg.NT,ACS.Common.AddReg
+CopyFiles    = ACS.APG8201Z.CopyFiles.NTx86
 
-; ============= Windows 2000 and up =================
+[ACS.APG8201Z.NTamd64]
+AddReg       = ACS.APG8201Z.AddReg.NT,ACS.Common.AddReg
+CopyFiles    = ACS.APG8201Z.CopyFiles.NTamd64
 
-[ACS.Install.AddReg.NT]
+[ACS.APG8201Z.CopyFiles.NTx86]
+apg8201z.sys,,
+
+[ACS.APG8201Z.CopyFiles.NTamd64]
+apg8201z.sys,apg8201zx64.sys
+
+[ACS.APG8201Z.AddReg.NT]
+HKR,,"IFDName",0,%IFDName.APG8201Z%
+HKR,,"DRIVERNAME",0,"APG8201Z"
+HKR,,"ACSCustomFlags",0x00010000,"0006","0014","0019","0023","0028"
+HKR,,"LCDRegistryPath",0,"\Registry\Machine\Software\Advanced Card Systems Ltd.\APG8201Z\LCD"
+
+[ACS.APG8201Z.NTx86.Services]
+AddService = APG8201Z, 2, ACS.APG8201Z.Service, ACS.APG8201Z.EventLog
+
+[ACS.APG8201Z.NTamd64.Services]
+AddService = APG8201Z, 2, ACS.APG8201Z.Service, ACS.APG8201Z.EventLog
+
+[ACS.APG8201Z.Service]
+DisplayName     = %ACS.APG8201Z.DevDesc%
+ServiceType     = 1
+StartType       = 3
+ErrorControl    = 1
+ServiceBinary   = %12%\apg8201z.sys
+
+[ACS.APG8201Z.EventLog]
+AddReg = ACS.APG8201Z.AddEventLog.reg
+
+[ACS.APG8201Z.AddEventLog.reg]
+HKR,, EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\drivers\apg8201z.sys"
+HKR,, TypesSupported,   0x00010001, 7
+
+; ============================== COMMON ==============================
+
+[ACS.Common.AddReg]
 HKR,,AdapterType, 0, "0100"
 HKR,,"VendorName",0,%Vendor%
-HKR,,"IFDName",0,%Reader%
 HKR,,"CardType",0,%CardType%
 HKR,,"SFDT",0,%SFDT%
 HKR,,"CardVoltage",0,%CardVoltage%
@@ -52,42 +96,16 @@ HKLM,"Software\Microsoft\Cryptography\Calais\Readers",,,
 HKLM,"System\CurrentControlSet\Services\SCardSvr","Start", 0x00010001,2
 HKLM,"System\CurrentControlSet\Services\CertPropSvc","Start", 0x00010001,2
 
-[ACS.Install.CopySYS.NTx86]
-apg8201z.sys
-
-[ACS.Install.CopySYS.NTamd64]
-apg8201z.sys,apg8201zx64.sys
-
-[ACS.Install.NTx86.Services]
-AddService = APG8201Z, 2, ACS.Service, ACS.EventLog
-
-[ACS.Install.NTamd64.Services]
-AddService = APG8201Z, 2, ACS.Service, ACS.EventLog
-
-[ACS.Service]
-DisplayName     = %ACS.DeviceDesc%
-ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
-StartType       = 3 ;%SERVICE_DEMAND_START%
-ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
-ServiceBinary   = %12%\apg8201z.sys
-
-[ACS.EventLog]
-AddReg = ACS.AddEventLog.reg
-
-[ACS.AddEventLog.reg]
-HKR,, EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\drivers\apg8201z.sys"
-HKR,, TypesSupported,   0x00010001, 7
-
 ; ================= Strings =====================
 
 [Strings]
-SourceDiskName  = "APG8201 USB Smart Card Reader Driver Installation Disk"
-Msft			= "Advanced Card Systems Ltd."
-ACS			    = "ACS"
-ACS.DeviceDesc	= "APG8201Z Smart Card Reader"
-ClassName 		= "Smart Card Readers"
-Vendor			= "ACS"
-Reader			= "APG8201Z"
-CardType		= 0
-SFDT			= "TRUE"
-CardVoltage		= 0
+SourceDiskName         = "APG8201 USB Smart Card Reader Driver Installation Disk"
+Msft			                = "Advanced Card Systems Ltd."
+Vendor		               = "ACS"
+ACS				                = "Advanced Card Systems Ltd."
+CardType               = 0
+SFDT                   = "TRUE"
+CardVoltage            = 0   
+ACS.APG8201Z.DevDesc   = "APG8201Z Smart Card Reader"   
+IFDName.APG8201Z			    = "APG8201Z" 
+DriverDisplayName      = "APG8201Z Unified PC/SC Driver"       
