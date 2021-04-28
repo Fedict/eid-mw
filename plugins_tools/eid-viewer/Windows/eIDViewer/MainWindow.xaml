@@ -123,6 +123,7 @@
             </TabItem>
             <TabItem Header="{Binding Path=applicationResource.CARD, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}">
                 <Grid>
+                    <Label Content="{Binding Path=cardTabResource.appletVersionLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Margin="92,107,0,0" VerticalAlignment="Top" />
                     <Label Content="{Binding Path=cardTabResource.cardNumberLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Margin="92,133,0,0" VerticalAlignment="Top" />
                     <Label Content="{Binding Path=cardTabResource.placeOfIssueLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Margin="92,159,0,0" VerticalAlignment="Top"  />
                     <Label Content="{Binding Path=cardTabResource.chipNumberLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Margin="92,185,0,0" VerticalAlignment="Top" />
@@ -130,6 +131,7 @@
                     <Label Content="{Binding Path=cardTabResource.validUntilLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Margin="92,237,0,0" VerticalAlignment="Top" />
                     <Button Click="PincodeTest_Click" Content="{Binding Path=cardTabResource.verifyPinButton, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Margin="92,283,0,0" VerticalAlignment="Top" Width="207" IsEnabled="{Binding Path=eid_card_present, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <Button Click="PincodeTest_Change" Content="{Binding Path=cardTabResource.changePinButton, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Margin="92,308,0,0" VerticalAlignment="Top" Width="207" IsEnabled="{Binding Path=eid_card_present, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Label Content="{Binding Path=applet_version, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="215,107,0,0" VerticalAlignment="Top"/>
                     <Label Content="{Binding Path=card_number, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="215,133,0,0" VerticalAlignment="Top"/>
                     <Label Content="{Binding Path=issuing_municipality, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="215,159,0,0" VerticalAlignment="Top"/>
                     <Label Content="{Binding Path=chip_number, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="215,185,0,0" VerticalAlignment="Top"/>

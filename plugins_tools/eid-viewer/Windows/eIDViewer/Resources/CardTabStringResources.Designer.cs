@@ -61,6 +61,15 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Applet version:.
+        /// </summary>
+        public static string appletVersionLabel {
+            get {
+                return ResourceManager.GetString("appletVersionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Card number:.
         /// </summary>
         public static string cardNumberLabel {

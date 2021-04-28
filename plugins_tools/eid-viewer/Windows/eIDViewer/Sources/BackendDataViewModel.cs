@@ -949,6 +949,29 @@ namespace eIDViewer
             brexit_fields_height = 26;
         }
 
+        private void ShowCardAppletVersion(byte carddata_appl_version)
+        {
+            switch(carddata_appl_version)
+            {
+                case 0x00:
+                case 0x11:
+                    applet_version = "1.1";
+                    break;
+                case 0x14:
+                    applet_version = "1.4";
+                    break;
+                case 0x17:
+                    applet_version = "1.7";
+                    break;
+                case 0x18:
+                    applet_version = "1.8";
+                    break;
+                default:
+
+                    break;
+            }
+        }
+
         public void StoreStringData(string label, string data)
         {
 
@@ -983,6 +1006,8 @@ namespace eIDViewer
             { address_municipality = data; }
             else if (String.Equals(label, "card_number", StringComparison.Ordinal))
             { card_number = data; }
+            else if (String.Equals(label, "carddata_appl_version", StringComparison.Ordinal))
+            { applet_version = data; }
             else if (String.Equals(label, "issuing_municipality", StringComparison.Ordinal))
             { issuing_municipality = data; }
             else if (String.Equals(label, "chip_number", StringComparison.Ordinal))
@@ -1127,6 +1152,7 @@ namespace eIDViewer
                 else if (String.Equals(label, "carddata_appl_version", StringComparison.Ordinal))
                 {
                     carddata_appl_version = data[0];
+                    ShowCardAppletVersion(carddata_appl_version);
                 }
                 else if (String.Equals(label, "basic_key_hash", StringComparison.Ordinal))
                 {
@@ -1204,6 +1230,7 @@ namespace eIDViewer
             address_street_and_number = "-";
             address_zip = "-";
             address_municipality = "-";
+            applet_version = "-";
             card_number = "-";
             issuing_municipality = "-";
             chip_number = "-";
@@ -1540,6 +1567,17 @@ namespace eIDViewer
             {
                 _address_municipality = value;
                 this.NotifyPropertyChanged("address_municipality");
+            }
+        }
+
+        private string _applet_version;
+        public string applet_version
+        {
+            get { return _applet_version; }
+            set
+            {
+                _applet_version = value;
+                this.NotifyPropertyChanged("applet_version");
             }
         }
 
