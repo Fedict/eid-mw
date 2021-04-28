@@ -953,13 +953,6 @@ namespace eIDViewer
         {
             switch(carddata_appl_version)
             {
-                case 0x00:
-                case 0x11:
-                    applet_version = "1.1";
-                    break;
-                case 0x14:
-                    applet_version = "1.4";
-                    break;
                 case 0x17:
                     applet_version = "1.7";
                     break;
@@ -967,7 +960,7 @@ namespace eIDViewer
                     applet_version = "1.8";
                     break;
                 default:
-
+                    applet_version = "?";
                     break;
             }
         }
