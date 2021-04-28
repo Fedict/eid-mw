@@ -5,6 +5,7 @@ var searchData=
   ['app_4',['App',['../classe_i_d_viewer_1_1_app.html',1,'App'],['../classe_i_d_data_sign_check_1_1_app.html',1,'App']]],
   ['appdelegate_5',['AppDelegate',['../interface_app_delegate.html',1,'']]],
   ['appdelegate_28_29_6',['AppDelegate()',['../category_app_delegate_07_08.html',1,'']]],
-  ['applicationstringresources_7',['ApplicationStringResources',['../classe_i_d_viewer_1_1_resources_1_1_application_string_resources.html',1,'eIDViewer::Resources']]],
-  ['attribute_5fdesc_8',['attribute_desc',['../structattribute__desc.html',1,'']]]
+  ['appletversionlabel_7',['appletVersionLabel',['../classe_i_d_viewer_1_1_resources_1_1_card_tab_string_resources.html#ab95285c268444b2adaedf65f514a8d65',1,'eIDViewer::Resources::CardTabStringResources']]],
+  ['applicationstringresources_8',['ApplicationStringResources',['../classe_i_d_viewer_1_1_resources_1_1_application_string_resources.html',1,'eIDViewer::Resources']]],
+  ['attribute_5fdesc_9',['attribute_desc',['../structattribute__desc.html',1,'']]]
 ];
