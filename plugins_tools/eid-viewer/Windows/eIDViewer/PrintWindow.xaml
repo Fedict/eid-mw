@@ -25,7 +25,7 @@
             <Image Grid.Column="0" Grid.RowSpan="2"  Source="{Binding Path=applicationResource.coat_of_arms_jpg_location, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" Height="60" VerticalAlignment="Top"/>
             <Label Grid.Column="1" Grid.Row="0" Content="{Binding Path=applicationResource.Belgium, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}"  HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="30"/>
             <Label Grid.Column="1" Grid.Row="1" Content="{Binding Path=document_type, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Center" VerticalAlignment="Top" Height="30"/>
-            <Image Grid.Column="2" Grid.RowSpan="2" Source="{Binding Path=photo, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" Height="60" VerticalAlignment="Top"/>
+            <Image Grid.Column="2" Grid.RowSpan="2" Source="{Binding Path=photo, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="20,0" HorizontalAlignment="Right" Height="60" VerticalAlignment="Top"/>
             <Separator Grid.ColumnSpan="3" Grid.Row="2" Height="16" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
         </Grid>
 
