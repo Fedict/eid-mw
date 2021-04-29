@@ -61,7 +61,7 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Applet version:.
+        ///   Looks up a localized string similar to Contact chip:.
         /// </summary>
         public static string appletVersionLabel {
             get {
