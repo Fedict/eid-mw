@@ -37,9 +37,9 @@ DocTypeConvertor::DocTypeConvertor()
 		// European blue card H
 		conversions[EID_VWR_LANG_DE][TEXT("19")] = TEXT("Blaue Karte EU");
 		// card I");
-		conversions[EID_VWR_LANG_DE][TEXT("20")] = TEXT("AUFENTHALSTITEL");
+		conversions[EID_VWR_LANG_DE][TEXT("20")] = TEXT("I. ICT");
 		// card J");
-		conversions[EID_VWR_LANG_DE][TEXT("21")] = TEXT("AUFENTHALSTITEL");
+		conversions[EID_VWR_LANG_DE][TEXT("21")] = TEXT("J. Mobile ICT");
 		// card M");
 		conversions[EID_VWR_LANG_DE][TEXT("22")] = TEXT("AUFENTHALSTITEL");
 		// card N");
@@ -72,9 +72,9 @@ DocTypeConvertor::DocTypeConvertor()
 		// European blue card H
 		conversions[EID_VWR_LANG_EN][TEXT("19")] = TEXT("EU Blue Card");
 		// card I");
-		conversions[EID_VWR_LANG_EN][TEXT("20")] = TEXT("RESIDENCE PERMIT");
+		conversions[EID_VWR_LANG_EN][TEXT("20")] = TEXT("I. ICT");
 		// card J");
-		conversions[EID_VWR_LANG_EN][TEXT("21")] = TEXT("RESIDENCE PERMIT");
+		conversions[EID_VWR_LANG_EN][TEXT("21")] = TEXT("J. Mobile ICT");
 		// card M");
 		conversions[EID_VWR_LANG_EN][TEXT("22")] = TEXT("RESIDENCE PERMIT");
 		// card N");
@@ -107,9 +107,9 @@ DocTypeConvertor::DocTypeConvertor()
 		// European blue card H
 		conversions[EID_VWR_LANG_FR][TEXT("19")] = TEXT("Carte bleue europ\u00e9enne");
 		// card I");
-		conversions[EID_VWR_LANG_FR][TEXT("20")] = TEXT("TITRE DE SEJOUR");
+		conversions[EID_VWR_LANG_FR][TEXT("20")] = TEXT("I. ICT");
 		// card J");
-		conversions[EID_VWR_LANG_FR][TEXT("21")] = TEXT("TITRE DE SEJOUR");
+		conversions[EID_VWR_LANG_FR][TEXT("21")] = TEXT("J. Mobile ICT");
 		// card M");
 		conversions[EID_VWR_LANG_FR][TEXT("22")] = TEXT("TITRE DE SEJOUR");
 		// card N");
@@ -142,9 +142,9 @@ DocTypeConvertor::DocTypeConvertor()
 		// European blue card H");
 		conversions[EID_VWR_LANG_NL][TEXT("19")] = TEXT("Europese blauwe kaart");
 		// card I");
-		conversions[EID_VWR_LANG_NL][TEXT("20")] = TEXT("VERBLIJFSTITEL");
+		conversions[EID_VWR_LANG_NL][TEXT("20")] = TEXT("I. ICT");
 		// card J");
-		conversions[EID_VWR_LANG_NL][TEXT("21")] = TEXT("VERBLIJFSTITEL");
+		conversions[EID_VWR_LANG_NL][TEXT("21")] = TEXT("J. Mobile ICT");
 		// card M");
 		conversions[EID_VWR_LANG_NL][TEXT("22")] = TEXT("VERBLIJFSTITEL");
 		// card N");
