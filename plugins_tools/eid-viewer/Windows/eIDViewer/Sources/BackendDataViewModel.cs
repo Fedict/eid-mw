@@ -999,8 +999,6 @@ namespace eIDViewer
             { address_municipality = data; }
             else if (String.Equals(label, "card_number", StringComparison.Ordinal))
             { card_number = data; }
-            else if (String.Equals(label, "carddata_appl_version", StringComparison.Ordinal))
-            { applet_version = data; }
             else if (String.Equals(label, "issuing_municipality", StringComparison.Ordinal))
             { issuing_municipality = data; }
             else if (String.Equals(label, "chip_number", StringComparison.Ordinal))
