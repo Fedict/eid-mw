@@ -170,6 +170,7 @@ TEST_FUNC(threads) {
 	pthread_mutex_unlock(&condmutex);
 #undef CHECK_RV_DEALLOC
 #define CHECK_RV_DEALLOC
+
 	pthread_join(thread, NULL);
 	printf("Thread finished\n");
 
