@@ -33,7 +33,7 @@ TEST_FUNC(exceptiondata){
 		trow CNotAuthenticatedException(0xe1d00404L)
 	}	
 	catch(CNotAuthenticatedException n){
-		printf("Not authenticated error code: %lu\n", n.get_m_lError);
+		printf("Not authenticated error code: %lu\n", n.GetError);
 	}
 	catch(CMWException mw){
 		if (mw.GetError() != 0xe1d00404L)return TEST_RV_FAIL;
