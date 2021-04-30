@@ -54,6 +54,7 @@ Convertor::Convertor()
 	{
 		to_xml[TEXT("document_type")] = new XmlDoctypeConvertor();
 		to_xml[TEXT("special_status")] = new XmlSpecConvertor();
+		to_xml[TEXT("carddata_appl_version")] = new HexNumberConvertor(1);
 		to_xml[TEXT("chip_number")] = new HexNumberConvertor(16);
 		to_xml[TEXT("date_of_birth")] = new XmlDateWriter(new DobParser);
 		to_xml[TEXT("validity_begin_date")] = new XmlDateWriter(new ValidityDateParser);
@@ -69,6 +70,7 @@ Convertor::Convertor()
 	{
 		from_xml[TEXT("document_type")] = new XmlDoctypeConvertor();
 		from_xml[TEXT("special_status")] = new XmlSpecConvertor();
+		from_xml[TEXT("carddata_appl_version")] = new HexDecodeConvertor(1);
 		from_xml[TEXT("chip_number")] = new HexDecodeConvertor(16);
 		from_xml[TEXT("date_of_birth")] = new DobWriter(new XmlDateParser);
 		from_xml[TEXT("validity_begin_date")] = new ValidityDateWriter(new XmlDateParser);
