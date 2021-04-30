@@ -150,7 +150,7 @@ int sessions_nocard(void);
 int sessioninfo(void);
 int slogin(void);
 int sbadlogin(void);
-int exceptiondata(void);
+//int exceptiondata(void);
 int nonsensible(void);
 int objects(void);
 int readdata(void);
