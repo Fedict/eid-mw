@@ -61,6 +61,7 @@ static struct element_desc card_elements[] = {
 /* Attributes of the <card> element */
 static struct attribute_desc card_attributes[] = {
 	{TEXT("documenttype"), TEXT("document_type"), 1},
+	{TEXT("carddata_appl_version"), TEXT("carddata_appl_version"), 0},
 	{TEXT("cardnumber"), TEXT("card_number"), 1},
 	{TEXT("chipnumber"), TEXT("chip_number"), 1},
 	{TEXT("validitydatebegin"), TEXT("validity_begin_date"), 1},
