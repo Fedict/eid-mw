@@ -36,9 +36,9 @@ TEST_FUNC(exceptiondata){
 		printf("Not authenticated error code: %lu\n", n.get_m_lError);
 	}
 	catch(CMWException mw){
-		if (mw.get_m_lError() != 0xe1d00404L)return TEST_RV_FAIL;
-		if (mw.get_m_lLine() != 0)return TEST_RV_FAIL;
-		if (mw.get_m_sFile() != "") return TEST_RV_FAIL;
+		if (mw.GetError() != 0xe1d00404L)return TEST_RV_FAIL;
+		if (mw.GetLine() != 0)return TEST_RV_FAIL;
+		if (mw.GetFile() != "") return TEST_RV_FAIL;
 		else return TEST_RV_OK;
 	}
  }
