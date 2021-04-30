@@ -30,17 +30,18 @@
 TEST_FUNC(exceptiondata){
 
 	try{
-		trow CNotAuthenticatedException(0xe1d00404L)
+		throw eIDMW::CNotAuthenticatedException(0xe1d00404L);
 	}	
-	catch(CNotAuthenticatedException n){
+	catch(eIDMW::CNotAuthenticatedException n){
 	
-		printf("Not authenticated error code: %lu\n", n.GetError);
+		printf("Not authenticated error code: %lu\n", n.GetError());
 		if (n.GetError() != 0xe1d00404L)return TEST_RV_FAIL;
 	}
-	catch(CMWException mw){
+	catch(eIDMW::CMWException mw){
 		if (mw.GetError() != 0xe1d00404L)return TEST_RV_FAIL;
 		if (mw.GetLine() != 0)return TEST_RV_FAIL;
 		if (mw.GetFile() != "") return TEST_RV_FAIL;
 		else return TEST_RV_OK;
 	}
  }
+ #endif	
