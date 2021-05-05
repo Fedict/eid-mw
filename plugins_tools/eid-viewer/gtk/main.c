@@ -411,6 +411,24 @@ static void set_hex(char* label, void* data, int length) {
 	newstringdata(label, string);
 }
 
+static void set_applvers(char* label, void* data, int length) {
+	unsigned char *source = (unsigned char*)data;
+	if(length != 1) {
+		uilog(EID_VWR_LOG_ERROR, "Invalid value for %s: length %d, expected 1", label, length);
+		return;
+	}
+	switch(*source) {
+		case 0x17:
+			newstringdata(label, "1.7");
+			break;
+		case 0x18:
+			newstringdata(label, "1.8");
+			break;
+		default:
+			newstringdata(label, "?");
+	}
+}
+
 /* Initialize the hash table for binary data */
 static void bindata_init() {
 	binhash = g_hash_table_new(g_str_hash, g_str_equal);
@@ -429,6 +447,7 @@ static void bindata_init() {
 	g_hash_table_insert(binhash, "member_of_family", set_family);
 	g_hash_table_insert(binhash, "basic_key_hash", set_hex);
 	g_hash_table_insert(binhash, "basic_key_verify:valid", set_basic_valid);
+	g_hash_table_insert(binhash, "carddata_appl_version", set_applvers);
 }
 
 /* Helper function for update_info() */
