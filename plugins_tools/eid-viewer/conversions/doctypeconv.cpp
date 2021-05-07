@@ -44,6 +44,10 @@ DocTypeConvertor::DocTypeConvertor()
 		conversions[EID_VWR_LANG_DE][TEXT("22")] = TEXT("AUFENTHALSTITEL");
 		// card N");
 		conversions[EID_VWR_LANG_DE][TEXT("23")] = TEXT("KLEINEN GRENZVERKEHR");
+		// Foreigner EU
+		conversions[EID_VWR_LANG_DE][TEXT("31")] = TEXT("EU. Anmeldung – Art 8 RL 2004/38/EG");
+		// Foreigner EU+
+		conversions[EID_VWR_LANG_DE][TEXT("32")] = TEXT("EU+. Daueraufenthalt – Art 19 RL 2004/38/EG");
 
 		conversions[EID_VWR_LANG_EN][TEXT("1")] = TEXT("IDENTITY CARD");
 		conversions[EID_VWR_LANG_EN][TEXT("6")] = TEXT("KIDS CARD");
@@ -79,6 +83,10 @@ DocTypeConvertor::DocTypeConvertor()
 		conversions[EID_VWR_LANG_EN][TEXT("22")] = TEXT("RESIDENCE PERMIT");
 		// card N");
 		conversions[EID_VWR_LANG_EN][TEXT("23")] = TEXT("LOCAL BORDER TRAFFIC");
+		// Foreigner EU
+		conversions[EID_VWR_LANG_EN][TEXT("31")] = TEXT("EU. Registration – Art 8 RL 2004/38/EG");
+		// Foreigner EU+
+		conversions[EID_VWR_LANG_EN][TEXT("32")] = TEXT("EU+. Permanent residence – Art 19 RL 2004/38/EG");
 
 		conversions[EID_VWR_LANG_FR][TEXT("1")] = TEXT("CARTE D'IDENTITE");
 		conversions[EID_VWR_LANG_FR][TEXT("6")] = TEXT("CARTE POUR ENFANTS");
@@ -114,6 +122,10 @@ DocTypeConvertor::DocTypeConvertor()
 		conversions[EID_VWR_LANG_FR][TEXT("22")] = TEXT("TITRE DE SEJOUR");
 		// card N");
 		conversions[EID_VWR_LANG_FR][TEXT("23")] = TEXT("PETIT TRAFIC FRONTALIER");
+		// Foreigner EU
+		conversions[EID_VWR_LANG_FR][TEXT("31")] = TEXT("EU. Enregistrement – Art 8 DIR 2004/38/CE");
+		// Foreigner EU+	
+		conversions[EID_VWR_LANG_FR][TEXT("32")] = TEXT("EU+. S\u00e9jour permanent – Art 19 DIR 2004/38/CE");
 
 		conversions[EID_VWR_LANG_NL][TEXT("1")] = TEXT("IDENTITEITSKAART");
 		conversions[EID_VWR_LANG_NL][TEXT("6")] = TEXT("KIDS KAART");
@@ -149,6 +161,10 @@ DocTypeConvertor::DocTypeConvertor()
 		conversions[EID_VWR_LANG_NL][TEXT("22")] = TEXT("VERBLIJFSTITEL");
 		// card N");
 		conversions[EID_VWR_LANG_NL][TEXT("23")] = TEXT("KLEIN GRENSVERKEER");
+		// Foreigner EU");
+		conversions[EID_VWR_LANG_NL][TEXT("31")] = TEXT("EU. Inschrijving – Art 8 RL 2004/38/EG");
+		// Foreigner EU+");
+		conversions[EID_VWR_LANG_NL][TEXT("32")] = TEXT("EU+. Duurzaam verblijf – Art 19 RL 2004/38/EG");
 	}
 }
 
