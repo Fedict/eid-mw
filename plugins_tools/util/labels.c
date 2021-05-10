@@ -37,7 +37,7 @@ static struct {
 	CK_BBOOL is_string;
 	CK_BBOOL on_eid;
 	CK_BBOOL on_foreigner;
-	EID_CHAR * min_version;
+	EID_CHAR * min_version; //the version of the attribute this eID Viewer is writing (and capable of handling)
 } labels[] = {
 	{ TEXT("CARD_DATA"),			CK_FALSE, CK_TRUE, CK_TRUE, NULL },
 	{ TEXT("ATR"),				CK_FALSE, CK_TRUE, CK_TRUE, NULL },
@@ -70,7 +70,7 @@ static struct {
 	{ TEXT("date_of_birth"),		CK_TRUE, CK_TRUE, CK_TRUE, NULL },
 	{ TEXT("gender"),			CK_TRUE, CK_TRUE, CK_TRUE, NULL },
 	{ TEXT("nobility"),			CK_TRUE, CK_TRUE, CK_TRUE, NULL },
-	{ TEXT("document_type"),		CK_TRUE, CK_TRUE, CK_TRUE, NULL },
+	{ TEXT("document_type"),		CK_TRUE, CK_TRUE, CK_TRUE, TEXT("4.3") },
 	{ TEXT("special_status"),		CK_TRUE, CK_TRUE, CK_TRUE, NULL },
 	{ TEXT("photo_hash"),			CK_FALSE, CK_TRUE, CK_TRUE, NULL },
 	{ TEXT("duplicata"),			CK_TRUE, CK_FALSE, CK_TRUE, NULL },//there is no converter for this field, and according to card spec, there are ascii values in this field
