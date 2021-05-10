@@ -54,7 +54,7 @@ void cache_add(const EID_CHAR * label, EID_CHAR * data, unsigned long len)
 		const EID_CHAR *vers = min_version((const EID_CHAR*)label);
 		if(vers != NULL) {
 			std::map<EID_STRING, cache_item_container *>::iterator it = cache.find(TEXT("xml_file_version"));
-			if(it == cache.end() || EID_STRCMP((const EID_CHAR*)((*it).second->item->data), vers) > 0) {
+			if(it == cache.end() || EID_STRCMP(vers,(const EID_CHAR*)((*it).second->item->data)) > 0) {
 				cache[TEXT("xml_file_version")] = new cache_item_container(vers, EID_STRLEN(vers));
 			}
 		}
