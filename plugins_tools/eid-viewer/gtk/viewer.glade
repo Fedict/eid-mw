@@ -1538,6 +1538,7 @@
                         <child>
                           <object class="GtkLabel" id="carddata_appl_version">
                             <property name="visible">True</property>
+			    <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="label">-</property>
