@@ -40,6 +40,7 @@
         <xsd:restriction base="xsd:string">
           <xsd:enumeration value="4.1" />
           <xsd:enumeration value="4.2" />
+          <xsd:enumeration value="4.3" />
         </xsd:restriction>
       </xsd:simpleType>
     </xsd:attribute>
@@ -160,7 +161,7 @@
       <xsd:enumeration value="foreigner_f" />
       <xsd:enumeration value="foreigner_f_plus" />
       <xsd:enumeration value="european_blue_card_h" />
-	  <xsd:enumeration value="ict_i" />
+      <xsd:enumeration value="ict_i" />
       <xsd:enumeration value="mobile_ict_j" />
       <xsd:enumeration value="foreigner_m" />
       <xsd:enumeration value="foreigner_n" />

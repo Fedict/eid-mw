@@ -364,6 +364,7 @@
 		    self, @"member_of_family",
 		    self, @"basic_key_hash",
 		    self, @"basic_key_verify:valid",
+            self, @"carddata_appl_version",
 		    nil];
 	_viewdict = [[NSMutableDictionary alloc] init];
 	[_CertificatesView setDataSource:_certstore];
@@ -475,19 +476,17 @@
 	assert(ui == self);
 	if([label isEqualToString:@"certimage"]) {
 		[(NSImageView*) [ui searchObjectById:label ofClass:[NSImageView class] forUpdate:NO] setImage:(NSImage*)data];
-		return;
 	}
-	if([label isEqualToString:@"member_of_family"]) {
+	else if([label isEqualToString:@"member_of_family"]) {
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			[self.memberOfFamilyState setState:NSOnState];
 		}];
-		return;
-	}
-	if([label isEqualToString:@"basic_key_hash"]) {
+    }
+    else if([label isEqualToString:@"basic_key_hash"]) {
 		[self setHex:data forLabel:label withUi:ui];
 		[self setHasBasicKey:YES];
 	}
-	if([label isEqualToString:@"basic_key_verify:valid"]) {
+	else if([label isEqualToString:@"basic_key_verify:valid"]) {
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			NSTextField *t = (NSTextField*)[self searchObjectById:@"basic_key_hash" ofClass:[NSTextField class] forUpdate:NO];
 			int a;
@@ -495,7 +494,7 @@
 			[t setTextColor:(a == 1 ? [NSColor systemGreenColor] : [NSColor systemRedColor])];
 		}];
 	}
-	if([label isEqualToString:@"document_type_raw"]) {
+	else if([label isEqualToString:@"document_type_raw"]) {
 		BOOL new_foreigner;
 		char b0, b1;
 		if([data length] > 1) {
@@ -532,6 +531,21 @@
 			}];
 		}
 	}
+    else if([label isEqualToString:@"carddata_appl_version"]) {
+        char vers;
+        [data getBytes:&vers length:1];
+        switch(vers) {
+            case 0x17:
+                [self newstringdata:@"v1.7" withLabel:label];
+                break;
+            case 0x18:
+                [self newstringdata:@"v1.8" withLabel:label];
+                break;
+            default:
+                [self newstringdata:@"?" withLabel:label];
+                break;
+        }
+    }
 }
 -(void)changeLogLevel:(NSPopUpButton *)logLevel {
 	[[NSUserDefaults standardUserDefaults] setInteger:[logLevel indexOfSelectedItem] forKey:@"log_level"];

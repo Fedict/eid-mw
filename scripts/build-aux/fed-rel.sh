@@ -6,7 +6,7 @@ find ./products -print
 
 declare -A DISTVERS
 declare -A DISTNAMES
-declare -A VERARCHS
+declare -A DISTARCHS
 
 DISTS="fedora epel"
 
