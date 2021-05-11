@@ -97,6 +97,9 @@
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "8Lw-Zo-LkV"; */
 "8Lw-Zo-LkV.placeholderString" = "-";
 
+/* Class = "NSTextFieldCell"; title = "Contact chip:"; ObjectID = "8nI-lQ-tKH"; */
+"8nI-lQ-tKH.title" = "Kontaktchip:";
+
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "8nN-Wk-ZVM"; */
 "8nN-Wk-ZVM.placeholderString" = "-";
 

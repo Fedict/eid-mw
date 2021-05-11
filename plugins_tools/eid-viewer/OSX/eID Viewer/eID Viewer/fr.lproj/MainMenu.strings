@@ -73,6 +73,9 @@
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "7NP-uC-fQ2"; */
 "7NP-uC-fQ2.placeholderString" = "-";
 
+/* Class = "NSTextFieldCell"; title = "Contact chip:"; ObjectID = "8nI-lQ-tKH"; */
+"8nI-lQ-tKH.title" = "Puce à contact:";
+
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "8nN-Wk-ZVM"; */
 "8nN-Wk-ZVM.placeholderString" = "-";
 
