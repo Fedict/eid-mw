@@ -327,8 +327,6 @@ static void connect_signals(GtkWidget* window) {
 	g_signal_connect(signaltmp, "clicked", G_CALLBACK(validate_all), NULL);
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "validate_always"));
 	g_signal_connect(signaltmp, "toggled", G_CALLBACK(validate_toggle), NULL);
-	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "basictestbut"));
-	g_signal_connect(signaltmp, "clicked", G_CALLBACK(eid_vwr_maybe_perform_challenge), NULL);
 
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "cert_paned"));
 	g_settings_bind(get_prefs(), "cert-paned-pos", signaltmp, "position", 0);
