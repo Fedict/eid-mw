@@ -12,7 +12,7 @@ libxml2-$(XML2_VERSION).tar.gz:
 	if [ -f $(TP_DIR)/libxml2-$(XML2_VERSION).tar.gz ]; then \
 		cp $(TP_DIR)/libxml2-$(XML2_VERSION).tar.gz .; \
 	else \
-		curl -O ftp://xmlsoft.org/libxml2/libxml2-$(XML2_VERSION).tar.gz; \
+		curl -O http://xmlsoft.org/sources/libxml2-$(XML2_VERSION).tar.gz; \
 		shasum -a 256 -c libxml2-$(XML2_VERSION).tar.gz.sha256; \
 	fi
 
