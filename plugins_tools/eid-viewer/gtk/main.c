@@ -89,7 +89,7 @@ static void uistatus(gboolean spin, char* data, ...) {
 
 /* Handle "state changed" elements */
 static void newstate(enum eid_vwr_states s) {
-	GObject *open, *save, *print, *close, *pintest, *pinchg, *validate, *basic;
+	GObject *open, *save, *print, *close, *pintest, *pinchg, *validate;
 #define want_verify (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "validate_always"))))
 	open = gtk_builder_get_object(builder, "mi_file_open");
 	save = gtk_builder_get_object(builder, "mi_file_saveas");
@@ -98,7 +98,6 @@ static void newstate(enum eid_vwr_states s) {
 	pintest = gtk_builder_get_object(builder, "pintestbut");
 	pinchg = gtk_builder_get_object(builder, "pinchangebut");
 	validate = gtk_builder_get_object(builder, "validate_now");
-	basic = gtk_builder_get_object(builder, "basictestbut");
 
 	g_object_set_threaded(open, "sensitive", (void*)FALSE, NULL);
 	g_object_set_threaded(close, "sensitive", (void*)FALSE, NULL);
@@ -107,7 +106,6 @@ static void newstate(enum eid_vwr_states s) {
 	g_object_set_threaded(pintest, "sensitive", (void*)FALSE, NULL);
 	g_object_set_threaded(pinchg, "sensitive", (void*)FALSE, NULL);
 	g_object_set_threaded(validate, "sensitive", (void*)FALSE, NULL);
-	g_object_set_threaded(basic, "sensitive", (void*)FALSE, NULL);
 	g_object_set_data_threaded(validate, "want_active", (void*)FALSE, NULL);
 	switch(s) {
 		case STATE_LIBOPEN:
@@ -134,9 +132,6 @@ static void newstate(enum eid_vwr_states s) {
 			g_object_set_threaded(pintest, "sensitive", (void*)TRUE, NULL);
 			g_object_set_threaded(pinchg, "sensitive", (void*)TRUE, NULL);
 			g_object_set_data_threaded(validate, "want_active", (void*)TRUE, NULL);
-			if(g_hash_table_contains(touched_labels, "basic_key_hash")) {
-				g_object_set_threaded(basic, "sensitive", (void*)TRUE, NULL);
-			}
 			if(want_verify) {
 				validate_all(NULL, NULL);
 			} else {
