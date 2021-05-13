@@ -140,7 +140,6 @@ build:deb_oldstable_32:
     CODE: $DEBIAN_OLDSTABLE_CODE
     SHORT: deb$DEBIAN_OLDSTABLE_VERSION
     ARCH: i386
-    TARGET: continuous
     GIT_STRATEGY: none
   only:
     variables:
@@ -152,7 +151,6 @@ build:deb_oldstable_64:
     CODE: $DEBIAN_OLDSTABLE_CODE
     SHORT: deb$DEBIAN_OLDSTABLE_VERSION
     ARCH: amd64
-    TARGET: continuous
     GIT_STRATEGY: none
   only:
     variables:
@@ -164,7 +162,6 @@ build:deb_stable_32:
     CODE: $DEBIAN_STABLE_CODE
     SHORT: deb$DEBIAN_STABLE_VERSION
     ARCH: i386
-    TARGET: continuous
     GIT_STRATEGY: none
   only:
     variables:
@@ -176,7 +173,6 @@ build:deb_stable_64:
     CODE: $DEBIAN_STABLE_CODE
     SHORT: deb$DEBIAN_STABLE_VERSION
     ARCH: amd64
-    TARGET: continuous
     GIT_STRATEGY: none
   only:
     variables:
@@ -188,7 +184,6 @@ build:sid-32:
     CODE: sid
     SHORT: sid
     ARCH: i386
-    TARGET: continuous
     GIT_STRATEGY: none
   allow_failure: true
 build:sid-64:
@@ -198,7 +193,6 @@ build:sid-64:
     CODE: sid
     SHORT: sid
     ARCH: amd64
-    TARGET: continuous
     GIT_STRATEGY: none
   allow_failure: true
 build:ubuntu_oldlts_32:
@@ -208,7 +202,6 @@ build:ubuntu_oldlts_32:
     CODE: $UBUNTU_OLDLTS_CODE
     SHORT: u$UBUNTU_OLDLTS_VERSION
     ARCH: i386
-    TARGET: continuous
     GIT_STRATEGY: none
   only:
     variables:
@@ -220,7 +213,6 @@ build:ubuntu_oldlts_64:
     CODE: $UBUNTU_OLDLTS_CODE
     SHORT: u$UBUNTU_OLDLTS_VERSION
     ARCH: amd64
-    TARGET: continuous
     GIT_STRATEGY: none
   only:
     variables:
@@ -232,7 +224,6 @@ build:ubuntu_lts_32:
     CODE: $UBUNTU_LTS_CODE
     SHORT: u$UBUNTU_LTS_VERSION
     ARCH: i386
-    TARGET: continuous
     GIT_STRATEGY: none
   only:
     variables:
@@ -244,7 +235,6 @@ build:ubuntu_lts_64:
     CODE: $UBUNTU_LTS_CODE
     SHORT: u$UBUNTU_LTS_VERSION
     ARCH: amd64
-    TARGET: continuous
     GIT_STRATEGY: none
   only:
     variables:
@@ -256,7 +246,6 @@ build:ubuntu_stable_32:
     CODE: $UBUNTU_STABLE_CODE
     SHORT: u$UBUNTU_STABLE_VERSION
     ARCH: i386
-    TARGET: continuous
     GIT_STRATEGY: none
   only:
     variables:
@@ -268,7 +257,6 @@ build:ubuntu_stable_64:
     CODE: $UBUNTU_STABLE_CODE
     SHORT: u$UBUNTU_STABLE_VERSION
     ARCH: amd64
-    TARGET: continuous
     GIT_STRATEGY: none
   only:
     variables:
@@ -488,8 +476,6 @@ repo:inject-debs:
     - $CI_COMMIT_TAG
 
 repo:inject-fed:
-  variables:
-    TARGET: continuous
   only:
     variables:
     - $CI_COMMIT_REF_NAME == "master"
@@ -506,8 +492,6 @@ repo:inject-fed:
   extends: .inject-fed
 
 repo:inject-suse:
-  variables:
-    TARGET: continuous
   only:
     variables:
     - $CI_COMMIT_REF_NAME == "master"

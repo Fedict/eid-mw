@@ -232,6 +232,8 @@
   - setup-chroot.sh $CODE $ARCH $DIST
   - if [ $CANDIDATEBRANCH = $CI_COMMIT_REF_NAME ]; then TARGET=candidate; fi
   - if [ ! -z "$CI_COMMIT_TAG" ]; then TARGET=proposed; fi
+  - if [ -z "$TARGET" ]; then TARGET=continuous; fi
+  - export TARGET
   - if [ $ARCH = "i386" ]; then DASHA="-A -s"; else DASHA="--no-arch-all --no-source"; fi
   - export DASHA
   - if [ ! -z "$TARGET" ]; then dist="$TARGET-$CODE"; else dist=$CODE; fi
@@ -309,6 +311,8 @@
   script:
     - if [ $CANDIDATEBRANCH = $CI_COMMIT_REF_NAME ]; then TARGET=candidate; fi
     - if [ ! -z "$CI_COMMIT_TAG" ]; then TARGET=candidate; fi
+    - if [ -z "$TARGET" ]; then TARGET=continuous; fi
+    - export TARGET
     - bash -x $LINUX_BASEDIR/scripts/build-aux/fed-rel.sh
 
 .inject-suse:
@@ -317,6 +321,8 @@
   script:
     - if [ $CANDIDATEBRANCH = $CI_COMMIT_REF_NAME ]; then TARGET=candidate; fi
     - if [ ! -z "$CI_COMMIT_TAG" ]; then TARGET=candidate; fi
+    - if [ -z "$TARGET" ]; then TARGET=continuous; fi
+    - export TARGET
     - bash -x $LINUX_BASEDIR/scripts/build-aux/suse-rel.sh
 
 .inject-source:
