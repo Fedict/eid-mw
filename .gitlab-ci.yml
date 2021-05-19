@@ -54,6 +54,7 @@ deb-repro:
     - .ci/dockerfiles/deb-repro/**/*
     - .ci/builds-docker.yml
     - .ci/build-configs.yml
+  allow_failure: true
 
 deb-scan-build:
   extends: .docker-base
@@ -62,6 +63,7 @@ deb-scan-build:
     - .ci/dockerfiles/deb-scan-build/**/*
     - .ci/builds-docker.yml
     - .ci/build-configs.yml
+  allow_failure: true
 
 deb-sbuild:
   extends: .docker-base
@@ -78,6 +80,7 @@ gtk4-build:
     - .ci/dockerfiles/gtk4-build/**/*
     - .ci/builds-docker.yml
     - .ci/build-configs.yml
+  allow_failure: true
 
 ##########################################################################################################
 # Stage "tests": run a test battery before doing all the hard work (i.e., try to find any problems ASAP) #
