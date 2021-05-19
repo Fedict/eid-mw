@@ -86,7 +86,7 @@ close $file;
 
 if(length($extra_allow) > 1) {
 	my $incoming = Dpkg::Control::HashCore->new();
-	$incoming->load($ENV{REPREPRO_BASE_DIR} . "/incoming");
+	$incoming->load($ENV{REPREPRO_BASE_DIR} . "/conf/incoming");
 	$incoming->{Allow} .= $extra_allow;
-	$incoming->save($ENV{REPREPRO_BASE_DIR} . "/incoming");
+	$incoming->save($ENV{REPREPRO_BASE_DIR} . "/conf/incoming");
 }
