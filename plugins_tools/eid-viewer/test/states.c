@@ -136,7 +136,7 @@ TEST_FUNC(states) {
 	clearflags();
 	
 	newstate(curstate);
-	eid_vwr_be_deserialize( L"../67.06.30-296.59.eid");
+	eid_vwr_be_deserialize( "./67.06.30-296.59.eid");
 
 	SLEEP(5);
 	newstate(curstate);
