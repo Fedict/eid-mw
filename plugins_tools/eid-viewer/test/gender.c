@@ -8,7 +8,7 @@
 static void(*nsd)(const EID_CHAR*, const EID_CHAR*) = NULL;
 static int have_found_cardnumber = 0;
 static enum eid_vwr_states curstate;
-static bool flags[STATE_COUNT];
+
 
 static void newstringdata(const EID_CHAR* label, const EID_CHAR* data) {
 	nsd(label, data);
@@ -66,11 +66,7 @@ static void newstringdata(const EID_CHAR* label, const EID_CHAR* data) {
 static void newstate(enum eid_vwr_states s) {
 	curstate = s;	
 }
-static void clearflags(){
-	for (int i=0;i<STATE_COUNT;i++){
-		flags[i]=false;
-	}
-}
+
 
 TEST_FUNC(gender) {
 	if(!have_robot()) {
