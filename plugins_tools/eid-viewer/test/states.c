@@ -139,7 +139,7 @@ TEST_FUNC(states) {
 	#ifdef WIN32
 	eid_vwr_be_deserialize( L"../67.06.30-296.59.eid");
 	#else 
-	eid_vwr_be_deserialize( "./67.06.30-296.59.eid");
+	eid_vwr_be_deserialize( "./67.06.30-296.60.eid");
 	#endif
 	SLEEP(5);
 	newstate(curstate);

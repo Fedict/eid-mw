@@ -139,6 +139,7 @@ int deserialize(void);
 int serialize(void);
 int init(void);
 int pinop(void);
+int gender(void);
 #endif
 int states(void);
 

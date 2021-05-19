@@ -28,19 +28,23 @@
 #include <typeinfo>
 #include <iostream>
 TEST_FUNC(exceptiondata){
-
 	try{
 		throw eIDMW::CNotAuthenticatedException(0xe1d00404L);
 	}	
 	catch(eIDMW::CNotAuthenticatedException n){
-	
 		printf("Not authenticated error code: %lu\n", n.GetError());
-		if (n.GetError() != 0xe1d00404L)return TEST_RV_FAIL;
-	}
-	catch(eIDMW::CMWException mw){
-		if (mw.GetError() != 0xe1d00404L)return TEST_RV_FAIL;
-		if (mw.GetLine() != 0)return TEST_RV_FAIL;
-		if (mw.GetFile() != "") return TEST_RV_FAIL;
+		if (n.GetError() != 0xe1d00404L){
+			printf("wrong code\n");
+			return TEST_RV_FAIL;
+		}
+		if (n.GetLine() != 0){
+			printf("wrong line\n");
+			return TEST_RV_FAIL;
+		}
+		if (n.GetFile() != "") {
+			printf("wrong file\n");
+			return TEST_RV_FAIL;
+		}
 		else return TEST_RV_OK;
 	}
  }
