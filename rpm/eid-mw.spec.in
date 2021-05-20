@@ -89,6 +89,7 @@ Requires: ccid
 %endif
 Requires: pcsc-lite
 Conflicts: openct
+Requires: pinentry-gui
 
 %description -n eid-viewer
 The eid-viewer application allows the user to read out any information from
