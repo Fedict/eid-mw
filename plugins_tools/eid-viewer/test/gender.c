@@ -7,8 +7,6 @@
 
 static void(*nsd)(const EID_CHAR*, const EID_CHAR*) = NULL;
 static int have_found_cardnumber = 0;
-static enum eid_vwr_states curstate;
-
 
 static void newstringdata(const EID_CHAR* label, const EID_CHAR* data) {
 	nsd(label, data);
@@ -63,31 +61,22 @@ static void newstringdata(const EID_CHAR* label, const EID_CHAR* data) {
 	}		
 }
 
-static void newstate(enum eid_vwr_states s) {
-	curstate = s;	
-}
-
-
 TEST_FUNC(gender) {
 	if(!have_robot()) {
 		printf("no robot");
 		return TEST_RV_SKIP;
 	}
 	struct eid_vwr_ui_callbacks* cb;
+	
 	robot_insert_reader();
+	robot_remove_card();
+	
 	cb = createcbs();
-	cb->newstate = newstate;
 	nsd = cb->newstringdata;
 	cb->newstringdata = newstringdata;
 	verbose_assert(eid_vwr_createcallbacks(cb) == 0);
-	
-	robot_insert_reader();
-	printf("press enter\n");
-	#ifdef WIN32
-	eid_vwr_be_deserialize( L"../67.06.30-296.59.eid");
-	#else 
+		
 	eid_vwr_be_deserialize( "./67.06.30-296.60.eid");
-	#endif
 	
 	printf("FR:\n");
 	eid_vwr_convert_set_lang(EID_VWR_LANG_FR);
