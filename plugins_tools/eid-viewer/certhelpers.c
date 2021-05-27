@@ -128,12 +128,12 @@ bool verify_once(EVP_PKEY *pubkey, const EVP_MD *md, const unsigned char *data, 
 		size_t asnsiglen = (*(sig+1))+2; //length value of asn.1 data is in second byte, add 2 for the 2 initial bytes: 0x30 and len
 		if (*sig != 0x30)
 		{
-		    be_log(EID_VWR_LOG_COARSE, "Signature not in asn.1 encoding");
+			be_log(EID_VWR_LOG_COARSE, "Signature not in asn.1 encoding");
 		}
 		else if( asnsiglen != siglen)
 		{
-		    be_log(EID_VWR_LOG_COARSE, "signature length mismatch between asn.1 encoding and filelength, will use the value in asn.1");
-		    siglen = asnsiglen;
+			be_log(EID_VWR_LOG_COARSE, "signature length mismatch between asn.1 encoding and filelength, will use the value in asn.1");
+			siglen = asnsiglen;
 		}
 	}
 	if(EVP_DigestVerifyInit(mdctx, &pctx, md, NULL, pubkey) != 1) {
