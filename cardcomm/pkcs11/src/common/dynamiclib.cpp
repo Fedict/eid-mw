@@ -81,11 +81,9 @@ void CDynamicLib::PlatformClose()
 }
 
 
-#endif
+#else
 
-////////////////////////////////// Linux /////////////////////////
-
-#ifdef USING_DL_OPEN
+////////////////////////////////// Linux & macOS /////////////////////////
 
 #include <dlfcn.h>
 
@@ -111,45 +109,6 @@ void *CDynamicLib::PlatformGetAddress(const char *csFunctionName)
 void CDynamicLib::PlatformClose()
 {
 	dlclose(m_module);
-}
-
-#endif
-
-/////////////////////////////////// Mac //////////////////////////
-
-#if defined(__APPLE__) && !defined(USING_DL_OPEN)
-
-#include <Carbon/Carbon.h>
-#include <mach-o/dyld.h>
-
-unsigned long CDynamicLib::PlatformOpen(const char *csLibPath)
-{
-	m_module = (struct mach_header *) NSAddImage(csLibPath,
-						     NSADDIMAGE_OPTION_WITH_SEARCHING);
-
-	return m_module == NULL ? EIDMW_CANT_LOAD_LIB : EIDMW_OK;
-}
-
-void *CDynamicLib::PlatformGetAddress(const char *csFunctionName)
-{
-	char csSymName[4096];
-
-	csSymName[0] = '_';
-	csSymName[1] = '\0';
-	strncat(csSymName, csFunctionName, sizeof(csSymName) - 2);
-	csSymName[sizeof(csSymName) - 1] = '\0';
-
-	NSSymbol nssym = NSLookupSymbolInImage((const struct mach_header *)
-					       m_module, csSymName,
-					       NSLOOKUPSYMBOLINIMAGE_OPTION_BIND_NOW);
-
-	return nssym == NULL ? NULL : NSAddressOfSymbol(nssym);
-}
-
-void CDynamicLib::PlatformClose()
-{
-	// It seems unpossible to unload a library on Mac OS X
-	// http://lists.apple.com/archives/Carbon-development/2004/Mar/msg00250.html
 }
 
 #endif
