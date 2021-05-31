@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="600"
+   height="400"
+   viewBox="0 0 158.75 105.83334"
+   version="1.1"
+   id="svg489"
+   inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
+   sodipodi:docname="bg.svg"
+   inkscape:export-filename="/home/wouter/bg.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
+  <defs
+     id="defs483">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient3436">
+      <stop
+         style="stop-color:#f7fdeb;stop-opacity:0"
+         offset="0"
+         id="stop3432" />
+      <stop
+         style="stop-color:#f7fdeb;stop-opacity:1"
+         offset="1"
+         id="stop3434" />
+    </linearGradient>
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3436"
+       id="radialGradient3438"
+       cx="79.375006"
+       cy="52.91667"
+       fx="79.375006"
+       fy="52.91667"
+       r="79.375006"
+       gradientTransform="matrix(1,0,0,0.66666666,0,17.63889)"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.9425"
+     inkscape:cx="300"
+     inkscape:cy="200"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     units="px"
+     inkscape:window-width="1920"
+     inkscape:window-height="1016"
+     inkscape:window-x="1920"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:lockguides="false"
+     showguides="true"
+     inkscape:guide-bbox="true">
+    <sodipodi:guide
+       position="72.760419,76.746241"
+       orientation="-1,0"
+       id="guide3475"
+       inkscape:label=""
+       inkscape:locked="false"
+       inkscape:color="rgb(0,0,255)" />
+    <sodipodi:guide
+       position="78.052086,84.256995"
+       orientation="-1,0"
+       id="guide3477"
+       inkscape:label=""
+       inkscape:locked="false"
+       inkscape:color="rgb(0,0,255)" />
+    <sodipodi:guide
+       position="85.989586,72.649467"
+       orientation="-1,0"
+       id="guide3479"
+       inkscape:label=""
+       inkscape:locked="false"
+       inkscape:color="rgb(0,0,255)" />
+    <sodipodi:guide
+       position="39.687501,66.145835"
+       orientation="0,1"
+       id="guide3481"
+       inkscape:label=""
+       inkscape:locked="false"
+       inkscape:color="rgb(0,0,255)" />
+    <sodipodi:guide
+       position="35.641935,39.687501"
+       orientation="0,1"
+       id="guide3483"
+       inkscape:label=""
+       inkscape:locked="false"
+       inkscape:color="rgb(0,0,255)" />
+    <sodipodi:guide
+       position="60.495699,52.916668"
+       orientation="0,1"
+       id="guide3485"
+       inkscape:label=""
+       inkscape:locked="false"
+       inkscape:color="rgb(0,0,255)" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata486">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Laag 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#f7fdeb;stroke-width:0.448744;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3440"
+       width="158.30125"
+       height="105.38459"
+       x="0.2243721"
+       y="0.2243721" />
+    <rect
+       style="fill:url(#radialGradient3438);fill-opacity:1;stroke:#f7fdeb;stroke-width:0.264309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3422"
+       width="158.4857"
+       height="105.56903"
+       x="0.1321543"
+       y="0.1321543" />
+    <path
+       style="fill:#dff8b1;fill-opacity:1;stroke:#dff8b1;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 72.760418,39.687501 85.989586,52.916668 72.760418,66.145835 78.052085,52.916668 Z"
+       id="path3487" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52778px;line-height:1.25;font-family:'Source Sans Pro';-inkscape-font-specification:'Source Sans Pro, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="20.918116"
+       y="13.642342"
+       id="text4052"><tspan
+         sodipodi:role="line"
+         x="20.918116"
+         y="13.642342"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52778px;font-family:'Source Sans Pro';-inkscape-font-specification:'Source Sans Pro, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583"
+         id="tspan4054">Om de eID Viewer te installeren, sleep je hem naar de map &quot;Toepassingen&quot;.</tspan><tspan
+         sodipodi:role="line"
+         x="20.918116"
+         y="18.052065"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52778px;font-family:'Source Sans Pro';-inkscape-font-specification:'Source Sans Pro, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583"
+         id="tspan4058">Pour installer l’eID Viewer, glissez-le dans le dossier « Applications ».</tspan><tspan
+         sodipodi:role="line"
+         x="20.918116"
+         y="22.46179"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52778px;font-family:'Source Sans Pro';-inkscape-font-specification:'Source Sans Pro, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583"
+         id="tspan4060">Um den eID Viewer zu installieren, ziehen Sie ihn in den Ordner &quot;Anwendungen&quot;.</tspan><tspan
+         sodipodi:role="line"
+         x="20.918116"
+         y="26.871515"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52778px;font-family:'Source Sans Pro';-inkscape-font-specification:'Source Sans Pro, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583"
+         id="tspan4062">To install the eID Viewer, drag it to your Applications folder.</tspan></text>
+  </g>
+</svg>
