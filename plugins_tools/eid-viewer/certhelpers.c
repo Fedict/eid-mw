@@ -124,17 +124,17 @@ bool verify_once(EVP_PKEY *pubkey, const EVP_MD *md, const unsigned char *data, 
 	}
 	if(key_base_id == EVP_PKEY_EC) {
 		md = EVP_get_digestbyname("sha384");
-        //check if the signature length is correct
-        size_t asnsiglen = (*(sig+1))+2; //length value of asn.1 data is in second byte, add 2 for the 2 initial bytes: 0x30 and len
-        if (*sig != 0x30)
-        {
-            be_log(EID_VWR_LOG_COARSE, "Signature not in asn.1 encoding");
-        }
-        else if( asnsiglen != siglen)
-        {
-            be_log(EID_VWR_LOG_COARSE, "signature length mismatch between asn.1 encoding and filelength, will use the value in asn.1");
-            siglen = asnsiglen;
-        }
+		//check if the signature length is correct
+		size_t asnsiglen = (*(sig+1))+2; //length value of asn.1 data is in second byte, add 2 for the 2 initial bytes: 0x30 and len
+		if (*sig != 0x30)
+		{
+			be_log(EID_VWR_LOG_COARSE, "Signature not in asn.1 encoding");
+		}
+		else if( asnsiglen != siglen)
+		{
+			be_log(EID_VWR_LOG_COARSE, "signature length mismatch between asn.1 encoding and filelength, will use the value in asn.1");
+			siglen = asnsiglen;
+		}
 	}
 	if(EVP_DigestVerifyInit(mdctx, &pctx, md, NULL, pubkey) != 1) {
 		be_log(EID_VWR_LOG_COARSE, "Could not verify card validity: failed to initialize verification context");
@@ -209,14 +209,14 @@ int eid_vwr_check_data_validity(const void* photo, int plen,
 		/* Some CA4 cards are re-signed CA3 ones where the photo hash
 		 * is still SHA1, but everything else is SHA256. Try if this is
 		 * such a card. */
-        if(hashlen == SHA_DIGEST_LENGTH)
-        {
-            md = EVP_get_digestbyname("sha256");
-            if(!verify_once(pubkey, md, datafile, datfilelen, datasig, datsiglen)) {
-                be_log(EID_VWR_LOG_COARSE, "Data signature fails validation!");
-                return 0;
-            }
-        }
+		if(hashlen == SHA_DIGEST_LENGTH)
+		{
+			md = EVP_get_digestbyname("sha256");
+			if(!verify_once(pubkey, md, datafile, datfilelen, datasig, datsiglen)) {
+				be_log(EID_VWR_LOG_COARSE, "Data signature fails validation!");
+				return 0;
+			}
+		}
 	}
 	address_data = calloc(addfilelen + datsiglen, 1);
 	memcpy(address_data, addrfile, addfilelen);

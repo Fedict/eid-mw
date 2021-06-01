@@ -165,6 +165,8 @@
       <xsd:enumeration value="mobile_ict_j" />
       <xsd:enumeration value="foreigner_m" />
       <xsd:enumeration value="foreigner_n" />
+      <xsd:enumeration value="foreigner_eu" />
+      <xsd:enumeration value="foreigner_eu_plus" />	  	  
     </xsd:restriction>
   </xsd:simpleType>
   <xsd:simpleType name="cardnumType">

@@ -66,8 +66,10 @@ namespace EidSamples
                     // use public key from certificate during verification
                     RSACryptoServiceProvider rsa = (RSACryptoServiceProvider)x509Certificate.PublicKey.Key;
 
-                    // verify signature. assume that the data was SHA1 hashed.
-                    return rsa.VerifyData(data, "SHA1", signature);
+                    //verify signature. assume that the data was SHA256 hashed.
+                    //normally we check the photo hash (length) for this, that hash is usually the same, 
+                    //though it is also possible that the photo hash is SHA1, and that the address signature got update to SHA256
+                    return rsa.VerifyData(data, "SHA256", signature);
                 }
                 else if (String.Compare(algo, "1.2.840.10045.2.1") == 0) //EC Public Key
                 {
