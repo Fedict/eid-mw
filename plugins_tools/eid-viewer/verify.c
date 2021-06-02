@@ -237,9 +237,9 @@ enum eid_vwr_result eid_vwr_verify_cert(const void *certificate, size_t certlen,
 
 	response = perform_ocsp_request(url, data, len, &len, &ocsp_handle);
 	if(!response) {
-        if(ocsp_handle != NULL){
-            free_ocsp_request(ocsp_handle);
-        }
+                if(ocsp_handle != NULL){
+                        free_ocsp_request(ocsp_handle);
+                }
 		ret = EID_VWR_RES_UNKNOWN;
 		goto exit;
 	}
