@@ -23,8 +23,6 @@
 #pragma pack(push, cryptoki, 1)
 #include "pkcs11.h"
 #pragma pack(pop, cryptoki)
-#include <stdio.h>
-#include <stdint.h>
 #include <tchar.h>
 #else
 #include <unix.h>
@@ -37,6 +35,8 @@
 #include <stdarg.h>
 #include <stdbool.h>
 #include <errno.h>
+#include <stdio.h>
+#include <stdint.h>
 
 #include "testlib.h"
 

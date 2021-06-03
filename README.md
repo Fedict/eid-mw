@@ -118,4 +118,4 @@ To create an XPI package, run:
 
 # Status badges
 
-[![Coverage Status](https://coveralls.io/repos/github/Fedict/eid-mw/badge.svg?branch=master)](https://coveralls.io/github/Fedict/eid-mw?branch=master) [![Build Status](https://travis-ci.org/Fedict/eid-mw.svg?branch=master)](https://travis-ci.org/Fedict/eid-mw) [![Coverity Scan Build Status](https://scan.coverity.com/projects/2576/badge.svg?flat=1)](https://scan.coverity.com/projects/eid-middleware) [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/1067/badge)](https://bestpractices.coreinfrastructure.org/projects/1067)
+[![Coverage Status](https://coveralls.io/repos/github/Fedict/eid-mw/badge.svg?branch=master)](https://coveralls.io/github/Fedict/eid-mw?branch=master) [![Coverity Scan Build Status](https://scan.coverity.com/projects/2576/badge.svg?flat=1)](https://scan.coverity.com/projects/eid-middleware) [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/1067/badge)](https://bestpractices.coreinfrastructure.org/projects/1067)
