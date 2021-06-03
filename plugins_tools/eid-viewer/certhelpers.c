@@ -221,6 +221,7 @@ int eid_vwr_check_data_validity(const void* photo, int plen,
 				return 0;
 			}
 		} else {
+			be_log(EID_VWR_LOG_COARSE, "Data signature fails validation!");
 			return 0;
 		}
 	}
