@@ -1,4 +1,4 @@
-TESTS = cardevent deserialize serialize init pinop states gender
+TESTS = cardevent deserialize serialize init pinop states gender validation
 check_PROGRAMS = $(TESTS)
 
 export EID_XSDLOC = $(srcdir)/../xml/eidv4.xsd
@@ -30,5 +30,8 @@ states_LDADD = $(COMMON_LIB)
 gender_SOURCES = gender.c $(COMMON_SRCS)
 gender_CPPFLAGS = -DSRCDIR='"$(srcdir)"'
 gender_LDADD = $(COMMON_LIB)
+
+validation_SOURCES = validation.c $(COMMON_SRCS)
+validation_LDADD = $(COMMON_LIB)
 
 EXTRA_DIST = 67.06.30-296.59.eid
