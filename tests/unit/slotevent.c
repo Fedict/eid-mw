@@ -58,8 +58,10 @@ TEST_FUNC(slotevent) {
 	}
 
 	robot_remove_card();
-
+	
+	#ifdef WIN32
 	Sleep(1000);
+	#endif
 
 	check_rv(C_WaitForSlotEvent(CKF_DONT_BLOCK, &slot, NULL_PTR));
 	// The below should return CKR_NO_EVENT, but it doesn't. That
