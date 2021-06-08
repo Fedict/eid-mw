@@ -19,11 +19,13 @@
 **************************************************************************** */
 #ifdef WIN32
 #include <win32.h>
+#include <windows.h>
 #pragma pack(push, cryptoki, 1)
 #include "pkcs11.h"
 #pragma pack(pop, cryptoki)
 #else
 #include <unix.h>
+#include <unistd.h>
 #include <pkcs11.h>
 #endif
 #include <stdio.h>
@@ -56,6 +58,10 @@ TEST_FUNC(slotevent) {
 	}
 
 	robot_remove_card();
+	
+	#ifdef WIN32
+	Sleep(1000);
+	#endif
 
 	check_rv(C_WaitForSlotEvent(CKF_DONT_BLOCK, &slot, NULL_PTR));
 	// The below should return CKR_NO_EVENT, but it doesn't. That

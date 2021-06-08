@@ -52,6 +52,7 @@ int main(int argc, char** argv) {
 		if(argc > 1) {
 			test_target = argv[i];
 		}
+		run_test(eject());
 		run_test(init_finalize());
 		run_test(fork_init());
 		run_test(double_init());

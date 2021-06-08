@@ -171,14 +171,18 @@ int eid_vwr_check_data_validity(const void* photo, int plen,
 	unsigned char digest[SHA384_DIGEST_LENGTH];
 	unsigned char *address_data, *ptr;
 
-	bio = BIO_new_mem_buf((char*)cert, certlen);
-	rrncert = d2i_X509_bio(bio, NULL);
-
 	assert(photo != NULL && plen != 0 && photohash != NULL
 			&& (hashlen == SHA_DIGEST_LENGTH || hashlen == SHA256_DIGEST_LENGTH || hashlen == SHA384_DIGEST_LENGTH)
 			&& datafile != NULL && datfilelen != 0 && datasig != NULL && datsiglen != 0
 			&& addrfile != NULL && addfilelen != 0 && addrsig != NULL && addsiglen != 0
-			&& rrncert != NULL);
+			&& cert != NULL && certlen != 0);
+
+	bio = BIO_new_mem_buf((char*)cert, certlen);
+	rrncert = d2i_X509_bio(bio, NULL);
+	if(rrncert == NULL) {
+		be_log(EID_VWR_LOG_COARSE, "Could not verify data validity: RRN certificate could not be parsed");
+		return 0;
+	}
 
 	switch(hashlen) {
 		case SHA_DIGEST_LENGTH:
@@ -216,6 +220,9 @@ int eid_vwr_check_data_validity(const void* photo, int plen,
 				be_log(EID_VWR_LOG_COARSE, "Data signature fails validation!");
 				return 0;
 			}
+		} else {
+			be_log(EID_VWR_LOG_COARSE, "Data signature fails validation!");
+			return 0;
 		}
 	}
 	address_data = calloc(addfilelen + datsiglen, 1);

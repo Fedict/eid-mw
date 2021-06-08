@@ -116,6 +116,18 @@ To create an XPI package, run:
  
     make xpipackage   
 
+# Common errors
+
+Q: I see
+
+    ./configure: line 11859: syntax error near unexpected token `ac_ext=c'
+    ./configure: line 11859: `ac_ext=c'
+
+How do I fix that?
+
+A: you missed the autoconf-archive dependency. Please install that and
+retry.
+
 # Status badges
 
-[![Coverage Status](https://coveralls.io/repos/github/Fedict/eid-mw/badge.svg?branch=master)](https://coveralls.io/github/Fedict/eid-mw?branch=master) [![Build Status](https://travis-ci.org/Fedict/eid-mw.svg?branch=master)](https://travis-ci.org/Fedict/eid-mw) [![Coverity Scan Build Status](https://scan.coverity.com/projects/2576/badge.svg?flat=1)](https://scan.coverity.com/projects/eid-middleware) [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/1067/badge)](https://bestpractices.coreinfrastructure.org/projects/1067)
+[![Coverage Status](https://coveralls.io/repos/github/Fedict/eid-mw/badge.svg?branch=master)](https://coveralls.io/github/Fedict/eid-mw?branch=master) [![Coverity Scan Build Status](https://scan.coverity.com/projects/2576/badge.svg?flat=1)](https://scan.coverity.com/projects/eid-middleware) [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/1067/badge)](https://bestpractices.coreinfrastructure.org/projects/1067)

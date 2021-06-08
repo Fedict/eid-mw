@@ -50,6 +50,7 @@ static struct field {
 	{ 4, N_("Chip number:"), "chip_number", NULL },
 	{ 4, N_("Valid from:"), "validity_begin_date", NULL },
 	{ 4, N_("Valid until:"), "validity_end_date", NULL },
+	{ 4, N_("Contact chip:"), "carddata_appl_version", NULL },
 };
 
 static struct field foreignerfields[] = {

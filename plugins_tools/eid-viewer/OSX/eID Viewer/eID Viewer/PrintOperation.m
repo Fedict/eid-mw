@@ -23,7 +23,7 @@
 		[self indexViews:view];
 		[self setIsIndexed:YES];
 	}
-	[self setPrintableFields:[[NSArray alloc] initWithObjects:@"surname", @"photo", @"location_of_birth", @"date_of_birth", @"gender", @"nationality", @"national_number", @"nobility", @"special_status", @"address_street_and_number", @"address_zip", @"address_municipality", @"chip_number", @"issuing_municipality", @"card_number", @"validity_begin_date", @"validity_end_date", @"document_type", nil]];
+	[self setPrintableFields:[[NSArray alloc] initWithObjects:@"surname", @"photo", @"location_of_birth", @"date_of_birth", @"gender", @"nationality", @"national_number", @"nobility", @"special_status", @"address_street_and_number", @"address_zip", @"address_municipality", @"chip_number", @"issuing_municipality", @"card_number", @"validity_begin_date", @"validity_end_date", @"document_type", @"carddata_appl_version", nil]];
 	struct labelnames *l = get_foreigner_labels();
 	NSMutableArray* arr = [NSMutableArray arrayWithCapacity:l->len];
 	for(int i=0; i<l->len; i++) {

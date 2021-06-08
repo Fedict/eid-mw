@@ -52,7 +52,8 @@ int ECDSA_SIG_set0(ECDSA_SIG* sig, BIGNUM *r, BIGNUM *s) {
 #endif
 
 // All valid OCSP URLs should have the following as their prefix:
-#define VALID_OCSP_PREFIX "http://ocsp.eid.belgium.be"
+#define VALID_OCSP_PREFIX_RSA "http://ocsp.eid.belgium.be"
+#define VALID_OCSP_PREFIX_ECC "http://ocsp.eidpki.belgium.be"
 // All valid CRL URLs should have the following as their prefix:
 #define VALID_CRL_PREFIX "http://crl.eid.belgium.be"
 
@@ -212,7 +213,7 @@ enum eid_vwr_result eid_vwr_verify_cert(const void *certificate, size_t certlen,
 				if(val->name != NULL && val->value != NULL) {
 					if(!strcmp(val->name, "OCSP - URI")) {
 						url = val->value;
-						if(strncmp(url, VALID_OCSP_PREFIX, strlen(VALID_OCSP_PREFIX))) {
+						if(strncmp(url, VALID_OCSP_PREFIX_RSA, strlen(VALID_OCSP_PREFIX_RSA)) && strncmp(url, VALID_OCSP_PREFIX_ECC, strlen(VALID_OCSP_PREFIX_ECC))) {
 							be_log(EID_VWR_LOG_NORMAL, "Invalid OCSP URL. Is this an actual eID card?");
 							ret = EID_VWR_RES_FAILED;
 							goto exit;
@@ -237,9 +238,9 @@ enum eid_vwr_result eid_vwr_verify_cert(const void *certificate, size_t certlen,
 
 	response = perform_ocsp_request(url, data, len, &len, &ocsp_handle);
 	if(!response) {
-        if(ocsp_handle != NULL){
-            free_ocsp_request(ocsp_handle);
-        }
+		if(ocsp_handle != NULL){
+			free_ocsp_request(ocsp_handle);
+		}
 		ret = EID_VWR_RES_UNKNOWN;
 		goto exit;
 	}
