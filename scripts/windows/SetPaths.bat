@@ -1,6 +1,6 @@
 ::Define search paths here
-@set SEARCH_BEID_DIR_MSBUILD=C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin
-@set SEARCH_BEID_DIR_MSBUILD_2=C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin
+@set SEARCH_BEID_DIR_MSBUILD=C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin
+@set SEARCH_BEID_DIR_MSBUILD_2=C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin
 @set SEARCH_BEID_DIR_MSBUILD_3=C:\Program Files (x86)\MSBuild\14.0\Bin
 
 ::@set SEARCH_SIGNTOOL_PATH=C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Bin

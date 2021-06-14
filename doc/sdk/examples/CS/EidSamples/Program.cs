@@ -37,10 +37,11 @@ namespace EidSamples
             //dt.GetSpecialStatus();
      
             //it.IntegrityIdentityFile();
+            it.IntegrityAddressFile();
             //st.SignSignature();
             //           CertificateValidityTests ct = new CertificateValidityTests();
             //          ct.ValidityAuthenticationChain();
-            dt.GetSurname();
+            //dt.GetSurname();
             /*dt.GetSurname();
             IntegrityIdentityFile
             dt.GetSurname();
@@ -52,9 +53,9 @@ namespace EidSamples
             dt.GetSurname();
             dt.GetCertificateLabels();
             st.SignAuthentication();*/
-            st.ChallengeCard();
+            //st.ChallengeCard();
             //duurtijd.Stop();
-           // Console.WriteLine(duurtijd.ElapsedMilliseconds.ToString());
+            // Console.WriteLine(duurtijd.ElapsedMilliseconds.ToString());
         }
     }
 }
