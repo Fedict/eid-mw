@@ -25,7 +25,7 @@
 # Changes to deal with BeID rather than EstEID:
 # Copyright(c) Wouter Verhelst, 2018-2020
 
-LIBS=$(ld --verbose | grep SEARCH | awk '{ gsub(/;/,"\n"); print }' | awk -F '\"' '/SEARCH_DIR\(\"=?/ { gsub(/=/,""); print $2 }')
+LIBS=$(ld --verbose | grep SEARCH | awk '{ gsub(/;/,"\n"); print }' | awk -F '\"' '/SEARCH_DIR\("=?/ { gsub(/=/,""); print $2 }')
 PKCS11=libbeidpkcs11.so.0
 
 if [ -z "$HOME" ]; then
