@@ -33,14 +33,20 @@ if [ -z "$HOME" ]; then
 	exit 1
 fi
 
-if [ ! -f $HOME/.pki/nssdb/cert9.db ]; then
+if [ -d "$HOME/.pki/nssdb" ]; then
+    NSSDBDIR="$HOME/.pki/nssdb"
+else
+    NSSDBDIR="${XDG_DATA_HOME:-$HOME/.local/share}/pki/nssdb"
+fi
+
+if [ ! -f $NSSDBDIR/cert9.db ]; then
     echo "Initializing new database"
-    mkdir -p $HOME/.pki/nssdb
-    certutil -d sql:$HOME/.pki/nssdb -N --empty-password
+    mkdir -p $NSSDBDIR
+    certutil -d sql:$NSSDBDIR -N --empty-password
 fi
 
 # Skip the Firefox directory, since we use the Firefox add-on for those.
-NSSDBS=$(find $HOME/.pki/nssdb $HOME/.thunderbird -name cert9.db -exec dirname {} \;)
+NSSDBS=$(find $NSSDBDIR $HOME/.thunderbird -name cert9.db -exec dirname {} \;)
 echo "Configuring $( echo $NSSDBS )"
 P11LOC=""
 
