@@ -105,8 +105,8 @@ TEST_FUNC(readvalidation) {
 	else {printf("happy flow ok\n");}
 	
 	//unhappy flow
-	//int now = time(NULL); 
-	int now = 1623918915;
+	int now = time(NULL); 
+	//int now = 1623918915;
 	srand(now);
 	//data change
 	if ( rand () % 2){
@@ -141,16 +141,7 @@ TEST_FUNC(readvalidation) {
 		printf("asig->seed: %d, offset: %d\n",now , offset);
 		memcpy(oasig, asig, asigs);
 		oasig[offset]= rand() % 256;
-		if (eid_vwr_check_data_validity(phot, phots, hash, hashs, data, datas, dsig, dsigs, addr, addrs, asig, asigs, cert, certs)){
-	   		return TEST_RV_FAIL;
-		}
-	}
-	if ( rand () % 2){ 
-		offset = rand() % certs;
-		printf("cert->seed: %d, offset: %d\n",now , offset);
-		memcpy(ocert, cert, certs);
-		ocert[offset]= rand() % 256;
-		if (eid_vwr_check_data_validity(phot, phots, hash, hashs, data, datas, dsig, dsigs, addr, addrs, asig, asigs, ocert, certs)){
+		if (eid_vwr_check_data_validity(phot, phots, hash, hashs, data, datas, dsig, dsigs, addr, addrs, oasig, asigs, cert, certs)){
 	   		return TEST_RV_FAIL;
 		}
 	}
