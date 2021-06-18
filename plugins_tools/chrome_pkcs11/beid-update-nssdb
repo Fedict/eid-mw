@@ -62,7 +62,7 @@ if [ -z "$P11LOC" ]; then
 	echo "E: Can't find $PKCS11" >&2
 	exit 1
 fi
-while read NSSDB; do
+while read -r NSSDB; do
     if grep -q library=$P11LOC "$NSSDB/pkcs11.txt"; then
         echo "ID-card support in $NSSDB already enabled"
     else
