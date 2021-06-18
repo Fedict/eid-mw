@@ -33,10 +33,10 @@ if [ -z "$HOME" ]; then
 	exit 1
 fi
 
-if [ -d "$HOME/.pki/nssdb" ]; then
-    NSSDBDIR="$HOME/.pki/nssdb"
-else
+if [ -d "${XDG_DATA_HOME:-$HOME/.local/share}/pki/nssdb" ]; then
     NSSDBDIR="${XDG_DATA_HOME:-$HOME/.local/share}/pki/nssdb"
+else
+    NSSDBDIR="$HOME/.pki/nssdb"
 fi
 
 if [ ! -f $NSSDBDIR/cert9.db ]; then
