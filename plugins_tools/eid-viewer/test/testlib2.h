@@ -140,7 +140,7 @@ int serialize(void);
 int init(void);
 int pinop(void);
 int gender(void);
-int validation(void);
+//int validation(void);
 #endif
 int states(void);
 

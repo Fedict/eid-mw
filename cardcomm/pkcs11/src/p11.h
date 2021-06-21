@@ -235,7 +235,6 @@ extern "C"
 	} P11_SIGN_DATA;
 
 
-//void memwash(char *p_in, unsigned int len);
 	int p11_get_token_type(char *atr, char *a_cType);
 
 #if 0
