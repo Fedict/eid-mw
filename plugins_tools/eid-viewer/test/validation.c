@@ -50,9 +50,13 @@ int loadData(uint8_t** array, size_t* size, char* label, CK_SLOT_ID slot, CK_SES
 	check_rv(C_GetAttributeValue(session, object, datab, 2));
 	*size = datab[1].ulValueLen ;
 	name[datab[0].ulValueLen] = '\0';
-	printf("name: %s\n", name);
-	hex_dump(*array, datab[1].ulValueLen);
+	/*uncomment if test fails to see if data is correct:
+	printf("label: %s\n",name)
+	hex_dump(*array, size);
+	*/
 	check_rv(C_FindObjectsFinal(session));
+	
+	free(name);
 	return TEST_RV_OK;
 }
 
