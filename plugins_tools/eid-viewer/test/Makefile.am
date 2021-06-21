@@ -1,4 +1,4 @@
-TESTS = cardevent deserialize serialize init pinop states gender #validation
+TESTS = cardevent deserialize serialize init pinop states gender validation
 check_PROGRAMS = $(TESTS)
 
 export EID_XSDLOC = $(srcdir)/../xml/eidv4.xsd
