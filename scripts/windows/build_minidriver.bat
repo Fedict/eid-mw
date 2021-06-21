@@ -10,14 +10,14 @@
 
 :: build pkcs11, minidriver and viewer
 :: ===================================
-@echo [INFO] Building "%~dp0..\..\VS_2017\beid.sln"
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:clean /property:Configuration=Minidriver_Release /Property:Platform=x86 "%~dp0..\..\VS_2017\beid.sln"
+@echo [INFO] Building "%~dp0..\..\VS_2019\beid.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:clean /property:Configuration=Minidriver_Release /Property:Platform=x86 "%~dp0..\..\VS_2019\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:build /property:Configuration=Minidriver_Release /Property:Platform=x86 "%~dp0..\..\VS_2017\beid.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:build /property:Configuration=Minidriver_Release /Property:Platform=x86 "%~dp0..\..\VS_2019\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:clean /property:Configuration=Minidriver_Release /Property:Platform=x64 "%~dp0..\..\VS_2017\beid.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:clean /property:Configuration=Minidriver_Release /Property:Platform=x64 "%~dp0..\..\VS_2019\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:build /property:Configuration=Minidriver_Release /Property:Platform=x64 "%~dp0..\..\VS_2017\beid.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:build /property:Configuration=Minidriver_Release /Property:Platform=x64 "%~dp0..\..\VS_2019\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
 
 
@@ -37,8 +37,8 @@ copy %~dp0..\..\cardcomm\minidriver\makemsi\beidmdrv.inf %MDRVINSTALLPATH%\beidm
 
 :: copy minidriver to quickinstaller's driver folder
 :: We use the same files for 32 and 64 bit. But we create architecture dependent MSI's
-copy %~dp0..\..\cardcomm\minidriver\VS_2017\Binaries\Win32_Release\beidmdrv32.dll %MDRVINSTALLPATH%\beidmdrv\beidmdrv32.dll
-copy %~dp0..\..\cardcomm\minidriver\VS_2017\Binaries\x64_Release\beidmdrv64.dll %MDRVINSTALLPATH%\beidmdrv\beidmdrv64.dll
+copy %~dp0..\..\cardcomm\minidriver\VS_2019\Binaries\Win32_Release\beidmdrv32.dll %MDRVINSTALLPATH%\beidmdrv\beidmdrv32.dll
+copy %~dp0..\..\cardcomm\minidriver\VS_2019\Binaries\x64_Release\beidmdrv64.dll %MDRVINSTALLPATH%\beidmdrv\beidmdrv64.dll
 
 :: copy icon
 :: copy %~dp0..\..\cardcomm\minidriver\img\beid.ico %MDRVINSTALLPATH%\beidmdrv\
