@@ -159,12 +159,6 @@ fi
 
 %files bin
 %defattr(-, root, root, 0755)
-%{_libexecdir}/beid-askaccess
-%{_libexecdir}/beid-askpin
-%{_libexecdir}/beid-badpin
-%{_libexecdir}/beid-changepin
-%{_libexecdir}/beid-spr-askpin
-%{_libexecdir}/beid-spr-changepin
 %{_bindir}/about-eid-mw
 %{_bindir}/beid-update-nssdb
 %{_sysconfdir}/xdg/autostart/beid-update-nssdb.desktop
