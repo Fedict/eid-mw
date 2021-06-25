@@ -165,6 +165,15 @@ fi
 %{_datadir}/locale/*/LC_MESSAGES/about-eid-mw.mo
 %{_datadir}/p11-kit/
 %{_libdir}/mozilla/
+%if 0%{?el7}
+%{_datadir}/locale/*/LC_MESSAGES/dialogs-beid.mo
+%{_libexecdir}/beid-askaccess
+%{_libexecdir}/beid-askpin
+%{_libexecdir}/beid-badpin
+%{_libexecdir}/beid-changepin
+%{_libexecdir}/beid-spr-askpin
+%{_libexecdir}/beid-spr-changepin
+%endif
 
 %files devel
 %defattr(-, root, root, 0755)
