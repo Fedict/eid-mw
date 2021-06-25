@@ -94,6 +94,7 @@
   script:
   - pushd $LINUX_BASEDIR
   - ./configure --libexecdir=$(pwd)/scripts/linux/hackbin --disable-pinentry CFLAGS='-g -O0 --coverage' CXXFLAGS='-g -O0 --coverage'
+  - ulimit -c unlimited'
   - make check
   - mkdir -p products/reports
   - gcovr --xml > products/reports/coverage.xml
