@@ -23,7 +23,11 @@ Requires(pre): /sbin/service
 Requires: eid-mw-bin
 Requires: eid-mw-libs
 BuildRequires: gcc-c++
+%if 0%{?el7}
+%else
 BuildRequires: libassuan-devel
+BuildRequires: libgpg-error-devel
+%endif
 %if 0%{?suse_version}
 Requires: pcsc-ccid
 BuildRequires: libopenssl-devel
