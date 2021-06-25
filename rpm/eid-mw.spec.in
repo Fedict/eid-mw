@@ -163,7 +163,6 @@ fi
 %{_bindir}/beid-update-nssdb
 %{_sysconfdir}/xdg/autostart/beid-update-nssdb.desktop
 %{_datadir}/locale/*/LC_MESSAGES/about-eid-mw.mo
-%{_datadir}/locale/*/LC_MESSAGES/dialogs-beid.mo
 %{_datadir}/p11-kit/
 %{_libdir}/mozilla/
 
