@@ -51,6 +51,7 @@ int ECDSA_SIG_set0(ECDSA_SIG* sig, BIGNUM *r, BIGNUM *s) {
 #define ppvalcast(obj) ((const void**)obj)
 #endif
 
+//Note: Do not forget to update the eID Viewer's Info.plist NSAppTransportSecurity dictionary when new http url's need to be supported
 // All valid OCSP URLs should have the following as their prefix:
 #define VALID_OCSP_PREFIX_RSA "http://ocsp.eid.belgium.be"
 #define VALID_OCSP_PREFIX_ECC "http://ocsp.eidpki.belgium.be"
