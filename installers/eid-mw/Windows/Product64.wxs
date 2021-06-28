@@ -84,13 +84,13 @@
 
       <Directory Id="SystemFolder" Name="SystemFolder">
 <?ifndef env.DONT_MERGE_VCRT?>
-        <Merge Id="VCRT" SourceFile="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Redist\MSVC\14.16.27012\MergeModules\Microsoft_VC141_CRT_x86.msm" Language="0" DiskId="1" />
+        <Merge Id="VCRT" SourceFile="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Redist\MSVC\v142\MergeModules\Microsoft_VC142_CRT_x86.msm" Language="0" DiskId="1" />
 <?endif?>
         <Directory Id="BEIDPPDIR" Name="beidpp"/>
       </Directory>
       <Directory Id="System64Folder"/>
 <?ifndef env.DONT_MERGE_VCRT?>
-		<Merge Id="VCRT_64" SourceFile="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Redist\MSVC\14.16.27012\MergeModules\Microsoft_VC141_CRT_x64.msm" Language="0" DiskId="1" />
+		<Merge Id="VCRT_64" SourceFile="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Redist\MSVC\v142\MergeModules\Microsoft_VC142_CRT_x64.msm" Language="0" DiskId="1" />
 <?endif?>
 		</Directory>
 
@@ -126,8 +126,8 @@
 	  <Component Id="FF_Manifest_FilesID" Guid="{658ACEFD-3305-447B-B764-96AA69344458}" Win64="no">
         <File Id="FF_Manifest_File_32ID" Name="beidpkcs11_32.json" KeyPath="yes" Source="..\..\..\plugins_tools\Firefox_plugin\beidpkcs11_32.json" />
         <File Id="FF_Manifest_File_64ID" Name="beidpkcs11_64.json" KeyPath="no" Source="..\..\..\plugins_tools\Firefox_plugin\beidpkcs11_64.json" />
-		<File Id="FF_Manifestbeid_ff_pkcs11_64ID" Name="beid_ff_pkcs11_64.dll" KeyPath="no" Source="..\..\..\cardcomm\pkcs11\VS_2017\binaries\x64_pkcs11_ff_release\beid_ff_pkcs11.dll" />
-		<File Id="FF_Manifestbeid_ff_pkcs11.32ID" Name="beid_ff_pkcs11_32.dll" KeyPath="no" Source="..\..\..\cardcomm\pkcs11\VS_2017\binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll" />
+		<File Id="FF_Manifestbeid_ff_pkcs11_64ID" Name="beid_ff_pkcs11_64.dll" KeyPath="no" Source="..\..\..\cardcomm\pkcs11\VS_2019\binaries\x64_pkcs11_ff_release\beid_ff_pkcs11.dll" />
+		<File Id="FF_Manifestbeid_ff_pkcs11.32ID" Name="beid_ff_pkcs11_32.dll" KeyPath="no" Source="..\..\..\cardcomm\pkcs11\VS_2019\binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll" />
       </Component>	  
 	</DirectoryRef>
 	
@@ -149,8 +149,8 @@
     <DirectoryRef Id="System64Folder">
 
       <Component Id="pkcs11_64" Guid="{3C4751D6-D92C-40ab-8FA5-3A1DF1D927EA}" SharedDllRefCount="no" Win64="yes">
-        <File Id="beidpkcs11_64.dll" Name="beidpkcs11.dll" KeyPath="yes" Source="..\..\..\cardcomm\pkcs11\VS_2017\binaries\x64_Release\beidpkcs11.dll" />
-        <File Id="beid_ff_pkcs11_64.dll" Name="beid_ff_pkcs11.dll" KeyPath="no" Source="..\..\..\cardcomm\pkcs11\VS_2017\binaries\x64_pkcs11_ff_release\beid_ff_pkcs11.dll" />
+        <File Id="beidpkcs11_64.dll" Name="beidpkcs11.dll" KeyPath="yes" Source="..\..\..\cardcomm\pkcs11\VS_2019\binaries\x64_Release\beidpkcs11.dll" />
+        <File Id="beid_ff_pkcs11_64.dll" Name="beid_ff_pkcs11.dll" KeyPath="no" Source="..\..\..\cardcomm\pkcs11\VS_2019\binaries\x64_pkcs11_ff_release\beid_ff_pkcs11.dll" />
 		<!-- <Shortcut Id='beid32_ff_pkcs11_shortcutId' Directory='FFPLUGMANFOLDER' Name="beid32_ff_pkcs11.dll" WorkingDirectory='System64Folder' Advertise="yes" /> -->
       </Component>
 
@@ -167,8 +167,8 @@
       </Component>
 
       <Component Id="pkcs11" Guid="{D54164C0-795D-4B2D-96C6-C8E395100896}" SharedDllRefCount="yes" Win64="no">
-        <File Id="beidpkcs11.dll" Name="beidpkcs11.dll" KeyPath="yes" Source="..\..\..\cardcomm\pkcs11\VS_2017\binaries\win32_release\beidpkcs11.dll" />
-        <File Id="beid_ff_pkcs11.dll" Name="beid_ff_pkcs11.dll" KeyPath="no" Source="..\..\..\cardcomm\pkcs11\VS_2017\binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll" />
+        <File Id="beidpkcs11.dll" Name="beidpkcs11.dll" KeyPath="yes" Source="..\..\..\cardcomm\pkcs11\VS_2019\binaries\win32_release\beidpkcs11.dll" />
+        <File Id="beid_ff_pkcs11.dll" Name="beid_ff_pkcs11.dll" KeyPath="no" Source="..\..\..\cardcomm\pkcs11\VS_2019\binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll" />
 		<!-- <Shortcut Id='beid64_ff_pkcs11_shortcutId' Directory='FFPLUGMANFOLDER' Name="beid64_ff_pkcs11.dll" WorkingDirectory='SystemFolder' Advertise="yes" /> -->
       </Component>
 

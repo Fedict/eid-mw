@@ -23,6 +23,11 @@ Requires(pre): /sbin/service
 Requires: eid-mw-bin
 Requires: eid-mw-libs
 BuildRequires: gcc-c++
+%if 0%{?el7}
+%else
+BuildRequires: libassuan-devel
+BuildRequires: libgpg-error-devel
+%endif
 %if 0%{?suse_version}
 Requires: pcsc-ccid
 BuildRequires: libopenssl-devel
@@ -158,19 +163,21 @@ fi
 
 %files bin
 %defattr(-, root, root, 0755)
+%{_bindir}/about-eid-mw
+%{_bindir}/beid-update-nssdb
+%{_sysconfdir}/xdg/autostart/beid-update-nssdb.desktop
+%{_datadir}/locale/*/LC_MESSAGES/about-eid-mw.mo
+%{_datadir}/p11-kit/
+%{_libdir}/mozilla/
+%if 0%{?el7}
+%{_datadir}/locale/*/LC_MESSAGES/dialogs-beid.mo
 %{_libexecdir}/beid-askaccess
 %{_libexecdir}/beid-askpin
 %{_libexecdir}/beid-badpin
 %{_libexecdir}/beid-changepin
 %{_libexecdir}/beid-spr-askpin
 %{_libexecdir}/beid-spr-changepin
-%{_bindir}/about-eid-mw
-%{_bindir}/beid-update-nssdb
-%{_sysconfdir}/xdg/autostart/beid-update-nssdb.desktop
-%{_datadir}/locale/*/LC_MESSAGES/about-eid-mw.mo
-%{_datadir}/locale/*/LC_MESSAGES/dialogs-beid.mo
-%{_datadir}/p11-kit/
-%{_libdir}/mozilla/
+%endif
 
 %files devel
 %defattr(-, root, root, 0755)

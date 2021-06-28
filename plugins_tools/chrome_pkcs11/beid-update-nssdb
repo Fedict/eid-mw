@@ -25,7 +25,7 @@
 # Changes to deal with BeID rather than EstEID:
 # Copyright(c) Wouter Verhelst, 2018-2020
 
-LIBS=$(ld --verbose | grep SEARCH | awk '{ gsub(/;/,"\n"); print }' | awk -F '\"' '/SEARCH_DIR\(\"=?/ { gsub(/=/,""); print $2 }')
+LIBS=$(ld --verbose | grep SEARCH | awk '{ gsub(/;/,"\n"); print }' | awk -F '\"' '/SEARCH_DIR\("=?/ { gsub(/=/,""); print $2 }')
 PKCS11=libbeidpkcs11.so.0
 
 if [ -z "$HOME" ]; then
@@ -33,16 +33,21 @@ if [ -z "$HOME" ]; then
 	exit 1
 fi
 
-if [ ! -f $HOME/.pki/nssdb/cert9.db ]; then
+if [ -d "${XDG_DATA_HOME:-$HOME/.local/share}/pki/nssdb" ]; then
+    NSSDBDIR="${XDG_DATA_HOME:-$HOME/.local/share}/pki/nssdb"
+else
+    NSSDBDIR="$HOME/.pki/nssdb"
+fi
+
+if [ ! -f $NSSDBDIR/cert9.db ]; then
     echo "Initializing new database"
-    mkdir -p $HOME/.pki/nssdb
-    certutil -d sql:$HOME/.pki/nssdb -N --empty-password
+    mkdir -p $NSSDBDIR
+    certutil -d sql:$NSSDBDIR -N --empty-password
 fi
 
 # Skip the Firefox directory, since we use the Firefox add-on for those.
-NSSDBS=$HOME/.pki/nssdb
-NSSDBS+=$(for dir in $(find $HOME/.thunderbird -name cert9.db); do echo " " $(dirname $dir); done)
-echo "Configuring ${NSSDBS}"
+NSSDBS=$(find $NSSDBDIR $HOME/.thunderbird -name cert9.db -exec dirname {} \;)
+echo "Configuring $( echo $NSSDBS )"
 P11LOC=""
 
 for DIR in $LIBS; do
@@ -57,12 +62,12 @@ if [ -z "$P11LOC" ]; then
 	echo "E: Can't find $PKCS11" >&2
 	exit 1
 fi
-for NSSDB in $NSSDBS; do
-    if grep -q library=$P11LOC $NSSDB/pkcs11.txt; then
+while read -r NSSDB; do
+    if grep -q library=$P11LOC "$NSSDB/pkcs11.txt"; then
         echo "ID-card support in $NSSDB already enabled"
     else
         echo "Enabling ID-card functionality in $NSSDB via $P11LOC"
-        modutil -force -dbdir sql:$NSSDB -delete "Belgium eID"
-        modutil -force -dbdir sql:$NSSDB -add "Belgium eID" -libfile $P11LOC -mechanisms FRIENDLY
+        modutil -force -dbdir sql:"$NSSDB" -delete "Belgium eID"
+        modutil -force -dbdir sql:"$NSSDB" -add "Belgium eID" -libfile $P11LOC -mechanisms FRIENDLY
     fi
-done
+done <<< "$NSSDBS"

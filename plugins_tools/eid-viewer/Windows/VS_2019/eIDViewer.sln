@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "eIDViewerBackend", "..\eIDViewerBackend\VS_2019\eIDViewerBackend.vcxproj", "{754CDA28-B21E-4919-94A2-2DC6BA77F578}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eIDViewer", "..\eIDViewer\eIDViewer.csproj", "{89D2BD16-3326-47D4-8A9B-6B41C010B9BC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{754CDA28-B21E-4919-94A2-2DC6BA77F578}.Release|x64.Build.0 = Release|x64
 		{754CDA28-B21E-4919-94A2-2DC6BA77F578}.Release|x86.ActiveCfg = Release|Win32
 		{754CDA28-B21E-4919-94A2-2DC6BA77F578}.Release|x86.Build.0 = Release|Win32
+		{89D2BD16-3326-47D4-8A9B-6B41C010B9BC}.Debug|x64.ActiveCfg = Debug|x64
+		{89D2BD16-3326-47D4-8A9B-6B41C010B9BC}.Debug|x64.Build.0 = Debug|x64
+		{89D2BD16-3326-47D4-8A9B-6B41C010B9BC}.Debug|x86.ActiveCfg = Debug|x86
+		{89D2BD16-3326-47D4-8A9B-6B41C010B9BC}.Debug|x86.Build.0 = Debug|x86
+		{89D2BD16-3326-47D4-8A9B-6B41C010B9BC}.Release|x64.ActiveCfg = Release|x64
+		{89D2BD16-3326-47D4-8A9B-6B41C010B9BC}.Release|x64.Build.0 = Release|x64
+		{89D2BD16-3326-47D4-8A9B-6B41C010B9BC}.Release|x86.ActiveCfg = Release|x86
+		{89D2BD16-3326-47D4-8A9B-6B41C010B9BC}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

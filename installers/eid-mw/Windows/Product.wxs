@@ -87,7 +87,7 @@
         <Directory Id="BEIDPPDIR" Name="beidpp"/>
       </Directory>
 <?ifndef env.DONT_MERGE_VCRT?>
-      <Merge Id="VCRT" SourceFile="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Redist\MSVC\14.16.27012\MergeModules\Microsoft_VC141_CRT_x86.msm" Language="0" DiskId="1" />
+      <Merge Id="VCRT" SourceFile="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Redist\MSVC\v142\MergeModules\Microsoft_VC142_CRT_x86.msm" Language="0" DiskId="1" />
 <?endif?>
 	  </Directory>
 	
@@ -138,7 +138,7 @@
 	<DirectoryRef Id="FFPLUGMANFOLDER">
 	  <Component Id="FF_Manifest_FilesID" Guid="{10A0598E-9F54-4386-959C-FB56FC1C412C}" Win64="no">
         <File Id="FF_Manifest_File_32ID" Name="beidpkcs11_32.json" KeyPath="yes" Source="..\..\..\plugins_tools\Firefox_plugin\beidpkcs11_32.json" />
-		<File Id="FF_Manifestbeid_ff_pkcs11.32ID" Name="beid_ff_pkcs11_32.dll" KeyPath="no" Source="..\..\..\cardcomm\pkcs11\VS_2017\binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll" />
+		<File Id="FF_Manifestbeid_ff_pkcs11.32ID" Name="beid_ff_pkcs11_32.dll" KeyPath="no" Source="..\..\..\cardcomm\pkcs11\VS_2019\binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll" />
       </Component>	  
 	</DirectoryRef>
 	
@@ -149,8 +149,8 @@
       </Component>
 
       <Component Id="pkcs11" Guid="{D54164C0-795D-4B2D-96C6-C8E395100896}" SharedDllRefCount="no">
-        <File Id="beidpkcs11.dll" Name="beidpkcs11.dll" KeyPath="yes" Source="..\..\..\cardcomm\pkcs11\VS_2017\binaries\win32_release\beidpkcs11.dll" />
-        <File Id="beid_ff_pkcs11.dll" Name="beid_ff_pkcs11.dll" KeyPath="no" Source="..\..\..\cardcomm\pkcs11\VS_2017\binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll" />
+        <File Id="beidpkcs11.dll" Name="beidpkcs11.dll" KeyPath="yes" Source="..\..\..\cardcomm\pkcs11\VS_2019\binaries\win32_release\beidpkcs11.dll" />
+        <File Id="beid_ff_pkcs11.dll" Name="beid_ff_pkcs11.dll" KeyPath="no" Source="..\..\..\cardcomm\pkcs11\VS_2019\binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll" />
       </Component>
 
     </DirectoryRef>
