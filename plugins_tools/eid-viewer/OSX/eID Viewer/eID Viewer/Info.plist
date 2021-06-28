@@ -40,6 +40,20 @@
 				<key>NSIncludesSubdomains</key>
 				<false/>
 			</dict>
+            <key>crl.eidpki.belgium.be</key>
+            <dict>
+                <key>NSExceptionAllowsInsecureHTTPLoads</key>
+                <true/>
+                <key>NSIncludesSubdomains</key>
+                <false/>
+            </dict>
+            <key>ocsp.eidpki.belgium.be</key>
+            <dict>
+                <key>NSExceptionAllowsInsecureHTTPLoads</key>
+                <true/>
+                <key>NSIncludesSubdomains</key>
+                <false/>
+            </dict>
 		</dict>
 	</dict>
 	<key>NSHumanReadableCopyright</key>
