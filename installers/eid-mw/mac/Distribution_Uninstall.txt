@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <installer-gui-script minSpecVersion="2">
     <title>eID Middleware Uninstaller</title>
-    <options hostArchitectures="i386"/>
+    <options hostArchitectures="x86_64,arm64"/>
     <options customize="never" rootVolumeOnly="true"/>
     <readme file="ReadMe.rtf"/>
     <license file="license.rtf"/>
