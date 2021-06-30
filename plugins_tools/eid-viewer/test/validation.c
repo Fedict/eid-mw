@@ -8,7 +8,6 @@
 #include <string.h>
 #include <eid-util/utftranslate.h>
 #include <eid-util/labels.h>
-#include <linux/random.h>
 #include "testlib.h"
 #include "../dataverify.h"
 
