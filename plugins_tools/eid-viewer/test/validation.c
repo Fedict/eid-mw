@@ -8,6 +8,7 @@
 #include <string.h>
 #include <eid-util/utftranslate.h>
 #include <eid-util/labels.h>
+#include <linux/random.h>
 #include "testlib.h"
 #include "../dataverify.h"
 
@@ -17,7 +18,8 @@ int loadData(uint8_t** array, size_t* size, char* label, CK_SLOT_ID slot, CK_SES
 	CK_ULONG count = 0;
 	CK_ULONG type;
 	CK_ATTRIBUTE attr[2];
-
+	char* name;
+	
 	attr[0].type = CKA_LABEL;
 	attr[0].pValue = label;
 	attr[0].ulValueLen = strlen(label);
@@ -40,16 +42,16 @@ int loadData(uint8_t** array, size_t* size, char* label, CK_SLOT_ID slot, CK_SES
 		return TEST_RV_FAIL;
 	}
 
-	char* name;
-
 	check_rv(C_GetAttributeValue(session, object, datab, 2));
-	*array = malloc(datab[1].ulValueLen+1);
-	datab[1].pValue = *array;
-	datab[0].pValue = name;
+	
 	name = malloc(datab[0].ulValueLen+1);
+	*array = malloc(datab[1].ulValueLen+1);
+	datab[0].pValue = name;
+	datab[1].pValue = *array;
+	
 	check_rv(C_GetAttributeValue(session, object, datab, 2));
-	*size = datab[1].ulValueLen ;
 	name[datab[0].ulValueLen] = '\0';
+	*size = datab[1].ulValueLen ;
 	/*uncomment if test fails to see if data is correct:
 	printf("label: %s\n",name)
 	hex_dump(*array, size);
