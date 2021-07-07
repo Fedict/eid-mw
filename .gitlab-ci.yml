@@ -54,7 +54,6 @@ deb-repro:
     - .ci/dockerfiles/deb-repro/**/*
     - .ci/builds-docker.yml
     - .ci/build-configs.yml
-  allow_failure: true
 
 deb-scan-build:
   extends: .docker-base
@@ -63,7 +62,6 @@ deb-scan-build:
     - .ci/dockerfiles/deb-scan-build/**/*
     - .ci/builds-docker.yml
     - .ci/build-configs.yml
-  allow_failure: true
 
 deb-sbuild:
   extends: .docker-base
@@ -92,7 +90,6 @@ test:distcheck:
 test:robot:linux:
   stage: tests
   extends: .robot:linux
-  allow_failure: true
 
 test:repro:debian:
   stage: tests
@@ -117,7 +114,6 @@ test:nodialogs:
 test:coverity:linux:
   stage: tests
   extends: .coverity:linux
-  allow_failure: true
 
 #################################################
 # Stage "source-package": build source packages #
@@ -425,7 +421,6 @@ validate:validation:linux:google:
   - build:ubuntu_stable_64
   - build:ubuntu_lts_64
   - build:ubuntu_lts_32
-  allow_failure: true
 
 validate:validation:linux:firefox:
   stage: validate
@@ -437,7 +432,6 @@ validate:validation:linux:firefox:
   - build:ubuntu_stable_64
   - build:ubuntu_lts_64
   - build:ubuntu_lts_32
-  allow_failure: true
 
 validate:validation:macos:firefox:
   stage: validate
