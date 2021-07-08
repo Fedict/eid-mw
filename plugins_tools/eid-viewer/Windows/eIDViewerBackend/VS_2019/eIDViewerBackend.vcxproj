@@ -100,7 +100,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>beid_ff_pkcs11D.lib;Xmllite.lib;Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\..\..\..\cardcomm\pkcs11\VS_2017\Binaries\Win32_PKCS11_FF_DEBUG\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\..\..\..\cardcomm\pkcs11\VS_2019\Binaries\Win32_PKCS11_FF_DEBUG\</AdditionalLibraryDirectories>
       <OutputFile>$(SolutionDir)\..\eIDViewer\bin\Debug\$(TargetName)$(TargetExt)</OutputFile>
     </Link>
   </ItemDefinitionGroup>
@@ -119,7 +119,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>beid_ff_pkcs11D.lib;Xmllite.lib;Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\..\..\..\cardcomm\pkcs11\VS_2017\Binaries\x64_PKCS11_FF_DEBUG\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\..\..\..\cardcomm\pkcs11\VS_2019\Binaries\x64_PKCS11_FF_DEBUG\</AdditionalLibraryDirectories>
       <OutputFile>$(SolutionDir)\..\eIDViewer\bin\Debug\$(TargetName)$(TargetExt)</OutputFile>
     </Link>
   </ItemDefinitionGroup>
@@ -141,11 +141,11 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>beid_ff_pkcs11.lib;Xmllite.lib;Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\..\..\..\cardcomm\pkcs11\VS_2017\Binaries\Win32_PKCS11_FF_Release\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\..\..\..\cardcomm\pkcs11\VS_2019\Binaries\Win32_PKCS11_FF_Release\</AdditionalLibraryDirectories>
     </Link>
     <Lib>
       <AdditionalDependencies>beidpkcs11.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\..\..\..\cardcomm\pkcs11\VS_2017\Binaries\Win32_release</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\..\..\..\cardcomm\pkcs11\VS_2019\Binaries\Win32_release</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -166,11 +166,11 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>beid_ff_pkcs11.lib;Xmllite.lib;Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\..\..\..\cardcomm\pkcs11\VS_2017\Binaries\x64_PKCS11_FF_Release\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\..\..\..\cardcomm\pkcs11\VS_2019\Binaries\x64_PKCS11_FF_Release\</AdditionalLibraryDirectories>
     </Link>
     <Lib>
       <AdditionalDependencies>beidpkcs11.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\..\..\..\cardcomm\pkcs11\VS_2017\Binaries\Win32_release</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\..\..\..\cardcomm\pkcs11\VS_2019\Binaries\Win32_release</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
