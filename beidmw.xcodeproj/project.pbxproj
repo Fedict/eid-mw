@@ -105,6 +105,7 @@
 		6C22BB6A257E619400E72FF2 /* brexitment1conv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6C22BB66257E619400E72FF2 /* brexitment1conv.cpp */; };
 		6C22BB6B257E619400E72FF2 /* brexitment2conv.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C22BB67257E619400E72FF2 /* brexitment2conv.h */; };
 		6C22BB6C257E619400E72FF2 /* brexitment2conv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6C22BB68257E619400E72FF2 /* brexitment2conv.cpp */; };
+		6C66057326944B6300BBD8CA /* eject.c in Sources */ = {isa = PBXBuildFile; fileRef = 6C66057126944B6300BBD8CA /* eject.c */; };
 		6CAFE1D821DF86E40078C7E2 /* pkcs11.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CAFE1D521DF86E40078C7E2 /* pkcs11.h */; };
 		6CAFE1D921DF86E40078C7E2 /* pkcs11t.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CAFE1D621DF86E40078C7E2 /* pkcs11t.h */; };
 		6CAFE1DA21DF86E40078C7E2 /* pkcs11f.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CAFE1D721DF86E40078C7E2 /* pkcs11f.h */; };
@@ -438,6 +439,7 @@
 		6C22BB66257E619400E72FF2 /* brexitment1conv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = brexitment1conv.cpp; sourceTree = "<group>"; };
 		6C22BB67257E619400E72FF2 /* brexitment2conv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = brexitment2conv.h; sourceTree = "<group>"; };
 		6C22BB68257E619400E72FF2 /* brexitment2conv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = brexitment2conv.cpp; sourceTree = "<group>"; };
+		6C66057126944B6300BBD8CA /* eject.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = eject.c; path = tests/unit/eject.c; sourceTree = "<group>"; };
 		6CAFE1D521DF86E40078C7E2 /* pkcs11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pkcs11.h; sourceTree = "<group>"; };
 		6CAFE1D621DF86E40078C7E2 /* pkcs11t.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pkcs11t.h; sourceTree = "<group>"; };
 		6CAFE1D721DF86E40078C7E2 /* pkcs11f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pkcs11f.h; sourceTree = "<group>"; };
@@ -800,6 +802,7 @@
 		6536230C19A7E8FE00D46ECB /* testsuite */ = {
 			isa = PBXGroup;
 			children = (
+				6C66057126944B6300BBD8CA /* eject.c */,
 				65EABAED1C621F3D00034337 /* labels.c */,
 				65EABAEE1C621F3D00034337 /* labels.h */,
 				65EABAEF1C621F3D00034337 /* utftranslate.h */,
@@ -1385,6 +1388,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C66057326944B6300BBD8CA /* eject.c in Sources */,
 				6CDC504222085AFB0078C7E2 /* readdata_limited.c in Sources */,
 				65EABAF31C621FB400034337 /* labels.c in Sources */,
 				65F3F0231BE237480073F2A3 /* readdata_sequence.c in Sources */,
