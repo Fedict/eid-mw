@@ -340,9 +340,9 @@
 .coverity:linux:
   variables:
     PATH: /opt/coverity/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
+  image: $COVERITY_BUILD_IMAGE
   tags:
-  - linux
-  - coverity
+  - docker
   before_script:
   - pushd $LINUX_BASEDIR
   - autoreconf -f -i
