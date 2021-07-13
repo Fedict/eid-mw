@@ -346,7 +346,6 @@
   before_script:
   - pushd $LINUX_BASEDIR
   - autoreconf -f -i
-  - rm -rf cov-int
   - popd
   script:
   - pushd $LINUX_BASEDIR
