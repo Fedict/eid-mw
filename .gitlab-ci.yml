@@ -522,6 +522,7 @@ publish:rsync:
   tags:
   - repobuilder
   script:
+  - scripts/build-aux/cleanup.sh
   - rsync -avr --delete-before $DIST_LOC/continuous/ $RSYNC_TARGET_DIST/continuous
   - rsync -avr --delete-before $DIST_LOC/releases/ $RSYNC_TARGET_DIST/releases
   - rsync -avrLHP --exclude="dists/" --exclude="repomd.xml*" $REPO_LOC $RSYNC_TARGET_FILES
