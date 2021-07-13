@@ -1,12 +1,12 @@
-@SET CORRECT_SHA256_HASH=114a8c5141057f38864ef0bd3efb809d8218255e874c19ae6564bdc7df0699b5
-@SET BEIDMDRV_ZIP=beidmdrv_all_5.0.17.5494.zip
+@SET CORRECT_SHA256_HASH=fcf8b503d1660185be90630dfa1c5b7625bcb26dc7aa3d38be61de163d29f298
+@SET BEIDMDRV_ZIP=beidmdrv_all_5.0.27.5677.zip
 @echo hash verification current beidmdrv started 
 @echo known hash is %CORRECT_SHA256_HASH%
 
 :: downloading signed minidriver
 ::==============================
 @echo downloading signed minidriver %BEIDMDRV_ZIP%
-@call curl -O "https://dist.eid.belgium.be/releases/5.0.17/%BEIDMDRV_ZIP%"
+@call curl -O "https://dist.eid.belgium.be/releases/5.0.27/%BEIDMDRV_ZIP%"
 @if %ERRORLEVEL%==1 goto download_failed
 
 @FOR /F "tokens=1" %%F IN ('CertUtil.exe -hashfile %BEIDMDRV_ZIP% SHA256 ^| find /i /v "SHA256" ^| find /i /v "certutil"') DO (
