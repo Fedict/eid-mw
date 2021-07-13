@@ -203,7 +203,8 @@ dist_packagedata_DATA = xml/eidv4.xsd
 dist_trust_DATA = \
 	certs/belgiumrca2.pem \
 	certs/belgiumrca3.pem \
-	certs/belgiumrca4.pem
+	certs/belgiumrca4.pem \
+	certs/belgiumrca6.pem
 
 install-data-hook:
 	if ( $(SSL_PREFIX)/bin/openssl help 2>&1 | grep -q rehash); then $(SSL_PREFIX)/bin/openssl rehash $(DESTDIR)/$(trustdir); else $(SSL_PREFIX)/bin/c_rehash $(DESTDIR)/$(trustdir); fi
