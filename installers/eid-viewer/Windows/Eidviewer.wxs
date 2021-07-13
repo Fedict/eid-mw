@@ -9,7 +9,7 @@
   <?define var.UpgradeCode ={A65D6AF1-8B50-4421-BFCB-CC1D3949807D}?>
   <?define var.ProductGuid ={F3DC7F06-92FF-4c98-87F5-72C0B786$(var.RevisionNumber)}?>
 
-  <?define var.ProductName =Belgium e-ID viewer $(var.OfficialProductVersion) (build $(var.RevisionNumber))?>
+  <?define var.ProductName =Belgium e-ID viewer (x86) $(var.OfficialProductVersion) (build $(var.RevisionNumber))?>
 
   <?define var.PackageCode="*"?>
 
