@@ -73,6 +73,9 @@ deb-sbuild:
 
 gtk4-build:
   extends: .docker-base
+  variables:
+    http_proxy: $ACNG
+    https_proxy: $ACNG
   only:
     changes:
     - .ci/dockerfiles/gtk4-build/**/*
