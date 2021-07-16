@@ -12,7 +12,8 @@
   - docker pull $IMAGE_TAG || true
   script:
   - cd $LINUX_BASEDIR/.ci/dockerfiles/$CI_JOB_NAME
-  - docker build --pull --cache-from $IMAGE_TAG --build-arg=http_proxy=$http_proxy --build-arg=https_proxy=$https_proxy -t $IMAGE_TAG .
+  - docker pull $IMAGE_TAG
+  - docker build --cache-from $IMAGE_TAG --build-arg=http_proxy=$http_proxy --build-arg=https_proxy=$https_proxy -t $IMAGE_TAG .
   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   - docker push $IMAGE_TAG
 
