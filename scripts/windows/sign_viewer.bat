@@ -18,9 +18,9 @@ set MDRVCERTPATH=%~dp0..\..\cardcomm\minidriver\makemsi
 :: ===========
 
 @echo [INFO] Sign the pkcs11_ff dll, 32bit
-"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\cardcomm\pkcs11\VS_2017\Binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll"
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\cardcomm\pkcs11\VS_2019\Binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll"
 @echo [INFO] Sign the pkcs11_ff dll, 64bit
-"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\cardcomm\pkcs11\VS_2017\Binaries\x64_PKCS11_FF_Release\beid_ff_pkcs11.dll"
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\cardcomm\pkcs11\VS_2019\Binaries\x64_PKCS11_FF_Release\beid_ff_pkcs11.dll"
 
 
 :: create the MSI installers
@@ -31,7 +31,7 @@ set MDRVCERTPATH=%~dp0..\..\cardcomm\minidriver\makemsi
 
 @echo [INFO] Sign the eID Viewer executable and the viewer backend dll x86
 "%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\Release\eIDViewer.exe"
-"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\plugins_tools\eid-viewer\Windows\eIDViewerBackend\VS_2017\Binaries\Win32_Release\eIDViewerBackend.dll"
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\plugins_tools\eid-viewer\Windows\eIDViewerBackend\VS_2019\Binaries\Win32_Release\eIDViewerBackend.dll"
 @if %ERRORLEVEL%==1 goto signtool_failed
 
 @echo [INFO] create eID Viewer msi installer x86
@@ -47,7 +47,7 @@ set MDRVCERTPATH=%~dp0..\..\cardcomm\minidriver\makemsi
 
 ::@echo [INFO] Sign the eID Viewer executable and the viewer backend dll x64
 ::"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\x64\Release\eIDViewer.exe"
-::"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\plugins_tools\eid-viewer\Windows\eIDViewerBackend\VS_2017\Binaries\x64_Release\eIDViewerBackend.dll"
+::"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "06f01865ee31c88ef2bc9d6f4b3eff06427d1ea7" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\plugins_tools\eid-viewer\Windows\eIDViewerBackend\VS_2019\Binaries\x64_Release\eIDViewerBackend.dll"
 ::@if %ERRORLEVEL%==1 goto signtool_failed
 ::
 ::@echo [INFO] create eID Viewer msi installer x64
