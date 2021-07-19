@@ -85,15 +85,15 @@
       </Directory>
 
 	<?ifndef env.DONT_MERGE_VCRT?>
-      <Merge Id="VCRT" SourceFile="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Redist\MSVC\14.16.27012\MergeModules\Microsoft_VC141_CRT_x86.msm" Language="0" DiskId="1" />
+		<Merge Id="VCRT" SourceFile="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Redist\MSVC\v142\MergeModules\Microsoft_VC142_CRT_x86.msm" Language="0" DiskId="1" />
 	<?endif?>
     </Directory>
 
     <DirectoryRef Id="BEIDVIEWERDIR">
       <Component Id="BEIDVIEWER" Guid="{67B78F6B-C6D5-4616-88B9-0BE8A46E01F7}">
         <File Id="eidviewer.exe" Name="eID Viewer.exe" KeyPath="yes" Source="..\..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\Release\eIDViewer.exe" />
-		<File Id="eIDViewerBackend" Name="eIDViewerBackend.dll" KeyPath="no" Source="..\..\..\plugins_tools\eid-viewer\Windows\eIDViewerBackend\VS_2017\Binaries\Win32_Release\eIDViewerBackend.dll" />	
-		<File Id="beid_ff_pkcs11" Name="beid_ff_pkcs11.dll" KeyPath="no" Source="..\..\..\cardcomm\pkcs11\VS_2017\Binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll" />			
+		<File Id="eIDViewerBackend" Name="eIDViewerBackend.dll" KeyPath="no" Source="..\..\..\plugins_tools\eid-viewer\Windows\eIDViewerBackend\VS_2019\Binaries\Win32_Release\eIDViewerBackend.dll" />	
+		<File Id="beid_ff_pkcs11" Name="beid_ff_pkcs11.dll" KeyPath="no" Source="..\..\..\cardcomm\pkcs11\VS_2019\Binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll" />			
 	  </Component>
     </DirectoryRef>
 	
