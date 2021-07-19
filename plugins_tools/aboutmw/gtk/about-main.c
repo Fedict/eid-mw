@@ -49,16 +49,30 @@
 #define gtk_clipboard_set_text(c, t, l) gdk_clipboard_set_text(c, t)
 #define gtk_init(a, b) gtk_init()
 
-void gtk_widget_show_all_ll(GtkWidget *widget, gpointer data G_GNUC_UNUSED) {
-	if(GTK_IS_CONTAINER(widget)) {
-		gtk_container_foreach(GTK_CONTAINER(widget), gtk_widget_show_all_ll, NULL);
-	}
-	gtk_widget_show(widget);
+GtkShortcutController *ctrl;
+
+void init_shortcuts(GtkWindow *mainwin) {
+	
 }
 
-void gtk_widget_show_all(GtkWidget *widget) {
-	gtk_widget_show_all_ll(widget, NULL);
+void add_shortcut(GtkWidget *button, char letter) {
+
 }
+
+#else
+#define gtk_window_destroy gtk_widget_destroy
+
+GtkAccelGroup *accel_group;
+
+void init_shortcuts(GtkWindow *mainwin) {
+	accel_group = gtk_accel_group_new();
+	gtk_window_add_accel_group(mainwin, accel_group);
+}
+void add_shortcut(GtkWidget *button, char letter) {
+	guint key = GDK_KEY_a + (letter - 'a');
+	gtk_widget_add_accelerator(GTK_WIDGET(button), "clicked", accel_group, key, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+}
+
 #endif
 
 #ifndef _
@@ -161,8 +175,8 @@ void do_files(GtkWidget* top, GtkListStore* data) {
 				break;
 			default:
 				dialog = gtk_message_dialog_new(GTK_WINDOW(top), GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "stat: %s", strerror(errno));
-				gtk_dialog_run(GTK_DIALOG(dialog));
-				gtk_widget_destroy(dialog);
+				g_signal_connect(dialog, "response", G_CALLBACK(gtk_window_destroy), NULL);
+				gtk_widget_show(dialog);
 				break;
 			}
 		} else {
@@ -282,8 +296,8 @@ void do_uname(GtkWidget* top, GtkListStore* data) {
 
 	if(uname(&undat) < 0) {
 		GtkWidget* dialog = gtk_message_dialog_new(GTK_WINDOW(top), GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "uname: %s", strerror(errno));
-		gtk_dialog_run(GTK_DIALOG(dialog));
-		gtk_widget_destroy(dialog);
+		g_signal_connect(dialog, "response", G_CALLBACK(gtk_window_destroy), NULL);
+		gtk_widget_show(dialog);
 	}
 
 	gtk_list_store_append(data, &iter);
@@ -362,14 +376,13 @@ void do_distro(GtkWidget* top G_GNUC_UNUSED, GtkListStore* data) {
 	free(dat);
 }
 
-int main(int argc, char** argv) {
-	GtkBuilder* builder;
+void activate(GtkApplication *app, gpointer user_data) {
+	GtkBuilder *builder;
 	GtkWidget *window, *treeview, *button;
 	GtkCellRenderer *renderer;
 	GtkTreeViewColumn* col;
 	GtkTreeIter iter;
 	GtkListStore *store;
-	GtkAccelGroup *group;
 	GtkTreeSelection* sel;
 	gchar *tmp, *loc;
 	GError *err = NULL;
@@ -377,16 +390,14 @@ int main(int argc, char** argv) {
 	bindtextdomain("about-eid-mw", DATAROOTDIR "/locale");
 	textdomain("about-eid-mw");
 
-	gtk_init(&argc, &argv);
-
 	builder = gtk_builder_new();
 	if(!gtk_builder_add_from_string(builder, ABOUT_GLADE_STRING, strlen(ABOUT_GLADE_STRING), &err)) {
 		g_critical("could not load builder: %s", err->message);
 		exit(EXIT_FAILURE);
 	}
 	window = GTK_WIDGET(gtk_builder_get_object(builder, "window"));
-	group = gtk_accel_group_new();
-	gtk_window_add_accel_group(GTK_WINDOW(window), group);
+	gtk_application_add_window(app, GTK_WINDOW(window));
+	init_shortcuts(GTK_WINDOW(window));
 
 	treeview = GTK_WIDGET(gtk_builder_get_object(builder, "treeview"));
 
@@ -420,18 +431,22 @@ int main(int argc, char** argv) {
 	gtk_tree_selection_set_mode(sel, GTK_SELECTION_MULTIPLE);
 	g_signal_connect(G_OBJECT(sel), "changed", G_CALLBACK(copy2prim), NULL);
 
-	g_signal_connect(G_OBJECT(window), "delete-event", gtk_main_quit, NULL);
 	button = GTK_WIDGET(gtk_builder_get_object(builder, "quitbtn"));
-	g_signal_connect(G_OBJECT(button), "clicked", gtk_main_quit, NULL);
-	gtk_widget_add_accelerator(button, "clicked", group, GDK_KEY_q, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
-	gtk_widget_add_accelerator(button, "clicked", group, GDK_KEY_w, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+	g_signal_connect_swapped(G_OBJECT(button), "clicked", G_CALLBACK(gtk_window_destroy), window);
+	add_shortcut(button, 'q');
+	add_shortcut(button, 'w');
 	button = GTK_WIDGET(gtk_builder_get_object(builder, "copybtn"));
 	g_signal_connect_swapped(G_OBJECT(button), "clicked", G_CALLBACK(copy2clip), treeview);
-	gtk_widget_add_accelerator(button, "clicked", group, GDK_KEY_c, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+	add_shortcut(button, 'c');
 
-	gtk_widget_show_all(window);
+	gtk_widget_show(window);
+}
 
-	gtk_main();
+int main(int argc, char**argv) {
+	GtkApplication *app = gtk_application_new("be.belgium.eid.eidviewer", G_APPLICATION_FLAGS_NONE);
+	g_signal_connect(app, "activate", G_CALLBACK(activate), NULL);
+	int status = g_application_run(G_APPLICATION(app), argc, argv);
+	g_object_unref(app);
 
-	return 0;
+	return status;
 }

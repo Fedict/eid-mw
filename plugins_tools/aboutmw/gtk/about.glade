@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.22.1 -->
+<!-- Generated with glade 3.38.2 -->
 <interface>
-  <requires lib="gtk+" version="3.0"/>
+  <requires lib="gtk+" version="3.4"/>
   <object class="GtkListStore" id="infodata">
     <columns>
       <!-- column-name name -->
@@ -10,56 +10,86 @@
       <column type="gchararray"/>
     </columns>
   </object>
-  <object class="GtkWindow" id="window">
+  <object class="GtkApplicationWindow" id="window">
+    <property name="can-focus">False</property>
+    <property name="show-menubar">False</property>
     <child>
       <object class="GtkBox" id="vbox">
-        <property name="visible">1</property>
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
         <property name="orientation">vertical</property>
         <child>
           <object class="GtkToolbar" id="toolbar1">
-            <property name="visible">1</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
             <property name="toolbar-style">icons</property>
             <child>
               <object class="GtkToolButton" id="copybtn">
-                <property name="can_focus">False</property>
-                <property name="icon_name">edit-copy</property>
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="icon-name">edit-copy</property>
               </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
             </child>
             <child>
               <object class="GtkToolButton" id="quitbtn">
-                <property name="can_focus">False</property>
-                <property name="icon_name">application-exit</property>
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="icon-name">application-exit</property>
               </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
             </child>
           </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
         </child>
         <child>
           <object class="GtkScrolledWindow" id="scrolledwindow1">
             <property name="width-request">500</property>
             <property name="height-request">250</property>
-            <property name="visible">1</property>
-            <property name="can-focus">1</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
             <property name="shadow-type">in</property>
             <child>
               <object class="GtkTreeView" id="treeview">
-                <property name="visible">1</property>
-                <property name="can-focus">1</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="vexpand">True</property>
                 <property name="model">infodata</property>
-                <property name="headers-visible">0</property>
+                <property name="headers-visible">False</property>
                 <property name="search-column">0</property>
                 <property name="enable-grid-lines">horizontal</property>
-                <property name="vexpand">1</property>
                 <child internal-child="selection">
                   <object class="GtkTreeSelection"/>
                 </child>
               </object>
             </child>
           </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
         </child>
         <child>
           <object class="GtkStatusbar" id="statusbar1">
-            <property name="visible">1</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
           </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">2</property>
+          </packing>
         </child>
       </object>
     </child>
