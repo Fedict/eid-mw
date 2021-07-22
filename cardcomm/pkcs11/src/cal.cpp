@@ -1592,6 +1592,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 {
 	CK_RV ret = CKR_OK;
 	CByteArray oFileData;
+	unsigned long fileLen = 0;
 
 	std::string szReader;
 	char cBuffer[256];
@@ -1628,6 +1629,8 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 	{
 		CReader & oReader = oCardLayer->getReader(szReader);
 		CCard* poCard = oReader.GetCard();
+		CByteArray oFileDataPart;
+
 		switch (dataType)
 		{
 		case CACHED_DATA_TYPE_ALL_DATA:
@@ -1678,7 +1681,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 			{
 				break;
 			}
-			/* Falls through */
+			// Falls through in case of CACHED_DATA_TYPE_ALL_DATA
 		case CACHED_DATA_TYPE_ADDRESS:
 			oFileData = poCard->ReadCardFile(BEID_FILE_ADDRESS);
 			plabel = BEID_LABEL_ADDRESS_FILE;
@@ -1710,7 +1713,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 			{
 				break;
 			}
-			/* Falls through */
+			// Falls through in case of CACHED_DATA_TYPE_ALL_DATA
 		case CACHED_DATA_TYPE_PHOTO:
 			plabel = BEID_LABEL_PHOTO;
 			pobjectID = BEID_OBJECTID_PHOTO;
@@ -1731,7 +1734,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 			{
 				break;
 			}
-			/* Falls through */
+			// Falls through in case of CACHED_DATA_TYPE_ALL_DATA
 		case CACHED_DATA_TYPE_RNCERT:
 			oFileData = poCard->ReadCardFile(BEID_FILE_CERT_RRN);
 			plabel = BEID_LABEL_CERT_RN;
@@ -1752,7 +1755,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 			{
 				break;
 			}
-			/* Falls through */
+			// Falls through in case of CACHED_DATA_TYPE_ALL_DATA
 		case CACHED_DATA_TYPE_SIGN_DATA_FILE:
 			plabel = BEID_LABEL_SGN_RN;
 			oFileData = poCard->ReadCardFile(BEID_FILE_ID_SIGN);
@@ -1773,7 +1776,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 			{
 				break;
 			}
-			/* Falls through */
+			// Falls through in case of CACHED_DATA_TYPE_ALL_DATA
 		case CACHED_DATA_TYPE_SIGN_ADDRESS_FILE:
 			plabel = BEID_LABEL_SGN_ADDRESS;
 			oFileData = poCard->ReadCardFile(BEID_FILE_ADDRESS_SIGN);
@@ -1794,7 +1797,36 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 			{
 				break;
 			}
-			/* Falls through */
+			// Falls through in case of CACHED_DATA_TYPE_ALL_DATA
+		case CACHED_DATA_TYPE_TOKENINFO:
+			plabel = BEID_LABEL_PersoVersions;
+			oFileData = poCard->ReadCardFile(BEID_FILE_TOKENINFO);
+			//get the personalisation version bytes (4 final bytes) directly, 
+			//it is all data we want from this asn.1 encoded file
+			//no need to provide the tokeninfo file itself to the SDK
+
+			fileLen = oFileData.GetByte(1) + 2;
+			oFileDataPart = oFileData.GetBytes(fileLen - 4, 4);
+
+			//add it to the BEID_OBJECTID_TOKENINFO group
+			ret = p11_add_slot_ID_object(pSlot, ID_DATA,
+				sizeof(ID_DATA) / sizeof(CK_ATTRIBUTE),
+				CK_TRUE,
+				CKO_DATA,
+				CK_FALSE,
+				&hObject,
+				(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),
+				(CK_VOID_PTR)oFileDataPart.GetBytes(),
+				(CK_ULONG)oFileDataPart.Size(),
+				(CK_VOID_PTR)BEID_OBJECTID_TOKENINFO, (CK_ULONG)strlen(BEID_OBJECTID_TOKENINFO),
+				CK_FALSE);
+			if (ret)
+				goto cleanup;
+			if (dataType != CACHED_DATA_TYPE_ALL_DATA)
+			{
+				break;
+			}
+			// Falls through in case of CACHED_DATA_TYPE_ALL_DATA
 		case CACHED_DATA_TYPE_BASIC_KEY_FILE:
 			ucAppletVersion = poCard->GetAppletVersion();
 
