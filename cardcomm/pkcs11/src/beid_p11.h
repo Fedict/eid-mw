@@ -85,6 +85,10 @@
 #define BEID_FIELD_TAG_ADDR_ZipCode             0x02
 #define BEID_FIELD_TAG_ADDR_Municipality        0x03
 
+#define BEID_FIELD_TAG_TOKINF_graph				0x00
+#define BEID_FIELD_TAG_TOKINF_elec				0x01
+#define BEID_FIELD_TAG_TOKINF_elecint           0x02
+
 /************************/
 
 /* differences with 2.20*/
