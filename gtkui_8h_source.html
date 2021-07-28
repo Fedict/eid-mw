@@ -76,14 +76,14 @@ $(function() {
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;gtk/gtk.h&gt;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="oslayer_8h.html">eid-viewer/oslayer.h</a>&gt;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keywordtype">void</span> file_open(GtkMenuItem * open, gpointer user_data);</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keywordtype">void</span> file_save(GtkMenuItem * open, gpointer format);</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keywordtype">void</span> file_close(GtkMenuItem * close, gpointer user_data);</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keywordtype">void</span> file_print(GtkMenuItem * print, gpointer user_data);</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keywordtype">void</span> translate(GtkMenuItem * langitem, gpointer to_lang);</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keywordtype">void</span> showabout(GtkMenuItem * about, gpointer user_data);</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keywordtype">void</span> showurl(GtkMenuItem * item, gpointer which);</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keywordtype">void</span> showlog(GtkMenuItem * item, gpointer user_data);</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keywordtype">void</span> file_open(GtkWidget * open, gpointer user_data);</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keywordtype">void</span> file_save(GtkWidget * open, gpointer format);</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keywordtype">void</span> file_close(GtkWidget * close, gpointer user_data);</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keywordtype">void</span> file_print(GtkWidget * print, gpointer user_data);</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keywordtype">void</span> translate(GtkWidget * langitem, gpointer to_lang);</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keywordtype">void</span> showabout(GtkWidget * about, gpointer user_data);</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keywordtype">void</span> showurl(GtkWidget * item, gpointer which);</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keywordtype">void</span> showlog(GtkWidget * item, gpointer user_data);</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keywordtype">void</span> pinop(GtkWidget * item, gpointer which);</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keywordtype">void</span> pinop_result(<span class="keyword">enum</span> <a class="code" href="group___c___a_p_i.html#gad19893db2805ad8851ad127820a1450f">eid_vwr_pinops</a> which, <span class="keyword">enum</span> <a class="code" href="group___c___a_p_i.html#ga77019cfe7dce20ab31a5b2c9da3ebfc6">eid_vwr_result</a> r);</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keywordtype">void</span> readers_changed(<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> nreaders, <a class="code" href="struct__slotdesc.html">slotdesc</a> * slots);</div>
@@ -91,8 +91,8 @@ $(function() {
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keywordtype">void</span> show_cert_image(<span class="keyword">const</span> <span class="keywordtype">char</span> *name, <span class="keywordtype">void</span> *data, <span class="keywordtype">int</span> len);</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keywordtype">void</span> setup_dnd(<span class="keywordtype">void</span>);</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keywordtype">void</span> disable_dnd(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#if GTK_CHECK_VERSION(3, 96, 0)</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keywordtype">void</span> drag_data_get(GtkWidget * widget, GdkDrag *ctx, GtkSelectionData *data, gpointer user_data);</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#if GTK_CHECK_VERSION(4, 0, 0)</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;GdkContentProvider * drag_data_get(GtkDragSource *dragsrc, <span class="keywordtype">double</span> x, <span class="keywordtype">double</span> y, gpointer user_data);</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#else</span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keywordtype">void</span> drag_data_get(GtkWidget * widget, GdkDragContext * ctx,</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;           GtkSelectionData * data, guint info, guint time,</div>
