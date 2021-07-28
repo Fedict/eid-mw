@@ -25,7 +25,7 @@ gboolean is_foreigner = FALSE;
 #define N_(s) gettext_noop(s)
 
 #define GEN_FUNC(n, d) \
-void n(GtkMenuItem* item G_GNUC_UNUSED, gpointer user_data) { \
+void n(GtkWidget* item G_GNUC_UNUSED, gpointer user_data) { \
 	GtkWindow* window = GTK_WINDOW(gtk_builder_get_object(builder, "mainwin")); \
 	GtkWidget* dlg = gtk_message_dialog_new(window, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_INFO, GTK_BUTTONS_OK, d " (not yet implemented)", (gchar*)user_data); \
 	gtk_dialog_run(GTK_DIALOG(dlg)); \
@@ -59,7 +59,7 @@ void show_cert_image(const char* label, void *data, int len G_GNUC_UNUSED) {
 }
 
 /* Show an "about" dialog */
-void showabout(GtkMenuItem* about G_GNUC_UNUSED, gpointer user_data G_GNUC_UNUSED) {
+void showabout(GtkWidget* about G_GNUC_UNUSED, gpointer user_data G_GNUC_UNUSED) {
 	GtkWindow* window = GTK_WINDOW(gtk_builder_get_object(builder, "mainwin"));
 	const char *authors[] = { "Wouter Verhelst", "Frederik Vernelen", NULL };
 	const char *artists[] = { "Frank Mariën", NULL };
@@ -106,7 +106,7 @@ static void update_preview(GtkFileChooser* chooser, gpointer data) {
 GEN_FUNC(open_file_detail, "opening %s")
 
 /* Show an "open file" dialog, and make the backend open it if the user accepted the selection */
-void file_open(GtkMenuItem* item G_GNUC_UNUSED, gpointer user_data G_GNUC_UNUSED) {
+void file_open(GtkWidget* item G_GNUC_UNUSED, gpointer user_data G_GNUC_UNUSED) {
 	GtkWindow* window = GTK_WINDOW(gtk_builder_get_object(builder, "mainwin"));
 	GtkWidget* dialog = gtk_file_chooser_dialog_new(
 			_("Open eID file"), window, GTK_FILE_CHOOSER_ACTION_OPEN,
@@ -149,7 +149,7 @@ void file_open(GtkMenuItem* item G_GNUC_UNUSED, gpointer user_data G_GNUC_UNUSED
 }
 
 /* Show a "save file" dialog, and make the backend save the XML data there if the user accepted the selection */
-void file_save(GtkMenuItem* item G_GNUC_UNUSED, gpointer user_data G_GNUC_UNUSED) {
+void file_save(GtkWidget* item G_GNUC_UNUSED, gpointer user_data G_GNUC_UNUSED) {
 	GtkWindow* window = GTK_WINDOW(gtk_builder_get_object(builder, "mainwin"));
 	GtkWidget* dialog = gtk_file_chooser_dialog_new(
 			_("Save eID file"), window, GTK_FILE_CHOOSER_ACTION_SAVE,
@@ -186,7 +186,7 @@ void file_save(GtkMenuItem* item G_GNUC_UNUSED, gpointer user_data G_GNUC_UNUSED
 }
 
 /* Close the currently-open file */
-void file_close(GtkMenuItem* item G_GNUC_UNUSED, gpointer user_data G_GNUC_UNUSED) {
+void file_close(GtkWidget* item G_GNUC_UNUSED, gpointer user_data G_GNUC_UNUSED) {
 	eid_vwr_close_file();
 }
 
@@ -265,7 +265,7 @@ static void retranslate_gtkui() {
 }
 
 /* Translate the UI to the target language */
-void translate(GtkMenuItem* item G_GNUC_UNUSED, gpointer target) {
+void translate(GtkWidget* item G_GNUC_UNUSED, gpointer target) {
 	enum eid_vwr_langs lang = EID_VWR_LANG_EN;
 	if(!strncmp(target, "de", 2)) {
 		lang = EID_VWR_LANG_DE;
@@ -313,15 +313,19 @@ void disable_dnd(void) {
 }
 
 /* Perform a drag-and-drop operation */
-#if GTK_CHECK_VERSION(3, 96, 0)
-void drag_data_get(GtkWidget* widget G_GNUC_UNUSED, GdkDrag *ctx G_GNUC_UNUSED, GtkSelectionData *data, gpointer user_data G_GNUC_UNUSED) {
+#if GTK_CHECK_VERSION(4, 0, 0)
+GdkContentProvider * drag_data_get(GtkDragSource *dragsrc, double x, double y, gpointer user_data) {
+	const char *xml = eid_vwr_be_get_xmlform();
+	if(!xml) return NULL;
+	return gdk_content_provider_new_for_bytes("application/xml", g_bytes_new(xml, strlen(xml)+1));
+}
 #else
 void drag_data_get(GtkWidget* widget G_GNUC_UNUSED, GdkDragContext *ctx G_GNUC_UNUSED, GtkSelectionData *data, guint info G_GNUC_UNUSED, guint time G_GNUC_UNUSED, gpointer user_data G_GNUC_UNUSED) {
-#endif
 	const char* xml = eid_vwr_be_get_xmlform();
 	if(!xml) return;
 	gtk_selection_data_set_text(data, xml, -1);
 }
+#endif
 
 void validate_toggle(gpointer event_source, gpointer user_data G_GNUC_UNUSED) {
 	// g_object_get_data returns NULL if we haven't set this yet. That's
@@ -338,7 +342,7 @@ void validate_toggle(gpointer event_source, gpointer user_data G_GNUC_UNUSED) {
 	}
 }
 
-void showurl(GtkMenuItem *item G_GNUC_UNUSED, gpointer user_data) {
+void showurl(GtkWidget *item G_GNUC_UNUSED, gpointer user_data) {
 	GtkWidget *window = GTK_WIDGET(gtk_builder_get_object(builder, "mainwin"));
 	if(strcmp((gchar*)user_data, "faq") == 0) {
 		gtk_show_uri_on_window(GTK_WINDOW(window), _("https://eid.belgium.be/en/question-and-answer"), GDK_CURRENT_TIME, NULL);

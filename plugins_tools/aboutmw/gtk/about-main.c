@@ -49,10 +49,10 @@
 #define gtk_clipboard_set_text(c, t, l) gdk_clipboard_set_text(c, t)
 #define gtk_init(a, b) gtk_init()
 
-GtkShortcutController *ctrl;
+GtkEventController *ctrl;
 
 void init_shortcuts(GtkWindow *mainwin) {
-	
+	ctrl = gtk_shortcut_controller_new();
 }
 
 void add_shortcut(GtkWidget *button, char letter) {

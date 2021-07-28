@@ -4,14 +4,14 @@
 #include <gtk/gtk.h>
 #include <eid-viewer/oslayer.h>
 
-void file_open(GtkMenuItem * open, gpointer user_data);
-void file_save(GtkMenuItem * open, gpointer format);
-void file_close(GtkMenuItem * close, gpointer user_data);
-void file_print(GtkMenuItem * print, gpointer user_data);
-void translate(GtkMenuItem * langitem, gpointer to_lang);
-void showabout(GtkMenuItem * about, gpointer user_data);
-void showurl(GtkMenuItem * item, gpointer which);
-void showlog(GtkMenuItem * item, gpointer user_data);
+void file_open(GtkWidget * open, gpointer user_data);
+void file_save(GtkWidget * open, gpointer format);
+void file_close(GtkWidget * close, gpointer user_data);
+void file_print(GtkWidget * print, gpointer user_data);
+void translate(GtkWidget * langitem, gpointer to_lang);
+void showabout(GtkWidget * about, gpointer user_data);
+void showurl(GtkWidget * item, gpointer which);
+void showlog(GtkWidget * item, gpointer user_data);
 void pinop(GtkWidget * item, gpointer which);
 void pinop_result(enum eid_vwr_pinops which, enum eid_vwr_result r);
 void readers_changed(unsigned long nreaders, slotdesc * slots);
@@ -19,8 +19,8 @@ enum eid_vwr_langs get_curlang();
 void show_cert_image(const char *name, void *data, int len);
 void setup_dnd(void);
 void disable_dnd(void);
-#if GTK_CHECK_VERSION(3, 96, 0)
-void drag_data_get(GtkWidget * widget, GdkDrag *ctx, GtkSelectionData *data, gpointer user_data);
+#if GTK_CHECK_VERSION(4, 0, 0)
+GdkContentProvider * drag_data_get(GtkDragSource *dragsrc, double x, double y, gpointer user_data);
 #else
 void drag_data_get(GtkWidget * widget, GdkDragContext * ctx,
 		   GtkSelectionData * data, guint info, guint time,

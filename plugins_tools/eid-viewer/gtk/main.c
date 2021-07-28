@@ -317,7 +317,13 @@ static void connect_signals(GtkWidget* window) {
 	g_signal_connect(signaltmp, "clicked", G_CALLBACK(pinop), (void*)EID_VWR_PINOP_CHG);
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "photobox"));
 	photo = G_OBJECT(gtk_builder_get_object(builder, "photo"));
+#if GTK_CHECK_VERSION(4, 0, 0)
+        GtkDragSource *dragsrc = gtk_drag_source_new();
+        g_signal_connect(dragsrc, "prepare", G_CALLBACK(drag_data_get), dragsrc);
+        gtk_widget_add_controller(photo, dragsrc);
+#else
 	g_signal_connect(signaltmp, "drag-data-get", G_CALLBACK(drag_data_get), photo);
+#endif
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "validate_now"));
 	g_signal_connect(signaltmp, "clicked", G_CALLBACK(validate_all), NULL);
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "validate_always"));

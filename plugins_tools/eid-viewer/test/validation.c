@@ -70,7 +70,6 @@ TEST_FUNC(readvalidation) {
 	uint8_t *cert; size_t certs;
 	uint8_t *phot; size_t phots;
 	uint8_t *hash; size_t hashs;
-	uint8_t *ptr;
 	CK_SLOT_ID slot;
 	CK_SESSION_HANDLE session;
 	int ret = TEST_RV_OK;
@@ -80,7 +79,6 @@ TEST_FUNC(readvalidation) {
 	uint8_t odsig[512];
 	uint8_t oaddr[512];
 	uint8_t oasig[512];
-	uint8_t ocert[2048];
 	uint8_t ophot[8192];
 	uint8_t ohash[0x30];
 	
