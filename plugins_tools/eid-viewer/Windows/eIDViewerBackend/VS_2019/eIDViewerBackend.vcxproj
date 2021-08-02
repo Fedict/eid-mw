@@ -103,6 +103,10 @@
       <AdditionalLibraryDirectories>..\..\..\..\..\cardcomm\pkcs11\VS_2019\Binaries\Win32_PKCS11_FF_DEBUG\</AdditionalLibraryDirectories>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>
+    <PostBuildEvent>
+      <Command>copy  ..\..\..\..\..\cardcomm\pkcs11\VS_2019\Binaries\Win32_PKCS11_FF_DEBUG\beid_ff_pkcs11D.dll  ..\..\eIDViewer\bin\Debug\
+copy $(OutDir)$(TargetName)$(TargetExt) ..\..\eIDViewer\bin\Debug\</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
