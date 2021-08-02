@@ -224,6 +224,7 @@
     <ClInclude Include="..\..\..\conversions\brexitment2conv.h" />
     <ClInclude Include="..\..\..\conversions\convertor.h" />
     <ClInclude Include="..\..\..\conversions\booldecode.h" />
+    <ClInclude Include="..\..\..\conversions\convworker.h" />
     <ClInclude Include="..\..\..\conversions\specconv.h" />
     <ClInclude Include="..\..\..\conversions\toxmlmemberoffamilyconv.h" />
     <ClInclude Include="..\..\..\conversions\xmlspecconv.h" />
