@@ -12,7 +12,7 @@ Package: eid-mw
 Section: metapackages
 Architecture: any
 Depends: ${misc:Depends}, libbeidpkcs11-0, beid-mozilla-extension, pcscd
-Recommends: libccid, libacr38u | libacsccid1
+Recommends: libccid, libacsccid1
 Description: low-level support for Belgian Electronic Identity Card
  This metapackage depends on a PKCS#11 module and a Firefox plugin for
  the Belgian electronic identity card. You should install it if you wish
