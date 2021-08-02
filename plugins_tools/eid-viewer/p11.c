@@ -361,9 +361,8 @@ int eid_vwr_p11_read_graph_vers(void* data EIDV_UNUSED) {
 		case 0x08:
 			//08 is a default (old) value, no need to create copies of conversions when version 8 equals version 0
 			convert_set_graphvers(EID_VWR_GRAPH_VERSION_NONE);			
-			//for testing
-			// break;
-		//case 0x09:
+			break;
+		case 0x09:
 			convert_set_graphvers(EID_VWR_GRAPH_VERSION_NINE);
 			break;
 		default:
