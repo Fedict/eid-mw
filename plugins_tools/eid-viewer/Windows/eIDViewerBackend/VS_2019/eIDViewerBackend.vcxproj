@@ -225,6 +225,7 @@ copy $(OutDir)$(TargetName)$(TargetExt) ..\..\eIDViewer\bin\Debug\</Command>
     <ClInclude Include="..\..\..\b64\base64dec.h" />
     <ClInclude Include="..\..\..\b64\base64enc.h" />
     <ClInclude Include="..\..\..\backend.h" />
+    <ClInclude Include="..\..\..\cache.h" />
     <ClInclude Include="..\..\..\conversions.h" />
     <ClInclude Include="..\..\..\conversions\brexitment1conv.h" />
     <ClInclude Include="..\..\..\conversions\brexitment2conv.h" />
