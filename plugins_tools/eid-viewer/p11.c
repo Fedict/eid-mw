@@ -356,19 +356,10 @@ int eid_vwr_p11_read_graph_vers(void* data EIDV_UNUSED) {
 
 		check_rv(C_GetAttributeValue(session, hKey, &data, 1));
 
-		switch (value)
-		{
-		case 0x08:
-			//08 is a default (old) value, no need to create copies of conversions when version 8 equals version 0
-			convert_set_graphvers(EID_VWR_GRAPH_VERSION_NONE);			
-			break;
-		case 0x09:
-			convert_set_graphvers(EID_VWR_GRAPH_VERSION_NINE);
-			break;
-		default:
-			convert_set_graphvers(EID_VWR_GRAPH_VERSION_NONE);
-			break;
-		}
+		//add the graphical version byte to cache
+		cache_add_bin(TEXT("tokeninfo_graph_perso_version"), &value, 1);
+		be_log(EID_VWR_LOG_DETAIL, TEXT("found data for tokeninfo_graph_perso_version 0x.2%x"), value);
+
 
 		check_rv(C_FindObjectsFinal(session));
 	}

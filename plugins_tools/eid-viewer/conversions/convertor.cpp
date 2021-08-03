@@ -65,6 +65,7 @@ Convertor::Convertor()
 		to_xml[TEXT("member_of_family")] = new ToXmlMemberOfFamilyConvertor();
 		to_xml[TEXT("brexit_mention_1")] = new XmlBrexitMention1Convertor();
 		to_xml[TEXT("brexit_mention_2")] = new XmlBrexitMention2Convertor();
+		to_xml[TEXT("tokeninfo_graph_perso_version")] = new HexNumberConvertor(1);
 	}
 	if (from_xml.empty())
 	{
@@ -82,6 +83,7 @@ Convertor::Convertor()
 		from_xml[TEXT("member_of_family")] = new BoolDecodeConvertor();
 		from_xml[TEXT("brexit_mention_1")] = new XmlBrexitMention1Convertor();
 		from_xml[TEXT("brexit_mention_2")] = new XmlBrexitMention2Convertor();
+		from_xml[TEXT("tokeninfo_graph_perso_version")] = new HexDecodeConvertor(1);
 	}
 }
 

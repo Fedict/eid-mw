@@ -8,6 +8,7 @@
 #include "p11.h"
 #include "cache.h"
 #include "conversions.h"
+#include <eid-util/labels.h>
 extern "C"
 {
 #include "state.h"
@@ -301,6 +302,7 @@ HRESULT StoreLocalName(WCHAR ** nodeNames, const WCHAR * pwszLocalName)
 HRESULT StoreTextElement(const WCHAR * pwszValue, WCHAR * wcsNodeName)
 {
 	EID_CHAR *val = NULL;
+	BYTE *pbByte = 0;
 
 	struct element_desc *desc = get_elemdesc((EID_CHAR *) wcsNodeName);
 
@@ -310,9 +312,10 @@ HRESULT StoreTextElement(const WCHAR * pwszValue, WCHAR * wcsNodeName)
 		int len = 0;
 
 		{
-			val = (EID_CHAR *) convert_from_xml(desc->label, pwszValue, &len);
+			
 			if (desc->is_b64)
 			{
+				val = (EID_CHAR*)convert_from_xml(desc->label, pwszValue, &len);
 				//utf16toutf8
 				unsigned long length = len;
 				char *utf8Char_out = EIDTOUTF8(val, &length);
@@ -340,8 +343,16 @@ HRESULT StoreTextElement(const WCHAR * pwszValue, WCHAR * wcsNodeName)
 			{
 				int len = 0;
 
-				val = (EID_CHAR *)convert_from_xml(desc->label, pwszValue, &len);
-				cache_add(desc->label, val, len);
+				if (is_string(desc->label))
+				{
+					val = (EID_CHAR*)convert_from_xml(desc->label, pwszValue, &len);
+					cache_add(desc->label, val, len);
+				}
+				else
+				{
+					pbByte = (BYTE*)convert_from_xml(desc->label, pwszValue, &len);
+					cache_add_bin(desc->label, pbByte, len);
+				}
 				eid_vwr_p11_to_ui((const EID_CHAR*)(desc->label), (const void *)val, len);
 				be_log(EID_VWR_LOG_DETAIL, TEXT("found data for label %s"), desc->label);
 				val = NULL;
@@ -358,6 +369,7 @@ HRESULT ParseAttributes(IXmlReader * pReader, const WCHAR * pwszLocalName)
 	const WCHAR *pwszValue;
 
 	EID_CHAR *val = NULL;
+	BYTE* pbByte = NULL;
 	HRESULT retVal = pReader->MoveToFirstAttribute();
 
 	if (retVal != S_OK)
@@ -379,11 +391,22 @@ HRESULT ParseAttributes(IXmlReader * pReader, const WCHAR * pwszLocalName)
 				{
 					int len = 0;
 
-					val = (EID_CHAR *)convert_from_xml(desc->label, pwszValue, &len);
-					cache_add(desc->label, val, len);
-					eid_vwr_p11_to_ui((const EID_CHAR*)(desc->label), (const void*)val, len);
-					be_log(EID_VWR_LOG_DETAIL, TEXT("found data for label %s"), desc->label);
-					val = NULL;
+					if (is_string(desc->label))
+					{
+						val = (EID_CHAR*)convert_from_xml(desc->label, pwszValue, &len);
+						cache_add(desc->label, val, len);
+						eid_vwr_p11_to_ui((const EID_CHAR*)(desc->label), (const void*)val, len);
+						be_log(EID_VWR_LOG_DETAIL, TEXT("found textual data for label %s"), desc->label);
+						val = NULL;
+					}
+					else
+					{
+						pbByte = (BYTE*)convert_from_xml(desc->label, pwszValue, &len);
+						cache_add_bin(desc->label, pbByte, len);
+						eid_vwr_p11_to_ui((const EID_CHAR*)(desc->label), (const void*)pbByte, len);
+						be_log(EID_VWR_LOG_DETAIL, TEXT("found binary data for label %s"), desc->label);
+						pbByte = NULL;
+					}				
 				}
 			}
 		} while (pReader->MoveToNextAttribute() == S_OK);

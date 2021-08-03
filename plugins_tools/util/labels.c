@@ -99,6 +99,7 @@ static struct {
 	{ TEXT("basic_key_hash"),		CK_FALSE, CK_TRUE, CK_TRUE, NULL },
 	{ TEXT("brexit_mention_1"),		CK_TRUE, CK_FALSE, CK_TRUE, TEXT("4.2") },
 	{ TEXT("brexit_mention_2"),		CK_TRUE, CK_FALSE, CK_TRUE, TEXT("4.2") },
+	{ TEXT("tokeninfo_graph_perso_version"),	CK_FALSE, CK_TRUE, CK_TRUE, TEXT("4.4") },
 	{ NULL,					0, 0, 0, NULL },
 };
 
