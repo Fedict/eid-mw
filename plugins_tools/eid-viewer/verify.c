@@ -18,6 +18,10 @@
 #include <config.h>
 #endif
 
+#ifdef HAVE_LIBBSD
+#include <bsd/bsd.h>
+#endif
+
 #ifdef __APPLE__
 #include "trustdirname.h"
 #define CERTTRUSTDIR eid_vwr_osl_objc_trustdirname()
