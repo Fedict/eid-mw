@@ -128,7 +128,7 @@
 #define BEID_LABEL_ATR							"ATR"
 
 //personalisation version numbers from tokeninfo file (4 bytes)
-#define BEID_LABEL_PersoVersions				"PersoVersions"
+#define BEID_LABEL_PersoVersions				"perso_versions"
 
 #define BEID_LABEL_KEY_CARD						"Card"
 
