@@ -252,4 +252,7 @@ CBE number (2):</value>
   <data name="Brexit_mentions" xml:space="preserve">
     <value>Brexit Mentions:</value>
   </data>
+  <data name="CardA_mentions" xml:space="preserve">
+    <value>Mentions:</value>
+  </data>
 </root>

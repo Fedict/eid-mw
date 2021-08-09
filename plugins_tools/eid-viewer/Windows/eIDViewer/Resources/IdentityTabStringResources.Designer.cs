@@ -19,7 +19,7 @@ namespace eIDViewer.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class IdentityTabStringResources {
@@ -66,6 +66,15 @@ namespace eIDViewer.Resources {
         public static string Brexit_mentions {
             get {
                 return ResourceManager.GetString("Brexit_mentions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mentions:.
+        /// </summary>
+        public static string CardA_mentions {
+            get {
+                return ResourceManager.GetString("CardA_mentions", resourceCulture);
             }
         }
         

@@ -252,4 +252,7 @@ van de werkgever (2):</value>
   <data name="Brexit_mentions" xml:space="preserve">
     <value>Brexit vermeldingen:</value>
   </data>
+  <data name="CardA_mentions" xml:space="preserve">
+    <value>Vermeldingen:</value>
+  </data>
 </root>

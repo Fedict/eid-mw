@@ -252,4 +252,7 @@ BCE de l’employeur (2):</value>
   <data name="Brexit_mentions" xml:space="preserve">
     <value>Mentions du Brexit:</value>
   </data>
+  <data name="CardA_mentions" xml:space="preserve">
+    <value>Mentions:</value>
+  </data>
 </root>
