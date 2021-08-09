@@ -948,7 +948,11 @@ namespace eIDViewer
         {
             brexit_fields_height = 26;
         }
-
+        private void CardAMentionFieldPresent()
+        {
+            cardA_fields_height = 26;
+        }
+  
         private void ShowCardAppletVersion(byte carddata_appl_version)
         {
             switch(carddata_appl_version)
@@ -1036,6 +1040,12 @@ namespace eIDViewer
             else if (String.Equals(label, "brexit_mention_2", StringComparison.Ordinal))
             { brexit_mention2 = data;
                 BrexitFieldPresent(); }
+            else if (String.Equals(label, "cardA_mention_1", StringComparison.Ordinal))
+            { cardA_mention1 = data;
+                CardAMentionFieldPresent();}
+            else if (String.Equals(label, "cardA_mention_2", StringComparison.Ordinal))
+            { cardA_mention2 = data;
+                CardAMentionFieldPresent();}
         }
 
         private byte[] dataFile;
@@ -1243,6 +1253,7 @@ namespace eIDViewer
             foreigner_fields_height = 0;
             foreigner_fields_height_double = 0;
             brexit_fields_height = 0;
+            cardA_fields_height = 0;
             pinop_ready = false;
             open_enabled = true;
 
@@ -1770,6 +1781,27 @@ namespace eIDViewer
             }
         }
 
+        private string _cardA_mention1;
+        public string cardA_mention1
+        {
+            get { return _cardA_mention1; }
+            set
+            {
+                _cardA_mention1 = value;
+                this.NotifyPropertyChanged("cardA_mention1");
+            }
+        }
+
+        private string _cardA_mention2;
+        public string cardA_mention2
+        {
+            get { return _cardA_mention2; }
+            set
+            {
+                _cardA_mention2 = value;
+                this.NotifyPropertyChanged("cardA_mention2");
+            }
+        }
 
         private int _foreigner_fields_height;
         public int foreigner_fields_height
@@ -1801,6 +1833,17 @@ namespace eIDViewer
             {
                 _brexit_fields_height = value;
                 this.NotifyPropertyChanged("brexit_fields_height");
+            }
+        }
+
+        private int _cardA_fields_height;
+        public int cardA_fields_height
+        {
+            get { return _cardA_fields_height; }
+            set
+            {
+                _cardA_fields_height = value;
+                this.NotifyPropertyChanged("cardA_fields_height");
             }
         }
 

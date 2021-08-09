@@ -59,6 +59,8 @@
                 <RowDefinition Height="{Binding Path=foreigner_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <RowDefinition Height="{Binding Path=brexit_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <RowDefinition Height="{Binding Path=brexit_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <RowDefinition Height="{Binding Path=cardA_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <RowDefinition Height="{Binding Path=cardA_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <RowDefinition Height="Auto"/>
                 
                 <RowDefinition Height="Auto"/>
@@ -129,17 +131,19 @@
             <Label Grid.Column="1" Grid.Row="19" Content="{Binding Path=regional_file_number, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
             <Label Grid.Column="1" Grid.Row="20" Content="{Binding Path=brexit_mention1, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
             <Label Grid.Column="1" Grid.Row="21" Content="{Binding Path=brexit_mention2, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
-            <Label Grid.Column="1" Grid.Row="23" Content="{Binding Path=address_street_and_number, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
-            <Label Grid.Column="1" Grid.Row="24" Content="{Binding Path=address_zip, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
-            <Label Grid.Column="1" Grid.Row="25" Content="{Binding Path=address_municipality, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
-            <Label Grid.Column="1" Grid.Row="27" Content="{Binding Path=applet_version, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
-            <Label Grid.Column="1" Grid.Row="28" Content="{Binding Path=card_number, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
-            <Label Grid.Column="1" Grid.Row="29" Content="{Binding Path=issuing_municipality, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
-            <Label Grid.Column="1" Grid.Row="30" Content="{Binding Path=chip_number, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
-            <Label Grid.Column="1" Grid.Row="31" Content="{Binding Path=validity_begin_date, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
-            <Label Grid.Column="1" Grid.Row="32" Content="{Binding Path=validity_end_date, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
-            <Label Grid.Column="1" Grid.Row="34" Content="{Binding Path=date, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
-            <Label Grid.Column="1" Grid.Row="35" Content="{Binding Path=viewerVersion, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
+            <Label Grid.Column="1" Grid.Row="22" Content="{Binding Path=cardA_mention1, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
+            <Label Grid.Column="1" Grid.Row="23" Content="{Binding Path=cardA_mention2, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
+            <Label Grid.Column="1" Grid.Row="25" Content="{Binding Path=address_street_and_number, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
+            <Label Grid.Column="1" Grid.Row="26" Content="{Binding Path=address_zip, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
+            <Label Grid.Column="1" Grid.Row="27" Content="{Binding Path=address_municipality, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
+            <Label Grid.Column="1" Grid.Row="29" Content="{Binding Path=applet_version, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
+            <Label Grid.Column="1" Grid.Row="30" Content="{Binding Path=card_number, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
+            <Label Grid.Column="1" Grid.Row="31" Content="{Binding Path=issuing_municipality, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
+            <Label Grid.Column="1" Grid.Row="32" Content="{Binding Path=chip_number, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
+            <Label Grid.Column="1" Grid.Row="33" Content="{Binding Path=validity_begin_date, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
+            <Label Grid.Column="1" Grid.Row="34" Content="{Binding Path=validity_end_date, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
+            <Label Grid.Column="1" Grid.Row="36" Content="{Binding Path=date, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
+            <Label Grid.Column="1" Grid.Row="37" Content="{Binding Path=viewerVersion, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
 
         </Grid>
     </Grid>
