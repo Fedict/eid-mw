@@ -49,6 +49,7 @@
   <xsd:element name="middlenames" type="xsd:string" />
   <xsd:element name="workpermit" type="workpermitType" />
   <xsd:element name="brexit" type="brexitType" />
+  <xsd:element name="cardA" type="cardAType" />
   <xsd:complexType name="identityType">
     <xsd:sequence>
       <xsd:element name="name" type="xsd:string" />
@@ -116,6 +117,29 @@
       <xsd:simpleType>
         <xsd:restriction base="xsd:string">
 	  <xsd:enumeration value="Permanent stay" />
+	</xsd:restriction>
+      </xsd:simpleType>
+    </xsd:attribute>
+  </xsd:complexType>
+  <xsd:complexType name="cardAType">
+    <xsd:attribute name="cardAmention1" use="required">
+      <xsd:simpleType>
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="Seasonal worker" />
+		  <xsd:enumeration value="Student" />
+		  <xsd:enumeration value="Pupil" />
+		  <xsd:enumeration value="Intern" />
+		  <xsd:enumeration value="Volunteer" />
+		  <xsd:enumeration value="Au pair" />
+		  <xsd:enumeration value="Researcher mobility"/>
+		  <xsd:enumeration value="Job search" />	  
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:attribute>
+    <xsd:attribute name="cardAmention2" use="optional">
+      <xsd:simpleType>
+        <xsd:restriction base="xsd:string">
+	  <xsd:enumeration value="Mobility program" />
 	</xsd:restriction>
       </xsd:simpleType>
     </xsd:attribute>
