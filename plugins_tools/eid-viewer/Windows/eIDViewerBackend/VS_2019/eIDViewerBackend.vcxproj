@@ -186,6 +186,8 @@
     <ClCompile Include="..\..\..\conversions\bbannumconv.cpp" />
     <ClCompile Include="..\..\..\conversions\brexitment1conv.cpp" />
     <ClCompile Include="..\..\..\conversions\brexitment2conv.cpp" />
+    <ClCompile Include="..\..\..\conversions\cardAment1conv.cpp" />
+    <ClCompile Include="..\..\..\conversions\cardAment2conv.cpp" />
     <ClCompile Include="..\..\..\conversions\convert.cpp" />
     <ClCompile Include="..\..\..\conversions\convertor.cpp" />
     <ClCompile Include="..\..\..\conversions\convworker.cpp" />
@@ -222,6 +224,8 @@
     <ClInclude Include="..\..\..\conversions.h" />
     <ClInclude Include="..\..\..\conversions\brexitment1conv.h" />
     <ClInclude Include="..\..\..\conversions\brexitment2conv.h" />
+    <ClInclude Include="..\..\..\conversions\cardAment1conv.h" />
+    <ClInclude Include="..\..\..\conversions\cardAment2conv.h" />
     <ClInclude Include="..\..\..\conversions\convertor.h" />
     <ClInclude Include="..\..\..\conversions\booldecode.h" />
     <ClInclude Include="..\..\..\conversions\specconv.h" />
