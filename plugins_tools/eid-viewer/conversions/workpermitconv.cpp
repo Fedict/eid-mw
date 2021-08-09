@@ -8,7 +8,7 @@ WorkPermitConvertor::WorkPermitConvertor() {
 		conversions[EID_VWR_LANG_DE]['7'] = TEXT("unbegrenzt");
 		conversions[EID_VWR_LANG_DE]['8'] = TEXT("begrenzt");
 		conversions[EID_VWR_LANG_DE]['9'] = TEXT("nein");
-		conversions[EID_VWR_LANG_DE]['A'] = TEXT("Saisonarbeiter");
+		conversions[EID_VWR_LANG_DE]['A'] = TEXT("Saisonarbeitnehmer");
 
 		conversions[EID_VWR_LANG_EN]['7'] = TEXT("unlimited");
 		conversions[EID_VWR_LANG_EN]['8'] = TEXT("limited");
@@ -18,7 +18,7 @@ WorkPermitConvertor::WorkPermitConvertor() {
 		conversions[EID_VWR_LANG_FR]['7'] = TEXT("illimité");
 		conversions[EID_VWR_LANG_FR]['8'] = TEXT("limité");
 		conversions[EID_VWR_LANG_FR]['9'] = TEXT("non");
-		conversions[EID_VWR_LANG_FR]['A'] = TEXT("Saisonnier");
+		conversions[EID_VWR_LANG_FR]['A'] = TEXT("travailleur saisonnier");
 
 		conversions[EID_VWR_LANG_NL]['7'] = TEXT("onbeperkt");
 		conversions[EID_VWR_LANG_NL]['8'] = TEXT("beperkt");
@@ -26,6 +26,7 @@ WorkPermitConvertor::WorkPermitConvertor() {
 		conversions[EID_VWR_LANG_NL]['A'] = TEXT("seizoensarbeider");
 	}
 }
+
 
 EID_STRING WorkPermitConvertor::convert(const void *normal) {
 	const char *norm = (const char*)normal;

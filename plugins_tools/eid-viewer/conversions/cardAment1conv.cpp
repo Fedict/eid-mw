@@ -7,9 +7,9 @@ CardAMention1Convertor::CardAMention1Convertor() {
 	{
 
 		//verify if mention 'A' exists
-		conversions[EID_VWR_LANG_DE]['A'] = TEXT("Saisonarbeiter");
+		conversions[EID_VWR_LANG_DE]['A'] = TEXT("Saisonarbeitnehmer");
 		conversions[EID_VWR_LANG_EN]['A'] = TEXT("Seasonal worker");
-		conversions[EID_VWR_LANG_FR]['A'] = TEXT("Saisonnier");
+		conversions[EID_VWR_LANG_FR]['A'] = TEXT("travailleur saisonnier");
 		conversions[EID_VWR_LANG_NL]['A'] = TEXT("seizoensarbeider");
 
 		conversions[EID_VWR_LANG_DE]['D'] = TEXT("Student");
