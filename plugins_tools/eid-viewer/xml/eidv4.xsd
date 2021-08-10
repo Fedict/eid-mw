@@ -164,6 +164,7 @@
       <xsd:element name="deliverymunicipality" />
       <xsd:element ref="workpermit" minOccurs="0" />
 	  <xsd:element ref="brexit" minOccurs="0" />
+	  <xsd:element ref="cardA" minOccurs="0" />
     </xsd:sequence>
     <xsd:attribute name="documenttype" type="doctypeType" use="required"/>
     <xsd:attribute name="cardnumber" type="cardnumType" use="required"/>
