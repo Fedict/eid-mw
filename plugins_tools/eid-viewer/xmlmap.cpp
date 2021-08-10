@@ -52,8 +52,8 @@ struct attribute_desc brexit_attributes[] = {
 
 /* Attributes of the <cardA> element */
 struct attribute_desc cardA_attributes[] = {
-	{TEXT("cardAmention1"), TEXT("cardA_mention_1"), 1},
-	{TEXT("cardAmention2"), TEXT("cardA_mention_2"), 0},
+	{TEXT("mentions1"), TEXT("cardA_mention_1"), 1},
+	{TEXT("mentions2"), TEXT("cardA_mention_2"), 0},
 	{NULL, NULL, 0},
 };
 
