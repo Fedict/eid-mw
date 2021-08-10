@@ -252,7 +252,7 @@ ZDU-Nummer des Arbeitgebers (2):</value>
   <data name="Brexit_mentions" xml:space="preserve">
     <value>Brexit Erwähnungen:</value>
   </data>
-  <data name="cardA_mentions" xml:space="preserve">
+  <data name="CardA_mentions" xml:space="preserve">
     <value>Erwähnungen:</value>
   </data>
 </root>
