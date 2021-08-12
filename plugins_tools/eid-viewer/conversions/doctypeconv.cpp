@@ -44,10 +44,22 @@ DocTypeConvertor::DocTypeConvertor()
 		conversions[EID_VWR_LANG_DE][TEXT("22")] = TEXT("AUFENTHALSTITEL");
 		// card N");
 		conversions[EID_VWR_LANG_DE][TEXT("23")] = TEXT("KLEINEN GRENZVERKEHR");
+		// card K");
+		conversions[EID_VWR_LANG_DE][TEXT("27")] = TEXT("K. NIEDERLASSUNG");
+		// card L");
+		conversions[EID_VWR_LANG_DE][TEXT("28")] = TEXT("L. DAUERAUFENTHALT – EU");
 		// Foreigner EU
 		conversions[EID_VWR_LANG_DE][TEXT("31")] = TEXT("EU. Anmeldung - Art 8 RL 2004/38/EG");
 		// Foreigner EU+
 		conversions[EID_VWR_LANG_DE][TEXT("32")] = TEXT("EU+. Daueraufenthalt - Art 19 RL 2004/38/EG");
+		// Foreigner A new layout 2021
+		conversions[EID_VWR_LANG_DE][TEXT("33")] = TEXT("A. AUFENTHALT FUR BEGRENZTE DAUER");
+		// Foreigner B new layout 2021
+		conversions[EID_VWR_LANG_DE][TEXT("34")] = TEXT("B. AUFENTHALT FUR UNBEGRENZTE DAUER");
+		// Foreigner F new layout 2021
+		conversions[EID_VWR_LANG_DE][TEXT("35")] = TEXT("F. EU-FAMILIENANGEHORIGER ART 10 RL 2004/38/EG");
+		// Foreigner F+ new layout 2021
+		conversions[EID_VWR_LANG_DE][TEXT("36")] = TEXT("F+. EU-FAMILIENANGEHORIGER ART 20 RL 2004/38/EG");
 
 		conversions[EID_VWR_LANG_EN][TEXT("1")] = TEXT("IDENTITY CARD");
 		conversions[EID_VWR_LANG_EN][TEXT("6")] = TEXT("KIDS CARD");
@@ -83,10 +95,22 @@ DocTypeConvertor::DocTypeConvertor()
 		conversions[EID_VWR_LANG_EN][TEXT("22")] = TEXT("RESIDENCE PERMIT");
 		// card N");
 		conversions[EID_VWR_LANG_EN][TEXT("23")] = TEXT("LOCAL BORDER TRAFFIC");
+		// card K");
+		conversions[EID_VWR_LANG_EN][TEXT("27")] = TEXT("K. ESTABLISHMENT");
+		// card L");
+		conversions[EID_VWR_LANG_EN][TEXT("28")] = TEXT("L. EU LONG-TERM RESIDENT");
 		// Foreigner EU
 		conversions[EID_VWR_LANG_EN][TEXT("31")] = TEXT("EU. Registration - Art 8 RL 2004/38/EG");
 		// Foreigner EU+
 		conversions[EID_VWR_LANG_EN][TEXT("32")] = TEXT("EU+. Permanent residence - Art 19 RL 2004/38/EG");
+		// Foreigner A new layout 2021
+		conversions[EID_VWR_LANG_EN][TEXT("33")] = TEXT("A.LIMITED STAY");
+		// Foreigner B new layout 2021
+		conversions[EID_VWR_LANG_EN][TEXT("34")] = TEXT("B. UNLIMITED STAY");
+		// Foreigner F new layout 2021
+		conversions[EID_VWR_LANG_EN][TEXT("35")] = TEXT("F. FAMILY MEMBER EU ART 10 RL 2004/38/EC");
+		// Foreigner F+ new layout 2021
+		conversions[EID_VWR_LANG_EN][TEXT("36")] = TEXT("F+. FAMILY MEMBER EU ART 20 RL 2004/38/EC");
 
 		conversions[EID_VWR_LANG_FR][TEXT("1")] = TEXT("CARTE D'IDENTITE");
 		conversions[EID_VWR_LANG_FR][TEXT("6")] = TEXT("CARTE POUR ENFANTS");
@@ -122,10 +146,22 @@ DocTypeConvertor::DocTypeConvertor()
 		conversions[EID_VWR_LANG_FR][TEXT("22")] = TEXT("TITRE DE SEJOUR");
 		// card N");
 		conversions[EID_VWR_LANG_FR][TEXT("23")] = TEXT("PETIT TRAFIC FRONTALIER");
+		// card K");
+		conversions[EID_VWR_LANG_FR][TEXT("27")] = TEXT("K. ETABLISSEMENT");
+		// card L");
+		conversions[EID_VWR_LANG_FR][TEXT("28")] = TEXT("L. RESIDENT DE LONGUE DUREE – UE");
 		// Foreigner EU
 		conversions[EID_VWR_LANG_FR][TEXT("31")] = TEXT("EU. Enregistrement - Art 8 DIR 2004/38/CE");
 		// Foreigner EU+	
 		conversions[EID_VWR_LANG_FR][TEXT("32")] = TEXT("EU+. S\u00e9jour permanent - Art 19 DIR 2004/38/CE");
+		// Foreigner A new layout 2021
+		conversions[EID_VWR_LANG_FR][TEXT("33")] = TEXT("A. SEJOUR LIMITE");
+		// Foreigner B new layout 2021
+		conversions[EID_VWR_LANG_FR][TEXT("34")] = TEXT("B. SEJOUR ILLIMITE");
+		// Foreigner F new layout 2021
+		conversions[EID_VWR_LANG_FR][TEXT("35")] = TEXT("F. MEMBRE FAMILLE UE ART 10 DIR 2004/38/CE");
+		// Foreigner F+ new layout 2021
+		conversions[EID_VWR_LANG_FR][TEXT("36")] = TEXT("F+. MEMBRE FAMILLE UE ART 20 DIR 2004/38/CE");
 
 		conversions[EID_VWR_LANG_NL][TEXT("1")] = TEXT("IDENTITEITSKAART");
 		conversions[EID_VWR_LANG_NL][TEXT("6")] = TEXT("KIDS KAART");
@@ -161,10 +197,22 @@ DocTypeConvertor::DocTypeConvertor()
 		conversions[EID_VWR_LANG_NL][TEXT("22")] = TEXT("VERBLIJFSTITEL");
 		// card N");
 		conversions[EID_VWR_LANG_NL][TEXT("23")] = TEXT("KLEIN GRENSVERKEER");
+		// card K");
+		conversions[EID_VWR_LANG_NL][TEXT("27")] = TEXT("K. VESTIGING");
+		// card L");
+		conversions[EID_VWR_LANG_NL][TEXT("28")] = TEXT("L. EU-LANGDURIG INGEZETENE");
 		// Foreigner EU");
 		conversions[EID_VWR_LANG_NL][TEXT("31")] = TEXT("EU. Inschrijving - Art 8 RL 2004/38/EG");
 		// Foreigner EU+");
 		conversions[EID_VWR_LANG_NL][TEXT("32")] = TEXT("EU+. Duurzaam verblijf - Art 19 RL 2004/38/EG");
+		// Foreigner A new layout 2021
+		conversions[EID_VWR_LANG_NL][TEXT("33")] = TEXT("A. BEPERKT VERBLIJF");
+		// Foreigner B new layout 2021
+		conversions[EID_VWR_LANG_NL][TEXT("34")] = TEXT("B. ONBEPERKT VERBLIJF");
+		// Foreigner F new layout 2021
+		conversions[EID_VWR_LANG_NL][TEXT("35")] = TEXT("F. FAMILIELID EU ART 10 RL 2004/38/EG");
+		// Foreigner F+ new layout 2021
+		conversions[EID_VWR_LANG_NL][TEXT("36")] = TEXT("F+. FAMILIELID EU ART 20 RL 2004/38/EG");
 	}
 }
 
