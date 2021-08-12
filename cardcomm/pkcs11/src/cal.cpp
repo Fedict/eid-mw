@@ -1682,6 +1682,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 				break;
 			}
 			/* Falls through */
+			/* only in case of CACHED_DATA_TYPE_ALL_DATA */
 		case CACHED_DATA_TYPE_ADDRESS:
 			oFileData = poCard->ReadCardFile(BEID_FILE_ADDRESS);
 			plabel = BEID_LABEL_ADDRESS_FILE;
@@ -1714,6 +1715,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 				break;
 			}
 			/* Falls through */
+			/* only in case of CACHED_DATA_TYPE_ALL_DATA */
 		case CACHED_DATA_TYPE_PHOTO:
 			plabel = BEID_LABEL_PHOTO;
 			pobjectID = BEID_OBJECTID_PHOTO;
@@ -1735,6 +1737,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 				break;
 			}
 			/* Falls through */
+			/* only in case of CACHED_DATA_TYPE_ALL_DATA */
 		case CACHED_DATA_TYPE_RNCERT:
 			oFileData = poCard->ReadCardFile(BEID_FILE_CERT_RRN);
 			plabel = BEID_LABEL_CERT_RN;
@@ -1756,6 +1759,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 				break;
 			}
 			/* Falls through */
+			/* only in case of CACHED_DATA_TYPE_ALL_DATA */
 		case CACHED_DATA_TYPE_SIGN_DATA_FILE:
 			plabel = BEID_LABEL_SGN_RN;
 			oFileData = poCard->ReadCardFile(BEID_FILE_ID_SIGN);
@@ -1777,6 +1781,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 				break;
 			}
 			/* Falls through */
+			/* only in case of CACHED_DATA_TYPE_ALL_DATA */
 		case CACHED_DATA_TYPE_SIGN_ADDRESS_FILE:
 			plabel = BEID_LABEL_SGN_ADDRESS;
 			oFileData = poCard->ReadCardFile(BEID_FILE_ADDRESS_SIGN);
@@ -1798,6 +1803,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 				break;
 			}
 			/* Falls through */
+			/* only in case of CACHED_DATA_TYPE_ALL_DATA */
 		case CACHED_DATA_TYPE_BASIC_KEY_FILE:
 			ucAppletVersion = poCard->GetAppletVersion();
 
@@ -1824,7 +1830,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 				break;
 			}
 			/* Falls through */
-                        /* (in case of CACHED_DATA_TYPE_ALL_DATA) */
+			/* only in case of CACHED_DATA_TYPE_ALL_DATA */
 		default:
 			break;
 		}
