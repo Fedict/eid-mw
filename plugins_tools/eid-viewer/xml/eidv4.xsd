@@ -122,7 +122,7 @@
     </xsd:attribute>
   </xsd:complexType>
   <xsd:complexType name="cardAType">
-    <xsd:attribute name="mentions1" use="required">
+    <xsd:attribute name="mentions1" use="optional">
       <xsd:simpleType>
         <xsd:restriction base="xsd:string">
           <xsd:enumeration value="Seasonal worker" />
