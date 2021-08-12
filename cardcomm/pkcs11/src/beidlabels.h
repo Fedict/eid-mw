@@ -123,9 +123,6 @@
 
 #define BEID_LABEL_ATR							"ATR"
 
-//personalisation version numbers from tokeninfo file (4 bytes)
-#define BEID_LABEL_PersoVersions				"PersoVersions"
-
 #define BEID_LABEL_KEY_CARD						"Card"
 
 #define BEID_OBJECTID_ID						"id"
@@ -136,7 +133,6 @@
 #define BEID_OBJECTID_SIGN_DATA_FILE			"sign_data_file"
 #define BEID_OBJECTID_SIGN_ADDRESS_FILE			"sign_address_file"
 #define BEID_OBJECTID_BASIC_KEY_FILE			"basic_key_file"
-#define BEID_OBJECTID_TOKENINFO					"tokeninfo"
 //to give the hidden record objects their own (hidden/undocumented) CKA_OBJECT_ID
 //this "record" CKA_OBJECT_ID is not meant to (and can not) be used to retrieve all hidden objects
 #define BEID_OBJECTID_RECORD					"record"
