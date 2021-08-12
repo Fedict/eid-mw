@@ -192,7 +192,13 @@
       <xsd:enumeration value="foreigner_m" />
       <xsd:enumeration value="foreigner_n" />
       <xsd:enumeration value="foreigner_eu" />
-      <xsd:enumeration value="foreigner_eu_plus" />	  	  
+      <xsd:enumeration value="foreigner_eu_plus" />
+      <xsd:enumeration value="foreigner_k" />
+      <xsd:enumeration value="foreigner_l" />
+      <xsd:enumeration value="foreigner_A" />
+      <xsd:enumeration value="foreigner_B" />
+      <xsd:enumeration value="foreigner_F" />
+      <xsd:enumeration value="foreigner_F_plus" />
     </xsd:restriction>
   </xsd:simpleType>
   <xsd:simpleType name="cardnumType">
