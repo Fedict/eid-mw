@@ -1058,7 +1058,7 @@
                         </child>
                         <child>
                           <object class="GtkCheckButton" id="member_of_family">
-                            <property name="label" translatable="yes"> </property>
+                            <property name="label"> </property>
                             <property name="sensitive">False</property>
                             <property name="can-focus">False</property>
                             <property name="focus-on-click">False</property>
@@ -2264,7 +2264,7 @@
           <object class="GtkLabel" id="printby">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="label" translatable="yes">label</property>
+            <property name="label">label</property>
           </object>
           <packing>
             <property name="expand">False</property>
