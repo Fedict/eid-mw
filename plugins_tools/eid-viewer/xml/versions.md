@@ -40,3 +40,10 @@ New allowed values:
 
 - `ict\_i`, `mobile\_ict\_j`, `foreigner\_m`, and `foreigner\_n` for the
   `documenttype` attribute of the `&lt;card&gt;` element.
+
+Version 4.4
+-----------
+
+New elements:
+
+- `&lt;cardA&gt; child element of the `&lt;card&gt;` element
