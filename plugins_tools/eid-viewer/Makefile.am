@@ -62,6 +62,10 @@ libeidviewer_la_SOURCES = \
 	conversions/hexdecode.cpp \
 	conversions/booldecode.h \
 	conversions/booldecode.cpp \
+	conversions/cardAment1conv.cpp \
+	conversions/cardAment1conv.h \
+	conversions/cardAment2conv.cpp \
+	conversions/cardAment2conv.h \
 	conversions/convert.cpp \
 	conversions/convertor.cpp \
 	conversions/convertor.h \
