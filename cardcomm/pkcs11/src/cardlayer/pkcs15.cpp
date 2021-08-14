@@ -40,8 +40,6 @@ namespace eIDMW
 										{true, BEID_LABEL_KEY_CARD,   0, CARD_KEY_ID, 2, 129, 48,  EC} };	//this key object is only meant to be used by the pkcs#11 SDK (for a card challenge),
 																											//it is not really part of the card PKI and cannot be fetched from the CDF
 
-	const std::string defaultEFTokenInfo = "3F00DF005032";
-
 	const std::string AODFPath = "3F00DF005034";
 	const std::string PrKDFPath = "3F00DF005035";
 	const std::string CDFPath = "3F00DF005037";
