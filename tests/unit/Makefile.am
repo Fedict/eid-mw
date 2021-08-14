@@ -1,4 +1,43 @@
-TESTS = eject_card init_finalize wrong_init fork_init double_init getinfo funclist slotlist slotinfo tkinfo slotevent mechlist mechinfo sessions sessions_nocard sessioninfo login login_state nonsensible objects readdata readdata_limited readdata_sequence digest threads sign sign_state ordering cardcom_common bad_login  exception_data
+# The eject_card must occur first. It's a workaround for the fact that the
+# machine on which the automated test suite runs (with a robot to eject the
+# card and/or the USB device) sometimes puts the card reader in an
+# unrecoverable sleep, which then causes the full test suite to fail. By
+# ejecting both the card and the reader, we ensure that the reader is
+# definitely not in unrecoverable sleep, and the first test that needs the
+# reader will just insert the card and/or the reader if necessary.
+TESTS =				\
+	eject_card		\
+	bad_login		\
+	cardcom_common		\
+	digest			\
+	double_init		\
+	exception_data		\
+	fork_init		\
+	funclist		\
+	getinfo			\
+	init_finalize		\
+	login			\
+	login_state		\
+	mechinfo		\
+	mechlist		\
+	nonsensible		\
+	objects			\
+	ordering		\
+	readdata		\
+	readdata_limited	\
+	readdata_sequence	\
+	sessioninfo		\
+	sessions		\
+	sessions_nocard		\
+	sign			\
+	sign_state		\
+	slotevent		\
+	slotinfo		\
+	slotlist		\
+	threads			\
+	tkinfo			\
+	wrong_init
+
 if JPEG
 TESTS += decode_photo
 endif
