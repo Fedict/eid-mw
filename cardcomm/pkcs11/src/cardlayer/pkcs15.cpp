@@ -46,7 +46,7 @@ namespace eIDMW
 	const std::string PrKDFPath = "3F00DF005035";
 	const std::string CDFPath = "3F00DF005037";
 
-	CPKCS15::CPKCS15(void) :m_poParser(NULL), m_poCard(NULL)
+	CPKCS15::CPKCS15(void) :m_poCard(NULL), m_poParser(NULL)
 	{
 		Clear();
 	}
