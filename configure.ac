@@ -50,7 +50,6 @@ fi
 
 AM_CONDITIONAL(ASSUAN,[test x"$ASSUAN" = x"y"])
 
-AC_SEARCH_LIBS([strlcpy], [bsd], AC_DEFINE_UNQUOTED([HAVE_LIBBSD], 1, [Set to 1 (just set to 1)]), AC_ERROR([libbsd not found]))
 ###### pcsc-lite ##########
 PKG_CHECK_MODULES([PCSC],[libpcsclite >= 1.4.4],
 [

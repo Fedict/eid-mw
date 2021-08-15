@@ -45,7 +45,6 @@ installed:
 For the PKCS#11 authentication module:
 
 - [PC/SC Lite](https://pcsclite.alioth.debian.org)
-- [libbsd](https://libbsd.freedesktop.org/)
 - (Optionally) [p11-kit](https://p11-glue.freedesktop.org/p11-kit.html)
 
 If the dialogs and/or the viewer are not disabled:

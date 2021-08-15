@@ -18,10 +18,6 @@
 #include <config.h>
 #endif
 
-#ifdef HAVE_LIBBSD
-#include <bsd/bsd.h>
-#endif
-
 #ifdef __APPLE__
 #include "trustdirname.h"
 #define CERTTRUSTDIR eid_vwr_osl_objc_trustdirname()
@@ -393,7 +389,7 @@ char* eid_vwr_x509_get_details(const void* certificate, size_t certlen) {
 	X509_print_ex(b, cert, 0, 0);
 	BIO_get_mem_ptr(b, &p);
 	rv = malloc(p->length + 1);
-	strlcpy(rv, p->data, p->length + 1);
+	snprintf(rv, p->length + 1, "%.*s", p->length, p->data);
 
 	BIO_free(b);
 
