@@ -60,7 +60,7 @@ TEST_FUNC(slotevent) {
 	robot_remove_card();
 	
 	#ifdef WIN32
-	Sleep(1000);
+	Sleep(10000);
 	#endif
 
 	check_rv(C_WaitForSlotEvent(CKF_DONT_BLOCK, &slot, NULL_PTR));
