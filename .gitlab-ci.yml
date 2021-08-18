@@ -49,6 +49,8 @@ deb-build:
 
 deb-repro:
   extends: .docker-base
+  variables:
+    USE_ACNG: "1"
   only:
     changes:
     - .ci/dockerfiles/deb-repro/**/*
@@ -57,6 +59,8 @@ deb-repro:
 
 deb-scan-build:
   extends: .docker-base
+  variables:
+    USE_ACNG: "1"
   only:
     changes:
     - .ci/dockerfiles/deb-scan-build/**/*
@@ -65,6 +69,8 @@ deb-scan-build:
 
 deb-sbuild:
   extends: .docker-base
+  variables:
+    USE_ACNG: "1"
   only:
     changes:
     - .ci/dockerfiles/deb-sbuild/**/*
