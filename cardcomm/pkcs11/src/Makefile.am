@@ -5,7 +5,7 @@ AM_CXXFLAGS = -Wall -Wextra -Wno-unused-parameter -fvisibility=hidden -Wno-error
 libbeidpkcs11_la_CFLAGS = $(AM_CFLAGS) -DLTC_NO_ASM
 libbeidpkcs11_la_CXXFLAGS = $(AM_CXXFLAGS) -DUSING_DL_OPEN -DEIDMW_CAL_EXPORT -DCAL_BEID -DCARDPLUGIN_IN_CAL -DBEID_35 -DNDEBUG -DBEID_OLD_PINPAD -DLTC_NO_ASM -fvisibility=hidden -I$(srcdir)/common -I$(srcdir)/fuzz -I$(srcdir)/cardlayer -I$(top_srcdir)/doc/sdk/include/v240 @PCSC_CFLAGS@
 libbeidpkcs11_la_CPPFLAGS = -I$(srcdir)/common -I$(srcdir)/fuzz -I$(srcdir)/cardlayer -I$(top_srcdir)/doc/sdk/include/v240 @PCSC_CFLAGS@ -DLIBEXECDIR='"$(libexecdir)"' -fvisibility=hidden
-libbeidpkcs11_la_LIBADD = @PCSC_LIBS@ @DL_LIBS@
+libbeidpkcs11_la_LIBADD = @PCSC_LIBS@ @DL_LIBS@ libbeidcommon.la
 
 libbeidcommon_la_SOURCES = \
 	common/mw_util.cpp \
@@ -53,8 +53,7 @@ libbeidpkcs11_la_SOURCES = \
 	cardlayer/pkcs15.cpp \
 	cardlayer/pkcs15parser.cpp \
 	cardlayer/reader.cpp \
-	cardlayer/readersinfo.cpp \
-	$(libbeidcommon_la_SOURCES)
+	cardlayer/readersinfo.cpp
 
 noinst_HEADERS = \
 	p11.h \
