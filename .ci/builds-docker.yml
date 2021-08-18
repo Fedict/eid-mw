@@ -16,6 +16,7 @@
   script:
   - pushd $LINUX_BASEDIR/.ci/dockerfiles/$CI_JOB_NAME
   - if [ ! -z "$USE_ACNG" ]; then proxy_args="--build-arg=http_proxy=$ACNG --build-arg=https_proxy=$ACNG"; else proxy_args=""; fi
+  - echo "$proxy_args"
   - docker build --cache-from $IMAGE_TAG $proxy_args -t $IMAGE_TAG .
   - docker push $IMAGE_TAG
   - popd
