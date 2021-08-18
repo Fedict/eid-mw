@@ -8,6 +8,7 @@ CLEANFILES=foto.jpg
 
 P11_LIB = libtestlib.la $(top_builddir)/cardcomm/pkcs11/src/libbeidpkcs11.la
 COMMON_LIB = $(top_builddir)/cardcomm/pkcs11/src/libbeidcommon.la
+DIALOGLIB = $(top_builddir)/cardcomm/pkcs11/src/libdialogs.la
 noinst_LTLIBRARIES = libtestlib.la
 libtestlib_la_SOURCES = testlib.h testlib.c serial_linux.c serial_io.h
 
@@ -115,7 +116,7 @@ bad_login_LDADD = $(P11_LIB)
 
 dialogs_SOURCES = dialogs.cpp
 dialogs_CXXFLAGS = -I$(top_srcdir)/cardcomm/pkcs11/src $(AM_CXXFLAGS)
-dialogs_LDADD = $(P11_LIB) $(COMMON_LIB)
+dialogs_LDADD = $(P11_LIB) $(COMMON_LIB) $(DIALOGLIB)
 
 exception_data_SOURCES = exception_data.cpp
 exception_data_CXXFLAGS = -I$(top_srcdir)/cardcomm/pkcs11/src $(AM_CXXFLAGS)

@@ -152,16 +152,20 @@ SUBDIRS = cardlayer/uml
 if NO_DIALOGS
 libbeidpkcs11_la_CXXFLAGS += -DNO_DIALOGS
 else
+noinst_LTLIBRARIES += libdialogs.la
 libbeidpkcs11_la_CXXFLAGS += -I$(srcdir)/dialogs
+libbeidpkcs11_la_LIBADD += libdialogs.la
+libdialogs_la_CXXFLAGS = $(libbeidpkcs11_la_CXXFLAGS)
+libdialogs_la_CPPFLAGS = $(libbeidpkcs11_la_CPPFLAGS)
 if ASSUAN
-libbeidpkcs11_la_SOURCES += \
+libdialogs_la_SOURCES = \
 	dialogs/dialogspinentry/dlgs_pinentry.cpp
-libbeidpkcs11_la_CFLAGS += $(LIBASSUAN_CFLAGS)
-libbeidpkcs11_la_CPPFLAGS += -DDATAROOTDIR='"$(datarootdir)"'
-libbeidpkcs11_la_CXXFLAGS += $(LIBASSUAN_CFLAGS)
-libbeidpkcs11_la_LIBADD += $(LIBASSUAN_LIBS)
+libdialogs_la_CFLAGS = $(LIBASSUAN_CFLAGS)
+libdialogs_la_CPPFLAGS += -DDATAROOTDIR='"$(datarootdir)"'
+libdialogs_la_CXXFLAGS += $(LIBASSUAN_CFLAGS)
+libdialogs_la_LIBADD = $(LIBASSUAN_LIBS)
 else
-libbeidpkcs11_la_SOURCES += \
+libdialogs_la_SOURCES = \
 	dialogs/dialogsgtk/dlgs_gtk.cpp \
 	dialogs/dialogsgtk/single_dialog.c
 libexec_PROGRAMS = beid-askpin beid-changepin beid-badpin beid-askaccess beid-spr-askpin beid-spr-changepin
