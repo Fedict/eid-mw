@@ -53,7 +53,10 @@ int robot_unit;
 #ifdef WIN32
 char *strndup(const char *s, size_t n) {
 	char *rv = malloc(n + 1);
-	strlcpy(rv, s, n + 1);
+
+	if (!rv)
+		return rv;
+	snprintf(rv, n + 1, "%.*s", n, s);
 	return rv;
 }
 #endif
