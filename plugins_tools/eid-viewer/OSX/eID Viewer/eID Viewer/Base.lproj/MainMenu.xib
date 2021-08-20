@@ -655,7 +655,7 @@
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField identifier="title_mention_1" hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="q39-NO-l86">
+                                        <textField identifier="title_cardA_mention_1" hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="q39-NO-l86">
                                             <rect key="frame" x="375" y="133" width="194" height="16"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Mentions:" id="70V-by-eGj">
                                                 <font key="font" metaFont="system"/>
@@ -663,7 +663,7 @@
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField identifier="mention_1" hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pdn-VV-Ug3" userLabel="mention_1">
+                                        <textField identifier="cardA_mention_1" hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pdn-VV-Ug3" userLabel="cardA_mention_1">
                                             <rect key="frame" x="573" y="133" width="11" height="16"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" placeholderString="-" id="paq-Oi-ERA">
                                                 <font key="font" metaFont="system"/>
@@ -671,7 +671,7 @@
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField identifier="mention_2" hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HOn-7g-FFb" userLabel="mention_2">
+                                        <textField identifier="cardA_mention_2" hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HOn-7g-FFb" userLabel="cardA_mention_2">
                                             <rect key="frame" x="596" y="133" width="4" height="16"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" id="n7r-xS-xYP">
                                                 <font key="font" metaFont="system"/>
