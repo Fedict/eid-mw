@@ -38,6 +38,9 @@ TESTS =				\
 	tkinfo			\
 	wrong_init
 
+# doesn't compile currently, silence the warning
+EXTRA_PROGRAMS = dialogs
+
 if JPEG
 TESTS += decode_photo
 endif
