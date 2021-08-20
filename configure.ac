@@ -18,8 +18,8 @@ AM_SILENT_RULES([yes])
 # Checks for programs.
 AC_PROG_CXX
 m4_ifdef([AX_CXX_COMPILE_STDCXX_11],,
-[AC_MSG_ERROR([The m4 macro AX_CXX_COMPILE_STDCXX_11 has not been defined.
-Please install the autoconf-archive package.], 1)])
+[m4_fatal([The m4 macro AX_CXX_COMPILE_STDCXX_11 has not been
+defined. Please install the autoconf-archive package.])])
 AX_CXX_COMPILE_STDCXX_11()
 AC_PROG_CPP
 AC_PROG_CC_C99
