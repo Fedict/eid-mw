@@ -32,10 +32,10 @@
     when: on_success
     paths:
     - products\windows
-    - cardcomm\minidriver\VS_2017\Binaries\*\*.lib
-    - cardcomm\pkcs11\VS_2017\Binaries\*\*.lib
-    - installers\quickinstaller\NSIS_Plugins\beidread\VS_2017\*\*.lib
-    - plugins_tools\eid-viewer\Windows\VS_2017\eIDViewer\bin\*\*.lib
+    - cardcomm\minidriver\VS_2019\Binaries\*\*.lib
+    - cardcomm\pkcs11\VS_2019\Binaries\*\*.lib
+    - installers\quickinstaller\NSIS_Plugins\beidread\VS_2019\*\*.lib
+    - plugins_tools\eid-viewer\Windows\VS_2019\eIDViewer\bin\*\*.lib
 
 #.validation:windows:dllinstall:
 #  tags:
