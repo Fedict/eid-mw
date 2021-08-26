@@ -5,7 +5,7 @@ AM_CXXFLAGS = -Wall -Wextra -Wno-unused-parameter -fvisibility=hidden -Wno-error
 libbeidpkcs11_la_CFLAGS = $(AM_CFLAGS) -DLTC_NO_ASM
 libbeidpkcs11_la_CXXFLAGS = $(AM_CXXFLAGS) -DUSING_DL_OPEN -DEIDMW_CAL_EXPORT -DCAL_BEID -DCARDPLUGIN_IN_CAL -DBEID_35 -DNDEBUG -DBEID_OLD_PINPAD -DLTC_NO_ASM -fvisibility=hidden -I$(srcdir)/common -I$(srcdir)/fuzz -I$(srcdir)/cardlayer -I$(top_srcdir)/doc/sdk/include/v240 @PCSC_CFLAGS@
 libbeidpkcs11_la_CPPFLAGS = -I$(srcdir)/common -I$(srcdir)/fuzz -I$(srcdir)/cardlayer -I$(top_srcdir)/doc/sdk/include/v240 @PCSC_CFLAGS@ -DLIBEXECDIR='"$(libexecdir)"' -fvisibility=hidden
-libbeidpkcs11_la_LIBADD = @PCSC_LIBS@ @DL_LIBS@ libbeidcommon.la
+libbeidpkcs11_la_LIBADD = @PCSC_LIBS@ @DL_LIBS@
 
 libbeidcommon_la_SOURCES = \
 	common/mw_util.cpp \
@@ -151,19 +151,21 @@ noinst_HEADERS = \
 SUBDIRS = cardlayer/uml
 if NO_DIALOGS
 libbeidpkcs11_la_CXXFLAGS += -DNO_DIALOGS
+libbeidpkcs11_la_LIBADD += libbeidcommon.la
 else
 noinst_LTLIBRARIES += libdialogs.la
 libbeidpkcs11_la_CXXFLAGS += -I$(srcdir)/dialogs
 libbeidpkcs11_la_LIBADD += libdialogs.la
 libdialogs_la_CXXFLAGS = $(libbeidpkcs11_la_CXXFLAGS)
 libdialogs_la_CPPFLAGS = $(libbeidpkcs11_la_CPPFLAGS)
+libdialogs_la_LIBADD = libbeidcommon.la
 if ASSUAN
 libdialogs_la_SOURCES = \
 	dialogs/dialogspinentry/dlgs_pinentry.cpp
 libdialogs_la_CFLAGS = $(LIBASSUAN_CFLAGS)
 libdialogs_la_CPPFLAGS += -DDATAROOTDIR='"$(datarootdir)"'
 libdialogs_la_CXXFLAGS += $(LIBASSUAN_CFLAGS)
-libdialogs_la_LIBADD = $(LIBASSUAN_LIBS)
+libdialogs_la_LIBADD += $(LIBASSUAN_LIBS)
 else
 libdialogs_la_SOURCES = \
 	dialogs/dialogsgtk/dlgs_gtk.cpp \
