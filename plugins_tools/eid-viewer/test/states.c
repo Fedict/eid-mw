@@ -9,7 +9,7 @@
 #include "pkcs11.h"
 #include <unistd.h>
 #endif
-#include "testlib2.h"
+#include <testlib.h>
 #include <eid-viewer/oslayer.h>
 #include <eid-viewer/macros.h>
 #include <stdlib.h>

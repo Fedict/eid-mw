@@ -8,34 +8,9 @@
 #include "common.h"
 
 pthread_barrier_t barrier;
-
-static void pinop_result(enum eid_vwr_pinops p, enum eid_vwr_result res) {
-	verbose_assert(p == EID_VWR_PINOP_TEST);
-	verbose_assert(res == EID_VWR_RES_SUCCESS);
-	exit(TEST_RV_OK);
-}
-
 static enum eid_vwr_states curstate;
-
-static void newstate(enum eid_vwr_states s) {
-	curstate = s;
-	switch(curstate) {
-	case STATE_TOKEN_WAIT:
-		if(!can_enter_pin(0)) {
-			printf("Cannot do PIN tests without PIN code...\n");
-			exit(TEST_RV_SKIP);
-		}
-		eid_vwr_pinop(EID_VWR_PINOP_TEST);
-		pthread_barrier_wait(&barrier);
-	break;
-	case STATE_CARD_INVALID:
-		fprintf(stderr, "E: could not read token: card data invalid");
-		exit(TEST_RV_FAIL);
-	default:
-		// nothing to do here
-		break;
-	}
-}
+static void pinop_result(enum eid_vwr_pinops p, enum eid_vwr_result res);
+static void newstate(enum eid_vwr_states s);
 
 TEST_FUNC(pinop) {
 	struct eid_vwr_ui_callbacks* cb;
@@ -72,4 +47,30 @@ TEST_FUNC(pinop) {
 	pthread_barrier_wait(&barrier);
 	SLEEP(30);
 	return TEST_RV_FAIL;
+}
+
+static void pinop_result(enum eid_vwr_pinops p, enum eid_vwr_result res) {
+	verbose_assert(p == EID_VWR_PINOP_TEST);
+	verbose_assert(res == EID_VWR_RES_SUCCESS);
+	exit(TEST_RV_OK);
+}
+
+static void newstate(enum eid_vwr_states s) {
+	curstate = s;
+	switch(curstate) {
+	case STATE_TOKEN_WAIT:
+		if(!can_enter_pin(0)) {
+			printf("Cannot do PIN tests without PIN code...\n");
+			exit(TEST_RV_SKIP);
+		}
+		eid_vwr_pinop(EID_VWR_PINOP_TEST);
+		pthread_barrier_wait(&barrier);
+	break;
+	case STATE_CARD_INVALID:
+		fprintf(stderr, "E: could not read token: card data invalid");
+		exit(TEST_RV_FAIL);
+	default:
+		// nothing to do here
+		break;
+	}
 }

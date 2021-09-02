@@ -8,7 +8,7 @@
 #include <string.h>
 #include <eid-util/utftranslate.h>
 #include <eid-util/labels.h>
-#include "testlib.h"
+#include <testlib.h>
 #include "../dataverify.h"
 
 int loadData(uint8_t** array, size_t* size, char* label, CK_SLOT_ID slot, CK_SESSION_HANDLE session){
