@@ -39,8 +39,15 @@ TEST_FUNC(sdialogs) {
 	const wchar_t * pin = L"name";
 	unsigned long attempts = 2;
 	eIDMW::DlgRet ret = eIDMW::DLG_OK;
+	printf("badpin ok button test\n");
 	ret = eIDMW::DlgBadPin(usage,pin,attempts);
-	if (ret == eIDMW::DLG_ERR || ret == eIDMW::DLG_BAD_PARAM){ return TEST_RV_FAIL;}
+	if (ret != eIDMW::DLG_OK){ return TEST_RV_FAIL;}
+	
+	attempts = 1;
+	printf("badpin cancel button test: ");
+	ret = eIDMW::DlgBadPin(usage,pin,attempts);
+	if (ret == eIDMW::DLG_ERR||ret == eIDMW::DLG_BAD_PARAM){ return TEST_RV_FAIL;}
+	
         
         //askpin dialog (operation, usage, pinname, pin1, buffer1, pin2, buffer2) 
  	ret = eIDMW::DLG_OK; 
@@ -52,13 +59,24 @@ TEST_FUNC(sdialogs) {
  	wchar_t pin2[20];
  	unsigned long bufferlen1 = sizeof(pin1);
  	unsigned long bufferlen2 = sizeof(pin2);
+ 	printf("pincheck ok button test\n");
  	ret = eIDMW::DlgAskPin(operation, usage, pinname, pin1Info, pin1, bufferlen1);
- 	if (ret == eIDMW::DLG_ERR || ret == eIDMW::DLG_BAD_PARAM){ return TEST_RV_FAIL;}
+ 	if (ret != eIDMW::DLG_OK){ return TEST_RV_FAIL;}
+ 	
+ 	printf("pincheck cancel button test\n");
+ 	ret = eIDMW::DlgAskPin(operation, usage, pinname, pin1Info, pin1, bufferlen1);
+ 	if (ret != eIDMW::DLG_CANCEL){ return TEST_RV_FAIL;}
+	
+	printf("pinchange ok button test\n");
  	ret = eIDMW::DlgAskPins(operation, usage, pinname, pin1Info, pin1, bufferlen1, pin2Info, pin2, bufferlen2);
-	if (ret == eIDMW::DLG_ERR || ret == eIDMW::DLG_BAD_PARAM){ return TEST_RV_FAIL;}
+	if (ret != eIDMW::DLG_OK){ return TEST_RV_FAIL;}
+ 	
+ 	printf("pinchange cancel button test\n");
+ 	ret = eIDMW::DlgAskPins(operation, usage, pinname, pin1Info, pin1, bufferlen1, pin2Info, pin2, bufferlen2);
+	if (ret != eIDMW::DLG_CANCEL){ return TEST_RV_FAIL;}
   	
 	//display pinpad info and close
-	printf("pinpad info starting");
+	printf("pinpad info starting\n");
 	wchar_t * reader= L"APG8201";
 	wchar_t * message;
 	unsigned long handle;
