@@ -29,39 +29,49 @@
 #include <stdio.h>
 #include "testlib.h"
 #include <string>
-#include <dialogs/dialog.h>
+#include <dialogs/dialogs.h>
 
 
 TEST_FUNC(sdialogs) {
 	
 	//bad pin dialog
-	DlgPinUsage usage = DLG_PIN_AUTH;
+	eIDMW::DlgPinUsage usage = eIDMW::DLG_PIN_AUTH;
 	const wchar_t * pin = L"name";
 	unsigned long attempts = 2;
-	if (DlgBadPin(usage,pin,attempts) != DLG_OK){return TEST_RV_OK;}
-	
-
+	eIDMW::DlgRet ret = eIDMW::DLG_OK;
+	ret = eIDMW::DlgBadPin(usage,pin,attempts);
+	if (ret == eIDMW::DLG_ERR || ret == eIDMW::DLG_BAD_PARAM){ return TEST_RV_FAIL;}
+        
         //askpin dialog (operation, usage, pinname, pin1, buffer1, pin2, buffer2) 
- 	DlgPinOperation operation = DLG_PIN_OP_VERIFY;
- 	wchar_t * pinname = L"test";
- 	DlgPinInfo pin1Info = new DLGPinInfo( 4, 12, 0) ;
- 	DlgPinInfo pin2Info = new DLGPinInfo( 4, 12, 0)  ;
- 	wchar_t * pin1 = "1234";
- 	wchar_t * pin2 = "5678";
- 	unsigned long buffer1 = 1024;
- 	unsigned long buffer2 = 1024;
-  	if (DlgAskPins(operation, usage, pinname, pin1Info, pin1, buffer1, pin2Info, pin2, buffer2)!=){return TEST_RV_OK;}
-  	 
-	return TEST_RV_FAIL;
+ 	ret = eIDMW::DLG_OK; 
+ 	eIDMW::DlgPinOperation operation = eIDMW::DLG_PIN_OP_VERIFY;
+	wchar_t * pinname = L"personal";
+ 	eIDMW::DlgPinInfo pin1Info = { 4, 12, 0};
+ 	eIDMW::DlgPinInfo pin2Info = { 4, 12, 0};
+ 	wchar_t pin1[20];
+ 	wchar_t pin2[20];
+ 	unsigned long bufferlen1 = sizeof(pin1);
+ 	unsigned long bufferlen2 = sizeof(pin2);
+ 	ret = eIDMW::DlgAskPin(operation, usage, pinname, pin1Info, pin1, bufferlen1);
+ 	if (ret == eIDMW::DLG_ERR || ret == eIDMW::DLG_BAD_PARAM){ return TEST_RV_FAIL;}
+ 	ret = eIDMW::DlgAskPins(operation, usage, pinname, pin1Info, pin1, bufferlen1, pin2Info, pin2, bufferlen2);
+	if (ret == eIDMW::DLG_ERR || ret == eIDMW::DLG_BAD_PARAM){ return TEST_RV_FAIL;}
+  	
+	//display pinpad info and close
+	printf("pinpad info starting");
+	wchar_t * reader= L"APG8201";
+	wchar_t * message;
+	unsigned long handle;
 
+	ret = eIDMW::DlgDisplayPinpadInfo( operation, reader, usage, pinname, message, &handle);
+	if (ret != eIDMW::DLG_OK){ return TEST_RV_FAIL;}
+	eIDMW::DlgClosePinpadInfo(handle);
+	return TEST_RV_OK;
 }
+
 /*
-not:
-displaypinpadinfo()
 closepinpadinfo()
 
-??
-askaccess()
 */	
 
 	
