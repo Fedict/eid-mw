@@ -33,42 +33,8 @@
 
 #include "testlib.h"
 
-int ReadFirstDataObject(CK_SESSION_HANDLE session)
-{
-	CK_ULONG count = 0;
-	CK_ULONG value = CKO_DATA;
-	CK_OBJECT_HANDLE object;
-	CK_ATTRIBUTE attr = {CKA_CLASS,&value,sizeof(CK_ULONG)};
-
-	check_rv(C_FindObjectsInit(session, &attr, 1));
-
-	check_rv(C_FindObjects(session, &object, 1, &count));
-	verbose_assert(count != 0);
-
-	check_rv(C_FindObjectsFinal(session));
-	return TEST_RV_OK;
-}
-
-int ReadAuthCert(CK_SESSION_HANDLE session)
-{
-	CK_ULONG count = 0;
-	CK_ULONG value = CKO_CERTIFICATE;
-	CK_OBJECT_HANDLE object;
-	const char *pAuthentication = "Authentication";
-	CK_ATTRIBUTE attr_list[2] = {
-		{CKA_CLASS,&value,sizeof(CK_ULONG)},
-		{CKA_LABEL,(CK_VOID_PTR)pAuthentication,(CK_ULONG)strlen(pAuthentication)}
-	};
-
-	check_rv(C_FindObjectsInit(session, attr_list, 2));
-
-	check_rv(C_FindObjects(session, &object, 1, &count));
-	verbose_assert(count != 0);
-
-	check_rv(C_FindObjectsFinal(session));
-
-	return TEST_RV_OK;
-}
+int ReadFirstDataObject(CK_SESSION_HANDLE session);
+int ReadAuthCert(CK_SESSION_HANDLE session);
 
 TEST_FUNC(readdata_sequence) {
 	CK_SESSION_HANDLE session;
@@ -121,6 +87,43 @@ TEST_FUNC(readdata_sequence) {
 
 
 	check_rv(C_Finalize(NULL_PTR));
+
+	return TEST_RV_OK;
+}
+
+int ReadFirstDataObject(CK_SESSION_HANDLE session)
+{
+	CK_ULONG count = 0;
+	CK_ULONG value = CKO_DATA;
+	CK_OBJECT_HANDLE object;
+	CK_ATTRIBUTE attr = {CKA_CLASS,&value,sizeof(CK_ULONG)};
+
+	check_rv(C_FindObjectsInit(session, &attr, 1));
+
+	check_rv(C_FindObjects(session, &object, 1, &count));
+	verbose_assert(count != 0);
+
+	check_rv(C_FindObjectsFinal(session));
+	return TEST_RV_OK;
+}
+
+int ReadAuthCert(CK_SESSION_HANDLE session)
+{
+	CK_ULONG count = 0;
+	CK_ULONG value = CKO_CERTIFICATE;
+	CK_OBJECT_HANDLE object;
+	const char *pAuthentication = "Authentication";
+	CK_ATTRIBUTE attr_list[2] = {
+		{CKA_CLASS,&value,sizeof(CK_ULONG)},
+		{CKA_LABEL,(CK_VOID_PTR)pAuthentication,(CK_ULONG)strlen(pAuthentication)}
+	};
+
+	check_rv(C_FindObjectsInit(session, attr_list, 2));
+
+	check_rv(C_FindObjects(session, &object, 1, &count));
+	verbose_assert(count != 0);
+
+	check_rv(C_FindObjectsFinal(session));
 
 	return TEST_RV_OK;
 }
