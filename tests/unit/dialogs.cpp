@@ -48,11 +48,10 @@ TEST_FUNC(sdialogs) {
 	ret = eIDMW::DlgBadPin(usage,pin,attempts);
 	if (ret == eIDMW::DLG_ERR||ret == eIDMW::DLG_BAD_PARAM){ return TEST_RV_FAIL;}
 	
-        
-        //askpin dialog (operation, usage, pinname, pin1, buffer1, pin2, buffer2) 
+	//askpin dialog (operation, usage, pinname, pinInfo, pin, bufferlen) to check the pin
  	ret = eIDMW::DLG_OK; 
  	eIDMW::DlgPinOperation operation = eIDMW::DLG_PIN_OP_VERIFY;
-	wchar_t * pinname = L"personal";
+	wchar_t * pinname ;
  	eIDMW::DlgPinInfo pin1Info = { 4, 12, 0};
  	eIDMW::DlgPinInfo pin2Info = { 4, 12, 0};
  	wchar_t pin1[20];
@@ -67,6 +66,8 @@ TEST_FUNC(sdialogs) {
  	ret = eIDMW::DlgAskPin(operation, usage, pinname, pin1Info, pin1, bufferlen1);
  	if (ret != eIDMW::DLG_CANCEL){ return TEST_RV_FAIL;}
 	
+        //askpins dialog (operation, usage, pinname, pinInfo1, pin1, bufferlen1, pinInfo2, pin2, bufferlen2) to change the pin
+        operation = eIDMW::DLG_PIN_OP_CHANGE;
 	printf("pinchange ok button test\n");
  	ret = eIDMW::DlgAskPins(operation, usage, pinname, pin1Info, pin1, bufferlen1, pin2Info, pin2, bufferlen2);
 	if (ret != eIDMW::DLG_OK){ return TEST_RV_FAIL;}
@@ -77,7 +78,7 @@ TEST_FUNC(sdialogs) {
   	
 	//display pinpad info and close
 	printf("pinpad info starting\n");
-	wchar_t * reader= L"APG8201";
+	wchar_t * reader;
 	wchar_t * message;
 	unsigned long handle;
 

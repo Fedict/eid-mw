@@ -36,7 +36,8 @@ TESTS =				\
 	slotlist		\
 	threads			\
 	tkinfo			\
-	wrong_init
+	wrong_init             \
+	dialogs
 
 # doesn't compile currently, silence the warning
 EXTRA_PROGRAMS = dialogs
@@ -157,7 +158,7 @@ bad_login_SOURCES = bad_login.c
 bad_login_LDADD = $(P11_LIB)
 
 dialogs_SOURCES = dialogs.cpp
-dialogs_CXXFLAGS = -I$(top_srcdir)/cardcomm/pkcs11/src/dialogs $(AM_CXXFLAGS)
+dialogs_CXXFLAGS = -I$(top_srcdir)/cardcomm/pkcs11/src $(AM_CXXFLAGS)
 dialogs_LDADD = $(P11_LIB) $(COMMON_LIB) $(DIALOGLIB)
 
 exception_data_SOURCES = exception_data.cpp
