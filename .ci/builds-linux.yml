@@ -109,6 +109,7 @@
     - products/reports
     reports:
       cobertura: products/reports/coverage.xml
+      junit: tests/unit/junit.xml
     when: always
 
 .validation:linux:firefox:
