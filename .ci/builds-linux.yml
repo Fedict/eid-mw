@@ -90,6 +90,7 @@
   before_script:
   - pushd $LINUX_BASEDIR
   - autoreconf -f -i
+  - rm -f tests/unit/junit.xml
   - popd
   script:
   - pushd $LINUX_BASEDIR
