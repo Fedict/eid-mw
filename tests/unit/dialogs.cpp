@@ -34,17 +34,22 @@
 
 TEST_FUNC(sdialogs) {
 	
-	//bad pin dialog
+	if (!have_pin()){ 
+		fprintf(stderr, "cannot test dialogs without the ability to enter a pin code\n");
+		return TEST_RV_SKIP;
+	}
+	
+	//bad pin dialog diolog with 2 attempts and 1 attempt left
 	eIDMW::DlgPinUsage usage = eIDMW::DLG_PIN_AUTH;
 	const wchar_t * pin = L"name";
 	unsigned long attempts = 2;
 	eIDMW::DlgRet ret = eIDMW::DLG_OK;
-	printf("badpin ok button test\n");
+	printf("badpin ok button test, please select the ok button.\n");
 	ret = eIDMW::DlgBadPin(usage,pin,attempts);
 	if (ret != eIDMW::DLG_OK){ return TEST_RV_FAIL;}
 	
 	attempts = 1;
-	printf("badpin cancel button test: ");
+	printf("badpin cancel button test, please select the cancel button.");
 	ret = eIDMW::DlgBadPin(usage,pin,attempts);
 	if (ret == eIDMW::DLG_ERR||ret == eIDMW::DLG_BAD_PARAM){ return TEST_RV_FAIL;}
 	
@@ -58,21 +63,22 @@ TEST_FUNC(sdialogs) {
  	wchar_t pin2[20];
  	unsigned long bufferlen1 = sizeof(pin1);
  	unsigned long bufferlen2 = sizeof(pin2);
- 	printf("pincheck ok button test\n");
+ 	
+ 	printf("pincheck ok button test, please select the ok button.\n");
  	ret = eIDMW::DlgAskPin(operation, usage, pinname, pin1Info, pin1, bufferlen1);
  	if (ret != eIDMW::DLG_OK){ return TEST_RV_FAIL;}
  	
- 	printf("pincheck cancel button test\n");
+ 	printf("pincheck cancel button test, please select the cancel button.\n");
  	ret = eIDMW::DlgAskPin(operation, usage, pinname, pin1Info, pin1, bufferlen1);
  	if (ret != eIDMW::DLG_CANCEL){ return TEST_RV_FAIL;}
 	
         //askpins dialog (operation, usage, pinname, pinInfo1, pin1, bufferlen1, pinInfo2, pin2, bufferlen2) to change the pin
         operation = eIDMW::DLG_PIN_OP_CHANGE;
-	printf("pinchange ok button test\n");
+	printf("pinchange ok button test, please select the ok button twice.\n");
  	ret = eIDMW::DlgAskPins(operation, usage, pinname, pin1Info, pin1, bufferlen1, pin2Info, pin2, bufferlen2);
 	if (ret != eIDMW::DLG_OK){ return TEST_RV_FAIL;}
  	
- 	printf("pinchange cancel button test\n");
+ 	printf("pinchange cancel button test, please select the ok button and then the cancel button.\n");
  	ret = eIDMW::DlgAskPins(operation, usage, pinname, pin1Info, pin1, bufferlen1, pin2Info, pin2, bufferlen2);
 	if (ret != eIDMW::DLG_CANCEL){ return TEST_RV_FAIL;}
   	
