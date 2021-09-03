@@ -36,18 +36,17 @@ TESTS =				\
 	slotlist		\
 	threads			\
 	tkinfo			\
-	wrong_init             \
-	dialogs
+	wrong_init
 
-# doesn't compile currently, silence the warning
-EXTRA_PROGRAMS = dialogs
-
+if !NO_DIALOGS
+TESTS += dialogs
+endif
 if JPEG
 TESTS += decode_photo
 endif
 check_PROGRAMS = $(TESTS)
 
-CLEANFILES=foto.jpg
+CLEANFILES=foto.jpg junit.xml
 
 P11_LIB = libtestlib.la $(top_builddir)/cardcomm/pkcs11/src/libbeidpkcs11.la
 COMMON_LIB = $(top_builddir)/cardcomm/pkcs11/src/libbeidcommon.la

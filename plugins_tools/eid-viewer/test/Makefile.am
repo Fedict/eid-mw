@@ -1,5 +1,6 @@
 TESTS = cardevent deserialize serialize init pinop states gender validation
 check_PROGRAMS = $(TESTS)
+CLEANFILES = junit.xml
 
 export EID_XSDLOC = $(srcdir)/../xml/eidv4.xsd
 
