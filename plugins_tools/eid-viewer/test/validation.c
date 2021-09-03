@@ -1,6 +1,5 @@
 #include <unix.h>
 #include <pkcs11.h>
-#include <testlib2.h>
 #include <time.h>
 #include <stdio.h>
 #include <stdint.h>
@@ -11,55 +10,7 @@
 #include <testlib.h>
 #include "../dataverify.h"
 
-int loadData(uint8_t** array, size_t* size, char* label, CK_SLOT_ID slot, CK_SESSION_HANDLE session){
-	
-	CK_OBJECT_HANDLE object ;
-	CK_ULONG count = 0;
-	CK_ULONG type;
-	CK_ATTRIBUTE attr[2];
-	char* name;
-	
-	attr[0].type = CKA_LABEL;
-	attr[0].pValue = label;
-	attr[0].ulValueLen = strlen(label);
-
-	attr[1].type = CKA_CLASS;
-	attr[1].pValue = &type;
-	type = CKO_DATA;
-	attr[1].ulValueLen = sizeof(CK_ULONG);
-
-	check_rv(C_FindObjectsInit(session, attr, 2));
-
-	CK_ATTRIBUTE datab[2] = {
-		{CKA_LABEL, NULL_PTR, 0},
-		{CKA_VALUE, NULL_PTR, 0},
-	};
-
-	check_rv(C_FindObjects(session, &object, 2, &count));
-	if(!count){ 
-		printf("no object found\n");
-		return TEST_RV_FAIL;
-	}
-
-	check_rv(C_GetAttributeValue(session, object, datab, 2));
-	
-	name = malloc(datab[0].ulValueLen+1);
-	*array = malloc(datab[1].ulValueLen+1);
-	datab[0].pValue = name;
-	datab[1].pValue = *array;
-	
-	check_rv(C_GetAttributeValue(session, object, datab, 2));
-	name[datab[0].ulValueLen] = '\0';
-	*size = datab[1].ulValueLen ;
-	/*uncomment if test fails to see if data is correct:
-	printf("label: %s\n",name)
-	hex_dump(*array, size);
-	*/
-	check_rv(C_FindObjectsFinal(session));
-	
-	free(name);
-	return TEST_RV_OK;
-}
+int loadData(uint8_t** array, size_t* size, char* label, CK_SLOT_ID slot, CK_SESSION_HANDLE session);
 
 TEST_FUNC(readvalidation) {
 	
@@ -168,3 +119,54 @@ TEST_FUNC(readvalidation) {
 	}
 	return TEST_RV_OK;
 }
+
+int loadData(uint8_t** array, size_t* size, char* label, CK_SLOT_ID slot, CK_SESSION_HANDLE session){
+	
+	CK_OBJECT_HANDLE object ;
+	CK_ULONG count = 0;
+	CK_ULONG type;
+	CK_ATTRIBUTE attr[2];
+	char* name;
+	
+	attr[0].type = CKA_LABEL;
+	attr[0].pValue = label;
+	attr[0].ulValueLen = strlen(label);
+
+	attr[1].type = CKA_CLASS;
+	attr[1].pValue = &type;
+	type = CKO_DATA;
+	attr[1].ulValueLen = sizeof(CK_ULONG);
+
+	check_rv(C_FindObjectsInit(session, attr, 2));
+
+	CK_ATTRIBUTE datab[2] = {
+		{CKA_LABEL, NULL_PTR, 0},
+		{CKA_VALUE, NULL_PTR, 0},
+	};
+
+	check_rv(C_FindObjects(session, &object, 2, &count));
+	if(!count){ 
+		printf("no object found\n");
+		return TEST_RV_FAIL;
+	}
+
+	check_rv(C_GetAttributeValue(session, object, datab, 2));
+	
+	name = malloc(datab[0].ulValueLen+1);
+	*array = malloc(datab[1].ulValueLen+1);
+	datab[0].pValue = name;
+	datab[1].pValue = *array;
+	
+	check_rv(C_GetAttributeValue(session, object, datab, 2));
+	name[datab[0].ulValueLen] = '\0';
+	*size = datab[1].ulValueLen ;
+	/*uncomment if test fails to see if data is correct:
+	printf("label: %s\n",name)
+	hex_dump(*array, size);
+	*/
+	check_rv(C_FindObjectsFinal(session));
+	
+	free(name);
+	return TEST_RV_OK;
+}
+
