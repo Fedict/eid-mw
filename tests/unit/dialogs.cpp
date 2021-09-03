@@ -27,7 +27,9 @@
 #include <pkcs11.h>
 #endif
 #include <stdio.h>
-#include "testlib.h"
+extern "C" {
+#include <testlib.h>
+}
 #include <string>
 #include <dialogs/dialogs.h>
 
