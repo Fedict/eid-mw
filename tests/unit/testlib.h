@@ -19,9 +19,9 @@ void write_xml_report(void);
 #include <stdlib.h>
 
 #ifndef TEST_NO_ABORT
-#define maybe_abort(a) do { write_xml_report(); abort(); } while (0)
+#define maybe_abort() do { write_xml_report(); abort(); } while (0)
 #else
-#define maybe_abort(a) do { return TEST_RV_FAIL } while (0)
+#define maybe_abort() do { return TEST_RV_FAIL } while (0)
 #endif
 
 #define verbose_assert(a) { printf("assertion %d: \"%s\": ", va_counter++, #a); if(!(a)) { report_failure(eid_testlib_funcname, #a, "AssertionFailure", "assertion %s failed", #a); fprintf(stderr, "assertion %s failed\n", #a); maybe_abort(); } else { report_success(eid_testlib_funcname, #a); printf("ok\n"); } }
