@@ -748,10 +748,10 @@ static int skip_count = 0;
 static struct element * append_test(struct element * ptr, const char * funcname, const char * name, const char * failtype, const char * failstring, enum result res) {
 	struct element * r = ptr;
 	struct element * new = calloc(sizeof(struct element), 1);
-	new->funcname = funcname;
-	new->name = name;
+	new->funcname = funcname ? strdup(funcname) : NULL;
+	new->name = name ? strdup(name) : NULL;
 	new->result = res;
-	new->failstring = failstring;
+	new->failstring = failstring ? strdup(failstring) : NULL;
 	all_count++;
 	switch(res) {
 		case success:
@@ -786,6 +786,7 @@ void report_failure(const char *eid_testlib_funcname, const char * test, const c
 	vsnprintf(str, 1024, details, ap);
 	va_end(ap);
 	root_element = append_test(root_element, eid_testlib_funcname, test, failtype, str, fail);
+	free(str);
 }
 
 void report_success(const char *eid_testlib_funcname, const char * test) {
