@@ -31,7 +31,7 @@ TESTS =				\
 	sessions_nocard		\
 	sign			\
 	sign_state		\
-	slotevent		\
+	#slotevent		\
 	slotinfo		\
 	slotlist		\
 	threads			\
