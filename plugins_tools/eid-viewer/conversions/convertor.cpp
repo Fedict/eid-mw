@@ -69,6 +69,7 @@ Convertor::Convertor()
 		to_xml[TEXT("member_of_family")] = new ToXmlMemberOfFamilyConvertor();
 		to_xml[TEXT("cardA_mention_1")] = new XmlCardAMention1Convertor();
 		to_xml[TEXT("cardA_mention_2")] = new XmlCardAMention2Convertor();
+		to_xml[TEXT("tokeninfo_graph_perso_version")] = new HexNumberConvertor(1);
 	}
 	if (from_xml.empty())
 	{
@@ -86,6 +87,7 @@ Convertor::Convertor()
 		from_xml[TEXT("member_of_family")] = new BoolDecodeConvertor();
 		from_xml[TEXT("cardA_mention_1")] = new XmlCardAMention1Convertor();
 		from_xml[TEXT("cardA_mention_2")] = new XmlCardAMention2Convertor();
+		from_xml[TEXT("tokeninfo_graph_perso_version")] = new HexDecodeConvertor(1);
 	}
 }
 

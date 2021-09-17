@@ -44,6 +44,12 @@ int can_convert(const EID_CHAR * label)
 	return conv.can_convert(label);
 }
 
+/* sets the graphical version number of this card */
+void convert_set_graphvers(enum eid_vwr_graphvers gv)
+{
+	ConversionWorker::set_graphvers(gv);
+}
+
 /* Set the display language for conversions */
 void eid_vwr_convert_set_lang(enum eid_vwr_langs which)
 {
