@@ -138,6 +138,7 @@
 #define BEID_OBJECTID_SIGN_DATA_FILE			"sign_data_file"
 #define BEID_OBJECTID_SIGN_ADDRESS_FILE			"sign_address_file"
 #define BEID_OBJECTID_BASIC_KEY_FILE			"basic_key_file"
+#define BEID_OBJECTID_TOKENINFO					"tokeninfo"
 //to give the hidden record objects their own (hidden/undocumented) CKA_OBJECT_ID
 //this "record" CKA_OBJECT_ID is not meant to (and can not) be used to retrieve all hidden objects
 #define BEID_OBJECTID_RECORD					"record"

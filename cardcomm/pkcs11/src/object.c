@@ -492,9 +492,10 @@ CK_RV C_FindObjectsInit(CK_SESSION_HANDLE hSession,   /* the session's handle */
 			((filesToCacheFlag == CACHED_DATA_TYPE_ALL_DATA) && (pSlot->ulCardDataCached != CACHED_DATA_TYPE_ALL_DATA)) )
 		{
 			CK_ULONG counter = 0;
-			CK_ULONG flagsToCheckListLen = 7;
-			CK_ULONG flagsToCheckList[7] = {CACHED_DATA_TYPE_ID,CACHED_DATA_TYPE_ADDRESS,CACHED_DATA_TYPE_PHOTO,
-				CACHED_DATA_TYPE_RNCERT,CACHED_DATA_TYPE_SIGN_DATA_FILE,CACHED_DATA_TYPE_SIGN_ADDRESS_FILE, CACHED_DATA_TYPE_BASIC_KEY_FILE };
+			CK_ULONG flagsToCheckListLen = 8;
+			CK_ULONG flagsToCheckList[8] = {CACHED_DATA_TYPE_ID,CACHED_DATA_TYPE_ADDRESS,CACHED_DATA_TYPE_PHOTO,
+				CACHED_DATA_TYPE_RNCERT,CACHED_DATA_TYPE_SIGN_DATA_FILE,CACHED_DATA_TYPE_SIGN_ADDRESS_FILE, 
+				CACHED_DATA_TYPE_BASIC_KEY_FILE, CACHED_DATA_TYPE_TOKENINFO };
 
 			switch(filesToCacheFlag)
 			{
@@ -901,6 +902,14 @@ void SetParseFlagByLabel(CK_ULONG* pFilesToParseFlag,CK_UTF8CHAR_PTR pLabel,CK_U
 			return;
 		}
 	}
+	//label of the personalisation versions
+	if (strlen(BEID_LABEL_PersoVersions) == len)
+	{
+		if (memcmp(BEID_LABEL_PersoVersions, pLabel, len) == 0) {
+			*pFilesToParseFlag = CACHED_DATA_TYPE_TOKENINFO;
+			return;
+		}
+	}
 	//labels from card data
 	counter = 0;
 	while(counter < carddataLabelsListLen)
@@ -976,6 +985,12 @@ void SetParseFlagByObjectID(CK_ULONG* pFilesToParseFlag,CK_UTF8CHAR_PTR pObjectI
 	if (strlen(BEID_OBJECTID_BASIC_KEY_FILE) == len) {
 		if (memcmp(BEID_OBJECTID_BASIC_KEY_FILE, pObjectID, len) == 0) {
 			*pFilesToParseFlag = CACHED_DATA_TYPE_BASIC_KEY_FILE;
+			return;
+		}
+	}
+	if (strlen(BEID_OBJECTID_TOKENINFO) == len) {
+		if (memcmp(BEID_OBJECTID_TOKENINFO, pObjectID, len) == 0) {
+			*pFilesToParseFlag = CACHED_DATA_TYPE_TOKENINFO;
 			return;
 		}
 	}
