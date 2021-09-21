@@ -1607,6 +1607,8 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 	CK_ATTRIBUTE ID_DATA[] = BEID_TEMPLATE_ID_DATA;
 	BEID_DATA_LABELS_NAME ID_LABELS[] = BEID_ID_DATA_LABELS;
 	BEID_DATA_LABELS_NAME ADDRESS_LABELS[] = BEID_ADDRESS_DATA_LABELS;
+	BEID_DATA_LABELS_NAME TOKENINFO_LABELS[] = BEID_TOKENINFO_LABELS;
+	
 	int i = 0;
 	int nrOfItems = 0;
 	unsigned char ucAppletVersion = 0;
@@ -1809,6 +1811,7 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 			/* only in case of CACHED_DATA_TYPE_ALL_DATA */
 		case CACHED_DATA_TYPE_TOKENINFO:
 			plabel = BEID_LABEL_PersoVersions;
+			pobjectID = BEID_OBJECTID_TOKENINFO;
 			oFileData = poCard->ReadCardFile(BEID_FILE_TOKENINFO);
 			//get the personalisation version bytes (4 final bytes) directly, 
 			//it is all data we want from this asn.1 encoded file
@@ -1827,10 +1830,27 @@ CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType)
 				(CK_VOID_PTR)plabel, (CK_ULONG)strlen(plabel),
 				(CK_VOID_PTR)oFileDataPart.GetBytes(),
 				(CK_ULONG)oFileDataPart.Size(),
-				(CK_VOID_PTR)BEID_OBJECTID_TOKENINFO, (CK_ULONG)strlen(BEID_OBJECTID_TOKENINFO),
+				(CK_VOID_PTR)pobjectID, (CK_ULONG)strlen(pobjectID),
 				CK_FALSE);
 			if (ret)
 				goto cleanup;
+
+			nrOfItems = sizeof(TOKENINFO_LABELS) / sizeof(BEID_DATA_LABELS_NAME);
+			
+			//parse the tokeninfo data
+			//each byte represents a version (graphical, electrical and electrical interface)
+			for (i = 0; i < nrOfItems; i++)
+			{
+				plabel = TOKENINFO_LABELS[i].name;
+				cBuffer[0] = oFileDataPart.GetByte(i);
+
+				ret = p11_add_slot_ID_object(pSlot, ID_DATA, sizeof(ID_DATA) / sizeof(CK_ATTRIBUTE), CK_TRUE,
+					CKO_DATA, CK_FALSE, &hObject, (CK_VOID_PTR)plabel,
+					(CK_ULONG)strlen(plabel), (CK_VOID_PTR)cBuffer, 1,
+					(CK_VOID_PTR)pobjectID, (CK_ULONG)strlen(pobjectID), CK_FALSE);
+				if (ret)
+					goto cleanup;
+			}
 			if (dataType != CACHED_DATA_TYPE_ALL_DATA)
 			{
 				break;

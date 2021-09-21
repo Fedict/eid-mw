@@ -107,6 +107,12 @@
 	{ BEID_FIELD_TAG_ADDR_Municipality,					"record_address_municipality"}  \
 }
 
+#define BEID_TOKENINFO_LABELS  {  \
+	{ BEID_FIELD_TAG_TOKINF_graph,						"tokeninfo_graph_perso_version"},  \
+	{ BEID_FIELD_TAG_TOKINF_elec,						"tokeninfo_elec_perso_version"},  \
+	{ BEID_FIELD_TAG_TOKINF_elecint,					"tokeninfo_elec_perso_int_version"}  \
+}
+
 #define BEID_LABEL_DATA_SerialNr				"carddata_serialnumber"
 #define BEID_LABEL_DATA_CompCode				"carddata_comp_code"
 #define BEID_LABEL_DATA_OSNr					"carddata_os_number"
