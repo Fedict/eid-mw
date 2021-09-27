@@ -70,12 +70,12 @@ void cache_add_bin(const EID_CHAR * label, BYTE * data, unsigned long len)
 	if (EID_STRCMP(label, TEXT("tokeninfo_graph_perso_version")) == 0) {
 		switch (*data)
 		{
-		case 0x08:
-			//08 is a default (old) value, no need to create copies of conversions when version 8 equals version 0
+		case 0x00:
+			//00 is the default (applet 1.7) value
 			convert_set_graphvers(EID_VWR_GRAPH_VERSION_NONE);
 			break;
-		case 0x09:
-			convert_set_graphvers(EID_VWR_GRAPH_VERSION_NINE);
+		case 0x08:
+			convert_set_graphvers(EID_VWR_GRAPH_VERSION_EIGHT);
 			break;
 		default:
 			convert_set_graphvers(EID_VWR_GRAPH_VERSION_NONE);

@@ -216,13 +216,13 @@ DocTypeConvertor::DocTypeConvertor()
 
 
 		// card J");
-		conversions[EID_VWR_GRAPH_VERSION_NINE][EID_VWR_LANG_DE][TEXT("21")] = TEXT("J. MOBILE ICT");
+		conversions[EID_VWR_GRAPH_VERSION_EIGHT][EID_VWR_LANG_DE][TEXT("21")] = TEXT("J. MOBILE ICT");
 		// card J");
-		conversions[EID_VWR_GRAPH_VERSION_NINE][EID_VWR_LANG_EN][TEXT("21")] = TEXT("J. MOBILE ICT");
+		conversions[EID_VWR_GRAPH_VERSION_EIGHT][EID_VWR_LANG_EN][TEXT("21")] = TEXT("J. MOBILE ICT");
 		// card J");
-		conversions[EID_VWR_GRAPH_VERSION_NINE][EID_VWR_LANG_FR][TEXT("21")] = TEXT("J. MOBILE ICT");
+		conversions[EID_VWR_GRAPH_VERSION_EIGHT][EID_VWR_LANG_FR][TEXT("21")] = TEXT("J. MOBILE ICT");
 		// card J");
-		conversions[EID_VWR_GRAPH_VERSION_NINE][EID_VWR_LANG_NL][TEXT("21")] = TEXT("J. MOBILE ICT");
+		conversions[EID_VWR_GRAPH_VERSION_EIGHT][EID_VWR_LANG_NL][TEXT("21")] = TEXT("J. MOBILE ICT");
 
 	}
 }
@@ -242,7 +242,7 @@ EID_STRING DocTypeConvertor::convert(const void* original)
 		}
 	}
 	//conversion was not found, now check if there is one for the default graphical version
-	//we do this way as only a few translations are different in EID_VWR_GRAPH_VERSION_NINE
+	//we do this way as only a few translations are different in EID_VWR_GRAPH_VERSION_EIGHT
 	if (conversions.count(EID_VWR_GRAPH_VERSION_NONE) > 0)
 	{
 		if (conversions[EID_VWR_GRAPH_VERSION_NONE].count(target_) > 0)

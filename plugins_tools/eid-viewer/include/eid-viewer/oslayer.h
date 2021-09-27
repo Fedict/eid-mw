@@ -109,8 +109,8 @@ enum eid_vwr_langs
 enum eid_vwr_graphvers
 {
 	EID_VWR_GRAPH_VERSION_NONE,   ///< No graphical version had been set, could be old data.
-	//EID_VWR_GRAPH_VERSION_EIGHT,  ///< version eight 
-	EID_VWR_GRAPH_VERSION_NINE,   ///< version nine
+	EID_VWR_GRAPH_VERSION_EIGHT,  ///< version eight 
+	//EID_VWR_GRAPH_VERSION_NINE,   ///< version nine
 };
 
 /** \brief Callbacks which the backend can perform towards the UI.
