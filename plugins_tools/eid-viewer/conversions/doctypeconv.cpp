@@ -215,6 +215,15 @@ DocTypeConvertor::DocTypeConvertor()
 		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_NL][TEXT("36")] = TEXT("F+. FAMILIELID EU ART 20 RL 2004/38/EG");
 
 
+		// European blue card H
+		conversions[EID_VWR_GRAPH_VERSION_EIGHT][EID_VWR_LANG_DE][TEXT("19")] = TEXT("H. BLAUE KARTE EU");
+		// European blue card H
+		conversions[EID_VWR_GRAPH_VERSION_EIGHT][EID_VWR_LANG_EN][TEXT("19")] = TEXT("H. EU BLUE CARD");
+		// European blue card H
+		conversions[EID_VWR_GRAPH_VERSION_EIGHT][EID_VWR_LANG_FR][TEXT("19")] = TEXT("H. CARTE BLEUE EUROPEENNE");
+		// European blue card H"
+		conversions[EID_VWR_GRAPH_VERSION_EIGHT][EID_VWR_LANG_NL][TEXT("19")] = TEXT("H. EUROPESE BLAUWE KAART");
+
 		// card J");
 		conversions[EID_VWR_GRAPH_VERSION_EIGHT][EID_VWR_LANG_DE][TEXT("21")] = TEXT("J. MOBILE ICT");
 		// card J");
