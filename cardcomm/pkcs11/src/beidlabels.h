@@ -55,10 +55,10 @@
 	{ BEID_FIELD_TAG_ID_RegionalFileNumber, "regional_file_number"}, \
 	{ BEID_FIELD_TAG_ID_BasicKeyHash,		"basic_key_hash"}, \
 	{ BEID_FIELD_TAG_ID_BrexitMention1,		"brexit_mention_1"}, \
-	{ BEID_FIELD_TAG_ID_BrexitMention2,		"brexit_mention_2"}, \
-	{ BEID_FIELD_TAG_ID_CardAMention1,		"cardA_mention_1"}, \
-	{ BEID_FIELD_TAG_ID_CardAMention2,		"cardA_mention_2"} \
+	{ BEID_FIELD_TAG_ID_BrexitMention2,		"brexit_mention_2"}\
 }
+//	{ BEID_FIELD_TAG_ID_CardAMention1,		"cardA_mention_1"}, \
+//	{ BEID_FIELD_TAG_ID_CardAMention2,		"cardA_mention_2"} \
 
 	//{ BEID_FIELD_TAG_ADDR_Version,                        "Address_Version"},
 #define BEID_ADDRESS_DATA_LABELS  {  \
@@ -95,10 +95,10 @@
 	{ BEID_FIELD_TAG_ID_RegionalFileNumber,				"record_regional_file_number"}, \
 	{ BEID_FIELD_TAG_ID_BasicKeyHash,					"record_basic_key_hash"}, \
 	{ BEID_FIELD_TAG_ID_BrexitMention1,					"record_brexit_mention_1"}, \
-	{ BEID_FIELD_TAG_ID_BrexitMention2,					"record_brexit_mention_2"}, \
-	{ BEID_FIELD_TAG_ID_CardAMention1,					"record_brexit_mention_1"}, \
-	{ BEID_FIELD_TAG_ID_CardAMention2,					"record_brexit_mention_2"} \
+	{ BEID_FIELD_TAG_ID_BrexitMention2,					"record_brexit_mention_2"} \
 }
+//	{ BEID_FIELD_TAG_ID_CardAMention1,					"record_cardA_mention_1"}, \
+//	{ BEID_FIELD_TAG_ID_CardAMention2,					"record_cardA_mention_2"} \
 
 	//{ BEID_FIELD_TAG_ADDR_Version,							"Address_Version"},
 #define BEID_ADDRESS_RECORD_DATA_LABELS  {  \
