@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['validitydateparser_391',['ValidityDateParser',['../class_validity_date_parser.html',1,'']]],
-  ['validitydatewriter_392',['ValidityDateWriter',['../class_validity_date_writer.html',1,'']]]
+  ['upgrade_5finfo_397',['upgrade_info',['../structupgrade__info.html',1,'']]]
 ];
