@@ -49,7 +49,7 @@
   - ./configure --with-gtkvers=4 --disable-pinentry
   - make -j distcheck
   - popd
-  allow_failure: $ROBOT_BROKEN
+  allow_failure: true
 
 .nogtk:
   tags:

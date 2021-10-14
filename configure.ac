@@ -125,6 +125,14 @@ fi
 
 AC_DEFINE_UNQUOTED([HAVE_GTK], [$have_gtk], [Set to major version of libgtk])
 
+if test "$have_gtk" = "4"
+then
+	if test "$assuan" = "no"
+	then
+		AC_MSG_ERROR([The dialogs are not supported on GTK4, please either use GTK3 or switch to pinentry dialogs])
+	fi
+fi
+
 if test "$have_gtk" = "no"
 then
 	if test "$gtkvers" != "no"
