@@ -195,6 +195,10 @@ set ASSEMBLYINFO_PATH="%~dp0..\..\plugins_tools\eid-viewer\Windows\eIDViewer\Sou
 @echo {>> %ASSEMBLYINFO_PATH%
 @echo     public static class About>> %ASSEMBLYINFO_PATH%
 @echo     {>> %ASSEMBLYINFO_PATH%
+@echo         public static int imajor = %BASE_VERSION1%;>> %ASSEMBLYINFO_PATH%
+@echo         public static int iminor = %BASE_VERSION2%;>> %ASSEMBLYINFO_PATH%
+@echo         public static int ibuild = %BASE_VERSION3%;>> %ASSEMBLYINFO_PATH%
+@echo:>> %ASSEMBLYINFO_PATH%
 @echo         public static string AboutMessage()>> %ASSEMBLYINFO_PATH%
 @echo         {>> %ASSEMBLYINFO_PATH%
 @echo             string message = ^@^"eID Viewer %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%>> %ASSEMBLYINFO_PATH%
