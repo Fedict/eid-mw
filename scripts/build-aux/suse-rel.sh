@@ -36,7 +36,7 @@ do
 				done
 			fi
 		done
-		createrepo $REPO_LOC/rpm/$TARGET/$dist/$vers
+		createrepo_c $REPO_LOC/rpm/$TARGET/$dist/$vers
 		(cd $REPO_LOC/rpm/$TARGET/$dist/$vers/repodata && gpg --yes --batch --passphrase "" --default-key $GPG_TEST_KEY_ID --no-tty -b --armor repomd.xml)
 	done
 done
