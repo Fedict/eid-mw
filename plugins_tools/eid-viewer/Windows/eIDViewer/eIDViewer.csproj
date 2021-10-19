@@ -144,6 +144,7 @@
     <Compile Include="Sources\LocalizedStrings.cs" />
     <Compile Include="Sources\MainWindowRegistry.cs" />
     <Compile Include="Sources\TextBoxutilities.cs" />
+    <Compile Include="Sources\Version.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

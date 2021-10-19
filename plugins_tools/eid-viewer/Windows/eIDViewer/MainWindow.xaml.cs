@@ -18,6 +18,8 @@ using System.IO;
 using Microsoft.Win32;
 using System.Windows.Controls.Primitives;
 using System.Runtime.InteropServices;
+using System.Xml;
+using System.Net;
 
 namespace eIDViewer
 {
@@ -81,7 +83,48 @@ namespace eIDViewer
 
                 //Do the version check
                 theBackendData.startupVersionCheck = true;
+                theBackendData.WriteLog("starting the online version check..\n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
 
+                if (!Version.getUpdateUrl(out bool updateNeeded, ref url, ref releaseNotes))
+                {
+                    //no updated version found, report this in the log
+                    theBackendData.WriteLog("failed to check for online update\n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
+                    return;
+                }
+
+                if (updateNeeded)
+                {
+                    if (url == "")
+                    {
+                        theBackendData.WriteLog("A newer version has been found, but not the url to download it\n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
+                        return;
+                    }
+                    //for safety, we do not accept all urls
+                    else if (url.StartsWith("https://eid.belgium.be"))
+                    {
+                        //xml Version check
+                        string aboutMessage = "\n" + eIDViewer.Resources.ApplicationStringResources.newVersionDownload;
+                        string caption = eIDViewer.Resources.ApplicationStringResources.newVersionDownloadTitle;
+
+
+                        MessageBoxResult result = MessageBox.Show(aboutMessage, caption, MessageBoxButton.YesNo, MessageBoxImage.Information, MessageBoxResult.Cancel);
+                        if (result == MessageBoxResult.Yes)
+                        {
+                            try
+                            {
+                                System.Diagnostics.Process.Start("https://eid.belgium.be");
+                            }
+                            catch (Exception ex)
+                            {
+                                theBackendData.WriteLog("Error: Could not start a browser to visit" + url + ex.Message, eid_vwr_loglevel.EID_VWR_LOG_COARSE);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    theBackendData.WriteLog("No viewer update is needed\n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
+                }
             }
             catch (Exception ex)
             {
