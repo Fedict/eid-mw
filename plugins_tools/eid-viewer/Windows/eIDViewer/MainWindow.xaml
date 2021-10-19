@@ -293,6 +293,7 @@
             </MenuItem>
             <MenuItem Header="{Binding Path=applicationResource.helpMenuTitle, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}">
                 <MenuItem Header="{Binding Path=applicationResource.ABOUT, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" Click="AboutMenuItem_Click"/>
+                <MenuItem Header="{Binding Path=menuItemResource.fileMenuVersionCheckItem, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" IsChecked="{Binding Path=startupVersionCheck, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" IsCheckable="true" Click="VersionMenuItem_Click"/>
                 <Separator/>
                 <MenuItem Header="{Binding Path=menuItemResource.fileMenuFAQItem, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" Click="FAQMenuItem_Click"/>
                 <Separator/>
