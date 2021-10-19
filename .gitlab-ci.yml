@@ -17,6 +17,7 @@ include:
 
 variables:
   LINUX_BASEDIR: .
+  DOCKER_BASEDIR: .
   WINDOWS_BASEDIR: .
   MACOS_BASEDIR: .
 
