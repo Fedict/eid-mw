@@ -109,6 +109,53 @@ namespace eIDViewer
             }
         }
 
+        public int ReadRegistryDwordValue(string subkey, string valueName, int defaultValue)
+        {
+            const string userRoot = "HKEY_CURRENT_USER";
+            const string localMachineRoot = "HKEY_LOCAL_MACHINE";
+            string keyName = userRoot + "\\" + subkey;
+            try
+            {
+                int inter = 0;
+                object readValue = Registry.GetValue(keyName, valueName, null);
+
+                if (readValue == null)
+                {
+                    keyName = localMachineRoot + "\\" + subkey;
+                    readValue = Registry.GetValue(keyName, valueName, defaultValue);
+                }
+                if (readValue == null)
+                {
+                    return -1;
+                }
+                else
+                {
+                    if (Type.Equals(readValue.GetType(), inter.GetType()))
+                    {
+                        inter = (int)readValue;
+                    }
+                   return inter;
+                }
+            }
+            catch (SecurityException e)
+            {
+                this.WriteLog("ReadRegistryStringValue failed, no permission to read key " + keyName, eid_vwr_loglevel.EID_VWR_LOG_COARSE);
+                this.WriteLog("Exception message: " + e.Message + "\n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
+                return -2;
+            }
+            catch (IOException e)
+            {
+                this.WriteLog("ReadRegistryStringValue failed, the key " + keyName + " was marked for deletion", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
+                this.WriteLog("Exception message: " + e.Message + "\n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
+                return -3;
+            }
+            catch (Exception e)
+            {
+                this.WriteLog("Exception message: " + e.Message + "\n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
+                return -4;
+            }
+        }
+
         public void WriteRegistryStringValue(string subkey, string valueName, object valueValue)
         {
             const string userRoot = "HKEY_CURRENT_USER";
@@ -116,6 +163,20 @@ namespace eIDViewer
             try
             {
                 Registry.SetValue(keyName, valueName, valueValue as string, RegistryValueKind.String);
+            }
+
+            catch (Exception e)
+            {
+                this.WriteLog("Exception" + e.Message + " caught when trying to write to registry key " + keyName, eid_vwr_loglevel.EID_VWR_LOG_COARSE);
+            }
+        }
+
+        public void WriteRegistryDwordValue(string subkey, string valueName, int dwordValue)
+        {
+            string keyName = "HKEY_CURRENT_USER\\" + subkey;
+            try
+            {
+                Registry.SetValue(keyName, valueName, dwordValue, RegistryValueKind.DWord);
             }
 
             catch (Exception e)

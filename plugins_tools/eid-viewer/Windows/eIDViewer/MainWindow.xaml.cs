@@ -455,6 +455,18 @@ namespace eIDViewer
             }
         }
 
+        private void VersionMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            //Store the chosen setting in the registry
+            if (theBackendData.startupVersionCheck)
+            {
+                StoreStartupVersionCheck(0);
+            }
+            else
+            {
+                StoreStartupVersionCheck(1);
+            }
+        }
     }
 }
 
