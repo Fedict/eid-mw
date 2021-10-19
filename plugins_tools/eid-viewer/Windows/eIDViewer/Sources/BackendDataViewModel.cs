@@ -1361,6 +1361,17 @@ namespace eIDViewer
             }
         }
 
+        private Boolean _startupVersionCheck;
+        public Boolean startupVersionCheck
+        {
+            get { return _startupVersionCheck; }
+            set
+            {
+                _startupVersionCheck = value;
+                this.NotifyPropertyChanged("startupVersionCheck");
+            }
+        }
+
         private Boolean _validateAlways;
         public Boolean validateAlways
         {
