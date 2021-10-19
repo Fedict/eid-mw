@@ -44,6 +44,49 @@ namespace eIDViewer
             GetLanguage();
 
             this.Loaded += new RoutedEventHandler(MainWindow_Loaded);
+            this.Loaded += new RoutedEventHandler(Version_Check);
+        }
+
+        void Version_Check(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Popup myPopup = new Popup();
+                myPopup.IsOpen = true;
+
+                string message = "";
+                string caption = "New Version available";
+
+                string url = "";
+                string releaseNotes = "";
+                int regVal = 0;
+                theBackendData.startupVersionCheck = false;
+
+                regVal = theBackendData.ReadRegistryDwordValue("SOFTWARE\\BEID\\eidviewer", "startup_version_check", 2);
+                if ((regVal == 2) || (regVal == -1))
+                {
+                    //2 is the default value we send (reg key name value not found), -1 means the reg key does not exist, so try to create the key name with value 1
+                    theBackendData.WriteRegistryDwordValue("SOFTWARE\\BEID\\eidviewer", "startup_version_check", 1);
+                    if (theBackendData.ReadRegistryDwordValue("SOFTWARE\\BEID\\eidviewer", "startup_version_check", 2) != 1)
+                    {
+                        //if we cannot write/read the register, we won't be able to disable the version check, so skip it
+                        return;
+                    }
+                }
+                else if (regVal <= 0)
+                {
+                    //either it is not needed (regVal == 0) or we failed reading registry (regVal < 0), so skip the version check
+                    return;
+                }
+
+                //Do the version check
+                theBackendData.startupVersionCheck = true;
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error occured during eID Viewer version check" + ex.Message);
+            }
         }
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
