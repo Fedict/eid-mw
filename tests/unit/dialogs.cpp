@@ -27,41 +27,78 @@
 #include <pkcs11.h>
 #endif
 #include <stdio.h>
-#include "testlib.h"
+extern "C" {
+#include <testlib.h>
+}
 #include <string>
-#include <dialogs/dialog.h>
+#include <dialogs/dialogs.h>
 
 
 TEST_FUNC(sdialogs) {
 	
-	//bad pin dialog
-	DlgPinUsage usage = DLG_PIN_AUTH;
+	if (!have_pin()){ 
+		fprintf(stderr, "cannot test dialogs without the ability to enter a pin code\n");
+		return TEST_RV_SKIP;
+	}
+	
+	//bad pin dialog diolog with 2 attempts and 1 attempt left
+	eIDMW::DlgPinUsage usage = eIDMW::DLG_PIN_AUTH;
 	const wchar_t * pin = L"name";
 	unsigned long attempts = 2;
-	if (DlgBadPin(usage,pin,attempts) != DLG_OK){return TEST_RV_OK;}
+	eIDMW::DlgRet ret = eIDMW::DLG_OK;
+	printf("badpin ok button test, please select the ok button.\n");
+	ret = eIDMW::DlgBadPin(usage,pin,attempts);
+	if (ret != eIDMW::DLG_OK){ return TEST_RV_FAIL;}
 	
+	attempts = 1;
+	printf("badpin cancel button test, please select the cancel button.");
+	ret = eIDMW::DlgBadPin(usage,pin,attempts);
+	if (ret == eIDMW::DLG_ERR||ret == eIDMW::DLG_BAD_PARAM){ return TEST_RV_FAIL;}
+	
+	//askpin dialog (operation, usage, pinname, pinInfo, pin, bufferlen) to check the pin
+ 	ret = eIDMW::DLG_OK; 
+ 	eIDMW::DlgPinOperation operation = eIDMW::DLG_PIN_OP_VERIFY;
+	wchar_t * pinname ;
+ 	eIDMW::DlgPinInfo pin1Info = { 4, 12, 0};
+ 	eIDMW::DlgPinInfo pin2Info = { 4, 12, 0};
+ 	wchar_t pin1[20];
+ 	wchar_t pin2[20];
+ 	unsigned long bufferlen1 = sizeof(pin1);
+ 	unsigned long bufferlen2 = sizeof(pin2);
+ 	
+ 	printf("pincheck ok button test, please select the ok button.\n");
+ 	ret = eIDMW::DlgAskPin(operation, usage, pinname, pin1Info, pin1, bufferlen1);
+ 	if (ret != eIDMW::DLG_OK){ return TEST_RV_FAIL;}
+ 	
+ 	printf("pincheck cancel button test, please select the cancel button.\n");
+ 	ret = eIDMW::DlgAskPin(operation, usage, pinname, pin1Info, pin1, bufferlen1);
+ 	if (ret != eIDMW::DLG_CANCEL){ return TEST_RV_FAIL;}
+	
+        //askpins dialog (operation, usage, pinname, pinInfo1, pin1, bufferlen1, pinInfo2, pin2, bufferlen2) to change the pin
+        operation = eIDMW::DLG_PIN_OP_CHANGE;
+	printf("pinchange ok button test, please select the ok button twice.\n");
+ 	ret = eIDMW::DlgAskPins(operation, usage, pinname, pin1Info, pin1, bufferlen1, pin2Info, pin2, bufferlen2);
+	if (ret != eIDMW::DLG_OK){ return TEST_RV_FAIL;}
+ 	
+ 	printf("pinchange cancel button test, please select the ok button and then the cancel button.\n");
+ 	ret = eIDMW::DlgAskPins(operation, usage, pinname, pin1Info, pin1, bufferlen1, pin2Info, pin2, bufferlen2);
+	if (ret != eIDMW::DLG_CANCEL){ return TEST_RV_FAIL;}
+  	
+	//display pinpad info and close
+	printf("pinpad info starting\n");
+	wchar_t * reader;
+	wchar_t * message;
+	unsigned long handle;
 
-        //askpin dialog (operation, usage, pinname, pin1, buffer1, pin2, buffer2) 
- 	DlgPinOperation operation = DLG_PIN_OP_VERIFY;
- 	wchar_t * pinname = L"test";
- 	DlgPinInfo pin1Info = new DLGPinInfo( 4, 12, 0) ;
- 	DlgPinInfo pin2Info = new DLGPinInfo( 4, 12, 0)  ;
- 	wchar_t * pin1 = "1234";
- 	wchar_t * pin2 = "5678";
- 	unsigned long buffer1 = 1024;
- 	unsigned long buffer2 = 1024;
-  	if (DlgAskPins(operation, usage, pinname, pin1Info, pin1, buffer1, pin2Info, pin2, buffer2)!=){return TEST_RV_OK;}
-  	 
-	return TEST_RV_FAIL;
-
+	ret = eIDMW::DlgDisplayPinpadInfo( operation, reader, usage, pinname, message, &handle);
+	if (ret != eIDMW::DLG_OK){ return TEST_RV_FAIL;}
+	eIDMW::DlgClosePinpadInfo(handle);
+	return TEST_RV_OK;
 }
+
 /*
-not:
-displaypinpadinfo()
 closepinpadinfo()
 
-??
-askaccess()
 */	
 
 	

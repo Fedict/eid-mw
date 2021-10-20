@@ -13,6 +13,28 @@ static int result = TEST_RV_FAIL;
 static pthread_mutex_t mut = PTHREAD_MUTEX_INITIALIZER;
 static pthread_cond_t cnd = PTHREAD_COND_INITIALIZER;
 
+static void newstringdata(const EID_CHAR* label, const EID_CHAR* data);
+static void newstate(enum eid_vwr_states new_state);
+
+TEST_FUNC(deserialize) {
+	struct eid_vwr_ui_callbacks* cb;
+
+	if(have_robot()) {
+		robot_remove_card();
+		sleep(1);
+	}
+	cb = createcbs();
+	verbose_assert(cb != NULL);
+	nsd = cb->newstringdata;
+	cb->newstringdata = newstringdata;
+	nst = cb->newstate;
+	cb->newstate = newstate;
+	verbose_assert(eid_vwr_createcallbacks(cb) == 0);
+	pthread_mutex_lock(&mut);
+	pthread_cond_wait(&cnd, &mut);
+	pthread_mutex_unlock(&mut);
+	return result;
+}
 static void newstringdata(const EID_CHAR* label, const EID_CHAR* data) {
 	nsd(label, data);
 	if(!strcmp(label, "card_number")) {
@@ -60,22 +82,3 @@ static void newstate(enum eid_vwr_states new_state) {
 	pthread_mutex_unlock(&mut);
 }
 
-TEST_FUNC(deserialize) {
-	struct eid_vwr_ui_callbacks* cb;
-
-	if(have_robot()) {
-		robot_remove_card();
-		sleep(1);
-	}
-	cb = createcbs();
-	verbose_assert(cb != NULL);
-	nsd = cb->newstringdata;
-	cb->newstringdata = newstringdata;
-	nst = cb->newstate;
-	cb->newstate = newstate;
-	verbose_assert(eid_vwr_createcallbacks(cb) == 0);
-	pthread_mutex_lock(&mut);
-	pthread_cond_wait(&cnd, &mut);
-	pthread_mutex_unlock(&mut);
-	return result;
-}

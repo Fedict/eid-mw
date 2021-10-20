@@ -71,7 +71,7 @@ enum dialogs_type dialogs_type;
 
 bool have_builtin_reader = false;
 
-int verify_null_func(CK_UTF8CHAR* string, size_t length, int expect, char* msg) {
+int verify_null_func(CK_UTF8CHAR* string, size_t length, int expect, char* msg, const char *eid_testlib_funcname) {
 	int nullCount = 0;
 	char* buf = (char*)malloc(length + 1);
 	unsigned int i;
@@ -638,7 +638,7 @@ void robot_remove_reader() {
 	}
 }
 
-int find_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR slot) {
+int find_slot_func(CK_BBOOL with_token, CK_SLOT_ID_PTR slot, const char * eid_testlib_funcname) {
 	CK_RV rv;
 	CK_ULONG count = 0;
 	CK_SLOT_ID_PTR list = NULL;
@@ -656,6 +656,7 @@ int find_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR slot) {
 		/* no slots with token found; try asking for a token */
 		if(!have_robot()) {
 			printf("Need at least one token to run this test\n");
+			report_skip(eid_testlib_funcname, "FindToken", "RobotNotAvailable");
 			return TEST_RV_SKIP;
 		}
 		robot_insert_card();
@@ -728,4 +729,96 @@ void hex_dump(char* data, CK_ULONG length) {
 	if(j) {
 		printf("\n");
 	}
+}
+
+struct element {
+	const char * funcname;
+	const char * name;
+	const char * failtype;
+	const char * failstring;
+	enum result { success, fail, skip } result;
+	struct element * next;
+} * root_element = NULL;
+
+static int all_count = 0;
+static int success_count = 0;
+static int fail_count = 0;
+static int skip_count = 0;
+
+static struct element * append_test(struct element * ptr, const char * funcname, const char * name, const char * failtype, const char * failstring, enum result res) {
+	struct element * r = ptr;
+	struct element * new = calloc(sizeof(struct element), 1);
+	new->funcname = funcname ? strdup(funcname) : NULL;
+	new->name = name ? strdup(name) : NULL;
+	new->result = res;
+	new->failstring = failstring ? strdup(failstring) : NULL;
+	all_count++;
+	switch(res) {
+		case success:
+			success_count++;
+			break;
+		case fail:
+			fail_count++;
+			break;
+		case skip:
+			skip_count++;
+			break;
+	}
+	if(ptr == NULL) {
+		return new;
+	}
+	while(ptr->next != NULL) {
+		ptr = ptr->next;
+	}
+	ptr->next = new;
+	return r;
+}
+
+static bool atexited = false;
+
+#define DO_ATEXIT do { if(!atexited) { atexit(write_xml_report); atexited = true; } } while(0)
+
+void report_failure(const char *eid_testlib_funcname, const char * test, const char * failtype, const char * details, ...) {
+	DO_ATEXIT;
+	va_list ap;
+	char *str = malloc(1024);
+	va_start(ap, details);
+	vsnprintf(str, 1024, details, ap);
+	va_end(ap);
+	root_element = append_test(root_element, eid_testlib_funcname, test, failtype, str, fail);
+	free(str);
+}
+
+void report_success(const char *eid_testlib_funcname, const char * test) {
+	DO_ATEXIT;
+	root_element = append_test(root_element, eid_testlib_funcname, test, NULL, NULL, success);
+}
+
+void report_skip(const char *eid_testlib_funcname, const char * test, const char * why) {
+	DO_ATEXIT;
+	root_element = append_test(root_element, eid_testlib_funcname, test, NULL, why, skip);
+}
+
+void write_xml_report(void) {
+	FILE * report = fopen("junit.xml", "a");
+	struct element * ptr = root_element;
+	const char * funcname = NULL;
+
+	fprintf(report, "<testsuite name=\"%s\" errors=\"0\", failures=\"%d\" skipped=\"%d\" tests=\"%d\">", ptr->funcname, fail_count, skip_count, all_count);
+	while(ptr) {
+		if(funcname != NULL && strcmp(funcname, ptr->funcname) != 0) {
+			fprintf(report, "</testsuite>");
+			fprintf(report, "<testsuite name=\"%s\" errors=\"0\", failures=\"%d\" skipped=\"%d\" tests=\"%d\">", ptr->funcname, fail_count, skip_count, all_count);
+			funcname = ptr->funcname;
+		}
+		fprintf(report, "<testcase classname=\"%s\" name=\"%s\">", ptr->funcname, ptr->name);
+		if(ptr->result == fail) {
+			fprintf(report, "<failure type=\"%s\">%s</failure>", ptr->failtype, ptr->failstring);
+		}
+		if(ptr->result == skip) {
+			fprintf(report, "<skipped message=\"%s\" />", ptr->failstring);
+		}
+		ptr = ptr->next;
+	}
+	fprintf(report, "</testsuite>");
 }

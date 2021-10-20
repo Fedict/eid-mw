@@ -7,6 +7,42 @@
 
 static void(*nsd)(const EID_CHAR*, const EID_CHAR*) = NULL;
 static int have_found_cardnumber = 0;
+static void newstringdata(const EID_CHAR* label, const EID_CHAR* data);
+
+TEST_FUNC(gender) {
+	if(!have_robot()) {
+		printf("no robot");
+		return TEST_RV_SKIP;
+	}
+	struct eid_vwr_ui_callbacks* cb;
+	
+	robot_insert_reader();
+	robot_remove_card();
+	
+	cb = createcbs();
+	nsd = cb->newstringdata;
+	cb->newstringdata = newstringdata;
+	verbose_assert(eid_vwr_createcallbacks(cb) == 0);
+		
+	eid_vwr_be_deserialize( "./67.06.30-296.60.eid");
+	
+	printf("FR:\n");
+	eid_vwr_convert_set_lang(EID_VWR_LANG_FR);
+	SLEEP(1);
+	
+	printf("NL:\n");
+	eid_vwr_convert_set_lang(EID_VWR_LANG_NL);
+
+	printf("EN:\n");
+	eid_vwr_convert_set_lang(EID_VWR_LANG_EN);
+
+	printf("DE:\n");
+	eid_vwr_convert_set_lang(EID_VWR_LANG_DE);
+	
+	eid_vwr_close_file ();
+
+	return TEST_RV_OK;
+}
 
 static void newstringdata(const EID_CHAR* label, const EID_CHAR* data) {
 	nsd(label, data);
@@ -61,37 +97,3 @@ static void newstringdata(const EID_CHAR* label, const EID_CHAR* data) {
 	}		
 }
 
-TEST_FUNC(gender) {
-	if(!have_robot()) {
-		printf("no robot");
-		return TEST_RV_SKIP;
-	}
-	struct eid_vwr_ui_callbacks* cb;
-	
-	robot_insert_reader();
-	robot_remove_card();
-	
-	cb = createcbs();
-	nsd = cb->newstringdata;
-	cb->newstringdata = newstringdata;
-	verbose_assert(eid_vwr_createcallbacks(cb) == 0);
-		
-	eid_vwr_be_deserialize( "./67.06.30-296.60.eid");
-	
-	printf("FR:\n");
-	eid_vwr_convert_set_lang(EID_VWR_LANG_FR);
-	SLEEP(1);
-	
-	printf("NL:\n");
-	eid_vwr_convert_set_lang(EID_VWR_LANG_NL);
-
-	printf("EN:\n");
-	eid_vwr_convert_set_lang(EID_VWR_LANG_EN);
-
-	printf("DE:\n");
-	eid_vwr_convert_set_lang(EID_VWR_LANG_DE);
-	
-	eid_vwr_close_file ();
-
-	return TEST_RV_OK;
-}

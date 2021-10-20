@@ -192,7 +192,7 @@ void file_close(GtkWidget* item G_GNUC_UNUSED, gpointer user_data G_GNUC_UNUSED)
 
 /* Perform a PIN operation */
 void pinop(GtkWidget* button G_GNUC_UNUSED, gpointer which) {
-	enum eid_vwr_pinops op = (enum eid_vwr_pinops) which;
+	enum eid_vwr_pinops op = (enum eid_vwr_pinops)(uintptr_t)which;
 
 	eid_vwr_pinop(op);
 }

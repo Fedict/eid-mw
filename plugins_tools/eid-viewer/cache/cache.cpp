@@ -64,6 +64,24 @@ void cache_add(const EID_CHAR * label, EID_CHAR * data, unsigned long len)
 void cache_add_bin(const EID_CHAR * label, BYTE * data, unsigned long len)
 {
 	cache[label] = new cache_item_container(data, len, true);
+
+	//in case of tokeninfo_graph_perso_version, store it in the conversion workers, 
+	//so the conversion functions can use it
+	if (EID_STRCMP(label, TEXT("tokeninfo_graph_perso_version")) == 0) {
+		switch (*data)
+		{
+		case 0x00:
+			//00 is the default (applet 1.7) value
+			convert_set_graphvers(EID_VWR_GRAPH_VERSION_NONE);
+			break;
+		case 0x08:
+			convert_set_graphvers(EID_VWR_GRAPH_VERSION_EIGHT);
+			break;
+		default:
+			convert_set_graphvers(EID_VWR_GRAPH_VERSION_NONE);
+			break;
+		}
+	}
 }
 
 const struct eid_vwr_cache_item *cache_get_data(const EID_CHAR * label)

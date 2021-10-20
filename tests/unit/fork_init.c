@@ -13,15 +13,7 @@
 
 #include "testlib.h"
 
-int child_part() {
-	CK_INFO info;
-	ckrv_mod m[] = { { CKR_CRYPTOKI_ALREADY_INITIALIZED, TEST_RV_OK } };
-
-	check_rv_long(C_Initialize(NULL_PTR), m);
-	check_rv(C_GetInfo(&info));
-
-	return TEST_RV_OK;
-}
+int child_part();
 
 /*
  * Check behaviour of C_Initialize across a fork() call (PKCS#11 §6.6.1)
@@ -52,3 +44,14 @@ TEST_FUNC(fork_init) {
 
 	return TEST_RV_OK;
 }
+
+int child_part() {
+	CK_INFO info;
+	ckrv_mod m[] = { { CKR_CRYPTOKI_ALREADY_INITIALIZED, TEST_RV_OK } };
+
+	check_rv_long(C_Initialize(NULL_PTR), m);
+	check_rv(C_GetInfo(&info));
+
+	return TEST_RV_OK;
+}
+

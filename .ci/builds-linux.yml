@@ -90,6 +90,7 @@
   before_script:
   - pushd $LINUX_BASEDIR
   - autoreconf -f -i
+  - rm -f tests/unit/junit.xml
   - popd
   script:
   - pushd $LINUX_BASEDIR
@@ -104,11 +105,13 @@
   - lcov -a tests.info -a cardcomm.info -a viewer.info -o coverage.info
   - genhtml coverage.info -o products/reports/lcov
   - popd
+  allow_failure: true
   artifacts:
     paths:
     - products/reports
     reports:
       cobertura: products/reports/coverage.xml
+      junit: tests/unit/junit.xml
     when: always
 
 .validation:linux:firefox:

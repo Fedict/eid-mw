@@ -45,6 +45,13 @@
         </xsd:restriction>
       </xsd:simpleType>
     </xsd:attribute>
+	<xsd:attribute name="graphpersoversion" use="optional">
+      <xsd:simpleType>
+		<xsd:restriction base="xsd:hexBinary">
+			<xsd:length value="1" fixed="true" />
+		</xsd:restriction>
+      </xsd:simpleType>
+    </xsd:attribute>
   </xsd:complexType>
   <xsd:element name="middlenames" type="xsd:string" />
   <xsd:element name="workpermit" type="workpermitType" />

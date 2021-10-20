@@ -18,6 +18,8 @@ using System.IO;
 using Microsoft.Win32;
 using System.Windows.Controls.Primitives;
 using System.Runtime.InteropServices;
+using System.Xml;
+using System.Net;
 
 namespace eIDViewer
 {
@@ -44,6 +46,90 @@ namespace eIDViewer
             GetLanguage();
 
             this.Loaded += new RoutedEventHandler(MainWindow_Loaded);
+            this.Loaded += new RoutedEventHandler(Version_Check);
+        }
+
+        void Version_Check(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Popup myPopup = new Popup();
+                myPopup.IsOpen = true;
+
+                string message = "";
+                string caption = "New Version available";
+
+                string url = "";
+                string releaseNotes = "";
+                int regVal = 0;
+                theBackendData.startupVersionCheck = false;
+
+                regVal = theBackendData.ReadRegistryDwordValue("SOFTWARE\\BEID\\eidviewer", "startup_version_check", 2);
+                if ((regVal == 2) || (regVal == -1))
+                {
+                    //2 is the default value we send (reg key name value not found), -1 means the reg key does not exist, so try to create the key name with value 1
+                    theBackendData.WriteRegistryDwordValue("SOFTWARE\\BEID\\eidviewer", "startup_version_check", 1);
+                    if (theBackendData.ReadRegistryDwordValue("SOFTWARE\\BEID\\eidviewer", "startup_version_check", 2) != 1)
+                    {
+                        //if we cannot write/read the register, we won't be able to disable the version check, so skip it
+                        return;
+                    }
+                }
+                else if (regVal <= 0)
+                {
+                    //either it is not needed (regVal == 0) or we failed reading registry (regVal < 0), so skip the version check
+                    return;
+                }
+
+                //Do the version check
+                theBackendData.startupVersionCheck = true;
+                theBackendData.WriteLog("starting the online version check..\n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
+
+                if (!Version.getUpdateUrl(out bool updateNeeded, ref url, ref releaseNotes))
+                {
+                    //no updated version found, report this in the log
+                    theBackendData.WriteLog("failed to check for online update\n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
+                    return;
+                }
+
+                if (updateNeeded)
+                {
+                    if (url == "")
+                    {
+                        theBackendData.WriteLog("A newer version has been found, but not the url to download it\n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
+                        return;
+                    }
+                    //for safety, we do not accept all urls
+                    else if (url.StartsWith("https://eid.belgium.be"))
+                    {
+                        //xml Version check
+                        string aboutMessage = "\n" + eIDViewer.Resources.ApplicationStringResources.newVersionDownload;
+                        string caption = eIDViewer.Resources.ApplicationStringResources.newVersionDownloadTitle;
+
+
+                        MessageBoxResult result = MessageBox.Show(aboutMessage, caption, MessageBoxButton.YesNo, MessageBoxImage.Information, MessageBoxResult.Cancel);
+                        if (result == MessageBoxResult.Yes)
+                        {
+                            try
+                            {
+                                System.Diagnostics.Process.Start("https://eid.belgium.be");
+                            }
+                            catch (Exception ex)
+                            {
+                                theBackendData.WriteLog("Error: Could not start a browser to visit" + url + ex.Message, eid_vwr_loglevel.EID_VWR_LOG_COARSE);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    theBackendData.WriteLog("No viewer update is needed\n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error occured during eID Viewer version check" + ex.Message);
+            }
         }
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -455,6 +541,18 @@ namespace eIDViewer
             }
         }
 
+        private void VersionMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            //Store the chosen setting in the registry
+            if (theBackendData.startupVersionCheck)
+            {
+                StoreStartupVersionCheck(0);
+            }
+            else
+            {
+                StoreStartupVersionCheck(1);
+            }
+        }
     }
 }
 

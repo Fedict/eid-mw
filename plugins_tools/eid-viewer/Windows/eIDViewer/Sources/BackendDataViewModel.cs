@@ -1025,10 +1025,10 @@ namespace eIDViewer
             else if (String.Equals(label, "work_permit_mention", StringComparison.Ordinal))
             { work_permit_mention = data;
                 ForeignersFieldPresent(); }
-            else if (String.Equals(label, "employers_vat_number1", StringComparison.Ordinal))
+            else if (String.Equals(label, "employer_vat_1", StringComparison.Ordinal))
             { employers_vat_number1 = data;
                 ForeignersFieldPresent(); }
-            else if (String.Equals(label, "employers_vat_number2", StringComparison.Ordinal))
+            else if (String.Equals(label, "employer_vat_2", StringComparison.Ordinal))
             { employers_vat_number2 = data;
                 ForeignersFieldPresent(); }
             else if (String.Equals(label, "regional_file_number", StringComparison.Ordinal))
@@ -1358,6 +1358,17 @@ namespace eIDViewer
             {
                 _languageFR = value;
                 this.NotifyPropertyChanged("languageFR");
+            }
+        }
+
+        private Boolean _startupVersionCheck;
+        public Boolean startupVersionCheck
+        {
+            get { return _startupVersionCheck; }
+            set
+            {
+                _startupVersionCheck = value;
+                this.NotifyPropertyChanged("startupVersionCheck");
             }
         }
 

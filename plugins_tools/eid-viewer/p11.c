@@ -311,7 +311,63 @@ int eid_vwr_p11_finalize_find() {
 	return 0;
 }
 
-/* Called by state machine at start of TOKEN_ID state 
+
+
+/* Called on state machine at start of TOKEN_ID state by eid_vwr_p11_read_id
+ * This function may only be called from the state machine thread
+ * It returns the card's graphical version byte, which determines
+ * the conversion functions to be used
+ */
+int eid_vwr_p11_read_graph_vers(void* data EIDV_UNUSED) {
+	CK_ULONG data_class = CKO_DATA;
+	CK_ULONG attribute_len = 2; //the number of attributes in the search template below
+	//the searchtemplate that will be used to initialize the search
+	CK_ATTRIBUTE attributes[2] = { {CKA_CLASS,&data_class,sizeof(CK_ULONG)},
+	{CKA_LABEL,"tokeninfo_graph_perso_version",(CK_ULONG)strlen("tokeninfo_graph_perso_version")} };
+	//prepare the findobjects function to find all objects with attributes 
+	//CKA_CLASS set to CKO_DATA and with CKA_LABEL set to "tokeninfo_graph_perso_version"
+
+	CK_ULONG ulMaxObjectCount = 1;//we want max one object returned
+	CK_ULONG ulObjectCount = 0;	//returns the number of objects found
+	CK_OBJECT_HANDLE hKey;
+	//retrieve the object with label "tokeninfo_graph_perso_version" 
+	check_rv(C_FindObjectsInit(session, attributes, attribute_len));
+
+	CK_RV retval = C_FindObjects(session, &hKey, ulMaxObjectCount, &ulObjectCount);
+	if (retval != CKR_OK)
+	{
+		be_log(EID_VWR_LOG_DETAIL, TEXT(EID_S_FORMAT) TEXT(":C_FindObjects returned value 0x%2x"), retval);
+		C_FindObjectsFinal(session);
+		return retval;
+	}
+	if ((ulObjectCount == 0) || (hKey == NULL_PTR))
+	{
+		//no "tokeninfo_graph_perso_version" object was found
+		be_log(EID_VWR_LOG_DETAIL, TEXT(EID_S_FORMAT) TEXT(":C_FindObjects did not find object with label tokeninfo_graph_perso_version"));
+		check_rv(C_FindObjectsFinal(session));
+	}
+	else
+	{
+		//"tokeninfo_graph_perso_version" object was found
+
+		unsigned char value = 0;
+
+		CK_ATTRIBUTE data = { CKA_VALUE, &value, 1 };
+
+		check_rv(C_GetAttributeValue(session, hKey, &data, 1));
+
+		//add the graphical version byte to cache
+		cache_add_bin(TEXT("tokeninfo_graph_perso_version"), &value, 1);
+		be_log(EID_VWR_LOG_DETAIL, TEXT("found data for tokeninfo_graph_perso_version 0x.2%x"), value);
+
+
+		check_rv(C_FindObjectsFinal(session));
+	}
+
+	return retval;
+}
+
+/* Called by state machine at start of TOKEN_ID state
  * This function may only be called from the state machine thread
  */
 int eid_vwr_p11_read_id(void* data EIDV_UNUSED) {
@@ -322,6 +378,8 @@ int eid_vwr_p11_read_id(void* data EIDV_UNUSED) {
 	attr.pValue = &type;
 	type = CKO_DATA;
 	attr.ulValueLen = sizeof(CK_ULONG);
+
+	check_rv(eid_vwr_p11_read_graph_vers(0));
 
 	check_rv(C_FindObjectsInit(session, &attr, 1));
 

@@ -55,10 +55,10 @@
 	{ BEID_FIELD_TAG_ID_RegionalFileNumber, "regional_file_number"}, \
 	{ BEID_FIELD_TAG_ID_BasicKeyHash,		"basic_key_hash"}, \
 	{ BEID_FIELD_TAG_ID_BrexitMention1,		"brexit_mention_1"}, \
-	{ BEID_FIELD_TAG_ID_BrexitMention2,		"brexit_mention_2"}, \
-	{ BEID_FIELD_TAG_ID_CardAMention1,		"cardA_mention_1"}, \
-	{ BEID_FIELD_TAG_ID_CardAMention2,		"cardA_mention_2"} \
+	{ BEID_FIELD_TAG_ID_BrexitMention2,		"brexit_mention_2"}\
 }
+//	{ BEID_FIELD_TAG_ID_CardAMention1,		"cardA_mention_1"}, \
+//	{ BEID_FIELD_TAG_ID_CardAMention2,		"cardA_mention_2"} \
 
 	//{ BEID_FIELD_TAG_ADDR_Version,                        "Address_Version"},
 #define BEID_ADDRESS_DATA_LABELS  {  \
@@ -95,16 +95,22 @@
 	{ BEID_FIELD_TAG_ID_RegionalFileNumber,				"record_regional_file_number"}, \
 	{ BEID_FIELD_TAG_ID_BasicKeyHash,					"record_basic_key_hash"}, \
 	{ BEID_FIELD_TAG_ID_BrexitMention1,					"record_brexit_mention_1"}, \
-	{ BEID_FIELD_TAG_ID_BrexitMention2,					"record_brexit_mention_2"}, \
-	{ BEID_FIELD_TAG_ID_CardAMention1,					"record_brexit_mention_1"}, \
-	{ BEID_FIELD_TAG_ID_CardAMention2,					"record_brexit_mention_2"} \
+	{ BEID_FIELD_TAG_ID_BrexitMention2,					"record_brexit_mention_2"} \
 }
+//	{ BEID_FIELD_TAG_ID_CardAMention1,					"record_cardA_mention_1"}, \
+//	{ BEID_FIELD_TAG_ID_CardAMention2,					"record_cardA_mention_2"} \
 
 	//{ BEID_FIELD_TAG_ADDR_Version,							"Address_Version"},
 #define BEID_ADDRESS_RECORD_DATA_LABELS  {  \
 	{ BEID_FIELD_TAG_ADDR_Street,						"record_address_street_and_number"},  \
 	{ BEID_FIELD_TAG_ADDR_ZipCode,						"record_address_zip"},  \
 	{ BEID_FIELD_TAG_ADDR_Municipality,					"record_address_municipality"}  \
+}
+
+#define BEID_TOKENINFO_LABELS  {  \
+	{ BEID_FIELD_TAG_TOKINF_graph,						"tokeninfo_graph_perso_version"},  \
+	{ BEID_FIELD_TAG_TOKINF_elec,						"tokeninfo_elec_perso_version"},  \
+	{ BEID_FIELD_TAG_TOKINF_elecint,					"tokeninfo_elec_perso_int_version"}  \
 }
 
 #define BEID_LABEL_DATA_SerialNr				"carddata_serialnumber"
@@ -125,6 +131,9 @@
 
 #define BEID_LABEL_ATR							"ATR"
 
+//personalisation version numbers from tokeninfo file (4 bytes)
+#define BEID_LABEL_PersoVersions				"perso_versions"
+
 #define BEID_LABEL_KEY_CARD						"Card"
 
 #define BEID_OBJECTID_ID						"id"
@@ -135,6 +144,7 @@
 #define BEID_OBJECTID_SIGN_DATA_FILE			"sign_data_file"
 #define BEID_OBJECTID_SIGN_ADDRESS_FILE			"sign_address_file"
 #define BEID_OBJECTID_BASIC_KEY_FILE			"basic_key_file"
+#define BEID_OBJECTID_TOKENINFO					"tokeninfo"
 //to give the hidden record objects their own (hidden/undocumented) CKA_OBJECT_ID
 //this "record" CKA_OBJECT_ID is not meant to (and can not) be used to retrieve all hidden objects
 #define BEID_OBJECTID_RECORD					"record"

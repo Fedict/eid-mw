@@ -12,13 +12,19 @@
 extern int va_counter;
 extern int fc_counter;
 
+void report_failure(const char *suitename, const char *test, const char * failtype, const char * details, ...);
+void report_success(const char *suitename, const char *test);
+void report_skip(const char *suitename, const char * test, const char * why);
+void write_xml_report(void);
+#include <stdlib.h>
+
 #ifndef TEST_NO_ABORT
-#define my_assert(a) assert(a)
+#define maybe_abort() do { write_xml_report(); abort(); } while (0)
 #else
-#define my_assert(a) do { if(!(a)) { printf("failed!\n"); return TEST_RV_FAIL; }} while(0)
+#define maybe_abort() do { return TEST_RV_FAIL; } while (0)
 #endif
 
-#define verbose_assert(a) { printf("assertion %d: \"%s\": ", va_counter++, #a); my_assert((a)); printf("ok\n"); }
+#define verbose_assert(a) { printf("assertion %d: \"%s\": ", va_counter++, #a); if(!(a)) { report_failure(eid_testlib_funcname, #a, "AssertionFailure", "assertion %s failed", #a); fprintf(stderr, "assertion %s failed\n", #a); maybe_abort(); } else { report_success(eid_testlib_funcname, #a); printf("ok\n"); } }
 
 #ifdef __GNUC__
 #define EIDT_LIKELY(expr) __builtin_expect((expr), 1)
@@ -64,10 +70,45 @@ typedef enum {
 } reading_pos;
 
 #define CHECK_RV_DEALLOC
-#define check_rv_late(func) { int retval = ckrv_decode(rv, func, 0, NULL); if(EIDT_UNLIKELY(retval != TEST_RV_OK)) { printf("not ok\n"); C_Finalize(NULL_PTR); my_assert(retval != TEST_RV_FAIL); CHECK_RV_DEALLOC; return retval; }}
-#define check_rv_late_long(func, mods) { int c = sizeof(mods) / sizeof(ckrv_mod); int retval = ckrv_decode(rv, func, c, (mods)); if(EIDT_UNLIKELY(retval != TEST_RV_OK)) { printf("not ok\n"); C_Finalize(NULL_PTR); my_assert(retval != TEST_RV_FAIL); CHECK_RV_DEALLOC; return retval; }}
+#define check_rv_late_action(func, count, mods) { \
+	int retval = ckrv_decode(rv, func, count, mods); \
+	if(EIDT_UNLIKELY(retval != TEST_RV_OK)) { \
+		report_failure(eid_testlib_funcname, #func, "UnexpectedReturn", "unexpectedly received %d for %s", rv, #func); \
+		printf("not ok\n"); \
+		C_Finalize(NULL_PTR); \
+		if(retval == TEST_RV_FAIL) { \
+			maybe_abort(); \
+		} \
+		CHECK_RV_DEALLOC; \
+		report_skip(eid_testlib_funcname, #func, "UnexpectedReturn"); \
+		return retval; \
+	} else { \
+		report_success(eid_testlib_funcname, #func); \
+	} \
+}
+#define check_rv_late(func) check_rv_late_action(func, 0, NULL)
+#define check_rv_late_long(func, mods) { \
+	int c = sizeof(mods) / sizeof(ckrv_mod); \
+	check_rv_late_action(func, c, mods); \
+}
+#define check_rv_action(call, count, mods) { \
+	CK_RV rv = call; \
+	int retval = ckrv_decode(rv, #call, count, mods); \
+	if(EIDT_UNLIKELY(retval != TEST_RV_OK)) { \
+		report_failure(eid_testlib_funcname, #call, "UnexpectedReturn", "unexpectedly received %d for %s", rv, #call); \
+		printf("not ok\n"); \
+		C_Finalize(NULL_PTR); \
+		if(retval == TEST_RV_FAIL) {\
+			maybe_abort(); \
+		} \
+		CHECK_RV_DEALLOC; \
+		report_skip(eid_testlib_funcname, #call, "UnexpectedReturn"); \
+		return retval; \
+	} else { \
+		report_success(eid_testlib_funcname, #call); \
+	} \
+}
 #define check_rv(call) check_rv_action(call, 0, NULL)
-#define check_rv_action(call, count, mods) { CK_RV rv = call; int retval = ckrv_decode(rv, #call, count, mods); if(EIDT_UNLIKELY(retval != TEST_RV_OK)) { printf("not ok\n"); C_Finalize(NULL_PTR); my_assert(retval != TEST_RV_FAIL); CHECK_RV_DEALLOC; return retval; }}
 #define check_rv_long(call, mods) { int c = sizeof(mods) / sizeof(ckrv_mod); check_rv_action(call, c, mods); }
 
 int ckrv_decode(CK_RV rv, char *fc, int count, const ckrv_mod *);
@@ -75,16 +116,15 @@ int ckrv_decode(CK_RV rv, char *fc, int count, const ckrv_mod *);
 char *ckm_to_charp(CK_MECHANISM_TYPE);
 
 #ifdef HAVE_CONFIG_H
-#define TEST_FUNC(a) int main(void)
+#define TEST_FUNC(a) static const char * eid_testlib_funcname = #a; int main(void)
 #else
-#define TEST_FUNC(a) int a(void)
+#define TEST_FUNC(a) static const char * eid_testlib_funcname = #a; int a(void)
 #endif
 
 /* Verifies that a string does not contain a NULL character */
-int verify_null_func(CK_UTF8CHAR * string, size_t length, int nulls_expected,
-		     char *msg);
+int verify_null_func(CK_UTF8CHAR * string, size_t length, int nulls_expected, char *msg, const char *eid_testlib_funcname);
 
-#define verify_null(s, l, e, m) { int retval = verify_null_func(s, l, e, m); if(EIDT_UNLIKELY(retval != TEST_RV_OK)) return retval; }
+#define verify_null(s, l, e, m) { int retval = verify_null_func(s, l, e, m, eid_testlib_funcname); if(EIDT_UNLIKELY(retval != TEST_RV_OK)) { report_failure(eid_testlib_funcname, "verify_null(" #s ", " #l ", " #e ", " #m ")", "not null where needed", "retval = %d", retval); return retval; } }
 
 /* Functions to work with card moving robots */
 CK_BBOOL have_robot(void);
@@ -130,7 +170,8 @@ extern enum robot_type robot_type;
 extern enum dialogs_type dialogs_type;
 
 /* Helper functions to not have to repeat common operations all the time */
-int find_slot(CK_BBOOL with_token, CK_SLOT_ID_PTR slot);
+#define find_slot(with_token, slot) find_slot_func(with_token, slot, eid_testlib_funcname)
+int find_slot_func(CK_BBOOL with_token, CK_SLOT_ID_PTR slot, const char * eid_testlib_funcname);
 
 /* function definitions for tests that exist */
 int scardcom_common(void);
@@ -165,5 +206,6 @@ int ordering(void);
 int wrong_init(void);
 int login_state(void);
 int eject(void);
+int sdialogs(void);
 
 #endif

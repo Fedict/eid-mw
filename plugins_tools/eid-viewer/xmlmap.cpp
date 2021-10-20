@@ -107,6 +107,7 @@ static struct element_desc eid_elements[] = {
 /* attributes of the <eid> element (the toplevel element) */
 static struct attribute_desc eid_attributes[] = {
 	{TEXT("version"), TEXT("xml_file_version"), 0},
+	{TEXT("graphpersoversion"), TEXT("tokeninfo_graph_perso_version"), 0},
 	{NULL, NULL, 0},
 };
 

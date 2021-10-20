@@ -11,6 +11,7 @@ class ConversionWorker
 {
 protected:
 	static eid_vwr_langs target_;
+	static eid_vwr_graphvers graphvers_; //the graphical version number
 public:
 	static void set_lang(eid_vwr_langs which)
 	{
@@ -24,6 +25,15 @@ public:
 	{
 		return target_ > EID_VWR_LANG_NONE;
 	};
+
+	static void set_graphvers(eid_vwr_graphvers graphvers)
+	{
+		graphvers_ = graphvers;
+	};
+	/*static eid_vwr_graphvers get_graphvers()
+	{
+		return graphvers_;
+	};*/
 	virtual EID_STRING convert(const void *original) = 0;
 	virtual EID_STRING convert(std::string original)
 	{

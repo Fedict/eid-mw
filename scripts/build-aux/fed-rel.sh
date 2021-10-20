@@ -32,6 +32,6 @@ do
 				done
 			fi
 		done
-		createrepo $REPO_LOC/rpm/$TARGET/${DISTNAMES[$dist]}/$vers
+		createrepo_c $REPO_LOC/rpm/$TARGET/${DISTNAMES[$dist]}/$vers
 	done
 done

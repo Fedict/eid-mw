@@ -17,6 +17,7 @@ include:
 
 variables:
   LINUX_BASEDIR: .
+  DOCKER_BASEDIR: .
   WINDOWS_BASEDIR: .
   MACOS_BASEDIR: .
 
@@ -73,8 +74,6 @@ deb-sbuild:
 
 gtk4-build:
   extends: .docker-base
-  variables:
-    USE_ACNG: "1"
   only:
     changes:
     - .ci/dockerfiles/gtk4-build/**/*

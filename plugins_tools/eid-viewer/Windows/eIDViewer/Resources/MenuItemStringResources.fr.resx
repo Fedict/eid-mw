@@ -147,4 +147,7 @@
   <data name="fileMenuTestSiteItem" xml:space="preserve">
     <value>Site de test eID..</value>
   </data>
+  <data name="fileMenuVersionCheckItem" xml:space="preserve">
+    <value>vérification de version au démarrage</value>
+  </data>
 </root>

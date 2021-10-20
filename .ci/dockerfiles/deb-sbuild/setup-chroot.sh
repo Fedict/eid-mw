@@ -28,7 +28,10 @@ case $DIST in
 		sbuild-createchroot --arch=$ARCH $CODE /srv/chroot/$CODE ${ACNG}deb.debian.org/debian
 	;;
 	ubuntu)
-		sbuild-createchroot --arch=$ARCH $CODE /srv/chroot/$CODE ${ACNG}archive.ubuntu.com/ubuntu /usr/share/debootstrap/scripts/gutsy
+		sbuild-createchroot --include=debhelper --arch=$ARCH $CODE /srv/chroot/$CODE ${ACNG}archive.ubuntu.com/ubuntu /usr/share/debootstrap/scripts/gutsy
+		# Revert the "default to xz compression" option in recent
+		# Ubuntu distributions
+		sed -i -e "s/my @dpkg_options;/my @dpkg_options = ('-Zxz');/" /srv/chroot/$CODE/usr/bin/dh_builddeb
 	;;
 	*)
 		echo "E: unknown dist: $DIST" >&2

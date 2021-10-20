@@ -18,8 +18,8 @@
  * http://www.gnu.org/licenses/.
 
 **************************************************************************** */
-#ifndef __ASN1_H__
-#define __ASN1_H__
+#ifndef EIDMW_ASN1_H
+#define EIDMW_ASN1_H
 
 #ifdef __cplusplus
 extern "C"

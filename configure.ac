@@ -17,6 +17,9 @@ AM_SILENT_RULES([yes])
 
 # Checks for programs.
 AC_PROG_CXX
+m4_ifdef([AX_CXX_COMPILE_STDCXX_11],,
+[m4_fatal([The m4 macro AX_CXX_COMPILE_STDCXX_11 has not been
+defined. Please install the autoconf-archive package.])])
 AX_CXX_COMPILE_STDCXX_11()
 AC_PROG_CPP
 AC_PROG_CC_C99
@@ -47,7 +50,6 @@ fi
 
 AM_CONDITIONAL(ASSUAN,[test x"$ASSUAN" = x"y"])
 
-AC_SEARCH_LIBS([strlcpy], [bsd], AC_DEFINE_UNQUOTED([HAVE_LIBBSD], 1, [Set to 1 (just set to 1)]), AC_ERROR([libbsd not found]))
 ###### pcsc-lite ##########
 PKG_CHECK_MODULES([PCSC],[libpcsclite >= 1.4.4],
 [
@@ -122,6 +124,14 @@ then
 fi
 
 AC_DEFINE_UNQUOTED([HAVE_GTK], [$have_gtk], [Set to major version of libgtk])
+
+if test "$have_gtk" = "4"
+then
+	if test "$assuan" = "no"
+	then
+		AC_MSG_ERROR([The dialogs are not supported on GTK4, please either use GTK3 or switch to pinentry dialogs])
+	fi
+fi
 
 if test "$have_gtk" = "no"
 then

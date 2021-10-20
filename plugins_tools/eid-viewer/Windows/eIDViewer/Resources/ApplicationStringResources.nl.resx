@@ -174,4 +174,10 @@
   <data name="pinChangedOKDialogTitle" xml:space="preserve">
     <value>Pincode gewijzigd</value>
   </data>
+  <data name="newVersionDownload" xml:space="preserve">
+    <value>Er is een nieuwe versie van de eID Viewer gevonden, wil je deze downloaden?</value>
+  </data>
+  <data name="newVersionDownloadTitle" xml:space="preserve">
+    <value>Nieuwe versie eID Viewer</value>
+  </data>
 </root>

@@ -18,7 +18,7 @@ du -sh $DIST_LOC
 echo "repo, RPM -- before:"
 du -sh $REPO_LOC/rpm
 
-find $REPO_LOC/candidate $REPO_LOC/continuous -name "*.rpm" -type f -mtime +550 -print0 | xargs -0 rm
+find $REPO_LOC/rpm/candidate $REPO_LOC/rpm/continuous -name "*.rpm" -type f -mtime +550 -print0 | xargs -0 rm
 
 echo "repo, RPM -- after:"
 du -sh $REPO_LOC/rpm

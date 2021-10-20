@@ -98,6 +98,8 @@ libeidviewer_la_SOURCES = \
 	conversions/xmlspecorgconv.h \
 	conversions/xmlspecorgconv.cpp \
 	conversions.h \
+	check_version.h \
+	check_version.c \
 	cppeidstring.h \
 	dataverify.h \
 	state.c \

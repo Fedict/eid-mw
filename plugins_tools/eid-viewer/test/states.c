@@ -9,7 +9,7 @@
 #include "pkcs11.h"
 #include <unistd.h>
 #endif
-#include "testlib2.h"
+#include <testlib.h>
 #include <eid-viewer/oslayer.h>
 #include <eid-viewer/macros.h>
 #include <stdlib.h>
@@ -21,84 +21,10 @@ static bool flags[STATE_COUNT];
 static bool have_keyhash = false;
 static void (*orig_bindata)(const EID_CHAR*, const unsigned char*,int) = NULL;
 
-static void mybindata (const EID_CHAR* label, const unsigned char *data, int datalen){
-	orig_bindata(label, data, datalen);
-	if (EID_STRCMP(label, TEXT(""))){
-		have_keyhash = true;
-	}
-}
-
-static void pinop_result(enum eid_vwr_pinops p, enum eid_vwr_result res) {
-	verbose_assert(p == EID_VWR_PINOP_TEST);
-	verbose_assert(res == EID_VWR_RES_SUCCESS);
-}
-static void newstate(enum eid_vwr_states s) {
-	curstate = s;
-	flags[s] = true;
-	switch(curstate){
-	case STATE_LIBOPEN:
-		printf("library is open\n");		
-		break;
-	case STATE_CALLBACKS:
-		printf("callback defined\n");		
-		break;
-	case STATE_NO_TOKEN:
-		printf("no file or card\n");
-		break;
-	case STATE_NO_READER:
-		printf("no reader foud (yet?)(child no token)\n");
-		break;
-	case STATE_READY:
-		printf("ready to get token(child no token)\n");
-		break;
-	case STATE_TOKEN:
-		printf("token found\n");
-		break;
-	case STATE_TOKEN_ID:
-		printf("token found, reading id data\n");
-		break;
-	case STATE_TOKEN_CERTS:
-		printf("token found, reading certificates data\n");
-		break;
-	case STATE_TOKEN_WAIT:
-		printf("token found, waiting on action\n");
-		break;
-	case STATE_TOKEN_IDLE:
-		printf("no action given durin token wait(child of wait)\n");
-		break;
-	case STATE_TOKEN_PINOP:
-		printf("executing a pin operation\n");
-		break;
-	case STATE_TOKEN_SERIALIZE:
-		printf("saving data to a file\n");
-		break;
-	case STATE_TOKEN_CHALLENGE:
-		printf("performing a challenge");
-		break;
-	case STATE_TOKEN_ERROR:
-		printf("error occured with card\n");
-		break;	
-	case STATE_FILE:
-		printf("source is defined as file\n");
-		break;
-	case STATE_FILE_READING:
-		printf("Reading the file\n");
-		break;
-	case STATE_FILE_WAIT:
-		printf("done parsing file\n");
-		break;
-	case STATE_CARD_INVALID:
-		printf("card read succesfull but deamed data invalid\n");
-		break;
-	default:
-		exit(TEST_RV_SKIP);
-	}
-}
-static void clearflags(){
-	for (int i=0;i<STATE_COUNT;i++){
-		flags[i]=false;
-	}
-}
+static void mybindata (const EID_CHAR* label, const unsigned char *data, int datalen);
+static void pinop_result(enum eid_vwr_pinops p, enum eid_vwr_result res);
+static void newstate(enum eid_vwr_states s);
+static void clearflags();
 TEST_FUNC(states) {
 	struct eid_vwr_ui_callbacks* cb;
 	cursrc = EID_VWR_SRC_UNKNOWN;
@@ -250,4 +176,82 @@ TEST_FUNC(states) {
 		
 	SLEEP(10);
 	return TEST_RV_OK;
+}
+static void mybindata (const EID_CHAR* label, const unsigned char *data, int datalen){
+	orig_bindata(label, data, datalen);
+	if (EID_STRCMP(label, TEXT(""))){
+		have_keyhash = true;
+	}
+}
+
+static void pinop_result(enum eid_vwr_pinops p, enum eid_vwr_result res) {
+	verbose_assert(p == EID_VWR_PINOP_TEST);
+	verbose_assert(res == EID_VWR_RES_SUCCESS);
+}
+static void newstate(enum eid_vwr_states s) {
+	curstate = s;
+	flags[s] = true;
+	switch(curstate){
+	case STATE_LIBOPEN:
+		printf("library is open\n");		
+		break;
+	case STATE_CALLBACKS:
+		printf("callback defined\n");		
+		break;
+	case STATE_NO_TOKEN:
+		printf("no file or card\n");
+		break;
+	case STATE_NO_READER:
+		printf("no reader foud (yet?)(child no token)\n");
+		break;
+	case STATE_READY:
+		printf("ready to get token(child no token)\n");
+		break;
+	case STATE_TOKEN:
+		printf("token found\n");
+		break;
+	case STATE_TOKEN_ID:
+		printf("token found, reading id data\n");
+		break;
+	case STATE_TOKEN_CERTS:
+		printf("token found, reading certificates data\n");
+		break;
+	case STATE_TOKEN_WAIT:
+		printf("token found, waiting on action\n");
+		break;
+	case STATE_TOKEN_IDLE:
+		printf("no action given durin token wait(child of wait)\n");
+		break;
+	case STATE_TOKEN_PINOP:
+		printf("executing a pin operation\n");
+		break;
+	case STATE_TOKEN_SERIALIZE:
+		printf("saving data to a file\n");
+		break;
+	case STATE_TOKEN_CHALLENGE:
+		printf("performing a challenge");
+		break;
+	case STATE_TOKEN_ERROR:
+		printf("error occured with card\n");
+		break;	
+	case STATE_FILE:
+		printf("source is defined as file\n");
+		break;
+	case STATE_FILE_READING:
+		printf("Reading the file\n");
+		break;
+	case STATE_FILE_WAIT:
+		printf("done parsing file\n");
+		break;
+	case STATE_CARD_INVALID:
+		printf("card read succesfull but deamed data invalid\n");
+		break;
+	default:
+		exit(TEST_RV_SKIP);
+	}
+}
+static void clearflags(){
+	for (int i=0;i<STATE_COUNT;i++){
+		flags[i]=false;
+	}
 }

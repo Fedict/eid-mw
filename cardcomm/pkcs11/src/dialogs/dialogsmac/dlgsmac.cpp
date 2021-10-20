@@ -618,17 +618,8 @@ DlgRet eIDMW::DlgBadPin(
         
         switch (responseFlags & 0x03)
         {
-            case kCFUserNotificationDefaultResponse:
-                lRet = DLG_OK;
-                break;
             case kCFUserNotificationAlternateResponse:
-                lRet = DLG_CANCEL;
-                break;
-            case kCFUserNotificationOtherResponse:
                 lRet = DLG_RETRY;
-                break;
-            case kCFUserNotificationCancelResponse:
-                lRet = DLG_CANCEL;
                 break;
             default:
                 lRet = DLG_CANCEL;

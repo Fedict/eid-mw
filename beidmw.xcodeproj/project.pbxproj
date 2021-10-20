@@ -117,6 +117,10 @@
 		6CD1B8C721A5A6530005F6E9 /* certificate_checked.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CD1B8C021A5A61A0005F6E9 /* certificate_checked.png */; };
 		6CD1B8C821A5A6570005F6E9 /* certificate_large.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CD1B8BF21A5A61A0005F6E9 /* certificate_large.png */; };
 		6CD1B8C921A5A65B0005F6E9 /* certificate_warn.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CD1B8C121A5A61A0005F6E9 /* certificate_warn.png */; };
+		6CD6661A26D006D2007DE98D /* cardAment2conv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6CD6661626D006D2007DE98D /* cardAment2conv.cpp */; };
+		6CD6661B26D006D2007DE98D /* cardAment2conv.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CD6661726D006D2007DE98D /* cardAment2conv.h */; };
+		6CD6661C26D006D2007DE98D /* cardAment1conv.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CD6661826D006D2007DE98D /* cardAment1conv.h */; };
+		6CD6661D26D006D2007DE98D /* cardAment1conv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6CD6661926D006D2007DE98D /* cardAment1conv.cpp */; };
 		6CDC504222085AFB0078C7E2 /* readdata_limited.c in Sources */ = {isa = PBXBuildFile; fileRef = 6CDC503C220858980078C7E2 /* readdata_limited.c */; };
 		6CF096A62563E914007501AA /* dataverify.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CF096A42563E914007501AA /* dataverify.h */; };
 		86C0E75821C2586E00602028 /* tlvbuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C0E72721C2586E00602028 /* tlvbuffer.h */; };
@@ -451,6 +455,10 @@
 		6CD1B8C121A5A61A0005F6E9 /* certificate_warn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = certificate_warn.png; path = "plugins_tools/eid-viewer/resources/certificate_warn.png"; sourceTree = SOURCE_ROOT; };
 		6CD1B8C221A5A6470005F6E9 /* state_error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = state_error.png; path = "plugins_tools/eid-viewer/resources/state_error.png"; sourceTree = SOURCE_ROOT; };
 		6CD1B8C321A5A6470005F6E9 /* state_noreaders.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = state_noreaders.png; path = "plugins_tools/eid-viewer/resources/state_noreaders.png"; sourceTree = SOURCE_ROOT; };
+		6CD6661626D006D2007DE98D /* cardAment2conv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cardAment2conv.cpp; sourceTree = "<group>"; };
+		6CD6661726D006D2007DE98D /* cardAment2conv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cardAment2conv.h; sourceTree = "<group>"; };
+		6CD6661826D006D2007DE98D /* cardAment1conv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cardAment1conv.h; sourceTree = "<group>"; };
+		6CD6661926D006D2007DE98D /* cardAment1conv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cardAment1conv.cpp; sourceTree = "<group>"; };
 		6CDC503C220858980078C7E2 /* readdata_limited.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = readdata_limited.c; path = tests/unit/readdata_limited.c; sourceTree = "<group>"; };
 		6CF096A42563E914007501AA /* dataverify.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dataverify.h; path = "plugins_tools/eid-viewer/dataverify.h"; sourceTree = SOURCE_ROOT; };
 		7F22A3D60F84D6B0001AD228 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -727,6 +735,10 @@
 		65270A0C1FE976B7004F326D /* conversions */ = {
 			isa = PBXGroup;
 			children = (
+				6CD6661926D006D2007DE98D /* cardAment1conv.cpp */,
+				6CD6661826D006D2007DE98D /* cardAment1conv.h */,
+				6CD6661626D006D2007DE98D /* cardAment2conv.cpp */,
+				6CD6661726D006D2007DE98D /* cardAment2conv.h */,
 				6C22BB66257E619400E72FF2 /* brexitment1conv.cpp */,
 				6C22BB64257E619400E72FF2 /* brexitment1conv.h */,
 				6C22BB68257E619400E72FF2 /* brexitment2conv.cpp */,
@@ -1040,6 +1052,7 @@
 				65270A3B1FE97991004F326D /* utftranslate.h in Headers */,
 				65270A3C1FE97991004F326D /* oslayer-objc.h in Headers */,
 				65270A3D1FE97991004F326D /* certhelpers.h in Headers */,
+				6CD6661C26D006D2007DE98D /* cardAment1conv.h in Headers */,
 				65270A3E1FE97991004F326D /* eid-viewer.h in Headers */,
 				65314FBD2080E9E20079D0B0 /* workpermitconv.h in Headers */,
 				65270A3F1FE97991004F326D /* macros.h in Headers */,
@@ -1048,6 +1061,7 @@
 				65270A401FE97991004F326D /* oslayer.h in Headers */,
 				8BD62CA121021C6300C28B6D /* toxmlmemberoffamilyconv.h in Headers */,
 				65270A411FE97991004F326D /* verify_cert.h in Headers */,
+				6CD6661B26D006D2007DE98D /* cardAment2conv.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1360,6 +1374,7 @@
 				65270A2D1FE976BE004F326D /* oslayer.c in Sources */,
 				65270A2E1FE976BE004F326D /* backend.c in Sources */,
 				65270A791FE97A2B004F326D /* valdate.cpp in Sources */,
+				6CD6661A26D006D2007DE98D /* cardAment2conv.cpp in Sources */,
 				6C22BB6C257E619400E72FF2 /* brexitment2conv.cpp in Sources */,
 				65270A781FE97A2B004F326D /* specorgconv.cpp in Sources */,
 				65270A6C1FE97A2B004F326D /* xmldoctypeconv.cpp in Sources */,
@@ -1371,6 +1386,7 @@
 				65270A331FE976BE004F326D /* state.c in Sources */,
 				65270A6A1FE97A2B004F326D /* hexnumconv.cpp in Sources */,
 				65270A751FE97A2B004F326D /* hexdecode.cpp in Sources */,
+				6CD6661D26D006D2007DE98D /* cardAment1conv.cpp in Sources */,
 				65270A2C1FE976BE004F326D /* base64dec.c in Sources */,
 				65270A351FE976BE004F326D /* preview.c in Sources */,
 				65270A651FE97A2B004F326D /* xmlspecorgconv.cpp in Sources */,

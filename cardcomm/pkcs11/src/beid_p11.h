@@ -48,6 +48,7 @@
 #define BEID_FILE_CERT_RRN				"3F00DF00503C"
 #define BEID_FILE_CERT_RRNCA			"3F00DF00503D"
 #define BEID_FILE_BASIC_KEY				"3F00DF014040"
+#define BEID_FILE_TOKENINFO				"3F00DF005032"
 
 #define BEID_FIELD_TAG_ID_Version				0x00
 #define BEID_FIELD_TAG_ID_CardNr				0x01
@@ -85,6 +86,10 @@
 #define BEID_FIELD_TAG_ADDR_Street				0x01
 #define BEID_FIELD_TAG_ADDR_ZipCode             0x02
 #define BEID_FIELD_TAG_ADDR_Municipality        0x03
+
+#define BEID_FIELD_TAG_TOKINF_graph				0x00
+#define BEID_FIELD_TAG_TOKINF_elec				0x01
+#define BEID_FIELD_TAG_TOKINF_elecint           0x02
 
 /************************/
 

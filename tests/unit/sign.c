@@ -44,6 +44,46 @@
 #include <openssl/engine.h>
 
 // These were copied from eid-test-ca:derencode.c
+int verify_sig(const unsigned char *sig_in, CK_ULONG siglen, const unsigned char *certificate, size_t certlen, bool is_rsa);
+#endif
+
+int test_key(char* label, CK_SESSION_HANDLE session, CK_SLOT_ID slot); 
+
+TEST_FUNC(sign) {
+	int ret;
+	CK_SESSION_HANDLE session;
+	CK_SLOT_ID slot;
+
+	if(!have_pin()) {
+		fprintf(stderr, "Cannot test signature without a pin code\n");
+		return TEST_RV_SKIP;
+	}
+
+	check_rv(C_Initialize(NULL_PTR));
+
+	if((ret = find_slot(CK_TRUE, &slot)) != TEST_RV_OK) {
+		check_rv(C_Finalize(NULL_PTR));
+		return ret;
+	}
+
+	check_rv(C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session));
+
+	if(!can_enter_pin(slot)) {
+		return TEST_RV_SKIP;
+	}
+
+	if((ret = test_key("Authentication", session, slot)) != TEST_RV_OK) {
+		return ret;
+	}
+	if((ret = test_key("Signature", session, slot)) != TEST_RV_OK) {
+		return ret;
+	}
+
+	check_rv(C_Finalize(NULL_PTR));
+
+	return TEST_RV_OK;
+}
+#if HAVE_OPENSSL
 int verify_sig(const unsigned char *sig_in, CK_ULONG siglen, const unsigned char *certificate, size_t certlen, bool is_rsa) {
 #if OPENSSL_VERSION_NUMBER > 0x10100000L
 	X509 *cert = NULL;
@@ -226,39 +266,4 @@ int test_key(char* label, CK_SESSION_HANDLE session, CK_SLOT_ID slot) {
 #else
 	return TEST_RV_OK;
 #endif
-}
-
-TEST_FUNC(sign) {
-	int ret;
-	CK_SESSION_HANDLE session;
-	CK_SLOT_ID slot;
-
-	if(!have_pin()) {
-		fprintf(stderr, "Cannot test signature without a pin code\n");
-		return TEST_RV_SKIP;
-	}
-
-	check_rv(C_Initialize(NULL_PTR));
-
-	if((ret = find_slot(CK_TRUE, &slot)) != TEST_RV_OK) {
-		check_rv(C_Finalize(NULL_PTR));
-		return ret;
-	}
-
-	check_rv(C_OpenSession(slot, CKF_SERIAL_SESSION, NULL_PTR, NULL_PTR, &session));
-
-	if(!can_enter_pin(slot)) {
-		return TEST_RV_SKIP;
-	}
-
-	if((ret = test_key("Authentication", session, slot)) != TEST_RV_OK) {
-		return ret;
-	}
-	if((ret = test_key("Signature", session, slot)) != TEST_RV_OK) {
-		return ret;
-	}
-
-	check_rv(C_Finalize(NULL_PTR));
-
-	return TEST_RV_OK;
 }
