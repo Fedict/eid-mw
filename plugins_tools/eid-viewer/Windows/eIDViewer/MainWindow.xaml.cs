@@ -56,9 +56,6 @@ namespace eIDViewer
                 Popup myPopup = new Popup();
                 myPopup.IsOpen = true;
 
-                string message = "";
-                string caption = "New Version available";
-
                 string url = "";
                 string releaseNotes = "";
                 int regVal = 0;
@@ -96,7 +93,8 @@ namespace eIDViewer
                 {
                     if (url == "")
                     {
-                        theBackendData.WriteLog("A newer version has been found, but not the url to download it\n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
+                        theBackendData.WriteLog("A newer version of the eID Viewer has been found, but not the url to download it\n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
+                        theBackendData.WriteLog("Newer version should be available at https://eid.belgium.be\n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
                         return;
                     }
                     //for safety, we do not accept all urls
@@ -106,9 +104,8 @@ namespace eIDViewer
                         string aboutMessage = "\n" + eIDViewer.Resources.ApplicationStringResources.newVersionDownload;
                         string caption = eIDViewer.Resources.ApplicationStringResources.newVersionDownloadTitle;
 
-
-                        MessageBoxResult result = MessageBox.Show(aboutMessage, caption, MessageBoxButton.YesNo, MessageBoxImage.Information, MessageBoxResult.Cancel);
-                        if (result == MessageBoxResult.Yes)
+                        MessageBoxResult result = MessageBox.Show(aboutMessage, caption, MessageBoxButton.OKCancel, MessageBoxImage.Information, MessageBoxResult.Cancel);
+                        if (result == MessageBoxResult.OK)
                         {
                             try
                             {
