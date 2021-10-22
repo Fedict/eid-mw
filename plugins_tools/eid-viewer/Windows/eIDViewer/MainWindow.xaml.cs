@@ -82,7 +82,9 @@ namespace eIDViewer
                 theBackendData.startupVersionCheck = true;
                 theBackendData.WriteLog("starting the online version check..\n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
 
-                if (!Version.getUpdateUrl(out bool updateNeeded, ref url, ref releaseNotes))
+                string language = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName.ToString();
+
+                if (!Version.getUpdateUrl(out bool updateNeeded, language, ref url, ref releaseNotes))
                 {
                     //no updated version found, report this in the log
                     theBackendData.WriteLog("failed to check for online update\n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
@@ -109,7 +111,7 @@ namespace eIDViewer
                         {
                             try
                             {
-                                System.Diagnostics.Process.Start("https://eid.belgium.be");
+                                System.Diagnostics.Process.Start(url);
                             }
                             catch (Exception ex)
                             {

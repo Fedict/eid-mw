@@ -78,17 +78,13 @@ namespace eIDViewer
         }
 
 
-        public static void CheckAttributeValue(ref XmlTextReader textReader, string elementName, string attributeName, ref string attributeValue)
+        public static void CheckAttributeValue(ref XmlTextReader textReader, string attributeName, ref string attributeValue)
         {
-            if (String.Equals(textReader.Name, elementName, StringComparison.Ordinal))
+            attributeValue = "";
+            if (textReader.MoveToAttribute(attributeName))
             {
-                while (textReader.MoveToNextAttribute())
-                {
-                    if (String.Equals(textReader.Name, attributeName, StringComparison.Ordinal))
-                    {
-                        attributeValue = textReader.Value;
-                    }
-                }
+                attributeValue = textReader.Value;
+                textReader.MoveToElement();
             }
         }
 
@@ -246,23 +242,66 @@ namespace eIDViewer
             return false;
         }
 
-        public static bool getUpdateUrl(out bool updateNeeded, ref string url, ref string releaseNotes)
+        /*
+         * 
+  <beid>
+	<OS name="windows">
+		<comp name="eid-viewer">
+			<latest-version major="5" minor="1" build="20">
+				<latest-url	url = "https://eid.belgium.be/" url_nl = "https://eid.belgium.be/nl" url_fr = "https://eid.belgium.be/fr" url_de = "https://eid.belgium.be/de" url_en = "https://eid.belgium.be/en"/>
+				<release-notes url = "https://eid.belgium.be/sites/default/files/software/RN5020.pdf"/>
+				<auto-upgrade-versions>
+					<auto-upgrade-version>
+						<min major="5" minor="0" build="6"/>
+						<max major="5" minor="0" build="8"/>
+					</auto-upgrade-version>
+					<auto-upgrade-version>
+						<min major="5" minor="0" build="10"/>
+						<max major="5" minor="2" build="16"/>
+					</auto-upgrade-version>
+				</auto-upgrade-versions>
+			</latest-version>
+			<latest-supported-OS>
+				<oldOS version = "6.1">
+					<oldOS-latest-version major="4" minor="4" build="20">
+						<oldOS-latest-url 	url = "https://eid.belgium.be/" url_nl = "https://eid.belgium.be/nl" url_fr = "https://eid.belgium.be/fr" url_de = "https://eid.belgium.be/de" url_en = "https://eid.belgium.be/en"/>
+						<oldOS-release-notes url = "https://eid.belgium.be/sites/default/files/software/RN4420.pdf"/>
+					</oldOS-latest-version>
+					
+				</oldOS>
+				<oldOS version = "6.2">
+					<oldOS-latest-version major="5" minor="1" build="2">
+						<oldOS-latest-url 	url = "https://eid.belgium.be/" url_nl = "https://eid.belgium.be/nl" url_fr = "https://eid.belgium.be/fr" url_de = "https://eid.belgium.be/de" url_en = "https://eid.belgium.be/en"/>
+						<oldOS-release-notes url = "https://eid.belgium.be/sites/default/files/software/RN502.pdf"/>
+					</oldOS-latest-version>
+				</oldOS>
+			</latest-supported-OS>
+		</eid-viewer>
+	</OS>
+	<OS name="macOS">
+    </OS>
+</beid>
+         * 
+         * */
+
+        public static bool getUpdateUrl(out bool updateNeeded, string lang, ref string url, ref string releaseNotes)
         {
             XmlTextReader textReader = new XmlTextReader("D:\\\\eidversion.xml");
             updateNeeded = false;
             bool keepParsing = true;
+            url = "";
 
             try
             {
-                //jump to the windows section
+                //jump to the <OS name="windows"> section
                 if (!jumpToSubElement(ref textReader, "OS", "name", "windows", "beid"))
                     return false;
 
-                //in the windows section, jump to the eid-viewer section
+                //in the windows section, jump to the <comp name="eid-viewer"> section
                 if (!jumpToSubElement(ref textReader, "comp", "name", "eid-viewer", "beid"))
                     return false;
 
-                //within the "Windows' eid-viewer" element, search the subelements
+                //within the <OS name="windows"> <comp name="eid-viewer"> element, search for the subelements <latest-version> and <latest-supported-OS>
                 //walk trough all the nodes
                 while (textReader.Read() && keepParsing)
                 {
@@ -270,7 +309,7 @@ namespace eIDViewer
                     {
                         case XmlNodeType.Element:
                             //check if this viewer's version is within the update range
-                            //do not return yet, if the OS this viewer is running on is part of the latest-supported-OS,
+                            //do not return when done, if the OS this viewer is running on is part of the latest-supported-OS,
                             //a different update (or none) is required
                             if (String.Equals(textReader.Name, "latest-version", StringComparison.Ordinal))
                             {
@@ -281,18 +320,31 @@ namespace eIDViewer
                                     //there is a higher version number present, now fill in all data from the xml (url, release_notes)
                                     //verify if our version number is within an auto update range
                                     while (textReader.Read() && keepParsing)
-                                    {
+                                    {                                        
                                         switch (textReader.NodeType)
                                         {
                                             case XmlNodeType.Element:
-                                                //check if this element contains the url attribute, if so, store it in the url string
-                                                CheckAttributeValue(ref textReader, "latest-url", "url", ref url);
-
-                                                //check if this element contains the url attribute, if so, store it in the url string
-                                                CheckAttributeValue(ref textReader, "release-notes", "url", ref releaseNotes);
 
                                                 //parse the multiple version ranges
-                                                if (String.Equals(textReader.Name, "auto-upgrade-versions", StringComparison.Ordinal))
+                                                if (String.Equals(textReader.Name, "latest-url", StringComparison.Ordinal))
+                                                {
+                                                    //check if this element contains the url attribute, if so, store it in the url string
+                                                    CheckAttributeValue(ref textReader, "url_" + lang, ref url);
+                                                    //if no url of this viewer's language is specified, try getting the default url
+                                                    if (url.Equals(""))
+                                                    {
+                                                        CheckAttributeValue(ref textReader,"url", ref url);
+                                                    }
+                                                }
+
+                                                else if (String.Equals(textReader.Name, "release-notes", StringComparison.Ordinal))
+                                                {
+                                                    //check if this element contains the url attribute, if so, store it in the url string
+                                                    CheckAttributeValue(ref textReader, "url", ref releaseNotes);
+                                                }
+
+                                                //parse the multiple version ranges
+                                                else if (String.Equals(textReader.Name, "auto-upgrade-versions", StringComparison.Ordinal))
                                                 {
                                                     if (InAutoUpgradeVersions(ref textReader))
                                                     {
@@ -330,10 +382,11 @@ namespace eIDViewer
                             
                             else if (String.Equals(textReader.Name, "latest-supported-OS", StringComparison.Ordinal))
                             {
-                                string version = Environment.OSVersion.Version.Major.ToString() + "." + Environment.OSVersion.Version.Minor.ToString();
+                                string OSversion = Environment.OSVersion.Version.Major.ToString() + "." + Environment.OSVersion.Version.Minor.ToString();
 
+                                //within the <OS name="windows"> <comp name="eid-viewer"> <latest-supported-OS> element
                                 //try to find sub element version, stop searching when closing element "latest-supported-OS" is reached
-                                if (jumpToSubElement(ref textReader, "oldOS", "version", version, "latest-supported-OS"))
+                                if (jumpToSubElement(ref textReader, "oldOS", "version", OSversion, "latest-supported-OS"))
                                 {
                                     if (jumpToSubElement(ref textReader, "oldOS-latest-version", "oldOS"))
                                     {
@@ -354,12 +407,21 @@ namespace eIDViewer
                                                 switch (textReader.NodeType)
                                                 {
                                                     case XmlNodeType.Element:
-                                                        //check if this element contains the url attribute, if so, store it in the url string
-                                                        CheckAttributeValue(ref textReader, "oldOS-latest-url", "url", ref url);
-
-                                                        //check if this element contains the url attribute, if so, store it in the url string
-                                                        CheckAttributeValue(ref textReader, "oldOS-release-notes", "url", ref releaseNotes);
-
+                                                        if (String.Equals(textReader.Name, "oldOS-latest-url", StringComparison.Ordinal))
+                                                        {
+                                                            //check if this element contains the url attribute, if so, store it in the url string
+                                                            CheckAttributeValue(ref textReader, "url_" + lang, ref url);
+                                                            //if no url of this viewer's language is specified, try getting the default url
+                                                            if (url.Equals(""))
+                                                            {
+                                                                CheckAttributeValue(ref textReader, "url", ref url);
+                                                            }
+                                                        }
+                                                        else if (String.Equals(textReader.Name, "oldOS-release-notes", StringComparison.Ordinal))
+                                                        {
+                                                            //check if this element contains the url attribute, if so, store it in the url string
+                                                            CheckAttributeValue(ref textReader, "url", ref releaseNotes);
+                                                        }
                                                         break;
 
                                                     case XmlNodeType.EndElement:
