@@ -19,11 +19,11 @@
 @"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:build /property:Configuration=PKCS11_FF_Release /Property:Platform=x86 "%~dp0..\..\VS_2019\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
 
-@echo [INFO] Building PKCS11_FF x64"
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:clean /property:Configuration=PKCS11_FF_Release /Property:Platform=x64 "%~dp0..\..\VS_2019\beid.sln"
-@if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:build /property:Configuration=PKCS11_FF_Release /Property:Platform=x64 "%~dp0..\..\VS_2019\beid.sln"
-@if "%ERRORLEVEL%" == "1" goto msbuild_failed
+:: @echo [INFO] Building PKCS11_FF x64"
+:: @"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:clean /property:Configuration=PKCS11_FF_Release /Property:Platform=x64 "%~dp0..\..\VS_2019\beid.sln"
+:: @if "%ERRORLEVEL%" == "1" goto msbuild_failed
+:: @"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:build /property:Configuration=PKCS11_FF_Release /Property:Platform=x64 "%~dp0..\..\VS_2019\beid.sln"
+:: @if "%ERRORLEVEL%" == "1" goto msbuild_failed
 
 
 @echo [INFO] Building eIDViewer Win32"
@@ -32,11 +32,11 @@
 @"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:build /property:Configuration=Release /Property:Platform=x86 "%~dp0..\..\plugins_tools\eid-viewer\Windows\VS_2019\eIDViewer.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
 
-@echo [INFO] Building eIDViewer x64"
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:clean /property:Configuration=Release /Property:Platform=x64 "%~dp0..\..\plugins_tools\eid-viewer\Windows\VS_2019\eIDViewer.sln"
-@if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:build /property:Configuration=Release /Property:Platform=x64 "%~dp0..\..\plugins_tools\eid-viewer\Windows\VS_2019\eIDViewer.sln"
-@if "%ERRORLEVEL%" == "1" goto msbuild_failed
+:: @echo [INFO] Building eIDViewer x64"
+:: @"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:clean /property:Configuration=Release /Property:Platform=x64 "%~dp0..\..\plugins_tools\eid-viewer\Windows\VS_2019\eIDViewer.sln"
+:: @if "%ERRORLEVEL%" == "1" goto msbuild_failed
+:: @"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:build /property:Configuration=Release /Property:Platform=x64 "%~dp0..\..\plugins_tools\eid-viewer\Windows\VS_2019\eIDViewer.sln"
+:: @if "%ERRORLEVEL%" == "1" goto msbuild_failed
 
 
 :: create the MSI installers
@@ -56,13 +56,13 @@ set OUR_CURRENT_PATH="%cd%"
 @echo [INFO] copy 32 bit msi installer
 copy %~dp0..\..\installers\eid-viewer\Windows\bin\beidViewer.msi %~dp0
 
-@call "%~dp0..\..\installers\eid-viewer\Windows\build_msi_eidviewer64.cmd"
-@if %ERRORLEVEL%==1 goto end_resetpath_with_error
-@echo [INFO] sign 64 bit msi installer
-"%SIGNTOOL_PATH%\signtool" sign /a /n "ZetesTestCert" /v "%~dp0..\..\installers\eid-viewer\Windows\bin\x64\beidViewer64.msi"
-@if %ERRORLEVEL%==1 goto signtool_failed
-@echo [INFO] copy 64 bit msi installer
-copy %~dp0..\..\installers\eid-viewer\Windows\bin\x64\beidViewer64.msi %~dp0
+:: @call "%~dp0..\..\installers\eid-viewer\Windows\build_msi_eidviewer64.cmd"
+:: @if %ERRORLEVEL%==1 goto end_resetpath_with_error
+:: @echo [INFO] sign 64 bit msi installer
+:: "%SIGNTOOL_PATH%\signtool" sign /a /n "ZetesTestCert" /v "%~dp0..\..\installers\eid-viewer\Windows\bin\x64\beidViewer64.msi"
+:: @if %ERRORLEVEL%==1 goto signtool_failed
+:: @echo [INFO] copy 64 bit msi installer
+:: copy %~dp0..\..\installers\eid-viewer\Windows\bin\x64\beidViewer64.msi %~dp0
 
 @cd "%OUR_CURRENT_PATH%"
 
