@@ -286,7 +286,7 @@ namespace eIDViewer
 
         public static bool getUpdateUrl(out bool updateNeeded, string lang, ref string url, ref string releaseNotes)
         {
-            XmlTextReader textReader = new XmlTextReader("D:\\\\eidversion.xml");
+            XmlTextReader textReader = new XmlTextReader("D:\\\\eidversions.xml");
             updateNeeded = false;
             bool keepParsing = true;
             url = "";
@@ -370,15 +370,17 @@ namespace eIDViewer
                                 }
                                 else
                                 {
-                                    //no need to update, no error
+                                    //no need to update (no newer version) , no error
                                     return true;
                                 }
                             }
 
+                            /*currently we do not support this feature, due to the items below
+
                             //wait till you find the "OS" tag with the currentOS attribute
                             //beware, below .Net 5.0, Environment.OSversion may be wrong when running in Windows compatibility mode,
                             //also needs a manual manifest file in order to use deprecated version checks (to distinguish versions above 6.2)
-                            //this feature is currently unused in the xml file
+                            //this feature is currently unused in the xml file, and no old release section currently exists on eid.belgium.be
                             
                             else if (String.Equals(textReader.Name, "latest-supported-OS", StringComparison.Ordinal))
                             {
@@ -441,6 +443,8 @@ namespace eIDViewer
                                     }
                                 }
                             }    
+                            */
+                            
                             break;
 
                         case XmlNodeType.EndElement:
@@ -457,8 +461,9 @@ namespace eIDViewer
             }
             catch (System.Xml.XmlException e)
             {
-                //do not show xml errors to the user
-                //MessageBox.Show(e.ToString());
+                eIDViewer.BackendDataViewModel theBackendData = (BackendDataViewModel)(App.Current.Resources["eIDViewerBackendObj"]);
+                theBackendData.WriteLog("error parsing xml version file: \n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
+                theBackendData.WriteLog(e.ToString() + "\n", eid_vwr_loglevel.EID_VWR_LOG_DETAIL);
                 return false; //xml corrupt?
             }
             catch
