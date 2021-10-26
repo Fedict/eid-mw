@@ -20,7 +20,7 @@ namespace eIDViewer
                 switch (textReader.NodeType)
                 {
                     case XmlNodeType.Element:
-                        //wait till you find the "OS" tag with the "Windows" attribute
+                        //wait till you find the elementName tag with the attributeName attribute
                         if (String.Equals(textReader.Name, elementName, StringComparison.Ordinal))
                         {
                             while (textReader.MoveToNextAttribute())
