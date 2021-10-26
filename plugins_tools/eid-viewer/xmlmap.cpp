@@ -60,6 +60,7 @@ struct attribute_desc cardA_attributes[] = {
 /* Child elements of the <card> element */
 static struct element_desc card_elements[] = {
 	{TEXT("deliverymunicipality"), TEXT("issuing_municipality"), 1, 0, NULL, NULL},
+	{TEXT("protection_date_country"), TEXT("date_and_country_of_protection"), 0, 0, NULL, NULL},
 	{TEXT("workpermit"), NULL, 0, 0, NULL, workpermit_attributes},
 	{TEXT("brexit"), NULL, 0, 0, NULL, brexit_attributes},
 	{TEXT("cardA"), NULL, 0, 0, NULL, cardA_attributes},
