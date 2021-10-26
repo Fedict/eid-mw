@@ -126,6 +126,8 @@ int cache_clear()
 {
 	cache.clear();
 
+	//set graphical version back to default, as old .eid files will not have it set
+	convert_set_graphvers(EID_VWR_GRAPH_VERSION_NONE);
 	return 0;
 }
 
