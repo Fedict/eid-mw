@@ -41,9 +41,9 @@ DocTypeConvertor::DocTypeConvertor()
 		// card J");
 		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_DE][TEXT("21")] = TEXT("J. Mobile ICT");
 		// card M");
-		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_DE][TEXT("22")] = TEXT("AUFENTHALSTITEL");
+		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_DE][TEXT("22")] = TEXT("M. Artikel 50 VEU");
 		// card N");
-		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_DE][TEXT("23")] = TEXT("KLEINEN GRENZVERKEHR");
+		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_DE][TEXT("23")] = TEXT("N. Art. 50 VEU – Grenzg\u00e4nger");
 		// card K");
 		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_DE][TEXT("27")] = TEXT("K. NIEDERLASSUNG");
 		// card L");
@@ -92,9 +92,9 @@ DocTypeConvertor::DocTypeConvertor()
 		// card J");
 		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_EN][TEXT("21")] = TEXT("J. Mobile ICT");
 		// card M");
-		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_EN][TEXT("22")] = TEXT("RESIDENCE PERMIT");
+		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_EN][TEXT("22")] = TEXT("M. Article 50 TUE");
 		// card N");
-		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_EN][TEXT("23")] = TEXT("LOCAL BORDER TRAFFIC");
+		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_EN][TEXT("23")] = TEXT("N. Art. 50 TUE – Local Border Traffic");
 		// card K");
 		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_EN][TEXT("27")] = TEXT("K. ESTABLISHMENT");
 		// card L");
@@ -143,9 +143,9 @@ DocTypeConvertor::DocTypeConvertor()
 		// card J");
 		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_FR][TEXT("21")] = TEXT("J. Mobile ICT");
 		// card M");
-		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_FR][TEXT("22")] = TEXT("TITRE DE SEJOUR");
+		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_FR][TEXT("22")] = TEXT("M. Article 50 TUE");
 		// card N");
-		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_FR][TEXT("23")] = TEXT("PETIT TRAFIC FRONTALIER");
+		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_FR][TEXT("23")] = TEXT("N. Art. 50 TUE – Travailleur frontalier");
 		// card K");
 		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_FR][TEXT("27")] = TEXT("K. ETABLISSEMENT");
 		// card L");
@@ -194,9 +194,9 @@ DocTypeConvertor::DocTypeConvertor()
 		// card J");
 		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_NL][TEXT("21")] = TEXT("J. Mobile ICT");
 		// card M");
-		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_NL][TEXT("22")] = TEXT("VERBLIJFSTITEL");
+		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_NL][TEXT("22")] = TEXT("M. Artikel 50 VEU");
 		// card N");
-		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_NL][TEXT("23")] = TEXT("KLEIN GRENSVERKEER");
+		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_NL][TEXT("23")] = TEXT("N. Art. 50 VEU – Grensarbeider");
 		// card K");
 		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_NL][TEXT("27")] = TEXT("K. VESTIGING");
 		// card L");
@@ -232,6 +232,24 @@ DocTypeConvertor::DocTypeConvertor()
 		conversions[EID_VWR_GRAPH_VERSION_EIGHT][EID_VWR_LANG_FR][TEXT("21")] = TEXT("J. MOBILE ICT");
 		// card J");
 		conversions[EID_VWR_GRAPH_VERSION_EIGHT][EID_VWR_LANG_NL][TEXT("21")] = TEXT("J. MOBILE ICT");
+
+		// card M");
+		conversions[EID_VWR_GRAPH_VERSION_EIGHT][EID_VWR_LANG_DE][TEXT("22")] = TEXT("M. ARTICLE 50 VEU");
+		// card M");
+		conversions[EID_VWR_GRAPH_VERSION_EIGHT][EID_VWR_LANG_EN][TEXT("22")] = TEXT("M. ARTICLE 50 TEU");
+		// card M");
+		conversions[EID_VWR_GRAPH_VERSION_EIGHT][EID_VWR_LANG_FR][TEXT("22")] = TEXT("M. ARTICLE 50 TUE");
+		// card M");
+		conversions[EID_VWR_GRAPH_VERSION_EIGHT][EID_VWR_LANG_NL][TEXT("22")] = TEXT("M. ARTIKEL 50 VEU");
+
+		// card N");
+		conversions[EID_VWR_GRAPH_VERSION_EIGHT][EID_VWR_LANG_DE][TEXT("23")] = TEXT("N. ART. 50 VEU – GRENZGANGER");
+		// card N");
+		conversions[EID_VWR_GRAPH_VERSION_EIGHT][EID_VWR_LANG_EN][TEXT("23")] = TEXT("N. ART. 50 TUE – LOCAL BORDER TRAFFIC");
+		// card N");
+		conversions[EID_VWR_GRAPH_VERSION_EIGHT][EID_VWR_LANG_FR][TEXT("23")] = TEXT("N. ART. 50 TUE – TRAVAILLEUR FRONTALIER");
+		// card N");
+		conversions[EID_VWR_GRAPH_VERSION_EIGHT][EID_VWR_LANG_NL][TEXT("23")] = TEXT("N. ART. 50 VEU – GRENSARBEIDER");
 
 	}
 }
