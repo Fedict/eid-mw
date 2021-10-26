@@ -19,9 +19,9 @@ namespace eIDViewer
             theBackendData.WriteRegistryStringValue("SOFTWARE\\BEID\\general", "language", language);
         }
 
-        public void StoreStartupVersionCheck(int startupCheck)
+        public bool StoreStartupVersionCheck(int startupCheck)
         {
-            theBackendData.WriteRegistryDwordValue("SOFTWARE\\BEID\\eidviewer", "startup_version_check", startupCheck);
+            return theBackendData.WriteRegistryDwordValue("SOFTWARE\\BEID\\eidviewer", "startup_version_check", startupCheck);
         }
 
         public void SetLanguageNL()

@@ -78,7 +78,7 @@ namespace eIDViewer
                     return;
                 }
 
-                //Do the version check
+                //Do the version check, as the "SOFTWARE\BEID\eidviewer\startup_version_check" registry value (DWORD) is set
                 theBackendData.startupVersionCheck = true;
                 theBackendData.WriteLog("starting the online version check..\n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
 
@@ -542,14 +542,32 @@ namespace eIDViewer
 
         private void VersionMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            //Store the chosen setting in the registry
-            if (theBackendData.startupVersionCheck)
+            //switch the startupVersionCheck setting and store it in the registry
+            if (theBackendData.startupVersionCheck == true)
             {
-                StoreStartupVersionCheck(0);
+                if (StoreStartupVersionCheck(0))
+                {
+                    theBackendData.startupVersionCheck = false; 
+                }                
+                else
+                {
+                    //storing the registry value failed, make sure the UI reflects this
+                    theBackendData.startupVersionCheck = true;
+                    theBackendData.WriteLog("Failed storing the startupversioncheck value in the registry, so not changing it\n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+                }
             }
             else
             {
-                StoreStartupVersionCheck(1);
+                if(StoreStartupVersionCheck(1))
+                {
+                    theBackendData.startupVersionCheck = true;
+                }
+                else
+                {
+                    //storing the registry value failed, make sure the UI reflects this
+                    theBackendData.startupVersionCheck = false;
+                    theBackendData.WriteLog("Failed storing the startupversioncheck value in the registry, so not changing it\n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+                }                
             }
         }
     }

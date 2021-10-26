@@ -171,17 +171,19 @@ namespace eIDViewer
             }
         }
 
-        public void WriteRegistryDwordValue(string subkey, string valueName, int dwordValue)
+        public bool WriteRegistryDwordValue(string subkey, string valueName, int dwordValue)
         {
             string keyName = "HKEY_CURRENT_USER\\" + subkey;
             try
             {
                 Registry.SetValue(keyName, valueName, dwordValue, RegistryValueKind.DWord);
+                return true;
             }
 
             catch (Exception e)
             {
                 this.WriteLog("Exception" + e.Message + " caught when trying to write to registry key " + keyName, eid_vwr_loglevel.EID_VWR_LOG_COARSE);
+                return false;
             }
         }
 
