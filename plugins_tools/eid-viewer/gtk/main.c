@@ -94,8 +94,8 @@ static void uistatus(gboolean spin, char* data, ...) {
 void check_update() {
 	long length;
 	void *handle;
-	//char *xml = (char*)perform_http_request("https://eid.belgium.be/sites/default/files/software/eidversions.xml", &length, &handle);
-	char *xml = (char*)perform_http_request("https://foo.bar/eidversions.xml", &length, &handle);
+	char *xml = (char*)perform_http_request("https://eid.belgium.be/sites/default/files/software/eidversions.xml", &length, &handle);
+	if(!xml) return;
 	struct upgrade_info *info = eid_vwr_upgrade_info(xml, (size_t)length, "linux", "debian11", 5, 0, 28);
 	if(info->have_upgrade) {
 		GObject *have_upgrade = gtk_builder_get_object(builder, "have_upgrade");
