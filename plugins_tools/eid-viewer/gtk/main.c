@@ -23,6 +23,8 @@
 #include "print.h"
 #include "gtk_main.h"
 #include "dataverify.h"
+#include "check_version.h"
+#include "certs.h"
 
 #if GTK_CHECK_VERSION(3, 96, 0)
 #define gtk_style_context_get_color(ct, s, cr) gtk_style_context_get_color(ct, cr)
@@ -32,6 +34,8 @@
 #ifndef _
 #define _(s) gettext(s)
 #endif
+
+#include <check_version.h>
 
 typedef void(*bindisplayfunc)(const char*, const void*, int);
 typedef void(*clearfunc)(char*);
@@ -87,6 +91,18 @@ static void uistatus(gboolean spin, char* data, ...) {
 	g_main_context_invoke(NULL, realstatus, update);
 }
 
+void check_update() {
+	long length;
+	void *handle;
+	//char *xml = (char*)perform_http_request("https://eid.belgium.be/sites/default/files/software/eidversions.xml", &length, &handle);
+	char *xml = (char*)perform_http_request("https://foo.bar/eidversions.xml", &length, &handle);
+	struct upgrade_info *info = eid_vwr_upgrade_info(xml, (size_t)length, "linux", "debian11", 5, 0, 28);
+	if(info->have_upgrade) {
+		GObject *have_upgrade = gtk_builder_get_object(builder, "have_upgrade");
+		g_object_set_threaded(G_OBJECT(have_upgrade), "active", (void*)TRUE, NULL); 
+	}
+}
+
 /* Handle "state changed" elements */
 static void newstate(enum eid_vwr_states s) {
 	GObject *open, *save, *print, *close, *pintest, *pinchg, *validate;
@@ -111,6 +127,7 @@ static void newstate(enum eid_vwr_states s) {
 		case STATE_LIBOPEN:
 		case STATE_CALLBACKS:
 			uistatus(TRUE, _("Initialising"));
+			check_update();
 			return;
 		case STATE_READY:
 			uistatus(FALSE, _("Ready to read identity card"));

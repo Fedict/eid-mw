@@ -44,6 +44,7 @@ static GdkPixbuf* good_certificate;
 static GdkPixbuf* bad_certificate;
 static GdkPixbuf* warn_certificate;
 static GdkPixbuf* unchecked_certificate;
+static pthread_once_t once = PTHREAD_ONCE_INIT;
 static pxProxyFactory *pf;
 
 /* Returns a GtkTreeIter for the part of the tree model that refers to the
@@ -170,7 +171,7 @@ struct recvdata {
 static size_t appendmem(char *ptr, size_t size, size_t nmemb, void* data) {
 	struct recvdata *str = (struct recvdata*) data;
 	size_t realsize = size * nmemb;
-	unsigned char *p = realloc(str->data, str->len + realsize);
+	unsigned char *p = realloc(str->data, str->len + realsize + 1);
 
 	if(!p) {
 		return 0;
@@ -178,12 +179,18 @@ static size_t appendmem(char *ptr, size_t size, size_t nmemb, void* data) {
 	str->data = p;
 	memcpy(str->data + str->len, ptr, realsize);
 	str->len += realsize;
+	str->data[str->len] = '\0';
 
 	return realsize;
 }
 
 static const void* perform_curl_request(char *url, CURL *curl, long *retlen) {
 	int i=0;
+	
+	pthread_once(&once, create_proxy_factory);
+	if(!pf) {
+		return NULL;
+	}
 	char** proxies = px_proxy_factory_get_proxies(pf, url);
 	void* retval;
 	CURLcode curl_res;
@@ -195,7 +202,7 @@ static const void* perform_curl_request(char *url, CURL *curl, long *retlen) {
 	curl_easy_setopt(curl, CURLOPT_WRITEDATA, dat);
 	do {
 		if((curl_res = curl_easy_perform(curl)) != CURLE_OK) {
-			uilog(EID_VWR_LOG_COARSE, "Could not perform OCSP request (with proxy: %s): %s",
+			uilog(EID_VWR_LOG_COARSE, "Could not perform HTTP request (with proxy: %s): %s",
 					proxies[i] ? "none" : proxies[i],
 					curl_easy_strerror(curl_res));
 		}
@@ -247,7 +254,7 @@ static const void* perform_ocsp_request(char* url, void* data, long datlen, long
 	return retval;
 }
 
-static const void* perform_http_request(char* url, long *retlen, void** handle) {
+const void* perform_http_request(char* url, long *retlen, void** handle) {
 	CURL *curl = curl_easy_init();
 	return (*handle = (void*)perform_curl_request(url, curl, retlen));
 }
@@ -325,7 +332,6 @@ static enum eid_vwr_result check_cert(char* which) {
 #define worst(res, new) (res == EID_VWR_RES_FAILED ? res : new)
 
 static void* check_certs_thread(void* splat G_GNUC_UNUSED) {
-	static pthread_once_t once = PTHREAD_ONCE_INIT;
 	enum eid_vwr_result res = EID_VWR_RES_UNKNOWN;
 	enum eid_vwr_result res_root = EID_VWR_RES_UNKNOWN;
 
