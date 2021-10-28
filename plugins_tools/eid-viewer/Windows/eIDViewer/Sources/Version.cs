@@ -286,7 +286,7 @@ namespace eIDViewer
 
         public static bool getUpdateUrl(out bool updateNeeded, string lang, ref string url, ref string releaseNotes)
         {
-            XmlTextReader textReader = new XmlTextReader("D:\\\\eidversions.xml");
+            XmlTextReader textReader = new XmlTextReader("https://eid.belgium.be/sites/default/files/software/eidversions.xml");
             updateNeeded = false;
             bool keepParsing = true;
             url = "";
