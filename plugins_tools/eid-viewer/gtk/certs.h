@@ -11,5 +11,6 @@ GtkTreeModel *certificates_get_model();
 void certexport(GtkMenuItem * mi, gpointer user_data);
 void certdetail(GtkMenuItem * mi, gpointer user_data);
 void validate_all(gpointer event_source, gpointer user_data);
+const void* perform_http_request(char *url, long *retlen, void** handle);
 
 #endif
