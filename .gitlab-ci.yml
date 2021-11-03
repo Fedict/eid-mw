@@ -434,12 +434,12 @@ validate:validation:linux:firefox:
   - build:ubuntu_lts_64
   - build:ubuntu_lts_32
 
-validate:validation:macos:firefox:
-  stage: validate
-  extends: .validation:macos:firefox
-  dependencies:
-  - build:macos
-  allow_failure: true
+#Validate:validation:macos:safari:
+#  stage: validate
+#  extends: .validation:macos:safari
+#  dependencies:
+#  - build:macos
+#  allow_failure: true
 
 validate:validation:macos:google:
   stage: validate

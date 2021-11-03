@@ -3,15 +3,21 @@
   - robot
   - macos
   script:
-  - osascript $MACOS_BASEDIR/tests/browsertests/Mac/InstallAddonNightly.applescript
-  - osascript $MACOS_BASEDIR/tests/browsertests/Mac/TestNightly.applescript "https://pfsense.pass.lan:20443" "1234"
+  - osascript $MACOS_BASEDIR/tests/browsertests/Mac/TestNightly.applescript "https://172.16.57.98" "1234"
+
+.validation:macos:safari:
+  tags:
+  - robot
+  - macos
+  script:
+  - osascript $MACOS_BASEDIR/tests/browsertests/Mac/TestSafari.applescript "https://172.16.57.98" "1234"
 
 .validation:macos:google:
   tags:
   - robot
   - macos
   script:
-  - osascript $MACOS_BASEDIR/tests/browsertests/Mac/TestCanary.applescript "https://pfsense.pass.lan:20443" "1234"
+  - osascript $MACOS_BASEDIR/tests/browsertests/Mac/TestCanary.applescript "https://172.16.57.98" "1234"
 
 .robot:macos:
   variables:
