@@ -1,21 +1,31 @@
-on run (pincode)
+on run {link, pin}
 	tell application "Safari"
 		activate
-		set URL of front document to "https://iamapps.belgium.be/tma/?lang=nl"
+		set URL of front document to link
 	end tell
 	delay 3
-	tell application "System Events"
-		click UI element "Start test" of UI element 1 of group 5 of UI element 1 of scroll area 1 of group 1 of group 1 of tab group 1 of splitter group 1 of window "Aanmelden testen" of application process "Safari"
-		delay 2
-		click UI element "Log in" of group 5 of UI element 1 of scroll area 1 of group 1 of group 1 of tab group 1 of splitter group 1 of window "Log in" of application process "Safari"
-		delay 2
-	end tell
-	tell application "System Events" to tell application process "coreautha"
-		set target to a reference to (text field 1 of window 1)
-		if target exists then
-			click target
-			keystroke "0075"
-			key code 36 (* enter *)
+	try
+		tell application "System Events"
+			key code 36
+			delay 2
+			click window 1 of application process "coreautha"
+			keystroke pin
+			key code 36
+		end tell
+	on error errStr number errorNumber
+		log "failed to load page"
+		tell application "Safari" to quit
+		error errStr number errorNumber
+	end try
+	delay 3
+	tell application "Safari"
+		if name of current tab in window 1 does not contain "phpinfo" then
+			log "failed to get certified access"
+			tell application "Safari" to quit
+			error "Bad certificate" number 401
+		else
+			log "succes"
+			quit
 		end if
 	end tell
 end run
