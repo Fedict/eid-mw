@@ -351,8 +351,8 @@ void showurl(GtkWidget *item G_GNUC_UNUSED, gpointer user_data) {
 	}
 }
 
-void auto_reader(GtkCheckMenuItem *mi, gpointer user_data G_GNUC_UNUSED) {
-	if(gtk_check_menu_item_get_active(mi)) {
+void auto_reader(GtkCheckButton *mi, gpointer user_data G_GNUC_UNUSED) {
+	if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(mi))) {
 		eid_vwr_be_select_slot(1, 0);
 	}
 }
@@ -372,7 +372,6 @@ struct rdri {
 
 static gboolean readers_changed_real(gpointer user_data) {
 	unsigned long i;
-	GtkMenuShell *menu = GTK_MENU_SHELL(gtk_builder_get_object(builder, "menu_reader"));
 	static GtkWidget** items = NULL;
 	struct rdri* info = (struct rdri*) user_data;
 
@@ -382,16 +381,17 @@ static gboolean readers_changed_real(gpointer user_data) {
 		}
 		free(items);
 	}
-	GtkRadioMenuItem* automatic = GTK_RADIO_MENU_ITEM(gtk_builder_get_object(builder, "mi_file_reader_auto"));
+	GtkRadioButton* automatic = GTK_RADIO_BUTTON(gtk_builder_get_object(builder, "reader_auto"));
 	if(info->nreaders == 0) {
 		gtk_widget_set_sensitive(GTK_WIDGET(automatic), FALSE);
 		return FALSE;
 	}
 	gtk_widget_set_sensitive(GTK_WIDGET(automatic), TRUE);
+	GtkBox *box = GTK_BOX(gtk_builder_get_object(builder, "box_cardreaders"));
 	items = malloc(sizeof(GtkWidget*) * (info->nreaders + 1));
 	for(i=0; i<info->nreaders; i++) {
-		items[i] = gtk_radio_menu_item_new_with_label_from_widget(automatic, (char*)info->slots[i].description);
-		gtk_menu_shell_append(menu, items[i]);
+		items[i] = gtk_radio_button_new_with_label_from_widget(automatic, (char*)info->slots[i].description);
+		gtk_container_add(box, items[i]);
 		g_signal_connect(G_OBJECT(items[i]), "toggled", G_CALLBACK(manual_reader), (void*)info->slots[i].slot);
 		gtk_widget_show(GTK_WIDGET(items[i]));
 		free(info->slots[i].description);

@@ -29,8 +29,8 @@ static gboolean append_logline(gpointer ptr) {
 	gchar* tmp;
 
 	tmp = g_strdup_printf("%s%s\n", msg->prefix, msg->msg);
-	if(gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(
-					gtk_builder_get_object(builder, "mi_help_log")))) {
+	if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(
+					gtk_builder_get_object(builder, "show_log")))) {
 		if(msg->l >= (enum eid_vwr_loglevel)gtk_combo_box_get_active(GTK_COMBO_BOX(
 						gtk_builder_get_object(builder, "loglvl")))) {
 			GtkTextView* tv = GTK_TEXT_VIEW(gtk_builder_get_object(builder, "logtext"));
@@ -121,8 +121,8 @@ static void copy_log(GtkButton* but G_GNUC_UNUSED, gpointer user_data G_GNUC_UNU
 }
 
 /* Toggle the visibility of the log tab. Callback for the "show log" menu item */
-static void switch_logtab(GtkCheckMenuItem* item, gpointer user_data G_GNUC_UNUSED) {
-	gboolean active = gtk_check_menu_item_get_active(item);
+static void switch_logtab(GtkCheckButton* item, gpointer user_data G_GNUC_UNUSED) {
+	gboolean active = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(item));
 	if(!active) {
 		clear_log(NULL, NULL);
 	}
@@ -177,10 +177,10 @@ logfunc ui_log_init() {
 	GtkTextIter it;
 	GSettings* sets = get_prefs();
 
-	object = G_OBJECT(gtk_builder_get_object(builder, "mi_help_log"));
+	object = G_OBJECT(gtk_builder_get_object(builder, "show_log"));
 	g_signal_connect(object, "toggled", G_CALLBACK(switch_logtab), object);
 	g_settings_bind(sets, "showlog", object, "active", 0);
-	switch_logtab(GTK_CHECK_MENU_ITEM(object), NULL);
+	switch_logtab(GTK_CHECK_BUTTON(object), NULL);
 
 	object = G_OBJECT(gtk_builder_get_object(builder, "logclearbut"));
 	g_signal_connect(object, "clicked", G_CALLBACK(clear_log), NULL);
