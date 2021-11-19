@@ -35,6 +35,7 @@
 #define _(s) gettext(s)
 #endif
 
+#include <curl/curl.h>
 #include <check_version.h>
 
 typedef void(*bindisplayfunc)(const char*, const void*, int);
@@ -91,6 +92,15 @@ static void uistatus(gboolean spin, char* data, ...) {
 	g_main_context_invoke(NULL, realstatus, update);
 }
 
+gboolean show_upgrade_message(void *user_data) {
+	struct upgrade_info *info = (struct upgrade_info*)user_data;
+	GtkWindow *mainwin = GTK_WINDOW(gtk_builder_get_object(builder, "mainwin"));
+	GtkWidget *dialog = gtk_message_dialog_new(mainwin, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_INFO, GTK_BUTTONS_OK, _("New version of the eID viewer available: version %d.%d.%d at %s"), info->new_version.major, info->new_version.minor, info->new_version.build, info->upgrade_url);
+	gtk_dialog_run(GTK_DIALOG(dialog));
+	gtk_widget_destroy(dialog);
+	return FALSE;
+}
+
 void check_update() {
 	long length;
 	void *handle;
@@ -98,8 +108,7 @@ void check_update() {
 	if(!xml) return;
 	struct upgrade_info *info = eid_vwr_upgrade_info(xml, (size_t)length, "linux", "debian11", 5, 0, 28);
 	if(info->have_upgrade) {
-		GObject *have_upgrade = gtk_builder_get_object(builder, "have_upgrade");
-		g_object_set_threaded(G_OBJECT(have_upgrade), "active", (void*)TRUE, NULL); 
+		g_main_context_invoke(NULL, (GSourceFunc)show_upgrade_message, (void*)info);
 	}
 }
 
