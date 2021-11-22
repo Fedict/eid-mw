@@ -27,7 +27,7 @@ void drag_data_get(GtkWidget * widget, GdkDragContext * ctx,
 		   gpointer user_data);
 #endif
 void validate_toggle(gpointer event_source, gpointer user_data);
-void auto_reader(GtkCheckButton * mi, gpointer user_data);
+void auto_reader(GtkWidget * mi, gpointer user_data);
 void update_doctype(char* label, void* data, int length);
 extern gboolean is_foreigner;
 
