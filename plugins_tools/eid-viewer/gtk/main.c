@@ -323,13 +323,13 @@ static void connect_signals(GtkWidget* window) {
 	g_signal_connect(signaltmp, "activate", G_CALLBACK(do_settings), NULL);
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_file_quit"));
 	g_signal_connect(signaltmp, "activate", G_CALLBACK(gtk_main_quit), NULL);
-	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_lang_de"));
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "language_de"));
 	g_signal_connect(signaltmp, "activate", G_CALLBACK(translate), "de_BE.UTF-8");
-	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_lang_en"));
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "language_en"));
 	g_signal_connect(signaltmp, "activate", G_CALLBACK(translate), "en_US.UTF-8");
-	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_lang_fr"));
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "language_fr"));
 	g_signal_connect(signaltmp, "activate", G_CALLBACK(translate), "fr_BE.UTF-8");
-	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_lang_nl"));
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "language_nl"));
 	g_signal_connect(signaltmp, "activate", G_CALLBACK(translate), "nl_BE.UTF-8");
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_help_about"));
 	g_signal_connect(signaltmp, "activate", G_CALLBACK(showabout), NULL);
