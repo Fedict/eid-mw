@@ -351,16 +351,16 @@ void showurl(GtkWidget *item G_GNUC_UNUSED, gpointer user_data) {
 	}
 }
 
-void auto_reader(GtkCheckButton *mi, gpointer user_data G_GNUC_UNUSED) {
+void auto_reader(GtkWidget *mi, gpointer user_data G_GNUC_UNUSED) {
 	if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(mi))) {
 		eid_vwr_be_select_slot(1, 0);
 	}
 }
 
-static void manual_reader(GtkCheckMenuItem *mi, gpointer slotptr) {
+static void manual_reader(GtkWidget *mi, gpointer slotptr) {
 	intptr_t slot = (intptr_t)slotptr;
 
-	if(gtk_check_menu_item_get_active(mi)) {
+	if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(mi))) {
 		eid_vwr_be_select_slot(0, slot);
 	}
 }
