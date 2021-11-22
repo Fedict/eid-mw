@@ -391,7 +391,7 @@ static gboolean readers_changed_real(gpointer user_data) {
 	items = malloc(sizeof(GtkWidget*) * (info->nreaders + 1));
 	for(i=0; i<info->nreaders; i++) {
 		items[i] = gtk_radio_button_new_with_label_from_widget(automatic, (char*)info->slots[i].description);
-		gtk_container_add(box, items[i]);
+		gtk_container_add(GTK_CONTAINER(box), items[i]);
 		g_signal_connect(G_OBJECT(items[i]), "toggled", G_CALLBACK(manual_reader), (void*)info->slots[i].slot);
 		gtk_widget_show(GTK_WIDGET(items[i]));
 		free(info->slots[i].description);
