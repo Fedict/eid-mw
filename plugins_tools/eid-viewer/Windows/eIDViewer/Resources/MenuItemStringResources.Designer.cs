@@ -151,11 +151,20 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Version check at startup.
+        ///   Looks up a localized string similar to Check version.
         /// </summary>
         public static string fileMenuVersionCheckItem {
             get {
                 return ResourceManager.GetString("fileMenuVersionCheckItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version check at startup.
+        /// </summary>
+        public static string fileMenuVersionStartupCheckItem {
+            get {
+                return ResourceManager.GetString("fileMenuVersionStartupCheckItem", resourceCulture);
             }
         }
     }

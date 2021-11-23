@@ -148,6 +148,9 @@
     <value>eID Card Test Site..</value>
   </data>
   <data name="fileMenuVersionCheckItem" xml:space="preserve">
+    <value>Check version</value>
+  </data>
+  <data name="fileMenuVersionStartupCheckItem" xml:space="preserve">
     <value>Version check at startup</value>
   </data>
 </root>
