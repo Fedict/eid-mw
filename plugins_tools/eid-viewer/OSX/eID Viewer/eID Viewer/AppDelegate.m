@@ -33,6 +33,7 @@
 - (IBAction)closeDetail:(id)sender;
 - (BOOL)application:(NSApplication*)sender openFile:(nonnull NSString *)filename;
 - (IBAction)basicKeyCheck:(id)sender;
+- (IBAction)showPreferences:(id)sender;
 
 @property CertificateStore *certstore;
 @property NSDictionary *bindict;
@@ -72,6 +73,8 @@
 @property (weak) IBOutlet NSButton *memberOfFamilyState;
 @property (weak) IBOutlet NSImageView *readerLogo;
 @property (weak) IBOutlet NSButton *BasicKeyButton;
+@property (weak) IBOutlet NSPanel *prefsPane;
+@property (weak) IBOutlet NSPopUpButton *selectedReader;
 
 @end
 
@@ -617,18 +620,23 @@ failed:
 -(void)readersFound:(NSArray *)readers withSlotNumbers:(NSArray *)slots {
 	NSInteger count = [readers count];
 	assert(count == [slots count]);
-	ReaderMenuItem* newreaders[count];
-	for(int i=0; i<count; i++) {
-		NSInteger slot = [[slots objectAtIndex:i]integerValue];
-		NSString *readerName = [readers objectAtIndex:i];
-		newreaders[i] = [[ReaderMenuItem alloc] initWithTitle:readerName action:@selector(selectManualReader:) keyEquivalent:@"" slotNumber:slot];
-		[_menu_file_reader addItem:newreaders[i]];
-	}
-	[_menu_file_reader_auto setEnabled:count > 0 ? YES : NO];
-	_readerSelections = [NSArray arrayWithObjects:newreaders count:count];
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                ReaderMenuItem* newreaders[count];
+                for(int i=0; i<count; i++) {
+                        NSInteger slot = [[slots objectAtIndex:i]integerValue];
+                        NSString *readerName = [readers objectAtIndex:i];
+                        newreaders[i] = [[ReaderMenuItem alloc] initWithTitle:readerName action:@selector(selectManualReader:) keyEquivalent:@"" slotNumber:slot];
+                        [[_selectedReader menu] addItem:newreaders[i]];
+                }
+                [_menu_file_reader_auto setEnabled:count > 0 ? YES : NO];
+                _readerSelections = [NSArray arrayWithObjects:newreaders count:count];
+        }];
 }
 
 - (IBAction)closeDetail:(id)sender {
 	[self.window endSheet:_CertDetailSheet];
+}
+- (IBAction)showPreferences:(id)sender {
+        [_prefsPane setIsVisible:YES];
 }
 @end
