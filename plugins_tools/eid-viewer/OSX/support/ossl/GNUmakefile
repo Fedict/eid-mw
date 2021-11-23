@@ -1,4 +1,4 @@
-OSSL_VERSION=1.1.1k
+OSSL_VERSION=1.1.1l
 TP_DIR=../../../../../../ThirdParty
 
 build: openssl/libcrypto.a openssl/include/openssl/opensslconf.h

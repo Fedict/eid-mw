@@ -35,6 +35,7 @@
 #define _(s) gettext(s)
 #endif
 
+#include <curl/curl.h>
 #include <check_version.h>
 
 typedef void(*bindisplayfunc)(const char*, const void*, int);
@@ -91,15 +92,25 @@ static void uistatus(gboolean spin, char* data, ...) {
 	g_main_context_invoke(NULL, realstatus, update);
 }
 
+gboolean show_upgrade_message(void *user_data) {
+	struct upgrade_info *info = (struct upgrade_info*)user_data;
+	GtkWindow *mainwin = GTK_WINDOW(gtk_builder_get_object(builder, "mainwin"));
+	GtkWidget *dialog = gtk_message_dialog_new(mainwin, GTK_DIALOG_DESTROY_WITH_PARENT, GTK_MESSAGE_INFO, GTK_BUTTONS_OK, _("New version of the eID viewer available: version %d.%d.%d at %s"), info->new_version.major, info->new_version.minor, info->new_version.build, info->upgrade_url);
+	gtk_dialog_run(GTK_DIALOG(dialog));
+	gtk_widget_destroy(dialog);
+	return FALSE;
+}
+
 void check_update() {
 	long length;
 	void *handle;
+	GtkToggleButton *check = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "update_auto"));
+	if(!gtk_toggle_button_get_active(check)) return;
 	char *xml = (char*)perform_http_request("https://eid.belgium.be/sites/default/files/software/eidversions.xml", &length, &handle);
 	if(!xml) return;
 	struct upgrade_info *info = eid_vwr_upgrade_info(xml, (size_t)length, "linux", "debian11", 5, 0, 28);
 	if(info->have_upgrade) {
-		GObject *have_upgrade = gtk_builder_get_object(builder, "have_upgrade");
-		g_object_set_threaded(G_OBJECT(have_upgrade), "active", (void*)TRUE, NULL); 
+		g_main_context_invoke(NULL, (GSourceFunc)show_upgrade_message, (void*)info);
 	}
 }
 
@@ -288,6 +299,10 @@ enum eid_vwr_langs langfromenv() {
 	return EID_VWR_LANG_EN;
 }
 
+void do_settings(GtkMenuItem *item G_GNUC_UNUSED, gpointer user_data G_GNUC_UNUSED) {
+	gtk_widget_show(GTK_WIDGET(gtk_builder_get_object(builder, "optwin")));
+}
+
 /* Connect UI event signals to callback functions */
 static void connect_signals(GtkWidget* window) {
 	GObject* signaltmp;
@@ -298,21 +313,23 @@ static void connect_signals(GtkWidget* window) {
 	g_signal_connect(signaltmp, "activate", G_CALLBACK(file_open), NULL);
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_file_saveas"));
 	g_signal_connect(signaltmp, "activate", G_CALLBACK(file_save), NULL);
-	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_file_reader_auto"));
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "reader_auto"));
 	g_signal_connect(signaltmp, "toggled", G_CALLBACK(auto_reader), NULL);
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_file_close"));
 	g_signal_connect(signaltmp, "activate", G_CALLBACK(file_close), NULL);
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_file_print"));
 	g_signal_connect(signaltmp, "activate", G_CALLBACK(do_print), NULL);
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_file_settings"));
+	g_signal_connect(signaltmp, "activate", G_CALLBACK(do_settings), NULL);
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_file_quit"));
 	g_signal_connect(signaltmp, "activate", G_CALLBACK(gtk_main_quit), NULL);
-	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_lang_de"));
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "language_de"));
 	g_signal_connect(signaltmp, "activate", G_CALLBACK(translate), "de_BE.UTF-8");
-	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_lang_en"));
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "language_en"));
 	g_signal_connect(signaltmp, "activate", G_CALLBACK(translate), "en_US.UTF-8");
-	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_lang_fr"));
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "language_fr"));
 	g_signal_connect(signaltmp, "activate", G_CALLBACK(translate), "fr_BE.UTF-8");
-	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_lang_nl"));
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "language_nl"));
 	g_signal_connect(signaltmp, "activate", G_CALLBACK(translate), "nl_BE.UTF-8");
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_help_about"));
 	g_signal_connect(signaltmp, "activate", G_CALLBACK(showabout), NULL);
@@ -346,8 +363,13 @@ static void connect_signals(GtkWidget* window) {
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "validate_always"));
 	g_signal_connect(signaltmp, "toggled", G_CALLBACK(validate_toggle), NULL);
 
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "optwin"));
+	g_signal_connect(signaltmp, "delete-event", G_CALLBACK(gtk_widget_hide_on_delete), NULL);
+
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "cert_paned"));
 	g_settings_bind(get_prefs(), "cert-paned-pos", signaltmp, "position", 0);
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "update_auto"));
+	g_settings_bind(get_prefs(), "check-update", signaltmp, "active", 0);
 }
 
 /* Set the colour of the "valid from" and "valid until" elements on the

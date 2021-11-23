@@ -316,7 +316,7 @@ build:centos_oldstable_64:
 build:centos_stable_64:
   <<: *build-fed
   variables:
-    DIST: epel
+    DIST: rocky
     DVER: $CENTOS_STABLE_VERSION
     ARCH: x86_64
   only:
