@@ -1,6 +1,11 @@
 on run {link, pin}
 	tell application "Google Chrome Canary"
 		activate
+		delay 2
+		tell application "System Events"
+			key code 36
+		end tell
+		delay 2
 		set URL of last tab of first window to link
 	end tell
 	delay 5
