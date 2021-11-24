@@ -1,4 +1,4 @@
-OSSL_VERSION=1.1.1k
+OSSL_VERSION=1.1.1l
 TP_DIR=../../../../../../ThirdParty
 
 build: openssl/libcrypto.a openssl/include/openssl/opensslconf.h
@@ -26,14 +26,15 @@ openssl/include/openssl/opensslconf.h: configured
 	diff -q openssl-x86_64/include/openssl/opensslconf.h openssl-arm64/include/openssl/opensslconf.h
 	cp -a openssl-x86_64/include/openssl/opensslconf.h openssl/include/openssl/opensslconf.h
 
-openssl/lib%.a: openssl-x86_64/lib%.a openssl-arm64/lib%.a
+openssl/libcrypto.a: openssl-x86_64/libcrypto.a openssl-arm64/libcrypto.a
+	rm -f $@
 	lipo -create -output $@ $^
 
-openssl-x86_64/lib%.a: configured
-	$(MAKE) -C openssl-x86_64
+openssl-x86_64/libcrypto.a: configured
+	$(MAKE) -C openssl-x86_64 libcrypto.a
 
-openssl-arm64/lib%.a: configured
-	$(MAKE) -C openssl-arm64
+openssl-arm64/libcrypto.a: configured
+	$(MAKE) -C openssl-arm64 libcrypto.a
 
 openssl: openssl-$(OSSL_VERSION)
 	ln -sf openssl-$(OSSL_VERSION) openssl

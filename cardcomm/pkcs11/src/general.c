@@ -179,7 +179,7 @@ CK_RV C_GetInfo(CK_INFO_PTR pInfo)
 	pInfo->flags = 0;
 	strcpy_n(pInfo->libraryDescription, "Belgium eID PKCS#11 interface v2", sizeof(pInfo->libraryDescription), ' ');
 	pInfo->libraryVersion.major = 5;
-	pInfo->libraryVersion.minor = 0;
+	pInfo->libraryVersion.minor = 1;
 
 cleanup:
 	log_trace(WHERE, "I: leave, ret = %lu",ret);

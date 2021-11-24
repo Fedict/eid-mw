@@ -46,19 +46,15 @@ namespace eIDViewer
             GetLanguage();
 
             this.Loaded += new RoutedEventHandler(MainWindow_Loaded);
-            this.Loaded += new RoutedEventHandler(Version_Check);
+            this.Loaded += new RoutedEventHandler(Auto_Version_Check);
         }
 
-        void Version_Check(object sender, RoutedEventArgs e)
+        void Auto_Version_Check(object sender, RoutedEventArgs e)
         {
+            int regVal = 0;
+
             try
             {
-                Popup myPopup = new Popup();
-                myPopup.IsOpen = true;
-
-                string url = "";
-                string releaseNotes = "";
-                int regVal = 0;
                 theBackendData.startupVersionCheck = false;
 
                 regVal = theBackendData.ReadRegistryDwordValue("SOFTWARE\\BEID\\eidviewer", "startup_version_check", 2);
@@ -80,6 +76,33 @@ namespace eIDViewer
 
                 //Do the version check, as the "SOFTWARE\BEID\eidviewer\startup_version_check" registry value (DWORD) is set
                 theBackendData.startupVersionCheck = true;
+
+                Perform_Version_Check();
+            }
+
+
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error occured during eID Viewer auto version check" + ex.Message);
+            }
+
+        }
+
+        void Version_Check(object sender, RoutedEventArgs e)
+        {
+            Perform_Version_Check();
+        }
+
+        void Perform_Version_Check()
+        {
+            try
+            {
+                Popup myPopup = new Popup();
+                myPopup.IsOpen = true;
+
+                string url = "";
+                string releaseNotes = "";
+
                 theBackendData.WriteLog("starting the online version check..\n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
 
                 string language = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName.ToString();
