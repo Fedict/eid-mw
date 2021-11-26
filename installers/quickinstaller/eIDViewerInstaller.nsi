@@ -199,7 +199,6 @@ Function nsdWelcome
 	IfSilent 0 +2 
         Abort   
 
-	File "welcome.bmp"
 	nsDialogs::Create 1018
 	Pop $nsdCustomDialog ;popped from the stack to prevent stack corruption
 	${If} $nsdCustomDialog == error
