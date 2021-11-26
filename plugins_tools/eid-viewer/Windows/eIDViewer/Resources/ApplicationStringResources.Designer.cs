@@ -248,5 +248,41 @@ namespace eIDViewer.Resources {
                 return ResourceManager.GetString("showLogTab", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Online update check failed, please check log for further details.
+        /// </summary>
+        public static string updateCheckError {
+            get {
+                return ResourceManager.GetString("updateCheckError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Online update check failed.
+        /// </summary>
+        public static string updateCheckErrorTitle {
+            get {
+                return ResourceManager.GetString("updateCheckErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The latest version of the eID Viewer has already been installed.
+        /// </summary>
+        public static string VersionUpToDate {
+            get {
+                return ResourceManager.GetString("VersionUpToDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to eID Viewer is up to date.
+        /// </summary>
+        public static string VersionUpToDateTitle {
+            get {
+                return ResourceManager.GetString("VersionUpToDateTitle", resourceCulture);
+            }
+        }
     }
 }

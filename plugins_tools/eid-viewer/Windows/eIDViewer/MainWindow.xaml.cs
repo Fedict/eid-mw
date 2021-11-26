@@ -77,7 +77,7 @@ namespace eIDViewer
                 //Do the version check, as the "SOFTWARE\BEID\eidviewer\startup_version_check" registry value (DWORD) is set
                 theBackendData.startupVersionCheck = true;
 
-                Perform_Version_Check();
+                Perform_Version_Check(false);
             }
 
 
@@ -90,18 +90,31 @@ namespace eIDViewer
 
         void Version_Check(object sender, RoutedEventArgs e)
         {
-            Perform_Version_Check();
+            Perform_Version_Check(true);
         }
 
-        void Perform_Version_Check()
+        void ShowErrorMessage(bool showAllMessages)
+        {
+            if (showAllMessages)
+            {
+                MessageBox.Show(eIDViewer.Resources.ApplicationStringResources.updateCheckError, eIDViewer.Resources.ApplicationStringResources.updateCheckErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        void Perform_Version_Check(bool showMessages)
         {
             try
             {
                 Popup myPopup = new Popup();
                 myPopup.IsOpen = true;
+                //do not log explicit when no messages should be shown to user (i.e. during auto version check)
+                eid_vwr_loglevel errorLevel = eid_vwr_loglevel.EID_VWR_LOG_NORMAL;
 
                 string url = "";
                 string releaseNotes = "";
+
+                if(showMessages)
+                    errorLevel = eid_vwr_loglevel.EID_VWR_LOG_ERROR;
 
                 theBackendData.WriteLog("starting the online version check..\n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
 
@@ -110,7 +123,8 @@ namespace eIDViewer
                 if (!Version.getUpdateUrl(out bool updateNeeded, language, ref url, ref releaseNotes))
                 {
                     //no updated version found, report this in the log
-                    theBackendData.WriteLog("failed to check for online update\n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
+                    theBackendData.WriteLog("failed to check for online update\n", errorLevel);
+                    ShowErrorMessage(showMessages);
                     return;
                 }
 
@@ -120,6 +134,7 @@ namespace eIDViewer
                     {
                         theBackendData.WriteLog("A newer version of the eID Viewer has been found, but not the url to download it\n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
                         theBackendData.WriteLog("Newer version should be available at https://eid.belgium.be\n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
+                        ShowErrorMessage(showMessages);
                         return;
                     }
                     //for safety, we do not accept all urls
@@ -142,10 +157,20 @@ namespace eIDViewer
                             }
                         }
                     }
+                    else
+                    {
+                        theBackendData.WriteLog("The url to download the new version did not start with https://eid.belgium.be\n", eid_vwr_loglevel.EID_VWR_LOG_COARSE);
+                        ShowErrorMessage(showMessages);
+                        return;
+                    }
                 }
                 else
                 {
                     theBackendData.WriteLog("No viewer update is needed\n", eid_vwr_loglevel.EID_VWR_LOG_NORMAL);
+                    if (showMessages)
+                    {
+                        MessageBox.Show(eIDViewer.Resources.ApplicationStringResources.VersionUpToDate, eIDViewer.Resources.ApplicationStringResources.VersionUpToDateTitle, MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
                 }
             }
             catch (Exception ex)

@@ -180,4 +180,16 @@
   <data name="newVersionDownloadTitle" xml:space="preserve">
     <value>Nieuwe versie eID Viewer</value>
   </data>
+  <data name="updateCheckError" xml:space="preserve">
+    <value>Versiecontrole mislukt, controleer het logboek voor meer informatie</value>
+  </data>
+  <data name="updateCheckErrorTitle" xml:space="preserve">
+    <value>Versiecontrole mislukt</value>
+  </data>
+  <data name="VersionUpToDate" xml:space="preserve">
+    <value>De meest recente versie van de eID Viewer is reeds aanwezig</value>
+  </data>
+  <data name="VersionUpToDateTitle" xml:space="preserve">
+    <value>Geen nieuwe versie beschikbaar</value>
+  </data>
 </root>

@@ -180,4 +180,16 @@
   <data name="newVersionDownloadTitle" xml:space="preserve">
     <value>Neue Version eID Viewer</value>
   </data>
+  <data name="updateCheckError" xml:space="preserve">
+    <value>Versionsprüfung fehlgeschlagen, bitte überprüfen Sie das Logbuch für weitere Details</value>
+  </data>
+  <data name="updateCheckErrorTitle" xml:space="preserve">
+    <value>Versionsprüfung fehlgeschlagen</value>
+  </data>
+  <data name="VersionUpToDate" xml:space="preserve">
+    <value>Die neueste Version ist bereits installiert</value>
+  </data>
+  <data name="VersionUpToDateTitle" xml:space="preserve">
+    <value>Keine neue Version verfügbar</value>
+  </data>
 </root>
