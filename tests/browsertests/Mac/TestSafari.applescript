@@ -5,7 +5,7 @@ on run {link, pin}
 		tell application "System Events"
 			key code 36
 		end tell
-		delay 2
+		delay 5
 		set URL of front document to link
 	end tell
 	delay 3
