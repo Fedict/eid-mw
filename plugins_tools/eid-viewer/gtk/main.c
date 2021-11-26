@@ -104,11 +104,32 @@ gboolean show_upgrade_message(void *user_data) {
 void check_update() {
 	long length;
 	void *handle;
+	GError *err = NULL;
 	GtkToggleButton *check = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "update_auto"));
 	if(!gtk_toggle_button_get_active(check)) return;
 	char *xml = (char*)perform_http_request("https://eid.belgium.be/sites/default/files/software/eidversions.xml", &length, &handle);
 	if(!xml) return;
-	struct upgrade_info *info = eid_vwr_upgrade_info(xml, (size_t)length, "linux", "debian11", 5, 0, 28);
+	GKeyFile *osrelease = g_key_file_new();
+	GMappedFile *file = g_mapped_file_new("/etc/os-release", FALSE, &err);
+	GBytes *bytes = g_mapped_file_get_bytes(file);
+	GByteArray *ba = g_bytes_unref_to_array(bytes);
+	ba = g_byte_array_prepend(ba, (const guint8*)"[foo]\n", 6);
+	gsize len;
+	guint8 *b = g_byte_array_steal(ba, &len);
+	bytes = g_bytes_new_take((gpointer)b, len);
+	g_mapped_file_unref(file);
+	char *distrel = g_strdup("unknown");
+	if(g_key_file_load_from_bytes(osrelease, bytes, 0, &err)) {
+		gchar *group = g_key_file_get_start_group(osrelease);
+		if(g_key_file_has_key(osrelease, group, "ID", NULL) && !g_key_file_has_key(osrelease, group, "VERSION_ID", NULL)) {
+			distrel = g_strdup_printf("%s%s", g_key_file_get_string(osrelease, group, "ID", NULL), g_key_file_get_string(osrelease, group, "VERSION_ID", NULL));
+		}
+	} else {
+		uilog(EID_VWR_LOG_COARSE, "Could not parse /etc/os-release: %s", err->message);
+	}
+	gchar **version_and_rest = g_strsplit(PACKAGE_VERSION, "-", 2);
+	gchar **version_parts = g_strsplit(version_and_rest[0], ".", 4);
+	struct upgrade_info *info = eid_vwr_upgrade_info(xml, (size_t)length, "linux", distrel, g_ascii_strtoll(version_parts[0], NULL, 10), g_ascii_strtoll(version_parts[1], NULL, 10), g_ascii_strtoll(version_parts[2], NULL, 10));
 	if(info->have_upgrade) {
 		g_main_context_invoke(NULL, (GSourceFunc)show_upgrade_message, (void*)info);
 	}
