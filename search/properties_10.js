@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['validatenowbuttonlabel_646',['ValidateNowButtonLabel',['../classe_i_d_viewer_1_1_resources_1_1_certificate_tab_string_resources.html#adf0e3914c66f99b92f66eb1c6e0f0942',1,'eIDViewer::Resources::CertificateTabStringResources']]],
-  ['validfromlabel_647',['validFromLabel',['../classe_i_d_viewer_1_1_resources_1_1_card_tab_string_resources.html#a726528a2992aec1bd10431cb472e2b81',1,'eIDViewer::Resources::CardTabStringResources']]],
-  ['validuntillabel_648',['validUntilLabel',['../classe_i_d_viewer_1_1_resources_1_1_card_tab_string_resources.html#a1a51e7a909a2e4564d74a143b435f0fe',1,'eIDViewer::Resources::CardTabStringResources']]],
-  ['verifypinbutton_649',['verifyPinButton',['../classe_i_d_viewer_1_1_resources_1_1_card_tab_string_resources.html#ad3378dad25a1889aed5a8afc7c347f9d',1,'eIDViewer::Resources::CardTabStringResources']]]
+  ['updatecheckerror_650',['updateCheckError',['../classe_i_d_viewer_1_1_resources_1_1_application_string_resources.html#a6a86af4374907e41248942045ae850e0',1,'eIDViewer::Resources::ApplicationStringResources']]],
+  ['updatecheckerrortitle_651',['updateCheckErrorTitle',['../classe_i_d_viewer_1_1_resources_1_1_application_string_resources.html#a0c1c38f6b77d73319236b5d4f5438a5d',1,'eIDViewer::Resources::ApplicationStringResources']]]
 ];
