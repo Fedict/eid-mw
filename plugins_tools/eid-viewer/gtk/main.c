@@ -115,8 +115,7 @@ void check_update() {
 	GByteArray *ba = g_bytes_unref_to_array(bytes);
 	ba = g_byte_array_prepend(ba, (const guint8*)"[foo]\n", 6);
 	gsize len;
-	guint8 *b = g_byte_array_steal(ba, &len);
-	bytes = g_bytes_new_take((gpointer)b, len);
+	bytes = g_byte_array_free_to_bytes(ba);
 	g_mapped_file_unref(file);
 	char *distrel = g_strdup("unknown");
 	if(g_key_file_load_from_bytes(osrelease, bytes, 0, &err)) {
