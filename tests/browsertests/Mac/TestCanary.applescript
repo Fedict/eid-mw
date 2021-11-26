@@ -5,12 +5,18 @@ on run {link, pin}
 		tell application "System Events"
 			key code 36
 		end tell
-		delay 2
+		delay 5
 		set URL of last tab of first window to link
 	end tell
 	delay 5
 	try
 		tell application "System Events"
+			keystroke tab
+			keystroke return
+			delay 1
+			keystroke tab
+			keystroke tab
+			keystroke return
 			click button "OK" of group "Select a certificate" of window "Select a certificate" of application process "Chrome Canary"
 			delay 2
 			click window 1 of application process "coreautha"
