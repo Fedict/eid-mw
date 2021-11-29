@@ -7,11 +7,11 @@ namespace eIDViewer
     {
         public static int imajor = 5;
         public static int iminor = 1;
-        public static int ibuild = 1;
+        public static int ibuild = 2;
 
         public static string AboutMessage()
         {
-            string message = @"eID Viewer 5.1.1
+            string message = @"eID Viewer 5.1.2
 eID Middleware Project
 Copyright(C) 2021 Bosa
 
