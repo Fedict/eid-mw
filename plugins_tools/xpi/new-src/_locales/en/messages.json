@@ -19,5 +19,11 @@
   },
   "installUrl": {
     "message": "https://eid.belgium.be/en"
+  },
+  "middlewareOutdatedTitle": {
+    "message": "eID software out of date"
+  },
+  "middlewareOutdatedContent": {
+    "message": "The eID software installed on this system is out of date. Please click on this notification to download the latest version."
   }
 }
