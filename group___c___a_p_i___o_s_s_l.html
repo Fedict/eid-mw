@@ -107,6 +107,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gaf04c65c5d3cb233efc7bcf744029d024"><td class="memItemLeft" align="right" valign="top">DllExport enum <a class="el" href="group___c___a_p_i.html#ga77019cfe7dce20ab31a5b2c9da3ebfc6">eid_vwr_result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c___a_p_i___o_s_s_l.html#gaf04c65c5d3cb233efc7bcf744029d024">eid_vwr_verify_cert</a> (const void *certificate, size_t certlen, const void *ca, size_t calen, const void *(*perform_ocsp_request)(char *, void *, long, long *, void **), void(*free_ocsp_request)(void *))</td></tr>
 <tr class="memdesc:gaf04c65c5d3cb233efc7bcf744029d024"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify the validity of a leaf certificate.  <a href="group___c___a_p_i___o_s_s_l.html#gaf04c65c5d3cb233efc7bcf744029d024">More...</a><br /></td></tr>
 <tr class="separator:gaf04c65c5d3cb233efc7bcf744029d024"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9253e01c424c71ee036ea2a54ac61281"><td class="memItemLeft" align="right" valign="top">DllExport enum <a class="el" href="group___c___a_p_i.html#ga77019cfe7dce20ab31a5b2c9da3ebfc6">eid_vwr_result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c___a_p_i___o_s_s_l.html#ga9253e01c424c71ee036ea2a54ac61281">eid_vwr_verify_cert_full</a> (const void *certificate, size_t certlen, const void *ca, size_t calen, const void *(*perform_ocsp_request)(char *, void *, long, long *, void **), void(*free_ocsp_request)(void *), uint64_t flags)</td></tr>
+<tr class="memdesc:ga9253e01c424c71ee036ea2a54ac61281"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify the validity of a leaf certificate, specifying options.  <a href="group___c___a_p_i___o_s_s_l.html#ga9253e01c424c71ee036ea2a54ac61281">More...</a><br /></td></tr>
+<tr class="separator:ga9253e01c424c71ee036ea2a54ac61281"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5419bd36a0ecaf600854a9bb230d89d4"><td class="memItemLeft" align="right" valign="top">DllExport enum <a class="el" href="group___c___a_p_i.html#ga77019cfe7dce20ab31a5b2c9da3ebfc6">eid_vwr_result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c___a_p_i___o_s_s_l.html#ga5419bd36a0ecaf600854a9bb230d89d4">eid_vwr_verify_int_cert</a> (const void *certificate, size_t certlen, const void *root, size_t rootlen, const void *(*perform_http_request)(char *, long *, void **), void(free_http_request)(void *))</td></tr>
 <tr class="memdesc:ga5419bd36a0ecaf600854a9bb230d89d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify the validity of an intermediate certificate.  <a href="group___c___a_p_i___o_s_s_l.html#ga5419bd36a0ecaf600854a9bb230d89d4">More...</a><br /></td></tr>
 <tr class="separator:ga5419bd36a0ecaf600854a9bb230d89d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -447,6 +450,71 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="ga9253e01c424c71ee036ea2a54ac61281"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9253e01c424c71ee036ea2a54ac61281">&#9670;&nbsp;</a></span>eid_vwr_verify_cert_full()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">DllExport enum <a class="el" href="group___c___a_p_i.html#ga77019cfe7dce20ab31a5b2c9da3ebfc6">eid_vwr_result</a> eid_vwr_verify_cert_full </td>
+          <td>(</td>
+          <td class="paramtype">const void *&#160;</td>
+          <td class="paramname"><em>certificate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>certlen</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const void *&#160;</td>
+          <td class="paramname"><em>ca</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>calen</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const void *(*)(char *, void *, long, long *, void **)&#160;</td>
+          <td class="paramname"><em>perform_ocsp_request</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(*)(void *)&#160;</td>
+          <td class="paramname"><em>free_ocsp_request</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>flags</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Verify the validity of a leaf certificate, specifying options. </p>
+<p>This function will do the same thing as <a class="el" href="group___c___a_p_i___o_s_s_l.html#gaf04c65c5d3cb233efc7bcf744029d024" title="Verify the validity of a leaf certificate.">eid_vwr_verify_cert()</a>, except that it allows to specify options through the "flags" parameter.</p>
+<p>Valid options include:</p>
+<ul>
+<li>EID_VWR_NO_OCSP_WHITELIST: Specify that the OCSP URL should not be checked against a whitelist of known OCSP URLs. </li>
+</ul>
 
 </div>
 </div>
