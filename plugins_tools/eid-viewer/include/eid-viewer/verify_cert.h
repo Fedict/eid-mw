@@ -19,6 +19,7 @@ extern "C"
 #endif
 
 #include <eid-viewer/oslayer.h>
+#include <stdint.h>
 
 /**
   * \brief Verify the validity of a leaf certificate.
