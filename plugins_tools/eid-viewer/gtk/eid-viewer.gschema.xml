@@ -28,8 +28,9 @@
       <summary>Check the OCSP/CRL URLs against the whitelist</summary>
       <description>The viewer has a whitelist of known OCSP and CRL URLs that
       are used in production cards. This whitelist ensures that test cards are
-      never accepted as valid cards. Enable this option if you do want your
-      test cards to validate</description>
+      never accepted as valid cards. Disable this option if you do want your
+      test cards to validate (Note: you will still need to add your test card's
+      root ca to the viewer's certificate store)</description>
     </key>
     <key name="check-update" type="b">
       <default>true</default>
