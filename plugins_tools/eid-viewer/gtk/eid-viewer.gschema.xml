@@ -23,6 +23,14 @@
       <description>How high the upper part of the paned on the "certificates" page should be (in pixels)</description>
       <range min="0" max="1000" />
     </key>
+    <key name="check-urls" type="b">
+      <default>true</default>
+      <summary>Check the OCSP/CRL URLs against the whitelist</summary>
+      <description>The viewer has a whitelist of known OCSP and CRL URLs that
+      are used in production cards. This whitelist ensures that test cards are
+      never accepted as valid cards. Enable this option if you do want your
+      test cards to validate</description>
+    </key>
     <key name="check-update" type="b">
       <default>true</default>
       <summary>Check for update at startup</summary>

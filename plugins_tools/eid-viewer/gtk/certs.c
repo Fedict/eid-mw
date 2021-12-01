@@ -294,7 +294,7 @@ static enum eid_vwr_result check_cert(char* which) {
 	} else if(strcmp(which, "Root") == 0) {
 		verify_result = eid_vwr_verify_root_cert(cert->data, cert->len);
 	} else {
-		verify_result = eid_vwr_verify_cert(cert->data, cert->len, ca_cert->data, ca_cert->len, perform_ocsp_request, free);
+		verify_result = eid_vwr_verify_cert_full(cert->data, cert->len, ca_cert->data, ca_cert->len, perform_ocsp_request, free, (g_settings_get_boolean(get_prefs(), "check-urls") ? EID_VWR_NO_OCSP_WHITELIST : 0);
 	}
 
 	switch(verify_result) {
