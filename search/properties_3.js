@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['dateofbirthlabel_572',['DateOfBirthLabel',['../classe_i_d_viewer_1_1_resources_1_1_identity_tab_string_resources.html#a890407567d941ede5ffdbb4047cb5d20',1,'eIDViewer::Resources::IdentityTabStringResources']]],
-  ['detailed_5finformation_573',['Detailed_Information',['../classe_i_d_viewer_1_1_resources_1_1_certificate_tab_string_resources.html#ae74ec61967ddbc36bb279f4691543040',1,'eIDViewer::Resources::CertificateTabStringResources']]],
-  ['duplicatelabel_574',['DuplicateLabel',['../classe_i_d_viewer_1_1_resources_1_1_identity_tab_string_resources.html#a24853f5fb0a3b669eaef864c789bdf8a',1,'eIDViewer::Resources::IdentityTabStringResources']]]
+  ['dateofbirthlabel_576',['DateOfBirthLabel',['../classe_i_d_viewer_1_1_resources_1_1_identity_tab_string_resources.html#a890407567d941ede5ffdbb4047cb5d20',1,'eIDViewer::Resources::IdentityTabStringResources']]],
+  ['detailed_5finformation_577',['Detailed_Information',['../classe_i_d_viewer_1_1_resources_1_1_certificate_tab_string_resources.html#ae74ec61967ddbc36bb279f4691543040',1,'eIDViewer::Resources::CertificateTabStringResources']]],
+  ['duplicatelabel_578',['DuplicateLabel',['../classe_i_d_viewer_1_1_resources_1_1_identity_tab_string_resources.html#a24853f5fb0a3b669eaef864c789bdf8a',1,'eIDViewer::Resources::IdentityTabStringResources']]]
 ];
