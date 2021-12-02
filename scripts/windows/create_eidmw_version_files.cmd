@@ -228,3 +228,19 @@ set ASSEMBLYINFO_PATH="%~dp0..\..\plugins_tools\eid-viewer\Windows\eIDViewer\Sou
 @echo         }>> %ASSEMBLYINFO_PATH%
 @echo     }>> %ASSEMBLYINFO_PATH%
 @echo }>> %ASSEMBLYINFO_PATH%
+:write beidpkcs11_version.json
+@echo beidpkcs11_version.json
+set ASSEMBLYINFO_PATH="%~dp0..\..\plugins_tools\Firefox_plugin\beidpkcs11_version.json"
+@echo ASSEMBLYINFO_PATH = %ASSEMBLYINFO_PATH%
+@echo {> %ASSEMBLYINFO_PATH%
+@echo   "name": "belgiumeid@eid.belgium.be",>> %ASSEMBLYINFO_PATH%
+@echo   "description": "version number of the currently-installed eID middleware",>> %ASSEMBLYINFO_PATH%
+@echo   "type": "storage",>> %ASSEMBLYINFO_PATH%
+@echo   "data": {>> %ASSEMBLYINFO_PATH%
+@echo     "versionInfo": {>> %ASSEMBLYINFO_PATH%
+@echo       "major": %BASE_VERSION1%,>> %ASSEMBLYINFO_PATH%
+@echo       "minor": %BASE_VERSION2%,>> %ASSEMBLYINFO_PATH%
+@echo       "patch": %BASE_VERSION3% >> %ASSEMBLYINFO_PATH%
+@echo     }>> %ASSEMBLYINFO_PATH%
+@echo   }>> %ASSEMBLYINFO_PATH%
+@echo }>> %ASSEMBLYINFO_PATH%
