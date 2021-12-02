@@ -138,6 +138,7 @@
 	<DirectoryRef Id="FFPLUGMANFOLDER">
 	  <Component Id="FF_Manifest_FilesID" Guid="{10A0598E-9F54-4386-959C-FB56FC1C412C}" Win64="no">
         <File Id="FF_Manifest_File_32ID" Name="beidpkcs11_32.json" KeyPath="yes" Source="..\..\..\plugins_tools\Firefox_plugin\beidpkcs11_32.json" />
+		<File Id="FF_Manifest_File_VersionID" Name="beidpkcs11_version.json" KeyPath="no" Source="..\..\..\plugins_tools\Firefox_plugin\beidpkcs11_version.json" />
 		<File Id="FF_Manifestbeid_ff_pkcs11.32ID" Name="beid_ff_pkcs11_32.dll" KeyPath="no" Source="..\..\..\cardcomm\pkcs11\VS_2019\binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll" />
       </Component>	  
 	</DirectoryRef>
@@ -168,7 +169,12 @@
         <RegistryKey Root="HKLM" Key="SOFTWARE\Mozilla\PKCS11Modules\beidpkcs11_32">
             <RegistryValue Type="string" Value="[FFPLUGMANFOLDER]beidpkcs11_32.json"/>
 		</RegistryKey>
+		<!-- Create the managed storage location (that contains beid version number)-->
+        <RegistryKey Root="HKLM" Key="SOFTWARE\Mozilla\ManagedStorage\belgiumeid@eid.belgium.be">
+            <RegistryValue Type="string" Value="[FFPLUGMANFOLDER]beidpkcs11_version.json"/>
+		</RegistryKey>
       </Component>
+	  
       <Component Id="SCardSvrService" Guid="{C3BC9746-0843-41b2-BDDA-3192772974CE}" Permanent="yes">
         <!-- Start SCardSvr Service during startup -->
         <RegistryValue Root="HKLM" Key="System\CurrentControlSet\Services\SCardSvr" Type="integer" Name="Start" Value="2" KeyPath="yes"/>
