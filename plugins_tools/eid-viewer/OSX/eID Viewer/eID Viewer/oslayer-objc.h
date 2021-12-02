@@ -69,7 +69,17 @@ typedef NS_ENUM(NSInteger, eIDResult)
 	eIDResultUnknown = EID_VWR_RES_UNKNOWN,
 	eIDResultWarning = EID_VWR_RES_WARNING,
 };
-
+@interface eIDVersionTriplet: NSObject
+@property NSInteger major;
+@property NSInteger minor;
+@property NSInteger build;
+@end
+@interface eIDUpgradeInfo: NSObject
+@property BOOL haveUpgrade;
+@property NSURL *upgradeUrl;
+@property NSURL *relnotesUrl;
+@property eIDVersionTriplet *newVersion;
+@end
 /** \brief Protocol for implementing a UI.
  * \see cbstruct for details on what each method does; these methods are
  * straightforward C-to-ObjC translations */
@@ -110,6 +120,7 @@ typedef NS_ENUM(NSInteger, eIDResult)
 +(NSString *) getCertDetail:(NSData *) certificate;
 +(void)doChallengeInternal;							///< calls eid_vwr_challenge() with random data, to be used when useDefaultChallengeResult returns YES.
 +(void)doChallenge:(NSData*)challenge;						///< calls eid_vwr_challenge()
++(eIDUpgradeInfo*) parseUpgradeInfoForXml:(NSString*)xml currentVersion:(eIDVersionTriplet *)ourVersion;
 @end
 
 /**@}*/

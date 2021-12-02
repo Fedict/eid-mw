@@ -150,7 +150,7 @@ exit:
 #endif
 }
 
-enum eid_vwr_result eid_vwr_verify_cert(const void *certificate, size_t certlen, const void *ca, size_t calen, const void*(*perform_ocsp_request)(char*, void*, long, long*, void**), void(*free_ocsp_request)(void*)) {
+enum eid_vwr_result eid_vwr_verify_cert_full(const void *certificate, size_t certlen, const void *ca, size_t calen, const void*(*perform_ocsp_request)(char*, void*, long, long*, void**), void(*free_ocsp_request)(void*), uint64_t flags) {
 	X509 *cert_i = NULL, *ca_i = NULL;
 	const STACK_OF(X509_EXTENSION)* exts;
 	char* url = NULL;
@@ -214,7 +214,7 @@ enum eid_vwr_result eid_vwr_verify_cert(const void *certificate, size_t certlen,
 				if(val->name != NULL && val->value != NULL) {
 					if(!strcmp(val->name, "OCSP - URI")) {
 						url = val->value;
-						if(strncmp(url, VALID_OCSP_PREFIX_RSA, strlen(VALID_OCSP_PREFIX_RSA)) && strncmp(url, VALID_OCSP_PREFIX_ECC, strlen(VALID_OCSP_PREFIX_ECC))) {
+						if(!(flags & EID_VWR_NO_OCSP_WHITELIST) && strncmp(url, VALID_OCSP_PREFIX_RSA, strlen(VALID_OCSP_PREFIX_RSA)) && strncmp(url, VALID_OCSP_PREFIX_ECC, strlen(VALID_OCSP_PREFIX_ECC))) {
 							be_log(EID_VWR_LOG_NORMAL, "Invalid OCSP URL. Is this an actual eID card?");
 							ret = EID_VWR_RES_FAILED;
 							goto exit;
@@ -309,6 +309,10 @@ exit:
 		sk_X509_free(certs_dup);
 	}
 	return ret;
+}
+
+enum eid_vwr_result eid_vwr_verify_cert(const void *certificate, size_t certlen, const void *ca, size_t calen, const void*(*perform_ocsp_request)(char*,void*,long,long*,void**),void(*free_ocsp_request)(void*)) {
+	return eid_vwr_verify_cert_full(certificate, certlen, ca, calen, perform_ocsp_request, free_ocsp_request, 0);
 }
 
 enum eid_vwr_result eid_vwr_verify_rrncert(const void* certificate, size_t certlen, const void *root_cert, size_t root_len) {

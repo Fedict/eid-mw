@@ -1,4 +1,42 @@
 var modname = "beidpkcs11";
+var minver = {
+  "major" : 5,
+  "minor": 1,
+  "patch": 2,
+};
+function versionCmp(a, b) {
+  if(a.major !== b.major) {
+    return a.major - b.major;
+  }
+  if(a.minor !== b.minor) {
+    return a.minor - b.minor;
+  }
+  return a.patch - b.patch;
+}
+
+async function validateVersion() {
+  var versionInfo;
+  try {
+    versionInfo = await browser.storage.managed.get("versionInfo");
+    versionInfo = versionInfo.versionInfo;
+  } catch(err) {
+    versionInfo = {
+      "major": 0,
+      "minor": 0,
+      "patch": 0,
+    }
+  }
+  if(versionCmp(minver, versionInfo) > 0) {
+    browser.notifications.onClicked.addListener(function(n) {
+      browser.tabs.create({url: browser.i18n.getMessage("installUrl")});
+    });
+    browser.notifications.create({
+      "type": "basic",
+      "title": browser.i18n.getMessage("middlewareOutdatedTitle"),
+      "message": browser.i18n.getMessage("middlewareOutdatedContent")
+    });
+  }
+}
 async function installPKCS11Module() {
   if(typeof browser.pkcs11 !== 'undefined') {
     var res;
@@ -25,11 +63,13 @@ async function installPKCS11Module() {
       return;
     }
     if(res) {
+      validateVersion();
       return;
     }
     try {
       res = await browser.pkcs11.installModule(modname, 0x1<<28);
       console.log("installModule result: ", res);
+      validateVersion();
     } catch(err) {
       console.error("installModule error: ", err);
       browser.pkcs11.isModuleInstalled("beidpkcs11_alt").then(() => {

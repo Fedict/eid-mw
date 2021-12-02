@@ -5,7 +5,7 @@
   "homepage_url": "https://eid.belgium.be/",
   "version": "1.0.32",
 
-  "permissions": [ "pkcs11", "notifications" ],
+  "permissions": [ "pkcs11", "notifications", "storage" ],
 
   "background": { "scripts": ["background-script.js"] },
   "applications": {

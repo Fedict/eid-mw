@@ -19,6 +19,7 @@ extern "C"
 #endif
 
 #include <eid-viewer/oslayer.h>
+#include <stdint.h>
 
 /**
   * \brief Verify the validity of a leaf certificate.
@@ -61,6 +62,33 @@ extern "C"
 							  void
 							  (*free_ocsp_request)
 							  (void *));
+/**
+  * \brief Verify the validity of a leaf certificate, specifying options.
+  *
+  * This function will do the same thing as eid_vwr_verify_cert(),
+  * except that it allows to specify options through the "flags"
+  * parameter.
+  *
+  * Valid options include:
+  *
+  * - EID_VWR_NO_OCSP_WHITELIST: Specify that the OCSP URL should not be
+  *   checked against a whitelist of known OCSP URLs.
+  */
+	DllExport enum eid_vwr_result eid_vwr_verify_cert_full(const void
+							  *certificate,
+							  size_t certlen,
+							  const void *ca,
+							  size_t calen,
+							  const void
+							  *
+							  (*perform_ocsp_request)
+							  (char *, void *,
+							   long, long *,
+							   void **),
+							  void
+							  (*free_ocsp_request)
+							  (void *), uint64_t flags);
+#define EID_VWR_NO_OCSP_WHITELIST (1 << 0)
 /**
   * \brief Verify the validity of an intermediate certificate.
   *
