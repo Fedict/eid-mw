@@ -23,9 +23,11 @@
                 <outlet property="CertificatesView" destination="G1r-zp-mgg" id="mxb-Xx-Viq"/>
                 <outlet property="IdentityTab" destination="8cq-xu-vLE" id="UUh-5o-1f7"/>
                 <outlet property="alwaysValidate" destination="DP5-Vd-vKQ" id="16x-fw-umH"/>
+                <outlet property="auto_reader" destination="oEH-q1-Txn" id="XBJ-su-LWW"/>
                 <outlet property="bottomLine" destination="hng-9T-9SU" id="ztW-rX-uH3"/>
                 <outlet property="centeringLine" destination="LTI-bJ-Hkh" id="HFU-Ao-3H4"/>
                 <outlet property="certview" destination="eni-gv-Xrt" id="9qA-J6-bCO"/>
+                <outlet property="currentLanguage" destination="eR6-eR-3gU" id="JsT-Uw-e7J"/>
                 <outlet property="foreigner_printop_view" destination="ieQ-cl-G8D" id="3kb-Sq-tLT"/>
                 <outlet property="logItem" destination="I3G-tI-1MG" id="Lw3-P0-gIi"/>
                 <outlet property="logLevel" destination="2Iq-Qb-1J7" id="zdf-dd-Roe"/>
@@ -42,6 +44,7 @@
                 <outlet property="readerLogo" destination="YDM-Mg-xdZ" id="dfG-hm-WXT"/>
                 <outlet property="selectedReader" destination="6qX-zk-wi0" id="YW4-EJ-xEw"/>
                 <outlet property="spinner" destination="iN8-2b-tEq" id="B3Z-bR-RbU"/>
+                <outlet property="updateCheck" destination="k7N-lC-wSM" id="AHo-5T-TvE"/>
                 <outlet property="validateNow" destination="0io-gu-IzB" id="v6w-nW-UYO"/>
                 <outlet property="verticalLineBottomConstraint" destination="IJ5-G4-aj0" id="uIw-A3-4g6"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
@@ -2182,7 +2185,7 @@ DQ
                         <rect key="frame" x="20" y="60" width="440" height="190"/>
                         <clipView key="contentView" drawsBackground="NO" id="rBk-zL-wWH">
                             <rect key="frame" x="1" y="1" width="438" height="188"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <textView importsGraphics="NO" verticallyResizable="YES" usesFontPanel="YES" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" smartInsertDelete="YES" id="RNs-UU-2CF">
                                     <rect key="frame" x="0.0" y="0.0" width="438" height="188"/>
@@ -2754,10 +2757,10 @@ DQ
         <window title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="m50-Wq-uYx" userLabel="PreferencesPane" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" utility="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="111" width="499" height="135"/>
+            <rect key="contentRect" x="196" y="111" width="504" height="135"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1055"/>
             <view key="contentView" id="Tah-1w-TZz">
-                <rect key="frame" x="0.0" y="0.0" width="499" height="135"/>
+                <rect key="frame" x="0.0" y="0.0" width="504" height="135"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k7N-lC-wSM">
@@ -2766,6 +2769,9 @@ DQ
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="changeUpdatePref:" target="Voe-Tx-rLC" id="5ys-KZ-Vl0"/>
+                        </connections>
                     </button>
                     <button verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iiZ-uB-eQK">
                         <rect key="frame" x="212" y="90" width="168" height="32"/>
@@ -2773,9 +2779,12 @@ DQ
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="checkUpdatesNow:" target="Voe-Tx-rLC" id="ujA-wU-v2B"/>
+                        </connections>
                     </button>
                     <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="IOc-3P-2C0">
-                        <rect key="frame" x="20" y="88" width="459" height="5"/>
+                        <rect key="frame" x="20" y="88" width="464" height="5"/>
                     </box>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TuA-3b-eCF">
                         <rect key="frame" x="18" y="63" width="68" height="16"/>
@@ -2786,7 +2795,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eR6-eR-3gU">
-                        <rect key="frame" x="90" y="59" width="280" height="24"/>
+                        <rect key="frame" x="90" y="59" width="285" height="24"/>
                         <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="K1V-dq-Hlk">
                             <font key="font" metaFont="system"/>
                             <segments>
@@ -2795,10 +2804,13 @@ DQ
                                 <segment label="English"/>
                                 <segment label="Nederlands"/>
                             </segments>
+                            <connections>
+                                <action selector="setLanguage:" target="Voe-Tx-rLC" id="Tp5-yl-wlW"/>
+                            </connections>
                         </segmentedCell>
                     </segmentedControl>
                     <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="9WU-b5-USS">
-                        <rect key="frame" x="20" y="49" width="459" height="5"/>
+                        <rect key="frame" x="20" y="49" width="464" height="5"/>
                     </box>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EE9-jh-gbo">
                         <rect key="frame" x="18" y="22" width="80" height="16"/>
@@ -2809,13 +2821,17 @@ DQ
                         </textFieldCell>
                     </textField>
                     <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6qX-zk-wi0">
-                        <rect key="frame" x="101" y="16" width="109" height="25"/>
+                        <rect key="frame" x="101" y="16" width="114" height="25"/>
                         <popUpButtonCell key="cell" type="push" title="Automatic" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="oEH-q1-Txn" id="pqs-ch-bG2">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" id="Znn-xV-cFV">
                                 <items>
-                                    <menuItem title="Automatic" state="on" id="oEH-q1-Txn"/>
+                                    <menuItem title="Automatic" state="on" id="oEH-q1-Txn">
+                                        <connections>
+                                            <action selector="selectAutoReader:" target="Voe-Tx-rLC" id="XSS-LO-kDN"/>
+                                        </connections>
+                                    </menuItem>
                                     <menuItem isSeparatorItem="YES" id="DBH-1P-wVI"/>
                                 </items>
                             </menu>
@@ -2847,7 +2863,7 @@ DQ
                     <constraint firstItem="6qX-zk-wi0" firstAttribute="centerY" secondItem="EE9-jh-gbo" secondAttribute="centerY" id="yMs-lT-OJv"/>
                 </constraints>
             </view>
-            <point key="canvasLocation" x="121.5" y="689.5"/>
+            <point key="canvasLocation" x="124" y="689.5"/>
         </window>
     </objects>
     <resources>

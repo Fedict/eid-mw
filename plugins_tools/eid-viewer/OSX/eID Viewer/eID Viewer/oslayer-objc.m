@@ -4,6 +4,7 @@
 #include "verify_cert.h"
 #include "dataverify.h"
 #include "p11.h"
+#include "check_version.h"
 
 static id <eIDOSLayerUI>currUi = nil;
 
@@ -92,6 +93,11 @@ static void osl_objc_challenge_result(const unsigned char *response, int respons
 	eIDResult res = (eIDResult) result;
 	[currUi challengeResult:res withResponse:resp];
 }
+
+@implementation eIDVersionTriplet
+@end
+@implementation eIDUpgradeInfo
+@end
 
 @implementation eIDOSLayerBackend
 +(void)pinop:(eIDPinOp)which {
@@ -214,5 +220,22 @@ static void osl_objc_challenge_result(const unsigned char *response, int respons
 }
 +(void)doChallengeInternal {
 	eid_vwr_maybe_perform_challenge();
+}
++(eIDUpgradeInfo*) parseUpgradeInfoForXml:(NSString*)xml  currentVersion:(eIDVersionTriplet *)ourVersion {
+        struct upgrade_info *info = eid_vwr_upgrade_info([xml cStringUsingEncoding:NSUTF8StringEncoding], [xml length], "macOS", [[[NSProcessInfo processInfo] operatingSystemVersionString] cStringUsingEncoding:NSUTF8StringEncoding], (int)[ourVersion major], (int)[ourVersion minor], (int)[ourVersion build]);
+        eIDUpgradeInfo *rv = [[eIDUpgradeInfo alloc] init];
+        eIDVersionTriplet *tr = [[eIDVersionTriplet alloc] init];
+        [tr setMajor:info->new_version.major];
+        [tr setMinor:info->new_version.minor];
+        [tr setBuild:info->new_version.build];
+        [rv setNewVersion:tr];
+        if(info->upgrade_url) {
+                [rv setUpgradeUrl:[[NSURL alloc] initWithString:[[NSString alloc] initWithCString:info->upgrade_url encoding:NSUTF8StringEncoding]]];
+        }
+        if(info->relnotes_url) {
+                [rv setRelnotesUrl:[[NSURL alloc] initWithString:[[NSString alloc] initWithCString:info->relnotes_url encoding:NSUTF8StringEncoding]]];
+        }
+        [rv setHaveUpgrade:info->have_upgrade ? YES : NO];
+        return rv;
 }
 @end

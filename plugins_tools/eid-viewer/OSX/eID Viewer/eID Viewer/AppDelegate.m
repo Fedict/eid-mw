@@ -19,7 +19,7 @@
 - (IBAction)file_open:(id)sender;
 - (IBAction)file_close:(id)sender;
 - (IBAction)do_pinop:(NSSegmentedControl *)sender;
-- (IBAction)setLanguage:(NSMenuItem *)sender;
+- (IBAction)setLanguage:(NSSegmentedControl *)sender;
 - (IBAction)log_buttonaction:(NSSegmentedControl *)sender;
 - (IBAction)changeLogLevel:(NSPopUpButton *)sender;
 - (IBAction)print:(id)sender;
@@ -34,6 +34,8 @@
 - (BOOL)application:(NSApplication*)sender openFile:(nonnull NSString *)filename;
 - (IBAction)basicKeyCheck:(id)sender;
 - (IBAction)showPreferences:(id)sender;
+- (IBAction)changeUpdatePref:(id)sender;
+- (IBAction)checkUpdatesNow:(id)sender;
 
 @property CertificateStore *certstore;
 @property NSDictionary *bindict;
@@ -61,8 +63,7 @@
 @property (weak) IBOutlet NSMenuItem *menu_file_close;
 @property (weak) IBOutlet NSMenuItem *menu_file_save;
 @property (weak) IBOutlet NSMenuItem *menu_file_print;
-@property (weak) IBOutlet NSMenu *menu_file_reader;
-@property (weak) IBOutlet NSMenuItem *menu_file_reader_auto;
+@property (weak) IBOutlet NSMenuItem *auto_reader;
 @property (weak) IBOutlet NSSegmentedControl *pinop_ctrl;
 @property (unsafe_unretained) IBOutlet NSTextView *CertDetailView;
 @property (weak) IBOutlet NSWindow *CertDetailSheet;
@@ -75,6 +76,8 @@
 @property (weak) IBOutlet NSButton *BasicKeyButton;
 @property (weak) IBOutlet NSPanel *prefsPane;
 @property (weak) IBOutlet NSPopUpButton *selectedReader;
+@property (weak) IBOutlet NSSegmentedControl *currentLanguage;
+@property (weak) IBOutlet NSButton *updateCheck;
 
 @end
 
@@ -397,6 +400,7 @@
 			langcode = eIDLanguageEn;
 		}
 	}
+        [_currentLanguage setSelectedSegment:(NSInteger)langcode - 1];
 	eIDLogLevel level = [prefs integerForKey:@"log_level"];
 	BOOL alw_val = [prefs boolForKey:@"always_validate"];
 	if(alw_val) {
@@ -404,30 +408,30 @@
 	} else {
 		[_alwaysValidate setState:NSOffState];
 	}
+        BOOL startup_update = [prefs boolForKey:@"check_update"];
+        if(startup_update) {
+                [self checkUpdatesNow:self];
+                [_updateCheck setState:NSOnState];
+        } else {
+                [_updateCheck setState:NSOffState];
+        }
 	[self setIsForeignerCard:NO];
 	[_logLevel selectItemAtIndex:level];
 	[eIDOSLayerBackend setLang:langcode];
 	[eIDOSLayerBackend setUi:self];
 }
-- (void)setLanguage:(NSMenuItem *)sender {
-	NSString* keyeq = sender.keyEquivalent;
+- (void)setLanguage:(NSSegmentedControl *)sender {
+        NSUInteger sel = [sender selectedSegment];
 	eIDLanguage langcode = eIDLanguageNone;
-	if([keyeq isEqualToString:@"d"]) {
-		langcode = eIDLanguageDe;
-	} else if([keyeq isEqualToString:@"e"]) {
-		langcode = eIDLanguageEn;
-	} else if([keyeq isEqualToString:@"f"]) {
-		langcode = eIDLanguageFr;
-	} else if([keyeq isEqualToString:@"n"]) {
-		langcode = eIDLanguageNl;
-	}
-	if(langcode == eIDLanguageNone) {
+        NSString *s = @"";
+        langcode = (eIDLanguage)(sel + 1);
+        if(langcode > eIDLanguageNl) {
 		NSAlert *alert = [[NSAlert alloc] init];
 		alert.messageText = @"Error: could not determine language";
 		[alert runModal];
 		return;
 	}
-	[self log:[NSString stringWithFormat:NSLocalizedStringWithDefaultValue(@"LanguageChosenLog", nil, [NSBundle mainBundle], @"Setting language to %@", ""), keyeq] withLevel:eIDLogLevelNormal];
+	[self log:[NSString stringWithFormat:NSLocalizedStringWithDefaultValue(@"LanguageChosenLog", nil, [NSBundle mainBundle], @"Setting language to %@", ""), s] withLevel:eIDLogLevelNormal];
 	[eIDOSLayerBackend setLang:langcode];
 	[[NSUserDefaults standardUserDefaults] setInteger:langcode forKey:@"ContentLanguage"];
 }
@@ -610,7 +614,7 @@ failed:
 	[eIDOSLayerBackend setReaderAuto:YES];
 }
 -(IBAction)selectManualReader:(ReaderMenuItem*)sender {
-	[_menu_file_reader_auto setState: NSOffState];
+	[_auto_reader setState: NSOffState];
 	for(int i=0; i<[_readerSelections count]; i++) {
 		[[_readerSelections objectAtIndex:i] setState: NSOffState];
 	}
@@ -628,7 +632,7 @@ failed:
                         newreaders[i] = [[ReaderMenuItem alloc] initWithTitle:readerName action:@selector(selectManualReader:) keyEquivalent:@"" slotNumber:slot];
                         [[_selectedReader menu] addItem:newreaders[i]];
                 }
-                [_menu_file_reader_auto setEnabled:count > 0 ? YES : NO];
+                [_auto_reader setEnabled:count > 0 ? YES : NO];
                 _readerSelections = [NSArray arrayWithObjects:newreaders count:count];
         }];
 }
@@ -638,5 +642,32 @@ failed:
 }
 - (IBAction)showPreferences:(id)sender {
         [_prefsPane setIsVisible:YES];
+}
+- (IBAction)checkUpdatesNow:(id)sender {
+        NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:@"https://eid.belgium.be/sites/default/files/software/eidversions.xml"]];
+        NSURLResponse *resp;
+        NSError *err;
+        NSData *respdata = [NSURLConnection sendSynchronousRequest:req returningResponse:&resp error:&err];
+        if(respdata != nil) {
+                NSString *xml = [[NSString alloc] initWithData:respdata encoding:NSUTF8StringEncoding];
+                eIDVersionTriplet *tr = [[eIDVersionTriplet alloc] init];
+                NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+                NSArray *versionArray = [version componentsSeparatedByString:@"."];
+                [tr setMajor:[versionArray[0] integerValue]];
+                [tr setMinor:[versionArray[1] integerValue]];
+                [tr setBuild:[versionArray[2] integerValue]];
+                eIDUpgradeInfo *info = [eIDOSLayerBackend parseUpgradeInfoForXml:xml  currentVersion:tr];
+                if([info haveUpgrade]) {
+                        NSAlert *alert = [[NSAlert alloc] init];
+                        eIDVersionTriplet *newVersion = [info newVersion];
+                        alert.messageText = [NSString stringWithFormat:NSLocalizedStringWithDefaultValue(@"updatemessage", nil, [NSBundle mainBundle], @"Version %d.%d.%d of the eID Viewer is available; you are running an older version. Please go to %@ to download the update", "message shown when a new version of the viewer is available"), [newVersion major], [newVersion minor], [newVersion build], [info upgradeUrl]];
+                        [alert runModal];
+                }
+        }
+}
+
+- (IBAction)changeUpdatePref:(NSButton *)sender {
+        NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+        [prefs setBool:([sender state] == NSOnState) ? YES : NO forKey:@"check_update"];
 }
 @end

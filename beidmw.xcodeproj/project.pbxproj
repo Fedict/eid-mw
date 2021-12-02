@@ -101,6 +101,8 @@
 		65E2354E19A7DE9D00C33AAC /* ordering.c in Sources */ = {isa = PBXBuildFile; fileRef = 65CC20ED19A7DE4E0089CD13 /* ordering.c */; };
 		65EABAF31C621FB400034337 /* labels.c in Sources */ = {isa = PBXBuildFile; fileRef = 65EABAED1C621F3D00034337 /* labels.c */; };
 		65F3F0231BE237480073F2A3 /* readdata_sequence.c in Sources */ = {isa = PBXBuildFile; fileRef = 65F3F0211BE236680073F2A3 /* readdata_sequence.c */; };
+		6C0122EB274E3F7900C9F564 /* check_version.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C0122E8274E3F7900C9F564 /* check_version.h */; };
+		6C0122EC274E3F7900C9F564 /* check_version.c in Sources */ = {isa = PBXBuildFile; fileRef = 6C0122EA274E3F7900C9F564 /* check_version.c */; };
 		6C22BB69257E619400E72FF2 /* brexitment1conv.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C22BB64257E619400E72FF2 /* brexitment1conv.h */; };
 		6C22BB6A257E619400E72FF2 /* brexitment1conv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6C22BB66257E619400E72FF2 /* brexitment1conv.cpp */; };
 		6C22BB6B257E619400E72FF2 /* brexitment2conv.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C22BB67257E619400E72FF2 /* brexitment2conv.h */; };
@@ -439,6 +441,8 @@
 		65EABAEE1C621F3D00034337 /* labels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = labels.h; path = "plugins_tools/util/eid-util/labels.h"; sourceTree = "<group>"; };
 		65EABAEF1C621F3D00034337 /* utftranslate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = utftranslate.h; path = "plugins_tools/util/eid-util/utftranslate.h"; sourceTree = "<group>"; };
 		65F3F0211BE236680073F2A3 /* readdata_sequence.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = readdata_sequence.c; path = tests/unit/readdata_sequence.c; sourceTree = "<group>"; };
+		6C0122E8274E3F7900C9F564 /* check_version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = check_version.h; path = "plugins_tools/eid-viewer/check_version.h"; sourceTree = SOURCE_ROOT; };
+		6C0122EA274E3F7900C9F564 /* check_version.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = check_version.c; path = "plugins_tools/eid-viewer/check_version.c"; sourceTree = SOURCE_ROOT; };
 		6C22BB64257E619400E72FF2 /* brexitment1conv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = brexitment1conv.h; sourceTree = "<group>"; };
 		6C22BB66257E619400E72FF2 /* brexitment1conv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = brexitment1conv.cpp; sourceTree = "<group>"; };
 		6C22BB67257E619400E72FF2 /* brexitment2conv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = brexitment2conv.h; sourceTree = "<group>"; };
@@ -689,6 +693,8 @@
 		652709FB1FE975A1004F326D /* BeidView */ = {
 			isa = PBXGroup;
 			children = (
+				6C0122EA274E3F7900C9F564 /* check_version.c */,
+				6C0122E8274E3F7900C9F564 /* check_version.h */,
 				6CF096A42563E914007501AA /* dataverify.h */,
 				65270A0B1FE976B6004F326D /* InfoPlist.strings */,
 				65270A191FE976BA004F326D /* oslayer-objc.h */,
@@ -1055,6 +1061,7 @@
 				6CD6661C26D006D2007DE98D /* cardAment1conv.h in Headers */,
 				65270A3E1FE97991004F326D /* eid-viewer.h in Headers */,
 				65314FBD2080E9E20079D0B0 /* workpermitconv.h in Headers */,
+				6C0122EB274E3F7900C9F564 /* check_version.h in Headers */,
 				65270A3F1FE97991004F326D /* macros.h in Headers */,
 				6C22BB6B257E619400E72FF2 /* brexitment2conv.h in Headers */,
 				8BD62CA221021C7000C28B6D /* xmlfileversconv.h in Headers */,
@@ -1391,6 +1398,7 @@
 				65270A351FE976BE004F326D /* preview.c in Sources */,
 				65270A651FE97A2B004F326D /* xmlspecorgconv.cpp in Sources */,
 				65270A821FE97A2B004F326D /* convert.cpp in Sources */,
+				6C0122EC274E3F7900C9F564 /* check_version.c in Sources */,
 				65270A6B1FE97A2B004F326D /* convworker.cpp in Sources */,
 				65270A341FE976BE004F326D /* labels.c in Sources */,
 				65270A321FE976BE004F326D /* state-posix.c in Sources */,
