@@ -210,7 +210,7 @@ struct upgrade_info *eid_vwr_upgrade_info(char *xml, size_t xmllen, char *osname
 	xmlTextReaderPtr reader = xmlReaderForDoc((const xmlChar *)xml, NULL, NULL, 0);
 	int rc;
 	if(upgrade_info != NULL) return upgrade_info;
-	upgrade_info = malloc(sizeof(struct upgrade_info));
+	upgrade_info = calloc(sizeof(struct upgrade_info), 1);
 	upgrade_info->have_upgrade = false;
 
 	if(reader == NULL) {
@@ -233,7 +233,9 @@ struct upgrade_info *eid_vwr_upgrade_info(char *xml, size_t xmllen, char *osname
 					upgrade_info->new_version = rv.version;
 				}
 				if(rv.parse_result & CONSTRAINT_MATCHED) {
-					upgrade_info->have_upgrade = true;
+                                        if(cmp_version(&(whoami.version), &(upgrade_info->new_version)) < 0) {
+                                                upgrade_info->have_upgrade = true;
+                                        }
 				}
 				if(rv.parse_result & NOT_INTERESTING) {
 					xmlTextReaderNext(reader);
