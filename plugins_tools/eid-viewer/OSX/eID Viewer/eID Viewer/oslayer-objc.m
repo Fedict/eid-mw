@@ -182,6 +182,12 @@ static void osl_objc_challenge_result(const unsigned char *response, int respons
 	}
 	return (eIDResult)eid_vwr_verify_cert([certificate bytes], [certificate length], [ca bytes], [ca length],osl_objc_perform_ocsp_request, osl_objc_free_ocsp_request);
 }
++(eIDResult)validateCert:(NSData*)certificate withCa:(NSData*)ca andAllowList:(BOOL)allowlist {
+        if(certificate == nil || ca == nil) {
+                return eIDResultUnknown;
+        }
+        return (eIDResult)eid_vwr_verify_cert_full([certificate bytes], [certificate length], [ca bytes], [ca length], osl_objc_perform_ocsp_request, osl_objc_free_ocsp_request, allowlist == YES ? 0 : EID_VWR_NO_OCSP_WHITELIST);
+}
 +(eIDResult)validateIntCert:(NSData *)certificate withCa:(NSData *)ca {
 	if(certificate == nil || ca == nil) {
 		return eIDResultUnknown;
