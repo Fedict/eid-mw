@@ -117,6 +117,7 @@ checks the certificate against the government's Trust Service.
 %{__make} install DESTDIR="%{buildroot}"
 mkdir -p %{buildroot}%{_libdir}/mozilla/
 mv %{buildroot}/usr/lib/mozilla/pkcs11-modules %{buildroot}%{_libdir}/mozilla/ || true
+mv %{buildroot}/usr/lib/mozilla/managed-storage %{buildroot}%{_libdir}/mozilla/ || true
 rm -f %{buildroot}%{_datadir}/applications/eid-viewer.desktop
 desktop-file-install --dir %{buildroot}%{_datadir}/applications --vendor fedict plugins_tools/eid-viewer/eid-viewer.desktop || true
 
