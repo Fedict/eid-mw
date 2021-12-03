@@ -214,7 +214,11 @@ enum eid_vwr_result eid_vwr_verify_cert_full(const void *certificate, size_t cer
 				if(val->name != NULL && val->value != NULL) {
 					if(!strcmp(val->name, "OCSP - URI")) {
 						url = val->value;
-						if(!(flags & EID_VWR_NO_OCSP_WHITELIST) && strncmp(url, VALID_OCSP_PREFIX_RSA, strlen(VALID_OCSP_PREFIX_RSA)) && strncmp(url, VALID_OCSP_PREFIX_ECC, strlen(VALID_OCSP_PREFIX_ECC))) {
+                                                if(flags & EID_VWR_NO_OCSP_ALLOWLIST) {
+                                                        be_log(EID_VWR_LOG_COARSE, "Not checking OCSP URL against allowlist: check disabled in configuration");
+                                                        continue;
+                                                }
+						if(strncmp(url, VALID_OCSP_PREFIX_RSA, strlen(VALID_OCSP_PREFIX_RSA)) && strncmp(url, VALID_OCSP_PREFIX_ECC, strlen(VALID_OCSP_PREFIX_ECC))) {
 							be_log(EID_VWR_LOG_NORMAL, "Invalid OCSP URL. Is this an actual eID card?");
 							ret = EID_VWR_RES_FAILED;
 							goto exit;

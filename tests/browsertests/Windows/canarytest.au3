@@ -21,14 +21,14 @@ EndFunc
 _AU3RecordSetup()
 #endregion --- Internal functions Au3Recorder End ---
 
-If $CmdLine[0] <> 1 Then
+If $CmdLine[0] <> 2 Then
 	MsgBox(64, 'Error', 'Need a PIN code on the command line!')
 	Exit(1)
 EndIf
 Opt("WinTitleMatchMode",2)
 Run('"C:\Program Files\Google\Chrome SxS\Application\Chrome.exe"')
 _WinWaitActivate("New Tab","")
-Send("https:{SHIFTDOWN}::{SHIFTUP}pfsense{SHIFTDOWN};{SHIFTUP}pass{SHIFTDOWN};{SHIFTUP}lan:{SHIFTDOWN}20443{SHIFTUP}{ENTER}")
+Send("https:\\"& $CmdLine[1] & "{ENTER}")
 Sleep(5000)
 Send("{ENTER}")
 Sleep(3000)
@@ -36,9 +36,9 @@ _WinWaitActivate("Windows Security","", 120)
 If Not WinActive("Windows Security") Then
   Exit(2)
 EndIf
-Send($CmdLine[1] & "{ENTER}")
-_WinWaitActivate("PHP 7.3.19","",120)
-If Not WinExists("PHP 7.3.19") Then
+Send($CmdLine[2] & "{ENTER}")
+_WinWaitActivate("PHP 7.3.31","",120)
+If Not WinExists("PHP 7.3.31") Then
    Exit(2)
 EndIf
 Sleep(5000)

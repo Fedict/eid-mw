@@ -21,24 +21,24 @@ EndFunc
 _AU3RecordSetup()
 #endregion --- Internal functions Au3Recorder End ---
 
-If $CmdLine[0] <> 1 Then
+If $CmdLine[0] <> 2 Then
    MsgBox(64, 'Error', 'Need a PIN code on the command line!')
    Exit(1)
 EndIf
 
 Run('C:\Program Files\Firefox Nightly\firefox.exe')
 _WinWaitActivate("Firefox Nightly","")
-Send("https:{SHIFTDOWN}::{SHIFTUP}pfsense{SHIFTDOWN};{SHIFTUP}pass{SHIFTDOWN};{SHIFTUP}lan:20443{ENTER}")
-_WinWaitActivate("User Identification Request","")
-Send("{ENTER}")
+Send("https:\\"& $CmdLine[1] & "{ENTER}")
 _WinWaitActivate("Asking PIN","", 120)
 If Not WinExists("Asking PIN") Then
    Exit(1)
 EndIf
-Send($CmdLine[1] & "{ENTER}")
-_WinWaitActivate("PHP 7.3.19-1~deb10u1 - phpinfo() — Firefox Nightly","",120)
-If Not WinExists("PHP 7.3.19-1~deb10u1 - phpinfo() — Firefox Nightly") Then
+Sleep(1000)
+Send($CmdLine[2] & "{ENTER}")
+_WinWaitActivate("PHP 7.3.31-1~deb10u1 - phpinfo() — Firefox Nightly","",120)
+If Not WinExists("PHP 7.3.31-1~deb10u1 - phpinfo() — Firefox Nightly") Then
    Exit(2)
 EndIf
+Sleep(3000)
 Send("{ALTDOWN}{F4}{ALTUP}")
 #endregion --- Au3Recorder generated code End ---

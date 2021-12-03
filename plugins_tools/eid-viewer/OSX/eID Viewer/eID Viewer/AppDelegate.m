@@ -562,6 +562,10 @@
 	NSData* ca = [_certstore certificateForKey:@"CA"];
 	NSData* root = [_certstore certificateForKey:@"Root"];
 	bool have_fail = false;
+        NSString *filePath = [[NSBundle mainBundle] pathForResource:@"extraopts" ofType:@"plist"];
+        NSDictionary *extraopts = [NSDictionary dictionaryWithContentsOfFile:filePath];
+        BOOL disableAllowlist = [[extraopts valueForKey:@"disableAllowlist"] boolValue];
+        
 	eIDResult resRoot = eIDResultUnknown,
 		resCa = eIDResultUnknown,
 		resSig = eIDResultUnknown,
@@ -571,7 +575,7 @@
 	maybe_fail(resRRN, [eIDOSLayerBackend validateRrnCert:[_certstore certificateForKey:@"CERT_RN_FILE"] withRoot:root], false);
 	maybe_fail(resCa, [eIDOSLayerBackend validateIntCert:ca withCa:root], true);
 	maybe_fail(resSig, [eIDOSLayerBackend validateCert:[_certstore certificateForKey:@"Signature"] withCa:ca], true);
-	maybe_fail(resAuth, [eIDOSLayerBackend validateCert:[_certstore certificateForKey:@"Authentication"] withCa:ca], true);
+	maybe_fail(resAuth, [eIDOSLayerBackend validateCert:[_certstore certificateForKey:@"Authentication"] withCa:ca andAllowList:!disableAllowlist], true);
 failed:
 	if(resCa != eIDResultSuccess && resSig == eIDResultSuccess) {
 		resSig = resCa;
