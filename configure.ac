@@ -214,9 +214,11 @@ AC_DEFINE_UNQUOTED([MAINVERSION], $MAINVERSION, [do not change this])
 AC_SUBST(MAINVERSION)
 CRYPTOKIMAJORVERS=$(echo $MAINVERSION|cut -d'.' -f1|sed -e 's/v//')
 CRYPTOKIMINORVERS=$(echo $MAINVERSION|cut -d'.' -f2)
+PATCHVERS=$(echo $MAINVERSION|cut -d'.' -f3)
 AS_IF([test -z "$CRYPTOKIMINORVERS"],[CRYPTOKIMINORVERS=0])
 AC_DEFINE_UNQUOTED([CRYPTOKIMAJORVERS], $CRYPTOKIMAJORVERS, [major version of PKCS#11 library])
 AC_DEFINE_UNQUOTED([CRYPTOKIMINORVERS], $CRYPTOKIMINORVERS, [minor version of PKCS#11 library])
+AC_DEFINE_UNQUOTED([PATCHVERS], $PATCHVERS, [patch version bit of the package])
 
 # need dlopen() for the pincode plugin thing
 save_LIBS="$LIBS"
@@ -258,6 +260,7 @@ AC_CONFIG_FILES([Makefile
 		 cardcomm/pkcs11/src/libbeidpkcs11.pc
 		 cardcomm/pkcs11/src/beidpkcs11.json
 		 cardcomm/pkcs11/src/beidpkcs11_alt.json
+		 cardcomm/pkcs11/src/belgiumeid@eid.belgium.be.json
 		 cardcomm/pkcs11/src/dialogs/dialogsgtk/po/Makefile.in
 		 doc/sdk/include/v240/Makefile
 		 tests/unit/Makefile
