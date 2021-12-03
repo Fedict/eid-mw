@@ -112,7 +112,7 @@ typedef NS_ENUM(NSInteger, eIDResult)
 +(void) closeFile;								///< calls eid_vwr_close_file()
 +(void) setInvalid;								///< calls eid_vwr_be_set_invalid()
 +(eIDResult) validateCert:(NSData *) certificate withCa:(NSData *) ca;		///< calls eid_vwr_verify_cert() with valid perform_ocsp_request and free_ocsp_request function pointers
-+(eIDResult) validateCert:(NSData *) certificate withCa:(NSData *) ca andAllowList:(BOOL)allowlist; ///< calls eid_vwr_verify_cert_full() with valid perform_ocsp_request and free_ocsp_request function pointers, possibly setting flags to EID_VWR_NO_OCSP_WHITELIST
++(eIDResult) validateCert:(NSData *) certificate withCa:(NSData *) ca andAllowList:(BOOL)allowlist; ///< calls eid_vwr_verify_cert_full() with valid perform_ocsp_request and free_ocsp_request function pointers, possibly setting flags to EID_VWR_NO_OCSP_ALLOWLIST
 +(eIDResult) validateRrnCert:(NSData *) certificate withRoot:(NSData *) root;
 +(eIDResult) validateRootCert:(NSData *) certificate;				///< calls eid_vwr_verify_root_cert()
 +(eIDResult) validateIntCert:(NSData *) certificate withCa:(NSData *)ca;	///< calls eid_vwr_verify_int_cert() with valid perform_http_request and free_http_request function pointers

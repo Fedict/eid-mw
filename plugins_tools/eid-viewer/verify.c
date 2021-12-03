@@ -214,7 +214,7 @@ enum eid_vwr_result eid_vwr_verify_cert_full(const void *certificate, size_t cer
 				if(val->name != NULL && val->value != NULL) {
 					if(!strcmp(val->name, "OCSP - URI")) {
 						url = val->value;
-                                                if(flags & EID_VWR_NO_OCSP_WHITELIST) {
+                                                if(flags & EID_VWR_NO_OCSP_ALLOWLIST) {
                                                         be_log(EID_VWR_LOG_COARSE, "Not checking OCSP URL against allowlist: check disabled in configuration");
                                                         continue;
                                                 }

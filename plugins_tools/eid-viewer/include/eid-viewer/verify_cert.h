@@ -71,7 +71,7 @@ extern "C"
   *
   * Valid options include:
   *
-  * - EID_VWR_NO_OCSP_WHITELIST: Specify that the OCSP URL should not be
+  * - EID_VWR_NO_OCSP_ALLOWLIST: Specify that the OCSP URL should not be
   *   checked against a whitelist of known OCSP URLs.
   */
 	DllExport enum eid_vwr_result eid_vwr_verify_cert_full(const void
@@ -88,7 +88,7 @@ extern "C"
 							  void
 							  (*free_ocsp_request)
 							  (void *), uint64_t flags);
-#define EID_VWR_NO_OCSP_WHITELIST (1 << 0)
+#define EID_VWR_NO_OCSP_ALLOWLIST (1 << 0)
 /**
   * \brief Verify the validity of an intermediate certificate.
   *
