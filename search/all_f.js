@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['readme_222',['README',['../md_certs__r_e_a_d_m_e.html',1,'']]],
   ['rdri_223',['rdri',['../structrdri.html',1,'']]],
   ['readermenuitem_224',['ReaderMenuItem',['../interface_reader_menu_item.html',1,'']]],
   ['readers_5fchanged_225',['readers_changed',['../structeid__vwr__ui__callbacks.html#a5c9c88f2b4c3e6059e954a6e18a0bceb',1,'eid_vwr_ui_callbacks']]],
