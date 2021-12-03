@@ -65,6 +65,7 @@ INSTALL_SCRIPTS_DIR="$RELEASE_DIR/install_scripts"
 #pkcs11_inst dir, where our pkcs11 lib will be placed
 PKCS11_INST_DIR="$ROOT_DIR/Library/Belgium Identity Card/Pkcs11"
 MOZ_PKCS11_MANIFEST_DIR="$ROOT_DIR/Library/Application Support/Mozilla/PKCS11Modules"
+MOZ_STORAGE_MANIFEST_DIR="$ROOT_DIR/Library/Application Support/Mozilla/ManagedStorage"
 #licenses dir, where our licences will be placed
 LICENSES_DIR="$ROOT_DIR/Library/Belgium Identity Card/Licenses"
 BEIDCARD_DIR="$ROOT_DIR/Library/Belgium Identity Card"
@@ -121,6 +122,7 @@ mkdir -p "$LICENSES_DIR"
 mkdir -p "$RESOURCES_DIR"
 mkdir -p "$INSTALL_SCRIPTS_DIR"
 mkdir -p "$MOZ_PKCS11_MANIFEST_DIR"
+Mkdir -p "$MOZ_STORAGE_MANIFEST_DIR"
 
 #copy all files that should be part of the installer:
 #in case of an export, also sign the pkcs11 library
@@ -158,6 +160,23 @@ cat > "$MOZ_PKCS11_MANIFEST_DIR/beidpkcs11_alt.json" <<EOF
   "type": "pkcs11",
   "path": "/usr/local/lib/beid-pkcs11.bundle/Contents/MacOS/libbeidpkcs11.dylib",
   "allowed_extensions": ["belgiumeid@eid.belgium.be"]
+}
+EOF
+
+# Create a storage manifest file with the eidmw version number for Mozilla
+# our plugin will use this storage manifest in order to retrieve the version of the pkcs11 lib that we installed
+cat > "$MOZ_STORAGE_MANIFEST_DIR/belgiumeid@eid.belgium.be.json" <<EOF
+{
+  "name": "belgiumeid@eid.belgium.be",
+  "description": "version number of the currently-installed eID middleware",
+  "type": "storage",
+  "data": {
+    "versionInfo": {
+      "major": ${BASE_VERSION1},
+      "minor": ${BASE_VERSION2},
+      "patch": ${BASE_VERSION3}
+    }
+  }
 }
 EOF
 
