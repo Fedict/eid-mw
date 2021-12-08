@@ -1321,7 +1321,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "make -C plugins_tools/eid-viewer/OSX/support/ossl build\nmake -C plugins_tools/eid-viewer/OSX/support/xml build\n";
+			shellScript = "make -C plugins_tools/eid-viewer/OSX/support/ossl -j$(sysctl hw.ncpu|cut -d' ' -f2) build\nmake -C plugins_tools/eid-viewer/OSX/support/xml -j$(sysctl hw.ncpu|cut -d' ' -f2) build\n";
 		};
 		86C65C5C223913D4001ED3A7 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1717,6 +1717,16 @@
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = (
+					plugins_tools/util,
+					"plugins_tools/eid-viewer/include",
+					"plugins_tools/eid-viewer/OSX/support/ossl/openssl-$(arch)/include",
+					"plugins_tools/eid-viewer/OSX/support/xml/libxml2-$(arch)/include",
+					"plugins_tools/eid-viewer/OSX/support/ossl/openssl-combined/include",
+					"plugins_tools/eid-viewer",
+					doc/sdk/include/rsaref220,
+					"$(inherited)",
+				);
 				INFOPLIST_EXPAND_BUILD_SETTINGS = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/plugins_tools/eid-viewer/OSX/eID Viewer/eID Viewer/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1778,6 +1788,16 @@
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = (
+					plugins_tools/util,
+					"plugins_tools/eid-viewer/include",
+					"plugins_tools/eid-viewer/OSX/support/ossl/openssl-$(arch)/include",
+					"plugins_tools/eid-viewer/OSX/support/xml/libxml2-$(arch)/include",
+					"plugins_tools/eid-viewer/OSX/support/ossl/openssl-combined/include",
+					"plugins_tools/eid-viewer",
+					doc/sdk/include/rsaref220,
+					"$(inherited)",
+				);
 				INFOPLIST_EXPAND_BUILD_SETTINGS = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/plugins_tools/eid-viewer/OSX/eID Viewer/eID Viewer/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1819,8 +1839,9 @@
 					plugins_tools/util/,
 					"plugins_tools/eid-viewer",
 					"plugins_tools/eid-viewer/include",
-					"plugins_tools/eid-viewer/OSX/support/ossl/openssl/include",
-					"plugins_tools/eid-viewer/OSX/support/xml/libxml2/include",
+					"plugins_tools/eid-viewer/OSX/support/ossl/openssl-$(arch)/include",
+					"plugins_tools/eid-viewer/OSX/support/xml/libxml2-$(arch)/include",
+					"plugins_tools/eid-viewer/OSX/support/ossl/openssl-combined/include",
 				);
 				INFOPLIST_EXPAND_BUILD_SETTINGS = YES;
 				INFOPLIST_FILE = "plugins_tools/eid-viewer/OSX/eID Viewer/BeidView/Info.plist";
@@ -1832,7 +1853,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/plugins_tools/eid-viewer/OSX/support/ossl/openssl",
+					"$(PROJECT_DIR)/plugins_tools/eid-viewer/OSX/support/ossl/openssl-combined",
 					"$(PROJECT_DIR)/plugins_tools/eid-viewer/OSX/support/xml/builddir",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
@@ -1870,8 +1891,9 @@
 					plugins_tools/util/,
 					"plugins_tools/eid-viewer",
 					"plugins_tools/eid-viewer/include",
-					"plugins_tools/eid-viewer/OSX/support/ossl/openssl/include",
-					"plugins_tools/eid-viewer/OSX/support/xml/libxml2/include",
+					"plugins_tools/eid-viewer/OSX/support/ossl/openssl-$(arch)/include",
+					"plugins_tools/eid-viewer/OSX/support/xml/libxml2-$(arch)/include",
+					"plugins_tools/eid-viewer/OSX/support/ossl/openssl-combined/include",
 				);
 				INFOPLIST_EXPAND_BUILD_SETTINGS = YES;
 				INFOPLIST_FILE = "plugins_tools/eid-viewer/OSX/eID Viewer/BeidView/Info.plist";
@@ -1883,7 +1905,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/plugins_tools/eid-viewer/OSX/support/ossl/openssl",
+					"$(PROJECT_DIR)/plugins_tools/eid-viewer/OSX/support/ossl/openssl-combined",
 					"$(PROJECT_DIR)/plugins_tools/eid-viewer/OSX/support/xml/builddir",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
