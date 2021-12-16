@@ -100,6 +100,9 @@ static struct {
 	{ TEXT("brexit_mention_1"),		CK_TRUE, CK_FALSE, CK_TRUE, TEXT("4.2") },
 	{ TEXT("brexit_mention_2"),		CK_TRUE, CK_FALSE, CK_TRUE, TEXT("4.2") },
 	{ TEXT("tokeninfo_graph_perso_version"),	CK_FALSE, CK_TRUE, CK_TRUE, TEXT("4.4") },
+	{ TEXT("perso_versions"),	CK_FALSE, CK_TRUE, CK_TRUE, NULL },
+	{ TEXT("tokeninfo_elec_perso_version"),	CK_FALSE, CK_TRUE, CK_TRUE, NULL },
+	{ TEXT("tokeninfo_elec_perso_int_version"),	CK_FALSE, CK_TRUE, CK_TRUE, NULL },
 //	{ TEXT("cardA_mention_1"),		CK_TRUE, CK_FALSE, CK_TRUE, TEXT("4.4") }, //extra mentions possible on type A cards
 //	{ TEXT("cardA_mention_2"),		CK_TRUE, CK_FALSE, CK_TRUE, TEXT("4.4") },
 	{ NULL,					0, 0, 0, NULL },
@@ -120,7 +123,7 @@ static struct labelnames *foreignerlabels = NULL;
 			return labels[i].NAME;\
 		}\
 	}\
-	EID_FPRINTF(stderr, TEXT("E: unknown label: %s"), label);\
+	EID_FPRINTF(stderr, TEXT("E: unknown label: %s\n"), label);\
 	return DEFAULT; \
 }
 
