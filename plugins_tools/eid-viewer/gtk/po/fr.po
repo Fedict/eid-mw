@@ -1,60 +1,63 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR FedICT
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#  <>, YEAR-2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: eid-mw 4.1.1-v4.1.1.4.gc149158.dirty\n"
 "Report-Msgid-Bugs-To: servicedesk@bosa.fgov.be\n"
-"POT-Creation-Date: 2021-08-13 09:55+0200\n"
-"PO-Revision-Date: 2016-12-21 15:37+0100\n"
+"POT-Creation-Date: 2021-12-09 17:42+0200\n"
+"PO-Revision-Date: 2021-12-09 18:04+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 3.0\n"
 
-#: plugins_tools/eid-viewer/gtk/main.c:114
+#: plugins_tools/eid-viewer/gtk/main.c:98
+#, c-format
+msgid "New version of the eID viewer available: version %d.%d.%d at %s"
+msgstr ""
+
+#: plugins_tools/eid-viewer/gtk/main.c:160
 msgid "Initialising"
 msgstr "Initialiser"
 
-#: plugins_tools/eid-viewer/gtk/main.c:117
+#: plugins_tools/eid-viewer/gtk/main.c:164
 msgid "Ready to read identity card"
 msgstr "Prêt à lire la carte d’identité"
 
-#: plugins_tools/eid-viewer/gtk/main.c:122
+#: plugins_tools/eid-viewer/gtk/main.c:169
 msgid "No cardreader found"
 msgstr "Aucun lecteur de cartes trouvé"
 
-#: plugins_tools/eid-viewer/gtk/main.c:127
+#: plugins_tools/eid-viewer/gtk/main.c:174
 msgid "Card available"
 msgstr "Carte disponible"
 
-#: plugins_tools/eid-viewer/gtk/main.c:144
+#: plugins_tools/eid-viewer/gtk/main.c:191
 msgid "Reading identity"
 msgstr "Lecture des données d’identité"
 
-#: plugins_tools/eid-viewer/gtk/main.c:147
+#: plugins_tools/eid-viewer/gtk/main.c:194
 msgid "Reading certificates"
 msgstr "Lecture de certificats en cours"
 
-#: plugins_tools/eid-viewer/gtk/main.c:150
+#: plugins_tools/eid-viewer/gtk/main.c:197
 msgid "Failed to read identity data"
 msgstr "Impossible de lire les données d’identité"
 
-#: plugins_tools/eid-viewer/gtk/main.c:153
+#: plugins_tools/eid-viewer/gtk/main.c:200
 msgid "Performing a PIN operation"
 msgstr "Exécution d'une opération PIN en cours"
 
-#: plugins_tools/eid-viewer/gtk/main.c:185
+#: plugins_tools/eid-viewer/gtk/main.c:232
 #, c-format
 msgid "Could not display label '%s', data '%s': no GtkLabel found for data"
 msgstr ""
 
-#: plugins_tools/eid-viewer/gtk/main.c:207
+#: plugins_tools/eid-viewer/gtk/main.c:254
 #, c-format
 msgid "Could not display binary data with label '%s': not found in hashtable"
 msgstr ""
@@ -160,248 +163,264 @@ msgstr "Exporter la chaine vers fichier PEM..."
 msgid "_File"
 msgstr "Dossier"
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:113
-msgid "Reader selection"
-msgstr "Sélection d'un lecteur de carte"
-
-#: plugins_tools/eid-viewer/gtk/viewer.glade:124
-msgid "Automatic"
-msgstr "Automatique"
-
-#: plugins_tools/eid-viewer/gtk/viewer.glade:180
-msgid "Language"
-msgstr "Language"
-
-#: plugins_tools/eid-viewer/gtk/viewer.glade:234
+#: plugins_tools/eid-viewer/gtk/viewer.glade:152
 msgid "_Help"
 msgstr "_Aide"
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:262
+#: plugins_tools/eid-viewer/gtk/viewer.glade:180
 msgid "Frequently asked questions..."
 msgstr "Foire aux questions..."
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:271
+#: plugins_tools/eid-viewer/gtk/viewer.glade:189
 msgid "eID Card Test Site..."
 msgstr "Site de test eID..."
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:287
-msgid "Show Log Tab"
-msgstr "Afficher le journal"
-
-#: plugins_tools/eid-viewer/gtk/viewer.glade:378
+#: plugins_tools/eid-viewer/gtk/viewer.glade:279
 #: plugins_tools/eid-viewer/gtk/print.c:36
 msgid "Name:"
 msgstr "Nom:"
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:397
+#: plugins_tools/eid-viewer/gtk/viewer.glade:298
 #: plugins_tools/eid-viewer/gtk/print.c:37
 msgid "Given names:"
 msgstr "Prénoms:"
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:416
+#: plugins_tools/eid-viewer/gtk/viewer.glade:317
 #: plugins_tools/eid-viewer/gtk/print.c:38
 msgid "Place of birth:"
 msgstr "Lieu de naissance:"
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:435
+#: plugins_tools/eid-viewer/gtk/viewer.glade:336
 #: plugins_tools/eid-viewer/gtk/print.c:39
 msgid "Date of birth:"
 msgstr "Date de naissance:"
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:454
+#: plugins_tools/eid-viewer/gtk/viewer.glade:355
 #: plugins_tools/eid-viewer/gtk/print.c:40
 msgid "Sex:"
 msgstr "Sexe:"
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:473
+#: plugins_tools/eid-viewer/gtk/viewer.glade:374
 #: plugins_tools/eid-viewer/gtk/print.c:42
 msgid "National number:"
 msgstr "Numéro national:"
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:492
+#: plugins_tools/eid-viewer/gtk/viewer.glade:393
 #: plugins_tools/eid-viewer/gtk/print.c:47
 msgid "Municipality:"
 msgstr "Commune:"
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:511
+#: plugins_tools/eid-viewer/gtk/viewer.glade:412
 #: plugins_tools/eid-viewer/gtk/print.c:46
 msgid "Postal code:"
 msgstr "Code postal:"
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:530
+#: plugins_tools/eid-viewer/gtk/viewer.glade:431
 #: plugins_tools/eid-viewer/gtk/print.c:45
 msgid "Street:"
 msgstr "Rue:"
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:563
+#: plugins_tools/eid-viewer/gtk/viewer.glade:464
 #: plugins_tools/eid-viewer/gtk/print.c:44
 msgid "Special status:"
 msgstr "Etat spécial:"
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:582
+#: plugins_tools/eid-viewer/gtk/viewer.glade:483
 #: plugins_tools/eid-viewer/gtk/print.c:43
 msgid "Title:"
 msgstr "Titre:"
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:601
+#: plugins_tools/eid-viewer/gtk/viewer.glade:502
 #: plugins_tools/eid-viewer/gtk/print.c:41
 msgid "Nationality:"
 msgstr "Nationalité:"
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:832
+#: plugins_tools/eid-viewer/gtk/viewer.glade:733
 msgid "On-card photo of the holder"
 msgstr ""
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:891
+#: plugins_tools/eid-viewer/gtk/viewer.glade:792
 #: plugins_tools/eid-viewer/gtk/print.c:60
 msgid "Date and country of protection:"
 msgstr ""
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:909
+#: plugins_tools/eid-viewer/gtk/viewer.glade:810
 #: plugins_tools/eid-viewer/gtk/print.c:62
 msgid "Employer's VAT number (1):"
 msgstr "Numéro TVA de l'employeur (1)"
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:943
+#: plugins_tools/eid-viewer/gtk/viewer.glade:844
 #: plugins_tools/eid-viewer/gtk/print.c:63
 msgid "Employer's VAT number (2):"
 msgstr "Numéro TVA de l'employeur (2)"
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:993
+#: plugins_tools/eid-viewer/gtk/viewer.glade:894
 #: plugins_tools/eid-viewer/gtk/print.c:61
 msgid "Work permit mention:"
 msgstr ""
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:1027
+#: plugins_tools/eid-viewer/gtk/viewer.glade:928
 #: plugins_tools/eid-viewer/gtk/print.c:64
 msgid "Regional file number:"
-msgstr "Numéro de dossier régional"
+msgstr "Numéro de dossier régional:"
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:1045
+#: plugins_tools/eid-viewer/gtk/viewer.glade:946
 #: plugins_tools/eid-viewer/gtk/print.c:57
 msgid "Member of family:"
-msgstr "Membre de la famille"
+msgstr "Membre de la famille:"
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:1079
+#: plugins_tools/eid-viewer/gtk/viewer.glade:980
 #: plugins_tools/eid-viewer/gtk/print.c:58
 msgid "Organization:"
 msgstr "Organisation:"
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:1097
+#: plugins_tools/eid-viewer/gtk/viewer.glade:998
 #: plugins_tools/eid-viewer/gtk/print.c:59
 msgid "Duplicata:"
 msgstr "Duplicata:"
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:1147
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1048
 #: plugins_tools/eid-viewer/gtk/print.c:65
 msgid "Brexit mentions:"
 msgstr "Mentions du Brexit:"
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:1190
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1091
 msgid "Mentions:"
 msgstr "Mentions:"
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:1271
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1172
 msgid "Identity"
 msgstr "Identité"
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:1327
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1228
 #: plugins_tools/eid-viewer/gtk/print.c:48
 msgid "Card number:"
 msgstr "Numéro de carte:"
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:1344
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1245
 #: plugins_tools/eid-viewer/gtk/print.c:49
 msgid "Place of issue:"
 msgstr "Lieu d'émission:"
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:1361
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1262
 #: plugins_tools/eid-viewer/gtk/print.c:50
 msgid "Chip number:"
 msgstr "Numéro de puce:"
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:1378
-#: plugins_tools/eid-viewer/gtk/viewer.glade:1798
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1279
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1699
 #: plugins_tools/eid-viewer/gtk/print.c:51
 msgid "Valid from:"
 msgstr "Début de validité:"
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:1395
-#: plugins_tools/eid-viewer/gtk/viewer.glade:1817
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1296
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1718
 #: plugins_tools/eid-viewer/gtk/print.c:52
 msgid "Valid until:"
 msgstr "Fin de validité:"
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:1409
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1310
 msgid "Verify PIN"
 msgstr "Verifier le code PIN"
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:1425
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1326
 msgid "Change PIN"
 msgstr "Changer le code PIN"
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:1560
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1461
 msgid "Basic key:"
 msgstr ""
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:1577
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1478
 #: plugins_tools/eid-viewer/gtk/print.c:53
 msgid "Contact chip:"
 msgstr "Puce à contact:"
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:1649
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1550
 msgid "Card/PIN"
 msgstr "Carte/PIN"
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:1675
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1576
 msgid "Contains a hierarchical view of the certificates on the card"
 msgstr ""
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:1836
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1737
 msgid "Usage:"
 msgstr "Utilisation:"
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:1855
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1756
 msgid "Trust:"
 msgstr "Confiance:"
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:1986
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1887
 msgid "Always validate Certificate Trust"
 msgstr "Toujours valider la fiabilité des certificats"
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:1996
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1897
 msgid ""
 "Enable this to disable the \"Validate now\" button and always validate "
 "certificates as soon as the card is read."
 msgstr ""
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:2008
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1909
 msgid "Validate Now"
 msgstr "Valider maintenant"
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:2016
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1917
 msgid "Immediately checks validity of all certificates on the card"
 msgstr ""
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:2059
+#: plugins_tools/eid-viewer/gtk/viewer.glade:1960
 msgid "Certificates"
 msgstr "Certificats"
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:2116
+#: plugins_tools/eid-viewer/gtk/viewer.glade:2017
 msgid "Filter the log entries"
 msgstr ""
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:2128
+#: plugins_tools/eid-viewer/gtk/viewer.glade:2029
 msgid "Clear Log"
 msgstr "Effacer le journal"
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:2142
+#: plugins_tools/eid-viewer/gtk/viewer.glade:2043
 msgid "Copy Log To Clipboard"
-msgstr "Copier le journal dans le presse-papiers "
+msgstr "Copier le journal dans le presse-papiers"
 
-#: plugins_tools/eid-viewer/gtk/viewer.glade:2181
+#: plugins_tools/eid-viewer/gtk/viewer.glade:2082
 msgid "Log"
 msgstr "Journal"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:2147
+msgid "Preferences"
+msgstr ""
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:2163
+msgid "Show log tab"
+msgstr "Afficher le journal"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:2192
+msgid "Check for update at startup"
+msgstr ""
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:2206
+msgid "Check for update now"
+msgstr ""
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:2225
+msgid "Update checks"
+msgstr ""
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:2321
+msgid "Language"
+msgstr "Language"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:2349
+msgid "Automatic"
+msgstr "Automatique"
+
+#: plugins_tools/eid-viewer/gtk/viewer.glade:2370
+msgid "Reader selection"
+msgstr "Sélection d'un lecteur de carte"
 
 #: plugins_tools/eid-viewer/gtk/print.c:69
 msgid "Printed:"

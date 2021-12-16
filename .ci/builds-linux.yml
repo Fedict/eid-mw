@@ -247,7 +247,7 @@
   - sbuild -n $DASHA -d $dist -c $CODE-$ARCH-sbuild --arch=$ARCH
   after_script:
   - mkdir -p products/deb/
-  - dcmd cp *ges products/deb/
+  - dcmd cp eid-mw_*.changes products/deb/
   artifacts:
     paths:
     - products/deb

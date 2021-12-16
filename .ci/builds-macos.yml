@@ -56,7 +56,6 @@
   tags:
   - macos
   - build
-  allow_failure: true
   artifacts:
     when: on_success
     paths:

@@ -1,43 +1,37 @@
 OSSL_VERSION=1.1.1l
 TP_DIR=../../../../../../ThirdParty
 
-build: openssl/libcrypto.a openssl/include/openssl/opensslconf.h
+build: openssl-combined/libcrypto.a
 
 clean-builds:
-	rm -rf $(CONFIGURED) openssl openssl-$(OSSL_VERSION) openssl-arm64 openssl-x86_64
-clean:
+	rm -rf $(CONFIGURED) openssl openssl-combined openssl-$(OSSL_VERSION) openssl-arm64 openssl-x86_64 configured
+clean: clean-builds
 	rm -rf openssl-$(OSSL_VERSION).tar.gz 
 
-configured: openssl/Configure openssl-x86_64 openssl-arm64
-	cd openssl-x86_64; ../openssl/Configure no-shared no-asm -mmacosx-version-min=10.9 darwin64-x86_64-cc
-	cd openssl-arm64; ../openssl/Configure no-shared no-asm -mmacosx-version-min=11 darwin64-arm64-cc
+configured: openssl-combined/Configure openssl-x86_64 openssl-arm64
+	cd openssl-x86_64; ../openssl-combined/Configure no-shared no-asm -mmacosx-version-min=10.9 darwin64-x86_64-cc
+	cd openssl-arm64; ../openssl-combined/Configure no-shared no-asm -mmacosx-version-min=11 darwin64-arm64-cc
 	$(MAKE) -C openssl-x86_64 depend
 	$(MAKE) -C openssl-arm64 depend
 	touch configured
 
-openssl/Configure: openssl
+openssl-combined/Configure: openssl-combined
 
-openssl-%: openssl
+openssl-%: openssl-combined
 	mkdir -p $@
 
-# OpenSSL needs this file, but it just so happens that it's the same for
-# both x86 and arm64, so...
-openssl/include/openssl/opensslconf.h: configured
-	diff -q openssl-x86_64/include/openssl/opensslconf.h openssl-arm64/include/openssl/opensslconf.h
-	cp -a openssl-x86_64/include/openssl/opensslconf.h openssl/include/openssl/opensslconf.h
-
-openssl/libcrypto.a: openssl-x86_64/libcrypto.a openssl-arm64/libcrypto.a
+openssl-combined/libcrypto.a: openssl-x86_64/libcrypto.a openssl-arm64/libcrypto.a
 	rm -f $@
 	lipo -create -output $@ $^
 
 openssl-x86_64/libcrypto.a: configured
-	$(MAKE) -C openssl-x86_64 libcrypto.a
+	$(MAKE) -C openssl-x86_64
 
 openssl-arm64/libcrypto.a: configured
-	$(MAKE) -C openssl-arm64 libcrypto.a
+	$(MAKE) -C openssl-arm64
 
-openssl: openssl-$(OSSL_VERSION)
-	ln -sf openssl-$(OSSL_VERSION) openssl
+openssl-combined: openssl-$(OSSL_VERSION)
+	ln -sf openssl-$(OSSL_VERSION) openssl-combined
 
 openssl-$(OSSL_VERSION): openssl-$(OSSL_VERSION).tar.gz
 	tar xvf $<

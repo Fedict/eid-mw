@@ -21,17 +21,19 @@ EndFunc
 _AU3RecordSetup()
 #endregion --- Internal functions Au3Recorder End ---
 Opt("WinTitleMatchMode",2)
-If $CmdLine[0] <> 1 Then
-   MsgBox(64, "Error", "Need a PIN code on the command line!")
+If $CmdLine[0] <> 2 Then
+   MsgBox(64, "Error", "Need the testlink and PIN code on the command line!")
    Exit(1)
 EndIf
-Run('cmd.exe /c "start microsoft-edge:https://pfsense.pass.lan:20443/"')
+Run("C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe")
+_WinWaitActivate("New tab","", 120)
+Send( "https:\\"&$CmdLine[1] & "{ENTER}")
 Sleep(5000)
-Send("{LEFT}{ENTER}")
+Send("{TAB 3}{ENTER}")
 _WinWaitActivate("Windows Security","", 120)
-Send($CmdLine[1] & "{ENTER}")
-_WinWaitActivate("PHP 7.3.19","")
-Sleep(5000)
+Send($CmdLine[2] & "{ENTER}")
+_WinWaitActivate("PHP 7.3.31","")
+Sleep(3000)
 Send("{ALTDOWN}{F4}{ALTUP}")
 Exit(0)
 #endregion --- Au3Recorder generated code End ---

@@ -8,6 +8,8 @@ cat <<EOF
 usr/bin/about-eid-mw
 usr/share/locale/*/LC_MESSAGES/about-eid-mw.mo
 usr/lib/mozilla/pkcs11-modules/beidpkcs11.json
+usr/lib/mozilla/pkcs11-modules/beidpkcs11_alt.json
+usr/lib/mozilla/managed-storage/belgiumeid@eid.belgium.be.json
 usr/bin/beid-update-nssdb
 etc/xdg/autostart
 EOF
