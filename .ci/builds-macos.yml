@@ -69,7 +69,7 @@
   - pushd $MACOS_BASEDIR
   - xcodebuild -exportLocalizations -localizationPath plugins_tools/eid-viewer/macXliff -exportLanguage de -exportLanguage fr -exportLanguage nl
   - pushd plugins_tools/eid-viewer/localization
-  - perl -I . -l ../gtk/po -w ../Windows/eIDViewer/Resources -m ../macXliff compare-translations > ../../../translation-report.json
+  - perl -I . ./compare-translations -l ../gtk/po -w ../Windows/eIDViewer/Resources -m ../macXliff > ../../../translation-report.json
   - popd
   artifacts:
     when: always
