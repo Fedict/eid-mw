@@ -50,9 +50,12 @@
   - export EIDMW_CODESIGN_IDENTITY_INST=${EIDMW_CODESIGN_IDENTITY_INST:-$EIDMW_CODESIGN_IDENTITY_INST_${CI_RUNNER_SHORT_TOKEN}}
   - echo $EIDMW_CODESIGN_IDENTITY_APP
   - echo $EIDMW_CODESIGN_IDENTITY_INST
-  - cd $MACOS_BASEDIR/scripts/mac
+  - pushd $MACOS_BASEDIR
+  - pushd scripts/mac
   - ./make-mac.sh
   - ./make-viewer.sh
+  - popd
+  - xcodebuild -exportLocalizations -localizationPath beidmw_l10n -exportLanguage de -exportLanguage fr -exportLanguage nl
   tags:
   - macos
   - build
@@ -61,17 +64,4 @@
     paths:
     - $MACOS_BASEDIR/scripts/mac/*dmg
     - $MACOS_BASEDIR/installers/eid-mw/mac/release/*
-
-.check-translations:
-  tags:
-  - macos
-  script:
-  - pushd $MACOS_BASEDIR
-  - xcodebuild -exportLocalizations -localizationPath plugins_tools/eid-viewer/macXliff -exportLanguage de -exportLanguage fr -exportLanguage nl
-  - pushd plugins_tools/eid-viewer/localization
-  - perl -I . ./compare-translations -l ../gtk/po -w ../Windows/eIDViewer/Resources -m ../macXliff > ../../../translation-report.json
-  - popd
-  artifacts:
-    when: always
-    paths:
-    - translation-report.json
+    - $MACOS_BASEDIR/beidmw_l10n
