@@ -368,6 +368,7 @@
   - if [ ! -z "$ACNG" ]; then sed -i -e "s,http://,$ACNG/," /etc/apt/sources.list; else echo "no proxy configured"; fi
   - apt-get update
   - apt-get -y install --no-install-recommends libxml-simpleobject-perl libxml-json-perl
+  script:
   - perl -I $LINUX_BASEDIR/plugins_tools/eid-viewer/localization $LINUX_BASEDIR/plugins_tools/eid-viewer/localization/compare-translations -l $LINUX_BASEDIR/plugins_tools/eid-viewer/gtk/po -m $MACOS_BASEDIR/beidmw_l10n -w $LINUX_BASEDIR/plugins_tools/eid-viewer/Windows/eIDViewer/Resources > translation-report.json
   artifacts:
     when: always
