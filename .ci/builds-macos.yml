@@ -61,3 +61,17 @@
     paths:
     - $MACOS_BASEDIR/scripts/mac/*dmg
     - $MACOS_BASEDIR/installers/eid-mw/mac/release/*
+
+.check-translations:
+  tags:
+  - macos
+  script:
+  - pushd $MACOS_BASEDIR
+  - xcodebuild -exportLocalizations -localizationPath plugins_tools/eid-viewer/macXliff -exportLanguage de -exportLanguage fr -exportLanguage nl
+  - pushd plugins_tools/eid-viewer/localization
+  - perl -I . -l ../gtk/po -w ../Windows/eIDViewer/Resources -m ../macXliff compare-translations > ../../../translation-report.json
+  - popd
+  artifacts:
+    when: always
+    paths:
+    - translation-report.json
