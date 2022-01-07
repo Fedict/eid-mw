@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AlwaysValidateCheckboxLabel" xml:space="preserve">
-    <value>Toujours valider les certificats de confiance</value>
+    <value>Toujours valider la fiabilité des certificats</value>
   </data>
   <data name="CertTrustLabel" xml:space="preserve">
     <value>Confiance:</value>
@@ -136,13 +136,13 @@
     <value>Information Détaillée</value>
   </data>
   <data name="Export_CHAIN_PEM" xml:space="preserve">
-    <value>Exporter la chaine vers fichier PEM..</value>
+    <value>Exporter la chaine vers fichier PEM...</value>
   </data>
   <data name="Export_DER" xml:space="preserve">
-    <value>Exporter vers fichier DER..</value>
+    <value>Exporter vers fichier DER...</value>
   </data>
   <data name="Export_PEM" xml:space="preserve">
-    <value>Exporter vers fichier PEM..</value>
+    <value>Exporter vers fichier PEM...</value>
   </data>
   <data name="TrustStatus_trusted" xml:space="preserve">
     <value>Fiable</value>

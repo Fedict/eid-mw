@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AlwaysValidateCheckboxLabel" xml:space="preserve">
-    <value>Vertrouwenscertificaten altijd valideren</value>
+    <value>Certificaatbetrouwbaarheid altijd valideren</value>
   </data>
   <data name="CertTrustLabel" xml:space="preserve">
     <value>Betrouwbaarheid:</value>
@@ -136,13 +136,13 @@
     <value>Gedetailleerde Informatie..</value>
   </data>
   <data name="Export_CHAIN_PEM" xml:space="preserve">
-    <value>Ketting exporteren naar PEM bestand..</value>
+    <value>Ketting exporteren naar PEM bestand...</value>
   </data>
   <data name="Export_DER" xml:space="preserve">
-    <value>Exporteren naar DER bestand..</value>
+    <value>Exporteren naar DER bestand...</value>
   </data>
   <data name="Export_PEM" xml:space="preserve">
-    <value>Exporteren naar PEM bestand..</value>
+    <value>Exporteren naar PEM bestand...</value>
   </data>
   <data name="TrustStatus_trusted" xml:space="preserve">
     <value>Betrouwbaar.</value>

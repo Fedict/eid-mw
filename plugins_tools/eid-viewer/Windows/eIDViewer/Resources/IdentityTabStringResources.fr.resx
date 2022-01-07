@@ -148,7 +148,7 @@
     <value>Code postal:</value>
   </data>
   <data name="SexLabel" xml:space="preserve">
-    <value>Sexe</value>
+    <value>Sexe:</value>
   </data>
   <data name="SpecialStatusLabel" xml:space="preserve">
     <value>Statut spécial:</value>

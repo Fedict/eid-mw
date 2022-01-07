@@ -127,7 +127,7 @@
     <value>PIN ändern</value>
   </data>
   <data name="chipNumberLabel" xml:space="preserve">
-    <value>Nummer:</value>
+    <value>Chipnummer:</value>
   </data>
   <data name="placeOfIssueLabel" xml:space="preserve">
     <value>Ausstellungsort:</value>

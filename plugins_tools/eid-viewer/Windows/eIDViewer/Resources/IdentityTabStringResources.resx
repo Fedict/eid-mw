@@ -121,7 +121,7 @@
     <value>Date of birth:</value>
   </data>
   <data name="GivenNamesLabel" xml:space="preserve">
-    <value>Given Names:</value>
+    <value>Given names:</value>
   </data>
   <data name="MunicipalityLabel" xml:space="preserve">
     <value>Municipality:</value>
@@ -250,7 +250,7 @@ CBE number (2):</value>
     <value>photo</value>
   </data>
   <data name="Brexit_mentions" xml:space="preserve">
-    <value>Brexit Mentions:</value>
+    <value>Brexit mentions:</value>
   </data>
   <data name="CardA_mentions" xml:space="preserve">
     <value>Mentions:</value>

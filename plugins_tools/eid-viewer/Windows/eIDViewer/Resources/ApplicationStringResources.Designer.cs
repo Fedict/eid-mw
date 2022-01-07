@@ -250,7 +250,7 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Online update check failed, please check log for further details.
+        ///   Looks up a localized string similar to Online version check failed, please check log for further details.
         /// </summary>
         public static string updateCheckError {
             get {
@@ -259,7 +259,7 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Online update check failed.
+        ///   Looks up a localized string similar to Online version check failed.
         /// </summary>
         public static string updateCheckErrorTitle {
             get {

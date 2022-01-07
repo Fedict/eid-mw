@@ -61,7 +61,7 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to About...
+        ///   Looks up a localized string similar to About....
         /// </summary>
         public static string fileMenuAboutItem {
             get {
@@ -79,7 +79,7 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Export photo to JPG file...
+        ///   Looks up a localized string similar to Export photo to JPG file....
         /// </summary>
         public static string fileMenuExportFoto {
             get {
@@ -88,7 +88,7 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frequently Asked Questions...
+        ///   Looks up a localized string similar to Frequently Asked Questions....
         /// </summary>
         public static string fileMenuFAQItem {
             get {
@@ -106,7 +106,7 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Preferences...
+        ///   Looks up a localized string similar to Preferences....
         /// </summary>
         public static string fileMenuPreferencesItem {
             get {
@@ -133,7 +133,7 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Save As...
+        ///   Looks up a localized string similar to Save As....
         /// </summary>
         public static string fileMenuSaveItem {
             get {
@@ -142,7 +142,7 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to eID Card Test Site...
+        ///   Looks up a localized string similar to eID Card Test Site....
         /// </summary>
         public static string fileMenuTestSiteItem {
             get {

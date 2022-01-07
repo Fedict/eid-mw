@@ -181,10 +181,10 @@
     <value>New version eID Viewer</value>
   </data>
   <data name="updateCheckError" xml:space="preserve">
-    <value>Online update check failed, please check log for further details</value>
+    <value>Online version check failed, please check log for further details</value>
   </data>
   <data name="updateCheckErrorTitle" xml:space="preserve">
-    <value>Online update check failed</value>
+    <value>Online version check failed</value>
   </data>
   <data name="VersionUpToDate" xml:space="preserve">
     <value>The latest version of the eID Viewer has already been installed</value>

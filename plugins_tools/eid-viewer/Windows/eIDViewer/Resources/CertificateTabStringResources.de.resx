@@ -133,16 +133,16 @@
     <value>Gültig bis:</value>
   </data>
   <data name="Detailed_Information" xml:space="preserve">
-    <value>Detail Information..</value>
+    <value>Detail Information...</value>
   </data>
   <data name="Export_CHAIN_PEM" xml:space="preserve">
-    <value>Kette exportieren zu PEM Datei..</value>
+    <value>Kette exportieren zu PEM Datei...</value>
   </data>
   <data name="Export_DER" xml:space="preserve">
-    <value>Exportieren zu DER Datei..</value>
+    <value>Exportieren zu DER Datei...</value>
   </data>
   <data name="Export_PEM" xml:space="preserve">
-    <value>Exportieren zu PEM Datei..</value>
+    <value>Exportieren zu PEM Datei...</value>
   </data>
   <data name="TrustStatus_trusted" xml:space="preserve">
     <value>Vertrauenswürdig</value>
@@ -157,7 +157,7 @@
     <value>Nicht vertrauenswürdig!</value>
   </data>
   <data name="TrustStatus_validating" xml:space="preserve">
-    <value>Validierung läuft..</value>
+    <value>Validierung läuft</value>
   </data>
   <data name="ValidateNowButtonLabel" xml:space="preserve">
     <value>Jetzt validieren</value>

@@ -118,25 +118,25 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="fileMenuAboutItem" xml:space="preserve">
-    <value>A propos de..</value>
+    <value>A propos de...</value>
   </data>
   <data name="fileMenuCloseItem" xml:space="preserve">
     <value>Fermer</value>
   </data>
   <data name="fileMenuExportFoto" xml:space="preserve">
-    <value>Exporter la photo vers fichier JPG..</value>
+    <value>Exporter la photo vers fichier JPG...</value>
   </data>
   <data name="fileMenuFAQItem" xml:space="preserve">
-    <value>Foire aux questions..</value>
+    <value>Foire aux questions...</value>
   </data>
   <data name="fileMenuOpenItem" xml:space="preserve">
     <value>Ouvrir</value>
   </data>
   <data name="fileMenuPreferencesItem" xml:space="preserve">
-    <value>Préférences..</value>
+    <value>Préférences...</value>
   </data>
   <data name="fileMenuPrintItem" xml:space="preserve">
-    <value>Imprimer..</value>
+    <value>Imprimer...</value>
   </data>
   <data name="fileMenuQuitItem" xml:space="preserve">
     <value>Quitter</value>
@@ -145,7 +145,7 @@
     <value>Enregistrer sous</value>
   </data>
   <data name="fileMenuTestSiteItem" xml:space="preserve">
-    <value>Site de test eID..</value>
+    <value>Site de test eID...</value>
   </data>
   <data name="fileMenuVersionCheckItem" xml:space="preserve">
     <value>vérifier la version</value>

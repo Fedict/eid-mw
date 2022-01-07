@@ -118,22 +118,22 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="fileMenuAboutItem" xml:space="preserve">
-    <value>Over..</value>
+    <value>Over...</value>
   </data>
   <data name="fileMenuCloseItem" xml:space="preserve">
     <value>Sluiten</value>
   </data>
   <data name="fileMenuExportFoto" xml:space="preserve">
-    <value>Foto Exporteren naar JPG bestand..</value>
+    <value>Foto Exporteren naar JPG bestand...</value>
   </data>
   <data name="fileMenuFAQItem" xml:space="preserve">
-    <value>Veel gestelde vragen..</value>
+    <value>Veel gestelde vragen...</value>
   </data>
   <data name="fileMenuOpenItem" xml:space="preserve">
     <value>Open</value>
   </data>
   <data name="fileMenuPreferencesItem" xml:space="preserve">
-    <value>Voorkeuren..</value>
+    <value>Voorkeuren...</value>
   </data>
   <data name="fileMenuPrintItem" xml:space="preserve">
     <value>Afdrukken</value>
@@ -142,10 +142,10 @@
     <value>Verlaten</value>
   </data>
   <data name="fileMenuSaveItem" xml:space="preserve">
-    <value>Opslaan als..</value>
+    <value>Opslaan als...</value>
   </data>
   <data name="fileMenuTestSiteItem" xml:space="preserve">
-    <value>Testsite voor eID..</value>
+    <value>Testsite voor eID...</value>
   </data>
   <data name="fileMenuVersionCheckItem" xml:space="preserve">
     <value>Controleer versie</value>

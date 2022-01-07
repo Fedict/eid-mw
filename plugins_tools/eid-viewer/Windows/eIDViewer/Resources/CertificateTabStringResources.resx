@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AlwaysValidateCheckboxLabel" xml:space="preserve">
-    <value>Always validate Certificate Trust</value>
+    <value>Always validate certificate trust</value>
   </data>
   <data name="CertTrustLabel" xml:space="preserve">
     <value>Trust:</value>
@@ -127,22 +127,22 @@
     <value>Usage:</value>
   </data>
   <data name="CertValidFromLabel" xml:space="preserve">
-    <value>Valid From:</value>
+    <value>Valid from:</value>
   </data>
   <data name="CertValidUntilLabel" xml:space="preserve">
-    <value>Valid Untill:</value>
+    <value>Valid until:</value>
   </data>
   <data name="Detailed_Information" xml:space="preserve">
-    <value>Detailed Information..</value>
+    <value>Detailed information...</value>
   </data>
   <data name="Export_CHAIN_PEM" xml:space="preserve">
-    <value>Export chain to PEM file..</value>
+    <value>Export chain to PEM file...</value>
   </data>
   <data name="Export_DER" xml:space="preserve">
-    <value>Export to DER file..</value>
+    <value>Export to DER file...</value>
   </data>
   <data name="Export_PEM" xml:space="preserve">
-    <value>Export to PEM file..</value>
+    <value>Export to PEM file...</value>
   </data>
   <data name="TrustStatus_trusted" xml:space="preserve">
     <value>Trusted.</value>
@@ -160,6 +160,6 @@
     <value>Validating</value>
   </data>
   <data name="ValidateNowButtonLabel" xml:space="preserve">
-    <value>Validate Now</value>
+    <value>Validate now</value>
   </data>
 </root>

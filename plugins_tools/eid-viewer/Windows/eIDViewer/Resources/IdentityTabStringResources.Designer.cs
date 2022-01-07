@@ -61,7 +61,7 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Brexit Mentions:.
+        ///   Looks up a localized string similar to Brexit mentions:.
         /// </summary>
         public static string Brexit_mentions {
             get {
@@ -135,7 +135,7 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Given Names:.
+        ///   Looks up a localized string similar to Given names:.
         /// </summary>
         public static string GivenNamesLabel {
             get {

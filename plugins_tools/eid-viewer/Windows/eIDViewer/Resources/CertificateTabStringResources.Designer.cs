@@ -19,7 +19,7 @@ namespace eIDViewer.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class CertificateTabStringResources {
@@ -61,7 +61,7 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Always validate Certificate Trust.
+        ///   Looks up a localized string similar to Always validate certificate trust.
         /// </summary>
         public static string AlwaysValidateCheckboxLabel {
             get {
@@ -88,7 +88,7 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Valid From:.
+        ///   Looks up a localized string similar to Valid from:.
         /// </summary>
         public static string CertValidFromLabel {
             get {
@@ -97,7 +97,7 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Valid Untill:.
+        ///   Looks up a localized string similar to Valid until:.
         /// </summary>
         public static string CertValidUntilLabel {
             get {
@@ -106,7 +106,7 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Detailed Information...
+        ///   Looks up a localized string similar to Detailed information....
         /// </summary>
         public static string Detailed_Information {
             get {
@@ -115,7 +115,7 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Export chain to PEM file...
+        ///   Looks up a localized string similar to Export chain to PEM file....
         /// </summary>
         public static string Export_CHAIN_PEM {
             get {
@@ -124,7 +124,7 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Export to DER file...
+        ///   Looks up a localized string similar to Export to DER file....
         /// </summary>
         public static string Export_DER {
             get {
@@ -133,7 +133,7 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Export to PEM file...
+        ///   Looks up a localized string similar to Export to PEM file....
         /// </summary>
         public static string Export_PEM {
             get {
@@ -187,7 +187,7 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Validate Now.
+        ///   Looks up a localized string similar to Validate now.
         /// </summary>
         public static string ValidateNowButtonLabel {
             get {
