@@ -70,4 +70,8 @@ foreach my $orig(keys %translated) {
 	}
 }
 
-print JSON->new->utf8->pretty->canonical->encode(\%missing);
+my $json = {
+	translated => \%translated,
+	issues => \%missing
+};
+print JSON->new->utf8->pretty->canonical->encode($json);
