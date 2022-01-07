@@ -132,7 +132,6 @@ bool verify_once(EVP_PKEY *pubkey, const EVP_MD *md, const unsigned char *data, 
 		}
 		else if( asnsiglen != siglen)
 		{
-			be_log(EID_VWR_LOG_COARSE, "signature length mismatch between asn.1 encoding and filelength, will use the value in asn.1");
 			siglen = asnsiglen;
 		}
 	}

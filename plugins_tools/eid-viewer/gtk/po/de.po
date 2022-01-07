@@ -374,7 +374,7 @@ msgstr ""
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1960
 msgid "Certificates"
-msgstr "Zertifkate"
+msgstr "Zertifikate"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:2017
 msgid "Filter the log entries"
