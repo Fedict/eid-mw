@@ -359,3 +359,18 @@
   - tar cvaf eid-mw-coverity.tar.gz cov-int
   - curl --form project=eID+middleware --form token=$COVERITY_TOKEN --form email=wouter.verhelst@fedict.be --form 'file=@"eid-mw-coverity.tar.gz";filename="eID middleware.tgz"' --form version=$CI_COMMIT_SHA --form description="automatic submission by GitLab CI" https://scan.coverity.com/builds?project=eID+middleware
   - popd
+
+.check-translations:
+  tags:
+  - docker
+  image: $CI_REGISTRY_IMAGE/deb-build:$CI_COMMIT_REF_SLUG
+  before_script:
+  - if [ ! -z "$ACNG" ]; then sed -i -e "s,http://,$ACNG/," /etc/apt/sources.list; else echo "no proxy configured"; fi
+  - apt-get update
+  - apt-get -y install --no-install-recommends libxml-simpleobject-perl libjson-perl
+  script:
+  - perl -I $LINUX_BASEDIR/plugins_tools/eid-viewer/localization $LINUX_BASEDIR/plugins_tools/eid-viewer/localization/compare-translations -l $LINUX_BASEDIR/plugins_tools/eid-viewer/gtk/po -m $MACOS_BASEDIR/beidmw_l10n -w $LINUX_BASEDIR/plugins_tools/eid-viewer/Windows/eIDViewer/Resources > translation-report.json
+  artifacts:
+    when: always
+    paths:
+    - translation-report.json

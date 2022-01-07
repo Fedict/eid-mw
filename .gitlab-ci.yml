@@ -448,6 +448,10 @@ validate:validation:macos:google:
   - build:macos
   allow_failure: true
 
+validate:reports:translation-status:
+  stage: validate
+  extends: .check-translations
+
 ####################################################################
 # Stage "build-repository": copy binaries into a repository layout #
 ####################################################################

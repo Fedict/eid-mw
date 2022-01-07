@@ -1,0 +1,77 @@
+#!/usr/bin/perl -w
+
+use strict;
+use warnings;
+use feature "signatures";
+
+no warnings "experimental::signatures";
+
+use ExtractTranslation::Gettext;
+use ExtractTranslation::macXliff;
+use ExtractTranslation::ResourceXml;
+use Getopt::Long;
+use JSON;
+
+my $linuxdir;
+my $macdir;
+my $windowsdir;
+
+GetOptions("linux-dir=s" => \$linuxdir,
+	   "mac-dir=s" => \$macdir,
+	   "windows-dir=s" => \$windowsdir)
+or die "Error in command line arguments\n";
+
+die "Require directories for all three operating systems" unless defined($linuxdir) && defined($macdir) && defined($windowsdir);
+
+my %translated;
+
+ExtractTranslation::Gettext::extract($linuxdir, \%translated);
+ExtractTranslation::macXliff::extract($macdir, \%translated);
+ExtractTranslation::ResourceXml::extract($windowsdir, \%translated);
+
+my %missing;
+my %found;
+
+sub add_missing($orig, $reason) {
+	if(!exists($missing{$orig})) {
+		$missing{$orig} = [$reason];
+	} else {
+		push @{$missing{$orig}}, $reason;
+	}
+}
+
+sub add_found($orig, $lang, $trans) {
+	if(!exists($found{$orig})) {
+		$found{$orig} = { $lang => $trans };
+	} else {
+		$found{$orig}{$lang} = $trans;
+	}
+}
+
+foreach my $orig(keys %translated) {
+	foreach my $style("gettext", "macXliff", "ResourceXML") {
+		if(!exists($translated{$orig}{$style})) {
+			add_missing($orig, "string does not exist in $style");
+			next;
+		}
+		if(scalar(keys(%{$translated{$orig}{$style}})) != 3) {
+			add_missing($orig, "less than 3 translated versions for $style");
+			next;
+		}
+		foreach my $lang("nl", "fr", "de") {
+			if(!exists($found{$orig}{$lang})) {
+				add_found($orig, $lang, $translated{$orig}{$style}{$lang});
+			} else {
+				if($found{$orig}{$lang} ne $translated{$orig}{$style}{$lang}) {
+					add_missing($orig, "$style $lang translation '" . $translated{$orig}{$style}{$lang} . "' does not match earlier-seen translation '" . $found{$orig}{$lang}) . "'";
+				}
+			}
+		}
+	}
+}
+
+my $json = {
+	translated => \%translated,
+	issues => \%missing
+};
+print JSON->new->utf8->pretty->canonical->encode($json);
