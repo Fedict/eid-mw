@@ -286,7 +286,7 @@
                 <MenuItem Header="{Binding Path=menuItemResource.fileMenuQuitItem, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" InputGestureText="Ctrl+Q" Click="ExitMenuItem_Click"/>
             </MenuItem>
             <MenuItem Header="{Binding Path=applicationResource.languageMenuTitle, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}">
-                <MenuItem Header="Deutch" IsCheckable="true" IsChecked="{Binding Path=languageDE, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" InputGestureText="Ctrl+D" Click="Deutch_Click"/>
+                <MenuItem Header="Deutsch" IsCheckable="true" IsChecked="{Binding Path=languageDE, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" InputGestureText="Ctrl+D" Click="Deutch_Click"/>
                 <MenuItem Header="English" IsCheckable="true" IsChecked="{Binding Path=languageEN, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" InputGestureText="Ctrl+E" Click="English_Click"/>
                 <MenuItem Header="Français" IsCheckable="true" IsChecked="{Binding Path=languageFR, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" InputGestureText="Ctrl+F" Click="French_Click"/>
                 <MenuItem Header="Nederlands" IsCheckable="true" IsChecked="{Binding Path=languageNL, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" InputGestureText="Ctrl+N" Click="Nederlands_Click"/>
