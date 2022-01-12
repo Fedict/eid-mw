@@ -1,0 +1,607 @@
+{
+   "%B %d, %Y" : {
+      "de" : "%d %B %Y",
+      "fr" : "%d %B %Y",
+      "nl" : "%d %B %Y"
+   },
+   "A newer version of the eID Viewer has been found, would you like to download it?" : {
+      "de" : "Es wurde eine neuere Version der eID Viewer gefunden. Möchten Sie diese herunterladen?",
+      "fr" : "Une version plus récente de l'eID Viewer a été trouvée, souhaitez-vous la télécharger?",
+      "nl" : "Er is een nieuwe versie van de eID Viewer gevonden, wil je deze downloaden?"
+   },
+   "About" : {
+      "de" : "Über",
+      "fr" : "A propos de",
+      "nl" : "Over"
+   },
+   "Access to the labour market:" : {
+      "de" : "Zugang zum Arbeitsmarkt:",
+      "fr" : "Accès au marché du travail:",
+      "nl" : "Toegang tot de arbeidsmarkt:"
+   },
+   "All eID files" : {
+      "de" : "Alle eID Dateien",
+      "fr" : "Tout fichier eID",
+      "nl" : "Alle eID-bestanden"
+   },
+   "All files" : {
+      "de" : "All files",
+      "fr" : "Tous les fichiers eID",
+      "nl" : "Alle bestanden"
+   },
+   "Always validate Certificate Trust" : {
+      "de" : "Vertrauenszertifikate immer validieren",
+      "fr" : "Toujours valider les certificats de confiance",
+      "nl" : "Vertrouwenscertificaten altijd valideren"
+   },
+   "Automatic" : {
+      "de" : "Automatisch",
+      "fr" : "Automatique",
+      "nl" : "Automatisch"
+   },
+   "Basic key:" : {
+      "de" : "",
+      "fr" : "",
+      "nl" : "Basissleutel:"
+   },
+   "Belgium" : {
+      "de" : "Belgien",
+      "fr" : "Belgique",
+      "nl" : "België"
+   },
+   "Brexit mentions:" : {
+      "de" : "Brexit Erwähnungen:",
+      "fr" : "Mentions du Brexit:",
+      "nl" : "Brexit vermeldingen:"
+   },
+   "Card available" : {
+      "de" : "Karte verfügbar",
+      "fr" : "Carte disponible",
+      "nl" : "Kaart beschikbaar"
+   },
+   "Card number:" : {
+      "de" : "Kartennummer:",
+      "fr" : "Numéro de carte:",
+      "nl" : "Kaartnummer:"
+   },
+   "Card/PIN" : {
+      "de" : "Karte/PIN",
+      "fr" : "Carte/PIN",
+      "nl" : "Kaart/PIN"
+   },
+   "Certificates" : {
+      "de" : "Zertifikate",
+      "fr" : "Certificats",
+      "nl" : "Certificaten"
+   },
+   "Change PIN" : {
+      "de" : "PIN ändern",
+      "fr" : "Changer le code PIN",
+      "nl" : "Pincode wijzigen"
+   },
+   "Check version at startup" : {
+      "de" : "",
+      "fr" : "",
+      "nl" : "Updatecontrole bij opstarten"
+   },
+   "Check version now" : {
+      "de" : "",
+      "fr" : "",
+      "nl" : "Nu controleren"
+   },
+   "Check version" : {
+      "de" : "Version prüfen",
+      "fr" : "vérifier la version",
+      "nl" : "Controleer versie"
+   },
+   "Chip number:" : {
+      "de" : "Chip-Nummer:",
+      "fr" : "Numéro de puce:",
+      "nl" : "Chip nummer:"
+   },
+   "Clear Log" : {
+      "de" : "Protokoll löschen",
+      "fr" : "Effacer le journal",
+      "nl" : "Log wissen"
+   },
+   "Close" : {
+      "de" : "Schließen",
+      "fr" : "Fermer",
+      "nl" : "Sluiten"
+   },
+   "Contact chip:" : {
+      "de" : "Kontaktchip:",
+      "fr" : "Puce à contact:",
+      "nl" : "Contactchip:"
+   },
+   "Copy Log To Clipboard" : {
+      "de" : "Protokoll in Zwischenablage kopieren",
+      "fr" : "Copier le journal dans le presse-papiers",
+      "nl" : "Log naar klembord kopiëren"
+   },
+   "Date and country\nof international protection:" : {
+      "de" : "Datum und Land \ndes internationalen Schutzes:",
+      "fr" : "Date et pays\nde protection internationale:",
+      "nl" : "Datum en land\nvan internationale bescherming:"
+   },
+   "Date and country of international protection:" : {
+      "de" : "Datum und Land des internationalen Schutzes:",
+      "fr" : "Date et pays de protection internationale:",
+      "nl" : "Datum en land van internationale bescherming:"
+   },
+   "Date of birth:" : {
+      "de" : "Geburtsdatum:",
+      "fr" : "Date de naissance:",
+      "nl" : "Geboortedatum:"
+   },
+   "Detailed information..." : {
+      "de" : "Detailinformation...",
+      "fr" : "Information Détaillée...",
+      "nl" : "Gedetailleerde informatie..."
+   },
+   "Duplicate:" : {
+      "de" : "Duplikat:",
+      "fr" : "Duplicata:",
+      "nl" : "Duplicaat:"
+   },
+   "Employer's VAT/CBE number (1):" : {
+      "de" : "Mehrwertsteuernummer/ZDU-Nummer des Arbeitgebers (1):",
+      "fr" : "Numéro TVA/BCE de l'employeur (1)",
+      "nl" : "BTW/KBO-nummer van de werkgever (1):"
+   },
+   "Employer's VAT/CBE number (2):" : {
+      "de" : "Mehrwertsteuernummer/ZDU-Nummer des Arbeitgebers (2):",
+      "fr" : "Numéro TVA/BCE de l'employeur (2)",
+      "nl" : "BTW/KBO-nummer van de werkgever (2):"
+   },
+   "Employer's VAT/\nCBE number (1):" : {
+      "de" : "Mehrwertsteuernummer/\nZDU-Nummer des Arbeitgebers (1):",
+      "fr" : "Numéro de TVA/\nBCE de l’employeur (1):",
+      "nl" : "BTW/KBO-nummer\nvan de werkgever (1):"
+   },
+   "Employer's VAT/\nCBE number (2):" : {
+      "de" : "Mehrwertsteuernummer/\nZDU-Nummer des Arbeitgebers (2):",
+      "fr" : "Numéro de TVA/\nBCE de l’employeur (2):",
+      "nl" : "BTW/KBO-nummer\nvan de werkgever (2):"
+   },
+   "Error occurred while trying to change PIN code" : {
+      "de" : "Es ist ein Fehler beim Ändern des PIN-Codes aufgetreten",
+      "fr" : "Une erreur s'est produite pendant la modification du code PIN",
+      "nl" : "Een fout deed zich voor tijdens het wijzigen van de Pincode"
+   },
+   "Error occurred while trying to test PIN code" : {
+      "de" : "Es ist ein Fehler beim Überprüfen des PIN-Codes aufgetreten",
+      "fr" : "Une erreur s'est produite pendant la vérification du code PIN",
+      "nl" : "Een fout deed zich voor tijdens het verifiëren van de Pincode"
+   },
+   "Export chain to PEM file..." : {
+      "de" : "Kette exportieren zu PEM Datei...",
+      "fr" : "Exporter la chaine vers fichier PEM...",
+      "nl" : "Ketting naar PEM bestand exporteren..."
+   },
+   "Export to DER file..." : {
+      "de" : "Exportieren zu DER Datei...",
+      "fr" : "Exporter vers fichier DER...",
+      "nl" : "Exporteren naar DER bestand..."
+   },
+   "Export to PEM file.." : {
+      "de" : "Exportieren zu PEM Datei..",
+      "fr" : "Exporter vers fichier PEM..",
+      "nl" : "Exporteren naar PEM bestand.."
+   },
+   "Export to PEM file..." : {
+      "de" : "Exportieren zu PEM Datei...",
+      "fr" : "Exporter vers fichier PEM...",
+      "nl" : "Exporteren naar PEM bestand..."
+   },
+   "Failed to read identity data" : {
+      "de" : "Konnte Identitätsangaben nicht lesen",
+      "fr" : "Impossible de lire les données d’identité",
+      "nl" : "Kon identiteitsgegevens niet uitlezen"
+   },
+   "Family member" : {
+      "de" : "Familienangehöriger",
+      "fr" : "Membre de famille",
+      "nl" : "Gezinslid"
+   },
+   "File" : {
+      "de" : "Datei",
+      "fr" : "Dossier",
+      "nl" : "Bestand"
+   },
+   "Frequently asked questions..." : {
+      "de" : "Häufig gestellte Fragen...",
+      "fr" : "Foire aux questions...",
+      "nl" : "Veel gestelde vragen..."
+   },
+   "Given names:" : {
+      "de" : "Vornamen:",
+      "fr" : "Prénoms:",
+      "nl" : "Voornamen:"
+   },
+   "Help" : {
+      "de" : "Hilfe",
+      "fr" : "Aide",
+      "nl" : "Hulp"
+   },
+   "Identity" : {
+      "de" : "Identität",
+      "fr" : "Identité",
+      "nl" : "Identiteit"
+   },
+   "Initialising" : {
+      "de" : "Initialisieren",
+      "fr" : "Initialiser",
+      "nl" : "Initialiseren"
+   },
+   "Language" : {
+      "de" : "Sprache",
+      "fr" : "Language",
+      "nl" : "Taal"
+   },
+   "Log" : {
+      "de" : "Logbuch",
+      "fr" : "Journal",
+      "nl" : "Logboek"
+   },
+   "Member of family:" : {
+      "de" : "Familienangehöriger:",
+      "fr" : "Membre de la famille:",
+      "nl" : "Gezinslid:"
+   },
+   "Mentions:" : {
+      "de" : "Erwähnungen:",
+      "fr" : "Mentions:",
+      "nl" : "Vermeldingen:"
+   },
+   "Municipality:" : {
+      "de" : "Gemeinde:",
+      "fr" : "Commune:",
+      "nl" : "Gemeente:"
+   },
+   "NATO" : {
+      "de" : "NATO",
+      "fr" : "OTAN",
+      "nl" : "NATO"
+   },
+   "Name:" : {
+      "de" : "Name:",
+      "fr" : "Nom:",
+      "nl" : "Naam:"
+   },
+   "National number:" : {
+      "de" : "Nationale Nummer:",
+      "fr" : "Numéro national:",
+      "nl" : "Nationaal nummer:"
+   },
+   "Nationality:" : {
+      "de" : "Staatsangehörigkeit:",
+      "fr" : "Nationalité:",
+      "nl" : "Nationaliteit:"
+   },
+   "New version eID Viewer" : {
+      "de" : "Neue Version eID Viewer",
+      "fr" : "Nouvelle version de l'eID Viewer",
+      "nl" : "Nieuwe versie eID Viewer"
+   },
+   "New version of the eID viewer available: version %d.%d.%d at %s" : {
+      "de" : "",
+      "fr" : "",
+      "nl" : "Nieuwe versie van de eID viewer beschikbaar: versie %d.%d.%d op %s"
+   },
+   "No cardreader found" : {
+      "de" : "Kein Kartenleser gefunden",
+      "fr" : "Aucun lecteur de cartes trouvé",
+      "nl" : "Geen kaartlezer gevonden"
+   },
+   "Not trusted!" : {
+      "de" : "Nicht vertrauenswürdig!",
+      "fr" : "Non fiable!",
+      "nl" : "Niet betrouwbaar!"
+   },
+   "Not validated" : {
+      "de" : "Unvalidiert",
+      "fr" : "Non validé",
+      "nl" : "Niet gevalideerd"
+   },
+   "Online update check failed" : {
+      "de" : "Versionsprüfung fehlgeschlagen",
+      "fr" : "La vérification de version a échoué",
+      "nl" : "Versiecontrole mislukt"
+   },
+   "Online update check failed, please check log for further details" : {
+      "de" : "Versionsprüfung fehlgeschlagen, bitte überprüfen Sie das Logbuch für weitere Details",
+      "fr" : "La vérification de version a échoué, veuillez consulter le journal pour plus de détails",
+      "nl" : "Versiecontrole mislukt, controleer het logboek voor meer informatie"
+   },
+   "Open eID file" : {
+      "de" : "eID-Datei öffnen",
+      "fr" : "Ouvrir un fichier eID",
+      "nl" : "eID-bestand openen"
+   },
+   "Organization:" : {
+      "de" : "Organisation:",
+      "fr" : "Organisation:",
+      "nl" : "Organisatie:"
+   },
+   "PIN OK" : {
+      "de" : "PIN-Code OK",
+      "fr" : "Code PIN OK",
+      "nl" : "Pincode OK"
+   },
+   "PIN change failed" : {
+      "de" : "Das Ändern des PIN-Codes ist fehlgeschlagen",
+      "fr" : "La modification du code PIN a échoué",
+      "nl" : "Wijzigen van de Pincode is gefaald"
+   },
+   "PIN changed" : {
+      "de" : "PIN-Code geändert",
+      "fr" : "Code PIN modifié",
+      "nl" : "Pincode gewijzigd"
+   },
+   "PIN incorrect" : {
+      "de" : "PIN-Code falsch",
+      "fr" : "Code PIN erroné",
+      "nl" : "Pincode fout"
+   },
+   "PIN validated OK" : {
+      "de" : "PIN validiert",
+      "fr" : "Code PIN vérifié",
+      "nl" : "Pincode geverifieerd"
+   },
+   "Performing a PIN operation" : {
+      "de" : "PIN-Vorgang wird durchgeführt",
+      "fr" : "Exécution d'une opération PIN en cours",
+      "nl" : "Bezig met uitvoeren van een PIN-operatie"
+   },
+   "Place of birth:" : {
+      "de" : "Geburtsort:",
+      "fr" : "Lieu de naissance:",
+      "nl" : "Geboorteplaats:"
+   },
+   "Place of issue:" : {
+      "de" : "Ausstellungsort:",
+      "fr" : "Lieu d'émission:",
+      "nl" : "Plaats van afgifte:"
+   },
+   "Postal code:" : {
+      "de" : "Postleitzahl:",
+      "fr" : "Code postal:",
+      "nl" : "Postcode:"
+   },
+   "Preferences" : {
+      "de" : "Einstellungen",
+      "fr" : "",
+      "nl" : "Voorkeuren"
+   },
+   "Print..." : {
+      "de" : "Drucken..",
+      "fr" : "Imprimer..",
+      "nl" : "Afdrukken"
+   },
+   "Printed by:" : {
+      "de" : "Gedruckt von:",
+      "fr" : "Imprimé par:",
+      "nl" : "Afgedrukt door:"
+   },
+   "Printed:" : {
+      "de" : "Gedruckt:",
+      "fr" : "Imprimé:",
+      "nl" : "Afgedrukt:"
+   },
+   "Quit" : {
+      "de" : "Beenden",
+      "fr" : "Quitter",
+      "nl" : "Verlaten"
+   },
+   "Reader selection" : {
+      "de" : "Kartenleserauswahl",
+      "fr" : "Sélection d'un lecteur de carte",
+      "nl" : "Kaartlezerselectie"
+   },
+   "Reading certificates" : {
+      "de" : "Zertifikate werden gelesen",
+      "fr" : "Lecture de certificats en cours",
+      "nl" : "Bezig met lezen van certificaten"
+   },
+   "Reading identity" : {
+      "de" : "eID wird gelesen",
+      "fr" : "Lecture des données d’identité",
+      "nl" : "Bezig met lezen van identiteit"
+   },
+   "Ready to read identity card" : {
+      "de" : "Bereit, e-ID zu lesen",
+      "fr" : "Prêt à lire la carte d’identité",
+      "nl" : "Klaar om identiteitskaart te lezen"
+   },
+   "Regional file number:" : {
+      "de" : "Regionale Aktennummer:",
+      "fr" : "Numéro de dossier régional:",
+      "nl" : "Gewestelijk dossiernummer:"
+   },
+   "Researcher" : {
+      "de" : "Forscher",
+      "fr" : "Chercheur",
+      "nl" : "Onderzoeker"
+   },
+   "Save eID file" : {
+      "de" : "eID-Datei speichern",
+      "fr" : "Enregistrer un fichier eID",
+      "nl" : "eID bestand opslaan"
+   },
+   "Sex:" : {
+      "de" : "Geschlecht:",
+      "fr" : "Sexe:",
+      "nl" : "Geslacht:"
+   },
+   "Show log tab" : {
+      "de" : "Logbuch anzeigen",
+      "fr" : "Afficher le journal",
+      "nl" : "Logboek tonen"
+   },
+   "Special organisation:" : {
+      "de" : "Besondere Organisation:",
+      "fr" : "Organisation spéciale:",
+      "nl" : "Bijzondere organisatie:"
+   },
+   "Special status:" : {
+      "de" : "Sonderstatus:",
+      "fr" : "Statut spécial:",
+      "nl" : "Speciale status:"
+   },
+   "Street:" : {
+      "de" : "Straße:",
+      "fr" : "Rue:",
+      "nl" : "Straat:"
+   },
+   "The latest version of the eID Viewer has already been installed" : {
+      "de" : "Die neueste Version ist bereits installiert",
+      "fr" : "La version la plus récente est déjà installée",
+      "nl" : "De meest recente versie van de eID Viewer is reeds aanwezig"
+   },
+   "Title:" : {
+      "de" : "Titel:",
+      "fr" : "Titre:",
+      "nl" : "Titel:"
+   },
+   "Trust:" : {
+      "de" : "Vertrauen:",
+      "fr" : "Confiance:",
+      "nl" : "Betrouwbaarheid:"
+   },
+   "Trusted." : {
+      "de" : "Vertrauenswürdig",
+      "fr" : "Fiable",
+      "nl" : "Betrouwbaar."
+   },
+   "Update checks" : {
+      "de" : "",
+      "fr" : "",
+      "nl" : "Updatecontroles"
+   },
+   "Usage:" : {
+      "de" : "Verwendung:",
+      "fr" : "Utilisation:",
+      "nl" : "Gebruik:"
+   },
+   "V" : {
+      "de" : "F",
+      "fr" : "F",
+      "nl" : "V"
+   },
+   "Valid from:" : {
+      "de" : "Gültig ab:",
+      "fr" : "Début de validité:",
+      "nl" : "Geldig vanaf:"
+   },
+   "Valid until:" : {
+      "de" : "Gültig bis:",
+      "fr" : "Fin de validité:",
+      "nl" : "Geldig tot:"
+   },
+   "Validate Now" : {
+      "de" : "Jetzt validieren",
+      "fr" : "Valider maintenant",
+      "nl" : "Nu valideren"
+   },
+   "Validating" : {
+      "de" : "Validierung läuft..",
+      "fr" : "Validation en cours",
+      "nl" : "Validatie bezig"
+   },
+   "Verify PIN" : {
+      "de" : "PIN uberprufen",
+      "fr" : "Verifier le code PIN",
+      "nl" : "Pincode testen"
+   },
+   "Version check at startup" : {
+      "de" : "Versionsprüfung beim Start",
+      "fr" : "vérification de version au démarrage",
+      "nl" : "Versiecontrole bij opstarten"
+   },
+   "View data on the Belgian eID card" : {
+      "de" : "Daten auf der belgischen eID-Karte einsehen",
+      "fr" : "Consultez les données de la carte eID belge",
+      "nl" : "Bekijk gegevens op de Belgische eID-kaart"
+   },
+   "White Cane" : {
+      "de" : "Weißer Stock",
+      "fr" : "Canne blanche",
+      "nl" : "Witte stok"
+   },
+   "Work permit mention:" : {
+      "de" : "",
+      "fr" : "",
+      "nl" : "Werkvergunningsvermelding:"
+   },
+   "Yellow Cane" : {
+      "de" : "Gelber Stock",
+      "fr" : "Canne jaune",
+      "nl" : "Gele stok"
+   },
+   "Your PIN was changed correctly." : {
+      "de" : "Ihr PIN-Code war korrekt geändert",
+      "fr" : "Le code PIN a été modifié avec succès.",
+      "nl" : "De PIN werd succesvol gewijzigd."
+   },
+   "Your PIN was validated correctly." : {
+      "de" : "Ihr PIN-Code war korrekt validiert",
+      "fr" : "La vérification du PIN a réussi.",
+      "nl" : "De PIN werd succesvol geverifieerd."
+   },
+   "_Cancel" : {
+      "de" : "Ab_brechen",
+      "fr" : "_Annuler",
+      "nl" : "_Annuleren"
+   },
+   "_File" : {
+      "de" : "_Datei",
+      "fr" : "Dossier",
+      "nl" : "_Bestand"
+   },
+   "_Help" : {
+      "de" : "_Hilfe",
+      "fr" : "_Aide",
+      "nl" : "_Hulp"
+   },
+   "_Open" : {
+      "de" : "Ö_ffnen",
+      "fr" : "_Ouvrir",
+      "nl" : "_Openen"
+   },
+   "_Save" : {
+      "de" : "_Speichern",
+      "fr" : "_Enregistrer",
+      "nl" : "Op_slaan"
+   },
+   "eID Card Test Site..." : {
+      "de" : "eID Test Site...",
+      "fr" : "Site de test eID...",
+      "nl" : "Testsite voor eID..."
+   },
+   "eID Viewer" : {
+      "de" : "eID Viewer",
+      "fr" : "eID Viewer",
+      "nl" : "eID Viewer"
+   },
+   "eID Viewer is up to date" : {
+      "de" : "Keine neue Version verfügbar",
+      "fr" : "Aucune nouvelle version disponible",
+      "nl" : "Geen nieuwe versie beschikbaar"
+   },
+   "eID files" : {
+      "de" : "eID files",
+      "fr" : "Fichiers eID",
+      "nl" : "eID-bestanden"
+   },
+   "https://eid.belgium.be/en/question-and-answer" : {
+      "de" : "https://eid.belgium.be/de/frage-und-antwort",
+      "fr" : "https://eid.belgium.be/fr/questions-et-reponses",
+      "nl" : "https://eid.belgium.be/en/vraag-en-antwoord"
+   },
+   "https://iamapps.belgium.be/tma/" : {
+      "de" : "https://iamapps.belgium.be/tma/?lang=de",
+      "fr" : "https://iamapps.belgium.be/tma/?lang=fr",
+      "nl" : "https://iamapps.belgium.be/tma/?lang=nl"
+   }
+}

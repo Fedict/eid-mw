@@ -205,12 +205,12 @@ msgstr "Geschlecht:"
 #: plugins_tools/eid-viewer/gtk/viewer.glade:374
 #: plugins_tools/eid-viewer/gtk/print.c:42
 msgid "National number:"
-msgstr "Staatsangehörigkeitsnummer:"
+msgstr "Nationale Nummer:"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:393
 #: plugins_tools/eid-viewer/gtk/print.c:47
 msgid "Municipality:"
-msgstr "Kommune:"
+msgstr "Gemeinde:"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:412
 #: plugins_tools/eid-viewer/gtk/print.c:46
@@ -225,7 +225,7 @@ msgstr "Straße:"
 #: plugins_tools/eid-viewer/gtk/viewer.glade:464
 #: plugins_tools/eid-viewer/gtk/print.c:44
 msgid "Special status:"
-msgstr "Besonderer Status:"
+msgstr "Sonderstatus:"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:483
 #: plugins_tools/eid-viewer/gtk/print.c:43
