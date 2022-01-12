@@ -1,0 +1,37 @@
+#!/usr/bin/perl -w
+
+use 5.30.0;
+use strict;
+use warnings;
+use feature "signatures";
+
+no warnings "experimental::signatures";
+
+use JSON qw/decode_json/;
+
+use WriteTranslation::macXliff;
+use WriteTranslation::Gettext;
+use WriteTranslation::ResourceXML;
+use Getopt::Long;
+
+my $translations = "";
+
+my $macXliffdir;
+my $gettextdir;
+my $resourcexmldir;
+
+GetOptions("linux-dir=s" => \$gettextdir,
+	   "mac-dir=s" => \$macXliffdir,
+	   "windows-dir=s" => \$resourcexmldir)
+or die "Error in command line arguments\n";
+
+open my $jsonfile, "<", "source-translations.json";
+while(<$jsonfile>) {
+	$translations .= $_;
+}
+close $jsonfile;
+$translations = decode_json($translations);
+
+WriteTranslation::Gettext::perform($translations, $gettextdir) if defined($gettextdir);
+WriteTranslation::macXliff::perform($translations, $macXliffdir) if defined($macXliffdir);
+WriteTranslation::ResourceXML::perform($translations, $resourcexmldir) if defined($resourcexmldir);

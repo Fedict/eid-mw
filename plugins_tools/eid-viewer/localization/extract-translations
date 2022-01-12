@@ -1,0 +1,53 @@
+#!/usr/bin/perl -w
+
+use v5.30;
+
+use strict;
+use warnings qw/FATAL utf8/;
+
+use ExtractTranslation::Gettext;
+use ExtractTranslation::macXliff;
+use ExtractTranslation::ResourceXml;
+use Getopt::Long;
+use JSON;
+
+use feature "signatures";
+use feature "unicode_strings";
+
+no warnings "experimental::signatures";
+
+my $windowsdir;
+my $macdir;
+my $linuxdir;
+
+GetOptions("linux-dir=s" => \$linuxdir,
+	   "mac-dir=s" => \$macdir,
+	   "windows-dir=s" => \$windowsdir)
+or die "Error in command line argument";
+
+my %extracted;
+
+ExtractTranslation::Gettext::extract($linuxdir, \%extracted) if(defined($linuxdir));
+ExtractTranslation::macXliff::extract($macdir, \%extracted) if(defined($macdir));
+ExtractTranslation::ResourceXml::extract($windowsdir, \%extracted) if(defined($windowsdir));
+
+my %translated;
+
+foreach my $source(keys %extracted) {
+	my $todo = { de => 1, fr => 1, nl => 1 };
+	$translated{$source} = {};
+	foreach my $platform(qw/ResourceXML gettext macXliff/) {
+		next unless exists($extracted{$source}{$platform});
+		foreach my $lang(keys %$todo) {
+			if(exists($extracted{$source}{$platform}{$lang})) {
+				delete $todo->{$lang};
+				$translated{$source}{$lang} = $extracted{$source}{$platform}{$lang};
+			}
+		}
+		last unless (scalar(keys(%$todo)) > 0);
+	}
+}
+
+open my $output, ">", "output.json";
+
+print $output JSON->new->utf8->pretty->canonical->encode(\%translated);
