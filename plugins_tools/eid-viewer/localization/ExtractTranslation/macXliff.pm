@@ -1,8 +1,11 @@
 package ExtractTranslation::macXliff;
 
+use v5.30;
 use strict;
 use warnings;
 use feature "signatures";
+use open ":encoding(UTF-8)";
+use feature "unicode_strings";
 
 no warnings "experimental::signatures";
 
@@ -15,7 +18,7 @@ sub extract($directory, $translations) {
 	foreach my $file(@files) {
 		my $lang = basename($file, ".xliff");
 		next if($lang eq "en");
-		open my $input, "<:encoding(utf8)", "$file";
+		open my $input, "<", "$file";
 		my $xml;
 		while(<$input>) {
 			$xml .= $_;

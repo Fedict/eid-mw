@@ -1,9 +1,13 @@
 package ExtractTranslation::Gettext;
 
+use v5.30;
+
 use strict;
 use warnings;
 use feature "signatures";
 use utf8;
+use open ":encoding(UTF-8)";
+use feature "unicode_strings";
 
 no warnings "experimental::signatures";
 
@@ -14,7 +18,7 @@ sub extract($directory, $translations) {
 	my @files = glob("\"$directory/*.po\"");
 	foreach my $file(@files) {
 		my $lang = basename($file, ".po");
-		open my $input, "<:encoding(utf8)", $file;
+		open my $input, "<", $file;
 		my $current_source;
 		my $current_target;
 		my $current;

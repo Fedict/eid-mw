@@ -1,8 +1,12 @@
 package ExtractTranslation::ResourceXml;
 
+use v5.30;
 use strict;
 use warnings;
 use feature "signatures";
+use feature "unicode_strings";
+
+use open ":encoding(UTF-8)";
 
 no warnings "experimental::signatures";
 
@@ -11,7 +15,7 @@ use File::Basename qw/basename dirname/;
 use ExtractTranslation::Util;
 
 sub readxml($filename, $dest) {
-	open my $file, "<:encoding(utf8)", $filename;
+	open my $file, "<", $filename;
 	my $in_comment = 0;
 	while(<$file>) {
 		if(!$in_comment) {
