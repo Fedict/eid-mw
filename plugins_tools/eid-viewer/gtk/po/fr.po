@@ -223,7 +223,7 @@ msgstr "Rue:"
 #: plugins_tools/eid-viewer/gtk/viewer.glade:464
 #: plugins_tools/eid-viewer/gtk/print.c:44
 msgid "Special status:"
-msgstr "Etat spécial:"
+msgstr "Statut spécial:"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:483
 #: plugins_tools/eid-viewer/gtk/print.c:43

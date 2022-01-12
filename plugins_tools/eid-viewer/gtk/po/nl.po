@@ -267,7 +267,7 @@ msgstr "Werkvergunningsvermelding:"
 #: plugins_tools/eid-viewer/gtk/viewer.glade:928
 #: plugins_tools/eid-viewer/gtk/print.c:64
 msgid "Regional file number:"
-msgstr "Regionaal dossiernummer:"
+msgstr "Gewestelijk dossiernummer:"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:946
 #: plugins_tools/eid-viewer/gtk/print.c:57
@@ -326,7 +326,7 @@ msgstr "Geldig tot:"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1310
 msgid "Verify PIN"
-msgstr "Pincode verifiëren"
+msgstr "Pincode testen"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1326
 msgid "Change PIN"
