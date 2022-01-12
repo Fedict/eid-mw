@@ -313,7 +313,7 @@ msgstr "Chip-Nummer:"
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1699
 #: plugins_tools/eid-viewer/gtk/print.c:51
 msgid "Valid from:"
-msgstr "Gültig von:"
+msgstr "Gültig ab:"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1296
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1718

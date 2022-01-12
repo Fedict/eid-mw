@@ -162,7 +162,7 @@ msgstr "Exporteren naar DER bestand..."
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:48
 msgid "Export chain to PEM file..."
-msgstr "Ketting naar PEM bestand exporteren..."
+msgstr "Ketting exporteren naar PEM bestand..."
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:68
 msgid "_File"
@@ -393,7 +393,7 @@ msgstr "Log naar klembord kopiëren"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:2082
 msgid "Log"
-msgstr "Log"
+msgstr "Logboek"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:2147
 msgid "Preferences"

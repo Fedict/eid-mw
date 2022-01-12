@@ -14,6 +14,11 @@
       "fr" : "A propos de",
       "nl" : "Over"
    },
+   "About..." : {
+      "de" : "Über...",
+      "fr" : "A propos de...",
+      "nl" : "Over..."
+   },
    "Access to the labour market:" : {
       "de" : "Zugang zum Arbeitsmarkt:",
       "fr" : "Accès au marché du travail:",
@@ -29,10 +34,10 @@
       "fr" : "Tous les fichiers eID",
       "nl" : "Alle bestanden"
    },
-   "Always validate Certificate Trust" : {
+   "Always validate certificate trust" : {
       "de" : "Vertrauenszertifikate immer validieren",
-      "fr" : "Toujours valider les certificats de confiance",
-      "nl" : "Vertrouwenscertificaten altijd valideren"
+      "fr" : "Toujours valider la fiabilité des certificats",
+      "nl" : "Certificaatbetrouwbaarheid altijd valideren"
    },
    "Automatic" : {
       "de" : "Automatisch",
@@ -82,12 +87,12 @@
    "Check version at startup" : {
       "de" : "",
       "fr" : "",
-      "nl" : "Updatecontrole bij opstarten"
+      "nl" : "Versiecontrole bij opstarten"
    },
    "Check version now" : {
       "de" : "",
       "fr" : "",
-      "nl" : "Nu controleren"
+      "nl" : "Versie nu controleren"
    },
    "Check version" : {
       "de" : "Version prüfen",
@@ -139,6 +144,11 @@
       "fr" : "Information Détaillée...",
       "nl" : "Gedetailleerde informatie..."
    },
+   "Duplicata:" : {
+      "de" : "Duplikat:",
+      "fr" : "Duplicata:",
+      "nl" : "Duplicaat:"
+   },
    "Duplicate:" : {
       "de" : "Duplikat:",
       "fr" : "Duplicata:",
@@ -177,17 +187,17 @@
    "Export chain to PEM file..." : {
       "de" : "Kette exportieren zu PEM Datei...",
       "fr" : "Exporter la chaine vers fichier PEM...",
-      "nl" : "Ketting naar PEM bestand exporteren..."
+      "nl" : "Ketting exporteren naar PEM bestand..."
+   },
+   "Export photo to JPG file..." : {
+      "de" : "Foto exportieren zu JPG Datei...",
+      "fr" : "Exporter la photo vers fichier JPG...",
+      "nl" : "Foto Exporteren naar JPG bestand..."
    },
    "Export to DER file..." : {
       "de" : "Exportieren zu DER Datei...",
       "fr" : "Exporter vers fichier DER...",
       "nl" : "Exporteren naar DER bestand..."
-   },
-   "Export to PEM file.." : {
-      "de" : "Exportieren zu PEM Datei..",
-      "fr" : "Exporter vers fichier PEM..",
-      "nl" : "Exporteren naar PEM bestand.."
    },
    "Export to PEM file..." : {
       "de" : "Exportieren zu PEM Datei...",
@@ -209,7 +219,7 @@
       "fr" : "Dossier",
       "nl" : "Bestand"
    },
-   "Frequently asked questions..." : {
+   "Frequently Asked Questions..." : {
       "de" : "Häufig gestellte Fragen...",
       "fr" : "Foire aux questions...",
       "nl" : "Veel gestelde vragen..."
@@ -304,12 +314,12 @@
       "fr" : "Non validé",
       "nl" : "Niet gevalideerd"
    },
-   "Online update check failed" : {
+   "Online version check failed" : {
       "de" : "Versionsprüfung fehlgeschlagen",
       "fr" : "La vérification de version a échoué",
       "nl" : "Versiecontrole mislukt"
    },
-   "Online update check failed, please check log for further details" : {
+   "Online version check failed, please check log for further details" : {
       "de" : "Versionsprüfung fehlgeschlagen, bitte überprüfen Sie das Logbuch für weitere Details",
       "fr" : "La vérification de version a échoué, veuillez consulter le journal pour plus de détails",
       "nl" : "Versiecontrole mislukt, controleer het logboek voor meer informatie"
@@ -375,8 +385,8 @@
       "nl" : "Voorkeuren"
    },
    "Print..." : {
-      "de" : "Drucken..",
-      "fr" : "Imprimer..",
+      "de" : "Drucken...",
+      "fr" : "Imprimer...",
       "nl" : "Afdrukken"
    },
    "Printed by:" : {
@@ -423,6 +433,11 @@
       "de" : "Forscher",
       "fr" : "Chercheur",
       "nl" : "Onderzoeker"
+   },
+   "Save As..." : {
+      "de" : "Speichern als",
+      "fr" : "Enregistrer sous",
+      "nl" : "Opslaan als..."
    },
    "Save eID file" : {
       "de" : "eID-Datei speichern",
@@ -491,21 +506,21 @@
    },
    "Valid from:" : {
       "de" : "Gültig ab:",
-      "fr" : "Début de validité:",
+      "fr" : "Valable à partir du:",
       "nl" : "Geldig vanaf:"
    },
    "Valid until:" : {
       "de" : "Gültig bis:",
-      "fr" : "Fin de validité:",
+      "fr" : "Valable jusqu'au:",
       "nl" : "Geldig tot:"
    },
-   "Validate Now" : {
+   "Validate now" : {
       "de" : "Jetzt validieren",
       "fr" : "Valider maintenant",
       "nl" : "Nu valideren"
    },
    "Validating" : {
-      "de" : "Validierung läuft..",
+      "de" : "Validierung läuft",
       "fr" : "Validation en cours",
       "nl" : "Validatie bezig"
    },

@@ -311,13 +311,13 @@ msgstr "Numéro de puce:"
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1699
 #: plugins_tools/eid-viewer/gtk/print.c:51
 msgid "Valid from:"
-msgstr "Début de validité:"
+msgstr "Valable à partir du:"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1296
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1718
 #: plugins_tools/eid-viewer/gtk/print.c:52
 msgid "Valid until:"
-msgstr "Fin de validité:"
+msgstr "Valable jusqu'au:"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1310
 msgid "Verify PIN"
