@@ -14,6 +14,11 @@
       "fr" : "A propos de",
       "nl" : "Over"
    },
+   "About eID Viewer" : {
+      "de" : "Über eID Viewer",
+      "fr" : "A propos du eID Viewer",
+      "nl" : "Over eID Viewer"
+   },
    "About..." : {
       "de" : "Über...",
       "fr" : "A propos de...",
@@ -59,6 +64,11 @@
       "fr" : "Mentions du Brexit:",
       "nl" : "Brexit vermeldingen:"
    },
+   "Bring All to Front" : {
+      "de" : "Bring All to Front",
+      "fr" : "Bring All to Front",
+      "nl" : "Alles op voorgrond"
+   },
    "Card available" : {
       "de" : "Karte verfügbar",
       "fr" : "Carte disponible",
@@ -69,10 +79,18 @@
       "fr" : "Numéro de carte:",
       "nl" : "Kaartnummer:"
    },
+   "Card reader:" : {
+      "de" : "Kartenleser:"
+   },
    "Card/PIN" : {
       "de" : "Karte/PIN",
       "fr" : "Carte/PIN",
       "nl" : "Kaart/PIN"
+   },
+   "Certificate" : {
+      "de" : "Zertifikat",
+      "fr" : "Certificat",
+      "nl" : "Certificaat"
    },
    "Certificates" : {
       "de" : "Zertifikate",
@@ -100,7 +118,7 @@
       "nl" : "Controleer versie"
    },
    "Chip number:" : {
-      "de" : "Chip-Nummer:",
+      "de" : "Chipnummer:",
       "fr" : "Numéro de puce:",
       "nl" : "Chip nummer:"
    },
@@ -139,6 +157,11 @@
       "fr" : "Date de naissance:",
       "nl" : "Geboortedatum:"
    },
+   "Detail" : {
+      "de" : "Detail",
+      "fr" : "Détail",
+      "nl" : "Detail"
+   },
    "Detailed information..." : {
       "de" : "Detailinformation...",
       "fr" : "Information Détaillée...",
@@ -148,21 +171,6 @@
       "de" : "Duplikat:",
       "fr" : "Duplicata:",
       "nl" : "Duplicaat:"
-   },
-   "Duplicate:" : {
-      "de" : "Duplikat:",
-      "fr" : "Duplicata:",
-      "nl" : "Duplicaat:"
-   },
-   "Employer's VAT/CBE number (1):" : {
-      "de" : "Mehrwertsteuernummer/ZDU-Nummer des Arbeitgebers (1):",
-      "fr" : "Numéro TVA/BCE de l'employeur (1)",
-      "nl" : "BTW/KBO-nummer van de werkgever (1):"
-   },
-   "Employer's VAT/CBE number (2):" : {
-      "de" : "Mehrwertsteuernummer/ZDU-Nummer des Arbeitgebers (2):",
-      "fr" : "Numéro TVA/BCE de l'employeur (2)",
-      "nl" : "BTW/KBO-nummer van de werkgever (2):"
    },
    "Employer's VAT/\nCBE number (1):" : {
       "de" : "Mehrwertsteuernummer/\nZDU-Nummer des Arbeitgebers (1):",
@@ -174,6 +182,16 @@
       "fr" : "Numéro de TVA/\nBCE de l’employeur (2):",
       "nl" : "BTW/KBO-nummer\nvan de werkgever (2):"
    },
+   "Employer's VAT/CBE number (1):" : {
+      "de" : "Mehrwertsteuernummer/ZDU-Nummer des Arbeitgebers (1):",
+      "fr" : "Numéro TVA/BCE de l'employeur (1)",
+      "nl" : "BTW/KBO-nummer van de werkgever (1):"
+   },
+   "Employer's VAT/CBE number (2):" : {
+      "de" : "Mehrwertsteuernummer/ZDU-Nummer des Arbeitgebers (2):",
+      "fr" : "Numéro TVA/BCE de l'employeur (2)",
+      "nl" : "BTW/KBO-nummer van de werkgever (2):"
+   },
    "Error occurred while trying to change PIN code" : {
       "de" : "Es ist ein Fehler beim Ändern des PIN-Codes aufgetreten",
       "fr" : "Une erreur s'est produite pendant la modification du code PIN",
@@ -183,6 +201,11 @@
       "de" : "Es ist ein Fehler beim Überprüfen des PIN-Codes aufgetreten",
       "fr" : "Une erreur s'est produite pendant la vérification du code PIN",
       "nl" : "Een fout deed zich voor tijdens het verifiëren van de Pincode"
+   },
+   "Export chain to PEM file..." : {
+      "de" : "Kette exportieren zu PEM Datei...",
+      "fr" : "Exporter la chaine vers fichier PEM...",
+      "nl" : "Ketting exporteren naar PEM bestand..."
    },
    "Export chain to PEM file..." : {
       "de" : "Kette exportieren zu PEM Datei...",
@@ -219,6 +242,11 @@
       "fr" : "Dossier",
       "nl" : "Bestand"
    },
+   "Filter the log entries" : {
+      "de" : "",
+      "fr" : "",
+      "nl" : ""
+   },
    "Frequently Asked Questions..." : {
       "de" : "Häufig gestellte Fragen...",
       "fr" : "Foire aux questions...",
@@ -233,6 +261,16 @@
       "de" : "Hilfe",
       "fr" : "Aide",
       "nl" : "Hulp"
+   },
+   "Hide Others" : {
+      "de" : "Hide Others",
+      "fr" : "Hide Others",
+      "nl" : "Verberg andere"
+   },
+   "Hide eID Viewer" : {
+      "de" : "Hide eID Viewer",
+      "fr" : "Hide eID Viewer",
+      "nl" : "eID Viewer verbergen"
    },
    "Identity" : {
       "de" : "Identität",
@@ -263,6 +301,11 @@
       "de" : "Erwähnungen:",
       "fr" : "Mentions:",
       "nl" : "Vermeldingen:"
+   },
+   "Minimize" : {
+      "de" : "Minimize",
+      "fr" : "Minimize",
+      "nl" : "Minimaliseer"
    },
    "Municipality:" : {
       "de" : "Gemeinde:",
@@ -329,6 +372,11 @@
       "fr" : "Ouvrir un fichier eID",
       "nl" : "eID-bestand openen"
    },
+   "Open…" : {
+      "de" : "Öffnen…",
+      "fr" : "Ouvrir…",
+      "nl" : "Openen…"
+   },
    "Organization:" : {
       "de" : "Organisation:",
       "fr" : "Organisation:",
@@ -359,6 +407,11 @@
       "fr" : "Code PIN vérifié",
       "nl" : "Pincode geverifieerd"
    },
+   "Page Setup…" : {
+      "de" : "Page Setup…",
+      "fr" : "Page Setup…",
+      "nl" : "Pagina-instellingen…"
+   },
    "Performing a PIN operation" : {
       "de" : "PIN-Vorgang wird durchgeführt",
       "fr" : "Exécution d'une opération PIN en cours",
@@ -384,6 +437,21 @@
       "fr" : "",
       "nl" : "Voorkeuren"
    },
+   "Preferences..." : {
+      "de" : "Einstellungen...",
+      "fr" : "Préférences...",
+      "nl" : "Voorkeuren..."
+   },
+   "Preferences…" : {
+      "de" : "Preferences…",
+      "fr" : "Préférences…",
+      "nl" : "Voorkeuren…"
+   },
+   "Print.." : {
+      "de" : "Drucken",
+      "fr" : "Imprimer",
+      "nl" : "Afdrukken.."
+   },
    "Print..." : {
       "de" : "Drucken...",
       "fr" : "Imprimer...",
@@ -399,10 +467,20 @@
       "fr" : "Imprimé:",
       "nl" : "Afgedrukt:"
    },
+   "Print…" : {
+      "de" : "Drucken…",
+      "fr" : "Imprimer…",
+      "nl" : "Afdrukken…"
+   },
    "Quit" : {
       "de" : "Beenden",
       "fr" : "Quitter",
       "nl" : "Verlaten"
+   },
+   "Quit eID Viewer" : {
+      "de" : "eID Viewer beenden",
+      "fr" : "Quitter eID Viewer",
+      "nl" : "eID Viewer afsluiten"
    },
    "Reader selection" : {
       "de" : "Kartenleserauswahl",
@@ -413,6 +491,11 @@
       "de" : "Zertifikate werden gelesen",
       "fr" : "Lecture de certificats en cours",
       "nl" : "Bezig met lezen van certificaten"
+   },
+   "Reading data from card..." : {
+      "de" : "Daten werden von der Karte gelesen...",
+      "fr" : "Lecture en cours des données de la carte...",
+      "nl" : "Data wordt van de kaart gelezen..."
    },
    "Reading identity" : {
       "de" : "eID wird gelesen",
@@ -444,10 +527,20 @@
       "fr" : "Enregistrer un fichier eID",
       "nl" : "eID bestand opslaan"
    },
-   "Sex:" : {
-      "de" : "Geschlecht:",
-      "fr" : "Sexe:",
-      "nl" : "Geslacht:"
+   "Save…" : {
+      "de" : "Speichern…",
+      "fr" : "Enregistrer…",
+      "nl" : "Opslaan…"
+   },
+   "Services" : {
+      "de" : "Services",
+      "fr" : "Services",
+      "nl" : "Diensten"
+   },
+   "Show All" : {
+      "de" : "Show All",
+      "fr" : "Show All",
+      "nl" : "Alles tonen"
    },
    "Show log tab" : {
       "de" : "Logbuch anzeigen",
@@ -468,6 +561,11 @@
       "de" : "Straße:",
       "fr" : "Rue:",
       "nl" : "Straat:"
+   },
+   "Test PIN" : {
+      "de" : "PIN-Code uberprufen",
+      "fr" : "Tester le code PIN",
+      "nl" : "Pincode verifiëren"
    },
    "The latest version of the eID Viewer has already been installed" : {
       "de" : "Die neueste Version ist bereits installiert",
@@ -539,10 +637,20 @@
       "fr" : "Consultez les données de la carte eID belge",
       "nl" : "Bekijk gegevens op de Belgische eID-kaart"
    },
+   "Warning" : {
+      "de" : "Warning",
+      "fr" : "Coarse",
+      "nl" : "Waarschuwing"
+   },
    "White Cane" : {
       "de" : "Weißer Stock",
       "fr" : "Canne blanche",
       "nl" : "Witte stok"
+   },
+   "Window" : {
+      "de" : "Window",
+      "fr" : "Window",
+      "nl" : "Venster"
    },
    "Work permit mention:" : {
       "de" : "",
@@ -563,6 +671,11 @@
       "de" : "Ihr PIN-Code war korrekt validiert",
       "fr" : "La vérification du PIN a réussi.",
       "nl" : "De PIN werd succesvol geverifieerd."
+   },
+   "Zoom" : {
+      "de" : "Zoom",
+      "fr" : "Zoom",
+      "nl" : "Vergroot/verklein"
    },
    "_Cancel" : {
       "de" : "Ab_brechen",
