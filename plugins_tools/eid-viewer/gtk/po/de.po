@@ -307,7 +307,7 @@ msgstr "Ausstellungsort:"
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1262
 #: plugins_tools/eid-viewer/gtk/print.c:50
 msgid "Chip number:"
-msgstr "Chip-Nummer:"
+msgstr "Chipnummer:"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1279
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1699
