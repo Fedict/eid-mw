@@ -98,6 +98,7 @@ sub perform($translations, $directory) {
 		my $msgstr;
 		my $current;
 		my @items;
+		my $fuzzy = undef;
 		while(my $line = <$input>) {
 			if($line =~ /^msgid "(.*)"$/) {
 				$msgid = WriteTranslation::Gettext::Msgid->new($1);
@@ -107,6 +108,8 @@ sub perform($translations, $directory) {
 				$current = \$msgstr;
 			} elsif($line =~ /^"(.*)"$/) {
 				$$current->add_line($1);
+			} elsif($line =~ /^#, fuzzy$/) {
+				$fuzzy = WriteTranslation::Gettext::Item->new($line);
 			} elsif($line =~ /^$/) {
 				if(!defined($msgid) && !defined($msgstr)) {
 					push @items, WriteTranslation::Gettext::Item->new($line);
@@ -116,15 +119,24 @@ sub perform($translations, $directory) {
 					die "invalid .po file: missing msgstr or msgid";
 				}
 				if(exists($translations->{$msgid->string}{$lang})) {
+					$fuzzy = undef;
 					if($msgstr->string ne $translations->{$msgid->string}{$lang}) {
 						$msgstr->clear;
 						$msgstr->add_line($translations->{$msgid->string}{$lang});
 					}
 				}
+				if(defined($fuzzy)) {
+					push @items, $fuzzy;
+				}
 				push @items, ($msgid, $msgstr);
 				$msgid = undef;
 				$msgstr = undef;
+				$fuzzy = undef;
 			} else {
+				if(defined($fuzzy)) {
+					push @items, $fuzzy;
+					$fuzzy = undef;
+				}
 				push @items, WriteTranslation::Gettext::Item->new($line);
 			}
 		}
