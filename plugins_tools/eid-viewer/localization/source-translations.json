@@ -232,10 +232,10 @@
       "fr" : "Impossible de lire les données d’identité",
       "nl" : "Kon identiteitsgegevens niet uitlezen"
    },
-   "Family member" : {
-      "de" : "Familienangehöriger",
-      "fr" : "Membre de famille",
-      "nl" : "Gezinslid"
+   "Family member:" : {
+      "de" : "Familienangehöriger:",
+      "fr" : "Membre de famille:",
+      "nl" : "Gezinslid:"
    },
    "File" : {
       "de" : "Datei",
@@ -250,7 +250,7 @@
    "Frequently Asked Questions..." : {
       "de" : "Häufig gestellte Fragen...",
       "fr" : "Foire aux questions...",
-      "nl" : "Veel gestelde vragen..."
+      "nl" : "Veelgestelde vragen..."
    },
    "Given names:" : {
       "de" : "Vornamen:",
