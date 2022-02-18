@@ -122,6 +122,9 @@ test:coverity:linux:
 src:srpm:
   stage: source-package
   extends: .srpm
+  needs:
+    - test:distcheck
+    - test:robot:linux
 
 ##############################################################
 # Stage "binary-package": build binaries and binary packages #
@@ -132,6 +135,9 @@ src:srpm:
   dependencies:
     - test:distcheck
   stage: binary-package
+  needs:
+    - test:distcheck
+    - test:robot:linux
 
 build:deb_oldstable_32:
   <<: *build-deb
@@ -268,6 +274,9 @@ build:ubuntu_stable_64:
   dependencies:
     - src:srpm
   stage: binary-package
+  needs:
+    - src:srpm
+
 build:fedora_oldstable_32:
   <<: *build-fed
   variables:
@@ -329,6 +338,8 @@ build:centos_stable_64:
   dependencies:
     - src:srpm
   stage: binary-package
+  needs:
+    - src:srpm
 build:suse_oldstable:
   <<: *build-suse
   variables:
@@ -352,6 +363,9 @@ build:suse_stable:
 build:windows:
   stage: binary-package
   extends: .build-windows
+  needs:
+    - test:distcheck
+    - test:robot:linux
 
 # macOS
 build:macos:
@@ -359,11 +373,17 @@ build:macos:
   extends: .build-macos
   variables:
     EIDMW_SIGN_BUILD: 0
+  needs:
+    - test:distcheck
+    - test:robot:linux
 
 build:freebsd:
   stage: binary-package
   extends: .build-freebsd-base
   allow_failure: true
+  needs:
+    - test:distcheck
+    - test:robot:linux
 
 validate:robot:windows:
   stage: validate
