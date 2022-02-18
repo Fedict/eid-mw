@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eid-mw 4.1.1-v4.1.1.4.gc149158.dirty\n"
 "Report-Msgid-Bugs-To: servicedesk@bosa.fgov.be\n"
-"POT-Creation-Date: 2021-12-09 17:42+0200\n"
+"POT-Creation-Date: 2022-02-18 14:37+0200\n"
 "PO-Revision-Date: 2021-12-09 18:07+0200\n"
 "Last-Translator: Wouter Verhelst <wouter.verhelst@fedict.be>\n"
 "Language-Team: \n"
@@ -170,7 +170,7 @@ msgid "_Help"
 msgstr "_Hilfe"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:180
-msgid "Frequently asked questions..."
+msgid "Frequently Asked Questions..."
 msgstr "Häufig gestellte Fragen..."
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:189
@@ -243,23 +243,23 @@ msgstr ""
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:792
 #: plugins_tools/eid-viewer/gtk/print.c:60
-msgid "Date and country of protection:"
-msgstr ""
+msgid "Date and country of international protection:"
+msgstr "Datum und Land des internationalen Schutzes:"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:810
 #: plugins_tools/eid-viewer/gtk/print.c:62
-msgid "Employer's VAT number (1):"
-msgstr "Mehrwertsteuernummer des Arbeitgebers (1):"
+msgid "Employer's VAT/CBE number (1):"
+msgstr "Mehrwertsteuernummer/ZDU-Nummer des Arbeitgebers (1):"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:844
 #: plugins_tools/eid-viewer/gtk/print.c:63
-msgid "Employer's VAT number (2):"
-msgstr "Mehrwertsteuernummer des Arbeitgebers (2):"
+msgid "Employer's VAT/CBE number (2):"
+msgstr "Mehrwertsteuernummer/ZDU-Nummer des Arbeitgebers (2):"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:894
 #: plugins_tools/eid-viewer/gtk/print.c:61
-msgid "Work permit mention:"
-msgstr ""
+msgid "Access to the labour market:"
+msgstr "Zugang zum Arbeitsmarkt:"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:928
 #: plugins_tools/eid-viewer/gtk/print.c:64
@@ -268,7 +268,7 @@ msgstr "Regionale Aktennummer:"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:946
 #: plugins_tools/eid-viewer/gtk/print.c:57
-msgid "Member of family:"
+msgid "Family member:"
 msgstr "Familienangehöriger:"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:980
@@ -355,7 +355,7 @@ msgid "Trust:"
 msgstr "Vertrauen:"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1887
-msgid "Always validate Certificate Trust"
+msgid "Always validate certificate trust"
 msgstr "Vertrauenszertifikate immer validieren"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1897
