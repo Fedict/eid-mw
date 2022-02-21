@@ -85,9 +85,6 @@
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "8S8-X4-vs2"; */
 "8S8-X4-vs2.placeholderString" = "-";
 
-/* Class = "NSMenuItem"; title = "Français"; ObjectID = "8Xd-Uv-Ytb"; */
-"8Xd-Uv-Ytb.title" = "Français";
-
 /* Class = "NSTextFieldCell"; title = "Given names:"; ObjectID = "9mr-Oa-QVJ"; */
 "9mr-Oa-QVJ.title" = "Prénoms:";
 
@@ -102,9 +99,6 @@
 
 /* Class = "NSTextFieldCell"; title = "Postal code:"; ObjectID = "87M-eA-geU"; */
 "87M-eA-geU.title" = "Code postal:";
-
-/* Class = "NSMenuItem"; title = "Reader selection"; ObjectID = "997-Qu-fV1"; */
-"997-Qu-fV1.title" = "Sélection d'un lecteur de carte";
 
 /* Class = "NSMenuItem"; title = "Warning"; ObjectID = "a4x-Kn-S3D"; */
 "a4x-Kn-S3D.title" = "Coarse";
@@ -171,9 +165,6 @@
 
 /* Class = "NSTextFieldCell"; title = "Place of issue:"; ObjectID = "EJc-zi-h6r"; */
 "EJc-zi-h6r.title" = "Lieu d'émission:";
-
-/* Class = "NSMenuItem"; title = "Language"; ObjectID = "eWg-zO-bzv"; */
-"eWg-zO-bzv.title" = "Language";
 
 /* Class = "NSMenu"; title = "Help"; ObjectID = "F2S-fz-NVQ"; */
 "F2S-fz-NVQ.title" = "Aide";
@@ -250,9 +241,6 @@
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "LaX-z8-D8m"; */
 "LaX-z8-D8m.placeholderString" = "-";
 
-/* Class = "NSMenuItem"; title = "Automatic"; ObjectID = "LcD-R6-Nvz"; */
-"LcD-R6-Nvz.title" = "Automatique";
-
 /* Class = "NSMenuItem"; title = "Bring All to Front"; ObjectID = "LE2-aR-0XJ"; */
 "LE2-aR-0XJ.title" = "Bring All to Front";
 
@@ -276,9 +264,6 @@
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "Mgi-5v-Mxz"; */
 "Mgi-5v-Mxz.placeholderString" = "-";
-
-/* Class = "NSMenuItem"; title = "Nederlands"; ObjectID = "mrE-xY-icY"; */
-"mrE-xY-icY.title" = "Nederlands";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "nDz-ak-r4z"; */
 "nDz-ak-r4z.placeholderString" = "-";
@@ -367,17 +352,11 @@
 /* Class = "NSTabViewItem"; label = "Card/PIN"; ObjectID = "TI0-e6-w10"; */
 "TI0-e6-w10.label" = "Carte/PIN";
 
-/* Class = "NSMenuItem"; title = "English"; ObjectID = "Tr5-53-x9e"; */
-"Tr5-53-x9e.title" = "English";
-
 /* Class = "NSTextFieldCell"; title = "Reading data from card..."; ObjectID = "UKa-9U-r1R"; */
 "UKa-9U-r1R.title" = "Lecture en cours des données de la carte...";
 
 /* Class = "NSMenu"; title = "eID Viewer"; ObjectID = "uQy-DD-JDr"; */
 "uQy-DD-JDr.title" = "eID Viewer";
-
-/* Class = "NSMenu"; title = "Reader selection"; ObjectID = "vdP-FZ-jf2"; */
-"vdP-FZ-jf2.title" = "Sélection d'un lecteur de la carte";
 
 /* Class = "NSMenuItem"; title = "Hide Others"; ObjectID = "Vdr-fp-XzO"; */
 "Vdr-fp-XzO.title" = "Hide Others";
@@ -387,9 +366,6 @@
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "VYw-86-rmN"; */
 "VYw-86-rmN.placeholderString" = "-";
-
-/* Class = "NSMenuItem"; title = "Deutsch"; ObjectID = "WdA-BK-ihJ"; */
-"WdA-BK-ihJ.title" = "Deutsch";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "wk0-KT-q0Z"; */
 "wk0-KT-q0Z.placeholderString" = "-";
@@ -420,9 +396,6 @@
 
 /* Class = "NSTextFieldCell"; placeholderString = "IDENTITY CARD"; ObjectID = "zA0-fy-z1e"; */
 "zA0-fy-z1e.placeholderString" = "CARTE D'IDENTITE";
-
-/* Class = "NSMenu"; title = "Language"; ObjectID = "ZEA-Hq-gUH"; */
-"ZEA-Hq-gUH.title" = "Language";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "zmd-lf-VkW"; */
 "zmd-lf-VkW.placeholderString" = "-";
