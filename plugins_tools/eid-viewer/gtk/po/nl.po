@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eid-mw 4.1.1-v4.1.1.dirty\n"
 "Report-Msgid-Bugs-To: servicedesk@bosa.fgov.be\n"
-"POT-Creation-Date: 2021-12-09 17:42+0200\n"
+"POT-Creation-Date: 2022-02-18 14:37+0200\n"
 "PO-Revision-Date: 2021-12-09 18:05+0200\n"
 "Last-Translator: Wouter Verhelst <wouter.verhelst@fedict.be>\n"
 "Language-Team: \n"
@@ -173,8 +173,8 @@ msgid "_Help"
 msgstr "_Hulp"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:180
-msgid "Frequently asked questions..."
-msgstr "Veel gestelde vragen..."
+msgid "Frequently Asked Questions..."
+msgstr "Veelgestelde vragen..."
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:189
 msgid "eID Card Test Site..."
@@ -246,23 +246,23 @@ msgstr ""
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:792
 #: plugins_tools/eid-viewer/gtk/print.c:60
-msgid "Date and country of protection:"
-msgstr "Datum en land van bescherming:"
+msgid "Date and country of international protection:"
+msgstr "Datum en land van internationale bescherming:"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:810
 #: plugins_tools/eid-viewer/gtk/print.c:62
-msgid "Employer's VAT number (1):"
-msgstr "BTW nummers van de werkgever (1):"
+msgid "Employer's VAT/CBE number (1):"
+msgstr "BTW/KBO-nummer van de werkgever (1):"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:844
 #: plugins_tools/eid-viewer/gtk/print.c:63
-msgid "Employer's VAT number (2):"
-msgstr "BTW nummers van de werkgever (2):"
+msgid "Employer's VAT/CBE number (2):"
+msgstr "BTW/KBO-nummer van de werkgever (2):"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:894
 #: plugins_tools/eid-viewer/gtk/print.c:61
-msgid "Work permit mention:"
-msgstr "Werkvergunningsvermelding:"
+msgid "Access to the labour market:"
+msgstr "Toegang tot de arbeidsmarkt:"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:928
 #: plugins_tools/eid-viewer/gtk/print.c:64
@@ -271,7 +271,7 @@ msgstr "Gewestelijk dossiernummer:"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:946
 #: plugins_tools/eid-viewer/gtk/print.c:57
-msgid "Member of family:"
+msgid "Family member:"
 msgstr "Gezinslid:"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:980
@@ -358,7 +358,7 @@ msgid "Trust:"
 msgstr "Betrouwbaarheid:"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1887
-msgid "Always validate Certificate Trust"
+msgid "Always validate certificate trust"
 msgstr "Certificaatbetrouwbaarheid altijd valideren"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1897

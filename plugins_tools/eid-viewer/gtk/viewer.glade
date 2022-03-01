@@ -177,7 +177,7 @@
                         <property name="use-action-appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="label" translatable="yes">Frequently asked questions...</property>
+                        <property name="label" translatable="yes">Frequently Asked Questions...</property>
                         <property name="use-underline">True</property>
                       </object>
                     </child>
@@ -789,7 +789,7 @@
                           <object class="GtkLabel" id="title_date_and_country_of_protection">
                             <property name="can-focus">False</property>
                             <property name="halign">start</property>
-                            <property name="label" translatable="yes">Date and country of protection:</property>
+                            <property name="label" translatable="yes">Date and country of international protection:</property>
                             <accessibility>
                               <relation type="label-for" target="date_and_country_of_protection"/>
                             </accessibility>
@@ -807,7 +807,7 @@
                           <object class="GtkLabel" id="title_employer_vat_1">
                             <property name="can-focus">False</property>
                             <property name="halign">start</property>
-                            <property name="label" translatable="yes">Employer's VAT number (1):</property>
+                            <property name="label" translatable="yes">Employer's VAT/CBE number (1):</property>
                             <accessibility>
                               <relation type="label-for" target="employer_vat_1"/>
                             </accessibility>
@@ -841,7 +841,7 @@
                           <object class="GtkLabel" id="title_employer_vat_2">
                             <property name="can-focus">False</property>
                             <property name="halign">start</property>
-                            <property name="label" translatable="yes">Employer's VAT number (2):</property>
+                            <property name="label" translatable="yes">Employer's VAT/CBE number (2):</property>
                             <accessibility>
                               <relation type="label-for" target="employer_vat_2"/>
                             </accessibility>
@@ -891,7 +891,7 @@
                           <object class="GtkLabel" id="title_work_permit_mention">
                             <property name="can-focus">False</property>
                             <property name="halign">start</property>
-                            <property name="label" translatable="yes">Work permit mention:</property>
+                            <property name="label" translatable="yes">Access to the labour market:</property>
                             <accessibility>
                               <relation type="label-for" target="work_permit_mention"/>
                             </accessibility>
@@ -943,7 +943,7 @@
                           <object class="GtkLabel" id="title_member_of_family">
                             <property name="can-focus">False</property>
                             <property name="halign">start</property>
-                            <property name="label" translatable="yes">Member of family:</property>
+                            <property name="label" translatable="yes">Family member:</property>
                             <accessibility>
                               <relation type="label-for" target="member_of_family"/>
                             </accessibility>
@@ -1884,7 +1884,7 @@
                         </child>
                         <child>
                           <object class="GtkCheckButton" id="validate_always">
-                            <property name="label" translatable="yes">Always validate Certificate Trust</property>
+                            <property name="label" translatable="yes">Always validate certificate trust</property>
                             <property name="use-action-appearance">False</property>
                             <property name="visible">True</property>
                             <property name="sensitive">False</property>
@@ -2250,7 +2250,7 @@
                     <property name="orientation">vertical</property>
                     <child>
                       <object class="GtkRadioButton" id="language_de">
-                        <property name="label" translatable="yes">Deutsch</property>
+                        <property name="label">Deutsch</property>
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                         <property name="receives-default">False</property>
@@ -2265,7 +2265,7 @@
                     </child>
                     <child>
                       <object class="GtkRadioButton" id="language_en">
-                        <property name="label" translatable="yes">English</property>
+                        <property name="label">English</property>
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                         <property name="receives-default">False</property>
@@ -2281,7 +2281,7 @@
                     </child>
                     <child>
                       <object class="GtkRadioButton" id="language_fr">
-                        <property name="label" translatable="yes">Français</property>
+                        <property name="label">Français</property>
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                         <property name="receives-default">False</property>
@@ -2296,7 +2296,7 @@
                     </child>
                     <child>
                       <object class="GtkRadioButton" id="language_nl">
-                        <property name="label" translatable="yes">Nederlands</property>
+                        <property name="label">Nederlands</property>
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                         <property name="receives-default">False</property>

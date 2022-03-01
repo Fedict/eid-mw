@@ -54,13 +54,13 @@ static struct field {
 };
 
 static struct field foreignerfields[] = {
-	{ 5, N_("Member of family:"), "member_of_family", NULL },
+	{ 5, N_("Family member:"), "member_of_family", NULL },
 	{ 5, N_("Organization:"), "special_organization", NULL },
 	{ 5, N_("Duplicata:"), "duplicata", NULL },
-	{ 5, N_("Date and country of protection:"), "date_and_country_of_protection", NULL },
-	{ 5, N_("Work permit mention:"), "work_permit_type", NULL },
-	{ 5, N_("Employer's VAT number (1):"), "employer_vat_1", NULL },
-	{ 5, N_("Employer's VAT number (2):"), "employer_vat_2", NULL },
+	{ 5, N_("Date and country of international protection:"), "date_and_country_of_protection", NULL },
+	{ 5, N_("Access to the labour market:"), "work_permit_type", NULL },
+	{ 5, N_("Employer's VAT/CBE number (1):"), "employer_vat_1", NULL },
+	{ 5, N_("Employer's VAT/CBE number (2):"), "employer_vat_2", NULL },
 	{ 5, N_("Regional file number:"), "regional_file_number", NULL },
 	{ 5, N_("Brexit mentions:"), "brexit_mention_1", "brexit_mention_2" },
 };

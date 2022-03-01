@@ -16,9 +16,6 @@
 /* Class = "NSSegmentedCell"; 1fk-Wt-tsG.ibShadowedLabels[1] = "Change PIN"; ObjectID = "1fk-Wt-tsG"; */
 "1fk-Wt-tsG.ibShadowedLabels[1]" = "Pincode wijzigen";
 
-/* Class = "NSWindow"; title = "Window"; ObjectID = "1TP-On-3Kg"; */
-"1TP-On-3Kg.title" = "Window";
-
 /* Class = "NSMenuItem"; title = "eID Viewer"; ObjectID = "1Xt-HY-uBw"; */
 "1Xt-HY-uBw.title" = "eID Viewer";
 
@@ -112,9 +109,6 @@
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "8S8-X4-vs2"; */
 "8S8-X4-vs2.placeholderString" = "-";
 
-/* Class = "NSMenuItem"; title = "Français"; ObjectID = "8Xd-Uv-Ytb"; */
-"8Xd-Uv-Ytb.title" = "Français";
-
 /* Class = "NSTextFieldCell"; title = "Given names:"; ObjectID = "9mr-Oa-QVJ"; */
 "9mr-Oa-QVJ.title" = "Voornamen:";
 
@@ -142,9 +136,6 @@
 /* Class = "NSTextFieldCell"; title = "Postal code:"; ObjectID = "87M-eA-geU"; */
 "87M-eA-geU.title" = "Postcode:";
 
-/* Class = "NSMenuItem"; title = "Reader selection"; ObjectID = "997-Qu-fV1"; */
-"997-Qu-fV1.title" = "Kaartlezerselectie";
-
 /* Class = "NSMenuItem"; title = "Warning"; ObjectID = "a4x-Kn-S3D"; */
 "a4x-Kn-S3D.title" = "Waarschuwing";
 
@@ -154,7 +145,7 @@
 /* Class = "NSTextFieldCell"; title = "Sex:"; ObjectID = "aEO-AU-Lj7"; */
 "aEO-AU-Lj7.title" = "Geslacht:";
 
-/* Class = "NSTextFieldCell"; title = "Work permit mention:"; ObjectID = "ajG-qo-rNj"; */
+/* Class = "NSTextFieldCell"; title = "Access to the labour market:"; ObjectID = "ajG-qo-rNj"; */
 "ajG-qo-rNj.title" = "Work permit mention:";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "Al9-Qa-Q3f"; */
@@ -181,13 +172,13 @@
 /* Class = "NSMenu"; title = "Main Menu"; ObjectID = "AYu-sK-qS6"; */
 "AYu-sK-qS6.title" = "Hoofdmenu";
 
-/* Class = "NSTextFieldCell"; title = "Employer's VAT number (2):"; ObjectID = "Azr-wO-2T2"; */
+/* Class = "NSTextFieldCell"; title = "Employer's VAT/CBE number (2):"; ObjectID = "Azr-wO-2T2"; */
 "Azr-wO-2T2.title" = "BTW-nummer werkgever (2):";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "b86-cc-Kkl"; */
 "b86-cc-Kkl.placeholderString" = "-";
 
-/* Class = "NSTextFieldCell"; title = "Special organization:"; ObjectID = "bGw-oH-xkv"; */
+/* Class = "NSTextFieldCell"; title = "Special organisation:"; ObjectID = "bGw-oH-xkv"; */
 "bGw-oH-xkv.title" = "Speciale organisatie:";
 
 /* Class = "NSMenu"; title = "File"; ObjectID = "bib-Uj-vzu"; */
@@ -250,9 +241,6 @@
 /* Class = "NSTextFieldCell"; title = "Municipality:"; ObjectID = "EOO-Fg-dHa"; */
 "EOO-Fg-dHa.title" = "Gemeente:";
 
-/* Class = "NSMenuItem"; title = "Language"; ObjectID = "eWg-zO-bzv"; */
-"eWg-zO-bzv.title" = "Taal";
-
 /* Class = "NSMenu"; title = "Help"; ObjectID = "F2S-fz-NVQ"; */
 "F2S-fz-NVQ.title" = "Help";
 
@@ -301,7 +289,7 @@
 /* Class = "NSMenuItem"; title = "Export to PEM file..."; ObjectID = "HVD-VU-hFe"; */
 "HVD-VU-hFe.title" = "Exporteren naar PEM-bestand...";
 
-/* Class = "NSTextFieldCell"; title = "Member of family:"; ObjectID = "Hx8-u0-Ait"; */
+/* Class = "NSTextFieldCell"; title = "Family member:"; ObjectID = "Hx8-u0-Ait"; */
 "Hx8-u0-Ait.title" = "Familielid:";
 
 /* Class = "NSMenu"; title = "Services"; ObjectID = "hz9-B4-Xy5"; */
@@ -328,7 +316,7 @@
 /* Class = "NSTextFieldCell"; title = "Municipality:"; ObjectID = "jRa-UX-QXr"; */
 "jRa-UX-QXr.title" = "Gemeente:";
 
-/* Class = "NSTextFieldCell"; title = "Work permit mention:"; ObjectID = "K60-eO-FbH"; */
+/* Class = "NSTextFieldCell"; title = "Access to the labour market:"; ObjectID = "K60-eO-FbH"; */
 "K60-eO-FbH.title" = "Work permit mentions:";
 
 /* Class = "NSMenuItem"; title = "Show All"; ObjectID = "Kd2-mp-pUS"; */
@@ -351,9 +339,6 @@
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "LaX-z8-D8m"; */
 "LaX-z8-D8m.placeholderString" = "-";
-
-/* Class = "NSMenuItem"; title = "Automatic"; ObjectID = "LcD-R6-Nvz"; */
-"LcD-R6-Nvz.title" = "Automatisch";
 
 /* Class = "NSMenuItem"; title = "Bring All to Front"; ObjectID = "LE2-aR-0XJ"; */
 "LE2-aR-0XJ.title" = "Alles op voorgrond";
@@ -384,9 +369,6 @@
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "Mgi-5v-Mxz"; */
 "Mgi-5v-Mxz.placeholderString" = "-";
-
-/* Class = "NSMenuItem"; title = "Nederlands"; ObjectID = "mrE-xY-icY"; */
-"mrE-xY-icY.title" = "Nederlands";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "nAB-Lm-9UB"; */
 "nAB-Lm-9UB.placeholderString" = "-";
@@ -496,7 +478,7 @@
 /* Class = "NSTextFieldCell"; title = "National number:"; ObjectID = "SDe-Jd-84P"; */
 "SDe-Jd-84P.title" = "Nationaal nummer:";
 
-/* Class = "NSTextFieldCell"; title = "Employer's VAT number (1):"; ObjectID = "SN9-Q7-Q0f"; */
+/* Class = "NSTextFieldCell"; title = "Employer's VAT/CBE number (1):"; ObjectID = "SN9-Q7-Q0f"; */
 "SN9-Q7-Q0f.title" = "BTW-nummer werkgever (1):";
 
 /* Class = "NSMenuItem"; title = "Export to DER file..."; ObjectID = "SuP-ea-w46"; */
@@ -505,7 +487,7 @@
 /* Class = "NSButtonCell"; title = "OK"; ObjectID = "t0l-zZ-q2E"; */
 "t0l-zZ-q2E.title" = "OK";
 
-/* Class = "NSTextFieldCell"; title = "Member of family:"; ObjectID = "T4a-fU-fO5"; */
+/* Class = "NSTextFieldCell"; title = "Family member:"; ObjectID = "T4a-fU-fO5"; */
 "T4a-fU-fO5.title" = "Familielid:";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "T4h-hG-qYW"; */
@@ -520,7 +502,7 @@
 /* Class = "NSMenu"; title = "Window"; ObjectID = "Td7-aD-5lo"; */
 "Td7-aD-5lo.title" = "Venster";
 
-/* Class = "NSTextFieldCell"; title = "Duplicata:"; ObjectID = "tEb-Jd-2a9"; */
+/* Class = "NSTextFieldCell"; title = "Duplicate:"; ObjectID = "tEb-Jd-2a9"; */
 "tEb-Jd-2a9.title" = "Duplicata:";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "tFb-hl-dlr"; */
@@ -529,11 +511,8 @@
 /* Class = "NSTabViewItem"; label = "Card/PIN"; ObjectID = "TI0-e6-w10"; */
 "TI0-e6-w10.label" = "Kaart/PIN";
 
-/* Class = "NSTextFieldCell"; title = "Date and country of protection:"; ObjectID = "tp9-V6-5al"; */
+/* Class = "NSTextFieldCell"; title = "Date and country of international protection:"; ObjectID = "tp9-V6-5al"; */
 "tp9-V6-5al.title" = "Date and country of protection:";
-
-/* Class = "NSMenuItem"; title = "English"; ObjectID = "Tr5-53-x9e"; */
-"Tr5-53-x9e.title" = "English";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "U3F-TE-jCw"; */
 "U3F-TE-jCw.placeholderString" = "-";
@@ -546,9 +525,6 @@
 
 /* Class = "NSMenu"; title = "eID Viewer"; ObjectID = "uQy-DD-JDr"; */
 "uQy-DD-JDr.title" = "eID Viewer";
-
-/* Class = "NSMenu"; title = "Reader selection"; ObjectID = "vdP-FZ-jf2"; */
-"vdP-FZ-jf2.title" = "Kaartlezerselectie";
 
 /* Class = "NSMenuItem"; title = "Hide Others"; ObjectID = "Vdr-fp-XzO"; */
 "Vdr-fp-XzO.title" = "Verberg andere";
@@ -565,14 +541,11 @@
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "VYw-86-rmN"; */
 "VYw-86-rmN.placeholderString" = "-";
 
-/* Class = "NSTextFieldCell"; title = "Employer's VAT number (2):"; ObjectID = "w0g-nT-jPb"; */
+/* Class = "NSTextFieldCell"; title = "Employer's VAT/CBE number (2):"; ObjectID = "w0g-nT-jPb"; */
 "w0g-nT-jPb.title" = "BTW-nummer werkgever (2):";
 
 /* Class = "NSTextFieldCell"; placeholderString = "IDENTITY CARD"; ObjectID = "w0u-t2-2FS"; */
 "w0u-t2-2FS.placeholderString" = "IDENTITEITSKAART";
-
-/* Class = "NSMenuItem"; title = "Deutsch"; ObjectID = "WdA-BK-ihJ"; */
-"WdA-BK-ihJ.title" = "Deutsch";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "wk0-KT-q0Z"; */
 "wk0-KT-q0Z.placeholderString" = "-";
@@ -583,7 +556,7 @@
 /* Class = "NSMenuItem"; title = "Help"; ObjectID = "wpr-3q-Mcd"; */
 "wpr-3q-Mcd.title" = "Help";
 
-/* Class = "NSTextFieldCell"; title = "Special organization:"; ObjectID = "X2q-8l-Xkh"; */
+/* Class = "NSTextFieldCell"; title = "Special organisation:"; ObjectID = "X2q-8l-Xkh"; */
 "X2q-8l-Xkh.title" = "Speciale organisatie:";
 
 /* Class = "NSTextFieldCell"; title = "Regional file number:"; ObjectID = "x6k-fu-9D1"; */
@@ -595,7 +568,7 @@
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "XDJ-NF-Xf1"; */
 "XDJ-NF-Xf1.placeholderString" = "-";
 
-/* Class = "NSTextFieldCell"; title = "Date and country of protection:"; ObjectID = "xep-Ek-qId"; */
+/* Class = "NSTextFieldCell"; title = "Date and country of international protection:"; ObjectID = "xep-Ek-qId"; */
 "xep-Ek-qId.title" = "Date and country of protection:";
 
 /* Class = "NSTextFieldCell"; title = "Municipality:"; ObjectID = "xFl-cP-2Ol"; */
@@ -622,13 +595,10 @@
 /* Class = "NSTextFieldCell"; placeholderString = "IDENTITY CARD"; ObjectID = "zA0-fy-z1e"; */
 "zA0-fy-z1e.placeholderString" = "IDENTITEITSKAART";
 
-/* Class = "NSMenu"; title = "Language"; ObjectID = "ZEA-Hq-gUH"; */
-"ZEA-Hq-gUH.title" = "Taal";
-
-/* Class = "NSTextFieldCell"; title = "Duplicata:"; ObjectID = "Zhh-U8-meA"; */
+/* Class = "NSTextFieldCell"; title = "Duplicate:"; ObjectID = "Zhh-U8-meA"; */
 "Zhh-U8-meA.title" = "Duplicata:";
 
-/* Class = "NSTextFieldCell"; title = "Employer's VAT number (1):"; ObjectID = "zjQ-1l-gDp"; */
+/* Class = "NSTextFieldCell"; title = "Employer's VAT/CBE number (1):"; ObjectID = "zjQ-1l-gDp"; */
 "zjQ-1l-gDp.title" = "BTW-nummer werkgever (1):";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "zmd-lf-VkW"; */
