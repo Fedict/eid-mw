@@ -101,6 +101,8 @@ BOOL StoreUserCerts (PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits, BY
 	unsigned long		 dwPropId			= CERT_KEY_PROV_INFO_PROP_ID; 
 	unsigned long	ulID			= 0;
 	int i;
+	CRYPT_ALGORITHM_IDENTIFIER algIdentifier;
+	BOOL isECDsa = 0;
 
 	//First parameter is not used and should be set to NULL.
 	HCERTSTORE		hMyStore		= CertOpenSystemStore((HCRYPTPROV)NULL, "MY");
@@ -158,6 +160,25 @@ BOOL StoreUserCerts (PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits, BY
 			return TRUE;
 		}
 
+		//Check signature algoritm (RSA or ECDSA)
+		algIdentifier = pCertContext->pCertInfo->SignatureAlgorithm;
+
+		char objOid[256];
+		if (sprintf_s(objOid, 256, "%s", algIdentifier.pszObjId) != -1)
+		{
+			if (strcmp(objOid, "1.2.840.10045.4.3") == 0 || strcmp(objOid, "1.2.840.10045.4.1") == 0 || //szOID_ECDSA_SPECIFIED of szOID_ECDSA_SHA1
+				strcmp(objOid, "1.2.840.10045.4.3.2") == 0 || strcmp(objOid, "1.2.840.10045.4.3.3") == 0 || //szOID_ECDSA_SHA256 of szOID_ECDSA_SHA384
+				strcmp(objOid, "1.2.840.10045.4.3.4") == 0) //szOID_ECDSA_SHA512
+			{
+				isECDsa = 1;
+			}
+		}
+		else
+		{
+			//could not identify signature algoritm
+			return FALSE;
+		}
+
 		// ----------------------------------------------------
 		// Initialize the CRYPT_KEY_PROV_INFO data structure.
 		// Note: pwszContainerName and pwszProvName can be set to NULL 
@@ -188,24 +209,39 @@ BOOL StoreUserCerts (PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits, BY
 				{
 					swprintf(containerName,(2*dwserialNumberLen+4),L"DS_%S", cardSerialNumber);
 				}
-				pCryptKeyProvInfo->pwszProvName			= L"Microsoft Base Smart Card Crypto Provider";
-				pCryptKeyProvInfo->dwKeySpec			= AT_SIGNATURE;
+				if(isECDsa)
+				{
+					pCryptKeyProvInfo->pwszProvName = L"Microsoft Key Protection Provider";
+				}
+				else
+				{
+					pCryptKeyProvInfo->pwszProvName = L"Microsoft Base Smart Card Crypto Provider";
+				}
+
+				pCryptKeyProvInfo->dwKeySpec = AT_SIGNATURE;
 			}
 			else
 			{
 				if (KeyUsageBits & CERT_NON_REPUDIATION_KEY_USAGE)
 				{
-					swprintf(containerName,(2*dwserialNumberLen+12), L"Signature(%S)", cardSerialNumber);
+					swprintf(containerName, (2 * dwserialNumberLen + 12), L"Signature(%S)", cardSerialNumber);
 				}
 				else
 				{
-					swprintf(containerName,(2*dwserialNumberLen+17),L"Authentication(%S)", cardSerialNumber);
+					swprintf(containerName, (2 * dwserialNumberLen + 17), L"Authentication(%S)", cardSerialNumber);
 				}
-				pCryptKeyProvInfo->pwszProvName		= L"Belgium Identity Card CSP";
-				pCryptKeyProvInfo->dwKeySpec		= AT_KEYEXCHANGE;
+				pCryptKeyProvInfo->pwszProvName = L"Belgium Identity Card CSP";
+				pCryptKeyProvInfo->dwKeySpec = AT_KEYEXCHANGE;
 			}
-			pCryptKeyProvInfo->pwszContainerName	= containerName;
-			pCryptKeyProvInfo->dwProvType			= PROV_RSA_FULL;
+			pCryptKeyProvInfo->pwszContainerName = containerName;
+			if (isECDsa)
+			{
+				pCryptKeyProvInfo->dwProvType = 0;
+			}
+			else
+			{
+				pCryptKeyProvInfo->dwProvType = PROV_RSA_FULL;
+			}
 			pCryptKeyProvInfo->dwFlags				= 0;
 			pCryptKeyProvInfo->cProvParam			= 0;
 			pCryptKeyProvInfo->rgProvParam			= NULL;
