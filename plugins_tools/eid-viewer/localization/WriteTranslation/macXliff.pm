@@ -1,14 +1,15 @@
 package WriteTranslation::macXliff;
 
-use feature "signatures";
-
+use v5.30;
+use utf8;
 use warnings;
-use strict;
+use open qw(:std :utf8);
+no feature "indirect";
+use feature "signatures";
+no warnings "experimental::signatures";
 
 use File::Basename;
 use XML::Twig;
-
-no warnings "experimental::signatures";
 
 my $trans;
 my $lang;
@@ -38,6 +39,7 @@ sub perform($translations, $directory) {
 				"trans-unit" => \&update_translation
 			},
 			twig_print_outside_roots => 1,
+			output_encoding => "utf-8"
 		)->parsefile_inplace($file);
 
 	}
