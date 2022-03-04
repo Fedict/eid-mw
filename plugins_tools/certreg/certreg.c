@@ -184,6 +184,7 @@ BOOL StoreUserCerts (PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits, BY
 		// Note: pwszContainerName and pwszProvName can be set to NULL 
 		// to use the default container and provider.
 		// ----------------------------------------------------
+		//memset(&cryptKeyProvInfo,0,sizeof(CRYPT_KEY_PROV_INFO));
 		pCryptKeyProvInfo	= &cryptKeyProvInfo;
 
 		// ----------------------------------------------------
@@ -211,14 +212,15 @@ BOOL StoreUserCerts (PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits, BY
 				}
 				if(isECDsa)
 				{
-					pCryptKeyProvInfo->pwszProvName = L"Microsoft Key Protection Provider";
+					pCryptKeyProvInfo->pwszProvName = MS_SMART_CARD_KEY_STORAGE_PROVIDER;
+					// Special dwKeySpec indicating a CNG NCRYPT_KEY_HANDLE instead of a CAPI1 HCRYPTPROV
+					pCryptKeyProvInfo->dwKeySpec = 0;// CERT_NCRYPT_KEY_SPEC;
 				}
 				else
 				{
 					pCryptKeyProvInfo->pwszProvName = L"Microsoft Base Smart Card Crypto Provider";
+					pCryptKeyProvInfo->dwKeySpec = AT_SIGNATURE;
 				}
-
-				pCryptKeyProvInfo->dwKeySpec = AT_SIGNATURE;
 			}
 			else
 			{
