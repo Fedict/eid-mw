@@ -1,10 +1,11 @@
 package WriteTranslation::ResourceXML;
 
-use feature "signatures";
-
+use v5.30;
+use utf8;
 use warnings;
-use strict;
-
+use open qw(:std :utf8);
+no feature "indirect";
+use feature "signatures";
 no warnings "experimental::signatures";
 
 use XML::Twig;
