@@ -14,13 +14,13 @@
 "1fk-Wt-tsG.ibShadowedLabels[0]" = "PIN-Code uberprufen";
 
 /* Class = "NSSegmentedCell"; 1fk-Wt-tsG.ibShadowedLabels[1] = "Change PIN"; ObjectID = "1fk-Wt-tsG"; */
-"1fk-Wt-tsG.ibShadowedLabels[1]" = "PIN-Code ändern";
+"1fk-Wt-tsG.ibShadowedLabels[1]" = "PIN ändern";
 
 /* Class = "NSMenuItem"; title = "eID Viewer"; ObjectID = "1Xt-HY-uBw"; */
 "1Xt-HY-uBw.title" = "eID Viewer";
 
 /* Class = "NSTextFieldCell"; title = "Chip number:"; ObjectID = "2gP-Hs-M1w"; */
-"2gP-Hs-M1w.title" = "Chip-Nummer:";
+"2gP-Hs-M1w.title" = "Chipnummer:";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "2II-ef-jvH"; */
 "2II-ef-jvH.placeholderString" = "-";
@@ -128,7 +128,7 @@
 "55i-L2-Jzx.label" = "Identität";
 
 /* Class = "NSTextFieldCell"; title = "Mentions:"; ObjectID = "70V-by-eGj"; */
-"70V-by-eGj.title" = "Erwähnungen";
+"70V-by-eGj.title" = "Erwähnungen:";
 
 /* Class = "NSTextFieldCell"; title = "Regional file number:"; ObjectID = "73B-Ec-86Y"; */
 "73B-Ec-86Y.title" = "Regionale Aktennummer:";
@@ -299,7 +299,7 @@
 "HVD-VU-hFe.title" = "Exportieren zu PEM Datei...";
 
 /* Class = "NSTextFieldCell"; title = "Family member:"; ObjectID = "Hx8-u0-Ait"; */
-"Hx8-u0-Ait.title" = "Familienangehöriger";
+"Hx8-u0-Ait.title" = "Familienangehöriger:";
 
 /* Class = "NSMenu"; title = "Services"; ObjectID = "hz9-B4-Xy5"; */
 "hz9-B4-Xy5.title" = "Services";
@@ -332,7 +332,7 @@
 "K60-eO-FbH.title" = "Zugang zum Arbeitsmarkt:";
 
 /* Class = "NSTextFieldCell"; title = "Mentions:"; ObjectID = "Kct-vf-Or3"; */
-"Kct-vf-Or3.title" = "Erwähnungen";
+"Kct-vf-Or3.title" = "Erwähnungen:";
 
 /* Class = "NSMenuItem"; title = "Show All"; ObjectID = "Kd2-mp-pUS"; */
 "Kd2-mp-pUS.title" = "Show All";
@@ -368,7 +368,7 @@
 "LJh-Dh-dMy.placeholderString" = "-";
 
 /* Class = "NSTextFieldCell"; title = "Chip number:"; ObjectID = "Lnq-zk-ckh"; */
-"Lnq-zk-ckh.title" = "Chip-Nummer:";
+"Lnq-zk-ckh.title" = "Chipnummer:";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "lU7-R3-db7"; */
 "lU7-R3-db7.placeholderString" = "-";
@@ -383,7 +383,7 @@
 "m9D-6v-f5l.title" = "Staatsangehörigkeit:";
 
 /* Class = "NSWindow"; title = "Preferences"; ObjectID = "m50-Wq-uYx"; */
-"m50-Wq-uYx.title" = "Einstellungen…";
+"m50-Wq-uYx.title" = "Einstellungen";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "Mgi-5v-Mxz"; */
 "Mgi-5v-Mxz.placeholderString" = "-";
@@ -408,6 +408,9 @@
 
 /* Class = "NSTabViewItem"; label = "Certificates"; ObjectID = "Oa8-8H-QZl"; */
 "Oa8-8H-QZl.label" = "Zertifikate";
+
+/* Class = "NSMenuItem"; title = "Automatic"; ObjectID = "oEH-q1-Txn"; */
+"oEH-q1-Txn.title" = "Automatisch";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "OIe-oa-EIA"; */
 "OIe-oa-EIA.placeholderString" = "-";
@@ -440,7 +443,7 @@
 "qf1-PD-Jx7.title" = "Zertifikat";
 
 /* Class = "NSTextFieldCell"; title = "Valid from:"; ObjectID = "qgY-bn-TbG"; */
-"qgY-bn-TbG.title" = "Gültig von:";
+"qgY-bn-TbG.title" = "Gültig ab:";
 
 /* Class = "NSMenuItem"; title = "Page Setup…"; ObjectID = "qIS-W8-SiK"; */
 "qIS-W8-SiK.title" = "Page Setup…";
@@ -503,10 +506,10 @@
 "SuP-ea-w46.title" = "Exportieren zu DER Datei...";
 
 /* Class = "NSButtonCell"; title = "OK"; ObjectID = "t0l-zZ-q2E"; */
-"t0l-zZ-q2E.title" = "OK";
+"t0l-zZ-q2E.title" = "";
 
 /* Class = "NSTextFieldCell"; title = "Family member:"; ObjectID = "T4a-fU-fO5"; */
-"T4a-fU-fO5.title" = "Familienangehöriger";
+"T4a-fU-fO5.title" = "Familienangehöriger:";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "T4h-hG-qYW"; */
 "T4h-hG-qYW.placeholderString" = "-";
