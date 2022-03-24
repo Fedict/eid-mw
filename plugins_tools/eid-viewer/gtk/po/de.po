@@ -356,7 +356,7 @@ msgstr "Vertrauen:"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1887
 msgid "Always validate certificate trust"
-msgstr "Vertrauenszertifikate immer validieren"
+msgstr "Zuverlässigkeit der Zertifikate stets validierent"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1897
 msgid ""

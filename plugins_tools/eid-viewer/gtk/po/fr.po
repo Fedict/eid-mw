@@ -247,12 +247,12 @@ msgstr "Date et pays de protection internationale:"
 #: plugins_tools/eid-viewer/gtk/viewer.glade:810
 #: plugins_tools/eid-viewer/gtk/print.c:62
 msgid "Employer's VAT/CBE number (1):"
-msgstr "Numéro TVA/BCE de l'employeur (1)"
+msgstr "Numéro TVA/BCE de l'employeur (1):"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:844
 #: plugins_tools/eid-viewer/gtk/print.c:63
 msgid "Employer's VAT/CBE number (2):"
-msgstr "Numéro TVA/BCE de l'employeur (2)"
+msgstr "Numéro TVA/BCE de l'employeur (2):"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:894
 #: plugins_tools/eid-viewer/gtk/print.c:61
