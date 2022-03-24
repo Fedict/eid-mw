@@ -77,9 +77,9 @@ CAPTION "About"
 FONT 8, "System", 0, 0, 0x0
 BEGIN
     ICON            IDI_CERTREG,IDC_MYICON,14,9,20,20
-    LTEXT           "certreg Version 1.0",IDC_STATIC,49,10,119,8,SS_NOPREFIX
+    LTEXT           "certreg Version 2.0",IDC_STATIC,49,10,119,8,SS_NOPREFIX
     LTEXT           "eID Middleware Project",IDC_STATIC,49,20,119,8
-    LTEXT           "Copyright (C) 2010 - 2015 Fedict",IDC_STATIC,49,30,419,8
+    LTEXT           "Copyright (C) 2022 BOSA",IDC_STATIC,49,30,419,8
 	LTEXT           " ",IDC_STATIC,49,40,419,8
 	LTEXT           "This is free software; you can redistribute it and/or modify it",IDC_STATIC,49,50,419,8
 	LTEXT           "under the terms of the GNU Lesser General Public License version",IDC_STATIC,49,60,419,8
