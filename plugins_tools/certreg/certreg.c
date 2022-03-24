@@ -83,7 +83,7 @@ BOOL StoreUserCerts (PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits, BY
 	CRYPT_KEY_PROV_INFO* pCryptKeyProvInfo	= NULL;
 	unsigned long		 dwPropId			= CERT_KEY_PROV_INFO_PROP_ID; 
 	unsigned long	ulID			= 0;
-	int i;
+	unsigned int i;
 	CRYPT_ALGORITHM_IDENTIFIER algIdentifier;
 	BOOL isECDsa = 0;
 

@@ -347,7 +347,7 @@ DWORD retval = 0;
 
 			// Get the menu.
 			if ((	hmenu = GetMenu(hWnd)) == NULL) 
-				return;
+				return 0;
 
 			if( (gAutoFlags & flags) != 0)
 			{
