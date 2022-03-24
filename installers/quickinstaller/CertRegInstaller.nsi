@@ -25,10 +25,10 @@
   VIProductVersion "${EIDMW_VERSION}"
   VIAddVersionKey "FileVersion" "${EIDMW_VERSION}"
   ;NSIS complains that Fileversion was not set for English, though it should have been done by the line above
-VIAddVersionKey /LANG=${LANG_ENGLISH} "FileVersion" "${EIDMW_VERSION}"
+;VIAddVersionKey /LANG=${LANG_ENGLISH} "FileVersion" "${EIDMW_VERSION}"
 VIAddVersionKey "CompanyName" "Belgian Government"
-VIAddVersionKey "LegalCopyright" "Copyright (C) 2015"
-VIAddVersionKey "FileDescription" "Belgium eID MiddleWare"
+VIAddVersionKey "LegalCopyright" "Copyright (C) ${EIDMW_YEAR}"
+VIAddVersionKey "FileDescription" "Belgium eID CertRegTool"
 
  
   ;Default installation folder
@@ -41,7 +41,7 @@ VIAddVersionKey "FileDescription" "Belgium eID MiddleWare"
 	;TargetMinimalOS 5.0
 	;installer will run on Win2000 and newer
   
-  ;XPStyle on
+  XPStyle on
 	WindowIcon on
 	Icon Setup.ico
 	caption "${INSTALLER_NAME} ${EIDMW_VERSION_SHORT}"
