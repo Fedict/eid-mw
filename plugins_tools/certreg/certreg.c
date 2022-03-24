@@ -22,23 +22,6 @@
 #include <stdio.h>
 #include "certreg.h"
 
-//**************************************************
-// Use Minidriver if OS is Vista or later
-//**************************************************
-BOOL UseMinidriver( void )
-{
-	OSVERSIONINFO osvi;
-	BOOL bIsWindowsVistaorLater;
-
-	ZeroMemory(&osvi, sizeof(OSVERSIONINFO));
-	osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
-
-	GetVersionEx(&osvi);
-
-	bIsWindowsVistaorLater = (osvi.dwMajorVersion >= 6);
-
-	return bIsWindowsVistaorLater;
-}
 
 BOOL ImportCertificate(BYTE* pbserialNumber,DWORD serialNumberLen,
 												BYTE* pbcertificateData,DWORD dwcertificateDataLen,
@@ -200,40 +183,24 @@ BOOL StoreUserCerts (PCCERT_CONTEXT pCertContext, unsigned char KeyUsageBits, BY
 
 		if( (cardSerialNumber != NULL) && (containerName != NULL) )
 		{
-			if (UseMinidriver())
+			if (KeyUsageBits & CERT_NON_REPUDIATION_KEY_USAGE)
 			{
-				if (KeyUsageBits & CERT_NON_REPUDIATION_KEY_USAGE)
-				{
-					swprintf(containerName,(2*dwserialNumberLen+4), L"NR_%S", cardSerialNumber);
-				}
-				else
-				{
-					swprintf(containerName,(2*dwserialNumberLen+4),L"DS_%S", cardSerialNumber);
-				}
-				if(isECDsa)
-				{
-					pCryptKeyProvInfo->pwszProvName = MS_SMART_CARD_KEY_STORAGE_PROVIDER;
-					// Special dwKeySpec indicating a CNG NCRYPT_KEY_HANDLE instead of a CAPI1 HCRYPTPROV
-					pCryptKeyProvInfo->dwKeySpec = 0;// CERT_NCRYPT_KEY_SPEC;
-				}
-				else
-				{
-					pCryptKeyProvInfo->pwszProvName = L"Microsoft Base Smart Card Crypto Provider";
-					pCryptKeyProvInfo->dwKeySpec = AT_SIGNATURE;
-				}
+				swprintf(containerName, (2 * dwserialNumberLen + 4), L"NR_%S", cardSerialNumber);
 			}
 			else
 			{
-				if (KeyUsageBits & CERT_NON_REPUDIATION_KEY_USAGE)
-				{
-					swprintf(containerName, (2 * dwserialNumberLen + 12), L"Signature(%S)", cardSerialNumber);
-				}
-				else
-				{
-					swprintf(containerName, (2 * dwserialNumberLen + 17), L"Authentication(%S)", cardSerialNumber);
-				}
-				pCryptKeyProvInfo->pwszProvName = L"Belgium Identity Card CSP";
-				pCryptKeyProvInfo->dwKeySpec = AT_KEYEXCHANGE;
+				swprintf(containerName, (2 * dwserialNumberLen + 4), L"DS_%S", cardSerialNumber);
+			}
+			if (isECDsa)
+			{
+				pCryptKeyProvInfo->pwszProvName = MS_SMART_CARD_KEY_STORAGE_PROVIDER;
+				// Special dwKeySpec indicating a CNG NCRYPT_KEY_HANDLE instead of a CAPI1 HCRYPTPROV
+				pCryptKeyProvInfo->dwKeySpec = 0;// CERT_NCRYPT_KEY_SPEC;
+			}
+			else
+			{
+				pCryptKeyProvInfo->pwszProvName = L"Microsoft Base Smart Card Crypto Provider";
+				pCryptKeyProvInfo->dwKeySpec = AT_SIGNATURE;
 			}
 			pCryptKeyProvInfo->pwszContainerName = containerName;
 			if (isECDsa)
@@ -397,9 +364,6 @@ BOOL ProviderNameCorrect (PCCERT_CONTEXT pCertContext )
 	unsigned long dwPropId= CERT_KEY_PROV_INFO_PROP_ID; 
 	DWORD cbData = 0;
 	CRYPT_KEY_PROV_INFO * pCryptKeyProvInfo;
-
-	if (!UseMinidriver())
-		return TRUE;
 
 	if(!(CertGetCertificateContextProperty(
 		pCertContext,		// A pointer to the certificate where the property will be set.
