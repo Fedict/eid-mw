@@ -149,7 +149,7 @@
 "aEO-AU-Lj7.title" = "Geslacht:";
 
 /* Class = "NSTextFieldCell"; title = "Access to the labour market:"; ObjectID = "ajG-qo-rNj"; */
-"ajG-qo-rNj.title" = "Work permit mention:";
+"ajG-qo-rNj.title" = "Toegang tot de arbeidsmarkt:";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "Al9-Qa-Q3f"; */
 "Al9-Qa-Q3f.placeholderString" = "-";
@@ -323,7 +323,7 @@
 "jRa-UX-QXr.title" = "Gemeente:";
 
 /* Class = "NSTextFieldCell"; title = "Access to the labour market:"; ObjectID = "K60-eO-FbH"; */
-"K60-eO-FbH.title" = "Work permit mentions:";
+"K60-eO-FbH.title" = "Toegang tot de arbeidsmarkt:";
 
 /* Class = "NSTextFieldCell"; title = "Mentions:"; ObjectID = "Kct-vf-Or3"; */
 "Kct-vf-Or3.title" = "Vermeldingen:";
