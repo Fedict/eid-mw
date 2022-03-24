@@ -35,7 +35,7 @@ copy %~dp0..\..\plugins_tools\certreg\Release\certreg.exe %~dp0
 :: sign the nsis installer
 :: =======================
 @echo [INFO] sign nsis installer
-%SIGNTOOL_PATH%\SignTool.exe sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "e20634d42e8bc522c6341dce24badd103f5f4312" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\installers\quickinstaller\certRegInstaller %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe"
+"%SIGNTOOL_PATH%\SignTool.exe" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "e20634d42e8bc522c6341dce24badd103f5f4312" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\installers\quickinstaller\certRegInstaller %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe"
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
 @echo [INFO] copy nsis installer
 copy "%~dp0..\..\installers\quickinstaller\certRegInstaller %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe" %~dp0
