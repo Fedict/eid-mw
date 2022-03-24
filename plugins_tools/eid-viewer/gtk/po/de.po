@@ -356,7 +356,7 @@ msgstr "Vertrauen:"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1887
 msgid "Always validate certificate trust"
-msgstr "Zuverlässigkeit der Zertifikate stets validieren"
+msgstr "Zuverlässigkeit der Zertifikate immer validieren"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1897
 msgid ""
@@ -402,15 +402,15 @@ msgstr "Logbuch anzeigen"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:2192
 msgid "Check for update at startup"
-msgstr ""
+msgstr "Beim Starten auf Updates prüfen"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:2206
 msgid "Check for update now"
-msgstr ""
+msgstr "Jetzt nach Updates suchen"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:2225
 msgid "Update checks"
-msgstr ""
+msgstr "Updateprüfungen"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:2321
 msgid "Language"
@@ -422,7 +422,7 @@ msgstr "Automatisch"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:2370
 msgid "Reader selection"
-msgstr "Kartenleserauswahl"
+msgstr "Leserauswahl"
 
 #: plugins_tools/eid-viewer/gtk/print.c:69
 msgid "Printed:"

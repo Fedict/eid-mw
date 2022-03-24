@@ -40,6 +40,9 @@
 /* Class = "NSTextFieldCell"; title = "Card number:"; ObjectID = "3ta-Y3-CdH"; */
 "3ta-Y3-CdH.title" = "Numéro de carte:";
 
+/* Class = "NSTextFieldCell"; title = "Card reader:"; ObjectID = "4pJ-t0-UVc"; */
+"4pJ-t0-UVc.title" = "Lecteur de carte:";
+
 /* Class = "NSMenuItem"; title = "Quit eID Viewer"; ObjectID = "4sb-4s-VLi"; */
 "4sb-4s-VLi.title" = "Quitter eID Viewer";
 
@@ -406,6 +409,9 @@
 /* Class = "NSTextFieldCell"; title = "Place of birth:"; ObjectID = "rcT-1p-AbV"; */
 "rcT-1p-AbV.title" = "Lieu de naissance:";
 
+/* Class = "NSButtonCell"; title = "Check for update at startup"; ObjectID = "rep-Xn-RSw"; */
+"rep-Xn-RSw.title" = "Rechercher des mises à jour au démarrage";
+
 /* Class = "NSMenuItem"; title = "eID Card Test Site..."; ObjectID = "Rev-Bw-YHE"; */
 "Rev-Bw-YHE.title" = "Site de test eID...";
 
@@ -465,6 +471,9 @@
 
 /* Class = "NSMenuItem"; title = "Hide Others"; ObjectID = "Vdr-fp-XzO"; */
 "Vdr-fp-XzO.title" = "Hide Others";
+
+/* Class = "NSButtonCell"; title = "Check for update now"; ObjectID = "vg5-NN-UiA"; */
+"vg5-NN-UiA.title" = "Rechercher des mises à jour maintenant";
 
 /* Class = "NSTextFieldCell"; title = "Printed by:"; ObjectID = "VKD-4B-ltv"; */
 "VKD-4B-ltv.title" = "Imprimé par:";

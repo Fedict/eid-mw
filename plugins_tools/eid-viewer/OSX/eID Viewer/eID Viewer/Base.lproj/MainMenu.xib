@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -2810,8 +2810,8 @@ DQ
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="k7N-lC-wSM">
-                        <rect key="frame" x="18" y="98" width="224" height="18"/>
-                        <buttonCell key="cell" type="check" title="Check version at startup" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="rep-Xn-RSw">
+                        <rect key="frame" x="18" y="98" width="206" height="18"/>
+                        <buttonCell key="cell" type="check" title="Check for update at startup" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="rep-Xn-RSw">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -2820,8 +2820,8 @@ DQ
                         </connections>
                     </button>
                     <button horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iiZ-uB-eQK">
-                        <rect key="frame" x="243" y="90" width="150" height="32"/>
-                        <buttonCell key="cell" type="push" title="Check version now" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="vg5-NN-UiA">
+                        <rect key="frame" x="225" y="90" width="168" height="32"/>
+                        <buttonCell key="cell" type="push" title="Check for update now" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="vg5-NN-UiA">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -2846,8 +2846,8 @@ DQ
                             <font key="font" metaFont="system"/>
                             <segments>
                                 <segment label="Deutsch"/>
-                                <segment label="Français" selected="YES" tag="1"/>
-                                <segment label="English"/>
+                                <segment label="Français" tag="1"/>
+                                <segment label="English" selected="YES"/>
                                 <segment label="Nederlands"/>
                             </segments>
                             <connections>

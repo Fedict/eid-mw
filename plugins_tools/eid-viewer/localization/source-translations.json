@@ -40,7 +40,7 @@
       "nl" : "Alle bestanden"
    },
    "Always validate certificate trust" : {
-      "de" : "Zuverlässigkeit der Zertifikate stets validieren",
+      "de" : "Zuverlässigkeit der Zertifikate immer validieren",
       "fr" : "Toujours valider la fiabilité des certificats",
       "nl" : "Certificaatbetrouwbaarheid altijd valideren"
    },
@@ -80,7 +80,9 @@
       "nl" : "Kaartnummer:"
    },
    "Card reader:" : {
-      "de" : "Kartenleser:"
+      "de" : "Kartenleser:",
+      "nl" : "Kaartlezer:",
+      "fr" : "Lecteur de carte:"
    },
    "Card/PIN" : {
       "de" : "Karte/PIN",
@@ -102,15 +104,15 @@
       "fr" : "Changer le code PIN",
       "nl" : "Pincode wijzigen"
    },
-   "Check version at startup" : {
-      "de" : "",
-      "fr" : "",
-      "nl" : "Versiecontrole bij opstarten"
+   "Check for update at startup" : {
+      "de" : "Beim Starten auf Updates prüfen",
+      "fr" : "Rechercher des mises à jour au démarrage",
+      "nl" : "Controleren op updates bij het opstarten"
    },
-   "Check version now" : {
-      "de" : "",
-      "fr" : "",
-      "nl" : "Versie nu controleren"
+   "Check for update now" : {
+      "de" : "Jetzt nach Updates suchen",
+      "fr" : "Rechercher des mises à jour maintenant",
+      "nl" : "Nu controleren op updates"
    },
    "Check version" : {
       "de" : "Version prüfen",
@@ -184,12 +186,12 @@
    },
    "Employer's VAT/CBE number (1):" : {
       "de" : "Mehrwertsteuernummer/ZDU-Nummer des Arbeitgebers (1):",
-      "fr" : "Numéro TVA/BCE de l'employeur (1)",
+      "fr" : "Numéro TVA/BCE de l'employeur (1):",
       "nl" : "BTW/KBO-nummer van de werkgever (1):"
    },
    "Employer's VAT/CBE number (2):" : {
       "de" : "Mehrwertsteuernummer/ZDU-Nummer des Arbeitgebers (2):",
-      "fr" : "Numéro TVA/BCE de l'employeur (2)",
+      "fr" : "Numéro TVA/BCE de l'employeur (2):",
       "nl" : "BTW/KBO-nummer van de werkgever (2):"
    },
    "Error occurred while trying to change PIN code" : {
@@ -483,9 +485,9 @@
       "nl" : "eID Viewer afsluiten"
    },
    "Reader selection" : {
-      "de" : "Kartenleserauswahl",
-      "fr" : "Sélection d'un lecteur de carte",
-      "nl" : "Kaartlezerselectie"
+      "de" : "Leserauswahl",
+      "fr" : "Sélection du lecteur",
+      "nl" : "Selectie van lezer"
    },
    "Reading certificates" : {
       "de" : "Zertifikate werden gelesen",
@@ -588,8 +590,8 @@
       "nl" : "Betrouwbaar."
    },
    "Update checks" : {
-      "de" : "",
-      "fr" : "",
+      "de" : "Updateprüfungen",
+      "fr" : "Contrôles de mise à jour",
       "nl" : "Updatecontroles"
    },
    "Usage:" : {

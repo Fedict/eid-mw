@@ -1,14 +1,12 @@
 #!/usr/bin/perl -w
 
 use v5.30;
-use utf8;
 use warnings;
-use open qw(:std :utf8);
 no feature "indirect";
 use feature "signatures";
 no warnings "experimental::signatures";
 
-use JSON qw/decode_json/;
+use JSON;
 
 use WriteTranslation::macXliff;
 use WriteTranslation::Gettext;

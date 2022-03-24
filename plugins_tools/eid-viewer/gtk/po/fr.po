@@ -400,15 +400,15 @@ msgstr "Afficher le journal"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:2192
 msgid "Check for update at startup"
-msgstr ""
+msgstr "Rechercher des mises à jour au démarrage"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:2206
 msgid "Check for update now"
-msgstr ""
+msgstr "Rechercher des mises à jour maintenant"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:2225
 msgid "Update checks"
-msgstr ""
+msgstr "Contrôles de mise à jour"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:2321
 msgid "Language"
@@ -420,7 +420,7 @@ msgstr "Automatique"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:2370
 msgid "Reader selection"
-msgstr "Sélection d'un lecteur de carte"
+msgstr "Sélection du lecteur"
 
 #: plugins_tools/eid-viewer/gtk/print.c:69
 msgid "Printed:"

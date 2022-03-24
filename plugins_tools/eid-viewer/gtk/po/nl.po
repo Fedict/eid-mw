@@ -405,11 +405,11 @@ msgstr "Logboek tonen"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:2192
 msgid "Check for update at startup"
-msgstr "Updatecontrole bij opstarten"
+msgstr "Controleren op updates bij het opstarten"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:2206
 msgid "Check for update now"
-msgstr "Nu controleren"
+msgstr "Nu controleren op updates"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:2225
 msgid "Update checks"
@@ -425,7 +425,7 @@ msgstr "Automatisch"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:2370
 msgid "Reader selection"
-msgstr "Kaartlezerselectie"
+msgstr "Selectie van lezer"
 
 #: plugins_tools/eid-viewer/gtk/print.c:69
 msgid "Printed:"
