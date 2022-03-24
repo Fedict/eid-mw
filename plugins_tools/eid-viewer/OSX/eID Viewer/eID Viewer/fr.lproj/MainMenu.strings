@@ -442,6 +442,9 @@
 /* Class = "NSMenu"; title = "Window"; ObjectID = "Td7-aD-5lo"; */
 "Td7-aD-5lo.title" = "Window";
 
+/* Class = "NSTextFieldCell"; title = "Duplicate:"; ObjectID = "tEb-Jd-2a9"; */
+"tEb-Jd-2a9.title" = "Duplicata:";
+
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "tFb-hl-dlr"; */
 "tFb-hl-dlr.placeholderString" = "-";
 
@@ -519,6 +522,9 @@
 
 /* Class = "NSTextFieldCell"; placeholderString = "IDENTITY CARD"; ObjectID = "zA0-fy-z1e"; */
 "zA0-fy-z1e.placeholderString" = "CARTE D'IDENTITÉ";
+
+/* Class = "NSTextFieldCell"; title = "Duplicate:"; ObjectID = "Zhh-U8-meA"; */
+"Zhh-U8-meA.title" = "Duplicata:";
 
 /* Class = "NSTextFieldCell"; title = "Employer's VAT/CBE number (1):"; ObjectID = "zjQ-1l-gDp"; */
 "zjQ-1l-gDp.title" = "Numéro TVA/BCE de l'employeur (1):";

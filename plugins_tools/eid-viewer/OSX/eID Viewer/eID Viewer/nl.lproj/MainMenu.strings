@@ -524,7 +524,7 @@
 "Td7-aD-5lo.title" = "Venster";
 
 /* Class = "NSTextFieldCell"; title = "Duplicate:"; ObjectID = "tEb-Jd-2a9"; */
-"tEb-Jd-2a9.title" = "Duplicata:";
+"tEb-Jd-2a9.title" = "Duplicaat:";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "tFb-hl-dlr"; */
 "tFb-hl-dlr.placeholderString" = "-";
@@ -617,7 +617,7 @@
 "zA0-fy-z1e.placeholderString" = "IDENTITEITSKAART";
 
 /* Class = "NSTextFieldCell"; title = "Duplicate:"; ObjectID = "Zhh-U8-meA"; */
-"Zhh-U8-meA.title" = "Duplicata:";
+"Zhh-U8-meA.title" = "Duplicaat:";
 
 /* Class = "NSTextFieldCell"; title = "Employer's VAT/CBE number (1):"; ObjectID = "zjQ-1l-gDp"; */
 "zjQ-1l-gDp.title" = "BTW/KBO-nummer van de werkgever (1):";
