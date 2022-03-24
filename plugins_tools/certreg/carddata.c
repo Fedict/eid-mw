@@ -324,7 +324,7 @@ CK_RV GetAndRegisterCertificates(HWND hTextEdit, CK_FUNCTION_LIST_PTR functions,
 	CK_ATTRIBUTE attr_label_templ = {CKA_LABEL,(CK_VOID_PTR)label,ullabelLen};
 	CK_ATTRIBUTE attr_value_templ = {CKA_VALUE,(CK_VOID_PTR)value,ulvalueLen};
 	CK_OBJECT_HANDLE hKey;
-
+	char errormessage[100];
 
 	retval = (functions->C_FindObjectsInit)(*psession_handle, attributes, 1); 
 	if (retval == CKR_OK)
@@ -333,44 +333,54 @@ CK_RV GetAndRegisterCertificates(HWND hTextEdit, CK_FUNCTION_LIST_PTR functions,
 		while (ulObjectCount > 0)
 		{
 			retval = (functions->C_FindObjects)(*psession_handle, &hKey,1,&ulObjectCount); 
-			if (ulObjectCount > 0)
+			if (retval == CKR_OK)
 			{
-				attr_label_templ.ulValueLen = 100;
-				retval = (functions->C_GetAttributeValue)(*psession_handle,hKey,&attr_label_templ,1);
-				if (retval == CKR_OK)
+				if (ulObjectCount > 0)
 				{
-					pbcertificateData = (CK_BYTE_PTR)attr_label_templ.pValue;										
-					pbcertificateData[attr_label_templ.ulValueLen] = 0;
-					SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"certificate found: ");
-					SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)pbcertificateData);
-				}
-				attr_value_templ.ulValueLen = 10239;
-				retval = (functions->C_GetAttributeValue)(*psession_handle,hKey,&attr_value_templ,1);
-				if ((retval == CKR_OK) && (ulcertContextLen > certCount) )
-				{
-					pbcertificateData = (CK_BYTE_PTR)attr_value_templ.pValue;
-					dwcertificateDataLen = attr_value_templ.ulValueLen; 
-
-					if( ImportCertificate(pbserialNumber,ulserialNumberLen,pbcertificateData,dwcertificateDataLen, &(ppCertContext[certCount])) == TRUE)
+					attr_label_templ.ulValueLen = 100;
+					retval = (functions->C_GetAttributeValue)(*psession_handle, hKey, &attr_label_templ, 1);
+					if (retval == CKR_OK)
 					{
-						certCount++;
+						pbcertificateData = (CK_BYTE_PTR)attr_label_templ.pValue;
+						pbcertificateData[attr_label_templ.ulValueLen] = 0;
+						SendMessage(hTextEdit, EM_REPLACESEL, 0, (LPARAM)"certificate found: ");
+						SendMessage(hTextEdit, EM_REPLACESEL, 0, (LPARAM)pbcertificateData);
+					}
+					attr_value_templ.ulValueLen = 10239;
+					retval = (functions->C_GetAttributeValue)(*psession_handle, hKey, &attr_value_templ, 1);
+					if ((retval == CKR_OK) && (ulcertContextLen > certCount))
+					{
+						pbcertificateData = (CK_BYTE_PTR)attr_value_templ.pValue;
+						dwcertificateDataLen = attr_value_templ.ulValueLen;
 
-						SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"   - registered\r\n");
+						if (ImportCertificate(pbserialNumber, ulserialNumberLen, pbcertificateData, dwcertificateDataLen, &(ppCertContext[certCount])) == TRUE)
+						{
+							certCount++;
+
+							SendMessage(hTextEdit, EM_REPLACESEL, 0, (LPARAM)"   - registered\r\n");
+						}
+						else
+						{
+							SendMessage(hTextEdit, EM_REPLACESEL, 0, (LPARAM)"   - registration failed\r\n");
+						}
+						//testlog(LVL_INFO,"key LABEL value = %s\n", pbcertificateData);
 					}
 					else
 					{
-						SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"   - registration failed\r\n");
+						_snprintf(errormessage, 100, "C_GetAttributeValue returned 0x%0.8x\r\n", retval);
+						SendMessage(hTextEdit, EM_REPLACESEL, 0, (LPARAM)"\r\n");
+						SendMessage(hTextEdit, EM_REPLACESEL, 0, (LPARAM)"ERROR: failed getting attribute value \r\n");
+						SendMessage(hTextEdit, EM_REPLACESEL, 0, (LPARAM)errormessage);
 					}
-					//testlog(LVL_INFO,"key LABEL value = %s\n", pbcertificateData);
 				}
-				else
-				{
-					char errormessage[100];
-					_snprintf(errormessage,100,"C_GetAttributeValue returned 0x%0.8x\r\n",retval);
-					SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"\r\n");
-					SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)"ERROR: failed getting attribute value \r\n");
-					SendMessage(hTextEdit, EM_REPLACESEL,0,  (LPARAM)errormessage);
-				}
+			}
+			else
+			{
+				_snprintf(errormessage, 100, "C_FindObjects returned 0x%0.8x\r\n", retval);
+				SendMessage(hTextEdit, EM_REPLACESEL, 0, (LPARAM)"\r\n");
+				SendMessage(hTextEdit, EM_REPLACESEL, 0, (LPARAM)"ERROR: failed getting object \r\n");
+				SendMessage(hTextEdit, EM_REPLACESEL, 0, (LPARAM)errormessage);
+				ulObjectCount = 0;
 			}
 		}//end of while
 		retval = (functions->C_FindObjectsFinal)(*psession_handle); 
