@@ -40,7 +40,7 @@
       "nl" : "Alle bestanden"
    },
    "Always validate certificate trust" : {
-      "de" : "Vertrauenszertifikate immer validieren",
+      "de" : "Zuverlässigkeit der Zertifikate stets validieren",
       "fr" : "Toujours valider la fiabilité des certificats",
       "nl" : "Certificaatbetrouwbaarheid altijd valideren"
    },
@@ -167,7 +167,7 @@
       "fr" : "Information Détaillée...",
       "nl" : "Gedetailleerde informatie..."
    },
-   "Duplicata:" : {
+   "Duplicate:" : {
       "de" : "Duplikat:",
       "fr" : "Duplicata:",
       "nl" : "Duplicaat:"

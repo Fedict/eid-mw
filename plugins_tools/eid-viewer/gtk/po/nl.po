@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eid-mw 4.1.1-v4.1.1.dirty\n"
 "Report-Msgid-Bugs-To: servicedesk@bosa.fgov.be\n"
-"POT-Creation-Date: 2022-02-18 14:37+0200\n"
+"POT-Creation-Date: 2022-03-24 14:44+0200\n"
 "PO-Revision-Date: 2021-12-09 18:05+0200\n"
 "Last-Translator: Wouter Verhelst <wouter.verhelst@fedict.be>\n"
 "Language-Team: \n"
@@ -281,7 +281,7 @@ msgstr "Organisatie:"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:998
 #: plugins_tools/eid-viewer/gtk/print.c:59
-msgid "Duplicata:"
+msgid "Duplicate:"
 msgstr "Duplicaat:"
 
 #: plugins_tools/eid-viewer/gtk/viewer.glade:1048

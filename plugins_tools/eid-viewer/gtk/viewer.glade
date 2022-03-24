@@ -995,7 +995,7 @@
                           <object class="GtkLabel" id="title_duplicata">
                             <property name="can-focus">False</property>
                             <property name="halign">start</property>
-                            <property name="label" translatable="yes">Duplicata:</property>
+                            <property name="label" translatable="yes">Duplicate:</property>
                             <accessibility>
                               <relation type="label-for" target="duplicata"/>
                             </accessibility>
