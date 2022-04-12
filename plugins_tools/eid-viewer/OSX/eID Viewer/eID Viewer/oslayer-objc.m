@@ -228,7 +228,8 @@ static void osl_objc_challenge_result(const unsigned char *response, int respons
 	eid_vwr_maybe_perform_challenge();
 }
 +(eIDUpgradeInfo*) parseUpgradeInfoForXml:(NSString*)xml  currentVersion:(eIDVersionTriplet *)ourVersion {
-        struct upgrade_info *info = eid_vwr_upgrade_info([xml cStringUsingEncoding:NSUTF8StringEncoding], [xml length], "macOS", [[[NSProcessInfo processInfo] operatingSystemVersionString] cStringUsingEncoding:NSUTF8StringEncoding], (int)[ourVersion major], (int)[ourVersion minor], (int)[ourVersion build]);
+        NSOperatingSystemVersion version = [[NSProcessInfo processInfo] operatingSystemVersion];
+        struct upgrade_info *info = eid_vwr_upgrade_info([xml cStringUsingEncoding:NSUTF8StringEncoding], [xml length], "macOS", [[NSString stringWithFormat:@"%ld.%ld.%ld", version.majorVersion, version.minorVersion, version.patchVersion] cStringUsingEncoding:NSUTF8StringEncoding], (int)[ourVersion major], (int)[ourVersion minor], (int)[ourVersion build]);
         eIDUpgradeInfo *rv = [[eIDUpgradeInfo alloc] init];
         eIDVersionTriplet *tr = [[eIDVersionTriplet alloc] init];
         [tr setMajor:info->new_version.major];
