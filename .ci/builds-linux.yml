@@ -197,6 +197,9 @@
   - make -j $(nproc)
   - popd
   allow_failure: true
+  artifacts:
+    when: on_failure
+    untracked: true
 
 .srpm:
   variables:
