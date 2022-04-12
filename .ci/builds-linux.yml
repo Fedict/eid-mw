@@ -180,6 +180,24 @@
     paths:
     - public
 
+.gcc-analyzer:
+  tags:
+    - docker
+  image: $CI_REGISTRY_IMAGE/deb-build:$CI_COMMIT_REF_SLUG
+  before_script:
+  - if [ ! -z "$ACNG" ]; then sed -i -e "s,http://,$ACNG/," /etc/apt/sources.list; else echo "no proxy configured"; fi
+  - apt-get update
+  - apt-get -y install --no-install-recommends gcc-12 g++-12
+  - pushd $LINUX_BASEDIR
+  - autoreconf -f -i
+  - ./configure CC=gcc-12 CXX=g++-12 CFLAGS='-g -O2 -Wall -Werror -fanalyze' CXXFLAGS='-g -O2 -Wall -fanalyze -Werror'
+  - popd
+  script:
+  - pushd $LINUX_BASEDIR
+  - make -j $(nproc)
+  - popd
+  allow_failure: true
+
 .srpm:
   variables:
     GIT_STRATEGY: none

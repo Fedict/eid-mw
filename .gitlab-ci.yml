@@ -100,6 +100,10 @@ test:scan-build:
   stage: tests
   extends: .scan-build
 
+test:gcc-analyze:
+  stage: tests
+  extends: .gcc-analyzer
+
 test:gtk4:
   stage: tests
   extends: .gtk4
