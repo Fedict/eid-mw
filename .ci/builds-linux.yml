@@ -190,7 +190,7 @@
   - apt-get -y install --no-install-recommends gcc-12 g++-12
   - pushd $LINUX_BASEDIR
   - autoreconf -f -i
-  - ./configure CC=gcc-12 CXX=g++-12 CFLAGS='-g -O2 -Wall -Werror -fanalyze' CXXFLAGS='-g -O2 -Wall -fanalyze -Werror'
+  - ./configure CC=gcc-12 CXX=g++-12 CFLAGS='-g -O2 -Wall -Werror -fanalyzer' CXXFLAGS='-g -O2 -Wall -fanalyzer -Werror'
   - popd
   script:
   - pushd $LINUX_BASEDIR
