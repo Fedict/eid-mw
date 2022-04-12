@@ -81,6 +81,14 @@ gtk4-build:
     - .ci/build-configs.yml
   allow_failure: true
 
+deb-testing:
+  extends: .deb-testing
+  only:
+    changes:
+    - .ci/dockerfiles/deb-testing/**/*
+    - .ci/builds-docker.yml
+    - .ci/build-configs.yml
+
 ##########################################################################################################
 # Stage "tests": run a test battery before doing all the hard work (i.e., try to find any problems ASAP) #
 ##########################################################################################################
