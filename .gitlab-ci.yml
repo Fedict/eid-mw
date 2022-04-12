@@ -82,7 +82,7 @@ gtk4-build:
   allow_failure: true
 
 deb-testing:
-  extends: .deb-testing
+  extends: .docker-base
   only:
     changes:
     - .ci/dockerfiles/deb-testing/**/*
