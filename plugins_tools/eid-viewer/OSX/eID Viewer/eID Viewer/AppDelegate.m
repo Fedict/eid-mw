@@ -379,6 +379,7 @@
 
 	// Load preferences (language, log level)
 	NSUserDefaults* prefs = [NSUserDefaults standardUserDefaults];
+	[prefs registerDefaults:@{@"check_update": @YES}];
 	eIDLanguage langcode = [prefs integerForKey:@"ContentLanguage"];
 	if(langcode == eIDLanguageNone||langcode > eIDLanguageNl) {
 		langcode = eIDLanguageNone;
