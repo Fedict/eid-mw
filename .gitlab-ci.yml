@@ -520,8 +520,8 @@ repo:inject-fed:
     - build:fedora_oldstable_64
     - build:fedora_stable_32
     - build:fedora_stable_64
-    - build:centos_oldstable_64
-    - build:centos_stable_64
+    - build:el_oldstable_64
+    - build:el_stable_64
   stage: build-repository
   extends: .inject-fed
 
