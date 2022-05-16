@@ -5,7 +5,8 @@ set -e
 find ./products -print
 
 declare -A DISTVERS
-declare -A DISTNAMES
+declare -A DIST_TARGET_NAMES
+declare -A DIST_SOURCE_NAMES
 declare -A DISTARCHS
 
 DISTS="fedora epel"
