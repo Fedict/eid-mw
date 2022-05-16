@@ -325,24 +325,24 @@ build:fedora_stable_64:
   only:
     variables:
     - $FEDORA_STABLE_VERSION
-build:centos_oldstable_64:
+build:el_oldstable_64:
   <<: *build-fed
   variables:
-    DIST: epel
-    DVER: $CENTOS_OLDSTABLE_VERSION
+    DIST: $EL_OLDSTABLE_DIST
+    DVER: $EL_OLDSTABLE_VERSION
     ARCH: x86_64
   only:
     variables:
-    - $CENTOS_OLDSTABLE_VERSION
-build:centos_stable_64:
+    - $EL_OLDSTABLE_VERSION
+build:el_stable_64:
   <<: *build-fed
   variables:
-    DIST: rocky
-    DVER: $CENTOS_STABLE_VERSION
+    DIST: $EL_STABLE_DIST
+    DVER: $EL_STABLE_VERSION
     ARCH: x86_64
   only:
     variables:
-    - $CENTOS_STABLE_VERSION
+    - $EL_STABLE_VERSION
 
 # openSUSE-based distributions
 .build-suse: &build-suse
@@ -520,8 +520,8 @@ repo:inject-fed:
     - build:fedora_oldstable_64
     - build:fedora_stable_32
     - build:fedora_stable_64
-    - build:centos_oldstable_64
-    - build:centos_stable_64
+    - build:el_oldstable_64
+    - build:el_stable_64
   stage: build-repository
   extends: .inject-fed
 

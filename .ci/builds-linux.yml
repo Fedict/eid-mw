@@ -47,7 +47,7 @@
   - popd
   script:
   - pushd $LINUX_BASEDIR
-  - ./configure --with-gtkvers=4 --disable-pinentry
+  - ./configure --with-gtkvers=4
   - make -j distcheck
   - popd
   allow_failure: true
