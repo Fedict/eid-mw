@@ -93,7 +93,7 @@ namespace eIDViewer
 
             try
             {
-                if (carddata_appl_version < 0x18)
+                if (!hashAlg.Equals("SHA384"))
                 {
                     if (hashAlg.Equals("SHA1"))
                     {
@@ -129,7 +129,7 @@ namespace eIDViewer
                         ResetDataValues();
                     }
                 }
-                else if (carddata_appl_version == 0x18)
+                else 
                 {
                     //ASN.1 structure:
                     //SEQ (0x30) / PayloadLen / Int Type (0x02) / Len (r) / r[] / Int Type (0x02) / Len (s) / s[]
@@ -695,7 +695,13 @@ namespace eIDViewer
         {
             string hashAlg;
             try {
-                if (photo_hash.Length == 20)
+                //due to the new hybrid cards spec, the logic below is no longer sound.
+                //when the RN certificate on the card is an EC signature, the signature files will be SHA384 EC
+                if (RN_cert.PublicKey.Oid.FriendlyName.Equals("ECC"))
+                {
+                    hashAlg = "SHA384";
+                }
+                else if (photo_hash.Length == 20)
                 {
                     hashAlg = "SHA1";
                 }
