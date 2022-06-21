@@ -111,7 +111,9 @@
     paths:
     - products/reports
     reports:
-      coverage_report: products/reports/coverage.xml
+      coverage_report:
+        path: products/reports/coverage.xml
+        coverage_format: cobertura
       junit: tests/unit/junit.xml
     when: always
 
