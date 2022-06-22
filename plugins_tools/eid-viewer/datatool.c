@@ -5,6 +5,7 @@
 #include <assert.h>
 #include <string.h>
 #include "dataverify.h"
+#include <eid-viewer/oslayer.h>
 
 struct option longopt[] = {
 	{"identity",		required_argument, NULL, 'i'},
@@ -26,7 +27,17 @@ void read_file(void** filedata, int* filelen, char *filename) {
 	fclose(fp);
 }
 
+void print_log(enum eid_vwr_loglevel level, const EID_CHAR *line) {
+	if(level < EID_VWR_LOG_COARSE) {
+		return;
+	}
+	printf("%s\n", line);
+}
+
 int main(int argc, char**argv) {
+	struct eid_vwr_ui_callbacks *cb = eid_vwr_cbstruct();
+	cb->log = print_log;
+	eid_vwr_createcallbacks(cb);
 	int c, uninteresting;
 	void *photo, *photohash, *datafile, *datasig, *addrfile, *addrsig, *rrncert;
 	photo = photohash = datafile = datasig = addrfile = addrsig = rrncert = NULL;
