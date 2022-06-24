@@ -47,7 +47,7 @@
   - popd
   script:
   - pushd $LINUX_BASEDIR
-  - ./configure --with-gtkvers=4 --disable-pinentry
+  - ./configure --with-gtkvers=4
   - make -j distcheck
   - popd
   allow_failure: true
@@ -111,7 +111,9 @@
     paths:
     - products/reports
     reports:
-      cobertura: products/reports/coverage.xml
+      coverage_report:
+        path: products/reports/coverage.xml
+        coverage_format: cobertura
       junit: tests/unit/junit.xml
     when: always
 

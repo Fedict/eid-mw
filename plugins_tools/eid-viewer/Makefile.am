@@ -4,6 +4,10 @@ EXTRA_PROGRAMS = sigtest
 sigtest_SOURCES = sigtest.c
 sigtest_LDADD = libeidviewer.la
 
+noinst_PROGRAMS = datatool
+datatool_SOURCES = datatool.c
+datatool_LDADD = libeidviewer.la
+
 if HAVE_GIO
 MAYBE_PREFS = gtk/prefs.c
 else
