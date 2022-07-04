@@ -958,7 +958,12 @@ namespace eIDViewer
         {
             cardA_fields_height = 26;
         }
-  
+
+        private void CardEUStartDateFieldPresent()
+        {
+            cardEU_fields_height = 26;
+        }
+
         private void ShowCardAppletVersion(byte carddata_appl_version)
         {
             switch(carddata_appl_version)
@@ -1052,6 +1057,9 @@ namespace eIDViewer
             else if (String.Equals(label, "cardA_mention_2", StringComparison.Ordinal))
             { cardA_mention2 = data;
                 CardAMentionFieldPresent();}
+            else if (String.Equals(label, "cardEU_start_date", StringComparison.Ordinal))
+            { cardEU_start_date = data;
+                CardEUStartDateFieldPresent();}          
         }
 
         private byte[] dataFile;
@@ -1253,6 +1261,7 @@ namespace eIDViewer
             regional_file_number = "-";
             brexit_mention1 = "-";
             brexit_mention2 = "-";
+            cardEU_start_date = "-";
             eid_card_present = false;
             progress = 0;
             HideProgressBar();
@@ -1260,6 +1269,7 @@ namespace eIDViewer
             foreigner_fields_height_double = 0;
             brexit_fields_height = 0;
             cardA_fields_height = 0;
+            cardEU_fields_height = 0;
             pinop_ready = false;
             open_enabled = true;
 
@@ -1820,6 +1830,17 @@ namespace eIDViewer
             }
         }
 
+        private string _cardEU_start_date;
+        public string cardEU_start_date
+        {
+            get { return _cardEU_start_date; }
+            set
+            {
+                _cardEU_start_date = value;
+                this.NotifyPropertyChanged("cardEU_start_date");
+            }
+        }
+
         private int _foreigner_fields_height;
         public int foreigner_fields_height
         {
@@ -1864,6 +1885,18 @@ namespace eIDViewer
             }
         }
 
+        private int _cardEU_fields_height;
+        public int cardEU_fields_height
+        {
+            get { return _cardEU_fields_height; }
+            set
+            {
+                _cardEU_fields_height = value;
+                this.NotifyPropertyChanged("cardEU_fields_height");
+            }
+        }
+
+        
         private BitmapImage _photo;
         public BitmapImage photo
         {

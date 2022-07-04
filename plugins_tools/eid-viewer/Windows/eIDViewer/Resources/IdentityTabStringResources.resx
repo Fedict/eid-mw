@@ -255,4 +255,10 @@ CBE number (2):</value>
   <data name="CardA_mentions" xml:space="preserve">
     <value>Mentions:</value>
   </data>
+  <data name="CardEUPlus_start_date" xml:space="preserve">
+    <value>Date of permanent residence</value>
+  </data>
+  <data name="CardEU_start_date" xml:space="preserve">
+    <value>Date of registration</value>
+  </data>
 </root>
