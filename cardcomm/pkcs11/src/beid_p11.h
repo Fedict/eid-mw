@@ -81,6 +81,7 @@
 #define BEID_FIELD_TAG_ID_BrexitMention2		0x1C
 #define BEID_FIELD_TAG_ID_CardAMention1			0x1D
 #define BEID_FIELD_TAG_ID_CardAMention2			0x1E
+#define BEID_FIELD_TAG_ID_CardEUStartDate		0x1F
 
 #define BEID_FIELD_TAG_ADDR_Version				0x00
 #define BEID_FIELD_TAG_ADDR_Street				0x01
