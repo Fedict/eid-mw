@@ -57,7 +57,8 @@
 	{ BEID_FIELD_TAG_ID_BrexitMention1,		"brexit_mention_1"}, \
 	{ BEID_FIELD_TAG_ID_BrexitMention2,		"brexit_mention_2"}, \
 	{ BEID_FIELD_TAG_ID_CardAMention1,		"cardA_mention_1"}, \
-	{ BEID_FIELD_TAG_ID_CardAMention2,		"cardA_mention_2"} \
+	{ BEID_FIELD_TAG_ID_CardAMention2,		"cardA_mention_2"}, \
+	{ BEID_FIELD_TAG_ID_CardEUStartDate,	"cardEU_start_date"} \
 }
 
 	//{ BEID_FIELD_TAG_ADDR_Version,                        "Address_Version"},
