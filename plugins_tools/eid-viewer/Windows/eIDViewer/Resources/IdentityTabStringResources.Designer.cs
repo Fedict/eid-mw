@@ -79,6 +79,24 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Date of registration.
+        /// </summary>
+        public static string CardEU_start_date {
+            get {
+                return ResourceManager.GetString("CardEU_start_date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date of permanent residence.
+        /// </summary>
+        public static string CardEUPlus_start_date {
+            get {
+                return ResourceManager.GetString("CardEUPlus_start_date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date of birth:.
         /// </summary>
         public static string DateOfBirthLabel {

@@ -255,4 +255,10 @@ van de werkgever (2):</value>
   <data name="CardA_mentions" xml:space="preserve">
     <value>Vermeldingen:</value>
   </data>
+  <data name="CardEUPlus_start_date" xml:space="preserve">
+    <value>Datum van het duurzaam verblijf</value>
+  </data>
+  <data name="CardEU_start_date" xml:space="preserve">
+    <value>Datum van inschrijving</value>
+  </data>
 </root>

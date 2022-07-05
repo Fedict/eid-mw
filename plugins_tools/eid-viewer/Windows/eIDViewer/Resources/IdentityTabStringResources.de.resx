@@ -255,4 +255,10 @@ ZDU-Nummer des Arbeitgebers (2):</value>
   <data name="CardA_mentions" xml:space="preserve">
     <value>Erwähnungen:</value>
   </data>
+  <data name="CardEUPlus_start_date" xml:space="preserve">
+    <value>Datum Daueraufenthalt</value>
+  </data>
+  <data name="CardEU_start_date" xml:space="preserve">
+    <value>Datum Anmeldung</value>
+  </data>
 </root>
