@@ -40,24 +40,24 @@
 				<key>NSIncludesSubdomains</key>
 				<false/>
 			</dict>
-            <key>crl.eidpki.belgium.be</key>
-            <dict>
-                <key>NSExceptionAllowsInsecureHTTPLoads</key>
-                <true/>
-                <key>NSIncludesSubdomains</key>
-                <false/>
-            </dict>
-            <key>ocsp.eidpki.belgium.be</key>
-            <dict>
-                <key>NSExceptionAllowsInsecureHTTPLoads</key>
-                <true/>
-                <key>NSIncludesSubdomains</key>
-                <false/>
-            </dict>
+			<key>crl.eidpki.belgium.be</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSIncludesSubdomains</key>
+				<false/>
+			</dict>
+			<key>ocsp.eidpki.belgium.be</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSIncludesSubdomains</key>
+				<false/>
+			</dict>
 		</dict>
 	</dict>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2014-2021 BOSA.</string>
+	<string>Copyright © 2014-2022 BOSA.</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
