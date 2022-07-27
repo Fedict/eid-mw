@@ -1,7 +1,7 @@
 ---
 stages:
 - docker
-- tests
+- test
 - source-package
 - binary-package
 - validate
@@ -14,6 +14,7 @@ include:
 - local: .ci/builds-windows.yml
 - local: .ci/builds-macos.yml
 - local: .ci/builds-docker.yml
+- template: Security/SAST.gitlab-ci.yml
 
 variables:
   LINUX_BASEDIR: .
@@ -90,42 +91,42 @@ deb-testing:
     - .ci/build-configs.yml
 
 ##########################################################################################################
-# Stage "tests": run a test battery before doing all the hard work (i.e., try to find any problems ASAP) #
+# Stage "test": run a test battery before doing all the hard work (i.e., try to find any problems ASAP) #
 ##########################################################################################################
 test:distcheck:
-  stage: tests
+  stage: test
   extends: .distcheck
 
 test:robot:linux:
-  stage: tests
+  stage: test
   extends: .robot:linux
 
 test:repro:debian:
-  stage: tests
+  stage: test
   extends: .repro:debian
 
 test:scan-build:
-  stage: tests
+  stage: test
   extends: .scan-build
 
 test:gcc-analyze:
-  stage: tests
+  stage: test
   extends: .gcc-analyzer
 
 test:gtk4:
-  stage: tests
+  stage: test
   extends: .gtk4
 
 test:nogtk:
-  stage: tests
+  stage: test
   extends: .nogtk
 
 test:nodialogs:
-  stage: tests
+  stage: test
   extends: .nodialogs
 
 test:coverity:linux:
-  stage: tests
+  stage: test
   extends: .coverity:linux
 
 #################################################
