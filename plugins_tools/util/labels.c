@@ -103,8 +103,9 @@ static struct {
 	{ TEXT("perso_versions"),	CK_FALSE, CK_TRUE, CK_TRUE, NULL },
 	{ TEXT("tokeninfo_elec_perso_version"),	CK_FALSE, CK_TRUE, CK_TRUE, NULL },
 	{ TEXT("tokeninfo_elec_perso_int_version"),	CK_FALSE, CK_TRUE, CK_TRUE, NULL },
-//	{ TEXT("cardA_mention_1"),		CK_TRUE, CK_FALSE, CK_TRUE, TEXT("4.4") }, //extra mentions possible on type A cards
-//	{ TEXT("cardA_mention_2"),		CK_TRUE, CK_FALSE, CK_TRUE, TEXT("4.4") },
+	{ TEXT("cardA_mention_1"),		CK_TRUE, CK_FALSE, CK_TRUE, TEXT("4.5") }, //extra mentions possible on type A cards
+	{ TEXT("cardA_mention_2"),		CK_TRUE, CK_FALSE, CK_TRUE, TEXT("4.5") },
+	{ TEXT("cardEU_start_date"),	CK_TRUE, CK_FALSE, CK_TRUE, TEXT("4.5") },
 	{ NULL,					0, 0, 0, NULL },
 };
 
