@@ -58,6 +58,7 @@ namespace eIDViewer
             //try to find a log_level setting in the registry, 
             //and initialize log_level and log_level_index
             GetViewerLogLevel();
+
         }
 
         ~BackendDataViewModel()
@@ -958,10 +959,24 @@ namespace eIDViewer
         {
             cardA_fields_height = 26;
         }
-
         private void CardEUStartDateFieldPresent()
         {
-            cardEU_fields_height = 26;
+            //depending on doctype, show either EU, EUPlus field
+            //or none yet, will be set when document_type_raw is received
+            cardEU_startdate_present = true;
+            switch (document_type_raw)
+            {
+                case 31: //EU card
+                    cardEUPlus_fields_height = 0;
+                    cardEU_fields_height = 25;
+                    break;
+                case 32: //EU+ card
+                    cardEUPlus_fields_height = 25;
+                    cardEU_fields_height = 0;
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void ShowCardAppletVersion(byte carddata_appl_version)
@@ -1074,7 +1089,7 @@ namespace eIDViewer
         public void StoreBinData(string label, byte[] data, int datalen)
         {
             try
-            {            
+            {
                 if (String.Equals(label, "PHOTO_FILE", StringComparison.Ordinal))
                 {
                     photoFile = new byte[datalen];
@@ -1092,10 +1107,10 @@ namespace eIDViewer
                 }
                 else if (String.Equals(label, "DATA_FILE", StringComparison.Ordinal))
                 {
-                   dataFile = new byte[datalen];
-                   data.CopyTo(dataFile,0);
-                   progress_info = "read the identity data file";
-                   progress += 4;                         
+                    dataFile = new byte[datalen];
+                    data.CopyTo(dataFile, 0);
+                    progress_info = "read the identity data file";
+                    progress += 4;
                 }
                 else if (String.Equals(label, "ADDRESS_FILE", StringComparison.Ordinal))
                 {
@@ -1128,7 +1143,7 @@ namespace eIDViewer
                 {
                     progress_info = "read authentication certificate";
                     authentication_cert = new X509Certificate2(data);
-                    StoreCertificate( ref authCertViewModel, ref authentication_cert);
+                    StoreCertificate(ref authCertViewModel, ref authentication_cert);
                     progress += 6;
                 }
                 else if (String.Equals(label, "Signature", StringComparison.Ordinal))
@@ -1182,6 +1197,20 @@ namespace eIDViewer
                     data.CopyTo(basicKeyFile, 0);
                     progress_info = "read the identity data file";
                     progress += 1;
+                }
+                else if (String.Equals(label, "document_type_raw", StringComparison.Ordinal))
+                {
+                    if (datalen == 4)
+                    {
+                        //data contains the doctype as 2 UTF16 characters (e.g. 0x33 0x00 0x31 0x00)
+                        var dataString = System.Text.Encoding.Unicode.GetString(data);
+                        Int32 SignedDocType = 0;
+                        if (!int.TryParse(dataString, out SignedDocType))
+                        {
+                            SignedDocType = 0;
+                        }
+                        document_type_raw = (uint)SignedDocType;
+                    }
                 }
             }
             catch (Exception e)
@@ -1270,6 +1299,7 @@ namespace eIDViewer
             brexit_fields_height = 0;
             cardA_fields_height = 0;
             cardEU_fields_height = 0;
+            cardEUPlus_fields_height = 0;
             pinop_ready = false;
             open_enabled = true;
 
@@ -1698,6 +1728,45 @@ namespace eIDViewer
             }
         }
 
+        private bool _cardEU_startdate_present;
+        public bool cardEU_startdate_present
+        {
+            get { return _cardEU_startdate_present; }
+            set
+            {
+                _cardEU_startdate_present = value;
+                this.NotifyPropertyChanged("document_type");
+            }
+        }
+        
+
+        private uint _document_type_raw;
+        public uint document_type_raw
+        {
+            get { return _document_type_raw; }
+            set
+            {
+                _document_type_raw = value;
+                if (cardEU_startdate_present)
+                {
+                    switch (document_type_raw)
+                    {
+                        case 31: //EU card
+                            cardEUPlus_fields_height = 0;
+                            cardEU_fields_height = 25;
+                            break;
+                        case 32: //EU+ card
+                            cardEUPlus_fields_height = 25;
+                            cardEU_fields_height = 0;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                //this.NotifyPropertyChanged("document_type_raw");
+            }
+        }
+
         private string _date_and_country_of_protection;
         public string date_and_country_of_protection
         {
@@ -1896,7 +1965,18 @@ namespace eIDViewer
             }
         }
 
-        
+
+        private int _cardEUPlus_fields_height;
+        public int cardEUPlus_fields_height
+        {
+            get { return _cardEUPlus_fields_height; }
+            set
+            {
+                _cardEUPlus_fields_height = value;
+                this.NotifyPropertyChanged("cardEUPlus_fields_height");
+            }
+        }
+
         private BitmapImage _photo;
         public BitmapImage photo
         {
