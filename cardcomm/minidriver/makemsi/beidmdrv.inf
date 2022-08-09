@@ -8,7 +8,7 @@ Class=SmartCard
 ClassGuid={990A2BD7-E738-46c7-B26F-1CF8FB9F1391}
 Provider=%BOSA%
 CatalogFile=beidmdrv.cat
-DriverVer=05/07/2021,5.0.27.0
+DriverVer=02/02/2022,5.0.27.1
 ;MMDDYYYY
 [Manufacturer]
 %BOSA%=Bosa,NTamd64.6.1,NTx86.6.1
@@ -152,7 +152,7 @@ wow64_CopyFiles=10,syswow64
 ; =================== Generic ==================================
 
 [Strings]
-BOSA="Bosa"
+BOSA="Bosa https://eid.belgium.be"
 MediaDescription="Belgium eID Smart Card Minidriver Installation Disk"
 BosaCardDeviceName="Belgium eID Minidriver for Smart Card"
 SmartCardName="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Beid"
