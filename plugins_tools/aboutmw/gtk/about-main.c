@@ -91,6 +91,7 @@ void check_pcsc(GtkWidget* top G_GNUC_UNUSED, GtkListStore* data) {
 	GtkTreeIter iter;
 	char pid[10];
 	char* tmp;
+	FILE* syst;
 
 	gtk_list_store_append(data, &iter);
 	if(!f) {
@@ -114,7 +115,7 @@ void check_pcsc(GtkWidget* top G_GNUC_UNUSED, GtkListStore* data) {
 	g_free(tmp);
 	goto exit;
 check_systemd:
-	FILE* syst = popen("systemctl status pcscd.socket|awk '/Active/{print $2}'", "r");
+	syst = popen("systemctl status pcscd.socket|awk '/Active/{print $2}'", "r");
 	if(!syst) {
 		gtk_list_store_set(data, &iter, 0, _("PCSC daemon status"), 1, _("(not running; systemd check failed"), -1);
 		goto exit;
