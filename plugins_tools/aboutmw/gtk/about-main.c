@@ -98,23 +98,48 @@ void check_pcsc(GtkWidget* top G_GNUC_UNUSED, GtkListStore* data) {
 		return;
 	}
 	if(feof(f)) {
-		gtk_list_store_set(data, &iter, 0, _("PCSC daemon status"), 1, _("(not running)"), -1);
-		goto exit;
+		goto check_systemd;
 	}
 	if(fgets(pid, sizeof pid, f)==NULL) {
-		gtk_list_store_set(data, &iter, 0, _("PCSC daemon status"), 1, _("(not running)"), -1);
-		goto exit;
+		goto check_systemd;
 	}
 	if((tmp = strchr(pid, '\n'))) {
 		*tmp = '\0';
 	}
 	if(strlen(pid)==0) {
-		gtk_list_store_set(data, &iter, 0, _("PCSC daemon status"), 1, _("(not running)"), -1);
-		goto exit;
+		goto check_systemd;
 	}
 	tmp = g_strdup_printf(_("running; pid: %s"), pid);
 	gtk_list_store_set(data, &iter, 0, _("PCSC daemon status"), 1, tmp, -1);
 	g_free(tmp);
+	goto exit;
+check_systemd:
+	FILE* syst = popen("systemctl status pcscd.socket|awk '/Active/{print $2}'", "r");
+	if(!syst) {
+		gtk_list_store_set(data, &iter, 0, _("PCSC daemon status"), 1, _("(not running; systemd check failed"), -1);
+		goto exit;
+	}
+	if(feof(syst)) {
+		gtk_list_store_set(data, &iter, 0, _("PCSC daemon status"), 1, _("(not running)"), -1);
+		goto exit_systemd;
+	}
+	char syst_active[20];
+	if(fgets(syst_active, sizeof syst_active, syst)==NULL) {
+		gtk_list_store_set(data, &iter, 0, _("PCSC daemon status"), 1, _("(not running)"), -1);
+		goto exit_systemd;
+	}
+	if((tmp = strchr(syst_active, '\n'))) {
+		*tmp = '\0';
+	}
+	if(strlen(syst_active)==0) {
+		gtk_list_store_set(data, &iter, 0, _("PCSC daemon status"), 1, _("(not running)"), -1);
+		goto exit_systemd;
+	}
+	tmp = g_strdup_printf(_("not running; systemd socket activation %s"), syst_active);
+	gtk_list_store_set(data, &iter, 0, _("PCSC daemon status"), 1, tmp, -1);
+	g_free(tmp);
+exit_systemd:
+	pclose(syst);
 exit:
 	pclose(f);
 }
