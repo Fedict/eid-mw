@@ -89,7 +89,7 @@ static enum _bits {
 void check_pcsc(GtkWidget* top G_GNUC_UNUSED, GtkListStore* data) {
 	FILE* f = popen("pidof pcscd", "r");
 	GtkTreeIter iter;
-	char pid[6];
+	char pid[10];
 	char* tmp;
 
 	gtk_list_store_append(data, &iter);
@@ -101,8 +101,7 @@ void check_pcsc(GtkWidget* top G_GNUC_UNUSED, GtkListStore* data) {
 		gtk_list_store_set(data, &iter, 0, _("PCSC daemon status"), 1, _("(not running)"), -1);
 		goto exit;
 	}
-	pid[5]='\0';
-	if(fgets(pid, 5, f)==NULL) {
+	if(fgets(pid, sizeof pid, f)==NULL) {
 		gtk_list_store_set(data, &iter, 0, _("PCSC daemon status"), 1, _("(not running)"), -1);
 		goto exit;
 	}
