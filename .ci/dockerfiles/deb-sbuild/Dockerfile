@@ -9,7 +9,7 @@ RUN echo "deb http://deb.debian.org/debian experimental main" >> /etc/apt/source
 
 RUN set -ex; \
 	apt-get update; \
-	apt-get -y -t experimental install debootstrap; \
+	apt-get -y upgrade; \
 	apt-get install -y --no-install-recommends \
 		sbuild schroot zstd \
 		\
@@ -21,6 +21,7 @@ RUN set -ex; \
 		fakeroot \
 		rsync sudo unzip eatmydata debhelper devscripts \
 	; \
+	apt-get -y -t experimental install debootstrap; \
 	rm -rf /var/lib/apt/lists/*
 
 WORKDIR /tmp
