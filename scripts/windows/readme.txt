@@ -55,6 +55,8 @@ Build and signing scripts:
 build_all.bat : builds all (certclean, pkcs11, pkcs11_ff, minidriver, viewer, viewer launcher, msi's and NSIS installers) and signs all with test certificate
 sign_minidriver_cab.bat : signs the minidriver, and creates and signs the minidriver cab file in preparation for attestation signing
 package_minidriver.bat : creates a zip file that contains all attestation signed minidriver files
+--latest_mdrv.bat-- : downloads and verifies the zip file created by package_minidriver.bat and places that minidriver in the folder to be included in the installers,
+			this script needs to be updated when a new minidriver zip has been placed online, this script will be called from sign_builds.bat	
 sign_builds.bat : sets the attestation signed minidriver that will be packaged, and signs all dll's and exe's and msi's (also rebuilds installers with signed components)
 
 build_viewer.bat : builds all viewer components and installers and signs them with test certificate
