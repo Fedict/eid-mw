@@ -32,13 +32,13 @@ copy %~dp0..\..\plugins_tools\CertClean\Release\CertClean.exe %~dp0
 :: sign pkcs11
 :: ===========
 @echo [INFO] Sign the pkcs11 dll, 32bit
-"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "e20634d42e8bc522c6341dce24badd103f5f4312" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\cardcomm\pkcs11\VS_2017\Binaries\Win32_Release\beidpkcs11.dll"
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "e20634d42e8bc522c6341dce24badd103f5f4312" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\cardcomm\pkcs11\VS_2019\Binaries\Win32_Release\beidpkcs11.dll"
 @echo [INFO] Sign the pkcs11_ff dll, 32bit
-"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "e20634d42e8bc522c6341dce24badd103f5f4312" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\cardcomm\pkcs11\VS_2017\Binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll"
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "e20634d42e8bc522c6341dce24badd103f5f4312" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\cardcomm\pkcs11\VS_2019\Binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll"
 @echo [INFO] Sign the pkcs11 dll, 64bit
-"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "e20634d42e8bc522c6341dce24badd103f5f4312" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\cardcomm\pkcs11\VS_2017\Binaries\x64_Release\beidpkcs11.dll"
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "e20634d42e8bc522c6341dce24badd103f5f4312" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\cardcomm\pkcs11\VS_2019\Binaries\x64_Release\beidpkcs11.dll"
 @echo [INFO] Sign the pkcs11_ff dll, 64bit
-"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "e20634d42e8bc522c6341dce24badd103f5f4312" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\cardcomm\pkcs11\VS_2017\Binaries\x64_PKCS11_FF_Release\beid_ff_pkcs11.dll"
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "e20634d42e8bc522c6341dce24badd103f5f4312" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\cardcomm\pkcs11\VS_2019\Binaries\x64_PKCS11_FF_Release\beid_ff_pkcs11.dll"
 
 
 :: create the MSI installers
