@@ -26,10 +26,10 @@
 #include <exception>
 #include <iostream>
 
-using namespace std;
-
 namespace eIDMW
 {
+
+        using namespace std;
 
 	class CMWException:public std::exception
 	{

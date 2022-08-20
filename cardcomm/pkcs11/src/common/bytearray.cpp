@@ -23,14 +23,14 @@
 #include <iostream>
 #include <exception>
 
-using namespace std;
-
 #include "bytearray.h"
 #include "util.h"
 #include "mwexception.h"
 #include "eiderrors.h"
 
 const static unsigned long EXTRA_INCREMENT_LEN = 10;
+
+using namespace std;
 
 /***************** ByteArray **************************/
 
