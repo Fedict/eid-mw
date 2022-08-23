@@ -66,11 +66,11 @@ namespace eIDMW
 		std::string out(in.size(), 0);
 
 		for (std::wstring::size_type i = 0; in.size() > i; ++i)
-#ifdef WIN32
+#ifdef _MSC_VER
 			out[i] = std::use_facet < std::ctype < wchar_t >
 				>(locale).narrow(in[i]);
 #else
-			// in the unix implementation of std::locale narrow needs 2 arguments
+			// in the gcc implementation of std::locale narrow needs 2 arguments
 			// (the second is a default char, here the choice is random)
 			out[i] = std::use_facet < std::ctype < wchar_t >
 				>(locale).narrow(in[i], 'x');
