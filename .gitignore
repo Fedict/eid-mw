@@ -90,3 +90,15 @@ beidpkcs11.sdf
 *.opendb
 *.ipch
 *.user
+*.db-shm
+*.db-wal
+cardcomm/pkcs11/VS_2019/Binaries
+cardcomm/pkcs11/VS_2019/Win32_PKCS11_FF_DEBUG
+cardcomm/pkcs11/VS_2019/Win32_PKCS11_FF_Release
+cardcomm/pkcs11/VS_2019/x64_PKCS11_FF_DEBUG
+cardcomm/pkcs11/VS_2019/x64_PKCS11_FF_Release
+scripts/windows/beidmdrv_dist
+scripts/windows/beidmdrv_all
+scripts/windows/beidmdrv_all.zip
+scripts/windows/beidmdrv_all_5.1.8.0000.zip
+scripts/windows/beidmdrv_all_5.1.8.6024.zip
