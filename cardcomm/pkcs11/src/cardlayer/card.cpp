@@ -506,6 +506,9 @@ namespace eIDMW
 		case 0x6982:
 			throw CNotAuthenticatedException(EIDMW_ERR_NOT_AUTHENTICATED);
 			break;
+		case 0x6A83:
+			if (ulRecordID != 0x0D) throw CMWEXCEPTION(EIDMW_ERR_BAD_P1P2);		//don't throw error for gender field
+			break;
 		case 0x6B00:
 			throw CMWEXCEPTION(EIDMW_ERR_PARAM_RANGE);
 			break;
