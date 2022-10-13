@@ -82,11 +82,14 @@
 #define BEID_FIELD_TAG_ID_CardAMention1			0x1D
 #define BEID_FIELD_TAG_ID_CardAMention2			0x1E
 #define BEID_FIELD_TAG_ID_CardEUStartDate		0x1F
+#define BEID_FIELD_TAG_ID_Test	0x20
 
 #define BEID_FIELD_TAG_ADDR_Version				0x00
 #define BEID_FIELD_TAG_ADDR_Street				0x01
 #define BEID_FIELD_TAG_ADDR_ZipCode             0x02
 #define BEID_FIELD_TAG_ADDR_Municipality        0x03
+#define BEID_FIELD_TAG_ADDR_Vat1				0x04
+#define BEID_FIELD_TAG_ADDR_Vat2				0x05
 
 #define BEID_FIELD_TAG_TOKINF_graph				0x00
 #define BEID_FIELD_TAG_TOKINF_elec				0x01

@@ -85,6 +85,8 @@ static struct {
 	{ TEXT("address_street_and_number"),	CK_TRUE, CK_TRUE, CK_TRUE, NULL },
 	{ TEXT("address_zip"),			CK_TRUE, CK_TRUE, CK_TRUE, NULL },
 	{ TEXT("address_municipality"),		CK_TRUE, CK_TRUE, CK_TRUE, NULL },
+	{ TEXT("address_employer_vat_1"),	CK_TRUE, CK_FALSE, CK_TRUE, TEXT("4.1") },
+	{ TEXT("address_employer_vat_2"),	CK_TRUE, CK_FALSE, CK_TRUE, TEXT("4.1") },
 	{ TEXT("PHOTO_FILE"),			CK_FALSE, CK_TRUE, CK_TRUE, NULL },
 	{ TEXT("CERT_RN_FILE"),			CK_FALSE, CK_TRUE, CK_TRUE, NULL },
 	{ TEXT("SIGN_DATA_FILE"),		CK_FALSE, CK_TRUE, CK_TRUE, NULL },
@@ -106,6 +108,7 @@ static struct {
 	{ TEXT("cardA_mention_1"),		CK_TRUE, CK_FALSE, CK_TRUE, TEXT("4.5") }, //extra mentions possible on type A cards
 	{ TEXT("cardA_mention_2"),		CK_TRUE, CK_FALSE, CK_TRUE, TEXT("4.5") },
 	{ TEXT("cardEU_start_date"),	CK_TRUE, CK_FALSE, CK_TRUE, TEXT("4.5") },
+	{ TEXT("test"),		CK_FALSE, CK_TRUE, CK_TRUE, NULL },
 	{ NULL,					0, 0, 0, NULL },
 };
 

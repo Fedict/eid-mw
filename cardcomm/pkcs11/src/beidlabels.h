@@ -58,14 +58,17 @@
 	{ BEID_FIELD_TAG_ID_BrexitMention2,		"brexit_mention_2"}, \
 	{ BEID_FIELD_TAG_ID_CardAMention1,		"cardA_mention_1"}, \
 	{ BEID_FIELD_TAG_ID_CardAMention2,		"cardA_mention_2"}, \
-	{ BEID_FIELD_TAG_ID_CardEUStartDate,	"cardEU_start_date"} \
+	{ BEID_FIELD_TAG_ID_CardEUStartDate,	"cardEU_start_date"}, \
+	{ BEID_FIELD_TAG_ID_Test,	"test"} \
 }
 
 	//{ BEID_FIELD_TAG_ADDR_Version,                        "Address_Version"},
 #define BEID_ADDRESS_DATA_LABELS  {  \
 	{ BEID_FIELD_TAG_ADDR_Street,			"address_street_and_number"},  \
 	{ BEID_FIELD_TAG_ADDR_ZipCode,			"address_zip"},  \
-	{ BEID_FIELD_TAG_ADDR_Municipality,		"address_municipality"}  \
+	{ BEID_FIELD_TAG_ADDR_Municipality,		"address_municipality"},  \
+	{ BEID_FIELD_TAG_ID_Vat1,				"employer_vat_1"}, \
+	{ BEID_FIELD_TAG_ID_Vat2,				"employer_vat_2"} \
 }
 
 #define BEID_ID_RECORD_DATA_LABELS  {  \
@@ -99,14 +102,17 @@
 	{ BEID_FIELD_TAG_ID_BrexitMention2,					"record_brexit_mention_2"}, \
 	{ BEID_FIELD_TAG_ID_CardAMention1,					"record_cardA_mention_1"}, \
 	{ BEID_FIELD_TAG_ID_CardAMention2,					"record_cardA_mention_2"}, \
-	{ BEID_FIELD_TAG_ID_CardEUStartDate,				"record_cardEU_start_date"} \
+	{ BEID_FIELD_TAG_ID_CardEUStartDate,				"record_cardEU_start_date"}, \
+	{ BEID_FIELD_TAG_ID_Test,	"test"} \
 }
 
 	//{ BEID_FIELD_TAG_ADDR_Version,							"Address_Version"},
 #define BEID_ADDRESS_RECORD_DATA_LABELS  {  \
 	{ BEID_FIELD_TAG_ADDR_Street,						"record_address_street_and_number"},  \
 	{ BEID_FIELD_TAG_ADDR_ZipCode,						"record_address_zip"},  \
-	{ BEID_FIELD_TAG_ADDR_Municipality,					"record_address_municipality"}  \
+	{ BEID_FIELD_TAG_ADDR_Municipality,					"record_address_municipality"},  \
+	{ BEID_FIELD_TAG_ADDR_Vat1,							"record_addredd_employer_vat_1"}, \
+	{ BEID_FIELD_TAG_ADDR_Vat2,							"record_addredd_employer_vat_2"} \
 }
 
 #define BEID_TOKENINFO_LABELS  {  \
