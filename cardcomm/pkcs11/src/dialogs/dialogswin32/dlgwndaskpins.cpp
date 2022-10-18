@@ -76,7 +76,11 @@ dlgWndAskPINs::dlgWndAskPINs( DlgPinInfo pinInfo1, DlgPinInfo pinInfo2, std::wst
 		GetClientRect( m_hWnd, &clientRect );
 
 		static const int points_per_inch = 96;
-		int pixels_per_inch = GetDeviceCaps(GetDC(NULL), LOGPIXELSY);
+		HMONITOR h_monitor = MonitorFromWindow(m_hWnd, MONITOR_DEFAULTTONEAREST);
+		MONITORINFOEX mInfo;
+		mInfo.cbSize = sizeof(mInfo);
+		GetMonitorInfo(h_monitor, &mInfo);
+		int pixels_per_inch = GetDeviceCaps(CreateDCW(mInfo.szDevice, NULL, NULL, NULL), LOGPIXELSY);
 		int pixels_height = (16 * pixels_per_inch / points_per_inch);
 		TextFont = CreateFont(pixels_height, 0, 0, 0, FW_DONTCARE, 0, 0, 0,
 				DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
