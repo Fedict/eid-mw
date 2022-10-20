@@ -380,7 +380,7 @@
   - cov-build --dir=cov-int make
   - cov-build --dir=cov-int make check
   - tar cvaf eid-mw-coverity.tar.gz cov-int
-  - curl --form project=eID+middleware --form token=$COVERITY_TOKEN --form email=w@uter.be --form 'file=@"eid-mw-coverity.tar.gz";filename="eID middleware.tgz"' --form version=$CI_COMMIT_SHA --form description="automatic submission by GitLab CI" https://scan.coverity.com/builds?project=eID+middleware
+  - curl --form token=$COVERITY_TOKEN --form email=w@uter.be --form 'file=@"eid-mw-coverity.tar.gz"' --form version=$CI_COMMIT_SHA --form description="automatic submission by GitLab CI" https://scan.coverity.com/builds?project=eID+middleware
   - popd
 
 .check-translations:
