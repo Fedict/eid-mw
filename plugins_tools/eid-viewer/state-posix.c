@@ -49,6 +49,7 @@ struct list {
 #ifdef WIN32
 DWORD WINAPI thread_main(void* val) {
 	INT error;
+	int retval = 0;
 
 	if( WaitForSingleObject( mutex, INFINITE ) == WAIT_FAILED)
 	{
@@ -83,9 +84,9 @@ static void* thread_main(void* val EIDV_UNUSED) {
 			//it can be several combinations of READER_FOUND, CARD_INSERTED, CARD_REMOVED, READER_ATTACHED, READER_REMOVED events
 			//in order to find out which of the STATE changing events should be triggered, some pkcs11 calls need to be made, 
 			//and we want all (especially getslotlist in v2.20) pkcs11 calls (besides waiting for device changes) to be done on this thread
-			if (tmp->e == EVENT_DEVICE_CHANGED)
+			if (tmp->e == EVENT_DEVICE_CHANGED  && retval != EIDV_RV_FAIL)
 			{
-				eid_vwr_p11_check_reader_list(tmp->data);
+				retval = eid_vwr_p11_check_reader_list(tmp->data);
 			}
 			else
 			{
@@ -104,7 +105,7 @@ static void* thread_main(void* val EIDV_UNUSED) {
 			}
 			free(tmp);
 		}
-
+		retval = 0;
 		WAIT_SIGNAL(cond, mutex);
 	}
 exit:

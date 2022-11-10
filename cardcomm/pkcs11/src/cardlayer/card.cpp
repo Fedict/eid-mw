@@ -103,27 +103,30 @@ namespace eIDMW
 		try
 		{
 			//Get Card Data (compatible with all applets)
-			m_oCardData = SendAPDU(0x80, 0xE4, 0x00, 0x00, 0x1C);
+			if (cardType != CARD_UNKNOWN)
+			{
+				m_oCardData = SendAPDU(0x80, 0xE4, 0x00, 0x00, 0x1C);
 
-			m_ulRemaining = 1;
-			if (m_oCardData.Size() < 23)
-			{
-				throw CMWEXCEPTION(EIDMW_ERR_APPLET_VERSION_NOT_FOUND);
+				m_ulRemaining = 1;
+				if (m_oCardData.Size() < 23)
+				{
+					throw CMWEXCEPTION(EIDMW_ERR_APPLET_VERSION_NOT_FOUND);
+				}
+				m_oCardData.Chop(2);	// remove SW12 = '90 00'
+				m_oSerialNr = CByteArray(m_oCardData.GetBytes(), 16);
+				m_ucAppletVersion = m_oCardData.GetByte(21);
+				if (m_ucAppletVersion >= 0x18) {
+					// Use applet 1.8-specific extended card data
+					m_oCardData = SendAPDU(0x80, 0xE4, 0x00, 0x01, 0x1F);
+					m_oCardData.Chop(2);
+					m_ulRemaining = m_oCardData.GetByte(28);
+				}
+				if (m_oCardData.GetByte(22) == 0x00 && m_oCardData.GetByte(23) == 0x01)
+				{
+					m_ul6CDelay = 50;
+				}
+				m_oPKCS15.SetCard(this);
 			}
-			m_oCardData.Chop(2);	// remove SW12 = '90 00'
-			m_oSerialNr = CByteArray(m_oCardData.GetBytes(), 16);
-			m_ucAppletVersion = m_oCardData.GetByte(21);
-			if (m_ucAppletVersion >= 0x18) {
-				// Use applet 1.8-specific extended card data
-				m_oCardData = SendAPDU(0x80,0xE4, 0x00, 0x01, 0x1F);
-				m_oCardData.Chop(2);
-				m_ulRemaining = m_oCardData.GetByte(28);
-			}
-			if (m_oCardData.GetByte(22) == 0x00 && m_oCardData.GetByte(23) == 0x01)
-			{
-				m_ul6CDelay = 50;
-			}
-			m_oPKCS15.SetCard(this);
 		}
 		catch (CMWException &e)
 		{
