@@ -4,7 +4,7 @@ var searchData=
   ['dateofbirthlabel_52',['DateOfBirthLabel',['../classe_i_d_viewer_1_1_resources_1_1_identity_tab_string_resources.html#a890407567d941ede5ffdbb4047cb5d20',1,'eIDViewer::Resources::IdentityTabStringResources']]],
   ['dateparser_53',['DateParser',['../class_date_parser.html',1,'']]],
   ['datewriter_54',['DateWriter',['../class_date_writer.html',1,'']]],
-  ['description_55',['description',['../struct__slotdesc.html#a490cfe0d8223a55ca6242ba677cb83f1',1,'_slotdesc::description()'],['../structe_i_d_viewer_1_1eid__slotdesc.html#a23af17c78302b71c14ef38ea40b8d1d7',1,'eIDViewer.eid_slotdesc.description()']]],
+  ['description_55',['description',['../structe_i_d_viewer_1_1eid__slotdesc.html#a23af17c78302b71c14ef38ea40b8d1d7',1,'eIDViewer.eid_slotdesc.description()'],['../struct__slotdesc.html#a490cfe0d8223a55ca6242ba677cb83f1',1,'_slotdesc::description()']]],
   ['deserialize_3a_56',['deserialize:',['../interfacee_i_d_o_s_layer_backend.html#a9d1dbb3790b80ac94ceb951f48f05beb',1,'eIDOSLayerBackend']]],
   ['detailed_5finformation_57',['Detailed_Information',['../classe_i_d_viewer_1_1_resources_1_1_certificate_tab_string_resources.html#ae74ec61967ddbc36bb279f4691543040',1,'eIDViewer::Resources::CertificateTabStringResources']]],
   ['dobparser_58',['DobParser',['../class_dob_parser.html',1,'']]],
