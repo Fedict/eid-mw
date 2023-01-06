@@ -336,14 +336,14 @@ int eid_vwr_p11_read_graph_vers(void* data EIDV_UNUSED) {
 	CK_RV retval = C_FindObjects(session, &hKey, ulMaxObjectCount, &ulObjectCount);
 	if (retval != CKR_OK)
 	{
-		be_log(EID_VWR_LOG_DETAIL, TEXT(EID_S_FORMAT) TEXT(":C_FindObjects returned value 0x%2x"), retval);
+		be_log(EID_VWR_LOG_DETAIL, TEXT(":C_FindObjects returned value 0x%2x"), retval);
 		C_FindObjectsFinal(session);
 		return retval;
 	}
 	if ((ulObjectCount == 0) || (hKey == NULL_PTR))
 	{
 		//no "tokeninfo_graph_perso_version" object was found
-		be_log(EID_VWR_LOG_DETAIL, TEXT(EID_S_FORMAT) TEXT(":C_FindObjects did not find object with label tokeninfo_graph_perso_version"));
+		be_log(EID_VWR_LOG_DETAIL, TEXT(":C_FindObjects did not find object with label tokeninfo_graph_perso_version"));
 		check_rv(C_FindObjectsFinal(session));
 	}
 	else
@@ -467,14 +467,14 @@ static int eid_vwr_p11_do_challenge_real(struct eid_vwr_challenge_responsedata *
 	CK_RV retval = C_FindObjects(session, &hKey, ulMaxObjectCount, &ulObjectCount);
 	if (retval != CKR_OK)
 	{
-		be_log(EID_VWR_LOG_DETAIL, TEXT(EID_S_FORMAT) TEXT(":C_FindObjects found return value of 0x%2x"), retval);
+		be_log(EID_VWR_LOG_DETAIL, TEXT(":C_FindObjects found return value of 0x%2x"), retval);
 		C_FindObjectsFinal(session);
 		return retval;
 	}
 	if ((ulObjectCount == 0) || (hKey == NULL_PTR))
 	{
 		//no "Card" object was found
-		be_log(EID_VWR_LOG_DETAIL, TEXT(EID_S_FORMAT) TEXT(":C_FindObjects did not find object with label Card"));
+		be_log(EID_VWR_LOG_DETAIL, TEXT(":C_FindObjects did not find object with label Card"));
 		check_rv(C_FindObjectsFinal(session));
 		p->response = NULL_PTR;
 		p->responselen = 0;
