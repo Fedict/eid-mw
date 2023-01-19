@@ -25,56 +25,104 @@ variables:
 #######################################
 # Stage "docker": build docker images #
 #######################################
-suse-build:
-  extends: .docker-base
+suse-build-arm:
+  extends: .docker-base-arm
   only:
     changes:
     - .ci/dockerfiles/suse-build/**/*
     - .ci/builds-docker.yml
     - .ci/build-configs.yml
 
-fed-build:
-  extends: .docker-base
+suse-build-x86:
+  extends: .docker-base-x86
+  only:
+    changes:
+    - .ci/dockerfiles/suse-build/**/*
+    - .ci/builds-docker.yml
+    - .ci/build-configs.yml
+
+fed-build-arm:
+  extends: .docker-base-arm
   only:
     changes:
     - .ci/dockerfiles/fed-build/**/*
     - .ci/builds-docker.yml
     - .ci/build-configs.yml
 
-deb-build:
-  extends: .docker-base
+fed-build-x86:
+  extends: .docker-base-x86
+  only:
+    changes:
+    - .ci/dockerfiles/fed-build/**/*
+    - .ci/builds-docker.yml
+    - .ci/build-configs.yml
+
+deb-build-arm:
+  extends: .docker-base-arm
   only:
     changes:
     - .ci/dockerfiles/deb-build/**/*
     - .ci/builds-docker.yml
     - .ci/build-configs.yml
 
-deb-repro:
-  extends: .docker-base
+deb-build-x86:
+  extends: .docker-base-x86
+  only:
+    changes:
+    - .ci/dockerfiles/deb-build/**/*
+    - .ci/builds-docker.yml
+    - .ci/build-configs.yml
+
+deb-repro-arm:
+  extends: .docker-base-arm
   only:
     changes:
     - .ci/dockerfiles/deb-repro/**/*
     - .ci/builds-docker.yml
     - .ci/build-configs.yml
 
-deb-scan-build:
-  extends: .docker-base
+deb-repro-x86:
+  extends: .docker-base-x86
+  only:
+    changes:
+    - .ci/dockerfiles/deb-repro/**/*
+    - .ci/builds-docker.yml
+    - .ci/build-configs.yml
+
+deb-scan-build-arm:
+  extends: .docker-base-arm
   only:
     changes:
     - .ci/dockerfiles/deb-scan-build/**/*
     - .ci/builds-docker.yml
     - .ci/build-configs.yml
 
-deb-sbuild:
-  extends: .docker-base
+deb-scan-build-x86:
+  extends: .docker-base-x86
+  only:
+    changes:
+    - .ci/dockerfiles/deb-scan-build/**/*
+    - .ci/builds-docker.yml
+    - .ci/build-configs.yml
+
+deb-sbuild-arm:
+  extends: .docker-base-arm
   only:
     changes:
     - .ci/dockerfiles/deb-sbuild/**/*
     - .ci/builds-docker.yml
     - .ci/build-configs.yml
 
-gtk4-build:
-  extends: .docker-base
+deb-sbuild-x86:
+  extends: .docker-base-x86
+  only:
+    changes:
+    - .ci/dockerfiles/deb-sbuild/**/*
+    - .ci/builds-docker.yml
+    - .ci/build-configs.yml
+
+gtk4-build-arm:
+  extends: .docker-base-arm
   only:
     changes:
     - .ci/dockerfiles/gtk4-build/**/*
@@ -82,8 +130,25 @@ gtk4-build:
     - .ci/build-configs.yml
   allow_failure: true
 
-deb-testing:
-  extends: .docker-base
+gtk4-build-x86:
+  extends: .docker-base-x86
+  only:
+    changes:
+    - .ci/dockerfiles/gtk4-build/**/*
+    - .ci/builds-docker.yml
+    - .ci/build-configs.yml
+  allow_failure: true
+
+deb-testing-arm:
+  extends: .docker-base-arm
+  only:
+    changes:
+    - .ci/dockerfiles/deb-testing/**/*
+    - .ci/builds-docker.yml
+    - .ci/build-configs.yml
+
+deb-testing-x86:
+  extends: .docker-base-x86
   only:
     changes:
     - .ci/dockerfiles/deb-testing/**/*
@@ -143,8 +208,17 @@ src:srpm:
 # Stage "binary-package": build binaries and binary packages #
 ##############################################################
 ## Debian-based distributions
-.build-deb: &build-deb
-  extends: .build-deb-base
+.build-deb-arm: &build-deb-arm
+  extends: .build-deb-base-arm
+  dependencies:
+    - test:distcheck
+  stage: binary-package
+  needs:
+    - test:distcheck
+    - test:robot:linux
+
+.build-deb-x86: &build-deb-x86
+  extends: .build-deb-base-x86
   dependencies:
     - test:distcheck
   stage: binary-package
@@ -153,289 +227,273 @@ src:srpm:
     - test:robot:linux
 
 build:deb_oldstable_32:
-  <<: *build-deb
+  <<: *build-deb-x86
   variables:
     DIST: debian
     CODE: $DEBIAN_OLDSTABLE_CODE
     SHORT: deb$DEBIAN_OLDSTABLE_VERSION
     ARCH: i386
     GIT_STRATEGY: none
-    BUILDER_ARCH: x86
   only:
     variables:
     - $DEBIAN_OLDSTABLE_CODE
 build:deb_oldstable_arm32:
-  <<: *build-deb
+  <<: *build-deb-arm
   variables:
     DIST: debian
     CODE: $DEBIAN_OLDSTABLE_CODE
     SHORT: deb$DEBIAN_OLDSTABLE_VERSION
     ARCH: armhf
     GIT_STRATEGY: none
-    BUILDER_ARCH: arm
   only:
     variables:
     - $DEBIAN_OLDSTABLE_CODE
 build:deb_oldstable_64:
-  <<: *build-deb
+  <<: *build-deb-x86
   variables:
     DIST: debian
     CODE: $DEBIAN_OLDSTABLE_CODE
     SHORT: deb$DEBIAN_OLDSTABLE_VERSION
     ARCH: amd64
     GIT_STRATEGY: none
-    BUILDER_ARCH: x86
   only:
     variables:
     - $DEBIAN_OLDSTABLE_CODE
 build:deb_oldstable_arm64:
-  <<: *build-deb
+  <<: *build-deb-arm
   variables:
     DIST: debian
     CODE: $DEBIAN_OLDSTABLE_CODE
     SHORT: deb$DEBIAN_OLDSTABLE_VERSION
     ARCH: arm64
     GIT_STRATEGY: none
-    BUILDER_ARCH: arm
   only:
     variables:
     - $DEBIAN_OLDSTABLE_CODE
 build:deb_stable_32:
-  <<: *build-deb
+  <<: *build-deb-x86
   variables:
     DIST: debian
     CODE: $DEBIAN_STABLE_CODE
     SHORT: deb$DEBIAN_STABLE_VERSION
     ARCH: i386
     GIT_STRATEGY: none
-    BUILDER_ARCH: x86
   only:
     variables:
     - $DEBIAN_STABLE_CODE
 build:deb_stable_arm32:
-  <<: *build-deb
+  <<: *build-deb-arm
   variables:
     DIST: debian
     CODE: $DEBIAN_STABLE_CODE
     SHORT: deb$DEBIAN_STABLE_VERSION
     ARCH: armhf
     GIT_STRATEGY: none
-    BUILDER_ARCH: arm
   only:
     variables:
     - $DEBIAN_STABLE_CODE
 build:deb_stable_64:
-  <<: *build-deb
+  <<: *build-deb-x86
   variables:
     DIST: debian
     CODE: $DEBIAN_STABLE_CODE
     SHORT: deb$DEBIAN_STABLE_VERSION
     ARCH: amd64
     GIT_STRATEGY: none
-    BUILDER_ARCH: x86
   only:
     variables:
     - $DEBIAN_STABLE_CODE
 build:deb_stable_arm64:
-  <<: *build-deb
+  <<: *build-deb-arm
   variables:
     DIST: debian
     CODE: $DEBIAN_STABLE_CODE
     SHORT: deb$DEBIAN_STABLE_VERSION
     ARCH: arm64
     GIT_STRATEGY: none
-    BUILDER_ARCH: arm
   only:
     variables:
     - $DEBIAN_STABLE_CODE
 build:sid-32:
-  <<: *build-deb
+  <<: *build-deb-x86
   variables:
     DIST: debian
     CODE: sid
     SHORT: sid
     ARCH: i386
     GIT_STRATEGY: none
-    BUILDER_ARCH: x86
   allow_failure: true
 build:sid-arm32:
-  <<: *build-deb
+  <<: *build-deb-arm
   variables:
     DIST: debian
     CODE: sid
     SHORT: sid
     ARCH: armhf
     GIT_STRATEGY: none
-    BUILDER_ARCH: arm
   allow_failure: true
 build:sid-64:
-  <<: *build-deb
+  <<: *build-deb-x86
   variables:
     DIST: debian
     CODE: sid
     SHORT: sid
     ARCH: amd64
     GIT_STRATEGY: none
-    BUILDER_ARCH: x86
   allow_failure: true
 build:sid-arm64:
-  <<: *build-deb
+  <<: *build-deb-arm
   variables:
     DIST: debian
     CODE: sid
     SHORT: sid
     ARCH: arm64
     GIT_STRATEGY: none
-    BUILDER_ARCH: arm
   allow_failure: true
 build:ubuntu_oldlts_32:
-  <<: *build-deb
+  <<: *build-deb-x86
   variables:
     DIST: ubuntu
     CODE: $UBUNTU_OLDLTS_CODE
     SHORT: u$UBUNTU_OLDLTS_VERSION
     ARCH: i386
     GIT_STRATEGY: none
-    BUILDER_ARCH: x86
   only:
     variables:
     - $UBUNTU_OLDLTS_CODE
 build:ubuntu_oldlts_arm32:
-  <<: *build-deb
+  <<: *build-deb-arm
   variables:
     DIST: ubuntu
     CODE: $UBUNTU_OLDLTS_CODE
     SHORT: u$UBUNTU_OLDLTS_VERSION
     ARCH: armhf
     GIT_STRATEGY: none
-    BUILDER_ARCH: arm
   only:
     variables:
     - $UBUNTU_OLDLTS_CODE
 build:ubuntu_oldlts_64:
-  <<: *build-deb
+  <<: *build-deb-x86
   variables:
     DIST: ubuntu
     CODE: $UBUNTU_OLDLTS_CODE
     SHORT: u$UBUNTU_OLDLTS_VERSION
     ARCH: amd64
     GIT_STRATEGY: none
-    BUILDER_ARCH: x86
   only:
     variables:
     - $UBUNTU_OLDLTS_CODE
 build:ubuntu_oldlts_arm64:
-  <<: *build-deb
+  <<: *build-deb-arm
   variables:
     DIST: ubuntu
     CODE: $UBUNTU_OLDLTS_CODE
     SHORT: u$UBUNTU_OLDLTS_VERSION
     ARCH: arm64
     GIT_STRATEGY: none
-    BUILDER_ARCH: arm
   only:
     variables:
     - $UBUNTU_OLDLTS_CODE
 build:ubuntu_lts_32:
-  <<: *build-deb
+  <<: *build-deb-x86
   variables:
     DIST: ubuntu
     CODE: $UBUNTU_LTS_CODE
     SHORT: u$UBUNTU_LTS_VERSION
     ARCH: i386
     GIT_STRATEGY: none
-    BUILDER_ARCH: x86
   only:
     variables:
     - $UBUNTU_LTS_CODE
 build:ubuntu_lts_arm32:
-  <<: *build-deb
+  <<: *build-deb-arm
   variables:
     DIST: ubuntu
     CODE: $UBUNTU_LTS_CODE
     SHORT: u$UBUNTU_LTS_VERSION
     ARCH: armhf
     GIT_STRATEGY: none
-    BUILDER_ARCH: arm
   only:
     variables:
     - $UBUNTU_LTS_CODE
 build:ubuntu_lts_64:
-  <<: *build-deb
+  <<: *build-deb-x86
   variables:
     DIST: ubuntu
     CODE: $UBUNTU_LTS_CODE
     SHORT: u$UBUNTU_LTS_VERSION
     ARCH: amd64
     GIT_STRATEGY: none
-    BUILDER_ARCH: x86
   only:
     variables:
     - $UBUNTU_LTS_CODE
 build:ubuntu_lts_arm64:
-  <<: *build-deb
+  <<: *build-deb-arm
   variables:
     DIST: ubuntu
     CODE: $UBUNTU_LTS_CODE
     SHORT: u$UBUNTU_LTS_VERSION
     ARCH: arm64
     GIT_STRATEGY: none
-    BUILDER_ARCH: arm
   only:
     variables:
     - $UBUNTU_LTS_CODE
 build:ubuntu_stable_32:
-  <<: *build-deb
+  <<: *build-deb-x86
   variables:
     DIST: ubuntu
     CODE: $UBUNTU_STABLE_CODE
     SHORT: u$UBUNTU_STABLE_VERSION
     ARCH: i386
     GIT_STRATEGY: none
-    BUILDER_ARCH: x86
   only:
     variables:
     - $UBUNTU_STABLE_CODE
 build:ubuntu_stable_arm32:
-  <<: *build-deb
+  <<: *build-deb-arm
   variables:
     DIST: ubuntu
     CODE: $UBUNTU_STABLE_CODE
     SHORT: u$UBUNTU_STABLE_VERSION
     ARCH: armhf
     GIT_STRATEGY: none
-    BUILDER_ARCH: arm
   only:
     variables:
     - $UBUNTU_STABLE_CODE
 build:ubuntu_stable_64:
-  <<: *build-deb
+  <<: *build-deb-x86
   variables:
     DIST: ubuntu
     CODE: $UBUNTU_STABLE_CODE
     SHORT: u$UBUNTU_STABLE_VERSION
     ARCH: amd64
     GIT_STRATEGY: none
-    BUILDER_ARCH: x86
   only:
     variables:
     - $UBUNTU_STABLE_CODE
 build:ubuntu_stable_arm64:
-  <<: *build-deb
+  <<: *build-deb-arm
   variables:
     DIST: ubuntu
     CODE: $UBUNTU_STABLE_CODE
     SHORT: u$UBUNTU_STABLE_VERSION
     ARCH: arm64
     GIT_STRATEGY: none
-    BUILDER_ARCH: arm
   only:
     variables:
     - $UBUNTU_STABLE_CODE
 
 # Fedora-based distributions
-.build-fed: &build-fed
-  extends: .build-fed-base
+.build-fed-arm: &build-fed-arm
+  extends: .build-fed-base-arm
+  dependencies:
+    - src:srpm
+  stage: binary-package
+  needs:
+    - src:srpm
+
+.build-fed-x86: &build-fed-x86
+  extends: .build-fed-base-x86
   dependencies:
     - src:srpm
   stage: binary-package
@@ -443,171 +501,164 @@ build:ubuntu_stable_arm64:
     - src:srpm
 
 build:fedora_oldstable_32:
-  <<: *build-fed
+  <<: *build-fed-x86
   variables:
     DIST: fedora
     DVER: $FEDORA_OLDSTABLE_VERSION
     ARCH: i386
-    BUILDER_ARCH: x86
   only:
     variables:
     - $FEDORA_OLDSTABLE_VERSION
 build:fedora_oldstable_arm32:
-  <<: *build-fed
+  <<: *build-fed-arm
   variables:
     DIST: fedora
     DVER: $FEDORA_OLDSTABLE_VERSION
     ARCH: aarch32
-    BUILDER_ARCH: arm
   only:
     variables:
     - $FEDORA_OLDSTABLE_VERSION
 build:fedora_oldstable_64:
-  <<: *build-fed
+  <<: *build-fed-x86
   variables:
     DIST: fedora
     DVER: $FEDORA_OLDSTABLE_VERSION
     ARCH: x86_64
-    BUILDER_ARCH: x86
   only:
     variables:
     - $FEDORA_OLDSTABLE_VERSION
 build:fedora_oldstable_arm64:
-  <<: *build-fed
+  <<: *build-fed-arm
   variables:
     DIST: fedora
     DVER: $FEDORA_OLDSTABLE_VERSION
     ARCH: aarch64
-    BUILDER_ARCH: arm
   only:
     variables:
     - $FEDORA_OLDSTABLE_VERSION
 build:fedora_stable_32:
-  <<: *build-fed
+  <<: *build-fed-x86
   variables:
     DIST: fedora
     DVER: $FEDORA_STABLE_VERSION
     ARCH: i386
-    BUILDER_ARCH: x86
   only:
     variables:
     - $FEDORA_STABLE_VERSION
 build:fedora_stable_arm32:
-  <<: *build-fed
+  <<: *build-fed-arm
   variables:
     DIST: fedora
     DVER: $FEDORA_STABLE_VERSION
     ARCH: aarch32
-    BUILDER_ARCH: arm
   only:
     variables:
     - $FEDORA_STABLE_VERSION
 build:fedora_stable_64:
-  <<: *build-fed
+  <<: *build-fed-x86
   variables:
     DIST: fedora
     DVER: $FEDORA_STABLE_VERSION
     ARCH: x86_64
-    BUILDER_ARCH: x86
   only:
     variables:
     - $FEDORA_STABLE_VERSION
 build:fedora_stable_arm64:
-  <<: *build-fed
+  <<: *build-fed-arm
   variables:
     DIST: fedora
     DVER: $FEDORA_STABLE_VERSION
     ARCH: aarch64
-    BUILDER_ARCH: arm
   only:
     variables:
     - $FEDORA_STABLE_VERSION
 build:el_oldstable_64:
-  <<: *build-fed
+  <<: *build-fed-x86
   variables:
     DIST: $EL_OLDSTABLE_DIST
     DVER: $EL_OLDSTABLE_VERSION
     ARCH: x86_64
-    BUILDER_ARCH: x86
   only:
     variables:
     - $EL_OLDSTABLE_VERSION
 build:el_oldstable_arm64:
-  <<: *build-fed
+  <<: *build-fed-arm
   variables:
     DIST: $EL_OLDSTABLE_DIST
     DVER: $EL_OLDSTABLE_VERSION
     ARCH: aarch64
-    BUILDER_ARCH: arm
   only:
     variables:
     - $EL_OLDSTABLE_VERSION
 build:el_stable_64:
-  <<: *build-fed
+  <<: *build-fed-x86
   variables:
     DIST: $EL_STABLE_DIST
     DVER: $EL_STABLE_VERSION
     ARCH: x86_64
-    BUILDER_ARCH: x86
   only:
     variables:
     - $EL_STABLE_VERSION
 build:el_stable_arm64:
-  <<: *build-fed
+  <<: *build-fed-arm
   variables:
     DIST: $EL_STABLE_DIST
     DVER: $EL_STABLE_VERSION
     ARCH: aarch64
-    BUILDER_ARCH: arm
   only:
     variables:
     - $EL_STABLE_VERSION
 
 # openSUSE-based distributions
-.build-suse: &build-suse
-  extends: .build-suse-base
+.build-suse-arm: &build-suse-arm
+  extends: .build-suse-base-arm
   dependencies:
     - src:srpm
   stage: binary-package
   needs:
     - src:srpm
+
+.build-suse-x86: &build-suse-x86
+  extends: .build-suse-base-x86
+  dependencies:
+    - src:srpm
+  stage: binary-package
+  needs:
+    - src:srpm
+
 build:suse_oldstable:
-  <<: *build-suse
+  <<: *build-suse-x86
   variables:
     DIST: opensuse
     DVER: $OPENSUSE_OLDSTABLE_VERSION
     ARCH: x86_64
-    BUILDER_ARCH: x86
   only:
     variables:
     - $OPENSUSE_OLDSTABLE_VERSION
 build:suse_oldstable_arm:
-  <<: *build-suse
+  <<: *build-suse-arm
   variables:
     DIST: opensuse
     DVER: $OPENSUSE_OLDSTABLE_VERSION
     ARCH: aarch64
-    BUILDER_ARCH: arm
   only:
     variables:
     - $OPENSUSE_OLDSTABLE_VERSION
 build:suse_stable:
-  <<: *build-suse
+  <<: *build-suse-x86
   variables:
     DIST: opensuse
     DVER: $OPENSUSE_STABLE_VERSION
     ARCH: x86_64
-    BUILDER_ARCH: x86
   only:
     variables:
     - $OPENSUSE_STABLE_VERSION
 build:suse_stable_arm:
-  <<: *build-suse
+  <<: *build-suse-arm
   variables:
     DIST: opensuse
     DVER: $OPENSUSE_STABLE_VERSION
     ARCH: aarch64
-    BUILDER_ARCH: arm
   only:
     variables:
     - $OPENSUSE_STABLE_VERSION

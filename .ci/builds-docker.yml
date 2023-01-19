@@ -6,8 +6,6 @@
   services:
   - name: docker:dind
     alias: docker
-  tags:
-  - dind
   variables:
     IMAGE_TAG: $CI_REGISTRY_IMAGE/$CI_JOB_NAME:$CI_COMMIT_REF_SLUG
     DOCKER_HOST: tcp://docker:2376
@@ -32,3 +30,15 @@
   - cd $OLDDIR
   after_script:
   - docker logout $CI_REGISTRY
+
+.docker-base-arm:
+  extends: .docker-base
+  tags:
+  - dind
+  - arm
+
+.docker-base-x86:
+  extends: .docker-base
+  tags:
+  - dind
+  - x86
