@@ -160,6 +160,7 @@ build:deb_oldstable_32:
     SHORT: deb$DEBIAN_OLDSTABLE_VERSION
     ARCH: i386
     GIT_STRATEGY: none
+    BUILDER_ARCH: x86
   only:
     variables:
     - $DEBIAN_OLDSTABLE_CODE
@@ -171,6 +172,7 @@ build:deb_oldstable_arm32:
     SHORT: deb$DEBIAN_OLDSTABLE_VERSION
     ARCH: armhf
     GIT_STRATEGY: none
+    BUILDER_ARCH: arm
   only:
     variables:
     - $DEBIAN_OLDSTABLE_CODE
@@ -182,6 +184,7 @@ build:deb_oldstable_64:
     SHORT: deb$DEBIAN_OLDSTABLE_VERSION
     ARCH: amd64
     GIT_STRATEGY: none
+    BUILDER_ARCH: x86
   only:
     variables:
     - $DEBIAN_OLDSTABLE_CODE
@@ -193,6 +196,7 @@ build:deb_oldstable_arm64:
     SHORT: deb$DEBIAN_OLDSTABLE_VERSION
     ARCH: arm64
     GIT_STRATEGY: none
+    BUILDER_ARCH: arm
   only:
     variables:
     - $DEBIAN_OLDSTABLE_CODE
@@ -204,6 +208,7 @@ build:deb_stable_32:
     SHORT: deb$DEBIAN_STABLE_VERSION
     ARCH: i386
     GIT_STRATEGY: none
+    BUILDER_ARCH: x86
   only:
     variables:
     - $DEBIAN_STABLE_CODE
@@ -215,6 +220,7 @@ build:deb_stable_arm32:
     SHORT: deb$DEBIAN_STABLE_VERSION
     ARCH: armhf
     GIT_STRATEGY: none
+    BUILDER_ARCH: arm
   only:
     variables:
     - $DEBIAN_STABLE_CODE
@@ -226,6 +232,7 @@ build:deb_stable_64:
     SHORT: deb$DEBIAN_STABLE_VERSION
     ARCH: amd64
     GIT_STRATEGY: none
+    BUILDER_ARCH: x86
   only:
     variables:
     - $DEBIAN_STABLE_CODE
@@ -237,6 +244,7 @@ build:deb_stable_arm64:
     SHORT: deb$DEBIAN_STABLE_VERSION
     ARCH: arm64
     GIT_STRATEGY: none
+    BUILDER_ARCH: arm
   only:
     variables:
     - $DEBIAN_STABLE_CODE
@@ -248,6 +256,7 @@ build:sid-32:
     SHORT: sid
     ARCH: i386
     GIT_STRATEGY: none
+    BUILDER_ARCH: x86
   allow_failure: true
 build:sid-arm32:
   <<: *build-deb
@@ -257,6 +266,7 @@ build:sid-arm32:
     SHORT: sid
     ARCH: armhf
     GIT_STRATEGY: none
+    BUILDER_ARCH: arm
   allow_failure: true
 build:sid-64:
   <<: *build-deb
@@ -266,6 +276,7 @@ build:sid-64:
     SHORT: sid
     ARCH: amd64
     GIT_STRATEGY: none
+    BUILDER_ARCH: x86
   allow_failure: true
 build:sid-arm64:
   <<: *build-deb
@@ -275,6 +286,7 @@ build:sid-arm64:
     SHORT: sid
     ARCH: arm64
     GIT_STRATEGY: none
+    BUILDER_ARCH: arm
   allow_failure: true
 build:ubuntu_oldlts_32:
   <<: *build-deb
@@ -284,6 +296,7 @@ build:ubuntu_oldlts_32:
     SHORT: u$UBUNTU_OLDLTS_VERSION
     ARCH: i386
     GIT_STRATEGY: none
+    BUILDER_ARCH: x86
   only:
     variables:
     - $UBUNTU_OLDLTS_CODE
@@ -295,6 +308,7 @@ build:ubuntu_oldlts_arm32:
     SHORT: u$UBUNTU_OLDLTS_VERSION
     ARCH: armhf
     GIT_STRATEGY: none
+    BUILDER_ARCH: arm
   only:
     variables:
     - $UBUNTU_OLDLTS_CODE
@@ -306,6 +320,7 @@ build:ubuntu_oldlts_64:
     SHORT: u$UBUNTU_OLDLTS_VERSION
     ARCH: amd64
     GIT_STRATEGY: none
+    BUILDER_ARCH: x86
   only:
     variables:
     - $UBUNTU_OLDLTS_CODE
@@ -317,6 +332,7 @@ build:ubuntu_oldlts_arm64:
     SHORT: u$UBUNTU_OLDLTS_VERSION
     ARCH: arm64
     GIT_STRATEGY: none
+    BUILDER_ARCH: arm
   only:
     variables:
     - $UBUNTU_OLDLTS_CODE
@@ -328,6 +344,7 @@ build:ubuntu_lts_32:
     SHORT: u$UBUNTU_LTS_VERSION
     ARCH: i386
     GIT_STRATEGY: none
+    BUILDER_ARCH: x86
   only:
     variables:
     - $UBUNTU_LTS_CODE
@@ -339,6 +356,7 @@ build:ubuntu_lts_arm32:
     SHORT: u$UBUNTU_LTS_VERSION
     ARCH: armhf
     GIT_STRATEGY: none
+    BUILDER_ARCH: arm
   only:
     variables:
     - $UBUNTU_LTS_CODE
@@ -350,6 +368,7 @@ build:ubuntu_lts_64:
     SHORT: u$UBUNTU_LTS_VERSION
     ARCH: amd64
     GIT_STRATEGY: none
+    BUILDER_ARCH: x86
   only:
     variables:
     - $UBUNTU_LTS_CODE
@@ -361,6 +380,7 @@ build:ubuntu_lts_arm64:
     SHORT: u$UBUNTU_LTS_VERSION
     ARCH: arm64
     GIT_STRATEGY: none
+    BUILDER_ARCH: arm
   only:
     variables:
     - $UBUNTU_LTS_CODE
@@ -372,6 +392,7 @@ build:ubuntu_stable_32:
     SHORT: u$UBUNTU_STABLE_VERSION
     ARCH: i386
     GIT_STRATEGY: none
+    BUILDER_ARCH: x86
   only:
     variables:
     - $UBUNTU_STABLE_CODE
@@ -383,6 +404,7 @@ build:ubuntu_stable_arm32:
     SHORT: u$UBUNTU_STABLE_VERSION
     ARCH: armhf
     GIT_STRATEGY: none
+    BUILDER_ARCH: arm
   only:
     variables:
     - $UBUNTU_STABLE_CODE
@@ -394,6 +416,7 @@ build:ubuntu_stable_64:
     SHORT: u$UBUNTU_STABLE_VERSION
     ARCH: amd64
     GIT_STRATEGY: none
+    BUILDER_ARCH: x86
   only:
     variables:
     - $UBUNTU_STABLE_CODE
@@ -405,6 +428,7 @@ build:ubuntu_stable_arm64:
     SHORT: u$UBUNTU_STABLE_VERSION
     ARCH: arm64
     GIT_STRATEGY: none
+    BUILDER_ARCH: arm
   only:
     variables:
     - $UBUNTU_STABLE_CODE
@@ -424,6 +448,7 @@ build:fedora_oldstable_32:
     DIST: fedora
     DVER: $FEDORA_OLDSTABLE_VERSION
     ARCH: i386
+    BUILDER_ARCH: x86
   only:
     variables:
     - $FEDORA_OLDSTABLE_VERSION
@@ -433,6 +458,7 @@ build:fedora_oldstable_arm32:
     DIST: fedora
     DVER: $FEDORA_OLDSTABLE_VERSION
     ARCH: aarch32
+    BUILDER_ARCH: arm
   only:
     variables:
     - $FEDORA_OLDSTABLE_VERSION
@@ -442,6 +468,7 @@ build:fedora_oldstable_64:
     DIST: fedora
     DVER: $FEDORA_OLDSTABLE_VERSION
     ARCH: x86_64
+    BUILDER_ARCH: x86
   only:
     variables:
     - $FEDORA_OLDSTABLE_VERSION
@@ -451,6 +478,7 @@ build:fedora_oldstable_arm64:
     DIST: fedora
     DVER: $FEDORA_OLDSTABLE_VERSION
     ARCH: aarch64
+    BUILDER_ARCH: arm
   only:
     variables:
     - $FEDORA_OLDSTABLE_VERSION
@@ -460,6 +488,7 @@ build:fedora_stable_32:
     DIST: fedora
     DVER: $FEDORA_STABLE_VERSION
     ARCH: i386
+    BUILDER_ARCH: x86
   only:
     variables:
     - $FEDORA_STABLE_VERSION
@@ -469,6 +498,7 @@ build:fedora_stable_arm32:
     DIST: fedora
     DVER: $FEDORA_STABLE_VERSION
     ARCH: aarch32
+    BUILDER_ARCH: arm
   only:
     variables:
     - $FEDORA_STABLE_VERSION
@@ -478,6 +508,7 @@ build:fedora_stable_64:
     DIST: fedora
     DVER: $FEDORA_STABLE_VERSION
     ARCH: x86_64
+    BUILDER_ARCH: x86
   only:
     variables:
     - $FEDORA_STABLE_VERSION
@@ -487,6 +518,7 @@ build:fedora_stable_arm64:
     DIST: fedora
     DVER: $FEDORA_STABLE_VERSION
     ARCH: aarch64
+    BUILDER_ARCH: arm
   only:
     variables:
     - $FEDORA_STABLE_VERSION
@@ -496,6 +528,7 @@ build:el_oldstable_64:
     DIST: $EL_OLDSTABLE_DIST
     DVER: $EL_OLDSTABLE_VERSION
     ARCH: x86_64
+    BUILDER_ARCH: x86
   only:
     variables:
     - $EL_OLDSTABLE_VERSION
@@ -505,6 +538,7 @@ build:el_oldstable_arm64:
     DIST: $EL_OLDSTABLE_DIST
     DVER: $EL_OLDSTABLE_VERSION
     ARCH: aarch64
+    BUILDER_ARCH: arm
   only:
     variables:
     - $EL_OLDSTABLE_VERSION
@@ -514,6 +548,7 @@ build:el_stable_64:
     DIST: $EL_STABLE_DIST
     DVER: $EL_STABLE_VERSION
     ARCH: x86_64
+    BUILDER_ARCH: x86
   only:
     variables:
     - $EL_STABLE_VERSION
@@ -523,6 +558,7 @@ build:el_stable_arm64:
     DIST: $EL_STABLE_DIST
     DVER: $EL_STABLE_VERSION
     ARCH: aarch64
+    BUILDER_ARCH: arm
   only:
     variables:
     - $EL_STABLE_VERSION
@@ -541,6 +577,7 @@ build:suse_oldstable:
     DIST: opensuse
     DVER: $OPENSUSE_OLDSTABLE_VERSION
     ARCH: x86_64
+    BUILDER_ARCH: x86
   only:
     variables:
     - $OPENSUSE_OLDSTABLE_VERSION
@@ -550,6 +587,7 @@ build:suse_oldstable_arm:
     DIST: opensuse
     DVER: $OPENSUSE_OLDSTABLE_VERSION
     ARCH: aarch64
+    BUILDER_ARCH: arm
   only:
     variables:
     - $OPENSUSE_OLDSTABLE_VERSION
@@ -559,6 +597,7 @@ build:suse_stable:
     DIST: opensuse
     DVER: $OPENSUSE_STABLE_VERSION
     ARCH: x86_64
+    BUILDER_ARCH: x86
   only:
     variables:
     - $OPENSUSE_STABLE_VERSION
@@ -568,6 +607,7 @@ build:suse_stable_arm:
     DIST: opensuse
     DVER: $OPENSUSE_STABLE_VERSION
     ARCH: aarch64
+    BUILDER_ARCH: arm
   only:
     variables:
     - $OPENSUSE_STABLE_VERSION

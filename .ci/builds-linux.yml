@@ -276,11 +276,6 @@
     - products/deb
     when:
       on_success
-  parallel:
-    matrix:
-    - BUILDER_ARCH:
-        - x86
-        - arm
   tags:
   - docker
   - $BUILDER_ARCH
@@ -288,11 +283,6 @@
 
 .build-fed-base:
   retry: 2
-  parallel:
-    matrix:
-    - BUILDER_ARCH:
-        - x86
-        - arm
   tags:
   - docker
   - $BUILDER_ARCH
@@ -315,11 +305,6 @@
     - src:srpm
   stage: binary-package
   retry: 2
-  parallel:
-    matrix:
-    - BUILDER_ARCH:
-        - x86
-        - arm
   tags:
     - docker
     - $BUILDER_ARCH
