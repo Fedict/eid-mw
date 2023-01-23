@@ -1,7 +1,8 @@
 .distcheck:
   tags:
   - docker
-  image: $CI_REGISTRY_IMAGE/deb-build:$CI_COMMIT_REF_SLUG
+  - x86
+  image: $CI_REGISTRY_IMAGE/deb-build-x86:$CI_COMMIT_REF_SLUG
   retry: 2
   variables:
     GIT_DEPTH: 0
@@ -40,7 +41,8 @@
 .gtk4:
   tags:
   - docker
-  image: $CI_REGISTRY_IMAGE/gtk4-build:$CI_COMMIT_REF_SLUG
+  - x86
+  image: $CI_REGISTRY_IMAGE/gtk4-build-x86:$CI_COMMIT_REF_SLUG
   before_script:
   - pushd $LINUX_BASEDIR
   - autoreconf -f -i
@@ -55,7 +57,8 @@
 .nogtk:
   tags:
   - docker
-  image: $CI_REGISTRY_IMAGE/deb-build:$CI_COMMIT_REF_SLUG
+  - x86
+  image: $CI_REGISTRY_IMAGE/deb-build-x86:$CI_COMMIT_REF_SLUG
   before_script:
   - pushd $LINUX_BASEDIR
   - autoreconf -f -i
@@ -68,7 +71,8 @@
 .nodialogs:
   tags:
   - docker
-  image: $CI_REGISTRY_IMAGE/deb-build:$CI_COMMIT_REF_SLUG
+  - x86
+  image: $CI_REGISTRY_IMAGE/deb-build-x86:$CI_COMMIT_REF_SLUG
   before_script:
   - pushd $LINUX_BASEDIR
   - autoreconf -f -i
@@ -142,7 +146,8 @@
 .repro:debian:
   tags:
   - docker
-  image: $CI_REGISTRY_IMAGE/deb-repro:$CI_COMMIT_REF_SLUG
+  - x86
+  image: $CI_REGISTRY_IMAGE/deb-repro-x86:$CI_COMMIT_REF_SLUG
   dependencies: []
   before_script:
   - if [ ! -z "$ACNG" ]; then sed -i -e "s,http://,$ACNG/," /etc/apt/sources.list; else echo "no proxy configured"; fi
@@ -164,7 +169,8 @@
 .scan-build:
   tags:
     - docker
-  image: $CI_REGISTRY_IMAGE/deb-scan-build:$CI_COMMIT_REF_SLUG
+    - x86
+  image: $CI_REGISTRY_IMAGE/deb-scan-build-x86:$CI_COMMIT_REF_SLUG
   before_script:
   - if [ ! -z "$ACNG" ]; then sed -i -e "s,http://,$ACNG/," /etc/apt/sources.list; else echo "no proxy configured"; fi
   - apt-get update
@@ -185,7 +191,8 @@
 .gcc-analyzer:
   tags:
     - docker
-  image: $CI_REGISTRY_IMAGE/deb-testing:$CI_COMMIT_REF_SLUG
+    - x86
+  image: $CI_REGISTRY_IMAGE/deb-testing-x86:$CI_COMMIT_REF_SLUG
   before_script:
   - if [ ! -z "$ACNG" ]; then sed -i -e "s,http://,$ACNG/," /etc/apt/sources.list; else echo "no proxy configured"; fi
   - apt-get update
@@ -208,7 +215,8 @@
     GIT_STRATEGY: none
   tags:
     - docker
-  image: $CI_REGISTRY_IMAGE/fed-build:$CI_COMMIT_REF_SLUG
+    - x86
+  image: $CI_REGISTRY_IMAGE/fed-build-x86:$CI_COMMIT_REF_SLUG
   before_script:
   - dnf -y install rpm-build git rpmdevtools
   - rpmdev-setuptree
@@ -276,23 +284,23 @@
     - products/deb
     when:
       on_success
-  image: $CI_REGISTRY_IMAGE/deb-sbuild:$CI_COMMIT_REF_SLUG
 
 .build-deb-base-arm:
   extends: .build-deb-base
   tags:
   - docker
   - arm
+  image: $CI_REGISTRY_IMAGE/deb-sbuild-arm:$CI_COMMIT_REF_SLUG
 
 .build-deb-base-x86:
   extends: .build-deb-base
   tags:
   - docker
   - x86
+  image: $CI_REGISTRY_IMAGE/deb-sbuild-x86:$CI_COMMIT_REF_SLUG
 
 .build-fed-base:
   retry: 2
-  image: $CI_REGISTRY_IMAGE/fed-build:$CI_COMMIT_REF_SLUG
   before_script:
   - dnf -y install mock git
   - VER=$(cat products/srpm/version)
@@ -311,19 +319,20 @@
   tags:
   - docker
   - arm
+  image: $CI_REGISTRY_IMAGE/fed-build-arm:$CI_COMMIT_REF_SLUG
 
 .build-fed-base-x86:
   extends: .build-fed-base
   tags:
   - docker
   - x86
+  image: $CI_REGISTRY_IMAGE/fed-build-x86:$CI_COMMIT_REF_SLUG
 
 .build-suse-base:
   dependencies:
     - src:srpm
   stage: binary-package
   retry: 2
-  image: $CI_REGISTRY_IMAGE/suse-build:$CI_COMMIT_REF_SLUG
   before_script:
     - VER=$(cat products/srpm/version)
     - VERSHORT=${VER#*-}
@@ -343,12 +352,14 @@
   tags:
   - docker
   - arm
+  image: $CI_REGISTRY_IMAGE/suse-build-arm:$CI_COMMIT_REF_SLUG
 
 .build-suse-base-x86:
   extends: .build-suse-base
   tags:
   - docker
   - x86
+  image: $CI_REGISTRY_IMAGE/suse-build-x86:$CI_COMMIT_REF_SLUG
 
 .inject-debs:
   tags:
