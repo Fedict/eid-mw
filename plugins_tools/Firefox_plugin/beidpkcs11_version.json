@@ -1,0 +1,12 @@
+{
+  "name": "belgiumeid@eid.belgium.be",
+  "description": "version number of the currently-installed eID middleware",
+  "type": "storage",
+  "data": {
+    "versionInfo": {
+      "major": 5,
+      "minor": 1,
+      "patch": 8 
+    }
+  }
+}
