@@ -57,14 +57,6 @@ fed-build-x86:
     - .ci/builds-docker.yml
     - .ci/build-configs.yml
 
-deb-build-arm:
-  extends: .docker-base-arm
-  only:
-    changes:
-    - .ci/dockerfiles/deb-build-arm/**/*
-    - .ci/builds-docker.yml
-    - .ci/build-configs.yml
-
 deb-build-x86:
   extends: .docker-base-x86
   only:
@@ -73,27 +65,11 @@ deb-build-x86:
     - .ci/builds-docker.yml
     - .ci/build-configs.yml
 
-deb-repro-arm:
-  extends: .docker-base-arm
-  only:
-    changes:
-    - .ci/dockerfiles/deb-repro-arm/**/*
-    - .ci/builds-docker.yml
-    - .ci/build-configs.yml
-
 deb-repro-x86:
   extends: .docker-base-x86
   only:
     changes:
     - .ci/dockerfiles/deb-repro-x86/**/*
-    - .ci/builds-docker.yml
-    - .ci/build-configs.yml
-
-deb-scan-build-arm:
-  extends: .docker-base-arm
-  only:
-    changes:
-    - .ci/dockerfiles/deb-scan-build-arm/**/*
     - .ci/builds-docker.yml
     - .ci/build-configs.yml
 
@@ -121,15 +97,6 @@ deb-sbuild-x86:
     - .ci/builds-docker.yml
     - .ci/build-configs.yml
 
-gtk4-build-arm:
-  extends: .docker-base-arm
-  only:
-    changes:
-    - .ci/dockerfiles/gtk4-build-arm/**/*
-    - .ci/builds-docker.yml
-    - .ci/build-configs.yml
-  allow_failure: true
-
 gtk4-build-x86:
   extends: .docker-base-x86
   only:
@@ -138,14 +105,6 @@ gtk4-build-x86:
     - .ci/builds-docker.yml
     - .ci/build-configs.yml
   allow_failure: true
-
-deb-testing-arm:
-  extends: .docker-base-arm
-  only:
-    changes:
-    - .ci/dockerfiles/deb-testing-arm/**/*
-    - .ci/builds-docker.yml
-    - .ci/build-configs.yml
 
 deb-testing-x86:
   extends: .docker-base-x86
