@@ -468,15 +468,6 @@ build:fedora_oldstable_32:
   only:
     variables:
     - $FEDORA_OLDSTABLE_VERSION
-build:fedora_oldstable_arm32:
-  <<: *build-fed-arm
-  variables:
-    DIST: fedora
-    DVER: $FEDORA_OLDSTABLE_VERSION
-    ARCH: aarch32
-  only:
-    variables:
-    - $FEDORA_OLDSTABLE_VERSION
 build:fedora_oldstable_64:
   <<: *build-fed-x86
   variables:
@@ -501,15 +492,6 @@ build:fedora_stable_32:
     DIST: fedora
     DVER: $FEDORA_STABLE_VERSION
     ARCH: i386
-  only:
-    variables:
-    - $FEDORA_STABLE_VERSION
-build:fedora_stable_arm32:
-  <<: *build-fed-arm
-  variables:
-    DIST: fedora
-    DVER: $FEDORA_STABLE_VERSION
-    ARCH: aarch32
   only:
     variables:
     - $FEDORA_STABLE_VERSION
@@ -780,11 +762,9 @@ repo:inject-fed:
     - $CI_COMMIT_TAG
   dependencies:
     - build:fedora_oldstable_32
-    - build:fedora_oldstable_arm32
     - build:fedora_oldstable_64
     - build:fedora_oldstable_arm64
     - build:fedora_stable_32
-    - build:fedora_stable_arm32
     - build:fedora_stable_64
     - build:fedora_stable_arm64
     - build:el_oldstable_64
