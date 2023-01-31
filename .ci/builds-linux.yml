@@ -411,6 +411,7 @@
   image: $COVERITY_BUILD_IMAGE
   tags:
   - docker
+  - x86
   before_script:
   - pushd $LINUX_BASEDIR
   - autoreconf -f -i
