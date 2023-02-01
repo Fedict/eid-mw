@@ -2,7 +2,7 @@
   tags:
   - docker
   - x86
-  image: $CI_REGISTRY_IMAGE/deb-build-x86:$CI_COMMIT_REF_SLUG
+  image: $CI_REGISTRY_IMAGE/deb-build:$CI_COMMIT_REF_SLUG
   retry: 2
   variables:
     GIT_DEPTH: 0
@@ -42,7 +42,7 @@
   tags:
   - docker
   - x86
-  image: $CI_REGISTRY_IMAGE/gtk4-build-x86:$CI_COMMIT_REF_SLUG
+  image: $CI_REGISTRY_IMAGE/gtk4-build:$CI_COMMIT_REF_SLUG
   before_script:
   - pushd $LINUX_BASEDIR
   - autoreconf -f -i
@@ -58,7 +58,7 @@
   tags:
   - docker
   - x86
-  image: $CI_REGISTRY_IMAGE/deb-build-x86:$CI_COMMIT_REF_SLUG
+  image: $CI_REGISTRY_IMAGE/deb-build:$CI_COMMIT_REF_SLUG
   before_script:
   - pushd $LINUX_BASEDIR
   - autoreconf -f -i
@@ -72,7 +72,7 @@
   tags:
   - docker
   - x86
-  image: $CI_REGISTRY_IMAGE/deb-build-x86:$CI_COMMIT_REF_SLUG
+  image: $CI_REGISTRY_IMAGE/deb-build:$CI_COMMIT_REF_SLUG
   before_script:
   - pushd $LINUX_BASEDIR
   - autoreconf -f -i
@@ -147,7 +147,7 @@
   tags:
   - docker
   - x86
-  image: $CI_REGISTRY_IMAGE/deb-repro-x86:$CI_COMMIT_REF_SLUG
+  image: $CI_REGISTRY_IMAGE/deb-repro:$CI_COMMIT_REF_SLUG
   dependencies: []
   before_script:
   - if [ ! -z "$ACNG" ]; then sed -i -e "s,http://,$ACNG/," /etc/apt/sources.list; else echo "no proxy configured"; fi
@@ -170,7 +170,7 @@
   tags:
     - docker
     - x86
-  image: $CI_REGISTRY_IMAGE/deb-scan-build-x86:$CI_COMMIT_REF_SLUG
+  image: $CI_REGISTRY_IMAGE/deb-scan-build:$CI_COMMIT_REF_SLUG
   before_script:
   - if [ ! -z "$ACNG" ]; then sed -i -e "s,http://,$ACNG/," /etc/apt/sources.list; else echo "no proxy configured"; fi
   - apt-get update
@@ -192,7 +192,7 @@
   tags:
     - docker
     - x86
-  image: $CI_REGISTRY_IMAGE/deb-testing-x86:$CI_COMMIT_REF_SLUG
+  image: $CI_REGISTRY_IMAGE/deb-testing:$CI_COMMIT_REF_SLUG
   before_script:
   - if [ ! -z "$ACNG" ]; then sed -i -e "s,http://,$ACNG/," /etc/apt/sources.list; else echo "no proxy configured"; fi
   - apt-get update
@@ -216,7 +216,7 @@
   tags:
     - docker
     - x86
-  image: $CI_REGISTRY_IMAGE/fed-build-x86:$CI_COMMIT_REF_SLUG
+  image: $CI_REGISTRY_IMAGE/fed-build:$CI_COMMIT_REF_SLUG
   before_script:
   - dnf -y install rpm-build git rpmdevtools
   - rpmdev-setuptree
@@ -290,14 +290,14 @@
   tags:
   - docker
   - arm
-  image: $CI_REGISTRY_IMAGE/deb-sbuild-arm:$CI_COMMIT_REF_SLUG
+  image: $CI_REGISTRY_IMAGE/deb-sbuild:$CI_COMMIT_REF_SLUG
 
 .build-deb-base-x86:
   extends: .build-deb-base
   tags:
   - docker
   - x86
-  image: $CI_REGISTRY_IMAGE/deb-sbuild-x86:$CI_COMMIT_REF_SLUG
+  image: $CI_REGISTRY_IMAGE/deb-sbuild:$CI_COMMIT_REF_SLUG
 
 .build-fed-base:
   retry: 2
@@ -319,14 +319,14 @@
   tags:
   - docker
   - arm
-  image: $CI_REGISTRY_IMAGE/fed-build-arm:$CI_COMMIT_REF_SLUG
+  image: $CI_REGISTRY_IMAGE/fed-build:$CI_COMMIT_REF_SLUG
 
 .build-fed-base-x86:
   extends: .build-fed-base
   tags:
   - docker
   - x86
-  image: $CI_REGISTRY_IMAGE/fed-build-x86:$CI_COMMIT_REF_SLUG
+  image: $CI_REGISTRY_IMAGE/fed-build:$CI_COMMIT_REF_SLUG
 
 .build-suse-base:
   dependencies:
@@ -352,14 +352,14 @@
   tags:
   - docker
   - arm
-  image: $CI_REGISTRY_IMAGE/suse-build-arm:$CI_COMMIT_REF_SLUG
+  image: $CI_REGISTRY_IMAGE/suse-build:$CI_COMMIT_REF_SLUG
 
 .build-suse-base-x86:
   extends: .build-suse-base
   tags:
   - docker
   - x86
-  image: $CI_REGISTRY_IMAGE/suse-build-x86:$CI_COMMIT_REF_SLUG
+  image: $CI_REGISTRY_IMAGE/suse-build:$CI_COMMIT_REF_SLUG
 
 .inject-debs:
   tags:
@@ -428,7 +428,7 @@
 .check-translations:
   tags:
   - docker
-  image: $CI_REGISTRY_IMAGE/deb-build-x86:$CI_COMMIT_REF_SLUG
+  image: $CI_REGISTRY_IMAGE/deb-build:$CI_COMMIT_REF_SLUG
   before_script:
   - if [ ! -z "$ACNG" ]; then sed -i -e "s,http://,$ACNG/," /etc/apt/sources.list; else echo "no proxy configured"; fi
   - apt-get update

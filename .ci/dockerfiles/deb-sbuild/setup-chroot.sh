@@ -28,7 +28,12 @@ case $DIST in
 		sbuild-createchroot --arch=$ARCH $CODE /srv/chroot/$CODE ${ACNG}deb.debian.org/debian
 	;;
 	ubuntu)
-		sbuild-createchroot --include=debhelper --arch=$ARCH $CODE /srv/chroot/$CODE ${ACNG}archive.ubuntu.com/ubuntu /usr/share/debootstrap/scripts/gutsy
+		if [ -z "$ARCH" = "armhf" ] || [ -z "$ARCH" = "arm64" ]
+		then
+			sbuild-createchroot --include=debhelper --arch=$ARCH $CODE /srv/chroot/$CODE ${ACNG}ports.ubuntu.com /usr/share/debootstrap/scripts/gutsy
+		else
+			sbuild-createchroot --include=debhelper --arch=$ARCH $CODE /srv/chroot/$CODE ${ACNG}archive.ubuntu.com/ubuntu /usr/share/debootstrap/scripts/gutsy
+		fi
 		# Revert the "default to xz compression" option in recent
 		# Ubuntu distributions
 		sed -i -e "s/my @dpkg_options;/my @dpkg_options = ('-Zxz');/" /srv/chroot/$CODE/usr/bin/dh_builddeb

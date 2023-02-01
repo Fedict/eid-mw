@@ -101,7 +101,7 @@ deb-sbuild-arm:
    IMAGE_NAME: deb-sbuild
   only:
     changes:
-    - .ci/dockerfiles/deb-sbuild-arm/**/*
+    - .ci/dockerfiles/deb-sbuild/**/*
     - .ci/builds-docker.yml
     - .ci/build-configs.yml
 
@@ -111,7 +111,7 @@ deb-sbuild-x86:
    IMAGE_NAME: deb-sbuild
   only:
     changes:
-    - .ci/dockerfiles/deb-sbuild-x86/**/*
+    - .ci/dockerfiles/deb-sbuild/**/*
     - .ci/builds-docker.yml
     - .ci/build-configs.yml
 
