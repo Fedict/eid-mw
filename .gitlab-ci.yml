@@ -27,62 +27,78 @@ variables:
 #######################################
 suse-build-arm:
   extends: .docker-base-arm
+  variables:
+   IMAGE_NAME: suse-build
   only:
     changes:
-    - .ci/dockerfiles/suse-build-arm/**/*
+    - .ci/dockerfiles/suse-build/**/*
     - .ci/builds-docker.yml
     - .ci/build-configs.yml
 
 suse-build-x86:
   extends: .docker-base-x86
+  variables:
+   IMAGE_NAME: suse-build
   only:
     changes:
-    - .ci/dockerfiles/suse-build-x86/**/*
+    - .ci/dockerfiles/suse-build/**/*
     - .ci/builds-docker.yml
     - .ci/build-configs.yml
 
 fed-build-arm:
   extends: .docker-base-arm
+  variables:
+   IMAGE_NAME: fed-build
   only:
     changes:
-    - .ci/dockerfiles/fed-build-arm/**/*
+    - .ci/dockerfiles/fed-build/**/*
     - .ci/builds-docker.yml
     - .ci/build-configs.yml
 
 fed-build-x86:
   extends: .docker-base-x86
+  variables:
+   IMAGE_NAME: fed-build
   only:
     changes:
-    - .ci/dockerfiles/fed-build-x86/**/*
+    - .ci/dockerfiles/fed-build/**/*
     - .ci/builds-docker.yml
     - .ci/build-configs.yml
 
 deb-build-x86:
   extends: .docker-base-x86
+  variables:
+   IMAGE_NAME: deb-build
   only:
     changes:
-    - .ci/dockerfiles/deb-build-x86/**/*
+    - .ci/dockerfiles/deb-build/**/*
     - .ci/builds-docker.yml
     - .ci/build-configs.yml
 
 deb-repro-x86:
   extends: .docker-base-x86
+  variables:
+   IMAGE_NAME: deb-repro
   only:
     changes:
-    - .ci/dockerfiles/deb-repro-x86/**/*
+    - .ci/dockerfiles/deb-repro/**/*
     - .ci/builds-docker.yml
     - .ci/build-configs.yml
 
 deb-scan-build-x86:
   extends: .docker-base-x86
+  variables:
+   IMAGE_NAME: deb-scan-build
   only:
     changes:
-    - .ci/dockerfiles/deb-scan-build-x86/**/*
+    - .ci/dockerfiles/deb-scan-build/**/*
     - .ci/builds-docker.yml
     - .ci/build-configs.yml
 
 deb-sbuild-arm:
   extends: .docker-base-arm
+  variables:
+   IMAGE_NAME: deb-sbuild
   only:
     changes:
     - .ci/dockerfiles/deb-sbuild-arm/**/*
@@ -91,6 +107,8 @@ deb-sbuild-arm:
 
 deb-sbuild-x86:
   extends: .docker-base-x86
+  variables:
+   IMAGE_NAME: deb-sbuild
   only:
     changes:
     - .ci/dockerfiles/deb-sbuild-x86/**/*
@@ -99,18 +117,22 @@ deb-sbuild-x86:
 
 gtk4-build-x86:
   extends: .docker-base-x86
+  variables:
+   IMAGE_NAME: gtk4-build
   only:
     changes:
-    - .ci/dockerfiles/gtk4-build-x86/**/*
+    - .ci/dockerfiles/gtk4-build/**/*
     - .ci/builds-docker.yml
     - .ci/build-configs.yml
   allow_failure: true
 
 deb-testing-x86:
   extends: .docker-base-x86
+  variables:
+   IMAGE_NAME: deb-testing
   only:
     changes:
-    - .ci/dockerfiles/deb-testing-x86/**/*
+    - .ci/dockerfiles/deb-testing/**/*
     - .ci/builds-docker.yml
     - .ci/build-configs.yml
 
