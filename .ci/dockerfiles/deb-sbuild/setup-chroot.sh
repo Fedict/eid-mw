@@ -28,7 +28,7 @@ case $DIST in
 		sbuild-createchroot --arch=$ARCH $CODE /srv/chroot/$CODE ${ACNG}deb.debian.org/debian
 	;;
 	ubuntu)
-		if [ -z "$ARCH" = "armhf" ] || [ -z "$ARCH" = "arm64" ]
+		if [ "$ARCH" == "armhf" ] || [ "$ARCH" == "arm64" ]
 		then
 			sbuild-createchroot --include=debhelper --arch=$ARCH $CODE /srv/chroot/$CODE ${ACNG}ports.ubuntu.com /usr/share/debootstrap/scripts/gutsy
 		else
