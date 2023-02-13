@@ -46,6 +46,7 @@
   - docker
   - $ARCH_TAG
   image: $CI_REGISTRY_IMAGE/gtk4-build:$CI_COMMIT_REF_SLUG-$ARCH_TAG
+  retry: 2
   before_script:
   - pushd $LINUX_BASEDIR
   - autoreconf -f -i
@@ -64,6 +65,7 @@
   - docker
   - $ARCH_TAG
   image: $CI_REGISTRY_IMAGE/deb-build:$CI_COMMIT_REF_SLUG-$ARCH_TAG
+  retry: 2
   before_script:
   - pushd $LINUX_BASEDIR
   - autoreconf -f -i
@@ -80,6 +82,7 @@
   - docker
   - $ARCH_TAG
   image: $CI_REGISTRY_IMAGE/deb-build:$CI_COMMIT_REF_SLUG-$ARCH_TAG
+  retry: 2
   before_script:
   - pushd $LINUX_BASEDIR
   - autoreconf -f -i
@@ -157,6 +160,7 @@
   - docker
   - $ARCH_TAG
   image: $CI_REGISTRY_IMAGE/deb-repro:$CI_COMMIT_REF_SLUG-$ARCH_TAG
+  retry: 2
   dependencies: []
   before_script:
   - if [ ! -z "$ACNG" ]; then sed -i -e "s,http://,$ACNG/," /etc/apt/sources.list; else echo "no proxy configured"; fi
@@ -182,6 +186,7 @@
     - docker
     - $ARCH_TAG
   image: $CI_REGISTRY_IMAGE/deb-scan-build:$CI_COMMIT_REF_SLUG-$ARCH_TAG
+  retry: 2
   before_script:
   - if [ ! -z "$ACNG" ]; then sed -i -e "s,http://,$ACNG/," /etc/apt/sources.list; else echo "no proxy configured"; fi
   - apt-get update
@@ -206,6 +211,7 @@
     - docker
     - $ARCH_TAG
   image: $CI_REGISTRY_IMAGE/deb-testing:$CI_COMMIT_REF_SLUG-$ARCH_TAG
+  retry: 2
   before_script:
   - if [ ! -z "$ACNG" ]; then sed -i -e "s,http://,$ACNG/," /etc/apt/sources.list; else echo "no proxy configured"; fi
   - apt-get update
