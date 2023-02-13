@@ -5,7 +5,7 @@
   tags:
   - docker
   - $ARCH_TAG
-  image: $CI_REGISTRY_IMAGE/deb-build:$CI_COMMIT_REF_SLUG-$ARCH_TAG
+  image: $CI_REGISTRY_IMAGE/deb-build:$CI_COMMIT_REF_SLUG
   retry: 2
   before_script:
   - if [ ! -z "$ACNG" ]; then sed -i -e "s,http://,$ACNG/," /etc/apt/sources.list; else echo "no proxy configured"; fi
@@ -45,7 +45,7 @@
   tags:
   - docker
   - $ARCH_TAG
-  image: $CI_REGISTRY_IMAGE/gtk4-build:$CI_COMMIT_REF_SLUG-$ARCH_TAG
+  image: $CI_REGISTRY_IMAGE/gtk4-build:$CI_COMMIT_REF_SLUG
   before_script:
   - pushd $LINUX_BASEDIR
   - autoreconf -f -i
@@ -63,7 +63,7 @@
   tags:
   - docker
   - $ARCH_TAG
-  image: $CI_REGISTRY_IMAGE/deb-build:$CI_COMMIT_REF_SLUG-$ARCH_TAG
+  image: $CI_REGISTRY_IMAGE/deb-build:$CI_COMMIT_REF_SLUG
   before_script:
   - pushd $LINUX_BASEDIR
   - autoreconf -f -i
@@ -79,7 +79,7 @@
   tags:
   - docker
   - $ARCH_TAG
-  image: $CI_REGISTRY_IMAGE/deb-build:$CI_COMMIT_REF_SLUG-$ARCH_TAG
+  image: $CI_REGISTRY_IMAGE/deb-build:$CI_COMMIT_REF_SLUG
   before_script:
   - pushd $LINUX_BASEDIR
   - autoreconf -f -i
@@ -156,7 +156,7 @@
   tags:
   - docker
   - $ARCH_TAG
-  image: $CI_REGISTRY_IMAGE/deb-repro:$CI_COMMIT_REF_SLUG-$ARCH_TAG
+  image: $CI_REGISTRY_IMAGE/deb-repro:$CI_COMMIT_REF_SLUG
   dependencies: []
   before_script:
   - if [ ! -z "$ACNG" ]; then sed -i -e "s,http://,$ACNG/," /etc/apt/sources.list; else echo "no proxy configured"; fi
@@ -181,7 +181,7 @@
   tags:
     - docker
     - $ARCH_TAG
-  image: $CI_REGISTRY_IMAGE/deb-scan-build:$CI_COMMIT_REF_SLUG-$ARCH_TAG
+  image: $CI_REGISTRY_IMAGE/deb-scan-build:$CI_COMMIT_REF_SLUG
   before_script:
   - if [ ! -z "$ACNG" ]; then sed -i -e "s,http://,$ACNG/," /etc/apt/sources.list; else echo "no proxy configured"; fi
   - apt-get update
@@ -205,7 +205,7 @@
   tags:
     - docker
     - $ARCH_TAG
-  image: $CI_REGISTRY_IMAGE/deb-testing:$CI_COMMIT_REF_SLUG-$ARCH_TAG
+  image: $CI_REGISTRY_IMAGE/deb-testing:$CI_COMMIT_REF_SLUG
   before_script:
   - if [ ! -z "$ACNG" ]; then sed -i -e "s,http://,$ACNG/," /etc/apt/sources.list; else echo "no proxy configured"; fi
   - apt-get update
@@ -230,7 +230,7 @@
   tags:
     - docker
     - $ARCH_TAG
-  image: $CI_REGISTRY_IMAGE/fed-build:$CI_COMMIT_REF_SLUG-$ARCH_TAG
+  image: $CI_REGISTRY_IMAGE/fed-build:$CI_COMMIT_REF_SLUG
   before_script:
   - dnf -y install rpm-build git rpmdevtools
   - rpmdev-setuptree
@@ -306,7 +306,7 @@
   tags:
   - docker
   - $ARCH_TAG
-  image: $CI_REGISTRY_IMAGE/deb-sbuild:$CI_COMMIT_REF_SLUG-$ARCH_TAG
+  image: $CI_REGISTRY_IMAGE/deb-sbuild:$CI_COMMIT_REF_SLUG
 
 .build-deb-base-x86:
   extends: .build-deb-base
@@ -315,7 +315,7 @@
   tags:
   - docker
   - $ARCH_TAG
-  image: $CI_REGISTRY_IMAGE/deb-sbuild:$CI_COMMIT_REF_SLUG-$ARCH_TAG
+  image: $CI_REGISTRY_IMAGE/deb-sbuild:$CI_COMMIT_REF_SLUG
 
 .build-fed-base:
   retry: 2
@@ -339,7 +339,7 @@
   tags:
   - docker
   - $ARCH_TAG
-  image: $CI_REGISTRY_IMAGE/fed-build:$CI_COMMIT_REF_SLUG-$ARCH_TAG
+  image: $CI_REGISTRY_IMAGE/fed-build:$CI_COMMIT_REF_SLUG
 
 .build-fed-base-x86:
   extends: .build-fed-base
@@ -348,7 +348,7 @@
   tags:
   - docker
   - $ARCH_TAG
-  image: $CI_REGISTRY_IMAGE/fed-build:$CI_COMMIT_REF_SLUG-$ARCH_TAG
+  image: $CI_REGISTRY_IMAGE/fed-build:$CI_COMMIT_REF_SLUG
 
 .build-suse-base:
   dependencies:
@@ -376,7 +376,7 @@
   tags:
   - docker
   - $ARCH_TAG
-  image: $CI_REGISTRY_IMAGE/suse-build:$CI_COMMIT_REF_SLUG-$ARCH_TAG
+  image: $CI_REGISTRY_IMAGE/suse-build:$CI_COMMIT_REF_SLUG
 
 .build-suse-base-x86:
   extends: .build-suse-base
@@ -385,7 +385,7 @@
   tags:
   - docker
   - $ARCH_TAG
-  image: $CI_REGISTRY_IMAGE/suse-build:$CI_COMMIT_REF_SLUG-$ARCH_TAG
+  image: $CI_REGISTRY_IMAGE/suse-build:$CI_COMMIT_REF_SLUG
 
 .inject-debs:
   tags:
@@ -457,7 +457,7 @@
   tags:
   - docker
   - $ARCH_TAG
-  image: $CI_REGISTRY_IMAGE/deb-build:$CI_COMMIT_REF_SLUG-$ARCH_TAG
+  image: $CI_REGISTRY_IMAGE/deb-build:$CI_COMMIT_REF_SLUG
   before_script:
   - if [ ! -z "$ACNG" ]; then sed -i -e "s,http://,$ACNG/," /etc/apt/sources.list; else echo "no proxy configured"; fi
   - apt-get update

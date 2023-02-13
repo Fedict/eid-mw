@@ -7,7 +7,7 @@
   - name: docker:dind
     alias: docker
   variables:
-    IMAGE_TAG: $CI_REGISTRY_IMAGE/$IMAGE_NAME:$CI_COMMIT_REF_SLUG-$ARCH_TAG
+    IMAGE_TAG: $CI_REGISTRY_IMAGE/$IMAGE_NAME:$CI_COMMIT_REF_SLUG
     DOCKER_HOST: tcp://docker:2376
     DOCKER_TLS_VERIFY: 1
   before_script:
