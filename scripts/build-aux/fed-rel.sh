@@ -13,7 +13,7 @@ DISTS="fedora epel"
 
 DISTVERS=([fedora]="$FEDORA_OLDSTABLE_VERSION $FEDORA_STABLE_VERSION" [epel]="$EL_OLDSTABLE_VERSION $EL_STABLE_VERSION")
 DIST_TARGET_NAMES=([fedora]="fedora" [epel]="el")
-DISTARCHS=([fedora]="i386 x86_64" [epel]="x86_64")
+DISTARCHS=([fedora]="i386 x86_64 aarch64" [epel]="x86_64 aarch64")
 DIST_SOURCE_NAMES=(["epel:$EL_OLDSTABLE_VERSION"]="$EL_OLDSTABLE_DIST" ["epel:$EL_STABLE_VERSION"]="$EL_STABLE_DIST" ["fedora:$FEDORA_STABLE_VERSION"]="fedora" ["fedora:$FEDORA_OLDSTABLE_VERSION"]="fedora")
 
 for dist in $DISTS

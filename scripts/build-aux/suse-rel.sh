@@ -12,7 +12,7 @@ DISTS=(opensuse)
 
 DISTVERS=([opensuse]="$OPENSUSE_OLDSTABLE_VERSION $OPENSUSE_STABLE_VERSION")
 DISTNAMES=([opensuse]="opensuse")
-DISTARCHS=([opensuse]="x86_64")
+DISTARCHS=([opensuse]="x86_64 aarch64")
 
 for dist in $DISTS
 do
