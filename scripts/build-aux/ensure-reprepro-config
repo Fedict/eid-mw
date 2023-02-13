@@ -35,7 +35,7 @@ foreach my $dist(@dists_known) {
 		$new->{Origin} = "BOSA";
 		$new->{Label} = "BOSA";
 		$new->{Description} = "BOSA eID packages for " . $ENV{$full} . " - official packages";
-		$new->{Architectures} = "source amd64 i386";
+		$new->{Architectures} = "source amd64 i386 armhf arm64";
 		if($dist =~ /^DEBIAN/) {
 			$ENV->{Architectures} .= " armhf";
 		}
