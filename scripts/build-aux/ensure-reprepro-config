@@ -36,9 +36,6 @@ foreach my $dist(@dists_known) {
 		$new->{Label} = "BOSA";
 		$new->{Description} = "BOSA eID packages for " . $ENV{$full} . " - official packages";
 		$new->{Architectures} = "source amd64 i386 armhf arm64";
-		if($dist =~ /^DEBIAN/) {
-			$ENV->{Architectures} .= " armhf";
-		}
 		$new->{Components} = "main";
 		$new->{SignWith} = $ENV{GPG_SIGN_KEY_ID};
 		push @blocks, $new;
@@ -52,10 +49,7 @@ foreach my $dist(@dists_known) {
 			$new->{Origin} = "BOSA";
 			$new->{Label} = "BOSA";
 			$new->{Description} = "BOSA eID packages for " . $ENV{$full} . " - unsupported development builds";
-			$new->{Architectures} = "source amd64 i386";
-			if($dist =~ /^DEBIAN/) {
-				$ENV->{Architectures} .= " armhf";
-			}
+			$new->{Architectures} = "source amd64 i386 armhf arm64";
 			$new->{Components} = "main";
 			$new->{SignWith} = $ENV{GPG_TEST_KEY_ID};
 			push @blocks, $new;
