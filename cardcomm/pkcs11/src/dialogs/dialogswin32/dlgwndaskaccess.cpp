@@ -42,6 +42,14 @@ dlgWndAskAccess::dlgWndAskAccess( const std::wstring &AppPath,
 			const std::wstring &ReaderName, DlgPFOperation ulOperation, HWND Parent)
 :Win32Dialog(L"WndAskAccess")
 {
+	static const int points_per_inch = 96;
+	HMONITOR h_monitor = MonitorFromWindow(m_hWnd, MONITOR_DEFAULTTONEAREST);
+	MONITORINFOEX mInfo;
+	mInfo.cbSize = sizeof(mInfo);
+	GetMonitorInfo(h_monitor, &mInfo);
+	int pixels_per_inch = GetDeviceCaps(CreateDCW(mInfo.szDevice, NULL, NULL, NULL), LOGPIXELSY);
+	int scalingValue = pixels_per_inch / points_per_inch;
+
 	std::wstring Msg;
 	HFONT Font1;
 	HFONT Font2;
@@ -77,24 +85,24 @@ dlgWndAskAccess::dlgWndAskAccess( const std::wstring &AppPath,
 		break;
 	}
 
-	if( CreateWnd( tmpTitle.c_str() , 420, 240, 0, Parent ) )
+	if( CreateWnd( tmpTitle.c_str() , 420 * scalingValue, 240 * scalingValue, 0, Parent ) )
 	{
 		RECT clientRect;
 		GetClientRect( m_hWnd, &clientRect );
 
-		Font1 = CreateFont( 18, 0, 0, 0, FW_BOLD, 0, 0, 0,
+		Font1 = CreateFont( 18 * scalingValue, 0, 0, 0, FW_BOLD, 0, 0, 0,
 				DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
 				DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"MS Shell Dlg" );
 
-		Font2 = CreateFont( 18, 0, 0, 0, FW_DONTCARE, 0, true, 0,
+		Font2 = CreateFont( 18 * scalingValue, 0, 0, 0, FW_DONTCARE, 0, true, 0,
 				DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
 				DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"MS Shell Dlg" );
 
-		Font3 = CreateFont( 18, 0, 0, 0, FW_DONTCARE, 0, 0, 0,
+		Font3 = CreateFont( 18 * scalingValue, 0, 0, 0, FW_DONTCARE, 0, 0, 0,
 				DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
 				DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"MS Shell Dlg" );
 
-		Font4 = CreateFont( 12, 0, 0, 0, FW_DONTCARE, 0, 0, 0,
+		Font4 = CreateFont( 12 * scalingValue, 0, 0, 0, FW_DONTCARE, 0, 0, 0,
 				DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
 				DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"MS Shell Dlg" );
 
@@ -103,74 +111,74 @@ dlgWndAskAccess::dlgWndAskAccess( const std::wstring &AppPath,
 
 		HWND hStaticText1 = CreateWindow( 
 			L"STATIC", GETSTRING_DLG(AnApplicationWantsToAccessTheCard), WS_CHILD | WS_VISIBLE, 
-			iImgColumnWidth, iTop, clientRect.right-iImgColumnWidth, 22, 
+			iImgColumnWidth, iTop, clientRect.right-iImgColumnWidth, 22 * scalingValue,
 			m_hWnd, (HMENU)IDC_STATIC1, m_hInstance, NULL );
 		SendMessage( hStaticText1, WM_SETFONT, (WPARAM)Font1, 0 );
 		iTop+=30;
 
 		HWND hStaticText2 = CreateWindow( 
 			L"STATIC", GETSTRING_DLG(Application), WS_CHILD | WS_VISIBLE, 
-			iImgColumnWidth, iTop, clientRect.right-iImgColumnWidth, 22, 
+			iImgColumnWidth, iTop, clientRect.right-iImgColumnWidth, 22 * scalingValue,
 			m_hWnd, (HMENU)IDC_STATIC2, m_hInstance, NULL );
 		SendMessage( hStaticText2, WM_SETFONT, (WPARAM)Font2, 0 );
 		iTop+=22;
 
 		HWND hStaticText3 = CreateWindow( 
 			L"STATIC", AppPath.c_str(), WS_CHILD | WS_VISIBLE, 
-			iImgColumnWidth, iTop, clientRect.right-iImgColumnWidth, 22, 
+			iImgColumnWidth, iTop, clientRect.right-iImgColumnWidth, 22 * scalingValue,
 			m_hWnd, (HMENU)IDC_STATIC3, m_hInstance, NULL );
 		SendMessage( hStaticText3, WM_SETFONT, (WPARAM)Font3, 0 );
 		iTop+=30;
 
 		HWND hStaticText4 = CreateWindow( 
 			L"STATIC", GETSTRING_DLG(Function), WS_CHILD | WS_VISIBLE, 
-			iImgColumnWidth, iTop, clientRect.right-iImgColumnWidth, 22, 
+			iImgColumnWidth, iTop, clientRect.right-iImgColumnWidth, 22 * scalingValue,
 			m_hWnd, (HMENU)IDC_STATIC4, m_hInstance, NULL );
 		SendMessage( hStaticText4, WM_SETFONT, (WPARAM)Font2, 0 );
 		iTop+=22;
 
 		HWND hStaticText5 = CreateWindow( 
 			L"STATIC", sOperation, WS_CHILD | WS_VISIBLE, 
-			iImgColumnWidth, iTop, clientRect.right-iImgColumnWidth, 22, 
+			iImgColumnWidth, iTop, clientRect.right-iImgColumnWidth, 22 * scalingValue,
 			m_hWnd, (HMENU)IDC_STATIC5, m_hInstance, NULL );
 		SendMessage( hStaticText5, WM_SETFONT, (WPARAM)Font3, 0 );
 		iTop+=30;
 
 		HWND hStaticText6 = CreateWindow( 
 			L"STATIC", GETSTRING_DLG(DoYouWantToAcceptIt), WS_CHILD | WS_VISIBLE, 
-			iImgColumnWidth, iTop, clientRect.right-iImgColumnWidth, 22, 
+			iImgColumnWidth, iTop, clientRect.right-iImgColumnWidth, 22 * scalingValue,
 			m_hWnd, (HMENU)IDC_STATIC6, m_hInstance, NULL );
 		SendMessage( hStaticText6, WM_SETFONT, (WPARAM)Font1, 0 );
 		iTop+=30;
 
 		HWND hCheckBox= CreateWindow (
 			L"BUTTON", GETSTRING_DLG(ForAllOperations), WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX,
-			iImgColumnWidth, iTop, clientRect.right-iImgColumnWidth, 22, 
+			iImgColumnWidth, iTop, clientRect.right-iImgColumnWidth, 22 * scalingValue,
 			m_hWnd, (HMENU)IDC_CHECK, m_hInstance, NULL);
 		SendMessage( hCheckBox, WM_SETFONT, (WPARAM)Font3, 0 );
 		iTop+=30;
 
 		HWND hNeverButton = CreateWindow(
 			L"BUTTON", GETSTRING_DLG(Never), WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_TEXT, 
-			clientRect.right - 100, iTop, 72, 24, 
+			clientRect.right - 100, iTop, 72 * scalingValue, 24 * scalingValue,
 			m_hWnd, (HMENU)IDB_NEVER, m_hInstance, NULL );
 		SendMessage( hNeverButton, WM_SETFONT, (WPARAM)Font4, 0 );
 
 		HWND hAlwaysButton = CreateWindow(
 			L"BUTTON", GETSTRING_DLG(Always), WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_TEXT, 
-			clientRect.right - 200, iTop, 72, 24, 
+			clientRect.right - 200, iTop, 72 * scalingValue, 24 * scalingValue,
 			m_hWnd, (HMENU)IDB_ALWAYS, m_hInstance, NULL );
 		SendMessage( hAlwaysButton, WM_SETFONT, (WPARAM)Font4, 0 );
 
 		HWND hCancelButton = CreateWindow(
 			L"BUTTON", GETSTRING_DLG(CancelNo), WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_TEXT, 
-			clientRect.right - 300, iTop, 72, 24, 
+			clientRect.right - 300, iTop, 72 * scalingValue, 24 * scalingValue,
 			m_hWnd, (HMENU)IDB_NO, m_hInstance, NULL );
 		SendMessage( hCancelButton, WM_SETFONT, (WPARAM)Font4, 0 );
 
 		HWND hYesButton = CreateWindow(
 			L"BUTTON", GETSTRING_DLG(Yes), WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_DEFPUSHBUTTON, 
-			clientRect.right - 400, iTop, 72, 24, 
+			clientRect.right - 400, iTop, 72 * scalingValue, 24 * scalingValue,
 			m_hWnd, (HMENU)IDB_YES, m_hInstance, NULL );
 		SendMessage( hYesButton, WM_SETFONT, (WPARAM)Font4, 0 );
 

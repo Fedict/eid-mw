@@ -45,6 +45,15 @@
 dlgWndAskPINs::dlgWndAskPINs( DlgPinInfo pinInfo1, DlgPinInfo pinInfo2, std::wstring & Header, std::wstring & PINName, bool UseKeypad, HWND Parent )
 :Win32Dialog(L"WndAskPINs")
 {
+	static const int points_per_inch = 96;
+	HMONITOR h_monitor = MonitorFromWindow(m_hWnd, MONITOR_DEFAULTTONEAREST);
+	MONITORINFOEX mInfo;
+	mInfo.cbSize = sizeof(mInfo);
+	GetMonitorInfo(h_monitor, &mInfo);
+	int pixels_per_inch = GetDeviceCaps(CreateDCW(mInfo.szDevice, NULL, NULL, NULL), LOGPIXELSY);
+	int scalingValue = pixels_per_inch / points_per_inch;
+	int pixels_height = (16 * scalingValue);
+
 	m_UseKeypad = UseKeypad;
 
 	InputField1_OK = InputField2_OK = InputField3_OK = false;
@@ -66,36 +75,29 @@ dlgWndAskPINs::dlgWndAskPINs( DlgPinInfo pinInfo1, DlgPinInfo pinInfo2, std::wst
 	szHeader = const_cast<wchar_t *>(Header.c_str());
 	szPIN = PINName.c_str();
 
-	int Height = 300;
+	int Height = 300 * scalingValue;
 	if( m_UseKeypad )
-		Height = 430;
+		Height = 430 * scalingValue;
 
-	if( CreateWnd( tmpTitle.c_str() , 280, Height, 0, Parent ) )
+	if( CreateWnd( tmpTitle.c_str() , 280 * scalingValue, Height, 0, Parent ) )
 	{
 		RECT clientRect;
 		GetClientRect( m_hWnd, &clientRect );
 
-		static const int points_per_inch = 96;
-		HMONITOR h_monitor = MonitorFromWindow(m_hWnd, MONITOR_DEFAULTTONEAREST);
-		MONITORINFOEX mInfo;
-		mInfo.cbSize = sizeof(mInfo);
-		GetMonitorInfo(h_monitor, &mInfo);
-		int pixels_per_inch = GetDeviceCaps(CreateDCW(mInfo.szDevice, NULL, NULL, NULL), LOGPIXELSY);
-		int pixels_height = (16 * pixels_per_inch / points_per_inch);
 		TextFont = CreateFont(pixels_height, 0, 0, 0, FW_DONTCARE, 0, 0, 0,
 				DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
 				DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"MS Shell Dlg" );
 
 		HWND hOkButton = CreateWindow(
 			L"BUTTON", GETSTRING_DLG(Ok), WS_CHILD | WS_VISIBLE | WS_TABSTOP, 
-			clientRect.right - 160, clientRect.bottom - 36, 72, 24, 
-			m_hWnd, (HMENU)IDB_OK, m_hInstance, NULL );
+			clientRect.right - 160 * scalingValue, clientRect.bottom - 36 * scalingValue, 
+			72 * scalingValue, 24 * scalingValue, m_hWnd, (HMENU)IDB_OK, m_hInstance, NULL );
 		EnableWindow( hOkButton, false );
 
 		HWND hCancelButton = CreateWindow(
 			L"BUTTON", GETSTRING_DLG(Cancel), WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_DEFPUSHBUTTON, 
-			clientRect.right - 80, clientRect.bottom - 36, 72, 24, 
-			m_hWnd, (HMENU)IDB_CANCEL, m_hInstance, NULL );
+			clientRect.right - 80 * scalingValue, clientRect.bottom - 36 * scalingValue, 
+			72 * scalingValue, 24 * scalingValue, m_hWnd, (HMENU)IDB_CANCEL, m_hInstance, NULL );
 
 		DWORD dwStyle = WS_CHILD | WS_VISIBLE | WS_TABSTOP | WS_BORDER | ES_PASSWORD;
 		if( pinInfo1.ulFlags & PIN_FLAG_DIGITS )
@@ -107,21 +109,23 @@ dlgWndAskPINs::dlgWndAskPINs( DlgPinInfo pinInfo1, DlgPinInfo pinInfo2, std::wst
 
 			HWND hTextEdit = CreateWindowEx( WS_EX_CLIENTEDGE,
 				L"EDIT", L"", dwStyle, 
-				62, clientRect.top + 20, clientRect.right - 94, 26, 
+				62 * scalingValue, clientRect.top + 20 * scalingValue, 
+				clientRect.right - 94 * scalingValue, 26 * scalingValue,
 				m_hWnd, (HMENU)IDC_EDIT, m_hInstance, NULL );
 			SendMessage( hTextEdit, EM_LIMITTEXT, m_ulPin1MaxLen, 0 );
 
 			HWND hStaticText = CreateWindow( 
 				L"STATIC", szPIN, WS_CHILD | WS_VISIBLE | SS_RIGHT, 
-				16, clientRect.top + 24, 36, 22, 
+				16 * scalingValue, clientRect.top + 24 * scalingValue, 
+				36 * scalingValue, 22 * scalingValue,
 				m_hWnd, (HMENU)IDC_STATIC, m_hInstance, NULL );
 
-			int top = 60;
-			int bottom = clientRect.bottom - 70 - IMG_SIZE;
-			int left = 46;
-			int right = clientRect.right - 46;
-			int hMargin = 12;
-			int vMargin = 12;
+			int top = 60 * scalingValue;
+			int bottom = clientRect.bottom - 70 * scalingValue - IMG_SIZE;
+			int left = 46 * scalingValue;
+			int right = clientRect.right - 46 * scalingValue;
+			int hMargin = 12 * scalingValue;
+			int vMargin = 12 * scalingValue;
 			int totwidth = right - left;
 			int totheight = bottom - top;
 			int btnwidth = ( totwidth - 2*hMargin ) / 3;
@@ -171,8 +175,8 @@ dlgWndAskPINs::dlgWndAskPINs( DlgPinInfo pinInfo1, DlgPinInfo pinInfo2, std::wst
 
 			HWND hTextEdit1 = CreateWindowEx( WS_EX_CLIENTEDGE,
 				L"EDIT", L"", dwStyle, 
-				clientRect.right/2 - 30, clientRect.bottom - 150, 160, 26, 
-				m_hWnd, (HMENU)IDC_EDIT_PIN1, m_hInstance, NULL );
+				clientRect.right/2 - 30 * scalingValue, clientRect.bottom - 150 * scalingValue, 
+				160 * scalingValue, 26 * scalingValue, m_hWnd, (HMENU)IDC_EDIT_PIN1, m_hInstance, NULL );
 			SendMessage( hTextEdit1, EM_LIMITTEXT, m_ulPin1MaxLen, 0 );
 
 
@@ -182,31 +186,31 @@ dlgWndAskPINs::dlgWndAskPINs( DlgPinInfo pinInfo1, DlgPinInfo pinInfo2, std::wst
 
 			HWND hTextEdit2 = CreateWindowEx( WS_EX_CLIENTEDGE,
 				L"EDIT", L"", dwStyle, 
-				clientRect.right/2 - 30, clientRect.bottom - 120, 160, 26, 
-				m_hWnd, (HMENU)IDC_EDIT_PIN2, m_hInstance, NULL );
+				clientRect.right/2 - 30 * scalingValue, clientRect.bottom - 120 * scalingValue, 
+				160 * scalingValue, 26 * scalingValue, m_hWnd, (HMENU)IDC_EDIT_PIN2, m_hInstance, NULL );
 			SendMessage( hTextEdit2, EM_LIMITTEXT, m_ulPin2MaxLen, 0 );
 
 			HWND hTextEdit3 = CreateWindowEx( WS_EX_CLIENTEDGE,
 				L"EDIT", L"", dwStyle, 
-				clientRect.right/2 - 30, clientRect.bottom - 90, 160, 26, 
-				m_hWnd, (HMENU)IDC_EDIT_PIN3, m_hInstance, NULL );
+				clientRect.right/2 - 30 * scalingValue, clientRect.bottom - 90 * scalingValue, 
+				160 * scalingValue, 26 * scalingValue, m_hWnd, (HMENU)IDC_EDIT_PIN3, m_hInstance, NULL );
 			SendMessage( hTextEdit3, EM_LIMITTEXT, m_ulPin2MaxLen, 0 );
 
 
 			HWND hStaticText1 = CreateWindow( 
 				L"STATIC", GETSTRING_DLG(CurrentPin), WS_CHILD | WS_VISIBLE | SS_RIGHT,
-				0, clientRect.bottom - 146, clientRect.right/2 - 35, 22, 
-				m_hWnd, (HMENU)IDC_STATIC, m_hInstance, NULL );
+				0, clientRect.bottom - 146 * scalingValue, clientRect.right/2 - 35 * scalingValue, 
+				22 * scalingValue, m_hWnd, (HMENU)IDC_STATIC, m_hInstance, NULL );
 
 			HWND hStaticText2 = CreateWindow( 
 				L"STATIC", GETSTRING_DLG(NewPin), WS_CHILD | WS_VISIBLE | SS_RIGHT,
-				0, clientRect.bottom - 116, clientRect.right/2 - 35, 22,
-				m_hWnd, (HMENU)IDC_STATIC, m_hInstance, NULL );
+				0, clientRect.bottom - 116 * scalingValue, clientRect.right/2 - 35 * scalingValue, 
+				22 * scalingValue, m_hWnd, (HMENU)IDC_STATIC, m_hInstance, NULL );
 
 			HWND hStaticText3 = CreateWindow( 
 				L"STATIC", GETSTRING_DLG(ConfirmNewPin), WS_CHILD | WS_VISIBLE | SS_RIGHT,
-				0, clientRect.bottom - 86, clientRect.right/2 - 35, 22, 
-				m_hWnd, (HMENU)IDC_STATIC, m_hInstance, NULL );
+				0, clientRect.bottom - 86 * scalingValue, clientRect.right/2 - 35 * scalingValue, 
+				22 * scalingValue, m_hWnd, (HMENU)IDC_STATIC, m_hInstance, NULL );
 
 
 			//ImageKP_BTN = ImageKP_BTN_Mask = NULL;
