@@ -36,6 +36,15 @@
 dlgWndBadPIN::dlgWndBadPIN( std::wstring & PINName, unsigned long RemainingTries, HWND Parent )
 :Win32Dialog(L"WndBadPIN")
 {
+	static const int points_per_inch = 96;
+	HMONITOR h_monitor = MonitorFromWindow(m_hWnd, MONITOR_DEFAULTTONEAREST);
+	MONITORINFOEX mInfo;
+	mInfo.cbSize = sizeof(mInfo);
+	GetMonitorInfo(h_monitor, &mInfo);
+	int pixels_per_inch = GetDeviceCaps(CreateDCW(mInfo.szDevice, NULL, NULL, NULL), LOGPIXELSY);
+	int scalingValue = pixels_per_inch / points_per_inch;
+	int pixels_height = (16 * scalingValue);
+
 	std::wstring tmpTitle = L"";
 
 	tmpTitle += GETSTRING_DLG(Notification);
@@ -70,12 +79,12 @@ dlgWndBadPIN::dlgWndBadPIN( std::wstring & PINName, unsigned long RemainingTries
 		szBody = GETSTRING_DLG(TryAgainOrCancel);
 	}
 
-	if( CreateWnd( tmpTitle.c_str() , 280, 230, 0,  Parent ) )
+	if( CreateWnd( tmpTitle.c_str() , 280 * scalingValue, 230 * scalingValue, 0,  Parent ) )
 	{
 		RECT clientRect;
 		GetClientRect( m_hWnd, &clientRect );
 
-		TextFont = CreateFont( 16, 0, 0, 0, FW_DONTCARE, 0, 0, 0,
+		TextFont = CreateFont(pixels_height, 0, 0, 0, FW_DONTCARE, 0, 0, 0,
 				DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
 				DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"MS Shell Dlg" );
 
@@ -83,28 +92,28 @@ dlgWndBadPIN::dlgWndBadPIN( std::wstring & PINName, unsigned long RemainingTries
 		{
 			HWND hOkButton = CreateWindow(
 				L"BUTTON", GETSTRING_DLG(Ok), WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_DEFPUSHBUTTON, 
-				clientRect.right - 160, clientRect.bottom - 36, 72, 24, 
-				m_hWnd, (HMENU)IDB_OK, m_hInstance, NULL );
+				clientRect.right - 160 * scalingValue, clientRect.bottom - 36 * scalingValue, 
+				72 * scalingValue, 24 * scalingValue, m_hWnd, (HMENU)IDB_OK, m_hInstance, NULL );
 			SendMessage( hOkButton, WM_SETFONT, (WPARAM)TextFont, 0 );
 		}
 		else
 		{
 			HWND hRetryButton = CreateWindow(
 				L"BUTTON", GETSTRING_DLG(Retry), WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_DEFPUSHBUTTON, 
-				clientRect.right - 160, clientRect.bottom - 36, 72, 24, 
-				m_hWnd, (HMENU)IDB_RETRY, m_hInstance, NULL );
+				clientRect.right - 160 * scalingValue, clientRect.bottom - 36 * scalingValue, 
+				72 * scalingValue, 24 * scalingValue, m_hWnd, (HMENU)IDB_RETRY, m_hInstance, NULL );
 			SendMessage( hRetryButton, WM_SETFONT, (WPARAM)TextFont, 0 );
 
 			HWND hCancelButton = CreateWindow(
 				L"BUTTON", GETSTRING_DLG(Cancel), WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_TEXT, 
-				clientRect.right - 80, clientRect.bottom - 36, 72, 24, 
-				m_hWnd, (HMENU)IDB_CANCEL, m_hInstance, NULL );
+				clientRect.right - 80 * scalingValue, clientRect.bottom - 36 * scalingValue, 
+				72 * scalingValue, 24 * scalingValue, m_hWnd, (HMENU)IDB_CANCEL, m_hInstance, NULL );
 			SendMessage( hCancelButton, WM_SETFONT, (WPARAM)TextFont, 0 );
 		}
 
 		HWND hStaticText = CreateWindow( 
 			L"STATIC", szBody, WS_CHILD | WS_VISIBLE | SS_CENTER, 
-			0, clientRect.bottom - 76, clientRect.right, 22, 
+			0, clientRect.bottom - 76 * scalingValue, clientRect.right, 22 * scalingValue,
 			m_hWnd, (HMENU)IDC_STATIC, m_hInstance, NULL );
 		SendMessage( hStaticText, WM_SETFONT, (WPARAM)TextFont, 0 );
 
