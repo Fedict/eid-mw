@@ -243,7 +243,7 @@
                       <object class="GtkTable" id="table1">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="n-rows">26</property>
+                        <property name="n-rows">28</property>
                         <property name="n-columns">4</property>
                         <child>
                           <object class="GtkLabel" id="document_type">
@@ -738,7 +738,7 @@
                           </object>
                           <packing>
                             <property name="top-attach">2</property>
-                            <property name="bottom-attach">26</property>
+                            <property name="bottom-attach">28</property>
                             <property name="x-options">GTK_FILL</property>
                             <property name="y-options">GTK_FILL</property>
                           </packing>
@@ -1125,6 +1125,60 @@
                             <property name="right-attach">4</property>
                             <property name="top-attach">25</property>
                             <property name="bottom-attach">26</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="title_cardEU_start_date">
+                            <property name="can-focus">False</property>
+                            <property name="halign">start</property>
+                            <property name="label" translatable="yes">Date of registration:</property>
+                          </object>
+                          <packing>
+                            <property name="left-attach">1</property>
+                            <property name="right-attach">2</property>
+                            <property name="top-attach">26</property>
+                            <property name="bottom-attach">27</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="cardEU_start_date">
+                            <property name="sensitive">False</property>
+                            <property name="can-focus">False</property>
+                            <property name="halign">start</property>
+                            <property name="label" translatable="yes">-</property>
+                          </object>
+                          <packing>
+                            <property name="left-attach">2</property>
+                            <property name="right-attach">4</property>
+                            <property name="top-attach">26</property>
+                            <property name="bottom-attach">27</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="title_cardEUPlus_start_date">
+                            <property name="can-focus">False</property>
+                            <property name="halign">start</property>
+                            <property name="label" translatable="yes">Date of permanent residence:</property>
+                          </object>
+                          <packing>
+                            <property name="left-attach">1</property>
+                            <property name="right-attach">2</property>
+                            <property name="top-attach">27</property>
+                            <property name="bottom-attach">28</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="cardEUPlus_start_date">
+                            <property name="sensitive">False</property>
+                            <property name="can-focus">False</property>
+                            <property name="halign">start</property>
+                            <property name="label" translatable="yes">-</property>
+                          </object>
+                          <packing>
+                            <property name="left-attach">2</property>
+                            <property name="right-attach">4</property>
+                            <property name="top-attach">27</property>
+                            <property name="bottom-attach">28</property>
                           </packing>
                         </child>
                       </object>
