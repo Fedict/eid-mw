@@ -193,6 +193,9 @@
 /* Class = "NSTextFieldCell"; title = "Special status:"; ObjectID = "Bje-6L-Van"; */
 "Bje-6L-Van.title" = "Speciale status:";
 
+/* Class = "NSTextFieldCell"; title = "Date of permanent residence:"; ObjectID = "bkF-Tb-NlG"; */
+"bkF-Tb-NlG.title" = "Datum van het duurzaam verblijf";
+
 /* Class = "NSMenuItem"; title = "Preferences…"; ObjectID = "BOF-NM-1cW"; */
 "BOF-NM-1cW.title" = "Voorkeuren…";
 
@@ -319,6 +322,9 @@
 /* Class = "NSTextFieldCell"; title = "Valid until:"; ObjectID = "JfV-jr-2PG"; */
 "JfV-jr-2PG.title" = "Geldig tot:";
 
+/* Class = "NSTextFieldCell"; title = "Date of registration:"; ObjectID = "jij-nJ-wJV"; */
+"jij-nJ-wJV.title" = "Datum van inschrijving";
+
 /* Class = "NSTextFieldCell"; title = "Printed by:"; ObjectID = "JKo-wG-zbj"; */
 "JKo-wG-zbj.title" = "Afgedrukt door:";
 
@@ -393,6 +399,9 @@
 
 /* Class = "NSTextFieldCell"; title = "Printed:"; ObjectID = "NHM-7n-ZDj"; */
 "NHM-7n-ZDj.title" = "Afgedrukt:";
+
+/* Class = "NSTextFieldCell"; title = "Date of permanent residence:"; ObjectID = "NLY-m3-8rC"; */
+"NLY-m3-8rC.title" = "Datum van het duurzaam verblijf";
 
 /* Class = "NSMenuItem"; title = "Services"; ObjectID = "NMo-om-nkz"; */
 "NMo-om-nkz.title" = "Diensten";
@@ -567,6 +576,9 @@
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "VUf-yO-cOS"; */
 "VUf-yO-cOS.placeholderString" = "-";
+
+/* Class = "NSTextFieldCell"; title = "Date of registration:"; ObjectID = "VUj-Eo-9QK"; */
+"VUj-Eo-9QK.title" = "Datum van inschrijving";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "VYw-86-rmN"; */
 "VYw-86-rmN.placeholderString" = "-";

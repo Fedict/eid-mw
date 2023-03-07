@@ -37,6 +37,9 @@
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "2Yv-uW-wEG"; */
 "2Yv-uW-wEG.placeholderString" = "-";
 
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "3c1-CU-3of"; */
+"3c1-CU-3of.placeholderString" = "-";
+
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "3gn-cj-42f"; */
 "3gn-cj-42f.placeholderString" = "-";
 
@@ -60,6 +63,9 @@
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "4zA-Ye-VVg"; */
 "4zA-Ye-VVg.placeholderString" = "-";
+
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "5HN-St-Srx"; */
+"5HN-St-Srx.placeholderString" = "-";
 
 /* Class = "NSMenuItem"; title = "About eID Viewer"; ObjectID = "5kV-Vb-QxS"; */
 "5kV-Vb-QxS.title" = "Über eID Viewer";
@@ -178,6 +184,9 @@
 /* Class = "NSMenu"; title = "Main Menu"; ObjectID = "AYu-sK-qS6"; */
 "AYu-sK-qS6.title" = "Main Menu";
 
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "Az0-bM-HbW"; */
+"Az0-bM-HbW.placeholderString" = "-";
+
 /* Class = "NSTextFieldCell"; title = "Employer's VAT/CBE number (2):"; ObjectID = "Azr-wO-2T2"; */
 "Azr-wO-2T2.title" = "Mehrwertsteuernummer/ZDU-Nummer des Arbeitgebers (2):";
 
@@ -195,6 +204,9 @@
 
 /* Class = "NSTextFieldCell"; title = "Special status:"; ObjectID = "Bje-6L-Van"; */
 "Bje-6L-Van.title" = "Sonderstatus:";
+
+/* Class = "NSTextFieldCell"; title = "Date of permanent residence:"; ObjectID = "bkF-Tb-NlG"; */
+"bkF-Tb-NlG.title" = "Datum Daueraufenthalt";
 
 /* Class = "NSMenuItem"; title = "Preferences…"; ObjectID = "BOF-NM-1cW"; */
 "BOF-NM-1cW.title" = "Einstellungen…";
@@ -216,6 +228,9 @@
 
 /* Class = "NSTextFieldCell"; title = "Valid until:"; ObjectID = "Cnx-oC-rJ5"; */
 "Cnx-oC-rJ5.title" = "Gültig bis:";
+
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "cpV-r6-rbf"; */
+"cpV-r6-rbf.placeholderString" = "-";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "CxZ-L0-OWj"; */
 "CxZ-L0-OWj.placeholderString" = "-";
@@ -243,6 +258,9 @@
 
 /* Class = "NSTextFieldCell"; title = "Postal code:"; ObjectID = "eIi-C8-04B"; */
 "eIi-C8-04B.title" = "Postleitzahl:";
+
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "EJb-bH-eil"; */
+"EJb-bH-eil.placeholderString" = "-";
 
 /* Class = "NSTextFieldCell"; title = "Place of issue:"; ObjectID = "EJc-zi-h6r"; */
 "EJc-zi-h6r.title" = "Ausstellungsort:";
@@ -283,11 +301,17 @@
 /* Class = "NSTextFieldCell"; title = "Name:"; ObjectID = "GsW-12-QJy"; */
 "GsW-12-QJy.title" = "Name:";
 
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "Gv0-kk-SsZ"; */
+"Gv0-kk-SsZ.placeholderString" = "-";
+
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "Gvc-Pb-JpW"; */
 "Gvc-Pb-JpW.placeholderString" = "-";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "GVo-vP-1Se"; */
 "GVo-vP-1Se.placeholderString" = "-";
+
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "h2c-lb-EjK"; */
+"h2c-lb-EjK.placeholderString" = "-";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "Hai-Pb-JKx"; */
 "Hai-Pb-JKx.placeholderString" = "-";
@@ -322,6 +346,9 @@
 /* Class = "NSTextFieldCell"; title = "Valid until:"; ObjectID = "JfV-jr-2PG"; */
 "JfV-jr-2PG.title" = "Gültig bis:";
 
+/* Class = "NSTextFieldCell"; title = "Date of registration:"; ObjectID = "jij-nJ-wJV"; */
+"jij-nJ-wJV.title" = "Datum Anmeldung";
+
 /* Class = "NSTextFieldCell"; title = "Printed by:"; ObjectID = "JKo-wG-zbj"; */
 "JKo-wG-zbj.title" = "Gedruckt von:";
 
@@ -348,6 +375,9 @@
 
 /* Class = "NSTextFieldCell"; title = "Brexit mentions:"; ObjectID = "KU6-Vz-V1i"; */
 "KU6-Vz-V1i.title" = "Brexit Erwähnungen:";
+
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "KZJ-fc-6xC"; */
+"KZJ-fc-6xC.placeholderString" = "-";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "kZU-gG-wde"; */
 "kZU-gG-wde.placeholderString" = "-";
@@ -397,6 +427,9 @@
 /* Class = "NSTextFieldCell"; title = "Printed:"; ObjectID = "NHM-7n-ZDj"; */
 "NHM-7n-ZDj.title" = "Gedruckt:";
 
+/* Class = "NSTextFieldCell"; title = "Date of permanent residence:"; ObjectID = "NLY-m3-8rC"; */
+"NLY-m3-8rC.title" = "Datum Daueraufenthalt";
+
 /* Class = "NSMenuItem"; title = "Services"; ObjectID = "NMo-om-nkz"; */
 "NMo-om-nkz.title" = "Services";
 
@@ -415,6 +448,9 @@
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "OIe-oa-EIA"; */
 "OIe-oa-EIA.placeholderString" = "-";
 
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "Ojv-Np-0Nc"; */
+"Ojv-Np-0Nc.placeholderString" = "-";
+
 /* Class = "NSMenuItem"; title = "Hide eID Viewer"; ObjectID = "Olw-nP-bQN"; */
 "Olw-nP-bQN.title" = "Hide eID Viewer";
 
@@ -424,6 +460,9 @@
 /* Class = "NSMenuItem"; title = "Minimize"; ObjectID = "OY7-WF-poV"; */
 "OY7-WF-poV.title" = "Minimize";
 
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "paq-Oi-ERA"; */
+"paq-Oi-ERA.placeholderString" = "-";
+
 /* Class = "NSTextFieldCell"; title = "Printed:"; ObjectID = "PcZ-3E-wWg"; */
 "PcZ-3E-wWg.title" = "Gedruckt:";
 
@@ -432,6 +471,9 @@
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "q8V-A2-wIs"; */
 "q8V-A2-wIs.placeholderString" = "-";
+
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "QAx-tA-Zov"; */
+"QAx-tA-Zov.placeholderString" = "-";
 
 /* Class = "NSTextFieldCell"; title = "Given names:"; ObjectID = "QbL-Kw-AB9"; */
 "QbL-Kw-AB9.title" = "Vornamen:";
@@ -450,6 +492,9 @@
 
 /* Class = "NSTextFieldCell"; placeholderString = "BELGIUM"; ObjectID = "qQW-ve-OY4"; */
 "qQW-ve-OY4.placeholderString" = "BELGIEN";
+
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "Qra-wp-y7A"; */
+"Qra-wp-y7A.placeholderString" = "-";
 
 /* Class = "NSWindow"; title = "eID Viewer"; ObjectID = "QvC-M9-y7g"; */
 "QvC-M9-y7g.title" = "eID Viewer";
@@ -486,6 +531,9 @@
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "S09-Sf-lPk"; */
 "S09-Sf-lPk.placeholderString" = "-";
+
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "SAc-6e-Jhl"; */
+"SAc-6e-Jhl.placeholderString" = "-";
 
 /* Class = "NSTableColumn"; headerCell.title = "Certificate"; ObjectID = "SbE-j5-DtL"; */
 "SbE-j5-DtL.headerCell.title" = "Zertifikat";
@@ -550,6 +598,9 @@
 /* Class = "NSMenu"; title = "eID Viewer"; ObjectID = "uQy-DD-JDr"; */
 "uQy-DD-JDr.title" = "eID Viewer";
 
+/* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "uYd-Ps-SNb"; */
+"uYd-Ps-SNb.placeholderString" = "-";
+
 /* Class = "NSMenuItem"; title = "Hide Others"; ObjectID = "Vdr-fp-XzO"; */
 "Vdr-fp-XzO.title" = "Hide Others";
 
@@ -564,6 +615,9 @@
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "VUf-yO-cOS"; */
 "VUf-yO-cOS.placeholderString" = "-";
+
+/* Class = "NSTextFieldCell"; title = "Date of registration:"; ObjectID = "VUj-Eo-9QK"; */
+"VUj-Eo-9QK.title" = "Datum Anmeldung";
 
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "VYw-86-rmN"; */
 "VYw-86-rmN.placeholderString" = "-";

@@ -573,6 +573,7 @@
 		8BC8E011210216900026D6AB /* toxmlmemberoffamilyconv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = toxmlmemberoffamilyconv.cpp; sourceTree = "<group>"; };
 		8BC8E012210216900026D6AB /* toxmlmemberoffamilyconv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = toxmlmemberoffamilyconv.h; sourceTree = "<group>"; };
 		8BCC05F7211479F90015C705 /* pkcs11log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pkcs11log.h; path = cardcomm/pkcs11/src/pkcs11log.h; sourceTree = "<group>"; };
+		E960052829B2321F00290EC6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainMenu.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1524,6 +1525,7 @@
 				659FD58D1FEA920900E4AF83 /* nl */,
 				659FD5901FEA921400E4AF83 /* fr */,
 				659FD5911FEA921800E4AF83 /* de */,
+				E960052829B2321F00290EC6 /* en */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
