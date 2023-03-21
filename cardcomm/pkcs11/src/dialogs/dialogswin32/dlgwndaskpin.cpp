@@ -39,6 +39,15 @@
 dlgWndAskPIN::dlgWndAskPIN( DlgPinInfo pinInfo, DlgPinUsage PinPusage, std::wstring & Header, std::wstring & PINName, bool UseKeypad, HWND Parent )
 :Win32Dialog(L"WndAskPIN")
 {
+	static const int points_per_inch = 96;
+	HMONITOR h_monitor = MonitorFromWindow(m_hWnd, MONITOR_DEFAULTTONEAREST);
+	MONITORINFOEX mInfo;
+	mInfo.cbSize = sizeof(mInfo);
+	GetMonitorInfo(h_monitor, &mInfo);
+	int pixels_per_inch = GetDeviceCaps(CreateDCW(mInfo.szDevice, NULL, NULL, NULL), LOGPIXELSY);
+	int scalingValue = pixels_per_inch / points_per_inch;
+	int pixels_height = (20 * scalingValue);
+
 	m_UseKeypad = UseKeypad;
 
 	PinResult[0] = ' ';
@@ -60,22 +69,15 @@ dlgWndAskPIN::dlgWndAskPIN( DlgPinInfo pinInfo, DlgPinUsage PinPusage, std::wstr
 	szHeader = Header.c_str();
 	szPIN = PINName.c_str();
 
-	int Height = 280;
+	int Height = 280 * scalingValue;
 	if( m_UseKeypad )
-		Height = 480;
+		Height = 480 * scalingValue;
 
-	if( CreateWnd( tmpTitle.c_str() , 480, Height, 0, Parent ) )
+	if( CreateWnd( tmpTitle.c_str() , 480 * scalingValue, Height, 0, Parent ) )
 	{
 		RECT clientRect;
 		GetClientRect( m_hWnd, &clientRect );
 
-		static const int points_per_inch = 96;
-		HMONITOR h_monitor = MonitorFromWindow(m_hWnd, MONITOR_DEFAULTTONEAREST);
-		MONITORINFOEX mInfo;
-		mInfo.cbSize = sizeof(mInfo);
-		GetMonitorInfo(h_monitor, &mInfo);
-		int pixels_per_inch = GetDeviceCaps(CreateDCW(mInfo.szDevice, NULL, NULL, NULL), LOGPIXELSY);
-		int pixels_height = (16 * pixels_per_inch / points_per_inch);
 		TextFont = CreateFont(pixels_height, 0, 0, 0, FW_DONTCARE, 0, 0, 0,
 				DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
 				DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"MS Shell Dlg" );
@@ -83,26 +85,26 @@ dlgWndAskPIN::dlgWndAskPIN( DlgPinInfo pinInfo, DlgPinUsage PinPusage, std::wstr
 		//OK Button
 		HWND hOkButton = CreateWindow(
 			L"BUTTON", GETSTRING_DLG(Ok), WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_DEFPUSHBUTTON, 
-			clientRect.right - 160, clientRect.bottom - 36, 72, 24, 
-			m_hWnd, (HMENU)IDB_OK, m_hInstance, NULL );
+			clientRect.right - 175 * scalingValue, clientRect.bottom - (36 * scalingValue), 
+			72 * scalingValue, 24 * scalingValue, m_hWnd, (HMENU)IDB_OK, m_hInstance, NULL );
 		EnableWindow( hOkButton, false );
 
 		//Cancel Button
 		HWND hCancelButton = CreateWindow(
 			L"BUTTON", GETSTRING_DLG(Cancel), WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_TEXT, 
-			clientRect.right - 80, clientRect.bottom - 36, 72, 24, 
-			m_hWnd, (HMENU)IDB_CANCEL, m_hInstance, NULL );
+			clientRect.right - 95 * scalingValue, clientRect.bottom - 36 * scalingValue, 
+			85 * scalingValue, 24 * scalingValue, m_hWnd, (HMENU)IDB_CANCEL, m_hInstance, NULL );
 
 		m_KeypadHeight=0;
 
 		//Virtual Keypad
 		if( m_UseKeypad )
 		{
-			int top = 60;
-			int hMargin = 12;
-			int vMargin = 12;
-			int btnwidth = 48;
-			int btnheight = 48;
+			int top = 60 * scalingValue;
+			int hMargin = 12 * scalingValue;
+			int vMargin = 12 * scalingValue;
+			int btnwidth = 48 * scalingValue;
+			int btnheight = 48 * scalingValue;
 			int totwidth = btnwidth*3 + 2*hMargin;
 			int totheight = btnheight*4 +3*vMargin;
 			int left = (clientRect.right - clientRect.left - totwidth)/2;
@@ -143,22 +145,22 @@ dlgWndAskPIN::dlgWndAskPIN( DlgPinInfo pinInfo, DlgPinUsage PinPusage, std::wstr
 			dwStyle |= ES_NUMBER;
 
 		LONG pinTop=0;
-		LONG pinLeft=clientRect.right/2 - 100 + 40;
+		LONG pinLeft=clientRect.right/2 - 100 * scalingValue + 40;
 
 		if( m_UseKeypad )
-			pinTop = clientRect.top + 20;
+			pinTop = clientRect.top + 20 * scalingValue;
 		else
-			pinTop = clientRect.bottom - 80;
+			pinTop = clientRect.bottom - 80 * scalingValue;
 
 		HWND hTextEdit = CreateWindowEx( WS_EX_CLIENTEDGE,
 			L"EDIT", L"", dwStyle, 
-			pinLeft, pinTop, 160, 26, 
+			pinLeft, pinTop, 160 * scalingValue, 26 * scalingValue,
 			m_hWnd, (HMENU)IDC_EDIT, m_hInstance, NULL );
 		SendMessage( hTextEdit, EM_LIMITTEXT, m_ulPinMaxLen, 0 );
 
 		HWND hStaticText = CreateWindow( 
 			L"STATIC", szPIN, WS_CHILD | WS_VISIBLE | SS_RIGHT, 
-			pinLeft-100, pinTop +4 , 96, 22, 
+			pinLeft-100 * scalingValue, pinTop +4 , 96 * scalingValue, 22 * scalingValue,
 			m_hWnd, (HMENU)IDC_STATIC, m_hInstance, NULL );
 
 		SendMessage( hStaticText, WM_SETFONT, (WPARAM)TextFont, 0 );
