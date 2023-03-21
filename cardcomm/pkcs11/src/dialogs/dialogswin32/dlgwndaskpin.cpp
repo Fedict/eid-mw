@@ -85,15 +85,15 @@ dlgWndAskPIN::dlgWndAskPIN( DlgPinInfo pinInfo, DlgPinUsage PinPusage, std::wstr
 		//OK Button
 		HWND hOkButton = CreateWindow(
 			L"BUTTON", GETSTRING_DLG(Ok), WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_DEFPUSHBUTTON, 
-			clientRect.right - 160 * scalingValue, clientRect.bottom - (36 * scalingValue), 
+			clientRect.right - 175 * scalingValue, clientRect.bottom - (36 * scalingValue), 
 			72 * scalingValue, 24 * scalingValue, m_hWnd, (HMENU)IDB_OK, m_hInstance, NULL );
 		EnableWindow( hOkButton, false );
 
 		//Cancel Button
 		HWND hCancelButton = CreateWindow(
 			L"BUTTON", GETSTRING_DLG(Cancel), WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_TEXT, 
-			clientRect.right - 80 * scalingValue, clientRect.bottom - 36 * scalingValue, 
-			72 * scalingValue, 24 * scalingValue, m_hWnd, (HMENU)IDB_CANCEL, m_hInstance, NULL );
+			clientRect.right - 95 * scalingValue, clientRect.bottom - 36 * scalingValue, 
+			85 * scalingValue, 24 * scalingValue, m_hWnd, (HMENU)IDB_CANCEL, m_hInstance, NULL );
 
 		m_KeypadHeight=0;
 
@@ -145,7 +145,7 @@ dlgWndAskPIN::dlgWndAskPIN( DlgPinInfo pinInfo, DlgPinUsage PinPusage, std::wstr
 			dwStyle |= ES_NUMBER;
 
 		LONG pinTop=0;
-		LONG pinLeft=clientRect.right/2 - 100 + 40 * scalingValue;
+		LONG pinLeft=clientRect.right/2 - 100 * scalingValue + 40;
 
 		if( m_UseKeypad )
 			pinTop = clientRect.top + 20 * scalingValue;
@@ -160,7 +160,7 @@ dlgWndAskPIN::dlgWndAskPIN( DlgPinInfo pinInfo, DlgPinUsage PinPusage, std::wstr
 
 		HWND hStaticText = CreateWindow( 
 			L"STATIC", szPIN, WS_CHILD | WS_VISIBLE | SS_RIGHT, 
-			pinLeft-100, pinTop +4 , 96 * scalingValue, 22 * scalingValue,
+			pinLeft-100 * scalingValue, pinTop +4 , 96 * scalingValue, 22 * scalingValue,
 			m_hWnd, (HMENU)IDC_STATIC, m_hInstance, NULL );
 
 		SendMessage( hStaticText, WM_SETFONT, (WPARAM)TextFont, 0 );

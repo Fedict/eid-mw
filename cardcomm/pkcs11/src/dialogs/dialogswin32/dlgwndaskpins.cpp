@@ -90,14 +90,14 @@ dlgWndAskPINs::dlgWndAskPINs( DlgPinInfo pinInfo1, DlgPinInfo pinInfo2, std::wst
 
 		HWND hOkButton = CreateWindow(
 			L"BUTTON", GETSTRING_DLG(Ok), WS_CHILD | WS_VISIBLE | WS_TABSTOP, 
-			clientRect.right - 160 * scalingValue, clientRect.bottom - 36 * scalingValue, 
+			clientRect.right - 175 * scalingValue, clientRect.bottom - 36 * scalingValue, 
 			72 * scalingValue, 24 * scalingValue, m_hWnd, (HMENU)IDB_OK, m_hInstance, NULL );
 		EnableWindow( hOkButton, false );
 
 		HWND hCancelButton = CreateWindow(
 			L"BUTTON", GETSTRING_DLG(Cancel), WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_DEFPUSHBUTTON, 
-			clientRect.right - 80 * scalingValue, clientRect.bottom - 36 * scalingValue, 
-			72 * scalingValue, 24 * scalingValue, m_hWnd, (HMENU)IDB_CANCEL, m_hInstance, NULL );
+			clientRect.right - 95 * scalingValue, clientRect.bottom - 36 * scalingValue, 
+			85 * scalingValue, 24 * scalingValue, m_hWnd, (HMENU)IDB_CANCEL, m_hInstance, NULL );
 
 		DWORD dwStyle = WS_CHILD | WS_VISIBLE | WS_TABSTOP | WS_BORDER | ES_PASSWORD;
 		if( pinInfo1.ulFlags & PIN_FLAG_DIGITS )
@@ -210,7 +210,7 @@ dlgWndAskPINs::dlgWndAskPINs( DlgPinInfo pinInfo1, DlgPinInfo pinInfo2, std::wst
 			HWND hStaticText3 = CreateWindow( 
 				L"STATIC", GETSTRING_DLG(ConfirmNewPin), WS_CHILD | WS_VISIBLE | SS_RIGHT,
 				0, clientRect.bottom - 86 * scalingValue, clientRect.right/2 - 35 * scalingValue, 
-				22 * scalingValue, m_hWnd, (HMENU)IDC_STATIC, m_hInstance, NULL );
+				38 * scalingValue, m_hWnd, (HMENU)IDC_STATIC, m_hInstance, NULL );
 
 
 			//ImageKP_BTN = ImageKP_BTN_Mask = NULL;
