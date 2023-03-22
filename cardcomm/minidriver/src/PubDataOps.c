@@ -248,8 +248,13 @@ DWORD WINAPI   CardReadFile
 					CLEANUP(dwReturn);
 				}
 				for (i=0; i < 16; i++) {
-					sprintf(szSerialNumber + 2*i*sizeof(char),
+#if defined(_MSC_VER) && __STDC_WANT_SECURE_LIB__
+					_snprintf_s(szSerialNumber + 2 * i * sizeof(char), sizeof(szSerialNumber) - 2 * i * sizeof(char), sizeof(szSerialNumber) - 2 * i * sizeof(char),
 						"%02X", pbSerialNumber[i]);
+#else
+					snprintf(szSerialNumber + 2*i*sizeof(char), sizeof(szSerialNumber) - 2 * i * sizeof(char),
+						"%02X", pbSerialNumber[i]);
+#endif
 				}
 				szSerialNumber[32] = '\0';
 
@@ -260,7 +265,11 @@ DWORD WINAPI   CardReadFile
 				/* Authentication Key Info */
 				/***************************/
 				/* Container name for Authentication key */
-				sprintf (szContainerName, "DS_%s", szSerialNumber);
+#if defined(_MSC_VER) && __STDC_WANT_SECURE_LIB__
+				_snprintf_s(szContainerName, sizeof(szContainerName), sizeof(szContainerName), "DS_%s", szSerialNumber);
+#else
+				snprintf (szContainerName, sizeof(szContainerName), "DS_%s", szSerialNumber);
+#endif
 				memset(cmr[0].wszGuid, '\0', sizeof(cmr[0].wszGuid));
 				iReturn = MultiByteToWideChar(CP_UTF8, 0, szContainerName, (int)strlen(szContainerName), cmr[0].wszGuid, (int)(sizeof(cmr[0].wszGuid)/sizeof(WCHAR)) );
 
@@ -304,7 +313,11 @@ DWORD WINAPI   CardReadFile
 				/* Non-Repudiation Key Info */
 				/****************************/
 				/* Container name for Non-repudiation key */
-				sprintf (szContainerName, "NR_%s", szSerialNumber);
+#if defined(_MSC_VER) && __STDC_WANT_SECURE_LIB__
+				_snprintf_s(szContainerName, sizeof(szContainerName), sizeof(szContainerName), "NR_%s", szSerialNumber);
+#else
+				snprintf (szContainerName, sizeof(szContainerName), "NR_%s", szSerialNumber);
+#endif
 				memset(cmr[1].wszGuid, '\0', sizeof(cmr[1].wszGuid));
 				iReturn = MultiByteToWideChar(CP_UTF8, 0, szContainerName, (int)strlen(szContainerName), cmr[1].wszGuid, (int)(sizeof(cmr[1].wszGuid) / sizeof(WCHAR)) );
 

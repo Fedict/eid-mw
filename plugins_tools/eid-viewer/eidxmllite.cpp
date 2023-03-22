@@ -115,7 +115,7 @@ static int write_elements(IXmlWriter * pWriter, struct element_desc *element)
 				//element is not requiered, so might not be needed to write it
 				//do some tests here to determine if it has any attributes or sub elements present
 				//if none present, skip this element
-				if ( (any_attributes_present(element->attributes) || any_elements_present(element->child_elements)) == 0)
+				if ( (any_attributes_present(element->attributes) | any_elements_present(element->child_elements)) == 0)
 				{
 					element++;
 					continue;
@@ -261,7 +261,8 @@ int eid_vwr_gen_xml(void *data)
 out:
 	if (pwszContent != NULL)
 	{
-		free(pwszContent);
+		//free(pwszContent);
+		pwszContent = NULL;
 	}
 
 	return retVal;
@@ -292,7 +293,12 @@ HRESULT StoreLocalName(WCHAR ** nodeNames, const WCHAR * pwszLocalName)
 		return S_FALSE;
 	}
 
+#if defined(_MSC_VER) && __STDC_WANT_SECURE_LIB__
+	wcscpy_s(temp, wcslen(pwszLocalName), pwszLocalName);
+#else
 	wcscpy(temp, pwszLocalName);
+#endif
+
 	*nodeNames = temp;
 
 	return S_OK;
@@ -521,7 +527,12 @@ int eid_vwr_serialize(const EID_CHAR * filename)
 {
 	int retVal = 0;
 	const struct eid_vwr_cache_item *item = cache_get_data(TEXT("xml"));
+#if defined(_MSC_VER) && __STDC_WANT_SECURE_LIB__
+	FILE *f = NULL;
+	_wfopen_s(&f, filename, TEXT("w"));
+#else
 	FILE *f = EID_FOPEN(filename, TEXT("w"));
+#endif
 	if (f == NULL) {
 		return 1;
 	}

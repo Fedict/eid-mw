@@ -392,7 +392,11 @@ DWORD BeidAuthenticateExternal(
 		0);
 	if (dwReturn != 0) {
 		LogTrace(LOGTYPE_ERROR, WHERE, "CardGetProperty Failed: %02X", dwReturn);
-		wcscpy(externalPinInfo.lpstrPinContextString, L"");
+#if defined(_MSC_VER) && __STDC_WANT_SECURE_LIB__
+		wcsncpy_s(externalPinInfo.lpstrPinContextString, sizeof(externalPinInfo.lpstrPinContextString) / sizeof(wchar_t), L"", sizeof(externalPinInfo.lpstrPinContextString) / sizeof(wchar_t));
+#else
+		wcsncpy(externalPinInfo.lpstrPinContextString, L"", sizeof(externalPinInfo.lpstrPinContextString) / sizeof(wchar_t));
+#endif
 	}
 
 	/**********/

@@ -219,7 +219,11 @@ void eid_vwr_p11_to_ui(const EID_CHAR* label, const void* value, int len) {
 		free(str);
 		label_len = (EID_STRLEN(label) + 5) * sizeof(EID_CHAR);
 		str = malloc(label_len);
+#if defined(_MSC_VER) && __STDC_WANT_SECURE_LIB__
+		_snwprintf_s(str, label_len, label_len, TEXT("%s_raw"), label);
+#else
 		EID_SNPRINTF(str, label_len, TEXT("%s_raw"), label);
+#endif
 		be_newbindata(str, value, len);
 		free(str);
 	} else if(is_string(label)) {
@@ -491,7 +495,7 @@ static int eid_vwr_p11_do_challenge_real(struct eid_vwr_challenge_responsedata *
 		//initialize the signature operation
 		check_rv(C_SignInit(session, &mechanism, hKey));
 
-		check_rv(C_Sign(session, p->challenge, (CK_ULONG)p->challengelen, p->response, &(p->responselen)));
+		check_rv(C_Sign(session, p->challenge, (CK_ULONG)p->challengelen, p->response, (CK_ULONG_PTR) & (p->responselen)));
 
 		p->result = EID_VWR_RES_SUCCESS;
 	}
@@ -522,7 +526,7 @@ int eid_vwr_p11_do_challenge(void* data) {
 		{
 			retval = eid_vwr_p11_do_challenge_real(p);
 			if (retval == CKR_OK) {
-				be_challengeresult(p->response, p->responselen, p->result);
+				be_challengeresult(p->response, (int)p->responselen, p->result);
 			}
 			free(signature);
 		}
@@ -717,7 +721,7 @@ int eid_vwr_p11_check_reader_list(void* slot_ID) {
 //inform the UI of update reader list
 int eid_vwr_p11_update_slot_list_ui(CK_SLOT_ID_PTR slotlist, CK_ULONG slotCount)
 {
-	slotdesc* slotDescs = (slotdesc*)malloc(slotCount * sizeof(slotdesc));
+	slotdesc* slotDescs = (slotdesc*)malloc((slotCount + 1) * sizeof(slotdesc));
 	if (slotDescs == NULL)
 	{
 		be_log(EID_VWR_LOG_ERROR, TEXT("eid_vwr_p11_update_slot_list_ui failed allocating memory for the slot descriptions"));

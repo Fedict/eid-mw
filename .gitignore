@@ -92,6 +92,11 @@ beidpkcs11.sdf
 *.user
 *.db-shm
 *.db-wal
+cardcomm/pkcs11/VS_2022/Binaries
+cardcomm/pkcs11/VS_2022/Win32_PKCS11_FF_DEBUG
+cardcomm/pkcs11/VS_2022/Win32_PKCS11_FF_Release
+cardcomm/pkcs11/VS_2022/x64_PKCS11_FF_DEBUG
+cardcomm/pkcs11/VS_2022/x64_PKCS11_FF_Release
 cardcomm/pkcs11/VS_2019/Binaries
 cardcomm/pkcs11/VS_2019/Win32_PKCS11_FF_DEBUG
 cardcomm/pkcs11/VS_2019/Win32_PKCS11_FF_Release

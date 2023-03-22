@@ -65,6 +65,11 @@ struct eid_vwr_ui_callbacks* eid_vwr_cbstruct() {
 	//version 0 was the initial backend version
 	//version 1 includes the challenge/response features of the applet 1.8 cards
 
+	if (retval == NULL)
+	{
+		return NULL;
+	}
+
 	retval->version = 1;
 	return retval;
 }
@@ -152,6 +157,16 @@ static EID_CHAR* format_string(const EID_CHAR* format, va_list ap) {
 	va_list apc;
 	do {
 		va_copy(apc, ap);
+#if defined(_MSC_VER) && __STDC_WANT_SECURE_LIB__
+		str = malloc(UNICODE_STRING_MAX_BYTES + sizeof(wchar_t));
+		_vsnwprintf_s(str, UNICODE_STRING_MAX_CHARS, UNICODE_STRING_MAX_BYTES, format, apc);
+		strnewsize = wcslen(str);
+		strsize = strnewsize + 1;
+		if (!str)
+		{
+			return NULL;
+		}
+#else
 		strnewsize = EID_VSNPRINTF(str, strsize, format, apc);
 		va_end(apc);
 		strsize = strnewsize + 1;
@@ -163,6 +178,7 @@ static EID_CHAR* format_string(const EID_CHAR* format, va_list ap) {
 		str = newstr;
 		va_copy(apc, ap);
 		strnewsize = EID_VSNPRINTF(str, strsize, format, apc);
+#endif
 		va_end(apc);
 	} while(strnewsize >= strsize);
 	return str;

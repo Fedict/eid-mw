@@ -117,7 +117,8 @@ void LogTrace(int info, const char *pWhere, const char *format,... )
 	DWORD baseNamseSize; 
 
 	time_t         timer;
-	struct tm      *t;
+	struct tm      ts;
+	struct tm      *t = &ts;
 	char           timebuf  [26];
 	unsigned int   uiYear;
 
@@ -183,7 +184,11 @@ void LogTrace(int info, const char *pWhere, const char *format,... )
 
 	/* Converts date/time to a structure */
 	memset(timebuf, '\0', sizeof(timebuf));
+#if defined(_MSC_VER) && __STDC_WANT_SECURE_LIB__
+	localtime_s(&ts, &timer);
+#else
 	t = localtime(&timer);
+#endif
 	if (t != NULL)
 	{
 		uiYear = t->tm_year;
@@ -192,6 +197,16 @@ void LogTrace(int info, const char *pWhere, const char *format,... )
 		uiYear += 1900;
 
 		/* Converts date/time to string */
+#if defined(_MSC_VER) && __STDC_WANT_SECURE_LIB__
+		_snprintf_s(timebuf, sizeof(timebuf), sizeof(timebuf)
+			, "%02d/%02d/%04d - %02d:%02d:%02d"
+			, t->tm_mday
+			, t->tm_mon + 1
+			, uiYear
+			, t->tm_hour
+			, t->tm_min
+			, t->tm_sec);
+#else
 		_snprintf(timebuf, sizeof(timebuf)
 			, "%02d/%02d/%04d - %02d:%02d:%02d"
 			, t->tm_mday
@@ -200,11 +215,16 @@ void LogTrace(int info, const char *pWhere, const char *format,... )
 			, t->tm_hour
 			, t->tm_min
 			, t->tm_sec);
+#endif
 	}
 
 	memset (buffer, '\0', sizeof(buffer));
 	va_start(listArg, format);
+#if defined(_MSC_VER) && __STDC_WANT_SECURE_LIB__
+	_vsnprintf_s(buffer, sizeof(buffer), sizeof(buffer), format, listArg);
+#else
 	_vsnprintf(buffer, sizeof(buffer), format, listArg);
+#endif
 	va_end(listArg);
 
 
