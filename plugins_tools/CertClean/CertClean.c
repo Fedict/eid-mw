@@ -110,15 +110,15 @@ int CleanAllUsers(void)
 
 					HKEY	CAKey = NULL;
 					LPCSTR	CAPath = "\\SOFTWARE\\Microsoft\\SystemCertificates\\CA\\Certificates";
-					DWORD	CAPathLen = strlen("\\SOFTWARE\\Microsoft\\SystemCertificates\\CA\\Certificates") + 1 ;
+					DWORD	CAPathLen = (DWORD)strlen("\\SOFTWARE\\Microsoft\\SystemCertificates\\CA\\Certificates") + 1 ;
 
 					DWORD subKeyLen = nameLen + CAPathLen;
 					LPCSTR subKEy = (LPCSTR)malloc(subKeyLen);
 					if (subKEy == NULL)
 						return -1;
 
-					strcpy_s(subKEy, subKeyLen, Name);
-					strcat_s(subKEy, subKeyLen, CAPath);
+					strcpy_s((LPSTR)subKEy, subKeyLen, Name);
+					strcat_s((LPSTR)subKEy, subKeyLen, CAPath);
 
 					//check if CA cert store exists for this subkey
 					if (RegOpenKeyExA(
@@ -133,13 +133,13 @@ int CleanAllUsers(void)
 						RegCloseKey(CAKey);
 						//ok, CA cert exists, check for RS belgian rootCA's (Name is userID) and delete them
 
-						DWORD userCALen = nameLen + strlen("\\CA") + 1;
+						DWORD userCALen = (DWORD)(nameLen + strlen("\\CA") + 1);
 						LPCSTR userCA = (LPCSTR)malloc(userCALen);
 						if (userCA == NULL)
 							return -1;
 
-						strcpy_s(userCA, userCALen, Name);
-						strcat_s(userCA, userCALen, "\\CA");
+						strcpy_s((LPSTR)userCA, userCALen, Name);
+						strcat_s((LPSTR)userCA, userCALen, "\\CA");
 						//userID store
 						hMemoryStore = CertOpenStore(CERT_STORE_PROV_SYSTEM_A, X509_ASN_ENCODING | PKCS_7_ASN_ENCODING, (HCRYPTPROV_LEGACY)NULL,
 							CERT_STORE_OPEN_EXISTING_FLAG | CERT_SYSTEM_STORE_USERS, userCA);//"userid\CA"
@@ -153,13 +153,13 @@ int CleanAllUsers(void)
 
 						if (userCA != NULL)
 						{
-							free(userCA);
+							free((LPSTR)userCA);
 							userCA = NULL;
 						}
 					}
 					if (subKEy != NULL)
 					{
-						free(subKEy);
+						free((LPSTR)subKEy);
 						subKEy = NULL;
 					}
 				}

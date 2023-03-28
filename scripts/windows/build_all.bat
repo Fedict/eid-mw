@@ -15,30 +15,30 @@ setlocal disabledelayedexpansion
 
 :: build pkcs11, minidriver and viewer
 :: ===================================
-@echo [INFO] Building "%~dp0..\..\VS_2019\beid.sln"
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:clean /property:Configuration=Release /Property:Platform=x86 "%~dp0..\..\VS_2019\beid.sln"
+@echo [INFO] Building "%~dp0..\..\VS_2022\beid.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:clean /property:Configuration=Release /Property:Platform=x86 "%~dp0..\..\VS_2022\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:build /property:Configuration=Release /Property:Platform=x86 "%~dp0..\..\VS_2019\beid.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:build /property:Configuration=Release /Property:Platform=x86 "%~dp0..\..\VS_2022\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:clean /property:Configuration=PKCS11_FF_Release /Property:Platform=x86 "%~dp0..\..\VS_2019\beid.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:clean /property:Configuration=PKCS11_FF_Release /Property:Platform=x86 "%~dp0..\..\VS_2022\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:build /property:Configuration=PKCS11_FF_Release /Property:Platform=x86 "%~dp0..\..\VS_2019\beid.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:build /property:Configuration=PKCS11_FF_Release /Property:Platform=x86 "%~dp0..\..\VS_2022\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:clean /property:Configuration=Release /Property:Platform=x64 "%~dp0..\..\VS_2019\beid.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:clean /property:Configuration=Release /Property:Platform=x64 "%~dp0..\..\VS_2022\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:build /property:Configuration=Release /Property:Platform=x64 "%~dp0..\..\VS_2019\beid.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:build /property:Configuration=Release /Property:Platform=x64 "%~dp0..\..\VS_2022\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:clean /property:Configuration=PKCS11_FF_Release /Property:Platform=x64 "%~dp0..\..\VS_2019\beid.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:clean /property:Configuration=PKCS11_FF_Release /Property:Platform=x64 "%~dp0..\..\VS_2022\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:build /property:Configuration=PKCS11_FF_Release /Property:Platform=x64 "%~dp0..\..\VS_2019\beid.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:build /property:Configuration=PKCS11_FF_Release /Property:Platform=x64 "%~dp0..\..\VS_2022\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:clean /property:Configuration=Release /Property:Platform=x86 "%~dp0..\..\plugins_tools\eid-viewer\Windows\VS_2019\eIDViewer.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:clean /property:Configuration=Release /Property:Platform=x86 "%~dp0..\..\plugins_tools\eid-viewer\Windows\VS_2022\eIDViewer.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:build /property:Configuration=Release /Property:Platform=x86 "%~dp0..\..\plugins_tools\eid-viewer\Windows\VS_2019\eIDViewer.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:build /property:Configuration=Release /Property:Platform=x86 "%~dp0..\..\plugins_tools\eid-viewer\Windows\VS_2022\eIDViewer.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:clean /property:Configuration=Release /Property:Platform=x64 "%~dp0..\..\plugins_tools\eid-viewer\Windows\VS_2019\eIDViewer.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:clean /property:Configuration=Release /Property:Platform=x64 "%~dp0..\..\plugins_tools\eid-viewer\Windows\VS_2022\eIDViewer.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:build /property:Configuration=Release /Property:Platform=x64 "%~dp0..\..\plugins_tools\eid-viewer\Windows\VS_2019\eIDViewer.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:build /property:Configuration=Release /Property:Platform=x64 "%~dp0..\..\plugins_tools\eid-viewer\Windows\VS_2022\eIDViewer.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
 
 
@@ -73,8 +73,8 @@ mkdir %MDRVINSTALLPATH%\beidmdrv
 copy %~dp0..\..\cardcomm\minidriver\makemsi\beidmdrv.inf %MDRVINSTALLPATH%\beidmdrv
 
 :: copy drivers. We use the same files for 32 and 64 bit. But we create architecture dependent MSI's
-copy %~dp0..\..\cardcomm\minidriver\VS_2019\Binaries\Win32_Release\beidmdrv32.dll %MDRVINSTALLPATH%\beidmdrv\beidmdrv32.dll
-copy %~dp0..\..\cardcomm\minidriver\VS_2019\Binaries\x64_Release\beidmdrv64.dll %MDRVINSTALLPATH%\beidmdrv\beidmdrv64.dll
+copy %~dp0..\..\cardcomm\minidriver\VS_2022\Binaries\Win32_Release\beidmdrv32.dll %MDRVINSTALLPATH%\beidmdrv\beidmdrv32.dll
+copy %~dp0..\..\cardcomm\minidriver\VS_2022\Binaries\x64_Release\beidmdrv64.dll %MDRVINSTALLPATH%\beidmdrv\beidmdrv64.dll
 
 :: copy icon
 :: copy %~dp0..\..\cardcomm\minidriver\img\beid.ico %MDRVINSTALLPATH%\beidmdrv\
@@ -87,15 +87,20 @@ copy %~dp0..\..\cardcomm\minidriver\VS_2019\Binaries\x64_Release\beidmdrv64.dll 
 @if "%BUILD_ONLY%" == "1" goto end
 :: sign minidriver driver cat file
 :: ===============================
+@echo [INFO] Sign the driver
+"%SIGNTOOL_PATH%\signtool" sign /a /fd SHA256 /v "%MDRVINSTALLPATH%\beidmdrv\beidmdrv32.dll"
+@if "%ERRORLEVEL%" == "1" goto signtool_failed
+"%SIGNTOOL_PATH%\signtool" sign /a /fd SHA256 /v "%MDRVINSTALLPATH%\beidmdrv\beidmdrv64.dll"
+@if "%ERRORLEVEL%" == "1" goto signtool_failed
 @echo [INFO] Sign the catalog
-"%SIGNTOOL_PATH%\signtool" sign /a /n "ZetesTestCert" /v "%MDRVINSTALLPATH%\beidmdrv\beidmdrv.cat"
+"%SIGNTOOL_PATH%\signtool" sign /a /fd SHA256 /v "%MDRVINSTALLPATH%\beidmdrv\beidmdrv.cat"
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
 
 :: copy minidriver to quickinstaller's driver folder
 
 
 :: create cert
-:: %SIGNTOOL_PATH%\makecert -r -n CN="ZetesTestCert" -b 01/01/2015 -e 01/01/2020 -ss my -sky signature
+:: %SIGNTOOL_PATH%\makecert -pe -r -n CN="ZetesTestCert" -b 01/01/2022 -e 01/01/2027 -ss my -sky signature -eku 1.3.6.1.5.5.7.3.3 
 
 :: create the MSI installers
 :: =========================
@@ -108,7 +113,7 @@ set OUR_CURRENT_PATH="%cd%"
 @call "%~dp0..\..\installers\eid-mw\Windows\build_msi_eidmw32.cmd"
 @if %ERRORLEVEL%==1 goto end_resetpath_with_error
 @echo [INFO] sign 32 bit msi installer
-"%SIGNTOOL_PATH%\signtool" sign /a /n "ZetesTestCert" /v "%~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi"
+"%SIGNTOOL_PATH%\signtool" sign /a /fd SHA256 /v "%~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi"
 @if %ERRORLEVEL%==1 goto signtool_failed
 @echo [INFO] copy 32 bit msi installer
 copy "%~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi" "%~dp0"
@@ -116,7 +121,7 @@ copy "%~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi" "%~dp0"
 @call "%~dp0..\..\installers\eid-mw\Windows\build_msi_eidmw64.cmd"
 @if %ERRORLEVEL%==1 goto end_resetpath_with_error
 @echo [INFO] sign 64 bit msi installer
-"%SIGNTOOL_PATH%\signtool" sign /a /n "ZetesTestCert" /v "%~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_64.msi"
+"%SIGNTOOL_PATH%\signtool" sign /a /fd SHA256 /v "%~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_64.msi"
 @if %ERRORLEVEL%==1 goto signtool_failed
 @echo [INFO] copy 64 bit msi installer
 copy "%~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_64.msi" "%~dp0"
@@ -128,7 +133,7 @@ copy "%~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_64.msi" "%~dp0"
 @call "%~dp0..\..\installers\eid-viewer\Windows\build_msi_eidviewer.cmd"
 @if %ERRORLEVEL%==1 goto end_resetpath_with_error
 @echo [INFO] sign 32 bit msi installer
-"%SIGNTOOL_PATH%\signtool" sign /a /n "ZetesTestCert" /v "%~dp0..\..\installers\eid-viewer\Windows\bin\BeidViewer.msi"
+"%SIGNTOOL_PATH%\signtool" sign /a /fd SHA256 /v "%~dp0..\..\installers\eid-viewer\Windows\bin\BeidViewer.msi"
 @if %ERRORLEVEL%==1 goto signtool_failed
 @echo [INFO] copy 32 bit msi installer
 copy "%~dp0..\..\installers\eid-viewer\Windows\bin\BeidViewer.msi" "%~dp0"
@@ -136,7 +141,7 @@ copy "%~dp0..\..\installers\eid-viewer\Windows\bin\BeidViewer.msi" "%~dp0"
 @call "%~dp0..\..\installers\eid-viewer\Windows\build_msi_eidviewer64.cmd"
 @if %ERRORLEVEL%==1 goto end_resetpath_with_error
 @echo [INFO] sign 64 bit msi installer
-"%SIGNTOOL_PATH%\signtool" sign /a /n "ZetesTestCert" /v "%~dp0..\..\installers\eid-viewer\Windows\bin\x64\BeidViewer64.msi"
+"%SIGNTOOL_PATH%\signtool" sign /a /fd SHA256 /v "%~dp0..\..\installers\eid-viewer\Windows\bin\x64\BeidViewer64.msi"
 @if %ERRORLEVEL%==1 goto signtool_failed
 @echo [INFO] copy 64 bit msi installer
 copy "%~dp0..\..\installers\eid-viewer\Windows\bin\x64\BeidViewer64.msi" "%~dp0"
@@ -145,10 +150,10 @@ copy "%~dp0..\..\installers\eid-viewer\Windows\bin\x64\BeidViewer64.msi" "%~dp0"
 
 :: create the NSIS plugins
 :: =========================
-@echo [INFO] Building "%~dp0..\..\installers\quickinstaller\NSIS_Plugins\VS_2019\beidplugins.sln"
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:clean /property:Configuration=Release /Property:Platform=x86 "%~dp0..\..\installers\quickinstaller\NSIS_Plugins\VS_2019\beidplugins.sln"
+@echo [INFO] Building "%~dp0..\..\installers\quickinstaller\NSIS_Plugins\VS_2022\beidplugins.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:clean /property:Configuration=Release /Property:Platform=x86 "%~dp0..\..\installers\quickinstaller\NSIS_Plugins\VS_2022\beidplugins.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:build /property:Configuration=Release /Property:Platform=x86 "%~dp0..\..\installers\quickinstaller\NSIS_Plugins\VS_2019\beidplugins.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:build /property:Configuration=Release /Property:Platform=x86 "%~dp0..\..\installers\quickinstaller\NSIS_Plugins\VS_2022\beidplugins.sln"
 
 :: copy the NSIS plugins to NSIS default plugin folder
 :: nsis installer is updated to look into the build folder
@@ -175,15 +180,15 @@ copy "%~dp0..\..\installers\eid-viewer\Windows\bin\x64\BeidViewer64.msi" "%~dp0"
 :: sign the NSIS installers
 :: =========================
 @echo [INFO] Sign nsis installer
-"%SIGNTOOL_PATH%\signtool" sign /a /n "ZetesTestCert" /v "%~dp0..\..\installers\quickinstaller\Belgium eID-QuickInstaller %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe"
+"%SIGNTOOL_PATH%\signtool" sign  /a /fd SHA256 /v "%~dp0..\..\installers\quickinstaller\Belgium eID-QuickInstaller %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe"
 @if %ERRORLEVEL%==1 goto signtool_failed
 
 @echo [INFO] Sign nsis viewer installer
-"%SIGNTOOL_PATH%\signtool" sign /a /n "ZetesTestCert" /v "%~dp0..\..\installers\quickinstaller\Belgium eID Viewer Installer %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe"
+"%SIGNTOOL_PATH%\signtool" sign  /a /fd SHA256 /v "%~dp0..\..\installers\quickinstaller\Belgium eID Viewer Installer %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe"
 @if %ERRORLEVEL%==1 goto signtool_failed
 
 @echo [INFO] Sign nsis viewer launcher installer
-"%SIGNTOOL_PATH%\signtool" sign /a /n "ZetesTestCert" /v "%~dp0..\..\installers\quickinstaller\Belgium eID Viewer Launcher %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe"
+"%SIGNTOOL_PATH%\signtool" sign /a /fd SHA256 /v "%~dp0..\..\installers\quickinstaller\Belgium eID Viewer Launcher %BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.exe"
 @if %ERRORLEVEL%==1 goto signtool_failed
 
 :: copy the NSIS installers

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1022
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "beid", "..\beidread\VS_2022\beid.vcxproj", "{4B2710AE-D5BF-4C35-A70E-1ECB05205FC6}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "beidread_test", "..\beidread_test\VS_2022\beidread_test.vcxproj", "{AD1249FE-22CA-471E-8706-8E0A4FE9F098}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4B2710AE-D5BF-4C35-A70E-1ECB05205FC6}.Debug|x86.ActiveCfg = Debug|Win32
+		{4B2710AE-D5BF-4C35-A70E-1ECB05205FC6}.Debug|x86.Build.0 = Debug|Win32
+		{4B2710AE-D5BF-4C35-A70E-1ECB05205FC6}.Release|x86.ActiveCfg = Release|Win32
+		{4B2710AE-D5BF-4C35-A70E-1ECB05205FC6}.Release|x86.Build.0 = Release|Win32
+		{AD1249FE-22CA-471E-8706-8E0A4FE9F098}.Debug|x86.ActiveCfg = Debug|Win32
+		{AD1249FE-22CA-471E-8706-8E0A4FE9F098}.Debug|x86.Build.0 = Debug|Win32
+		{AD1249FE-22CA-471E-8706-8E0A4FE9F098}.Release|x86.ActiveCfg = Release|Win32
+		{AD1249FE-22CA-471E-8706-8E0A4FE9F098}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {95CEB61D-32B6-4BB4-8D31-D6E95F8C70EB}
+	EndGlobalSection
+EndGlobal
