@@ -79,6 +79,11 @@ copy %~dp0..\..\cardcomm\minidriver\VS_2022\Binaries\x64_Release\beidmdrv64.dll 
 :: copy icon
 :: copy %~dp0..\..\cardcomm\minidriver\img\beid.ico %MDRVINSTALLPATH%\beidmdrv\
 
+@echo [INFO] Sign the driver
+"%SIGNTOOL_PATH%\signtool" sign /a /fd SHA256 /v "%MDRVINSTALLPATH%\beidmdrv\beidmdrv32.dll"
+@if "%ERRORLEVEL%" == "1" goto signtool_failed
+"%SIGNTOOL_PATH%\signtool" sign /a /fd SHA256 /v "%MDRVINSTALLPATH%\beidmdrv\beidmdrv64.dll"
+
 :: @echo [INFO] Creating cat file
 :: Create catalog
 "%INF2CAT_PATH%\inf2cat.exe" /driver:%MDRVINSTALLPATH%\beidmdrv\ /os:XP_X86,XP_X64,Vista_X86,Vista_X64,7_X86,7_X64
@@ -87,10 +92,6 @@ copy %~dp0..\..\cardcomm\minidriver\VS_2022\Binaries\x64_Release\beidmdrv64.dll 
 @if "%BUILD_ONLY%" == "1" goto end
 :: sign minidriver driver cat file
 :: ===============================
-@echo [INFO] Sign the driver
-"%SIGNTOOL_PATH%\signtool" sign /a /fd SHA256 /v "%MDRVINSTALLPATH%\beidmdrv\beidmdrv32.dll"
-@if "%ERRORLEVEL%" == "1" goto signtool_failed
-"%SIGNTOOL_PATH%\signtool" sign /a /fd SHA256 /v "%MDRVINSTALLPATH%\beidmdrv\beidmdrv64.dll"
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
 @echo [INFO] Sign the catalog
 "%SIGNTOOL_PATH%\signtool" sign /a /fd SHA256 /v "%MDRVINSTALLPATH%\beidmdrv\beidmdrv.cat"
