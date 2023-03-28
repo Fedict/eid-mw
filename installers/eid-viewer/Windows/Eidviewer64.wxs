@@ -85,7 +85,7 @@
       </Directory>
 
 	<?ifndef env.DONT_MERGE_VCRT?>
-		<Merge Id="VCRT_64" SourceFile="C:\Program Files\Microsoft Visual Studio\2022\Entreprise\VC\Redist\MSVC\v143\MergeModules\Microsoft_VC143_CRT_x86.msm" Language="0" DiskId="1" />
+		<Merge Id="VCRT_64" SourceFile="C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Redist\MSVC\v143\MergeModules\Microsoft_VC143_CRT_x86.msm" Language="0" DiskId="1" />
 	<?endif?>
     </Directory>
 
