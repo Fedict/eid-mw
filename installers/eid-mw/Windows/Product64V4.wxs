@@ -1,0 +1,273 @@
+﻿<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs" xmlns:util="http://wixtoolset.org/schemas/v4/wxs/util" xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui">
+  <?include ..\..\..\scripts\windows\eidmw_revision.wxs ?>
+
+  <?define var.OfficialProductVersion =$(var.BaseVersion1).$(var.BaseVersion2).$(var.BaseVersion3)?>
+  <?define var.ProductVersion =$(var.BaseVersion1).$(var.BaseVersion2).$(var.RevisionNumber)?>
+  <?define var.FullProductVersion =$(var.OfficialProductVersion).$(var.RevisionNumber)?>
+
+  <?define var.UpgradeCode ={41D2DFA4-7754-465C-9379-55CDBADE082D}?>
+  <?define var.ProductGuid ={DB942AEA-93D6-4FE4-8862-180D35A7$(var.RevisionNumber)}?>
+
+  <?define var.ProductName =Belgium e-ID middleware $(var.OfficialProductVersion) (build $(var.RevisionNumber))?>
+
+  <?define var.PackageCode="*"?>
+
+  <Package Name="$(var.ProductName)" Language="1033" Codepage="1252" Version="$(var.ProductVersion)" Manufacturer="Belgian Government" UpgradeCode="$(var.UpgradeCode)" InstallerVersion="405" ProductCode="$(var.ProductGuid)"><!-- InstallerVersion="405"(v4.5)Released with Vista Service Pack 2, or update for Windows XP(SP2, SP3) -->	
+    <SummaryInformation Keywords="Belgium e-ID Middleware Installer" Manufacturer="Belgian Government" />
+
+	<MajorUpgrade AllowDowngrades="no" DowngradeErrorMessage="error 1638: Newer version eID Middleware found" />
+
+    <WixVariable Id="WixUILicenseRtf" Value="..\..\..\doc\licenses\English\License_en.rtf" />
+
+    <WixVariable Id="WixUIBannerBmp" Value="..\..\bannrbmp.bmp" />
+    <WixVariable Id="WixUIDialogBmp" Value="..\..\dlgbmp.bmp" />
+
+    <Media Id="1" Cabinet="Middleware.cab" EmbedCab="yes" />
+
+    <Icon Id="eid.ico" SourceFile="..\..\eid.ico" />
+
+    <Property Id="ARPPRODUCTICON" Value="eid.ico" />
+    <Property Id="ARPURLINFOABOUT" Value="http://eid.belgium.be" />
+
+    
+
+    
+
+    <DirectoryRef Id="LOGDIR">
+      <Component Id="LogDir" Guid="{A300DA04-F8DF-4506-B654-1E5EB2782DF3}" KeyPath="yes" Bitness="always32">
+        <RemoveFile Id="RemoveLogFiles" On="uninstall" Name="*" />
+        <RemoveFolder Id="RemoveLogFolder" On="uninstall" />
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="MINIDRIVERROOTFOLDER">
+      <Component Id="beidmdrv" Guid="2bdf2bb0-4f7a-4ed6-a3d4-abcbe212fa14" Bitness="always32">
+        <File Id="beidmdrv.inf" Name="beidmdrv.inf" Source="..\..\..\installers\quickinstaller\Drivers\WINALL\beidmdrv\beidmdrv.inf" KeyPath="yes" DiskId="1" />
+        <File Id="beidmdrv.cat" Name="beidmdrv.cat" Source="..\..\..\installers\quickinstaller\Drivers\WINALL\beidmdrv\beidmdrv.cat" KeyPath="no" DiskId="1" />
+        <File Id="beidmdrv32.dll" Name="beidmdrv32.dll" Source="..\..\..\installers\quickinstaller\Drivers\WINALL\beidmdrv\beidmdrv32.dll" KeyPath="no" DiskId="1" />
+        <File Id="beidmdrv64.dll" Name="beidmdrv64.dll" Source="..\..\..\installers\quickinstaller\Drivers\WINALL\beidmdrv\beidmdrv64.dll" KeyPath="no" DiskId="1" />
+      </Component>
+      <!-- Certificate Propagation Service is a standard Windows service available in from Windows Vista on. In order to use the minidriver
+			   it is necessary that this service is running. When a smart card reader is inserted this service should be started  by the smart card
+			   driver. As not all drivers are following this guidance, we start CertPropSvc during the minidriver install -->
+      <Component Id="CertPropService" Guid="932459d0-df59-11de-8a39-0800200c9a66" Permanent="yes" Bitness="always32">
+        <!-- Start Certificate Propagation Service during startup -->
+        <RegistryValue Root="HKLM" Key="System\CurrentControlSet\Services\CertPropSvc" Type="integer" Name="Start" Value="2" KeyPath="yes" />
+        <!-- Start Certificate Propagation Service now -->
+        <!--<ServiceControl Id="StartCertPropSvc" Name="CertPropSvc" Start="install" />-->
+      </Component>
+    </DirectoryRef>
+
+	<DirectoryRef Id="FFPLUGMANFOLDER">
+	  <Component Id="FF_Manifest_FilesID" Guid="{658ACEFD-3305-447B-B764-96AA69344458}" Bitness="always32">
+        <File Id="FF_Manifest_File_32ID" Name="beidpkcs11_32.json" KeyPath="yes" Source="..\..\..\plugins_tools\Firefox_plugin\beidpkcs11_32.json" />
+        <File Id="FF_Manifest_File_64ID" Name="beidpkcs11_64.json" KeyPath="no" Source="..\..\..\plugins_tools\Firefox_plugin\beidpkcs11_64.json" />
+		<File Id="FF_Manifest_File_VersionID" Name="beidpkcs11_version.json" KeyPath="no" Source="..\..\..\plugins_tools\Firefox_plugin\beidpkcs11_version.json" />
+		<File Id="FF_Manifestbeid_ff_pkcs11_64ID" Name="beid_ff_pkcs11_64.dll" KeyPath="no" Source="..\..\..\cardcomm\pkcs11\VS_2022\binaries\x64_pkcs11_ff_release\beid_ff_pkcs11.dll" />
+		<File Id="FF_Manifestbeid_ff_pkcs11.32ID" Name="beid_ff_pkcs11_32.dll" KeyPath="no" Source="..\..\..\cardcomm\pkcs11\VS_2022\binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll" />
+      </Component>	  
+	</DirectoryRef>
+	
+    <DirectoryRef Id="APPLICATIONROOTFOLDER">
+
+      <Component Id="Icon" Guid="{5B657BAD-8CFC-4E42-AF8C-13338C50D784}" SharedDllRefCount="yes" Bitness="always32">
+        <File Id="eid.ico" Name="eid.ico" KeyPath="yes" Source="..\..\eid.ico" />
+      </Component>
+
+      <Component Id="License" Guid="{C00AF621-E882-4805-BA9C-B90AA5DBBCB6}" SharedDllRefCount="no" Bitness="always32">
+        <File Id="License_en.rtf" Name="License_en.rtf" KeyPath="yes" Source="..\..\..\doc\licenses\English\License_en.rtf" />
+        <File Id="License_nl.rtf" Name="License_nl.rtf" KeyPath="no" Source="..\..\..\doc\licenses\Dutch\License_nl.rtf" />
+        <File Id="License_fr.rtf" Name="License_fr.rtf" KeyPath="no" Source="..\..\..\doc\licenses\French\License_fr.rtf" />
+        <File Id="License_de.rtf" Name="License_de.rtf" KeyPath="no" Source="..\..\..\doc\licenses\German\License_de.rtf" />
+      </Component>
+
+    </DirectoryRef>
+
+    <StandardDirectory Id="System64Folder">
+
+      <Component Id="pkcs11_64" Guid="{3C4751D6-D92C-40ab-8FA5-3A1DF1D927EA}" SharedDllRefCount="no" Bitness="always64">
+        <File Id="beidpkcs11_64.dll" Name="beidpkcs11.dll" KeyPath="yes" Source="..\..\..\cardcomm\pkcs11\VS_2022\binaries\x64_Release\beidpkcs11.dll" />
+        <File Id="beid_ff_pkcs11_64.dll" Name="beid_ff_pkcs11.dll" KeyPath="no" Source="..\..\..\cardcomm\pkcs11\VS_2022\binaries\x64_pkcs11_ff_release\beid_ff_pkcs11.dll" />
+		<!-- <Shortcut Id='beid32_ff_pkcs11_shortcutId' Directory='FFPLUGMANFOLDER' Name="beid32_ff_pkcs11.dll" WorkingDirectory='System64Folder' Advertise="yes" /> -->
+      </Component>
+
+      <Component Id="MINIDRIVER_64" Guid="{a8259480-e408-11de-8a39-0800200c9a66}" SharedDllRefCount="no" Bitness="always64">
+        <File Id="MINIDRIVER_64.dll" Name="beidmdrv64.dll" KeyPath="yes" Source="..\..\..\installers\quickinstaller\Drivers\WINALL\beidmdrv\beidmdrv64.dll" />
+      </Component>
+
+    </StandardDirectory>
+
+    <StandardDirectory Id="SystemFolder">
+
+      <Component Id="MINIDRIVER" Guid="{2A6887B1-A020-47e7-847A-F68673A12CE2}" SharedDllRefCount="yes" Bitness="always32">
+        <File Id="MINIDRIVER.dll" Name="beidmdrv32.dll" KeyPath="yes" Source="..\..\..\installers\quickinstaller\Drivers\WINALL\beidmdrv\beidmdrv32.dll" />
+      </Component>
+
+      <Component Id="pkcs11" Guid="{D54164C0-795D-4B2D-96C6-C8E395100896}" SharedDllRefCount="yes" Bitness="always32">
+        <File Id="beidpkcs11.dll" Name="beidpkcs11.dll" KeyPath="yes" Source="..\..\..\cardcomm\pkcs11\VS_2022\binaries\win32_release\beidpkcs11.dll" />
+        <File Id="beid_ff_pkcs11.dll" Name="beid_ff_pkcs11.dll" KeyPath="no" Source="..\..\..\cardcomm\pkcs11\VS_2022\binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll" />
+		<!-- <Shortcut Id='beid64_ff_pkcs11_shortcutId' Directory='FFPLUGMANFOLDER' Name="beid64_ff_pkcs11.dll" WorkingDirectory='SystemFolder' Advertise="yes" /> -->
+      </Component>
+
+    </StandardDirectory>
+
+    <DirectoryRef Id="BEIDPPDIR">
+      <Component Id="PinpadLib" Guid="{9ADA6D75-5DCC-467E-A0CE-B84A482B2115}" SharedDllRefCount="yes" Bitness="always32">
+        <File Id="xireid.dll" Name="xireid.dll" Source="..\..\beidpp\xireid.dll" />
+      </Component>
+    </DirectoryRef>
+
+    
+
+    <Feature Id="BeidRuntime" Title="eID_Runtime" Description="eID Middleware Runtime" Level="1" AllowAbsent="no">
+
+      <!-- Program Files -->
+      <ComponentRef Id="Icon" />
+      <ComponentRef Id="License" />
+      <ComponentRef Id="LogDir" />
+
+      <!-- Beid pinpad dir-->
+      <ComponentRef Id="PinpadLib" />
+
+      <!-- Windows -->
+
+      <!-- Registry -->
+      <ComponentRef Id="RegistryBeidSystem" />
+
+      <Feature Id="Crypto" Title="eID_PKCS11" Description="eID PKCS11" Level="1">
+        <ComponentRef Id="SCardSvrService" />
+        <ComponentRef Id="pkcs11" />
+        <ComponentRef Id="pkcs11_64" />	
+
+        <!-- Shortcuts -->
+        <Feature Id="Install_Minidriver" Title="Minidriver" Level="1">
+          <ComponentRef Id="beidmdrv" />
+          <ComponentRef Id="CertPropService" />
+          <ComponentRef Id="MINIDRIVER" />
+          <ComponentRef Id="MINIDRIVER_64" />
+          <ComponentRef Id="REGISTERMINIDRIVER" />
+          <ComponentRef Id="REGISTERMINIDRIVER_64" />
+          <Level Value="1" Condition="VersionNT &gt;= 600" />
+        </Feature>
+		
+		<Feature Id="Firefox_Modules_Setup" Title="Firefox_PKCS11Modules_Manifests" Level="1">
+		  <ComponentRef Id="FF_Manifest_FilesID" />
+          <ComponentRef Id="FF_pkcs11_plugin_32_setup" />
+          <ComponentRef Id="FF_pkcs11_plugin_64_setup" />
+        </Feature>
+
+  </Feature>
+</Feature>
+    <UI>
+      <Property Id="WIXUI_INSTALLDIR" Value="APPLICATIONROOTFOLDER" />
+    </UI>
+
+    <!--SetARPINSTALLLOCATION sets the location in the registry entries of the Add & Remove Panel-->
+    <CustomAction Id="SetARPINSTALLLOCATION" Property="ARPINSTALLLOCATION" Value="[APPLICATIONROOTFOLDER]" />
+    <CustomAction Id="IsPrivileged" Error="Privileged Error" />
+
+    <InstallExecuteSequence>
+      <Custom Action="IsPrivileged" Before="LaunchConditions" Condition="Not Privileged" />
+      <Custom Action="SetARPINSTALLLOCATION" After="InstallValidate"></Custom>
+    </InstallExecuteSequence>
+
+  
+ 
+	  <StandardDirectory Id="CommonAppDataFolder">
+        <Directory Id="APPLICATIONDATAFOLDER" Name="Belgium Identity Card">
+          <Directory Id="LOGDIR" Name="log" />
+        </Directory>
+	  </StandardDirectory>
+      <StandardDirectory Id="ProgramFilesFolder">
+        <Directory Id="APPLICATIONROOTFOLDER" Name="Belgium Identity Card">
+          <Directory Id="MINIDRIVERROOTFOLDER" Name="BeID Minidriver" />
+		  <Directory Id="FFPLUGMANFOLDER" Name="FireFox Plugin Manifests" />
+        </Directory>
+      </StandardDirectory>
+
+      <StandardDirectory Id="SystemFolder">
+        <Directory Id="BEIDPPDIR" Name="beidpp" />
+      </StandardDirectory>
+      <StandardDirectory Id="System64Folder" />
+      <Component Id="SCardSvrService" Guid="{C3BC9746-0843-41b2-BDDA-3192772974CE}" Permanent="yes" Directory="TARGETDIR" Bitness="always32">
+        <!-- Start SCardSvr Service during startup -->
+        <RegistryValue Root="HKLM" Key="System\CurrentControlSet\Services\SCardSvr" Type="integer" Name="Start" Value="2" KeyPath="yes" />
+        <!-- Start SCardSvr Service now -->
+        <!-- <ServiceControl Id="StartSCardSvrService" Name="SCardSvr" Start="install" /> -->
+      </Component>
+      
+	  <Component Id="FF_pkcs11_plugin_32_setup" Guid="{C5D92550-C65F-46D6-A1A5-35FA8AE2594F}" Directory="TARGETDIR" Bitness="always64">
+        <!-- Create our 32 bit beid_ff_pkcs11.dll manifest location -->
+        <RegistryKey Root="HKLM" Key="SOFTWARE\Mozilla\PKCS11Modules\beidpkcs11_32">
+            <RegistryValue Type="string" Value="[FFPLUGMANFOLDER]beidpkcs11_32.json" />
+		</RegistryKey>
+      </Component>
+	  
+	  <Component Id="FF_pkcs11_plugin_64_setup" Guid="{5127623F-59F2-4A7E-8E73-3450D68A5B5E}" Directory="TARGETDIR" Bitness="always64">
+        <!-- Create our 64 bit beid_ff_pkcs11.dll manifest location -->
+        <RegistryKey Root="HKLM" Key="SOFTWARE\Mozilla\PKCS11Modules\beidpkcs11_64">
+            <RegistryValue Type="string" Value="[FFPLUGMANFOLDER]beidpkcs11_64.json" />
+		</RegistryKey>
+		<!-- Create the managed storage location (that contains beid version number)-->
+        <RegistryKey Root="HKLM" Key="SOFTWARE\Mozilla\ManagedStorage\belgiumeid@eid.belgium.be">
+            <RegistryValue Type="string" Value="[FFPLUGMANFOLDER]beidpkcs11_version.json" />
+		</RegistryKey>
+      </Component>
+	  
+      <Component Id="REGISTERMINIDRIVER" Guid="{B9980C19-883E-49f9-BDD2-AB3D75187C8F}" Directory="TARGETDIR" Bitness="always32">
+        <RegistryKey Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Beid">
+          <RegistryValue Type="string" Name="80000001" Value="beidmdrv32.dll" KeyPath="yes" />
+          <RegistryValue Type="binary" Name="ATR" Value="3b98004000a503010101ad1300" KeyPath="no" />
+          <RegistryValue Type="binary" Name="ATRMask" Value="ffff00ff00ffffffffffffff00" KeyPath="no" />
+          <RegistryValue Type="string" Name="Crypto Provider" Value="Microsoft Base Smart Card Crypto Provider" KeyPath="no" />
+          <RegistryValue Type="string" Name="Smart Card Key Storage Provider" Value="Microsoft Smart Card Key Storage Provider" KeyPath="no" />
+          <RegistryValue Type="string" Name="80000100" Value="en-US,Please enter your PIN;en-EN,Please enter your PIN;nl-BE,Geef uw PIN in;nl-NL,Geef uw PIN in;fr-BE,Entrez votre code PIN;fr-FR,Entrez votre code PIN;de-DE,Bitte geben Sie Ihre PIN ein" KeyPath="no" />
+          <RegistryValue Type="string" Name="80000103" Value="en-US,Please enter your PIN;en-EN,Please enter your PIN;nl-BE,Geef uw PIN in;nl-NL,Geef uw PIN in;fr-BE,Entrez votre code PIN;fr-FR,Entrez votre code PIN;de-DE,Bitte geben Sie Ihre PIN ein" KeyPath="no" />
+        </RegistryKey>
+		<RegistryKey Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Beid_v18" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
+          <RegistryValue Type="string" Name="80000001" Value="beidmdrv32.dll" KeyPath="no" />
+          <RegistryValue Type="binary" Name="ATR" Value="3b7f96000080318065b085040120120fff829000" KeyPath="no" />
+          <RegistryValue Type="binary" Name="ATRMask" Value="ffffffffffffffffffffffffffffffffffffffff" KeyPath="no" />
+          <RegistryValue Type="string" Name="Crypto Provider" Value="Microsoft Base Smart Card Crypto Provider" KeyPath="no" />
+          <RegistryValue Type="string" Name="Smart Card Key Storage Provider" Value="Microsoft Smart Card Key Storage Provider" KeyPath="no" />
+          <RegistryValue Type="string" Name="80000100" Value="en-US,Please enter your PIN;en-EN,Please enter your PIN;nl-BE,Geef uw PIN in;nl-NL,Geef uw PIN in;fr-BE,Entrez votre code PIN;fr-FR,Entrez votre code PIN;de-DE,Bitte geben Sie Ihre PIN ein" KeyPath="no" />
+          <RegistryValue Type="string" Name="80000103" Value="en-US,Please enter your PIN;en-EN,Please enter your PIN;nl-BE,Geef uw PIN in;nl-NL,Geef uw PIN in;fr-BE,Entrez votre code PIN;fr-FR,Entrez votre code PIN;de-DE,Bitte geben Sie Ihre PIN ein" KeyPath="no" />
+        </RegistryKey>
+      </Component>
+
+      <Component Id="REGISTERMINIDRIVER_64" Guid="{3BCA1B2C-08AF-4727-AD85-1C60025656EA}" Directory="TARGETDIR" Bitness="always64">
+        <RegistryKey Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Beid">
+          <RegistryValue Type="string" Name="80000001" Value="beidmdrv64.dll" KeyPath="yes" />
+          <RegistryValue Type="binary" Name="ATR" Value="3b98004000a503010101ad1300" KeyPath="no" />
+          <RegistryValue Type="binary" Name="ATRMask" Value="ffff00ff00ffffffffffffff00" KeyPath="no" />
+          <RegistryValue Type="string" Name="Crypto Provider" Value="Microsoft Base Smart Card Crypto Provider" KeyPath="no" />
+          <RegistryValue Type="string" Name="Smart Card Key Storage Provider" Value="Microsoft Smart Card Key Storage Provider" KeyPath="no" />
+          <RegistryValue Type="string" Name="80000100" Value="en-US,Please enter your PIN;en-EN,Please enter your PIN;nl-BE,Geef uw PIN in;nl-NL,Geef uw PIN in;fr-BE,Entrez votre code PIN;fr-FR,Entrez votre code PIN;de-DE,Bitte geben Sie Ihre PIN ein" KeyPath="no" />
+          <RegistryValue Type="string" Name="80000103" Value="en-US,Please enter your PIN;en-EN,Please enter your PIN;nl-BE,Geef uw PIN in;nl-NL,Geef uw PIN in;fr-BE,Entrez votre code PIN;fr-FR,Entrez votre code PIN;de-DE,Bitte geben Sie Ihre PIN ein" KeyPath="no" />
+        </RegistryKey>
+		<RegistryKey Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Beid_v18" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
+          <RegistryValue Type="string" Name="80000001" Value="beidmdrv64.dll" KeyPath="no" />
+          <RegistryValue Type="binary" Name="ATR" Value="3b7f96000080318065b085040120120fff829000" KeyPath="no" />
+          <RegistryValue Type="binary" Name="ATRMask" Value="ffffffffffffffffffffffffffffffffffffffff" KeyPath="no" />
+          <RegistryValue Type="string" Name="Crypto Provider" Value="Microsoft Base Smart Card Crypto Provider" KeyPath="no" />
+          <RegistryValue Type="string" Name="Smart Card Key Storage Provider" Value="Microsoft Smart Card Key Storage Provider" KeyPath="no" />
+          <RegistryValue Type="string" Name="80000100" Value="en-US,Please enter your PIN;en-EN,Please enter your PIN;nl-BE,Geef uw PIN in;nl-NL,Geef uw PIN in;fr-BE,Entrez votre code PIN;fr-FR,Entrez votre code PIN;de-DE,Bitte geben Sie Ihre PIN ein" KeyPath="no" />
+          <RegistryValue Type="string" Name="80000103" Value="en-US,Please enter your PIN;en-EN,Please enter your PIN;nl-BE,Geef uw PIN in;nl-NL,Geef uw PIN in;fr-BE,Entrez votre code PIN;fr-FR,Entrez votre code PIN;de-DE,Bitte geben Sie Ihre PIN ein" KeyPath="no" />
+        </RegistryKey>
+      </Component>
+
+      <Component Id="RegistryBeidSystem" Guid="{414DF15C-6CE6-4181-95B4-D83F16903BA3}" Directory="TARGETDIR" Bitness="always32">
+        <RegistryKey Root="HKLM" Key="SOFTWARE\BEID" ForceDeleteOnUninstall="yes">
+
+          <RegistryKey Key="general">
+            <RegistryValue Type="string" Name="install_dirname" Value="[ProgramFilesFolder]Belgium Identity Card" />
+          </RegistryKey>
+
+          <RegistryKey Key="logging">
+            <RegistryValue Type="string" Name="log_dirname" Value="[CommonAppDataFolder]Belgium Identity Card\log" />
+          </RegistryKey>
+        </RegistryKey>
+      </Component>
+
+    </Package>
+</Wix>
