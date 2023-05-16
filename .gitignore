@@ -68,7 +68,7 @@ beidpkcs11.sdf
 /installers/eid-mw/mac/release_TokenD
 /cardcomm/minidriver/VS_2017/beidmdrv.vcxproj.user
 /VS_2017/.vs/beid/v15
-/.vs
+.vs/
 /cardcomm/pkcs11/VS_2017/Binaries
 /cardcomm/pkcs11/VS_2017/beidpkcs11.vcxproj.user
 /cardcomm/pkcs11/VS_2017/Win32_PKCS11_FF_Release
