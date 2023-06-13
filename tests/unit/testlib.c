@@ -48,6 +48,7 @@
 
 Serial *robot_port;
 Serial *reader_port;
+char* envvar_rbt;
 int robot_unit;
 
 #ifdef WIN32
@@ -143,7 +144,7 @@ CK_BBOOL init_robot(Serial *port, char type) {
 	return CK_TRUE;
 }
 
-CK_BBOOL open_robot(char *envvar) {
+CK_BBOOL open_robot() {
 	char *dev;
 
 	if(robot_port) {
@@ -152,18 +153,18 @@ CK_BBOOL open_robot(char *envvar) {
 
 	switch(robot_type) {
 		case ROBOT_AUTO:
-			if(strlen(envvar) == strlen("fedict")) {
+			if(strlen(envvar_rbt) == strlen("fedict")) {
 				dev = strdup(default_card_port);
 			} else {
-				dev = strdup(envvar + strlen("fedict") + 1);
+				dev = strdup(envvar_rbt + strlen("fedict") + 1);
 			}
 			break;
 		case ROBOT_AUTO_2:
-			if(strlen(envvar) == strlen("zetes")) {
+			if(strlen(envvar_rbt) == strlen("zetes")) {
 				dev = strdup(default_usb_port);
 			} else {
 				char *p;
-				dev = strdup(strchr(envvar, ':') + 1);
+				dev = strdup(strchr(envvar_rbt, ':') + 1);
 				if((p = strchr(dev, ':')) != NULL) {
 					*p = '\0';
 				}
@@ -179,17 +180,17 @@ CK_BBOOL open_robot(char *envvar) {
 	return init_robot(robot_port, 'C');
 }
 
-CK_BBOOL open_reader_robot(char *envvar) {
+CK_BBOOL open_reader_robot() {
 	char *dev;
 
 	if(robot_type != ROBOT_AUTO_2) {
 		fprintf(stderr, "E: no reader robot connected!\n");
 		return CK_FALSE;
 	}
-	if(strlen(envvar) == strlen("zetes")) {
+	if(strlen(envvar_rbt) == strlen("zetes")) {
 		dev = default_usb_port;
 	} else {
-		dev = strrchr(envvar, ':') + 1;
+		dev = strrchr(envvar_rbt, ':') + 1;
 	}
 	if(!reader_port) {
 		printf("opening reader robot at %s\n", dev);
@@ -202,23 +203,23 @@ CK_BBOOL open_reader_robot(char *envvar) {
 
 CK_BBOOL have_robot() {
 #ifdef WIN32
-	char* envvar = eid_robot_style;
+	envvar_rbt = eid_robot_style;
 #else
-	char* envvar = getenv("EID_ROBOT_STYLE");
+	envvar_rbt = getenv("EID_ROBOT_STYLE");
 #endif
-	if(envvar == NULL) {
+	if(envvar_rbt == NULL) {
 		robot_type = ROBOT_NONE;
 		return CK_FALSE;
 	}
-	if(!strncmp(envvar, "fedict", strlen("fedict"))) {
+	if(!strncmp(envvar_rbt, "fedict", strlen("fedict"))) {
 		robot_type = ROBOT_AUTO;
-		return open_robot(envvar);
+		return open_robot();
 	}
-	if(!strncmp(envvar, "zetes", strlen("zetes"))) {
+	if(!strncmp(envvar_rbt, "zetes", strlen("zetes"))) {
 		robot_type = ROBOT_AUTO_2;
-		return open_robot(envvar);
+		return open_robot();
 	}
-	if(!strcmp(envvar, "manual")) {
+	if(!strcmp(envvar_rbt, "manual")) {
 		robot_type = ROBOT_MECHANICAL_TURK;
 		return CK_TRUE;
 	}
@@ -228,10 +229,8 @@ CK_BBOOL have_robot() {
 
 CK_BBOOL have_reader_robot(void) {
 #ifdef WIN32
-	char* envvar_rbt = eid_robot_style;
 	char* envvar_rdr = eid_builtin_reader;
 #else
-	char* envvar_rbt = getenv("EID_ROBOT_STYLE");
 	char* envvar_rdr = getenv("EID_BUILTIN_READER");
 #endif
 
@@ -247,7 +246,7 @@ CK_BBOOL have_reader_robot(void) {
 			case ROBOT_MECHANICAL_TURK:
 				return CK_TRUE;
 			case ROBOT_AUTO_2:
-				return open_reader_robot(envvar_rbt);
+				return open_reader_robot();
 		}
 	}
 	return CK_FALSE;
