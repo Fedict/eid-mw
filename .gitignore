@@ -81,6 +81,7 @@ beidpkcs11.sdf
 /installers/eid-mw/Windows/1031
 /plugins_tools/eid-viewer/Windows/eIDViewer/Resources/Certs
 /plugins_tools/eid-viewer/Windows/eIDViewer/Resources/Images
+/plugins_tools/xpi/INSTALL
 /CppProperties.json
 *.db
 *.lock
