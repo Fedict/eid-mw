@@ -2,7 +2,7 @@
 .docker-base:
   retry: 1
   stage: docker
-  image: docker:stable
+  image: docker:latest
   services:
   - name: docker:dind
     alias: docker
