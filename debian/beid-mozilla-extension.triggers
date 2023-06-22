@@ -1,2 +1,2 @@
-interest /etc/apparmor.d/firefox
-interest /etc/apparmor.d/firefox-esr
+interest /etc/apparmor.d/usr.bin.firefox
+interest /etc/apparmor.d/usr.bin.firefox-esr
