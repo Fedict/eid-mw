@@ -130,7 +130,7 @@
             <Label Grid.Column="1" Grid.Row="8" Padding="5,0,5,0" Content="{Binding Path=nationality, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
             <Label Grid.Column="1" Grid.Row="10" Padding="5,0,5,0" Content="{Binding Path=nobility, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
             <Label Grid.Column="1" Grid.Row="11" Padding="5,0,5,0" Content="{Binding Path=special_status, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
-            <Label Grid.Column="1" Grid.Row="12" Padding="5,0,5,0" Content="{Binding Path=member_of_family, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
+            <CheckBox Grid.Column="1" Grid.Row="12" IsChecked="{Binding Path=member_of_family, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CheckBoxAsData}"/>
             <Label Grid.Column="1" Grid.Row="13" Padding="5,0,5,0" Content="{Binding Path=date_and_country_of_protection, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabelDouble}"/>
             <Label Grid.Column="1" Grid.Row="14" Padding="5,0,5,0" Content="{Binding Path=special_organisation, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
             <Label Grid.Column="1" Grid.Row="15" Padding="5,0,5,0" Content="{Binding Path=duplicate, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
