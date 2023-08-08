@@ -7,13 +7,13 @@ namespace eIDViewer
     {
         public static int imajor = 5;
         public static int iminor = 1;
-        public static int ibuild = 8;
+        public static int ibuild = 12;
 
         public static string AboutMessage()
         {
-            string message = @"eID Viewer 5.1.8
+            string message = @"eID Viewer 5.1.12
 eID Middleware Project
-Copyright(C) 2022 Bosa
+Copyright(C) 2023 Bosa
 
 By Frederik Vernelen and Wouter Verhelst
 Based on the design of Frank Marien
@@ -32,7 +32,6 @@ License along with this software; if not, see
 http://www.gnu.org/licenses
 
 Official releases and support are available on https://eid.belgium.be
-Source code and other files are available on https://github.com/Fedict/eid-mw";
 
             return message;
         }
