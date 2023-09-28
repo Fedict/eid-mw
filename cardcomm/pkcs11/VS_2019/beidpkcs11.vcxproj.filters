@@ -154,6 +154,18 @@
     <ClCompile Include="..\src\common\tlvbuffer.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\common\libtomcrypt\sha3.c">
+      <Filter>Common\LibTomCrypt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\libtomcrypt\compare_testvector.c">
+      <Filter>Common\LibTomCrypt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\libtomcrypt\crypt_argchk.c">
+      <Filter>Common\LibTomCrypt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\libtomcrypt\sha3_test.c">
+      <Filter>Common\LibTomCrypt</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\common\bytearray.h">
@@ -175,9 +187,6 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="..\src\common\util.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\common\beidversions.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="..\src\cardlayer\card.h">
@@ -318,6 +327,15 @@
     <ClInclude Include="..\src\util.h">
       <Filter>Pkcs11</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\common\libtomcrypt\tomcrypt.h">
+      <Filter>Common\LibTomCrypt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\libtomcrypt\tomcrypt_custom.h">
+      <Filter>Common\LibTomCrypt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\libtomcrypt\tomcrypt_misc.h">
+      <Filter>Common\LibTomCrypt</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\src\dialogs\dialogswin32\images\ICO_BELPIC.ico">
@@ -405,11 +423,5 @@
     <None Include="..\src\common\beid_registry.reg">
       <Filter>Common</Filter>
     </None>
-    <None Include="ClassDiagram3.cd" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="beidpkcs11.rc">
-      <Filter>Pkcs11</Filter>
-    </ResourceCompile>
   </ItemGroup>
 </Project>

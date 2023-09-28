@@ -315,7 +315,7 @@
     <ClInclude Include="..\src\util.h">
       <Filter>Pkcs11</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\doc\sdk\include\v240\pkcs11t.h">
+    <ClInclude Include="..\..\..\doc\sdk\include\v30\pkcs11t.h">
       <Filter>Pkcs11\Pkcs11_standard</Filter>
     </ClInclude>
     <ClInclude Include="..\src\beidlabels.h">

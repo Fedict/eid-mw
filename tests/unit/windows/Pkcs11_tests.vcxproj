@@ -56,7 +56,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;TEST_NO_ABORT</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\..\doc\sdk\include\v240;..\;.\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\doc\sdk\include\v30;..\;.\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -79,7 +79,7 @@ copy ..\..\..\cardcomm\pkcs11\VS_2019\Binaries\Win32_Debug\beidpkcs11D.pdb  $(So
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;TEST_NO_ABORT</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\..\doc\sdk\include\v240;..\;.\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\doc\sdk\include\v30;..\;.\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

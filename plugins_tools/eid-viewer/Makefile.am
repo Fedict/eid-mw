@@ -137,7 +137,7 @@ eid_viewer_LDADD += $(top_builddir)/cardcomm/pkcs11/src/libbeidpkcs11.la
 endif
 libeidviewer_la_LIBADD = $(top_builddir)/plugins_tools/util/liblabels.la $(top_builddir)/cardcomm/pkcs11/src/libbeidpkcs11.la @SSL_LIBS@ @XML2_LIBS@
 libeidviewer_la_LDFLAGS = -version-info 1:0:1
-AM_CFLAGS = @GTK_CFLAGS@ -I. -I$(srcdir)/include -Igtk -DDATAROOTDIR='"$(datarootdir)"' -I$(top_srcdir)/doc/sdk/include/v240 -I$(top_srcdir)/cardcomm/pkcs11/src/fuzz -I$(top_srcdir)/plugins_tools/util @SSL_CFLAGS@ @GIO_CFLAGS@ @XML2_CFLAGS@ @CURL_CFLAGS@ @libproxy_CFLAGS@ -fvisibility=hidden @FUZZING@
+AM_CFLAGS = @GTK_CFLAGS@ -I. -I$(srcdir)/include -Igtk -DDATAROOTDIR='"$(datarootdir)"' -I$(top_srcdir)/doc/sdk/include/v30 -I$(top_srcdir)/cardcomm/pkcs11/src/fuzz -I$(top_srcdir)/plugins_tools/util @SSL_CFLAGS@ @GIO_CFLAGS@ @XML2_CFLAGS@ @CURL_CFLAGS@ @libproxy_CFLAGS@ -fvisibility=hidden @FUZZING@
 AM_CXXFLAGS = $(AM_CFLAGS) -std=c++98
 SUBDIRS = . gtk/po test uml
 

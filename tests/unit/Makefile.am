@@ -54,7 +54,7 @@ DIALOGLIB = $(top_builddir)/cardcomm/pkcs11/src/libdialogs.la
 noinst_LTLIBRARIES = libtestlib.la
 libtestlib_la_SOURCES = testlib.h testlib.c serial_linux.c serial_io.h
 
-AM_CFLAGS = -I$(top_srcdir)/doc/sdk/include/v240 -I$(top_srcdir)/plugins_tools/util @FUZZING@
+AM_CFLAGS = -I$(top_srcdir)/doc/sdk/include/v30 -I$(top_srcdir)/plugins_tools/util @FUZZING@
 if NO_DIALOGS
 AM_CFLAGS += -DNO_DIALOGS
 endif

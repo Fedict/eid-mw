@@ -88,7 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;TEST_NO_ABORT</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\..\..\..\doc\sdk\include\v240;..\..\;..\..\..\util;..\..\include;.\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\..\doc\sdk\include\v30;..\..\;..\..\..\util;..\..\include;.\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

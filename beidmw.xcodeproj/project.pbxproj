@@ -878,7 +878,7 @@
 			name = "Supporting files";
 			sourceTree = "<group>";
 		};
-		6CAFE1D421DF86E40078C7E2 /* v240 */ = {
+		6CAFE1D421DF86E40078C7E2 /* v30 */ = {
 			isa = PBXGroup;
 			children = (
 				6CAFE1DB21DF889B0078C7E2 /* unix.h */,
@@ -886,14 +886,14 @@
 				6CAFE1D621DF86E40078C7E2 /* pkcs11t.h */,
 				6CAFE1D721DF86E40078C7E2 /* pkcs11f.h */,
 			);
-			name = v240;
-			path = doc/sdk/include/v240;
+			name = v30;
+			path = doc/sdk/include/v30;
 			sourceTree = "<group>";
 		};
 		7FA1AA420F85F446000D9EE1 /* Pkcs11 */ = {
 			isa = PBXGroup;
 			children = (
-				6CAFE1D421DF86E40078C7E2 /* v240 */,
+				6CAFE1D421DF86E40078C7E2 /* v30 */,
 				86C0E93721C25E4700602028 /* cardlayer */,
 				86C0E72621C2586E00602028 /* common */,
 				86C0E7CA21C258D800602028 /* dialogs */,
@@ -1951,7 +1951,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				HEADER_SEARCH_PATHS = (
 					/System/Library/Frameworks/PCSC.framework/Headers,
-					doc/sdk/include/v240,
+					doc/sdk/include/v30,
 					plugins_tools/util,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
@@ -1992,7 +1992,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				HEADER_SEARCH_PATHS = (
 					/System/Library/Frameworks/PCSC.framework/Headers,
-					doc/sdk/include/v240,
+					doc/sdk/include/v30,
 					plugins_tools/util,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;

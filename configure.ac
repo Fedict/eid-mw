@@ -262,7 +262,7 @@ AC_CONFIG_FILES([Makefile
 		 cardcomm/pkcs11/src/beidpkcs11_alt.json
 		 cardcomm/pkcs11/src/belgiumeid@eid.belgium.be.json
 		 cardcomm/pkcs11/src/dialogs/dialogsgtk/po/Makefile.in
-		 doc/sdk/include/v240/Makefile
+		 doc/sdk/include/v30/Makefile
 		 tests/unit/Makefile
 		 tests/fuzz/Makefile
 		 plugins_tools/util/Makefile
