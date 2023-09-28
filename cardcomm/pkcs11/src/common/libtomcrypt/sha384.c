@@ -5,15 +5,15 @@
  *
  * The library is free for all purposes without any express
  * guarantee it works.
- *
- * Tom St Denis, tomstdenis@iahu.ca, http://libtomcrypt.org
  */
-/** 
+/**
    @param sha384.c
-   SHA384 hash included in sha512.c, Tom St Denis
+   LTC_SHA384 hash included in sha512.c, Tom St Denis
 */
 
-#include "tomcrypt_hash.h"
+#include "tomcrypt.h"
+
+#if defined(LTC_SHA384) && defined(LTC_SHA512)
 
 const struct ltc_hash_descriptor sha384_desc =
 {
@@ -22,16 +22,15 @@ const struct ltc_hash_descriptor sha384_desc =
     48,
     128,
 
-    /* DER identifier */
-    { 0x30, 0x41, 0x30, 0x0D, 0x06, 0x09, 0x60, 0x86, 
-      0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x02, 0x05, 
-      0x00, 0x04, 0x30 },
-    19,
+    /* OID */
+   { 2, 16, 840, 1, 101, 3, 4, 2, 2,  },
+   9,
 
     &sha384_init,
     &sha512_process,
     &sha384_done,
-    &sha384_test
+    &sha384_test,
+    NULL
 };
 
 /**
@@ -84,14 +83,14 @@ int sha384_done(hash_state * md, unsigned char *out)
 /**
   Self-test the hash
   @return CRYPT_OK if successful, CRYPT_NOP if self-tests have been disabled
-*/  
+*/
 int  sha384_test(void)
 {
  #ifndef LTC_TEST
     return CRYPT_NOP;
- #else    
+ #else
   static const struct {
-      char *msg;
+      const char *msg;
       unsigned char hash[48];
   } tests[] = {
     { "abc",
@@ -120,7 +119,7 @@ int  sha384_test(void)
       sha384_init(&md);
       sha384_process(&md, (unsigned char*)tests[i].msg, (unsigned long)strlen(tests[i].msg));
       sha384_done(&md, tmp);
-      if (memcmp(tmp, tests[i].hash, 48) != 0) {
+      if (compare_testvector(tmp, sizeof(tmp), tests[i].hash, sizeof(tests[i].hash), "SHA384", i)) {
          return CRYPT_FAIL_TESTVECTOR;
       }
   }
@@ -128,7 +127,8 @@ int  sha384_test(void)
  #endif
 }
 
+#endif /* defined(LTC_SHA384) && defined(LTC_SHA512) */
 
-
-
-
+/* ref:         $Format:%D$ */
+/* git commit:  $Format:%H$ */
+/* commit time: $Format:%ai$ */

@@ -5,18 +5,15 @@
  *
  * The library is free for all purposes without any express
  * guarantee it works.
- *
- * Tom St Denis, tomstdenis@iahu.ca, http://libtomcrypt.org
  */
-
-#include "tomcrypt_hash.h"
+#include "tomcrypt.h"
 
 /**
   @file sha256.c
-  SHA256 by Tom St Denis 
+  LTC_SHA256 by Tom St Denis
 */
 
-#ifdef USE_SHA256 
+#ifdef LTC_SHA256
 
 const struct ltc_hash_descriptor sha256_desc =
 {
@@ -25,21 +22,20 @@ const struct ltc_hash_descriptor sha256_desc =
     32,
     64,
 
-    /* DER identifier */
-    { 0x30, 0x31, 0x30, 0x0D, 0x06, 0x09, 0x60, 0x86, 
-      0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x01, 0x05, 
-      0x00, 0x04, 0x20 },
-    19,
-    
+    /* OID */
+   { 2, 16, 840, 1, 101, 3, 4, 2, 1,  },
+   9,
+
     &sha256_init,
     &sha256_process,
     &sha256_done,
-    NULL,
+    &sha256_test,
+    NULL
 };
 
 #ifdef LTC_SMALL_CODE
 /* the K array */
-static const unsigned long K[64] = {
+static const ulong32 K[64] = {
     0x428a2f98UL, 0x71374491UL, 0xb5c0fbcfUL, 0xe9b5dba5UL, 0x3956c25bUL,
     0x59f111f1UL, 0x923f82a4UL, 0xab1c5ed5UL, 0xd807aa98UL, 0x12835b01UL,
     0x243185beUL, 0x550c7dc3UL, 0x72be5d74UL, 0x80deb1feUL, 0x9bdc06a7UL,
@@ -58,7 +54,7 @@ static const unsigned long K[64] = {
 
 /* Various logical functions */
 #define Ch(x,y,z)       (z ^ (x & (y ^ z)))
-#define Maj(x,y,z)      (((x | y) & z) | (x & y)) 
+#define Maj(x,y,z)      (((x | y) & z) | (x & y))
 #define S(x, n)         RORc((x),(n))
 #define R(x, n)         (((x)&0xFFFFFFFFUL)>>(n))
 #define Sigma0(x)       (S(x, 2) ^ S(x, 13) ^ S(x, 22))
@@ -92,10 +88,10 @@ static int  sha256_compress(hash_state * md, unsigned char *buf)
     /* fill W[16..63] */
     for (i = 16; i < 64; i++) {
         W[i] = Gamma1(W[i - 2]) + W[i - 7] + Gamma0(W[i - 15]) + W[i - 16];
-    }        
+    }
 
     /* Compress */
-#ifdef LTC_SMALL_CODE   
+#ifdef LTC_SMALL_CODE
 #define RND(a,b,c,d,e,f,g,h,i)                         \
      t0 = h + Sigma1(e) + Ch(e, f, g) + K[i] + W[i];   \
      t1 = Sigma0(a) + Maj(a, b, c);                    \
@@ -104,10 +100,10 @@ static int  sha256_compress(hash_state * md, unsigned char *buf)
 
      for (i = 0; i < 64; ++i) {
          RND(S[0],S[1],S[2],S[3],S[4],S[5],S[6],S[7],i);
-         t = S[7]; S[7] = S[6]; S[6] = S[5]; S[5] = S[4]; 
+         t = S[7]; S[7] = S[6]; S[6] = S[5]; S[5] = S[4];
          S[4] = S[3]; S[3] = S[2]; S[2] = S[1]; S[1] = S[0]; S[0] = t;
-     }  
-#else 
+     }
+#else
 #define RND(a,b,c,d,e,f,g,h,i,ki)                    \
      t0 = h + Sigma1(e) + Ch(e, f, g) + ki + W[i];   \
      t1 = Sigma0(a) + Maj(a, b, c);                  \
@@ -179,9 +175,9 @@ static int  sha256_compress(hash_state * md, unsigned char *buf)
     RND(S[2],S[3],S[4],S[5],S[6],S[7],S[0],S[1],62,0xbef9a3f7);
     RND(S[1],S[2],S[3],S[4],S[5],S[6],S[7],S[0],63,0xc67178f2);
 
-#undef RND     
-    
-#endif     
+#undef RND
+
+#endif
 
     /* feedback */
     for (i = 0; i < 8; i++) {
@@ -286,6 +282,53 @@ int sha256_done(hash_state * md, unsigned char *out)
     return CRYPT_OK;
 }
 
+/**
+  Self-test the hash
+  @return CRYPT_OK if successful, CRYPT_NOP if self-tests have been disabled
+*/
+int  sha256_test(void)
+{
+ #ifndef LTC_TEST
+    return CRYPT_NOP;
+ #else
+  static const struct {
+      const char *msg;
+      unsigned char hash[32];
+  } tests[] = {
+    { "abc",
+      { 0xba, 0x78, 0x16, 0xbf, 0x8f, 0x01, 0xcf, 0xea,
+        0x41, 0x41, 0x40, 0xde, 0x5d, 0xae, 0x22, 0x23,
+        0xb0, 0x03, 0x61, 0xa3, 0x96, 0x17, 0x7a, 0x9c,
+        0xb4, 0x10, 0xff, 0x61, 0xf2, 0x00, 0x15, 0xad }
+    },
+    { "abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq",
+      { 0x24, 0x8d, 0x6a, 0x61, 0xd2, 0x06, 0x38, 0xb8,
+        0xe5, 0xc0, 0x26, 0x93, 0x0c, 0x3e, 0x60, 0x39,
+        0xa3, 0x3c, 0xe4, 0x59, 0x64, 0xff, 0x21, 0x67,
+        0xf6, 0xec, 0xed, 0xd4, 0x19, 0xdb, 0x06, 0xc1 }
+    },
+  };
+
+  int i;
+  unsigned char tmp[32];
+  hash_state md;
+
+  for (i = 0; i < (int)(sizeof(tests) / sizeof(tests[0])); i++) {
+      sha256_init(&md);
+      sha256_process(&md, (unsigned char*)tests[i].msg, (unsigned long)strlen(tests[i].msg));
+      sha256_done(&md, tmp);
+      if (compare_testvector(tmp, sizeof(tmp), tests[i].hash, sizeof(tests[i].hash), "SHA256", i)) {
+         return CRYPT_FAIL_TESTVECTOR;
+      }
+  }
+  return CRYPT_OK;
+ #endif
+}
+
 #endif
 
 
+
+/* ref:         $Format:%D$ */
+/* git commit:  $Format:%H$ */
+/* commit time: $Format:%ai$ */
