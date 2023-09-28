@@ -71,7 +71,18 @@ int hash_init(CK_MECHANISM_PTR pMechanism, void **pphashinfo,
 			algo = ALGO_RIPEMD160;
 			*size = 20;
 			break;
-
+		case CKM_ECDSA_SHA3_256:
+			algo = ALGO_SHA3_256;
+			*size = 32;
+			break;
+		case CKM_ECDSA_SHA3_384:
+			algo = ALGO_SHA3_384;
+			*size = 48;
+			break;
+		case CKM_ECDSA_SHA3_512:
+			algo = ALGO_SHA3_512;
+			*size = 64;
+			break;
 		default:
 			ret = CKR_MECHANISM_INVALID;
 			delete oHash;

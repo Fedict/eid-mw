@@ -429,7 +429,7 @@ CK_RV cal_get_mechanism_list(CK_SLOT_ID hSlot,
 
 	if (pMechanismList == NULL)
 	{
-		*pulCount = 6;	//for 6 hash algos
+		*pulCount = 9;	//for 9 hash algos
 
 		if (algos & SIGN_ALGO_RSA_PKCS)
 			*pulCount += 1;
@@ -457,7 +457,12 @@ CK_RV cal_get_mechanism_list(CK_SLOT_ID hSlot,
 			*pulCount += 1;
 		if (algos & SIGN_ALGO_ECDSA_RAW)
 			*pulCount += 1;
-		// TODO: also add SHA3 mechanisms -- PKCS#11 v2.40 does not yet support those, though; PKCS#11 v3 will, but is not released yet.
+		if (algos & SIGN_ALGO_SHA3_256_ECDSA)
+			*pulCount += 1;
+		if (algos & SIGN_ALGO_SHA3_384_ECDSA)
+			*pulCount += 1;
+		if (algos & SIGN_ALGO_SHA3_512_ECDSA)
+			*pulCount += 1;
 		return (CKR_OK);
 	}
 
@@ -489,6 +494,21 @@ CK_RV cal_get_mechanism_list(CK_SLOT_ID hSlot,
 
 	if (n++ < *pulCount)
 		pMechanismList[n - 1] = CKM_RIPEMD160;
+	else
+		return (CKR_BUFFER_TOO_SMALL);
+
+	if (n++ < *pulCount)
+		pMechanismList[n - 1] = CKM_SHA3_256;
+	else
+		return (CKR_BUFFER_TOO_SMALL);
+
+	if (n++ < *pulCount)
+		pMechanismList[n - 1] = CKM_SHA3_384;
+	else
+		return (CKR_BUFFER_TOO_SMALL);
+
+	if (n++ < *pulCount)
+		pMechanismList[n - 1] = CKM_SHA3_512;
 	else
 		return (CKR_BUFFER_TOO_SMALL);
 
@@ -581,6 +601,27 @@ CK_RV cal_get_mechanism_list(CK_SLOT_ID hSlot,
 	{
 		if (n++ < *pulCount)
 			pMechanismList[n - 1] = CKM_ECDSA;
+		else
+			return (CKR_BUFFER_TOO_SMALL);
+	}
+	if (algos & SIGN_ALGO_SHA3_256_ECDSA)
+	{
+		if (n++ < *pulCount)
+			pMechanismList[n - 1] = CKM_ECDSA_SHA3_256;
+		else
+			return (CKR_BUFFER_TOO_SMALL);
+	}
+	if (algos & SIGN_ALGO_SHA3_384_ECDSA)
+	{
+		if (n++ < *pulCount)
+			pMechanismList[n - 1] = CKM_ECDSA_SHA3_384;
+		else
+			return (CKR_BUFFER_TOO_SMALL);
+	}
+	if (algos & SIGN_ALGO_SHA3_512_ECDSA)
+	{
+		if (n++ < *pulCount)
+			pMechanismList[n - 1] = CKM_ECDSA_SHA3_512;
 		else
 			return (CKR_BUFFER_TOO_SMALL);
 	}
@@ -2349,6 +2390,15 @@ CK_RV cal_sign(CK_SLOT_ID hSlot, P11_SIGN_DATA * pSignData, unsigned char *in,
 				break;
 			case CKM_ECDSA:
 				algo = SIGN_ALGO_ECDSA_RAW;
+				break;
+			case CKM_ECDSA_SHA3_256:
+				algo = SIGN_ALGO_SHA3_256_ECDSA;
+				break;
+			case CKM_ECDSA_SHA3_384:
+				algo = SIGN_ALGO_SHA3_384_ECDSA;
+				break;
+			case CKM_ECDSA_SHA3_512:
+				algo = SIGN_ALGO_SHA3_512_ECDSA;
 				break;
 			default:
 				ret = CKR_MECHANISM_INVALID;

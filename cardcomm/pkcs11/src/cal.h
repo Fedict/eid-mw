@@ -50,7 +50,10 @@ extern "C"
 	{  CKM_ECDSA_SHA256,		256,  521,  CKF_HW | CKF_SIGN  }, \
 	{  CKM_ECDSA_SHA384,		256,  521,  CKF_HW | CKF_SIGN  }, \
 	{  CKM_ECDSA_SHA512,		256,  521,  CKF_HW | CKF_SIGN  }, \
-	{  CKM_ECDSA,				256,  521,  CKF_HW | CKF_SIGN  }  \
+	{  CKM_ECDSA,				256,  521,  CKF_HW | CKF_SIGN  }, \
+	{  CKM_ECDSA_SHA3_256,		256,  521,  CKF_HW | CKF_SIGN  }, \
+	{  CKM_ECDSA_SHA3_384,		256,  521,  CKF_HW | CKF_SIGN  }, \
+	{  CKM_ECDSA_SHA3_512,		256,  521,  CKF_HW | CKF_SIGN  }  \
 }
 
 

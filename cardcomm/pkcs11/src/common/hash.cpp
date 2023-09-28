@@ -47,6 +47,12 @@ unsigned long CHash::GetHashLength(tHashAlgo algo)
 			return 64;
 		case ALGO_RIPEMD160:
 			return 20;
+		case ALGO_SHA3_256:
+			return 32;
+		case ALGO_SHA3_384:
+			return 48;
+		case ALGO_SHA3_512:
+			return 64;
 		default:
 			throw CMWEXCEPTION(EIDMW_ERR_PARAM_BAD);
 	}
@@ -91,6 +97,15 @@ void CHash::Init(tHashAlgo algo)
 			break;
 		case ALGO_RIPEMD160:
 			rmd160_init(&m_md1);
+			break;
+		case ALGO_SHA3_256:
+			sha3_256_init(&m_md1);
+			break;
+		case ALGO_SHA3_384:
+			sha3_384_init(&m_md1);
+			break;
+		case ALGO_SHA3_512:
+			sha3_512_init(&m_md1);
 			break;
 		default:
 			throw CMWEXCEPTION(EIDMW_ERR_PARAM_BAD);
@@ -139,6 +154,11 @@ void CHash::Update(const CByteArray & data, unsigned long ulOffset,
 			case ALGO_RIPEMD160:
 				rmd160_process(&m_md1, pucData, ulLen);
 				break;
+			case ALGO_SHA3_256:
+			case ALGO_SHA3_384:
+			case ALGO_SHA3_512:
+				sha3_process(&m_md1, pucData, ulLen);
+				break;
 			default:
 				throw CMWEXCEPTION(EIDMW_ERR_PARAM_BAD);
 		}
@@ -178,6 +198,11 @@ CByteArray CHash::GetHash()
 			break;
 		case ALGO_RIPEMD160:
 			rmd160_done(&m_md1, tucHash);
+			break;
+		case ALGO_SHA3_256:
+		case ALGO_SHA3_384:
+		case ALGO_SHA3_512:
+			sha3_done(&m_md1, tucHash);
 			break;
 		default:
 			throw CMWEXCEPTION(EIDMW_ERR_PARAM_BAD);

@@ -47,7 +47,7 @@
 #define HASH_H
 
 #include "bytearray.h"
-#include "libtomcrypt/tomcrypt_hash.h"
+#include "libtomcrypt/tomcrypt.h"
 
 namespace eIDMW
 {
@@ -61,6 +61,9 @@ namespace eIDMW
 		ALGO_SHA384, // 48-byte hash
 		ALGO_SHA512, // 64-byte hash
 		ALGO_RIPEMD160,	// 64-byte hash
+		ALGO_SHA3_256, // 32-byte hash
+		ALGO_SHA3_384, // 48-byte hash
+		ALGO_SHA3_512, // 64-byte hash
 	};
 
 	class CHash
