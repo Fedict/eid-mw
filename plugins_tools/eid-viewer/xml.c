@@ -104,17 +104,11 @@ static int write_elements(xmlTextWriterPtr writer, struct element_desc *element)
 			int have_cache = cache_have_label(element->label);
 			assert(element->child_elements == NULL);
 
-			//for testing
-			//if(EID_STRCMP(element->label, TEXT("firstnames")) == 0) {
-			//		be_log(EID_VWR_LOG_ERROR, "Could not write file: no root certificate found");
-			//		return 0;
-			//}
-
 			if(element->reqd && !have_cache) {
 				//don't let save file if no root cert present
 				if(EID_STRCMP(element->label, TEXT("Root")) == 0) {
-					be_log(EID_VWR_LOG_ERROR, "Could not write file: no root certificate found");
-					return 1;
+					be_log(EID_VWR_LOG_COARSE, "Could not write certificates: no root certificate found");
+					return 0;
 				} else {
 					be_log(EID_VWR_LOG_ERROR, "Could not write file: no data found for required label %s", element->label);
 					return -1;
