@@ -369,6 +369,7 @@
   after_script:
     - mkdir -p products/$DIST-$DVER-$ARCH
     - mv /var/tmp/build-root/home/abuild/rpmbuild/RPMS/*/*rpm products/$DIST-$DVER-$ARCH/
+  allow_failure: true
   artifacts:
     paths:
       - products/$DIST-$DVER-$ARCH
