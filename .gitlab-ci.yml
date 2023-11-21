@@ -34,7 +34,6 @@ suse-build-arm:
     - .ci/dockerfiles/suse-build/**/*
     - .ci/builds-docker.yml
     - .ci/build-configs.yml
-  allow_failure: true
 
 suse-build-x86:
   extends: .docker-base-x86
@@ -45,7 +44,6 @@ suse-build-x86:
     - .ci/dockerfiles/suse-build/**/*
     - .ci/builds-docker.yml
     - .ci/build-configs.yml
-  allow_failure: true
 
 fed-build-arm:
   extends: .docker-base-arm
