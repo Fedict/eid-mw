@@ -424,6 +424,7 @@
     - if [ -z "$TARGET" ]; then TARGET=continuous; fi
     - export TARGET
     - bash -x $LINUX_BASEDIR/scripts/build-aux/suse-rel.sh
+  allow_failure: true
 
 .inject-source:
   tags:
