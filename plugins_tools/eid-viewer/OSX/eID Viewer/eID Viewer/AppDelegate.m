@@ -81,6 +81,27 @@
 
 @end
 
+NSString * const state_string[] =
+{
+    [eIDStateLibOpen] = @"STATE_LIBOPEN",
+    [eIDStateCallbacks] = @"STATE_CALLBACKS",
+    [eIDStateReady] = @"STATE_READY",
+    [eIDStateToken] = @"STATE_TOKEN",
+    [eIDStateTokenWait] = @"STATE_TOKEN_WAIT",
+    [eIDStateTokenID] = @"TATE_TOKEN_ID",
+    [eIDStateTokenCerts] = @"STATE_TOKEN_CERTS",
+    [eIDStateTokenIdle] = @"STATE_TOKEN_IDLE",
+    [eIDStateTokenPinop] = @"STATE_TOKEN_PINOP",
+    [eIDStateTokenSerialize] = @"STATE_TOKEN_SERIALIZE",
+    [eIDStateTokenError] = @"STATE_TOKEN_ERROR",
+    [eIDStateFile] = @"STATE_FILE",
+    [eIDStateFileReading] = @"STATE_FILE_READING",
+    [eIDStateFileWait] = @"STATE_FILE_WAIT",
+    [eIDStateCardInvalid] = @"STATE_CARD_INVALID",
+    [eIDStateNoToken] = @"STATE_NO_TOKEN",
+    [eIDStateNoReader] = @"STATE_NO_READER",
+};
+
 @implementation AppDelegate
 -(BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender {
 	return YES;
@@ -178,6 +199,9 @@
 		[handler handle_bin_data:data forLabel:label withUi:self];
 	}];
 }
+- (NSString *)getStatusString:(eIDState)state {
+    return state_string[state];
+}
 - (void)newstate:(eIDState)state {
 	static eIDState prevState = eIDStateLibOpen;
 	BOOL fileOpen = NO;
@@ -190,6 +214,9 @@
 	BOOL sheet = NO;
 	BOOL dnd = NO;
 	BOOL doTest = NO;
+    NSString * ps = [self getStatusString:prevState];
+    NSString * s = [self getStatusString:state];
+    [self log:[NSString stringWithFormat: @"start of newstate, status of all flags: previous state: %@, state: %@, fileOpen: %d, filePrint: %d, fileSave: %d, fileClose: %d, pinops: %d, validate: %d, doValidateNow: %d, sheet: %d, dnd: %d, doTest: %d", ps, s, fileOpen, filePrint, fileSave, fileClose, pinops, validate, doValidateNow, sheet, dnd, doTest] withLevel:eIDLogLevelNormal];
 	switch(state) {
 		case eIDStateReady:
 			fileOpen = YES;
@@ -255,11 +282,13 @@
 		if(sheet && ![self sheetIsActive]) {
 			[self.spinner startAnimation:self];
 			[self.window beginSheet:self.CardReadSheet completionHandler:nil];
+            [self log:@"sheet activation" withLevel:eIDLogLevelNormal];
 			[self setSheetIsActive:YES];
 		}
 		if(!sheet && [self sheetIsActive]) {
 			[self.window endSheet:self.CardReadSheet];
 			[self.CardReadSheet orderOut:self.window];
+            [self log:@"stop spin animation" withLevel:eIDLogLevelNormal];
 			[self.spinner stopAnimation:self];
 			[self setSheetIsActive:NO];
 		}
@@ -267,6 +296,9 @@
 			[self validateNow:nil];
 		}
 	}];
+    s = [self getStatusString:state];
+    ps = [self getStatusString:prevState];
+    [self log:[NSString stringWithFormat: @"end of newstate, status of all flags: previous state: %@, state: %@, fileOpen: %d, filePrint: %d, fileSave: %d, fileClose: %d, pinops: %d, validate: %d, doValidateNow: %d, sheet: %d, dnd: %d, doTest: %d", ps, s, fileOpen, filePrint, fileSave, fileClose, pinops, validate, doValidateNow, sheet, dnd, doTest] withLevel:eIDLogLevelNormal];
 }
 - (NSObject*)searchView:(NSView*)from withName:(NSString*)name {
 	if(![from conformsToProtocol:@protocol(NSUserInterfaceItemIdentification)]) {
