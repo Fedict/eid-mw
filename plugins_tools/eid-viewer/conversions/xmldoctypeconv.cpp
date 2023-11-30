@@ -31,6 +31,15 @@ XmlDoctypeConvertor::XmlDoctypeConvertor()
 		conversions[TEXT("34")] = TEXT("foreigner_B");//new visual (and doctype) of older b card
 		conversions[TEXT("35")] = TEXT("foreigner_F");//new visual (and doctype) of older f card
 		conversions[TEXT("36")] = TEXT("foreigner_F_plus");//new visual (and doctype) of older f+ card
+		conversions[TEXT("61")] = TEXT("kids_foreigner_eu");
+		conversions[TEXT("62")] = TEXT("kids_foreigner_eu_plus");
+		conversions[TEXT("63")] = TEXT("kids_foreigner_A");
+		conversions[TEXT("64")] = TEXT("kids_foreigner_B");
+		conversions[TEXT("65")] = TEXT("kids_foreigner_K");
+		conversions[TEXT("66")] = TEXT("kids_foreigner_L");
+		conversions[TEXT("67")] = TEXT("kids_foreigner_F");
+		conversions[TEXT("68")] = TEXT("kids_foreigner_F_plus");
+		conversions[TEXT("69")] = TEXT("kids_foreigner_M");
 		conversions[TEXT("belgian_citizen")] = TEXT("1");
 		conversions[TEXT("kids_card")] = TEXT("6");
 		conversions[TEXT("bootstrap_card")] = TEXT("7");
@@ -56,6 +65,15 @@ XmlDoctypeConvertor::XmlDoctypeConvertor()
 		conversions[TEXT("foreigner_B")] = TEXT("34");//new visual (and doctype) of older b card
 		conversions[TEXT("foreigner_F")] = TEXT("35");//new visual (and doctype) of older f card
 		conversions[TEXT("foreigner_F_plus")] = TEXT("36");//new visual (and doctype) of older f+ card
+		conversions[TEXT("kids_foreigner_eu")] = TEXT("61");
+		conversions[TEXT("kids_foreigner_eu_plus")] = TEXT("62");
+		conversions[TEXT("kids_foreigner_A")] = TEXT("63");
+		conversions[TEXT("kids_foreigner_B")] = TEXT("64");
+		conversions[TEXT("kids_foreigner_K")] = TEXT("65");
+		conversions[TEXT("kids_foreigner_L")] = TEXT("66");
+		conversions[TEXT("kids_foreigner_F")] = TEXT("67");
+		conversions[TEXT("kids_foreigner_F_plus")] = TEXT("68");
+		conversions[TEXT("kids_foreigner_M")] = TEXT("69");
 	}
 }
 
