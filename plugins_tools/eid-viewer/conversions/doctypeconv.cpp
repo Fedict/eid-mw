@@ -276,9 +276,9 @@ DocTypeConvertor::DocTypeConvertor()
 		// Kids foreigner B
 		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_NL][TEXT("64")] = TEXT("B. ONBEPERKT VERBLIJF");
 		// Kids foreigner K
-		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_NL][TEXT("65")] = TEXT("K. ETABLISSEMENT");
+		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_NL][TEXT("65")] = TEXT("K. VESTIGING");
 		// Kids foreigner L
-		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_NL][TEXT("66")] = TEXT("L. RESIDENT DE LONGUE DUREE – UE");
+		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_NL][TEXT("66")] = TEXT("L. EU-LANGDURIG INGEZETENE");
 		// Kids foreigner F
 		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_NL][TEXT("67")] = TEXT("F. FAMILIELID EU ART 10 RL 2004/38/EG");
 		// Kids foreigner F+
