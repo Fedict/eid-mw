@@ -33,103 +33,105 @@
     <Grid>
         <TabControl Margin="0,23,0,60">
             <TabItem Header="{Binding Path=applicationResource.IDENTITY, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}">
-                <Grid Margin="0,0,0,0"
-                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" MinWidth="150"  />
-                        <ColumnDefinition Width="Auto" MinWidth="100" />
-                        <ColumnDefinition Width="Auto" MinWidth="100"/>
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="{Binding Path=foreigner_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        <RowDefinition Height="{Binding Path=foreigner_fields_height_double, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        <RowDefinition Height="{Binding Path=foreigner_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        <RowDefinition Height="{Binding Path=foreigner_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        <RowDefinition Height="{Binding Path=foreigner_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        <RowDefinition Height="{Binding Path=foreigner_fields_height_double, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        <RowDefinition Height="{Binding Path=foreigner_fields_height_double, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        <RowDefinition Height="{Binding Path=foreigner_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        <RowDefinition Height="{Binding Path=brexit_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        <RowDefinition Height="{Binding Path=brexit_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        <RowDefinition Height="{Binding Path=cardA_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        <RowDefinition Height="{Binding Path=cardA_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        <RowDefinition Height="{Binding Path=cardEU_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <Label Grid.ColumnSpan="3" Grid.Row="0" Padding="5,0,5,0" Content="{Binding Path=document_type, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,20,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Height="26"/>
-                    <Separator Grid.ColumnSpan="3" Grid.Row="1" HorizontalAlignment="Center" Height="16" VerticalAlignment="Top" Width="250"/>
-                    <Label Grid.Column="1" Grid.Row="2" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.NameLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" />
-                    <Label Grid.Column="1" Grid.Row="3" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.GivenNamesLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
-                    <Label Grid.Column="1" Grid.Row="4" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.PlaceOfBirthLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
-                    <Label Grid.Column="1" Grid.Row="5" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.DateOfBirthLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
-                    <Label Grid.Column="1" Grid.Row="6" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.SexLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
-                    <Label Grid.Column="1" Grid.Row="7" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.NationalNumberLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
-                    <Label Grid.Column="1" Grid.Row="8" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.NationalityLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
-                    <Label Grid.Column="1" Grid.Row="9" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.TitleLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
-                    <Label Grid.Column="1" Grid.Row="10" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.SpecialStatusLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
-                    <Label Grid.Column="1" Grid.Row="11" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.MemberLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
-                    <Label Grid.Column="1" Grid.Row="12" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.ProtectionLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" />
-                    <Label Grid.Column="1" Grid.Row="13" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.SpecialOrganisationLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
-                    <Label Grid.Column="1" Grid.Row="14" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.DuplicateLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
-                    <Label Grid.Column="1" Grid.Row="15" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.WorkPermitMentionLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
-                    <Label Grid.Column="1" Grid.Row="16" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.EmployersVATNumber1Label, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" />
-                    <Label Grid.Column="1" Grid.Row="17" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.EmployersVATNumber2Label, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" />
-                    <Label Grid.Column="1" Grid.Row="18" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.RegionalFileNumberLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
-                    <Label Grid.Column="1" Grid.Row="19" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.Brexit_mentions, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
-                    <Label Grid.Column="1" Grid.Row="21" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.CardA_mentions, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
-                    <Label Grid.Column="1" Grid.Row="23" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.CardEU_start_date , Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="{Binding Path=cardEU_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Label Grid.Column="1" Grid.Row="24" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.CardEUPlus_start_date , Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="{Binding Path=cardEUPlus_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Separator Grid.ColumnSpan="3" Grid.Row="25" HorizontalAlignment="Center" Height="16" VerticalAlignment="Top" Width="250"/>
-                    <Label Grid.Column="1" Grid.Row="26" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.StreetLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
-                    <Label Grid.Column="1" Grid.Row="27" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.PostalCodeLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
-                    <Label Grid.Column="1" Grid.Row="28" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.MunicipalityLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="25"/>
-                    <Label Grid.Column="2" Grid.Row="2" Padding="5,0,5,0" Content="{Binding Path=surName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
-                    <Label Grid.Column="2" Grid.Row="3" Padding="5,0,5,0" Content="{Binding Path=firstNames, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
-                    <Label Grid.Column="2" Grid.Row="4" Padding="5,0,5,0" Content="{Binding Path=location_of_birth, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
-                    <Label Grid.Column="2" Grid.Row="5" Padding="5,0,5,0" Content="{Binding Path=date_of_birth, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
-                    <Label Grid.Column="2" Grid.Row="6" Padding="5,0,5,0" Content="{Binding Path=gender, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
-                    <Label Grid.Column="2" Grid.Row="7" Padding="5,0,5,0" Content="{Binding Path=national_number, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
-                    <Label Grid.Column="2" Grid.Row="8" Padding="5,0,5,0" Content="{Binding Path=nationality, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
-                    <Label Grid.Column="2" Grid.Row="9" Padding="5,0,5,0" Content="{Binding Path=nobility, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
-                    <Label Grid.Column="2" Grid.Row="10" Padding="5,0,5,0" Content="{Binding Path=special_status, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
-                    <CheckBox Grid.Column="2" Grid.Row="11" IsChecked="{Binding Path=member_of_family, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CheckBoxAsData}"/>
-                    <Label Grid.Column="2" Grid.Row="12" Padding="5,0,5,0" Content="{Binding Path=date_and_country_of_protection, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabelDouble}"/>
-                    <Label Grid.Column="2" Grid.Row="13" Padding="5,0,5,0" Content="{Binding Path=special_organisation, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
-                    <Label Grid.Column="2" Grid.Row="14" Padding="5,0,5,0" Content="{Binding Path=duplicate, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
-                    <Label Grid.Column="2" Grid.Row="15" Padding="5,0,5,0" Content="{Binding Path=work_permit_mention, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
-                    <Label Grid.Column="2" Grid.Row="16" Padding="5,0,5,0" Content="{Binding Path=employers_vat_number1, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabelDouble}"/>
-                    <Label Grid.Column="2" Grid.Row="17" Padding="5,0,5,0" Content="{Binding Path=employers_vat_number2, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabelDouble}"/>
-                    <Label Grid.Column="2" Grid.Row="18" Padding="5,0,5,0" Content="{Binding Path=regional_file_number, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
-                    <Label Grid.Column="2" Grid.Row="19" Padding="5,0,5,0" Content="{Binding Path=brexit_mention1, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
-                    <Label Grid.Column="2" Grid.Row="20" Padding="5,0,5,0" Content="{Binding Path=brexit_mention2, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
-                    <Label Grid.Column="2" Grid.Row="21" Padding="5,0,5,0" Content="{Binding Path=cardA_mention1, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
-                    <Label Grid.Column="2" Grid.Row="22" Padding="5,0,5,0" Content="{Binding Path=cardA_mention2, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
-                    <Label Grid.Column="2" Grid.Row="23" Padding="5,0,5,0" Content="{Binding Path=cardEU_start_date, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Top" Height="{Binding Path=cardEU_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Label Grid.Column="2" Grid.Row="24" Padding="5,0,5,0" Content="{Binding Path=cardEU_start_date, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Left" VerticalAlignment="Top" Height="{Binding Path=cardEUPlus_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Label Grid.Column="2" Grid.Row="26" Padding="5,0,5,0" Content="{Binding Path=address_street_and_number, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
-                    <Label Grid.Column="2" Grid.Row="27" Padding="5,0,5,0" Content="{Binding Path=address_zip, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
-                    <Label Grid.Column="2" Grid.Row="28" Padding="5,0,5,0" Content="{Binding Path=address_municipality, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}" Margin="0,0,0,-20"/>
-                    <Image Grid.Column="0" Grid.Row="2" Grid.RowSpan="16" Source="{Binding Path=photo, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="20,0,0,0" HorizontalAlignment="Center" Height="200" VerticalAlignment="Top" Width="150" AutomationProperties.Name="{Binding Path=identityTabResource.Photo, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" MouseLeftButtonDown="eIDPictureDnD"/>
-                </Grid>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <Grid Margin="0,0,0,0"
+                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" MinWidth="150"  />
+                            <ColumnDefinition Width="Auto" MinWidth="100" />
+                            <ColumnDefinition Width="Auto" MinWidth="100"/>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="{Binding Path=foreigner_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <RowDefinition Height="{Binding Path=foreigner_fields_height_double, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <RowDefinition Height="{Binding Path=foreigner_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <RowDefinition Height="{Binding Path=foreigner_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <RowDefinition Height="{Binding Path=foreigner_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <RowDefinition Height="{Binding Path=foreigner_fields_height_double, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <RowDefinition Height="{Binding Path=foreigner_fields_height_double, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <RowDefinition Height="{Binding Path=foreigner_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <RowDefinition Height="{Binding Path=brexit_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <RowDefinition Height="{Binding Path=brexit_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <RowDefinition Height="{Binding Path=cardA_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <RowDefinition Height="{Binding Path=cardA_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <RowDefinition Height="{Binding Path=cardEU_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Label Grid.ColumnSpan="3" Grid.Row="0" Padding="5,0,5,0" Content="{Binding Path=document_type, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,20,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Height="26"/>
+                        <Separator Grid.ColumnSpan="3" Grid.Row="1" HorizontalAlignment="Center" Height="16" VerticalAlignment="Top" Width="250"/>
+                        <Label Grid.Column="1" Grid.Row="2" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.NameLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                        <Label Grid.Column="1" Grid.Row="3" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.GivenNamesLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
+                        <Label Grid.Column="1" Grid.Row="4" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.PlaceOfBirthLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
+                        <Label Grid.Column="1" Grid.Row="5" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.DateOfBirthLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
+                        <Label Grid.Column="1" Grid.Row="6" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.SexLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
+                        <Label Grid.Column="1" Grid.Row="7" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.NationalNumberLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
+                        <Label Grid.Column="1" Grid.Row="8" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.NationalityLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
+                        <Label Grid.Column="1" Grid.Row="9" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.TitleLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
+                        <Label Grid.Column="1" Grid.Row="10" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.SpecialStatusLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
+                        <Label Grid.Column="1" Grid.Row="11" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.MemberLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
+                        <Label Grid.Column="1" Grid.Row="12" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.ProtectionLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                        <Label Grid.Column="1" Grid.Row="13" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.SpecialOrganisationLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
+                        <Label Grid.Column="1" Grid.Row="14" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.DuplicateLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
+                        <Label Grid.Column="1" Grid.Row="15" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.WorkPermitMentionLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
+                        <Label Grid.Column="1" Grid.Row="16" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.EmployersVATNumber1Label, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                        <Label Grid.Column="1" Grid.Row="17" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.EmployersVATNumber2Label, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                        <Label Grid.Column="1" Grid.Row="18" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.RegionalFileNumberLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
+                        <Label Grid.Column="1" Grid.Row="19" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.Brexit_mentions, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
+                        <Label Grid.Column="1" Grid.Row="21" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.CardA_mentions, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
+                        <Label Grid.Column="1" Grid.Row="23" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.CardEU_start_date , Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="{Binding Path=cardEU_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Grid.Column="1" Grid.Row="24" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.CardEUPlus_start_date , Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="{Binding Path=cardEUPlus_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Separator Grid.ColumnSpan="3" Grid.Row="25" HorizontalAlignment="Center" Height="16" VerticalAlignment="Top" Width="250"/>
+                        <Label Grid.Column="1" Grid.Row="26" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.StreetLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
+                        <Label Grid.Column="1" Grid.Row="27" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.PostalCodeLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="26"/>
+                        <Label Grid.Column="1" Grid.Row="28" Padding="5,0,5,0" Content="{Binding Path=identityTabResource.MunicipalityLabel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" HorizontalAlignment="Left" VerticalAlignment="Top"  Height="25"/>
+                        <Label Grid.Column="2" Grid.Row="2" Padding="5,0,5,0" Content="{Binding Path=surName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
+                        <Label Grid.Column="2" Grid.Row="3" Padding="5,0,5,0" Content="{Binding Path=firstNames, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
+                        <Label Grid.Column="2" Grid.Row="4" Padding="5,0,5,0" Content="{Binding Path=location_of_birth, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
+                        <Label Grid.Column="2" Grid.Row="5" Padding="5,0,5,0" Content="{Binding Path=date_of_birth, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
+                        <Label Grid.Column="2" Grid.Row="6" Padding="5,0,5,0" Content="{Binding Path=gender, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
+                        <Label Grid.Column="2" Grid.Row="7" Padding="5,0,5,0" Content="{Binding Path=national_number, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
+                        <Label Grid.Column="2" Grid.Row="8" Padding="5,0,5,0" Content="{Binding Path=nationality, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
+                        <Label Grid.Column="2" Grid.Row="9" Padding="5,0,5,0" Content="{Binding Path=nobility, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
+                        <Label Grid.Column="2" Grid.Row="10" Padding="5,0,5,0" Content="{Binding Path=special_status, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
+                        <CheckBox Grid.Column="2" Grid.Row="11" IsChecked="{Binding Path=member_of_family, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CheckBoxAsData}"/>
+                        <Label Grid.Column="2" Grid.Row="12" Padding="5,0,5,0" Content="{Binding Path=date_and_country_of_protection, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabelDouble}"/>
+                        <Label Grid.Column="2" Grid.Row="13" Padding="5,0,5,0" Content="{Binding Path=special_organisation, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
+                        <Label Grid.Column="2" Grid.Row="14" Padding="5,0,5,0" Content="{Binding Path=duplicate, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
+                        <Label Grid.Column="2" Grid.Row="15" Padding="5,0,5,0" Content="{Binding Path=work_permit_mention, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
+                        <Label Grid.Column="2" Grid.Row="16" Padding="5,0,5,0" Content="{Binding Path=employers_vat_number1, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabelDouble}"/>
+                        <Label Grid.Column="2" Grid.Row="17" Padding="5,0,5,0" Content="{Binding Path=employers_vat_number2, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabelDouble}"/>
+                        <Label Grid.Column="2" Grid.Row="18" Padding="5,0,5,0" Content="{Binding Path=regional_file_number, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
+                        <Label Grid.Column="2" Grid.Row="19" Padding="5,0,5,0" Content="{Binding Path=brexit_mention1, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
+                        <Label Grid.Column="2" Grid.Row="20" Padding="5,0,5,0" Content="{Binding Path=brexit_mention2, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
+                        <Label Grid.Column="2" Grid.Row="21" Padding="5,0,5,0" Content="{Binding Path=cardA_mention1, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
+                        <Label Grid.Column="2" Grid.Row="22" Padding="5,0,5,0" Content="{Binding Path=cardA_mention2, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
+                        <Label Grid.Column="2" Grid.Row="23" Padding="5,0,5,0" Content="{Binding Path=cardEU_start_date, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Top" Height="{Binding Path=cardEU_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Grid.Column="2" Grid.Row="24" Padding="5,0,5,0" Content="{Binding Path=cardEU_start_date, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Left" VerticalAlignment="Top" Height="{Binding Path=cardEUPlus_fields_height, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Grid.Column="2" Grid.Row="26" Padding="5,0,5,0" Content="{Binding Path=address_street_and_number, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
+                        <Label Grid.Column="2" Grid.Row="27" Padding="5,0,5,0" Content="{Binding Path=address_zip, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}"/>
+                        <Label Grid.Column="2" Grid.Row="28" Padding="5,0,5,0" Content="{Binding Path=address_municipality, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DataLabel}" Margin="0,0,0,-20"/>
+                        <Image Grid.Column="0" Grid.Row="2" Grid.RowSpan="16" Source="{Binding Path=photo, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="20,0,0,0" HorizontalAlignment="Center" Height="200" VerticalAlignment="Top" Width="150" AutomationProperties.Name="{Binding Path=identityTabResource.Photo, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}" MouseLeftButtonDown="eIDPictureDnD"/>
+                    </Grid>
+                </ScrollViewer>
             </TabItem>
             <TabItem Header="{Binding Path=applicationResource.CARD, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Source={StaticResource LocalizedStrings }}">
                 <Grid>
