@@ -43,11 +43,11 @@ DocTypeConvertor::DocTypeConvertor()
 		// card M");
 		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_DE][TEXT("22")] = TEXT("M. Artikel 50 VEU");
 		// card N");
-		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_DE][TEXT("23")] = TEXT("N. Art. 50 VEU – Grenzg\u00e4nger");
+		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_DE][TEXT("23")] = TEXT("N. Art. 50 VEU - Grenzg\u00e4nger");
 		// card K");
 		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_DE][TEXT("27")] = TEXT("K. NIEDERLASSUNG");
 		// card L");
-		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_DE][TEXT("28")] = TEXT("L. DAUERAUFENTHALT – EU");
+		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_DE][TEXT("28")] = TEXT("L. DAUERAUFENTHALT - EU");
 		// Foreigner EU
 		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_DE][TEXT("31")] = TEXT("EU. Anmeldung - Art 8 RL 2004/38/EG");
 		// Foreigner EU+
@@ -61,9 +61,9 @@ DocTypeConvertor::DocTypeConvertor()
 		// Foreigner F+ new layout 2021
 		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_DE][TEXT("36")] = TEXT("F+. EU-FAMILIENANGEHORIGER ART 20 RL 2004/38/EG");
 		// Kids foreigner EU new layout 2023
-		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_DE][TEXT("61")] = TEXT("EU. Anmeldung – Art 8 RL 2004/38/EG");
+		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_DE][TEXT("61")] = TEXT("EU. Anmeldung - Art 8 RL 2004/38/EG");
 		// Kids foreigner EU+ new layout 2023
-		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_DE][TEXT("62")] = TEXT("EU+. Daueraufenthalt – Art 19 RL 2004/38/EG");
+		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_DE][TEXT("62")] = TEXT("EU+. Daueraufenthalt - Art 19 RL 2004/38/EG");
 		// Kids foreigner A
 		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_DE][TEXT("63")] = TEXT("A. AUFENTHALT FUR BEGRENZTE DAUER");
 		// Kids foreigner B
@@ -71,7 +71,7 @@ DocTypeConvertor::DocTypeConvertor()
 		// Kids foreigner K
 		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_DE][TEXT("65")] = TEXT("K. NIEDERLASSUNG");
 		// Kids foreigner L
-		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_DE][TEXT("66")] = TEXT("L. DAUERAUFENTHALT – EU");
+		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_DE][TEXT("66")] = TEXT("L. DAUERAUFENTHALT - EU");
 		// Kids foreigner F
 		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_DE][TEXT("67")] = TEXT("F. EU-FAMILIENANGEHORIGER ART 10 RL 2004/38/EG");
 		// Kids foreigner F+
@@ -112,7 +112,7 @@ DocTypeConvertor::DocTypeConvertor()
 		// card M");
 		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_EN][TEXT("22")] = TEXT("M. Article 50 TUE");
 		// card N");
-		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_EN][TEXT("23")] = TEXT("N. Art. 50 TUE – Local Border Traffic");
+		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_EN][TEXT("23")] = TEXT("N. Art. 50 TUE - Local Border Traffic");
 		// card K");
 		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_EN][TEXT("27")] = TEXT("K. ESTABLISHMENT");
 		// card L");
@@ -181,7 +181,7 @@ DocTypeConvertor::DocTypeConvertor()
 		// card M");
 		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_FR][TEXT("22")] = TEXT("M. Article 50 TUE");
 		// card N");
-		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_FR][TEXT("23")] = TEXT("N. Art. 50 TUE – Travailleur frontalier");
+		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_FR][TEXT("23")] = TEXT("N. Art. 50 TUE - Travailleur frontalier");
 		// card K");
 		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_FR][TEXT("27")] = TEXT("K. ETABLISSEMENT");
 		// card L");
@@ -209,7 +209,7 @@ DocTypeConvertor::DocTypeConvertor()
 		// Kids foreigner K
 		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_FR][TEXT("65")] = TEXT("K. ETABLISSEMENT");
 		// Kids foreigner L
-		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_FR][TEXT("66")] = TEXT("L. RESIDENT DE LONGUE DUREE – UE");
+		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_FR][TEXT("66")] = TEXT("L. RESIDENT DE LONGUE DUREE - UE");
 		// Kids foreigner F
 		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_FR][TEXT("67")] = TEXT("F. MEMBRE FAMILLE UE ART 10 DIR 2004/38/CE");
 		// Kids foreigner F+
@@ -250,7 +250,7 @@ DocTypeConvertor::DocTypeConvertor()
 		// card M");
 		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_NL][TEXT("22")] = TEXT("M. Artikel 50 VEU");
 		// card N");
-		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_NL][TEXT("23")] = TEXT("N. Art. 50 VEU – Grensarbeider");
+		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_NL][TEXT("23")] = TEXT("N. Art. 50 VEU - Grensarbeider");
 		// card K");
 		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_NL][TEXT("27")] = TEXT("K. VESTIGING");
 		// card L");
@@ -315,13 +315,13 @@ DocTypeConvertor::DocTypeConvertor()
 		conversions[EID_VWR_GRAPH_VERSION_EIGHT][EID_VWR_LANG_NL][TEXT("22")] = TEXT("M. ARTIKEL 50 VEU");
 
 		// card N");
-		conversions[EID_VWR_GRAPH_VERSION_EIGHT][EID_VWR_LANG_DE][TEXT("23")] = TEXT("N. ART. 50 VEU – GRENZGANGER");
+		conversions[EID_VWR_GRAPH_VERSION_EIGHT][EID_VWR_LANG_DE][TEXT("23")] = TEXT("N. ART. 50 VEU - GRENZGANGER");
 		// card N");
-		conversions[EID_VWR_GRAPH_VERSION_EIGHT][EID_VWR_LANG_EN][TEXT("23")] = TEXT("N. ART. 50 TUE – LOCAL BORDER TRAFFIC");
+		conversions[EID_VWR_GRAPH_VERSION_EIGHT][EID_VWR_LANG_EN][TEXT("23")] = TEXT("N. ART. 50 TUE - LOCAL BORDER TRAFFIC");
 		// card N");
-		conversions[EID_VWR_GRAPH_VERSION_EIGHT][EID_VWR_LANG_FR][TEXT("23")] = TEXT("N. ART. 50 TUE – TRAVAILLEUR FRONTALIER");
+		conversions[EID_VWR_GRAPH_VERSION_EIGHT][EID_VWR_LANG_FR][TEXT("23")] = TEXT("N. ART. 50 TUE - TRAVAILLEUR FRONTALIER");
 		// card N");
-		conversions[EID_VWR_GRAPH_VERSION_EIGHT][EID_VWR_LANG_NL][TEXT("23")] = TEXT("N. ART. 50 VEU – GRENSARBEIDER");
+		conversions[EID_VWR_GRAPH_VERSION_EIGHT][EID_VWR_LANG_NL][TEXT("23")] = TEXT("N. ART. 50 VEU - GRENSARBEIDER");
 
 	}
 }
