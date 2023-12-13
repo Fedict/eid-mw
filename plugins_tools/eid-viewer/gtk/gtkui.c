@@ -61,7 +61,7 @@ void show_cert_image(const char* label, void *data, int len G_GNUC_UNUSED) {
 /* Show an "about" dialog */
 void showabout(GtkWidget* about G_GNUC_UNUSED, gpointer user_data G_GNUC_UNUSED) {
 	GtkWindow* window = GTK_WINDOW(gtk_builder_get_object(builder, "mainwin"));
-	const char *authors[] = { "Wouter Verhelst", "Frederik Vernelen", NULL };
+	const char *authors[] = { "Wouter Verhelst", "Frederik Vernelen", "Thomas Charlier", NULL };
 	const char *artists[] = { "Frank Mariën", NULL };
 	gtk_show_about_dialog(window,
 			"program-name", _("eID Viewer"),

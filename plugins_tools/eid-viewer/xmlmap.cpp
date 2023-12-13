@@ -11,6 +11,23 @@ static bool inited = false;
  * label to an element struct. We wrote it in C++ so we can use the STL
  * containers, but other than that C++ isn't really needed... */
 
+
+/****************************************************************************
+ * NOTE NOTE NOTE                                                           *
+ *                                                                          *
+ * When adding new attribute or element mapppings to this file, also        *
+ * update the following files:                                              *
+ *                                                                          *
+ * - plugins_tools/eid-viewer/xml/eidv4.xsd: used for validation on macOS   *
+ *   and Linux. Add the new attributes or elements and the new version.     *
+ * - plugins_tools/util/labels.c: add the elements or attributes, and       *
+ *   tag them with a new version number                                     *
+ * - plugins_tools/eid-viewer/xml/versions.md: document the                 *
+ *   modifications you made.                                                *
+ *                                                                          *
+ * NOTE NOTE NOTE                                                           *
+ ****************************************************************************/
+
 /* Attributes of the <identity> element */
 struct attribute_desc identity_attributes[] = {
 	{TEXT("nationalnumber"), TEXT("national_number"), 1},
