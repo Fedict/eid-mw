@@ -365,7 +365,7 @@
     - VER=$(cat products/srpm/version)
     - VERSHORT=${VER#*-}
   script:
-    - http_proxy="$ACNG" build --no-checks --clean -debug --dist sl$DVER --repo https://download.opensuse.org/distribution/leap/$DVER/repo/oss --define "revision $VERSHORT" products/srpm/eid-mw-*.src.rpm
+    - https_proxy="$ACNG" http_proxy="$ACNG" build --no-checks --clean -debug --dist sl$DVER --repo https://download.opensuse.org/distribution/leap/$DVER/repo/oss --define "revision $VERSHORT" products/srpm/eid-mw-*.src.rpm
   after_script:
     - mkdir -p products/$DIST-$DVER-$ARCH
     - mv /var/tmp/build-root/home/abuild/rpmbuild/RPMS/*/*rpm products/$DIST-$DVER-$ARCH/
