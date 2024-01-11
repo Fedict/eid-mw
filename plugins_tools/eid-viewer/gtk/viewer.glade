@@ -1113,7 +1113,6 @@
                             <property name="sensitive">False</property>
                             <property name="can-focus">False</property>
                             <property name="halign">start</property>
-                            <property name="label" translatable="yes">-</property>
                           </object>
                           <packing>
                             <property name="right-attach">2</property>
@@ -1125,7 +1124,6 @@
                           <object class="GtkLabel" id="cardEUPlus_start_date">
                             <property name="can-focus">False</property>
                             <property name="halign">start</property>
-                            <property name="label" translatable="yes">-</property>
                           </object>
                           <packing>
                             <property name="right-attach">2</property>
