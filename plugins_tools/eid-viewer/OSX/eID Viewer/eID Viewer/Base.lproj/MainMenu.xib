@@ -660,17 +660,9 @@
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField identifier="title_cardEUPlus_start_date" hidden="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WkL-sb-l30">
-                                            <rect key="frame" x="335" y="35" width="273" height="16"/>
+                                        <textField identifier="title_cardEUPlus_start_date" hidden="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WkL-sb-l30">
+                                            <rect key="frame" x="335" y="36" width="273" height="16"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Date of permanent residence:" id="NLY-m3-8rC">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <textField identifier="cardEUPlus_start_date" hidden="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BIm-DK-d8c" userLabel="cardEUPlus_start_date">
-                                            <rect key="frame" x="612" y="35" width="27" height="16"/>
-                                            <textFieldCell key="cell" lineBreakMode="clipping" placeholderString="-" id="h2c-lb-EjK">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -720,7 +712,6 @@
                                         <constraint firstItem="BYA-0F-HiY" firstAttribute="trailing" secondItem="eBO-Iq-zMd" secondAttribute="trailing" id="DZv-j6-lSK"/>
                                         <constraint firstItem="tJY-ug-b4h" firstAttribute="bottom" secondItem="LTL-TZ-G5R" secondAttribute="bottom" id="Dej-U4-11X"/>
                                         <constraint firstItem="Uyd-Lq-vAn" firstAttribute="leading" secondItem="zdm-MS-LoZ" secondAttribute="leading" id="DfU-jb-KxU"/>
-                                        <constraint firstItem="BIm-DK-d8c" firstAttribute="top" secondItem="WkL-sb-l30" secondAttribute="top" id="ERQ-tl-eNV"/>
                                         <constraint firstItem="Uyd-Lq-vAn" firstAttribute="bottom" secondItem="fNv-JG-pQe" secondAttribute="bottom" id="Eda-Iz-59M"/>
                                         <constraint firstItem="bFc-6s-Jly" firstAttribute="leading" secondItem="IJr-6h-wka" secondAttribute="trailing" constant="8" symbolic="YES" id="F22-cQ-YYF"/>
                                         <constraint firstItem="oqk-he-lZ1" firstAttribute="baseline" secondItem="PT0-gM-zyw" secondAttribute="baseline" id="F4G-9e-nOE"/>
@@ -733,7 +724,6 @@
                                         <constraint firstItem="ZWO-OR-lKk" firstAttribute="top" secondItem="fNv-JG-pQe" secondAttribute="top" id="HA2-7X-2ia"/>
                                         <constraint firstItem="Jog-mF-XTX" firstAttribute="trailing" secondItem="zdm-MS-LoZ" secondAttribute="trailing" id="HNs-HP-2Pf"/>
                                         <constraint firstItem="sSK-8j-MVu" firstAttribute="top" secondItem="sce-BE-aus" secondAttribute="top" id="Hkl-Eb-w5S"/>
-                                        <constraint firstItem="BIm-DK-d8c" firstAttribute="bottom" secondItem="WkL-sb-l30" secondAttribute="bottom" id="HnO-nq-xEt"/>
                                         <constraint firstItem="7Hq-Tk-J38" firstAttribute="leading" secondItem="04b-UH-oPb" secondAttribute="trailing" constant="8" symbolic="YES" id="I8C-Tq-A0M"/>
                                         <constraint firstItem="hng-9T-9SU" firstAttribute="bottom" secondItem="LTI-bJ-Hkh" secondAttribute="bottom" id="IJ5-G4-aj0"/>
                                         <constraint firstItem="2EQ-gU-efx" firstAttribute="leading" secondItem="HFX-Ns-Kc4" secondAttribute="trailing" constant="8" symbolic="YES" id="Izx-R7-zAL"/>
@@ -771,12 +761,10 @@
                                         <constraint firstItem="UIf-Nb-wbI" firstAttribute="baseline" secondItem="V0V-EL-761" secondAttribute="baseline" id="UdY-Fj-os2"/>
                                         <constraint firstItem="2Cp-It-1RO" firstAttribute="leading" secondItem="xjA-5d-ByW" secondAttribute="trailing" constant="8" symbolic="YES" id="UhO-L8-x7U"/>
                                         <constraint firstItem="feA-T9-MfQ" firstAttribute="top" secondItem="52a-Vi-OGT" secondAttribute="bottom" constant="8" symbolic="YES" id="Uuy-qF-gNX"/>
-                                        <constraint firstItem="BIm-DK-d8c" firstAttribute="leading" secondItem="zdm-MS-LoZ" secondAttribute="leading" id="Uxi-0A-sNy"/>
                                         <constraint firstItem="zNF-Qo-Gbc" firstAttribute="top" secondItem="feA-T9-MfQ" secondAttribute="bottom" constant="8" symbolic="YES" id="V1B-gY-q56"/>
                                         <constraint firstItem="Mkp-SV-Wqr" firstAttribute="leading" secondItem="LS2-EH-nXE" secondAttribute="leading" id="Vfh-0k-lfV"/>
-                                        <constraint firstItem="WkL-sb-l30" firstAttribute="top" secondItem="BYA-0F-HiY" secondAttribute="bottom" constant="8" symbolic="YES" id="WCs-aS-yUE"/>
+                                        <constraint firstItem="WkL-sb-l30" firstAttribute="top" secondItem="q39-NO-l86" secondAttribute="bottom" constant="8" symbolic="YES" id="WCs-aS-yUE"/>
                                         <constraint firstItem="6Ns-0y-WKF" firstAttribute="top" secondItem="Mkp-SV-Wqr" secondAttribute="bottom" constant="8" symbolic="YES" id="WJ3-4G-sIL"/>
-                                        <constraint firstItem="BIm-DK-d8c" firstAttribute="trailing" secondItem="zdm-MS-LoZ" secondAttribute="trailing" id="WJe-6f-XFG"/>
                                         <constraint firstItem="4Fh-Up-6Jx" firstAttribute="bottom" secondItem="RXd-5L-wZ4" secondAttribute="bottom" id="WNR-VD-E6P"/>
                                         <constraint firstItem="gHg-7a-bRk" firstAttribute="trailing" secondItem="feA-T9-MfQ" secondAttribute="trailing" id="Y4d-4I-HiJ"/>
                                         <constraint firstItem="z2f-UJ-T29" firstAttribute="leading" secondItem="PT0-gM-zyw" secondAttribute="leading" id="Y5W-e3-902"/>
@@ -814,7 +802,6 @@
                                         <constraint firstItem="7Hq-Tk-J38" firstAttribute="top" secondItem="04b-UH-oPb" secondAttribute="top" id="h8Q-Qa-vdh"/>
                                         <constraint firstItem="GTK-QH-Ddw" firstAttribute="bottom" secondItem="nrP-Rp-Yyg" secondAttribute="bottom" id="hV7-kn-SYM"/>
                                         <constraint firstItem="gHg-7a-bRk" firstAttribute="trailing" secondItem="ZYo-x6-dhc" secondAttribute="trailing" id="hlX-Nz-NSt"/>
-                                        <constraint firstItem="BIm-DK-d8c" firstAttribute="leading" secondItem="WkL-sb-l30" secondAttribute="trailing" constant="8" symbolic="YES" id="hva-zE-8B8"/>
                                         <constraint firstItem="yN0-4K-0GX" firstAttribute="bottom" secondItem="2tO-5W-jUS" secondAttribute="bottom" id="hwB-Gc-Lqi"/>
                                         <constraint firstItem="z2f-UJ-T29" firstAttribute="leading" secondItem="52a-Vi-OGT" secondAttribute="leading" id="i1O-3V-zPc"/>
                                         <constraint firstItem="yN0-4K-0GX" firstAttribute="leading" secondItem="zdm-MS-LoZ" secondAttribute="leading" id="izs-uY-g71"/>
@@ -1420,7 +1407,7 @@
                     <constraint firstItem="5Om-bz-RVh" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="12" symbolic="YES" id="nqi-su-YXf"/>
                 </constraints>
             </view>
-            <point key="canvasLocation" x="1026" y="-212"/>
+            <point key="canvasLocation" x="946" y="-239"/>
         </window>
         <customView id="ieQ-cl-G8D" userLabel="ForeignerPrintOperation" customClass="ResizablePrintView">
             <rect key="frame" x="0.0" y="0.0" width="569" height="952"/>
