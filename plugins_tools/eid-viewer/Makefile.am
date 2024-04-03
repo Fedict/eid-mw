@@ -142,13 +142,13 @@ AM_CXXFLAGS = $(AM_CFLAGS) -std=c++98
 SUBDIRS = . gtk/po test uml
 
 resources/%.c: resources/%.png
-	echo -e "#include <gdk-pixbuf/gdk-pixdata.h>\n#if __GNUC__ >= 4\n#pragma GCC diagnostic push\n#pragma GCC diagnostic ignored \"-Wpointer-sign\"\n#endif\n" > $@
+	printf '%s\n' '#include <gdk-pixbuf/gdk-pixdata.h>' '#if __GNUC__ >= 4' '#pragma GCC diagnostic push' '#pragma GCC diagnostic ignored "-Wpointer-sign"' '#endif' > $@
 	gdk-pixbuf-csource --struct --extern --name `basename $^ .png` $^ >> $@
-	echo -e "#pragma GCC diagnostic pop\n" >> $@
+	printf '%s\n' '#pragma GCC diagnostic pop' >> $@
 resources/%.c: resources/%.jpg
-	echo -e "#include <gdk-pixbuf/gdk-pixdata.h>\n#if __GNUC__ >= 4\n#pragma GCC diagnostic push\n#pragma GCC diagnostic ignored \"-Wpointer-sign\"\n#endif\n" > $@
+	printf '%s\n' '#include <gdk-pixbuf/gdk-pixdata.h>' '#if __GNUC__ >= 4' '#pragma GCC diagnostic push' '#pragma GCC diagnostic ignored "-Wpointer-sign"' '#endif' > $@
 	gdk-pixbuf-csource --struct --extern --name `basename $^ .jpg` $^ >> $@
-	echo -e "#pragma GCC diagnostic pop\n" >> $@
+	printf '%s\n' '#pragma GCC diagnostic pop' >> $@
 
 BUILT_SOURCES = gtk/viewer_glade.h \
 		resources/coat_of_arms_nl.c \
