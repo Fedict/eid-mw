@@ -10,11 +10,7 @@ Source: eid-mw-%{version}-%{revision}.tar.gz
 Source1: baselibs.conf
 #BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-%if 0%{?el6}
-BuildRequires: gtk2-devel
-%else
 BuildRequires: gtk3-devel
-%endif
 BuildRequires: desktop-file-utils
 BuildRequires: p11-kit-devel
 BuildRequires: pcsc-lite-devel
@@ -23,11 +19,8 @@ Requires(pre): /sbin/service
 Requires: eid-mw-bin
 Requires: eid-mw-libs
 BuildRequires: gcc-c++
-%if 0%{?el7}
-%else
 BuildRequires: libassuan-devel
 BuildRequires: libgpg-error-devel
-%endif
 %if 0%{?suse_version}
 Requires: pcsc-ccid
 BuildRequires: libopenssl-devel
@@ -169,15 +162,6 @@ fi
 %{_datadir}/locale/*/LC_MESSAGES/about-eid-mw.mo
 %{_datadir}/p11-kit/
 %{_libdir}/mozilla/
-%if 0%{?el7}
-%{_datadir}/locale/*/LC_MESSAGES/dialogs-beid.mo
-%{_libexecdir}/beid-askaccess
-%{_libexecdir}/beid-askpin
-%{_libexecdir}/beid-badpin
-%{_libexecdir}/beid-changepin
-%{_libexecdir}/beid-spr-askpin
-%{_libexecdir}/beid-spr-changepin
-%endif
 
 %files devel
 %defattr(-, root, root, 0755)
@@ -199,9 +183,6 @@ fi
 %{_datadir}/metainfo/
 %exclude %{_datadir}/metainfo/*metainfo.xml
 %{_datadir}/icons/hicolor/*/*/eid-viewer.png
-%if ! 0%{?el6}
-%{_datadir}/glib-2.0/schemas/
-%endif
 
 %post -n eid-viewer
 [ -x /usr/bin/glib-compile-schemas ] && /usr/bin/glib-compile-schemas /usr/share/glib-2.0/schemas
