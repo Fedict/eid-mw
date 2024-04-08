@@ -349,56 +349,44 @@ void do_uname(GtkWidget* top, GtkListStore* data) {
 	free(values);
 }
 
-char* get_lsb_info(char opt) {
-	char cmd[] = "lsb_release -. -s";
-	char *rv, *loc;
-	FILE *f;
-
-	*(strchr(cmd, '.')) = opt;
-	f=popen(cmd, "r");
-	if(!f) {
-		return strdup(_("(unknown)"));
+#define set_distro_data(dat, key, desc) \
+	if(strncmp(dat, key, strlen(key)) == 0) { \
+		char *val = dat + strlen(key); \
+		if(*val == '"') val++; \
+		char *quote = strrchr(val, '"'); \
+		if(quote) *quote = '\0'; \
+		if(val[strlen(val)-1] == '\n') val[strlen(val)-1] = '\0'; \
+		if(strlen(val) == 0) continue; \
+		gtk_list_store_append(data, &iter); \
+		gtk_list_store_set(data, &iter, 0, desc, 1, val, -1); \
+		continue; \
 	}
-	rv = malloc(80);
-	rv[79]='\0';
-	rv[0]='\0';
-	if(fgets(rv, 79, f) == NULL) {
-		free(rv);
-		rv = strdup(_("(unknown)"));
-		goto exit;
-	}
-	if(strlen(rv) == 0) {
-		free(rv);
-		rv = strdup(_("(unknown)"));
-		goto exit;
-	}
-	if((loc = strrchr(rv, '\n')) != NULL) {
-		*loc = '\0';
-	}
-exit:
-	pclose(f);
-	return rv;
-}
 
 void do_distro(GtkWidget* top G_GNUC_UNUSED, GtkListStore* data) {
 	GtkTreeIter iter;
-	char *dat;
+	char *dat = NULL;
+	size_t datlen = 0;
+	FILE *f;
+	ssize_t gl_len;
 
-	dat = get_lsb_info('i');
-	gtk_list_store_append(data, &iter);
-	gtk_list_store_set(data, &iter, 0, _("Distribution"), 1, dat, -1);
-	// dat is allocated by get_lsb_info, so we need to release it.
-	free(dat);
+	f = fopen("/etc/os-release", "r");
+	if(!f) {
+		gtk_list_store_append(data, &iter);
+		gtk_list_store_set(data, &iter, 0, _("Distribution"), 1, _("(not found)"), -1);
+		return;
+	}
 
-	dat = get_lsb_info('r');
-	gtk_list_store_append(data, &iter);
-	gtk_list_store_set(data, &iter, 0, _("Distribution version"), 1, dat, -1);
-	free(dat);
-
-	dat = get_lsb_info('c');
-	gtk_list_store_append(data, &iter);
-	gtk_list_store_set(data, &iter, 0, _("Distribution codename"), 1, dat, -1);
-	free(dat);
+	while((gl_len = getline(&dat, &datlen, f) > 0)) {
+		if(gl_len > 0) {
+			set_distro_data(dat, "NAME=", _("Distribution"));
+			set_distro_data(dat, "VERSION_ID=", _("Distribution version"));
+			set_distro_data(dat, "VERSION_CODENAME=", _("Distribution codename"));
+		}
+		free(dat);
+		dat=NULL;
+	}
+	fclose(f);
+	perror("getline");
 }
 
 void activate(GtkApplication *app, gpointer user_data) {
