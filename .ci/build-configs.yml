@@ -12,9 +12,9 @@ variables:
   MINT_OLDLTS_CODE: ulyana
   MINT_OLDLTS_VERSION: 20
   MINT_OLDLTS_FULL: Linux Mint 20
-  UBUNTU_LTS_CODE: nobel
+  UBUNTU_LTS_CODE: noble
   UBUNTU_LTS_VERSION: 2404
-  UBUNTU_LTS_FULL: Ubuntu 24.04 "Nobel Numbat"
+  UBUNTU_LTS_FULL: Ubuntu 24.04 "Noble Numbat"
   MINT_LTS_CODE: vanessa
   MINT_LTS_VERSION: 21
   MINT_LTS_FULL: Linux Mint 21
