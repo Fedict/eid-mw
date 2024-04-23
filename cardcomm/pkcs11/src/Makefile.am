@@ -211,10 +211,10 @@ beid_spr_changepin_LDADD = @GTK_LIBS@
 metainfodir = $(datarootdir)/metainfo
 dist_metainfo_DATA = be.belgium.eid.eidmw.metainfo.xml
 
-pkcs11_manifestdir = $(libdir)/mozilla/pkcs11-modules
+pkcs11_manifestdir = $(prefix)/lib/mozilla/pkcs11-modules
 pkcs11_manifest_DATA = beidpkcs11.json beidpkcs11_alt.json
 
-managed_storage_manifestdir = $(libdir)/mozilla/managed-storage
+managed_storage_manifestdir = $(prefix)/lib/mozilla/managed-storage
 managed_storage_manifest_DATA = belgiumeid@eid.belgium.be.json
 
 pkgconfig_DATA=libbeidpkcs11.pc
