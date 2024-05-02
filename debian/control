@@ -1,7 +1,7 @@
 Source: eid-mw
 Priority: optional
 Maintainer: FedICT Servicedesk <servicedesk@fedict.be>
-Build-Depends: debhelper (>= 9), autotools-dev, libpcsclite-dev, libgtk-3-dev | libgtk2.0-dev (<= 2.24.11), libtool, lsb-release, libssl-dev, libxml2-dev, libcurl4-openssl-dev, libproxy-dev, openssl, libp11-kit-dev, libassuan-dev, libgpg-error-dev
+Build-Depends: debhelper (>= 9), autotools-dev, libpcsclite-dev, libgtk-3-dev | libgtk2.0-dev (<= 2.24.11), libtool, lsb-release, libssl-dev, libxml2-dev, libcurl4-openssl-dev, libproxy-dev, openssl, libp11-kit-dev, libassuan-dev, libgpg-error-dev, debhelper-compat (= 13)
 Standards-Version: 3.8.3
 Section: libs
 Vcs-Browser: https://github.com/Fedict/eid-mw
