@@ -491,7 +491,13 @@ static int eid_vwr_p11_do_challenge_real(struct eid_vwr_challenge_responsedata *
 		//initialize the signature operation
 		check_rv(C_SignInit(session, &mechanism, hKey));
 
-		check_rv(C_Sign(session, p->challenge, (CK_ULONG)p->challengelen, p->response, &((CK_ULONG)(p->responselen))));
+		// We should really change struct
+		// eid_vwr_challenge_responsedata, but doing so changes
+		// the ABI of libeidviewer. Let's try to avoid that for
+		// now.
+		CK_ULONG resplen = 0;
+		check_rv(C_Sign(session, p->challenge, (CK_ULONG)p->challengelen, p->response, &(resplen)));
+		p->responselen = (size_t)resplen;
 
 		p->result = EID_VWR_RES_SUCCESS;
 	}
