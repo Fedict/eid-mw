@@ -184,6 +184,7 @@ fi
 %{_datadir}/metainfo/
 %exclude %{_datadir}/metainfo/*metainfo.xml
 %{_datadir}/icons/hicolor/*/*/eid-viewer.png
+%{_datadir}/glib-2.0/schemas/
 
 %post -n eid-viewer
 [ -x /usr/bin/glib-compile-schemas ] && /usr/bin/glib-compile-schemas /usr/share/glib-2.0/schemas
