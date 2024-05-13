@@ -728,24 +728,35 @@ namespace eIDMW
 		SCARDHANDLE hCard, CPCSC * poPCSC, CPinpad * poPinpad)
 	{
 		CCard * poCard = NULL;
-
-		try
-		{
-			bool bIsBeidCard = BeidCardSelectApplet(poPCSC, hCard);
-
-			if (bIsBeidCard)
+		static int iFailingnCount = 0;
+			try
 			{
-				poCard = new CCard(hCard, poPCSC, poPinpad, TRY_SELECT_APPLET, CARD_BEID);
+				bool bIsBeidCard = BeidCardSelectApplet(poPCSC, hCard);
+				if (getReaderToSkip() != csReader || bIsBeidCard) {
+					if (bIsBeidCard)
+					{
+						UnlockReader();
+						poCard = new CCard(hCard, poPCSC, poPinpad, TRY_SELECT_APPLET, CARD_BEID);
+					}
+					else
+					{
+						//Let the chance to eid card to connect
+						if (iFailingnCount < 5)
+						{
+							iFailingnCount++;
+						}
+						else
+						{
+							LockReader(csReader);
+						}
+						poCard = new CCard(hCard, poPCSC, poPinpad, DONT_SELECT_APPLET, CARD_UNKNOWN);
+					}
+				}
 			}
-			else
+			catch (...)
 			{
-				poCard = new CCard(hCard, poPCSC, poPinpad, DONT_SELECT_APPLET, CARD_UNKNOWN);
+				MWLOG(LEV_ERROR, MOD_CAL, L"Exception in cardPluginBeid.CardGetInstance()");
 			}
-		}
-		catch (...)
-		{
-			MWLOG(LEV_ERROR, MOD_CAL, L"Exception in cardPluginBeid.CardGetInstance()");
-		}
 
 		return poCard;
 	}
@@ -1030,10 +1041,10 @@ namespace eIDMW
 
 		CByteArray oAPDU(7 + oData.Size());
 
-		oAPDU.Append(0x00);		//	CLA ‘00’ or ‘10’(chaining)
-		oAPDU.Append(0x88);		//	INS ‘88’ (Internal authenticate)
+		oAPDU.Append(0x00);		//	CLA â€˜00â€™ or â€˜10â€™(chaining)
+		oAPDU.Append(0x88);		//	INS â€˜88â€™ (Internal authenticate)
 		oAPDU.Append(0x02);		//	P1 Algorithm reference(ECDSA SHA-2-384)
-		oAPDU.Append(0x81);		//	P2 Private key reference(‘81’(basic key)
+		oAPDU.Append(0x81);		//	P2 Private key reference(â€˜81â€™(basic key)
 		oAPDU.Append((unsigned char)oData.Size() + 2); // length of following bytes
 		oAPDU.Append(0x94);		//	Tag (for challenge is 0x94)
 		oAPDU.Append((unsigned char)oData.Size()); // Length of data
@@ -1600,6 +1611,21 @@ namespace eIDMW
 //		}
 
 		return oBuf;
+	}
+
+	void LockReader(const char* csReader)
+	{
+		csReaderToSkip = csReader;
+	}
+
+	void UnlockReader()
+	{
+		csReaderToSkip = "";
+	}
+
+	const char* getReaderToSkip()
+	{
+		return csReaderToSkip;
 	}
 
 	////////////////////////////////////////////////////////////////:
