@@ -741,9 +741,9 @@ namespace eIDMW
 					else
 					{
 						//Let the chance to eid card to connect
-						if (iFailingnCount < 5)
+						if (iFailingCount < 5)
 						{
-							iFailingnCount++;
+							iFailingCount++;
 						}
 						else
 						{
