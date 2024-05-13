@@ -728,7 +728,7 @@ namespace eIDMW
 		SCARDHANDLE hCard, CPCSC * poPCSC, CPinpad * poPinpad)
 	{
 		CCard * poCard = NULL;
-		static int iFailingnCount = 0;
+		static int iFailingCount = 0;
 			try
 			{
 				bool bIsBeidCard = BeidCardSelectApplet(poPCSC, hCard);
