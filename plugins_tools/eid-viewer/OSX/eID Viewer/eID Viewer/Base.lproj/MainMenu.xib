@@ -1284,7 +1284,7 @@
                                         </splitView>
                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0io-gu-IzB">
                                             <rect key="frame" x="477" y="18" width="94" height="23"/>
-                                            <buttonCell key="cell" type="roundTextured" title="Validate now" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="fPW-Dr-YAR">
+                                            <buttonCell key="cell" type="push" title="Validate now" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="fPW-Dr-YAR">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
