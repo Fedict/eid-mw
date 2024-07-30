@@ -30,9 +30,9 @@ case $DIST in
 	ubuntu)
 		if [ "$ARCH" == "armhf" ] || [ "$ARCH" == "arm64" ]
 		then
-			sbuild-createchroot --include=debhelper --arch=$ARCH $CODE /srv/chroot/$CODE ${ACNG}ports.ubuntu.com /usr/share/debootstrap/scripts/gutsy
+			sbuild-createchroot --include=debhelper --components=main,universe --arch=$ARCH $CODE /srv/chroot/$CODE ${ACNG}ports.ubuntu.com /usr/share/debootstrap/scripts/gutsy
 		else
-			sbuild-createchroot --include=debhelper --arch=$ARCH $CODE /srv/chroot/$CODE ${ACNG}archive.ubuntu.com/ubuntu /usr/share/debootstrap/scripts/gutsy
+			sbuild-createchroot --include=debhelper --components=main,universe --arch=$ARCH $CODE /srv/chroot/$CODE ${ACNG}archive.ubuntu.com/ubuntu /usr/share/debootstrap/scripts/gutsy
 		fi
 		# Revert the "default to xz compression" option in recent
 		# Ubuntu distributions

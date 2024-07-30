@@ -480,6 +480,14 @@
 	string[length * 2] = '\0';
 	[ui newstringdata:[NSString stringWithCString:string encoding:NSUTF8StringEncoding] withLabel:label];
 }
+-(void)show_card_eu_start_date:(Boolean)isEU {
+    NSView *vEU = (NSView*)[self searchObjectById:[NSString stringWithFormat:@"cardEU_start_date"] ofClass:[NSView class] forUpdate:NO];
+    [vEU setHidden:FALSE];
+    vEU = (NSView*)[self searchObjectById:[NSString stringWithFormat:@"title_cardEU_start_date"] ofClass:[NSView class] forUpdate:NO];
+    [vEU setHidden:!isEU];
+    NSView *vEUPlus = (NSView*)[self searchObjectById:[NSString stringWithFormat:@"title_cardEUPlus_start_date"] ofClass:[NSView class] forUpdate:NO];
+    [vEUPlus setHidden:isEU];
+}
 -(void)handle_bin_data:(NSData *)data forLabel:(NSString *)label withUi:(AppDelegate *)ui {
 	assert(ui == self);
 	if([label isEqualToString:@"certimage"]) {
@@ -523,6 +531,9 @@
 				struct labelnames* toggles = get_foreigner_labels();
 				int i;
 				for(i=0; i<toggles->len; i++) {
+                    if(strcmp(toggles->label[i], "cardEU_start_date") == 0) {
+                        continue;
+                    }
 					NSView *v = (NSView*)[self searchObjectById:[NSString stringWithUTF8String:toggles->label[i]] ofClass:[NSView class] forUpdate:NO];
 					[v setHidden:!new_foreigner];
 					v = (NSView*)[self searchObjectById:[NSString stringWithFormat:@"title_%s",toggles->label[i]] ofClass:[NSView class] forUpdate:NO];
@@ -538,6 +549,12 @@
 				[self.IdentityTab layoutSubtreeIfNeeded];
 			}];
 		}
+        if((b0 == '3' && b1 == '1') || (b0 == '6' && b1 == '1')) {
+            [self show_card_eu_start_date:TRUE];
+        }
+        if((b0 == '3' && b1 == '2') || (b0 == '6' && b1 == '2')) {
+            [self show_card_eu_start_date:FALSE];
+        }
 	}
     else if([label isEqualToString:@"carddata_appl_version"]) {
         char vers;

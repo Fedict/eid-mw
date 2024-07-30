@@ -44,6 +44,13 @@ New allowed values:
 Version 4.4
 -----------
 
+New attributes:
+
+- `graphpersoversion` for the `&lt;eid&gt;` toplevel element.
+
+Version 4.5
+-----------
+
 New elements:
 
 - `&lt;cardA&gt; child element of the `&lt;card&gt;` element

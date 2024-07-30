@@ -54,7 +54,7 @@ AM_CONDITIONAL(ASSUAN,[test x"$ASSUAN" = x"y"])
 PKG_CHECK_MODULES([PCSC],[libpcsclite >= 1.4.4],
 [
 CPPFLAGS="$PCSC_CFLAGS $CPPFLAGS"
-LDFLAGS="$PCSC_LIBS $CPPFLAGS"
+LDFLAGS="$PCSC_LIBS $LDFLAGS"
 ])
 
 AC_ARG_ENABLE([test-fuzzer],AS_HELP_STRING([--enable-test-fuzzer],[Build a version of eid-mw instrumented for fuzzing (not meant for production use!)]),[fuzzer=$enableval],[fuzzer=no])

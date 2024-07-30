@@ -71,7 +71,7 @@ TEST_FUNC(sign_state) {
 		printf("Robot not present, can't do this test...\n");
 		return TEST_RV_SKIP;
 	}
-	check_rv_long(C_Sign(NULL, data, sizeof(data), NULL, &sig_len), m_p11_noinit);
+	check_rv_long(C_Sign(NULL_PTR, data, sizeof(data), NULL, &sig_len), m_p11_noinit);
 
 	check_rv(C_Initialize(NULL_PTR));
 

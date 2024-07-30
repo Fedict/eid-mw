@@ -60,11 +60,11 @@ static bool setup() {
 					break;
 				}
 				char *termname = getenv("TERM");
-				termname = strchr(termname, '=');
-				if(!termname) {
+				if (!termname) {
 					MWLOG(LEV_WARN, MOD_DLG, L"Could not set TTY type: TERM variable not found or invalid. Ignoring.");
 					break;
 				}
+				termname = strchr(termname, '=');
 				snprintf(cmd, sizeof cmd, "OPTION ttytype=%s", termname);
 				if((r = assuan_transact(ctx, cmd, NULL, NULL, NULL, NULL, NULL, NULL))) {
 					MWLOG(LEV_WARN, MOD_DLG, L"Could not set TTY type: %s. Ignoring.", gpg_strerror(r));

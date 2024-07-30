@@ -41,7 +41,8 @@
           <xsd:enumeration value="4.1" />
           <xsd:enumeration value="4.2" />
           <xsd:enumeration value="4.3" />
-		  <xsd:enumeration value="4.4" />
+	  <xsd:enumeration value="4.4" />
+	  <xsd:enumeration value="4.5" />
         </xsd:restriction>
       </xsd:simpleType>
     </xsd:attribute>

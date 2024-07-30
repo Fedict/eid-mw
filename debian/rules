@@ -25,3 +25,6 @@ override_dh_makeshlibs:
 override_dh_strip:
 	dh_strip -p libbeidpkcs11-0 --dbg-package=libbeidpkcs11-dbg
 	dh_strip -a
+
+# Don't dh_autoreconf our stuff, please
+override_dh_autoreconf:
