@@ -185,7 +185,7 @@ DocTypeConvertor::DocTypeConvertor()
 		// card K");
 		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_FR][TEXT("27")] = TEXT("K. ETABLISSEMENT");
 		// card L");
-		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_FR][TEXT("28")] = TEXT("L. RESIDENT DE LONGUE DUREE – UE");
+		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_FR][TEXT("28")] = TEXT("L. RESIDENT DE LONGUE DUREE - UE");
 		// Foreigner EU
 		conversions[EID_VWR_GRAPH_VERSION_NONE][EID_VWR_LANG_FR][TEXT("31")] = TEXT("EU. Enregistrement - Art 8 DIR 2004/38/CE");
 		// Foreigner EU+	
