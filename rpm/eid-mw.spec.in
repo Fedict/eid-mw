@@ -70,7 +70,7 @@ programs needed by the eID Middleware.
 
 %package libs
 Summary: Belgium electronic identity card PKCS#11 module - libraries
-Conflicts: %{_libdir}/pkcs11/opensc-pkcs11.so
+Conflicts: %{_libdir}/pkcs11/opensc-pkcs11.so < 0.26.0
 
 %description libs
 The eID Middleware provides the libraries, a PKCS#11 module and a Firefox
