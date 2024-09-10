@@ -24,7 +24,7 @@ Section: libs
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
 Replaces: eid-mw (<< 4.0.6r1508)
-Breaks: opensc-pkcs11 (>= 0.23.0), opensc-pkcs11 (<< 0.26.0)
+Breaks: opensc-pkcs11 (<< 0.26.0)
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, libbeidpkcs11-bin, pinentry-x11
 Description: PKCS#11 library for Belgian Electronic Identity Card
