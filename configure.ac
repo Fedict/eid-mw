@@ -204,9 +204,9 @@ AM_CONDITIONAL([JPEG], [test x$HAVE_JPEGLIB = x1])
 AC_DEFINE_UNQUOTED([HAVE_JPEGLIB], $HAVE_JPEGLIB, [Define to 1 if you have libjpeg installed])
 
 PKG_CHECK_MODULES(SSL, "openssl", [HAVE_OPENSSL=1])
-PKG_CHECK_VAR(SSL_PREFIX, "openssl", "exec_prefix",, AC_MSG_ERROR([Could not find exec_prefix for openssl]))
+AC_PATH_PROG(OPENSSL_PATH, openssl)
 AC_DEFINE_UNQUOTED([HAVE_OPENSSL], $HAVE_OPENSSL, [Define to 1 if you have OpenSSL installed])
-AC_SUBST(SSL_PREFIX)
+AC_SUBST(OPENSSL_PATH)
 
 PKG_CHECK_MODULES(CURL, "libcurl", [HAVE_CURL=1])
 MAINVERSION=$(echo $PACKAGE_VERSION|sed -e 's/-.*$//')

@@ -217,7 +217,7 @@ dist_trust_DATA = \
 	certs/belgiumrca6.pem
 
 install-data-hook:
-	if ( $(SSL_PREFIX)/bin/openssl help 2>&1 | grep -q rehash); then $(SSL_PREFIX)/bin/openssl rehash $(DESTDIR)/$(trustdir); else $(SSL_PREFIX)/bin/c_rehash $(DESTDIR)/$(trustdir); fi
+	$(OPENSSL_PATH) rehash $(DESTDIR)/$(trustdir)
 
 gtk/viewer_glade.h: gtk/viewer.glade
 	$(top_srcdir)/plugins_tools/aboutmw/gtk/gen.sh VIEWER_GLADE_H VIEWER_GLADE_STRING < $^ > $@
