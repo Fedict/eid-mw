@@ -41,7 +41,7 @@ openssl-$(OSSL_VERSION).tar.gz:
 	if [ -f $(TP_DIR)/openssl-$(OSSL_VERSION).tar.gz ]; then \
 		cp $(TP_DIR)/openssl-$(OSSL_VERSION).tar.gz . ; \
 	else \
-		curl -O https://www.openssl.org/source/openssl-$(OSSL_VERSION).tar.gz; \
+		curl -L -O https://www.openssl.org/source/openssl-$(OSSL_VERSION).tar.gz; \
 		shasum -a 256 -c openssl-$(OSSL_VERSION).tar.gz.sha256; \
 	fi
 
