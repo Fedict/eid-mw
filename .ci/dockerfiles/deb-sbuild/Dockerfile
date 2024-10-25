@@ -3,7 +3,7 @@
 # distribution and a few things changed so we get a more recent version of
 # debootstrap.
 
-FROM debian:unstable-slim
+FROM debian:testing-slim
 
 RUN echo "deb http://deb.debian.org/debian experimental main" >> /etc/apt/sources.list
 
