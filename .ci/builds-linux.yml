@@ -329,7 +329,7 @@
   - VERSHORT=${VER#*-}
   - mkdir -p products/$DIST-$DVER-$ARCH
   script:
-  - mock --dnf --isolation=simple --verbose -r $DIST-$DVER-$ARCH --rebuild products/srpm/eid-mw-*.src.rpm --resultdir $CI_PROJECT_DIR/products/$DIST-$DVER-$ARCH --define "revision $VERSHORT"
+  - mock --isolation=simple --verbose -r $DIST-$DVER-$ARCH --rebuild products/srpm/eid-mw-*.src.rpm --resultdir $CI_PROJECT_DIR/products/$DIST-$DVER-$ARCH --define "revision $VERSHORT"
   artifacts:
     paths:
     - products/$DIST-$DVER-$ARCH
