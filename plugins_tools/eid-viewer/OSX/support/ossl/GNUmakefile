@@ -1,4 +1,4 @@
-OSSL_VERSION=1.1.1n
+OSSL_VERSION=3.4.0
 TP_DIR=../../../../../../ThirdParty
 
 build: openssl-combined/libcrypto.a
@@ -9,8 +9,8 @@ clean: clean-builds
 	rm -rf openssl-$(OSSL_VERSION).tar.gz 
 
 configured: openssl-combined/Configure openssl-x86_64 openssl-arm64
-	cd openssl-x86_64; ../openssl-combined/Configure no-shared no-asm -mmacosx-version-min=10.9 darwin64-x86_64-cc
-	cd openssl-arm64; ../openssl-combined/Configure no-shared no-asm -mmacosx-version-min=11 darwin64-arm64-cc
+	cd openssl-x86_64; ../openssl-combined/Configure no-shared no-asm -mmacosx-version-min=13 darwin64-x86_64-cc
+	cd openssl-arm64; ../openssl-combined/Configure no-shared no-asm -mmacosx-version-min=13 darwin64-arm64-cc
 	$(MAKE) -C openssl-x86_64 depend
 	$(MAKE) -C openssl-arm64 depend
 	touch configured
