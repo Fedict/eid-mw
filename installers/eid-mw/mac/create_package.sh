@@ -263,8 +263,7 @@ then
 
 
   echo "********** notarize the quick installer **********"
-  /usr/bin/xcrun altool --notarize-app --primary-bundle-id "be.eid.QuickInstaller.dmg" --username "$AC_USERNAME" --password "@keychain:altool" --file "$DMG_NAME"
-
+  /usr/bin/xcrun notarytool submit --wait --keychain-profile "notarytool" "$DMG_NAME"
 
   #create a backup copy, in case the stapling goes wrong
   cp -R "$DMG_NAME"  "$DMG_BACKUP_NAME"
@@ -274,7 +273,7 @@ then
   sleep 200
 
   echo "********** check notarization history **********"
-  /usr/bin/xcrun altool --notarization-history 0 -u "$AC_USERNAME" -p "@keychain:altool"
+  /usr/bin/xcrun notarytool history -p "notarytool"
 
 
   #staple the notarization package to the DMG.
@@ -284,7 +283,7 @@ then
   cp -R "$DMG_NAME" "$(pwd)/../../../../../scripts/mac/"
 
 else
-  EIDMW_CODESIGN_IDENTITY_APP="${EIDMW_CODESIGN_IDENTITY_APP:-Mac Developer}"
+  EIDMW_CODESIGN_IDENTITY_APP="${EIDMW_CODESIGN_IDENTITY_APP:-Developer ID Application}"
 
   echo "********** building beidbuild.pkg **********"
   pkgbuild --root "$ROOT_DIR" --scripts "$INSTALL_SCRIPTS_DIR" --identifier be.eid.middleware --version $REL_VERSION --install-location / beidbuild.pkg
