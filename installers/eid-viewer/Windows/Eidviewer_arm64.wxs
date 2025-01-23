@@ -7,9 +7,9 @@
   <?define var.FullProductVersion =$(var.OfficialProductVersion).$(var.RevisionNumber)?>
 
   <?define var.UpgradeCode ={A65D6AF1-8B50-4421-BFCB-CC1D3949807D}?>
-  <?define var.ProductGuid ={F3DC7F06-92FF-4c98-87F5-72C0B786$(var.RevisionNumber)}?>
+  <?define var.ProductGuid ={00456E12-B861-4736-97A9-359C3D4B$(var.RevisionNumber)}?>
 
-  <?define var.ProductName =Belgium e-ID viewer (x86) $(var.OfficialProductVersion) (build $(var.RevisionNumber))?>
+  <?define var.ProductName =Belgium e-ID viewer $(var.OfficialProductVersion) (build $(var.RevisionNumber))?>
 
   <?define var.PackageCode="*"?>
 
@@ -24,7 +24,7 @@
     <Package Id="$(var.PackageCode)"
              InstallerVersion="405"
              Keywords="Belgium e-ID Viewer Installer"
-             Platform="x86"
+             Platform="x64"
              Manufacturer="Belgian Government"
              Compressed="yes"
              InstallPrivileges="elevated"
@@ -74,7 +74,7 @@
 	  
 	  <Directory Id="DesktopFolder"/>
       
-      <Directory Id="ProgramFilesFolder">
+      <Directory Id="ProgramFiles64Folder">
         <Directory Id="APPLICATIONROOTFOLDER" Name="Belgium Identity Card">
           <Directory Id="BEIDVIEWERDIR" Name="EidViewer">
 			<Directory Id="BEIDVIEWERDIRNL" Name="nl" />
@@ -85,33 +85,33 @@
       </Directory>
 
 	<?ifndef env.DONT_MERGE_VCRT?>
-		<Merge Id="VCRT" SourceFile="C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Redist\MSVC\v143\MergeModules\Microsoft_VC143_CRT_x86.msm" Language="0" DiskId="1" />
+		<Merge Id="VCRT_64" SourceFile="C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Redist\MSVC\v143\MergeModules\Microsoft_VC143_CRT_x86.msm" Language="0" DiskId="1" />
 	<?endif?>
     </Directory>
 
     <DirectoryRef Id="BEIDVIEWERDIR">
-      <Component Id="BEIDVIEWER" Guid="{67B78F6B-C6D5-4616-88B9-0BE8A46E01F7}">
-        <File Id="eidviewer.exe" Name="eID Viewer.exe" KeyPath="yes" Source="..\..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\Release\eIDViewer.exe" />
-		<File Id="eIDViewerBackend" Name="eIDViewerBackend.dll" KeyPath="no" Source="..\..\..\plugins_tools\eid-viewer\Windows\eIDViewerBackend\VS_2022\Binaries\Win32_Release\eIDViewerBackend.dll" />	
-		<File Id="beid_ff_pkcs11" Name="beid_ff_pkcs11.dll" KeyPath="no" Source="..\..\..\cardcomm\pkcs11\VS_2022\Binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll" />			
+      <Component Id="BEIDVIEWER" Guid="{B174DBAD-48C4-4553-BA88-F28D4549647D}">
+        <File Id="eidviewer.exe" Name="eID Viewer.exe" KeyPath="yes" Source="..\..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\x64\Release\eIDViewer.exe" />
+		<File Id="eIDViewerBackend" Name="eIDViewerBackend.dll" KeyPath="no" Source="..\..\..\plugins_tools\eid-viewer\Windows\eIDViewerBackend\VS_2022\Binaries\x64_Release\eIDViewerBackend.dll" />	
+		<File Id="beid_ff_pkcs11" Name="beid_ff_pkcs11.dll" KeyPath="no" Source="..\..\..\cardcomm\pkcs11\VS_2022\Binaries\ARM64_PKCS11_FF_Release\beid_ff_pkcs11.dll" />			
 	  </Component>
     </DirectoryRef>
 	
     <DirectoryRef Id="BEIDVIEWERDIRNL">
-	  <Component Id="BEIDVIEWERNL" Guid="{7C199B6A-72EF-40A2-B9C3-93856836985C}">
-        <File Id="eIDViewer.resourcesNL.dll" Name="eIDViewer.resources.dll" KeyPath="yes" Source="..\..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\Release\nl\eIDViewer.resources.dll" />
+	  <Component Id="BEIDVIEWERNL" Guid="{7B81C40A-850F-4DAB-BFA7-14BFF600B718}">
+        <File Id="eIDViewer.resourcesNL.dll" Name="eIDViewer.resources.dll" KeyPath="yes" Source="..\..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\x64\Release\nl\eIDViewer.resources.dll" />
       </Component>
     </DirectoryRef>
 	
 	<DirectoryRef Id="BEIDVIEWERDIRFR">
-      <Component Id="BEIDVIEWERFR" Guid="{0BF38D61-45B6-4988-859B-CFA2AF2F4B92}">
-        <File Id="eIDViewer.resourcesFR.dll" Name="eIDViewer.resources.dll" KeyPath="yes" Source="..\..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\Release\fr\eIDViewer.resources.dll" />
+      <Component Id="BEIDVIEWERFR" Guid="{BA1D2050-077B-42F6-B1F0-CD0EBFC266B0}">
+        <File Id="eIDViewer.resourcesFR.dll" Name="eIDViewer.resources.dll" KeyPath="yes" Source="..\..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\x64\Release\fr\eIDViewer.resources.dll" />
       </Component>
     </DirectoryRef>
 	
 	<DirectoryRef Id="BEIDVIEWERDIRDE">
-      <Component Id="BEIDVIEWERDE" Guid="{E7F0C1A0-AF8F-42B2-85E0-28CE56D073DB}">
-        <File Id="eIDViewer.resourcesDE.dll" Name="eIDViewer.resources.dll" KeyPath="yes" Source="..\..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\Release\de\eIDViewer.resources.dll" />
+      <Component Id="BEIDVIEWERDE" Guid="{7B9BEC69-8AF6-4F5D-B639-F2AB117625B5}">
+        <File Id="eIDViewer.resourcesDE.dll" Name="eIDViewer.resources.dll" KeyPath="yes" Source="..\..\..\plugins_tools\eid-viewer\Windows\eIDViewer\bin\x64\Release\de\eIDViewer.resources.dll" />
       </Component>
     </DirectoryRef>
 	
@@ -136,7 +136,7 @@
              >
 <?ifndef env.DONT_MERGE_VCRT?>
       <Feature Id="VCRedist" Title="VC++ 14.1 runtime" AllowAdvertise="no" Display="hidden" Level="1">
-        <MergeRef Id="VCRT" />
+        <MergeRef Id="VCRT_64" />
       </Feature>
 <?endif?>
       <!-- Program Files -->

@@ -1,8 +1,8 @@
 Packages needed to create the eidmw for windows
 -----------------------------------------------
-1) Visual Studio 2017 Community Edition
+1) Visual Studio 2022 Community Edition
 For the compilation of the crypto libraries and the eID Viewer
-Select desktop development, .Net desktop development and Windows 10 SDK (10.0.17134.0)
+Select desktop development, .Net desktop development and Windows 10 SDK (10.0.26100.0)
 https://visualstudio.microsoft.com/downloads/
 
 2) Windows Driver Kit
@@ -32,7 +32,7 @@ Code Signing Certificate for testing
 How to create a new code signing certificate/key pair (only written down here for the reference)
 
 1) Make sure you have the tools makecert and pvk2pfx. These tools can be found in the Windows
-   Driver Kit (e.g. C:\Program Files (x86)\Windows Kits\10\bin\10.0.17134.0\x64\)
+   Driver Kit (e.g. C:\Program Files (x86)\Windows Kits\10\bin\10.0.26100.0\x64\)
 
 2) To make the keys and the certificate run:
    MakeCert.exe -r -pe -ss my -a sha256 -n "CN=ZetesTestCert" -sv zeteseidtest.pvk zeteseidtest.cer

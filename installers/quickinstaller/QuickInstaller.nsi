@@ -128,7 +128,56 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 	
 	StrCpy $FAQ_url "https://eid.belgium.be/"
 	
-	${If} ${RunningX64}
+	${If} ${IsNativeARM64}
+		ClearErrors
+		StrCpy $FileToCopy "$INSTDIR\BeidMW_arm64.msi"
+		File "..\eid-mw\Windows\bin\BeidMW_arm64.msi"
+		IfErrors 0 +2
+			Call ErrorHandler_file
+		ClearErrors
+		
+		StrCpy $LogFile "$INSTDIR\log\install_eidmwarm64_log.txt"
+		StrCpy $TempFile "$INSTDIR\log\1612_count.txt"
+		;delete previous log
+		;Delete "$LogFile"
+		ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeidMW_arm64.msi"' $MsiResponse
+		;for testing
+		;StrCpy $MsiResponse 1603
+		;StrCpy $TestLogFile "$INSTDIR\log\install_eidmw64_error_1612_log.txt"
+		${Switch} $MsiResponse
+			${Case} 1603
+			;general failure, parse through the log file to find the root cause
+			;check if error 1612 occured
+				;for testing
+				;ExecWait 'cmd.exe /C FIND "1612" "$TestLogFile" | FIND /C "error code 1612" > "$TempFile"' $retval
+				ExecWait 'cmd.exe /C FIND "1612" "$LogFile" | FIND /C "error code 1612" > "$TempFile"' $retval
+				!insertmacro GetFirstLineOfFile $TempFile $firstLine
+				DetailPrint "MSI error 1612, count = $firstLine"
+				StrCmp "$firstLine" "" +2 0	
+				StrCmp "$firstLine" "0" 0 MSI_1612_Error_arm64				
+			${Break}
+			${Case} 1612
+			MSI_1612_Error_arm64:
+				DetailPrint "$(ls_errorinstallmsi_1612) $\r$\n $(ls_error) = $MsiResponse"
+				;Refer to the FAQ where the user can find a manuel to manually repair the registry, or to run a MS tool that does the cleanup
+				StrCpy $FAQ_url "$(ls_errorinstallmsi_1612_FAQurl)"
+			;The installation source for this product is not available. Verify that the source exists and that you can access it.
+			;often caused by registry not cleaned when cleanup tools remove previously installed msi files
+			${Break}
+			${Case} 1622
+			;install log failure, try to install without logging
+				ExecWait 'msiexec /quiet /norestart /i "$INSTDIR\BeidMW_arm64.msi"' $MsiResponse			
+			${Break}
+			${Default}	
+				DetailPrint "MsiResponse = $MsiResponse"
+			${Break}				
+		${EndSwitch}
+		;IfErrors 0 +2
+		;	Call ErrorHandler_msiexec
+		
+		;WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto64" 0x1
+		Delete "$INSTDIR\BeidMW_arm64.msi"
+	${elseif} ${RunningX64}
 		ClearErrors
 		StrCpy $FileToCopy "$INSTDIR\BeidMW_64.msi"
 		File "..\eid-mw\Windows\bin\BeidMW_64.msi"

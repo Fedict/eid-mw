@@ -1,15 +1,15 @@
 ::Define search paths here
-@set SEARCH_BEID_DIR_MSBUILD=C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin
+@set SEARCH_BEID_DIR_MSBUILD=C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin
 @set SEARCH_BEID_DIR_MSBUILD_2=C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin
 @set SEARCH_BEID_DIR_MSBUILD_3=C:\Program Files (x86)\MSBuild\14.0\Bin
 
 ::@set SEARCH_SIGNTOOL_PATH=C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Bin
-@set SEARCH_SIGNTOOL_PATH=C:\Program Files (x86)\Windows Kits\10\bin\10.0.17763.0\x86
+@set SEARCH_SIGNTOOL_PATH=C:\Program Files (x86)\Windows Kits\10\bin\10.0.22621.0\arm64
 @set SEARCH_SIGNTOOL_PATH_2=C:\Program Files (x86)\Windows Kits\8.1\bin\x64
 @set SEARCH_SIGNTOOL_PATH_3=C:\WinDDK\7600.16385.1\bin\x86
-@set SEARCH_INF2CAT_PATH=C:\Program Files (x86)\Windows Kits\10\bin\x86
+@set SEARCH_INF2CAT_PATH=C:\Program Files (x86)\Windows Kits\10\bin\10.0.26100.0\x86
 @set SEARCH_INF2CAT_PATH_2=C:\WinDDK\7600.16385.1\bin\selfsign
-@set SEARCH_BEID_DIR_PLATFORMSDK_1=C:\Program Files (x86)\Windows Kits\10\bin\10.0.17763.0\x86
+@set SEARCH_BEID_DIR_PLATFORMSDK_1=C:\Program Files (x86)\Windows Kits\10\bin\10.0.26100.0\x86
 @set SEARCH_BEID_DIR_PLATFORMSDK_2=C:\Program Files (x86)\Windows Kits\10\bin\x86
 @set SEARCH_BEID_DIR_PLATFORMSDK_3=C:\Program Files\Microsoft Platform SDK\bin
 @set SEARCH_BEID_DIR_PLATFORMSDK_4=C:\Program Files (x86)\Windows Kits\8.1\bin\x86
@@ -17,7 +17,7 @@
 @set SEARCH_BEID_DIR_PLATFORMSDK_6=C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\bin
 
 
-@set SEARCH_WIX_PATH=C:\Program Files (x86)\WiX Toolset v3.11\bin
+@set SEARCH_WIX_PATH=C:\Program Files (x86)\WiX Toolset v3.14\bin
 @set SEARCH_NSIS_PATH=C:\Program Files (x86)\NSIS
 @set SEARCH_NSIS_PATH_2=C:\Program Files\NSIS
 

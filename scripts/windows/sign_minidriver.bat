@@ -25,17 +25,17 @@ set MDRVCERTPATH=%~dp0..\..\cardcomm\minidriver\makemsi
 :: =====================
 @echo MDRVINSTALLPATH = %MDRVINSTALLPATH% 
 @echo [INFO] Sign the minidriver 32bit dll
-"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "e20634d42e8bc522c6341dce24badd103f5f4312" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%MDRVINSTALLPATH%\beidmdrv\beidmdrv32.dll"
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%MDRVINSTALLPATH%\beidmdrv\beidmdrv32.dll"
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
 
 @echo [INFO] Sign the minidriver 64bit dll
-"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "e20634d42e8bc522c6341dce24badd103f5f4312" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%MDRVINSTALLPATH%\beidmdrv\beidmdrv64.dll"
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%MDRVINSTALLPATH%\beidmdrv\beidmdrv64.dll"
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
 
 :: Sign catalog
 :: ============
 @echo [INFO] Sign the minidriver catalog
-"%SIGNTOOL_PATH%\signtool" sign /as /fd SHA256 /ac "%MDRVCERTPATH%\MSCV-GlobalSign Root CA.cer" /s MY /n "Zetes SA" /sha1 "e20634d42e8bc522c6341dce24badd103f5f4312" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%MDRVINSTALLPATH%\beidmdrv\beidmdrv.cat"
+"%SIGNTOOL_PATH%\signtool" sign /as /fd SHA256 /ac "%MDRVCERTPATH%\MSCV-GlobalSign Root CA.cer" /s MY /n "Zetes SA" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%MDRVINSTALLPATH%\beidmdrv\beidmdrv.cat"
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
 
 @mkdir "%~dp0..\..\installers\quickinstaller\Drivers\XP-WIN8\beidmdrv\"

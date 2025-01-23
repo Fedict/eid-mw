@@ -88,7 +88,7 @@ copy %~dp0..\..\cardcomm\minidriver\VS_2019\Binaries\x64_Release\beidmdrv64.dll 
 :: sign minidriver driver cat file
 :: ===============================
 @echo [INFO] Sign the catalog
-"%SIGNTOOL_PATH%\signtool" sign /a /n "ZetesTestCert" /v "%MDRVINSTALLPATH%\beidmdrv\beidmdrv.cat"
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /a /n "ZetesTestCert" /v "%MDRVINSTALLPATH%\beidmdrv\beidmdrv.cat"
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
 
 :: copy minidriver to quickinstaller's driver folder
