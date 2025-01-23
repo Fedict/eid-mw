@@ -22,12 +22,12 @@
            Manufacturer="Belgian Government"
            UpgradeCode="$(var.UpgradeCode)">
 
-	<!-- InstallerVersion="405"(v4.5)Released with Vista Service Pack 2, or update for Windows XP(SP2, SP3) -->	
+	<!-- InstallerVersion="500"(v5.0) Required for arm -->	
     <Package Id="$(var.PackageCode)"
              InstallerVersion="500"
              Keywords="Belgium e-ID Middleware Installer"
-             Platform="x64"
              Manufacturer="Belgian Government"
+			 Platform="arm64"
              Compressed="yes"
              InstallPrivileges="elevated"
     />
@@ -75,7 +75,7 @@
           <Directory Id="LOGDIR" Name="log"/>
         </Directory>
 	  </Directory>
-      <Directory Id="ProgramFilesFolder" Name="ProgramFilesFolder">
+      <Directory Id="ProgramFiles64Folder" Name="ProgramFiles64Folder">
         <Directory Id="APPLICATIONROOTFOLDER" Name="Belgium Identity Card">
           <Directory Id="MINIDRIVERROOTFOLDER" Name="BeID Minidriver"/>
 		  <Directory Id="FFPLUGMANFOLDER" Name="FireFox Plugin Manifests"/>
@@ -127,7 +127,7 @@
         <File Id="FF_Manifest_File_32ID" Name="beidpkcs11_32.json" KeyPath="yes" Source="..\..\..\plugins_tools\Firefox_plugin\beidpkcs11_32.json" />
         <File Id="FF_Manifest_File_64ID" Name="beidpkcs11_64.json" KeyPath="no" Source="..\..\..\plugins_tools\Firefox_plugin\beidpkcs11_64.json" />
 		<File Id="FF_Manifest_File_VersionID" Name="beidpkcs11_version.json" KeyPath="no" Source="..\..\..\plugins_tools\Firefox_plugin\beidpkcs11_version.json" />
-		<File Id="FF_Manifestbeid_ff_pkcs11_64ID" Name="beid_ff_pkcs11_64.dll" KeyPath="no" Source="..\..\..\cardcomm\pkcs11\VS_2022\binaries\x64_pkcs11_ff_release\beid_ff_pkcs11.dll" />
+		<File Id="FF_Manifestbeid_ff_pkcs11_64ID" Name="beid_ff_pkcs11_64.dll" KeyPath="no" Source="..\..\..\cardcomm\pkcs11\VS_2022\binaries\ARM64_pkcs11_ff_release\beid_ff_pkcs11.dll" />
 		<File Id="FF_Manifestbeid_ff_pkcs11.32ID" Name="beid_ff_pkcs11_32.dll" KeyPath="no" Source="..\..\..\cardcomm\pkcs11\VS_2022\binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll" />
       </Component>	  
 	</DirectoryRef>
@@ -150,9 +150,9 @@
     <DirectoryRef Id="System64Folder">
 
       <Component Id="pkcs11_64" Guid="{3C4751D6-D92C-40ab-8FA5-3A1DF1D927EA}" SharedDllRefCount="no" Win64="yes">
-        <File Id="beidpkcs11_64.dll" Name="beidpkcs11.dll" KeyPath="yes" Source="..\..\..\cardcomm\pkcs11\VS_2022\binaries\x64_Release\beidpkcs11.dll" />
-        <File Id="beid_ff_pkcs11_64.dll" Name="beid_ff_pkcs11.dll" KeyPath="no" Source="..\..\..\cardcomm\pkcs11\VS_2022\binaries\x64_pkcs11_ff_release\beid_ff_pkcs11.dll" />
-		<!-- <Shortcut Id='beid32_ff_pkcs11_shortcutId' Directory='FFPLUGMANFOLDER' Name="beid32_ff_pkcs11.dll" WorkingDirectory='System64Folder' Advertise="yes" /> -->
+        <File Id="beidpkcs11_64.dll" Name="beidpkcs11.dll" KeyPath="yes" Source="..\..\..\cardcomm\pkcs11\VS_2022\binaries\ARM64_Release\beidpkcs11.dll" />
+        <File Id="beid_ff_pkcs11_64.dll" Name="beid_ff_pkcs11.dll" KeyPath="no" Source="..\..\..\cardcomm\pkcs11\VS_2022\binaries\ARM64_pkcs11_ff_release\beid_ff_pkcs11.dll" />
+		<!-- <Shortcut Id='beid64_ff_pkcs11_shortcutId' Directory='FFPLUGMANFOLDER' Name="beid_ff_pkcs11_64.dll" WorkingDirectory='System64Folder' Advertise="yes" /> -->
       </Component>
 
       <Component Id="MINIDRIVER_64" Guid="{a8259480-e408-11de-8a39-0800200c9a66}" SharedDllRefCount="no" Win64="yes">
@@ -170,7 +170,7 @@
       <Component Id="pkcs11" Guid="{D54164C0-795D-4B2D-96C6-C8E395100896}" SharedDllRefCount="yes" Win64="no">
         <File Id="beidpkcs11.dll" Name="beidpkcs11.dll" KeyPath="yes" Source="..\..\..\cardcomm\pkcs11\VS_2022\binaries\win32_release\beidpkcs11.dll" />
         <File Id="beid_ff_pkcs11.dll" Name="beid_ff_pkcs11.dll" KeyPath="no" Source="..\..\..\cardcomm\pkcs11\VS_2022\binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll" />
-		<!-- <Shortcut Id='beid64_ff_pkcs11_shortcutId' Directory='FFPLUGMANFOLDER' Name="beid64_ff_pkcs11.dll" WorkingDirectory='SystemFolder' Advertise="yes" /> -->
+		<!-- <Shortcut Id='beid32_ff_pkcs11_shortcutId' Directory='FFPLUGMANFOLDER' Name="beid32_ff_pkcs11.dll" WorkingDirectory='SystemFolder' Advertise="yes" /> -->
       </Component>
 
     </DirectoryRef>
@@ -201,7 +201,7 @@
         <RegistryKey Root="HKLM" Key="SOFTWARE\Mozilla\PKCS11Modules\beidpkcs11_64">
             <RegistryValue Type="string" Value="[FFPLUGMANFOLDER]beidpkcs11_64.json"/>
 		</RegistryKey>
-		<!-- Create the managed storage location (that contains beid version number)-->
+		<!-- Create the managed storage location (that contains beid version number) -->
         <RegistryKey Root="HKLM" Key="SOFTWARE\Mozilla\ManagedStorage\belgiumeid@eid.belgium.be">
             <RegistryValue Type="string" Value="[FFPLUGMANFOLDER]beidpkcs11_version.json"/>
 		</RegistryKey>
@@ -220,7 +220,8 @@
         </RegistryKey>
 		<RegistryKey Root="HKLM"
                      Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Beid_v18"
-                     Action="createAndRemoveOnUninstall">
+                     ForceCreateOnInstall="yes"
+					 ForceDeleteOnUninstall="yes">
           <RegistryValue Type="string" Name="80000001" Value="beidmdrv32.dll" KeyPath="no"/>
           <RegistryValue Type="binary" Name="ATR" Value="3b7f96000080318065b085040120120fff829000" KeyPath="no"/>
           <RegistryValue Type="binary" Name="ATRMask" Value="ffffffffffffffffffffffffffffffffffffffff" KeyPath="no"/>
@@ -244,7 +245,8 @@
         </RegistryKey>
 		<RegistryKey Root="HKLM"
 					 Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Beid_v18"
-					 Action="createAndRemoveOnUninstall">
+					 ForceCreateOnInstall="yes"
+					 ForceDeleteOnUninstall="yes">
           <RegistryValue Type="string" Name="80000001" Value="beidmdrv64.dll" KeyPath="no"/>
           <RegistryValue Type="binary" Name="ATR" Value="3b7f96000080318065b085040120120fff829000" KeyPath="no"/>
           <RegistryValue Type="binary" Name="ATRMask" Value="ffffffffffffffffffffffffffffffffffffffff" KeyPath="no"/>
@@ -261,7 +263,7 @@
             ForceDeleteOnUninstall="yes">
 
           <RegistryKey Key="general">
-            <RegistryValue Type="string" Name="install_dirname" Value="[ProgramFilesFolder]Belgium Identity Card"/>
+            <RegistryValue Type="string" Name="install_dirname" Value="[ProgramFiles64Folder]Belgium Identity Card"/>
           </RegistryKey>
 
           <RegistryKey Key="logging">
