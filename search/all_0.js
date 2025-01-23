@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['_5f_5fquicklookgeneratorplugintype_0',['__QuickLookGeneratorPluginType',['../struct_____quick_look_generator_plugin_type.html',1,'']]],
-  ['_5fslotdesc_1',['_slotdesc',['../struct__slotdesc.html',1,'']]]
+  ['0_0',['Version 4.0',['../md_xml_2versions.html#autotoc_md6',1,'']]]
 ];

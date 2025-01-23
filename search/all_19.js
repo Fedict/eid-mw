@@ -1,0 +1,26 @@
+var searchData=
+[
+  ['validatecert_3awithca_3a_0',['validateCert:withCa:',['../interfacee_i_d_o_s_layer_backend.html#a9770a7c4c08f4ba93e739548c52039db',1,'eIDOSLayerBackend']]],
+  ['validatecert_3awithca_3aandallowlist_3a_1',['validateCert:withCa:andAllowList:',['../interfacee_i_d_o_s_layer_backend.html#a7888875293acfa7e61cce6d518d21fe9',1,'eIDOSLayerBackend']]],
+  ['validateintcert_3awithca_3a_2',['validateIntCert:withCa:',['../interfacee_i_d_o_s_layer_backend.html#aecfa08efffa83a41a37ea8affae7e95a',1,'eIDOSLayerBackend']]],
+  ['validatenowbuttonlabel_3',['ValidateNowButtonLabel',['../classe_i_d_viewer_1_1_resources_1_1_certificate_tab_string_resources.html#adf0e3914c66f99b92f66eb1c6e0f0942',1,'eIDViewer::Resources::CertificateTabStringResources']]],
+  ['validaterootcert_3a_4',['validateRootCert:',['../interfacee_i_d_o_s_layer_backend.html#a6d30dfc0488f911e173505019f89d950',1,'eIDOSLayerBackend']]],
+  ['validfromlabel_5',['validFromLabel',['../classe_i_d_viewer_1_1_resources_1_1_card_tab_string_resources.html#a726528a2992aec1bd10431cb472e2b81',1,'eIDViewer::Resources::CardTabStringResources']]],
+  ['validitydateparser_6',['ValidityDateParser',['../class_validity_date_parser.html',1,'']]],
+  ['validitydatewriter_7',['ValidityDateWriter',['../class_validity_date_writer.html',1,'']]],
+  ['validuntillabel_8',['validUntilLabel',['../classe_i_d_viewer_1_1_resources_1_1_card_tab_string_resources.html#a1a51e7a909a2e4564d74a143b435f0fe',1,'eIDViewer::Resources::CardTabStringResources']]],
+  ['verify_5fcert_2eh_9',['verify_cert.h',['../verify__cert_8h.html',1,'']]],
+  ['verifypinbutton_10',['verifyPinButton',['../classe_i_d_viewer_1_1_resources_1_1_card_tab_string_resources.html#ad3378dad25a1889aed5a8afc7c347f9d',1,'eIDViewer::Resources::CardTabStringResources']]],
+  ['version_11',['version',['../structeid__vwr__ui__callbacks.html#aad880fc4455c253781e8968f2239d56f',1,'eid_vwr_ui_callbacks']]],
+  ['version_204_200_12',['Version 4.0',['../md_xml_2versions.html#autotoc_md6',1,'']]],
+  ['version_204_201_13',['Version 4.1',['../md_xml_2versions.html#autotoc_md7',1,'']]],
+  ['version_204_202_14',['Version 4.2',['../md_xml_2versions.html#autotoc_md8',1,'']]],
+  ['version_204_203_15',['Version 4.3',['../md_xml_2versions.html#autotoc_md9',1,'']]],
+  ['version_204_204_16',['Version 4.4',['../md_xml_2versions.html#autotoc_md10',1,'']]],
+  ['version_204_205_17',['Version 4.5',['../md_xml_2versions.html#autotoc_md11',1,'']]],
+  ['version_5ftriplet_18',['version_triplet',['../structversion__triplet.html',1,'']]],
+  ['versions_20of_20the_20xsd_20format_19',['Versions of the XSD format',['../md_xml_2versions.html',1,'']]],
+  ['versionuptodate_20',['VersionUpToDate',['../classe_i_d_viewer_1_1_resources_1_1_application_string_resources.html#ac0801383554f9a0b3e48cd860a106f37',1,'eIDViewer::Resources::ApplicationStringResources']]],
+  ['versionuptodatetitle_21',['VersionUpToDateTitle',['../classe_i_d_viewer_1_1_resources_1_1_application_string_resources.html#adcd026acc1da40e43c957c78f96fee99',1,'eIDViewer::Resources::ApplicationStringResources']]],
+  ['viewer_20library_22',['The eid-viewer library',['../index.html',1,'']]]
+];

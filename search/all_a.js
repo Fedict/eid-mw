@@ -1,12 +1,22 @@
 var searchData=
 [
-  ['lang_174',['lang',['../interfacee_i_d_o_s_layer_backend.html#a3283bc87fdbf3598b8cdb4292bbe35bd',1,'eIDOSLayerBackend']]],
-  ['languagemenutitle_175',['languageMenuTitle',['../classe_i_d_viewer_1_1_resources_1_1_application_string_resources.html#ae94c385e0dec6219aa9f65068c0bceeb',1,'eIDViewer::Resources::ApplicationStringResources']]],
-  ['list_176',['list',['../structlist.html',1,'']]],
-  ['localizedstrings_177',['LocalizedStrings',['../classe_i_d_viewer_1_1_localized_strings.html',1,'eIDViewer']]],
-  ['log_178',['log',['../structeid__vwr__ui__callbacks.html#ac5b8c4f8e2a0a57739f3af7cddcc370c',1,'eid_vwr_ui_callbacks']]],
-  ['log_179',['LOG',['../classe_i_d_viewer_1_1_resources_1_1_application_string_resources.html#a8506c456b96922f19b116b56d3a8be94',1,'eIDViewer::Resources::ApplicationStringResources']]],
-  ['log_3awithlevel_3a_180',['log:withLevel:',['../protocole_i_d_o_s_layer_u_i-p.html#ac5d8a3f308481193c15c010bee07e3be',1,'eIDOSLayerUI-p']]],
-  ['log_5fmessage_181',['log_message',['../structlog__message.html',1,'']]],
-  ['logv_182',['logv',['../structeid__vwr__ui__callbacks.html#a94b40f36a6eb1418b57b596e1b2846ae',1,'eid_vwr_ui_callbacks']]]
+  ['date_0',['Date',['../struct_date.html',1,'']]],
+  ['dateofbirthlabel_1',['DateOfBirthLabel',['../classe_i_d_viewer_1_1_resources_1_1_identity_tab_string_resources.html#a890407567d941ede5ffdbb4047cb5d20',1,'eIDViewer::Resources::IdentityTabStringResources']]],
+  ['dateparser_2',['DateParser',['../class_date_parser.html',1,'']]],
+  ['datewriter_3',['DateWriter',['../class_date_writer.html',1,'']]],
+  ['description_4',['description',['../structe_i_d_viewer_1_1eid__slotdesc.html#a23af17c78302b71c14ef38ea40b8d1d7',1,'eIDViewer.eid_slotdesc.description'],['../struct__slotdesc.html#a490cfe0d8223a55ca6242ba677cb83f1',1,'_slotdesc::description']]],
+  ['deserialize_3a_5',['deserialize:',['../interfacee_i_d_o_s_layer_backend.html#a9d1dbb3790b80ac94ceb951f48f05beb',1,'eIDOSLayerBackend']]],
+  ['detailed_5finformation_6',['Detailed_Information',['../classe_i_d_viewer_1_1_resources_1_1_certificate_tab_string_resources.html#ae74ec61967ddbc36bb279f4691543040',1,'eIDViewer::Resources::CertificateTabStringResources']]],
+  ['directory_7',['About this directory',['../md_certs_2_r_e_a_d_m_e.html',1,'']]],
+  ['disabling_20the_20allowlist_8',['Disabling the allowlist',['../md_certs_2_r_e_a_d_m_e.html#autotoc_md3',1,'']]],
+  ['dobparser_9',['DobParser',['../class_dob_parser.html',1,'']]],
+  ['dobwriter_10',['DobWriter',['../class_dob_writer.html',1,'']]],
+  ['dochallenge_3a_11',['doChallenge:',['../interfacee_i_d_o_s_layer_backend.html#ae68aae9aa1c80d9ab467b9c03cb8d5b8',1,'eIDOSLayerBackend']]],
+  ['dochallengeinternal_12',['doChallengeInternal',['../interfacee_i_d_o_s_layer_backend.html#a2105a8605b9a9d0817d6c9bf12c42e25',1,'eIDOSLayerBackend']]],
+  ['doctypeconvertor_13',['DocTypeConvertor',['../class_doc_type_convertor.html',1,'']]],
+  ['draggingimage_14',['DraggingImage',['../interface_dragging_image.html',1,'']]],
+  ['dump_5fder_15',['DUMP_DER',['../group___c___a_p_i___o_s_s_l.html#gga2dac6438ec9ab6b51e7346427a1157d8a657d9ec867a5a58c3252acc8e2980c1b',1,'certhelpers.h']]],
+  ['dump_5fpem_16',['DUMP_PEM',['../group___c___a_p_i___o_s_s_l.html#gga2dac6438ec9ab6b51e7346427a1157d8a0123830147247486a35f61c8b9dacaf0',1,'certhelpers.h']]],
+  ['dump_5ftype_17',['dump_type',['../group___c___a_p_i___o_s_s_l.html#ga2dac6438ec9ab6b51e7346427a1157d8',1,'certhelpers.h']]],
+  ['duplicatelabel_18',['DuplicateLabel',['../classe_i_d_viewer_1_1_resources_1_1_identity_tab_string_resources.html#a24853f5fb0a3b669eaef864c789bdf8a',1,'eIDViewer::Resources::IdentityTabStringResources']]]
 ];

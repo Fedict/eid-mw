@@ -1,9 +1,15 @@
 var searchData=
 [
-  ['genderconvertor_159',['GenderConvertor',['../class_gender_convertor.html',1,'']]],
-  ['genderfemale_160',['genderFemale',['../classe_i_d_viewer_1_1_resources_1_1_identity_tab_string_resources.html#af42e1d4d90be8733cf746eb54cc7b0d4',1,'eIDViewer::Resources::IdentityTabStringResources']]],
-  ['gendermale_161',['genderMale',['../classe_i_d_viewer_1_1_resources_1_1_identity_tab_string_resources.html#adb382578d695c5dfb2e950d7cda72491',1,'eIDViewer::Resources::IdentityTabStringResources']]],
-  ['getpreview_3a_162',['getPreview:',['../interfacee_i_d_o_s_layer_backend.html#ad64c1f8bcafaab6127b3d6b97b5e7154',1,'eIDOSLayerBackend']]],
-  ['givennameslabel_163',['GivenNamesLabel',['../classe_i_d_viewer_1_1_resources_1_1_identity_tab_string_resources.html#a6ba7c58aacb3acfc5990b898b18c9d0e',1,'eIDViewer::Resources::IdentityTabStringResources']]],
-  ['gost_5fhelper_164',['gost_helper',['../structgost__helper.html',1,'']]]
+  ['about_0',['ABOUT',['../classe_i_d_viewer_1_1_resources_1_1_application_string_resources.html#aa5c4bacc9a4ba9000628af5edf1a16ab',1,'eIDViewer::Resources::ApplicationStringResources']]],
+  ['about_20this_20directory_1',['About this directory',['../md_certs_2_r_e_a_d_m_e.html',1,'']]],
+  ['allowlist_2',['Disabling the allowlist',['../md_certs_2_r_e_a_d_m_e.html#autotoc_md3',1,'']]],
+  ['alwaysvalidatecheckboxlabel_3',['AlwaysValidateCheckboxLabel',['../classe_i_d_viewer_1_1_resources_1_1_certificate_tab_string_resources.html#aaf1007e42a81570640c27000ca52b2ae',1,'eIDViewer::Resources::CertificateTabStringResources']]],
+  ['api_4',['the (base) C API',['../group___c___a_p_i.html',1,'']]],
+  ['api_20macos_20only_5',['Objective-C wrapper API (macOS only)',['../group___obj_c.html',1,'']]],
+  ['app_6',['app',['../classe_i_d_data_sign_check_1_1_app.html',1,'App'],['../classe_i_d_viewer_1_1_app.html',1,'App']]],
+  ['appdelegate_7',['AppDelegate',['../interface_app_delegate.html',1,'']]],
+  ['appdelegate_28_29_8',['AppDelegate()',['../category_app_delegate_07_08.html',1,'']]],
+  ['appletversionlabel_9',['appletVersionLabel',['../classe_i_d_viewer_1_1_resources_1_1_card_tab_string_resources.html#ab95285c268444b2adaedf65f514a8d65',1,'eIDViewer::Resources::CardTabStringResources']]],
+  ['applicationstringresources_10',['ApplicationStringResources',['../classe_i_d_viewer_1_1_resources_1_1_application_string_resources.html',1,'eIDViewer::Resources']]],
+  ['attribute_5fdesc_11',['attribute_desc',['../structattribute__desc.html',1,'']]]
 ];
