@@ -13,33 +13,25 @@
 @echo build_msi_eidmw32.cmd
 @echo [INFO] Making the nl-nl version
 
-"%BEID_DIR_WIX%\candle.exe" -v -dLang=nl -out obj\Product.wixobj -arch x86 -ext "%BEID_DIR_WIX%\WixUtilExtension.dll" -ext "%BEID_DIR_WIX%\WixUIExtension.dll" "%~dp0\Product.wxs"
-@if NOT "%ERRORLEVEL%" == "0" goto msi_failed
-"%BEID_DIR_WIX%\Light.exe" -v -cultures:nl-nl -ext "%BEID_DIR_WIX%\WixUtilExtension.dll" -ext "%BEID_DIR_WIX%\WixUIExtension.dll" -loc "%~dp0\Strings-nl.wxl" -loc "%~dp0\WixUI_nl-nl.wxl" -out bin\nl-nl\BeidMW32-Basic-nl.msi -pdbout bin\nl-nl\BeidMW32-Basic-nl.wixpdb -sice:ICE09 obj\Product.wixobj"
+wix build -arch x86 -culture nl-nl -loc "%~dp0\Strings-nl.wxl" -loc WixUI_nl-nl.wxl -out bin\nl-nl\BeidMW32-Basic-nl.msi -pdbout bin\nl-nl\BeidMW32-Basic-nl.wixpdb "%~dp0\Product.wxs"
 @if NOT "%ERRORLEVEL%" == "0" goto msi_failed
 
 
 @echo [INFO] Making the fr-fr version
 
-"%BEID_DIR_WIX%\candle.exe" -v -dLang=fr -out obj\Product.wixobj -arch x86 -ext "%BEID_DIR_WIX%\WixDifxAppExtension.dll" -ext "%BEID_DIR_WIX%\WixUtilExtension.dll" -ext "%BEID_DIR_WIX%\WixUIExtension.dll" "%~dp0\Product.wxs"
-@if NOT "%ERRORLEVEL%" == "0" goto msi_failed
-"%BEID_DIR_WIX%\Light.exe" -v -cultures:fr-fr -ext "%BEID_DIR_WIX%\WixUtilExtension.dll" -ext "%BEID_DIR_WIX%\WixUIExtension.dll" -loc "%~dp0\Strings-fr.wxl" -out bin\fr-fr\BeidMW32-Basic-fr.msi -pdbout bin\fr-fr\BeidMW32-Basic-fr.wixpdb -sice:ICE09 obj\Product.wixobj"
+wix build -arch x86 -culture fr-fr -loc "%~dp0\Strings-fr.wxl" -loc WixUI_fr-fr.wxl -out bin\fr-fr\BeidMW32-Basic-fr.msi -pdbout bin\fr-fr\BeidMW32-Basic-fr.wixpdb "%~dp0\Product.wxs"
 @if NOT "%ERRORLEVEL%" == "0" goto msi_failed
 
 
 @echo [INFO] Making the de-de version
 
-"%BEID_DIR_WIX%\candle.exe" -v -dLang=de -out obj\Product.wixobj -arch x86 -ext "%BEID_DIR_WIX%\WixDifxAppExtension.dll" -ext "%BEID_DIR_WIX%\WixUtilExtension.dll" -ext "%BEID_DIR_WIX%\WixUIExtension.dll" "%~dp0\Product.wxs"
-@if NOT "%ERRORLEVEL%" == "0" goto msi_failed
-"%BEID_DIR_WIX%\Light.exe" -v -cultures:de-de -ext "%BEID_DIR_WIX%\WixUtilExtension.dll" -ext "%BEID_DIR_WIX%\WixUIExtension.dll" -loc "%~dp0\Strings-de.wxl" -out bin\de-de\BeidMW32-Basic-de.msi -pdbout bin\de-de\BeidMW32-Basic-de.wixpdb -sice:ICE09 obj\Product.wixobj"
+wix build -arch x86 -culture de-de -loc "%~dp0\Strings-de.wxl" -loc WixUI_de-de.wxl -out bin\de-de\BeidMW32-Basic-de.msi -pdbout bin\de-de\BeidMW32-Basic-de.wixpdb "%~dp0\Product.wxs"
 @if NOT "%ERRORLEVEL%" == "0" goto msi_failed
 
 
 @echo [INFO] Making the en-us version
 
-"%BEID_DIR_WIX%\candle.exe" -v -dLang=en -out obj\Product.wixobj -arch x86 -ext "%BEID_DIR_WIX%\WixDifxAppExtension.dll" -ext "%BEID_DIR_WIX%\WixUtilExtension.dll" -ext "%BEID_DIR_WIX%\WixUIExtension.dll" "%~dp0\Product.wxs"
-@if NOT "%ERRORLEVEL%" == "0" goto msi_failed
-"%BEID_DIR_WIX%\Light.exe" -v -cultures:en-us -ext "%BEID_DIR_WIX%\WixUtilExtension.dll" -ext "%BEID_DIR_WIX%\WixUIExtension.dll" -loc "%~dp0\Strings-en.wxl" -out bin\en-us\BeidMW32-Basic-en.msi -pdbout bin\en-us\BeidMW32-Basic-en.wixpdb -sice:ICE09 obj\Product.wixobj"
+wix build -arch x86 -culture en-us -loc "%~dp0\Strings-en.wxl" -loc WixUI_en-us.wxl -out bin\en-us\BeidMW32-Basic-en.msi -pdbout bin\en-us\BeidMW32-Basic-de.wixpdb "%~dp0\Product.wxs"
 @if NOT "%ERRORLEVEL%" == "0" goto msi_failed
 
 :: join the language specific msi's together
