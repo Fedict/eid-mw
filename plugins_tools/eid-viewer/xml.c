@@ -22,8 +22,8 @@
 
 #define check_xml(call) if((rc = call) < 0) { \
 	be_log(EID_VWR_LOG_DETAIL, "Error while dealing with file (calling '%s'): %d", #call, rc); \
-	goto out; \
-}
+		goto out; \
+} 
 
 static bool have_attribute_data(struct attribute_desc *attribute) {
 	while(attribute != NULL && attribute->name) {
@@ -105,11 +105,17 @@ static int write_elements(xmlTextWriterPtr writer, struct element_desc *element)
 			assert(element->child_elements == NULL);
 
 			if(element->reqd && !have_cache) {
-				be_log(EID_VWR_LOG_ERROR, "Could not write file: no data found for required label %s", element->label);
-				return -1;
+				//don't let save file if no root cert present
+				if(EID_STRCMP(element->label, TEXT("Root")) == 0) {
+					be_log(EID_VWR_LOG_COARSE, "Could not write certificates: no root certificate found");
+					return 0;
+				} else {
+					be_log(EID_VWR_LOG_ERROR, "Could not write file: no data found for required label %s", element->label);
+					return -1;
+				}
 			}
 			if(have_cache) {
-				val = cache_get_xmlform(element->label);
+								val = cache_get_xmlform(element->label);
 				if(!element->is_b64) {
 					check_xml(xmlTextWriterWriteElement(writer, BAD_CAST element->name, BAD_CAST cache_get_xmlform(element->label)));
 				} else {

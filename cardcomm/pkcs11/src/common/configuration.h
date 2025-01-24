@@ -123,14 +123,14 @@ replace $install by string in install parameter
 */
 
 #define EIDMW_CNF_MACRO_INSTALL         L"$install"	//installation directory
-#define EIDMW_CNF_MACRO_HOME            L"$home"	//user home directory, ì$commonî is taken when used for processes without user (eg. services)
-#define EIDMW_CNF_MACRO_COMMON          L"$common"	//directory readable/writable for every user, used for shared files like the CRLís
+#define EIDMW_CNF_MACRO_HOME            L"$home"	//user home directory, ‚Äú$common‚Äù is taken when used for processes without user (eg. services)
+#define EIDMW_CNF_MACRO_COMMON          L"$common"	//directory readable/writable for every user, used for shared files like the CRL‚Äôs
 
 #define EIDMW_CNF_MACRO_COMMON_SUBDIR	L"beid"	//this subdirectory is part of the common
 
 #define EIDMW_CNF_SECTION_GENERAL       L"general"	//section with the general pupose parameters
-#define EIDMW_CNF_GENERAL_INSTALLDIR    L"install_dirname"	//string, directory of the basic eid software; ìc:/Program Files/beid/î
-#define EIDMW_CNF_GENERAL_LANGUAGE      L"language"	//string, user lanugage: fr, nl, en, de, es, Ö
+#define EIDMW_CNF_GENERAL_INSTALLDIR    L"install_dirname"	//string, directory of the basic eid software; ‚Äúc:/Program Files/beid/‚Äù
+#define EIDMW_CNF_GENERAL_LANGUAGE      L"language"	//string, user lanugage: fr, nl, en, de, es, ‚Ä¶
 
 #define EIDMW_CNF_GENERAL_CARDTXDELAY   L"card_transmit_delay"	//number, delay while communicating with the smartcard, in mili-seconds, default 1 mSec
 #define EIDMW_CNF_GENERAL_CARDCONNDELAY L"card_connect_delay"	//number, delay before connecting to a smartcard, in mili-seconds, default 0 mSec

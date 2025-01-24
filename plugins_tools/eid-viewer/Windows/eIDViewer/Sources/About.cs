@@ -7,13 +7,13 @@ namespace eIDViewer
     {
         public static int imajor = 5;
         public static int iminor = 1;
-        public static int ibuild = 8;
+        public static int ibuild = 19;
 
         public static string AboutMessage()
         {
-            string message = @"eID Viewer 5.1.8
+            string message = @"eID Viewer 5.1.19
 eID Middleware Project
-Copyright(C) 2022 Bosa
+Copyright(C) 2024 Bosa
 
 By Frederik Vernelen and Wouter Verhelst
 Based on the design of Frank Marien

@@ -966,11 +966,13 @@ namespace eIDViewer
             cardEU_startdate_present = true;
             switch (document_type_raw)
             {
-                case 31: //EU card
+                case 31:
+                case 61: //EU card
                     cardEUPlus_fields_height = 0;
                     cardEU_fields_height = 25;
                     break;
-                case 32: //EU+ card
+                case 32:
+                case 62: //EU+ card
                     cardEUPlus_fields_height = 25;
                     cardEU_fields_height = 0;
                     break;

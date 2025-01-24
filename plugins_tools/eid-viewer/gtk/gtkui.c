@@ -61,7 +61,7 @@ void show_cert_image(const char* label, void *data, int len G_GNUC_UNUSED) {
 /* Show an "about" dialog */
 void showabout(GtkWidget* about G_GNUC_UNUSED, gpointer user_data G_GNUC_UNUSED) {
 	GtkWindow* window = GTK_WINDOW(gtk_builder_get_object(builder, "mainwin"));
-	const char *authors[] = { "Wouter Verhelst", "Frederik Vernelen", NULL };
+	const char *authors[] = { "Wouter Verhelst", "Frederik Vernelen", "Thomas Charlier", NULL };
 	const char *artists[] = { "Frank Mariën", NULL };
 	gtk_show_about_dialog(window,
 			"program-name", _("eID Viewer"),
@@ -419,6 +419,32 @@ void readers_changed(unsigned long nreaders, slotdesc* slots) {
 	g_message("readers changed");
 }
 
+void show_card_eu_start_date(char* doctype) {
+	//show card EU start date or card EU+ start date depending on doctype of the card
+	GValue *show_data, *show_label, *hide_label;
+	show_data = calloc(sizeof(GValue), 1);
+	g_value_init(show_data, G_TYPE_BOOLEAN);
+	g_value_set_boolean(show_data, TRUE);
+	show_label = calloc(sizeof(GValue), 1);
+	g_value_init(show_label, G_TYPE_BOOLEAN);
+	g_value_set_boolean(show_label, TRUE);
+	hide_label = calloc(sizeof(GValue), 1);
+	g_value_init(hide_label, G_TYPE_BOOLEAN);
+	g_value_set_boolean(hide_label, FALSE);
+	if(((doctype[0] == '3') && (doctype[1] == '1')) || ((doctype[0] == '6') && (doctype[1] == '1'))) {   //EU case
+		GObject* objEU = gtk_builder_get_object(builder, "cardEU_start_date");
+		g_object_set_threaded_gvalue(objEU, "visible", show_data, free);	
+		g_object_set_threaded_gvalue(gtk_builder_get_object(builder, "title_cardEU_start_date"), "visible", show_label, free);
+		g_object_set_threaded_gvalue(gtk_builder_get_object(builder, "title_cardEUPlus_start_date"), "visible", hide_label, free);
+	}
+	if(((doctype[0] == '3') && (doctype[1] == '2')) || ((doctype[0] == '6') && (doctype[1] == '2'))) {   //EU+ case
+		GObject* objEU = gtk_builder_get_object(builder, "cardEU_start_date");
+		g_object_set_threaded_gvalue(objEU, "visible", show_data, free);
+		g_object_set_threaded_gvalue(gtk_builder_get_object(builder, "title_cardEUPlus_start_date"), "visible", show_label, free);
+		g_object_set_threaded_gvalue(gtk_builder_get_object(builder, "title_cardEU_start_date"), "visible", hide_label, free);
+	}
+}
+
 void update_doctype(char* label G_GNUC_UNUSED, void* data, int length) {
 	static char doctype[2];
 	char* newtype = (char*)data;
@@ -448,6 +474,9 @@ void update_doctype(char* label G_GNUC_UNUSED, void* data, int length) {
 			if(!obj) {
 				continue;
 			}
+			if(toggles->label[i] == "cardEU_start_date") {
+				continue;
+			}
 			titlelabel = g_strdup_printf("title_%s", toggles->label[i]);
 			show_data = calloc(sizeof(GValue), 1);
 			g_value_init(show_data, G_TYPE_BOOLEAN);
@@ -459,5 +488,6 @@ void update_doctype(char* label G_GNUC_UNUSED, void* data, int length) {
 			g_object_set_threaded_gvalue(gtk_builder_get_object(builder, titlelabel), "visible", show_label, free);
 			g_free(titlelabel);
 		}
+		show_card_eu_start_date(doctype);
 	}
 }

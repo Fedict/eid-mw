@@ -51,6 +51,8 @@ namespace eIDMW
 	const static tPin PinInvalid = { false, "", 0, 0, 0, 0, 0 };
 	const static tPin PinBeid = { true, "Basic PIN", 1, 0, 4, 12, 8 };
 
+	static const char* csReaderToSkip;
+
 	class CCard
 	{
 	public:
@@ -220,7 +222,7 @@ namespace eIDMW
 
 		void SetSecurityEnv(const tPrivKey & key, unsigned long algo, unsigned long ulInputLen);
 		CByteArray SignInternal(const tPrivKey & key, unsigned long algo, const CByteArray & oData,
-			const tPin * pPin = NULL);
+			const tPin * pPin = NULL);		
 
 		CPCSC *m_poPCSC;
 		CPinpad *m_poPinpad;
@@ -276,6 +278,10 @@ namespace eIDMW
 
 	CCard *UnknownCardGetInstance(const char *csReader,
 		SCARDHANDLE hCard, CPCSC * poPCSC, CPinpad * poPinpad);
+
+	void LockReader(const char* csReader);
+	void UnlockReader();
+	const char* getReaderToSkip();
 }
 
 #endif

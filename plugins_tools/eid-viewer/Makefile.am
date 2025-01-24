@@ -142,13 +142,13 @@ AM_CXXFLAGS = $(AM_CFLAGS) -std=c++98
 SUBDIRS = . gtk/po test uml
 
 resources/%.c: resources/%.png
-	echo -e "#include <gdk-pixbuf/gdk-pixdata.h>\n#if __GNUC__ >= 4\n#pragma GCC diagnostic push\n#pragma GCC diagnostic ignored \"-Wpointer-sign\"\n#endif\n" > $@
+	printf '%s\n' '#include <gdk-pixbuf/gdk-pixdata.h>' '#if __GNUC__ >= 4' '#pragma GCC diagnostic push' '#pragma GCC diagnostic ignored "-Wpointer-sign"' '#endif' > $@
 	gdk-pixbuf-csource --struct --extern --name `basename $^ .png` $^ >> $@
-	echo -e "#pragma GCC diagnostic pop\n" >> $@
+	printf '%s\n' '#pragma GCC diagnostic pop' >> $@
 resources/%.c: resources/%.jpg
-	echo -e "#include <gdk-pixbuf/gdk-pixdata.h>\n#if __GNUC__ >= 4\n#pragma GCC diagnostic push\n#pragma GCC diagnostic ignored \"-Wpointer-sign\"\n#endif\n" > $@
+	printf '%s\n' '#include <gdk-pixbuf/gdk-pixdata.h>' '#if __GNUC__ >= 4' '#pragma GCC diagnostic push' '#pragma GCC diagnostic ignored "-Wpointer-sign"' '#endif' > $@
 	gdk-pixbuf-csource --struct --extern --name `basename $^ .jpg` $^ >> $@
-	echo -e "#pragma GCC diagnostic pop\n" >> $@
+	printf '%s\n' '#pragma GCC diagnostic pop' >> $@
 
 BUILT_SOURCES = gtk/viewer_glade.h \
 		resources/coat_of_arms_nl.c \
@@ -217,7 +217,7 @@ dist_trust_DATA = \
 	certs/belgiumrca6.pem
 
 install-data-hook:
-	if ( $(SSL_PREFIX)/bin/openssl help 2>&1 | grep -q rehash); then $(SSL_PREFIX)/bin/openssl rehash $(DESTDIR)/$(trustdir); else $(SSL_PREFIX)/bin/c_rehash $(DESTDIR)/$(trustdir); fi
+	$(OPENSSL_PATH) rehash $(DESTDIR)/$(trustdir)
 
 gtk/viewer_glade.h: gtk/viewer.glade
 	$(top_srcdir)/plugins_tools/aboutmw/gtk/gen.sh VIEWER_GLADE_H VIEWER_GLADE_STRING < $^ > $@
