@@ -126,7 +126,7 @@
 
     <DirectoryRef Id="BEIDPPDIR">
       <Component Id="PinpadLib" Guid="{9ADA6D75-5DCC-467E-A0CE-B84A482B2115}" SharedDllRefCount="yes" Bitness="always32">
-        <File Id="xireid.dll" Name="xireid.dll" Source="..\..\..\beidpp\xireid.dll" />
+        <File Id="xireid.dll" Name="xireid.dll" Source="..\..\beidpp\xireid.dll" />
       </Component>
     </DirectoryRef>
 
@@ -216,10 +216,11 @@
 <?endif?>
         <Directory Id="BEIDPPDIR" Name="beidpp" />
       </StandardDirectory>
-      <StandardDirectory Id="System64Folder" />
+      <StandardDirectory Id="System64Folder">
 <?ifndef env.DONT_MERGE_VCRT?>
 		<Merge Id="VCRT_64" SourceFile="C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Redist\MSVC\v143\MergeModules\Microsoft_VC143_CRT_x64.msm" Language="0" DiskId="1" />
 <?endif?>
+	  </StandardDirectory>
 		
       <Component Id="SCardSvrService" Guid="{C3BC9746-0843-41b2-BDDA-3192772974CE}" Permanent="yes" Directory="TARGETDIR" Bitness="always32">
         <!-- Start SCardSvr Service during startup -->

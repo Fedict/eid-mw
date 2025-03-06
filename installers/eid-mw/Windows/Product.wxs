@@ -110,7 +110,7 @@
 
     <DirectoryRef Id="BEIDPPDIR">
       <Component Id="PinpadLib" Guid="{9ADA6D75-5DCC-467E-A0CE-B84A482B2115}" SharedDllRefCount="yes">
-        <File Id="xireid.dll" Name="xireid.dll" Source="..\..\..\beidpp\xireid.dll" />
+        <File Id="xireid.dll" Name="xireid.dll" Source="..\..\beidpp\xireid.dll" />
       </Component>
     </DirectoryRef>
 
@@ -186,11 +186,11 @@
       </StandardDirectory>
 
       <StandardDirectory Id="SystemFolder">
+<?ifndef env.DONT_MERGE_VCRT?>
+		<Merge Id="VCRT" SourceFile="C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Redist\MSVC\v143\MergeModules\Microsoft_VC143_CRT_x86.msm" Language="0" DiskId="1" />
+<?endif?>
         <Directory Id="BEIDPPDIR" Name="beidpp" />
       </StandardDirectory>
-<?ifndef env.DONT_MERGE_VCRT?>
-      <Merge Id="VCRT" SourceFile="C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Redist\MSVC\v143\MergeModules\Microsoft_VC143_CRT_x86.msm" Language="0" DiskId="1" />
-<?endif?>
 	  
 	
 	  <Component Id="FF_pkcs11_plugin_32_setup" Guid="{CE09E849-91E3-4EDE-9C8B-5261162FCD42}" Directory="TARGETDIR">

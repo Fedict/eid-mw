@@ -26,7 +26,7 @@ MakeCab /f ".\beidmdrv.dff"
 :: Sign cab file
 :: =============
 @echo [INFO] Sign the minidriver cabinet file
-"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /ac "%MDRVCERTPATH%\MSCV-GlobalSign Root CA.cer" /sm MY /n 'ZetesTestCert' /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0\disk1\Beidmdrv.cab"
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /ac "%MDRVCERTPATH%\MSCV-GlobalSign Root CA.cer" /sm MY /n 'Zetes SA' /sha1 "e20634d42e8bc522c6341dce24badd103f5f4312" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0\disk1\Beidmdrv.cab"
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
 
 @cd "%MDRVINSTALLPATH%"

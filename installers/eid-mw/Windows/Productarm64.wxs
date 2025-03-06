@@ -61,11 +61,10 @@
     </DirectoryRef>
 
     <DirectoryRef Id="MINIDRIVERROOTFOLDER">
-      <Component Id="beidmdrv" Guid="2bdf2bb0-4f7a-4ed6-a3d4-abcbe212fa14" Bitness="always32">
+      <Component Id="beidmdrv" Guid="2bdf2bb0-4f7a-4ed6-a3d4-abcbe212fa14" Bitness="always64">
         <File Id="beidmdrv.inf" Name="beidmdrv.inf" Source="..\..\..\installers\quickinstaller\Drivers\WINALL\beidmdrv\beidmdrv.inf" KeyPath="yes" DiskId="1" />
         <File Id="beidmdrv.cat" Name="beidmdrv.cat" Source="..\..\..\installers\quickinstaller\Drivers\WINALL\beidmdrv\beidmdrv.cat" KeyPath="no" DiskId="1" />
-        <File Id="beidmdrv32.dll" Name="beidmdrv32.dll" Source="..\..\..\installers\quickinstaller\Drivers\WINALL\beidmdrv\beidmdrv32.dll" KeyPath="no" DiskId="1" />
-        <File Id="beidmdrv64.dll" Name="beidmdrv64.dll" Source="..\..\..\installers\quickinstaller\Drivers\WINALL\beidmdrv\beidmdrv64.dll" KeyPath="no" DiskId="1" />
+        <File Id="beidmdrv_arm64.dll" Name="beidmdrv_arm64.dll" Source="..\..\..\installers\quickinstaller\Drivers\WINALL\beidmdrv\beidmdrv_arm64.dll" KeyPath="no" DiskId="1" />
       </Component>
       <!-- Certificate Propagation Service is a standard Windows service available in from Windows Vista on. In order to use the minidriver
 			   it is necessary that this service is running. When a smart card reader is inserted this service should be started  by the smart card
@@ -106,22 +105,18 @@
     <StandardDirectory Id="System64Folder">
 
       <Component Id="pkcs11_64" Guid="{3C4751D6-D92C-40ab-8FA5-3A1DF1D927EA}" SharedDllRefCount="no" Bitness="always64">
-        <File Id="beidpkcs11_64.dll" Name="beidpkcs11.dll" KeyPath="yes" Source="..\..\..\cardcomm\pkcs11\VS_2022\binaries\ARM64_Release\beidpkcs11.dll" />
+        <File Id="beidpkcs11_64.dll" Name="beidpkcs11.dll" KeyPath="yes" Source="..\..\..\cardcomm\pkcs11\VS_2022\binaries\ARM64EC_Release\beidpkcs11.dll" />
         <File Id="beid_ff_pkcs11_64.dll" Name="beid_ff_pkcs11.dll" KeyPath="no" Source="..\..\..\cardcomm\pkcs11\VS_2022\binaries\ARM64_pkcs11_ff_release\beid_ff_pkcs11.dll" />
 		<!-- <Shortcut Id='beid64_ff_pkcs11_shortcutId' Directory='FFPLUGMANFOLDER' Name="beid_ff_pkcs11_64.dll" WorkingDirectory='System64Folder' Advertise="yes" /> -->
       </Component>
 
       <Component Id="MINIDRIVER_64" Guid="{a8259480-e408-11de-8a39-0800200c9a66}" SharedDllRefCount="no" Bitness="always64">
-        <File Id="MINIDRIVER_64.dll" Name="beidmdrv64.dll" KeyPath="yes" Source="..\..\..\installers\quickinstaller\Drivers\WINALL\beidmdrv\beidmdrv64.dll" />
+        <File Id="MINIDRIVER_64.dll" Name="beidmdrv_arm64.dll" KeyPath="yes" Source="..\..\..\installers\quickinstaller\Drivers\WINALL\beidmdrv\beidmdrv_arm64.dll" />
       </Component>
 
     </StandardDirectory>
 
     <StandardDirectory Id="SystemFolder">
-
-      <Component Id="MINIDRIVER" Guid="{2A6887B1-A020-47e7-847A-F68673A12CE2}" SharedDllRefCount="yes" Bitness="always32">
-        <File Id="MINIDRIVER.dll" Name="beidmdrv32.dll" KeyPath="yes" Source="..\..\..\installers\quickinstaller\Drivers\WINALL\beidmdrv\beidmdrv32.dll" />
-      </Component>
 
       <Component Id="pkcs11" Guid="{D54164C0-795D-4B2D-96C6-C8E395100896}" SharedDllRefCount="yes" Bitness="always32">
         <File Id="beidpkcs11.dll" Name="beidpkcs11.dll" KeyPath="yes" Source="..\..\..\cardcomm\pkcs11\VS_2022\binaries\win32_release\beidpkcs11.dll" />
@@ -133,23 +128,13 @@
 
     <DirectoryRef Id="BEIDPPDIR">
       <Component Id="PinpadLib" Guid="{9ADA6D75-5DCC-467E-A0CE-B84A482B2115}" SharedDllRefCount="yes" Bitness="always32">
-        <File Id="xireid.dll" Name="xireid.dll" Source="..\..\..\beidpp\xireid.dll" />
+        <File Id="xireid.dll" Name="xireid.dll" Source="..\..\beidpp\xireid.dll" />
       </Component>
     </DirectoryRef>
 
     
 
     <Feature Id="BeidRuntime" Title="!(loc.BeidRuntime)" Description="!(loc.BeidRuntimeDesc)" Level="1" AllowAbsent="no">
-
-<?ifndef env.DONT_MERGE_VCRT?>
-      <Feature Id="VCRedist" Title="VC++ 15.0 runtime" AllowAdvertise="no" Display="hidden" Level="1">
-        <MergeRef Id="VCRT" />
-      </Feature>
-
-      <Feature Id="VCRedist_64" Title="VC++ 15.0 runtime" AllowAdvertise="no" Display="hidden" Level="1">
-        <MergeRef Id="VCRT_64" />
-      </Feature>
-<?endif?>
 
       <!-- Program Files -->
       <ComponentRef Id="Icon" />
@@ -173,9 +158,7 @@
         <Feature Id="Install_Minidriver" Title="Minidriver" Level="1">
           <ComponentRef Id="beidmdrv" />
           <ComponentRef Id="CertPropService" />
-          <ComponentRef Id="MINIDRIVER"/>
           <ComponentRef Id="MINIDRIVER_64" />
-          <ComponentRef Id="REGISTERMINIDRIVER"/>
           <ComponentRef Id="REGISTERMINIDRIVER_64" />
           <Level Value="1" Condition="VersionNT &gt;= 600" />
         </Feature>
@@ -216,18 +199,11 @@
 		  <Directory Id="FFPLUGMANFOLDER" Name="FireFox Plugin Manifests" />
         </Directory>
       </StandardDirectory>
+	  
+	  <StandardDirectory Id="SystemFolder">
+		<Directory Id="BEIDPPDIR" Name="beidpp" />
+	  </StandardDirectory>
 
-      <StandardDirectory Id="SystemFolder">
-<?ifndef env.DONT_MERGE_VCRT?>
-        <Merge Id="VCRT" SourceFile="C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Redist\MSVC\v143\MergeModules\Microsoft_VC143_CRT_x86.msm" Language="0" DiskId="1" />
-<?endif?>
-        <Directory Id="BEIDPPDIR" Name="beidpp" />
-      </StandardDirectory>
-      <StandardDirectory Id="System64Folder" />
-<?ifndef env.DONT_MERGE_VCRT?>
-		<Merge Id="VCRT_64" SourceFile="C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Redist\MSVC\v143\MergeModules\Microsoft_VC143_CRT_x64.msm" Language="0" DiskId="1" />
-<?endif?>
-		
       <Component Id="SCardSvrService" Guid="{C3BC9746-0843-41b2-BDDA-3192772974CE}" Permanent="yes" Directory="TARGETDIR" Bitness="always32">
         <!-- Start SCardSvr Service during startup -->
         <RegistryValue Root="HKLM" Key="System\CurrentControlSet\Services\SCardSvr" Type="integer" Name="Start" Value="2" KeyPath="yes" />
@@ -253,30 +229,9 @@
 		</RegistryKey>
       </Component>
 	  
-      <Component Id="REGISTERMINIDRIVER" Guid="{B9980C19-883E-49f9-BDD2-AB3D75187C8F}" Directory="TARGETDIR" Bitness="always32">
-        <RegistryKey Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Beid">
-          <RegistryValue Type="string" Name="80000001" Value="beidmdrv32.dll" KeyPath="yes" />
-          <RegistryValue Type="binary" Name="ATR" Value="3b98004000a503010101ad1300" KeyPath="no" />
-          <RegistryValue Type="binary" Name="ATRMask" Value="ffff00ff00ffffffffffffff00" KeyPath="no" />
-          <RegistryValue Type="string" Name="Crypto Provider" Value="Microsoft Base Smart Card Crypto Provider" KeyPath="no" />
-          <RegistryValue Type="string" Name="Smart Card Key Storage Provider" Value="Microsoft Smart Card Key Storage Provider" KeyPath="no" />
-          <RegistryValue Type="string" Name="80000100" Value="en-US,Please enter your PIN;en-EN,Please enter your PIN;nl-BE,Geef uw PIN in;nl-NL,Geef uw PIN in;fr-BE,Entrez votre code PIN;fr-FR,Entrez votre code PIN;de-DE,Bitte geben Sie Ihre PIN ein" KeyPath="no" />
-          <RegistryValue Type="string" Name="80000103" Value="en-US,Please enter your PIN;en-EN,Please enter your PIN;nl-BE,Geef uw PIN in;nl-NL,Geef uw PIN in;fr-BE,Entrez votre code PIN;fr-FR,Entrez votre code PIN;de-DE,Bitte geben Sie Ihre PIN ein" KeyPath="no" />
-        </RegistryKey>
-		<RegistryKey Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Beid_v18" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
-          <RegistryValue Type="string" Name="80000001" Value="beidmdrv32.dll" KeyPath="no" />
-          <RegistryValue Type="binary" Name="ATR" Value="3b7f96000080318065b085040120120fff829000" KeyPath="no" />
-          <RegistryValue Type="binary" Name="ATRMask" Value="ffffffffffffffffffffffffffffffffffffffff" KeyPath="no" />
-          <RegistryValue Type="string" Name="Crypto Provider" Value="Microsoft Base Smart Card Crypto Provider" KeyPath="no" />
-          <RegistryValue Type="string" Name="Smart Card Key Storage Provider" Value="Microsoft Smart Card Key Storage Provider" KeyPath="no" />
-          <RegistryValue Type="string" Name="80000100" Value="en-US,Please enter your PIN;en-EN,Please enter your PIN;nl-BE,Geef uw PIN in;nl-NL,Geef uw PIN in;fr-BE,Entrez votre code PIN;fr-FR,Entrez votre code PIN;de-DE,Bitte geben Sie Ihre PIN ein" KeyPath="no" />
-          <RegistryValue Type="string" Name="80000103" Value="en-US,Please enter your PIN;en-EN,Please enter your PIN;nl-BE,Geef uw PIN in;nl-NL,Geef uw PIN in;fr-BE,Entrez votre code PIN;fr-FR,Entrez votre code PIN;de-DE,Bitte geben Sie Ihre PIN ein" KeyPath="no" />
-        </RegistryKey>
-      </Component>
-
       <Component Id="REGISTERMINIDRIVER_64" Guid="{3BCA1B2C-08AF-4727-AD85-1C60025656EA}" Directory="TARGETDIR" Bitness="always64">
         <RegistryKey Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Beid">
-          <RegistryValue Type="string" Name="80000001" Value="beidmdrv64.dll" KeyPath="yes" />
+          <RegistryValue Type="string" Name="80000001" Value="beidmdrv_arm64.dll" KeyPath="yes" />
           <RegistryValue Type="binary" Name="ATR" Value="3b98004000a503010101ad1300" KeyPath="no" />
           <RegistryValue Type="binary" Name="ATRMask" Value="ffff00ff00ffffffffffffff00" KeyPath="no" />
           <RegistryValue Type="string" Name="Crypto Provider" Value="Microsoft Base Smart Card Crypto Provider" KeyPath="no" />
@@ -285,7 +240,7 @@
           <RegistryValue Type="string" Name="80000103" Value="en-US,Please enter your PIN;en-EN,Please enter your PIN;nl-BE,Geef uw PIN in;nl-NL,Geef uw PIN in;fr-BE,Entrez votre code PIN;fr-FR,Entrez votre code PIN;de-DE,Bitte geben Sie Ihre PIN ein" KeyPath="no" />
         </RegistryKey>
 		<RegistryKey Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\Beid_v18" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
-          <RegistryValue Type="string" Name="80000001" Value="beidmdrv64.dll" KeyPath="no" />
+          <RegistryValue Type="string" Name="80000001" Value="beidmdrv_arm64.dll" KeyPath="no" />
           <RegistryValue Type="binary" Name="ATR" Value="3b7f96000080318065b085040120120fff829000" KeyPath="no" />
           <RegistryValue Type="binary" Name="ATRMask" Value="ffffffffffffffffffffffffffffffffffffffff" KeyPath="no" />
           <RegistryValue Type="string" Name="Crypto Provider" Value="Microsoft Base Smart Card Crypto Provider" KeyPath="no" />

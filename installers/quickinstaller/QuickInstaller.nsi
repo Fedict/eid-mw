@@ -44,6 +44,9 @@ caption $(ls_caption)
 	Var lastname
 	Var firstletterthirdname
 	Var firstname
+	Var VCMajor
+	Var VCMinor
+	Var VCBld
 	
 	Var nsdCustomDialog
 	Var Label
@@ -135,6 +138,20 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 		IfErrors 0 +2
 			Call ErrorHandler_file
 		ClearErrors
+		
+		ReadRegDWORD $VCMajor HKLM SOFTWARE\Wow6432Node\Microsoft\VisualStudio\14.0\VC\Runtimes\arm64 Major
+		ReadRegDWORD $VCMinor HKLM SOFTWARE\Wow6432Node\Microsoft\VisualStudio\14.0\VC\Runtimes\arm64 Minor
+		ReadRegDWORD $VCBld HKLM SOFTWARE\Wow6432Node\Microsoft\VisualStudio\14.0\VC\Runtimes\arm64 Bld
+		${If} $VCMajor < 14
+		${AndIf} $VCMinor < 42
+		${AndIf} $VCBld < 34433
+			DetailPrint "Installing Visual Studio Redistributable package..."
+			ExecWait '"$PLUGINSDIR\VC_redist.arm64.exe" /q /norestart'
+			Delete "$PLUGINSDIR\VC_redist.arm64.exe"
+			DetailPrint "Done"
+		${Else}
+			DetailPrint "More recent version of VC++ Redistributable already installed"
+		${EndIf}
 		
 		StrCpy $LogFile "$INSTDIR\log\install_eidmwarm64_log.txt"
 		StrCpy $TempFile "$INSTDIR\log\1612_count.txt"

@@ -13,25 +13,25 @@
 @echo build_msi_eidmw32.cmd
 @echo [INFO] Making the nl-nl version
 
-wix build -arch x86 -culture nl-nl -loc "%~dp0\Strings-nl.wxl" -loc WixUI_nl-nl.wxl -out bin\nl-nl\BeidMW32-Basic-nl.msi -pdbout bin\nl-nl\BeidMW32-Basic-nl.wixpdb "%~dp0\Product.wxs"
+wix build -arch x86 -culture nl-nl -d Lang=nl -ext "%BEID_DIR_WIX%\WixToolset.UI.wixext.dll" -ext "%BEID_DIR_WIX%\WixToolset.Util.wixext.dll" -loc "%~dp0\Strings-nl.wxl" -loc WixUI_nl-nl.wxl -out bin\nl-nl\BeidMW32-Basic-nl.msi -pdb bin\nl-nl\BeidMW32-Basic-nl.wixpdb "%~dp0\Product.wxs"
 @if NOT "%ERRORLEVEL%" == "0" goto msi_failed
 
 
 @echo [INFO] Making the fr-fr version
 
-wix build -arch x86 -culture fr-fr -loc "%~dp0\Strings-fr.wxl" -loc WixUI_fr-fr.wxl -out bin\fr-fr\BeidMW32-Basic-fr.msi -pdbout bin\fr-fr\BeidMW32-Basic-fr.wixpdb "%~dp0\Product.wxs"
+wix build -arch x86 -culture fr-fr -d Lang=fr -ext "%BEID_DIR_WIX%\WixToolset.UI.wixext.dll" -ext "%BEID_DIR_WIX%\WixToolset.Util.wixext.dll" -loc "%~dp0\Strings-fr.wxl" -out bin\fr-fr\BeidMW32-Basic-fr.msi -pdb bin\fr-fr\BeidMW32-Basic-fr.wixpdb "%~dp0\Product.wxs"
 @if NOT "%ERRORLEVEL%" == "0" goto msi_failed
 
 
 @echo [INFO] Making the de-de version
 
-wix build -arch x86 -culture de-de -loc "%~dp0\Strings-de.wxl" -loc WixUI_de-de.wxl -out bin\de-de\BeidMW32-Basic-de.msi -pdbout bin\de-de\BeidMW32-Basic-de.wixpdb "%~dp0\Product.wxs"
+wix build -arch x86 -culture de-de -d Lang=de -ext "%BEID_DIR_WIX%\WixToolset.UI.wixext.dll" -ext "%BEID_DIR_WIX%\WixToolset.Util.wixext.dll" -loc "%~dp0\Strings-de.wxl" -out bin\de-de\BeidMW32-Basic-de.msi -pdb bin\de-de\BeidMW32-Basic-de.wixpdb "%~dp0\Product.wxs"
 @if NOT "%ERRORLEVEL%" == "0" goto msi_failed
 
 
 @echo [INFO] Making the en-us version
 
-wix build -arch x86 -culture en-us -loc "%~dp0\Strings-en.wxl" -loc WixUI_en-us.wxl -out bin\en-us\BeidMW32-Basic-en.msi -pdbout bin\en-us\BeidMW32-Basic-de.wixpdb "%~dp0\Product.wxs"
+wix build -arch x86 -culture en-us -d Lang=en -ext "%BEID_DIR_WIX%\WixToolset.UI.wixext.dll" -ext "%BEID_DIR_WIX%\WixToolset.Util.wixext.dll" -loc "%~dp0\Strings-en.wxl" -out bin\en-us\BeidMW32-Basic-en.msi -pdb bin\en-us\BeidMW32-Basic-en.wixpdb "%~dp0\Product.wxs"
 @if NOT "%ERRORLEVEL%" == "0" goto msi_failed
 
 :: join the language specific msi's together

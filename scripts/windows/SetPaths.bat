@@ -17,7 +17,8 @@
 @set SEARCH_BEID_DIR_PLATFORMSDK_6=C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\bin
 
 
-@set SEARCH_WIX_PATH=C:\Program Files (x86)\WiX Toolset v3.14\bin
+@set SEARCH_WIX_PATH=%USERPROFILE%\.dotnet\tools\.store\wix\5.0.2\wix\5.0.2\tools\net6.0\any
+@set SEARCH_WIX_PATH_2=C:\Program Files (x86)\WiX Toolset v3.11\bin
 @set SEARCH_NSIS_PATH=C:\Program Files (x86)\NSIS
 @set SEARCH_NSIS_PATH_2=C:\Program Files\NSIS
 
@@ -149,7 +150,7 @@
 
 
 @echo [INFO] Check if WiX is installed
-@set FILE_TO_FIND="candle.exe"
+@set FILE_TO_FIND="WixToolset.UI.wixext.dll"
 @echo [INFO] Looking for files: %FILE_TO_FIND%
 
 @set BEID_DIR_WIX=%WIX%
@@ -167,7 +168,7 @@
 
 
 @echo [ERROR] WiX could not be found
-@echo         Please install Wix3
+@echo         Please install Wix v5
 @exit /B 1
 
 :found_wix
