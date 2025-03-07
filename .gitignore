@@ -42,9 +42,14 @@ Win32_Release
 Win32_Debug
 x64_Debug
 x64_Release
+ARM64_Debug
+ARM64EC_Debug
+ARM64_Release
+ARM64EC_Release
 /VS_2015/beid.sdf
 /VS_2015/beid.v11.suo
 /installers/quickinstaller/*.exe
+/scripts/windows/*.exe
 /scripts/windows/*.exe
 /scripts/windows/*.msi
 /installers/eid-mw/Windows/obj/*.wixobj
@@ -79,6 +84,9 @@ beidpkcs11.sdf
 /installers/eid-mw/Windows/2067
 /installers/eid-mw/Windows/2060
 /installers/eid-mw/Windows/1031
+/installers/eid-viewer/Windows/2067
+/installers/eid-viewer/Windows/2060
+/installers/eid-viewer/Windows/1031
 /plugins_tools/eid-viewer/Windows/eIDViewer/Resources/Certs
 /plugins_tools/eid-viewer/Windows/eIDViewer/Resources/Images
 /plugins_tools/xpi/INSTALL
@@ -108,3 +116,8 @@ scripts/windows/beidmdrv_all_5.1.8.6024.zip
 /cardcomm/pkcs11/VS_2022/Win32_PKCS11_FF_Release
 /cardcomm/pkcs11/VS_2022/x64_PKCS11_FF_DEBUG
 /cardcomm/pkcs11/VS_2022/x64_PKCS11_FF_Release
+/cardcomm/pkcs11/VS_2022/ARM64_PKCS11_FF_DEBUG
+/cardcomm/pkcs11/VS_2022/ARM64_PKCS11_FF_Release
+/cardcomm/pkcs11/VS_2022/ARM64EC_PKCS11_FF_Release
+/installers/eid-viewer/Windows/2060
+/installers/eid-viewer/Windows/2067
