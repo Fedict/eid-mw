@@ -15,40 +15,43 @@ setlocal disabledelayedexpansion
 
 :: build pkcs11, minidriver and viewer
 :: ===================================
-@echo [INFO] Building "%~dp0..\..\VS_2019\beid.sln"
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:clean /property:Configuration=Release /Property:Platform=x86 "%~dp0..\..\VS_2019\beid.sln"
+@echo [INFO] Building "%~dp0..\..\VS_2022\beid.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:clean /property:Configuration=Release /Property:Platform=x86 "%~dp0..\..\VS_2022\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:build /property:Configuration=Release /Property:Platform=x86 "%~dp0..\..\VS_2019\beid.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:build /property:Configuration=Release /Property:Platform=x86 "%~dp0..\..\VS_2022\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:clean /property:Configuration=PKCS11_FF_Release /Property:Platform=x86 "%~dp0..\..\VS_2019\beid.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:clean /property:Configuration=PKCS11_FF_Release /Property:Platform=x86 "%~dp0..\..\VS_2022\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:build /property:Configuration=PKCS11_FF_Release /Property:Platform=x86 "%~dp0..\..\VS_2019\beid.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:build /property:Configuration=PKCS11_FF_Release /Property:Platform=x86 "%~dp0..\..\VS_2022\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:clean /property:Configuration=Release /Property:Platform=x64 "%~dp0..\..\VS_2019\beid.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:clean /property:Configuration=Release /Property:Platform=x64 "%~dp0..\..\VS_2022\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:build /property:Configuration=Release /Property:Platform=x64 "%~dp0..\..\VS_2019\beid.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:build /property:Configuration=Release /Property:Platform=x64 "%~dp0..\..\VS_2022\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:clean /property:Configuration=PKCS11_FF_Release /Property:Platform=x64 "%~dp0..\..\VS_2019\beid.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:clean /property:Configuration=PKCS11_FF_Release /Property:Platform=x64 "%~dp0..\..\VS_2022\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:build /property:Configuration=PKCS11_FF_Release /Property:Platform=x64 "%~dp0..\..\VS_2019\beid.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:build /property:Configuration=PKCS11_FF_Release /Property:Platform=x64 "%~dp0..\..\VS_2022\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:clean /property:Configuration=Release /Property:Platform=x86 "%~dp0..\..\plugins_tools\eid-viewer\Windows\VS_2019\eIDViewer.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:clean /property:Configuration=Release /Property:Platform=ARM64EC "%~dp0..\..\VS_2022\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:build /property:Configuration=Release /Property:Platform=x86 "%~dp0..\..\plugins_tools\eid-viewer\Windows\VS_2019\eIDViewer.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:build /property:Configuration=Release /Property:Platform=ARM64EC "%~dp0..\..\VS_2022\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:clean /property:Configuration=Release /Property:Platform=x64 "%~dp0..\..\plugins_tools\eid-viewer\Windows\VS_2019\eIDViewer.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:clean /property:Configuration=PKCS11_FF_Release /Property:Platform=ARM64 "%~dp0..\..\VS_2022\beid.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:build /property:Configuration=Release /Property:Platform=x64 "%~dp0..\..\plugins_tools\eid-viewer\Windows\VS_2019\eIDViewer.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:build /property:Configuration=PKCS11_FF_Release /Property:Platform=ARM64 "%~dp0..\..\VS_2022\beid.sln"
+@if "%ERRORLEVEL%" == "1" goto msbuild_failed
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:clean /property:Configuration=Release /Property:Platform=x86 "%~dp0..\..\plugins_tools\eid-viewer\Windows\VS_2022\eIDViewer.sln"
+@if "%ERRORLEVEL%" == "1" goto msbuild_failed
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:build /property:Configuration=Release /Property:Platform=x86 "%~dp0..\..\plugins_tools\eid-viewer\Windows\VS_2022\eIDViewer.sln"
+@if "%ERRORLEVEL%" == "1" goto msbuild_failed
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:clean /property:Configuration=Release /Property:Platform=x64 "%~dp0..\..\plugins_tools\eid-viewer\Windows\VS_2022\eIDViewer.sln"
+@if "%ERRORLEVEL%" == "1" goto msbuild_failed
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:build /property:Configuration=Release /Property:Platform=x64 "%~dp0..\..\plugins_tools\eid-viewer\Windows\VS_2022\eIDViewer.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
 
 
 :: create the CertClean tool
 :: =========================
-@echo [INFO] Building CertClean Win32"
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:clean /property:Configuration=Release /Property:Platform=x86 "%~dp0..\..\plugins_tools\CertClean\CertClean.sln"
-@if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:build /property:Configuration=Release /Property:Platform=x86 "%~dp0..\..\plugins_tools\CertClean\CertClean.sln"
-@if "%ERRORLEVEL%" == "1" goto msbuild_failed
 
 @echo [INFO] Building CertClean x64"
 @"%BEID_DIR_MSBUILD%\MSBuild.exe" /m  /target:clean /property:Configuration=Release /Property:Platform=x64 "%~dp0..\..\plugins_tools\CertClean\CertClean.sln"
@@ -73,15 +76,16 @@ mkdir %MDRVINSTALLPATH%\beidmdrv
 copy %~dp0..\..\cardcomm\minidriver\makemsi\beidmdrv.inf %MDRVINSTALLPATH%\beidmdrv
 
 :: copy drivers. We use the same files for 32 and 64 bit. But we create architecture dependent MSI's
-copy %~dp0..\..\cardcomm\minidriver\VS_2019\Binaries\Win32_Release\beidmdrv32.dll %MDRVINSTALLPATH%\beidmdrv\beidmdrv32.dll
-copy %~dp0..\..\cardcomm\minidriver\VS_2019\Binaries\x64_Release\beidmdrv64.dll %MDRVINSTALLPATH%\beidmdrv\beidmdrv64.dll
+copy %~dp0..\..\cardcomm\minidriver\VS_2022\Binaries\Win32_Release\beidmdrv32.dll %MDRVINSTALLPATH%\beidmdrv\beidmdrv32.dll
+copy %~dp0..\..\cardcomm\minidriver\VS_2022\Binaries\x64_Release\beidmdrv64.dll %MDRVINSTALLPATH%\beidmdrv\beidmdrv64.dll
+copy %~dp0..\..\cardcomm\minidriver\VS_2022\Binaries\ARM64EC_Release\beidmdrv64.dll %MDRVINSTALLPATH%\beidmdrv\beidmdrv_arm64.dll
 
 :: copy icon
 :: copy %~dp0..\..\cardcomm\minidriver\img\beid.ico %MDRVINSTALLPATH%\beidmdrv\
 
-:: @echo [INFO] Creating cat file
+@echo [INFO] Creating cat file
 :: Create catalog
-"%INF2CAT_PATH%\inf2cat.exe" /driver:%MDRVINSTALLPATH%\beidmdrv\ /os:XP_X86,XP_X64,Vista_X86,Vista_X64,7_X86,7_X64
+"%INF2CAT_PATH%\inf2cat.exe" /verbose /driver:%MDRVINSTALLPATH%\beidmdrv\ /os:XP_X86,XP_X64,Vista_X86,Vista_X64,7_X86,7_X64,Server10_ARM64,10_RS3_ARM64,10_RS4_ARM64,ServerRS5_ARM64,10_RS5_ARM64,10_19H1_ARM64,10_VB_ARM64,ServerFE_ARM64,10_CO_ARM64,10_NI_ARM64
 @if "%ERRORLEVEL%" == "1" goto inf2cat_failed
 
 @if "%BUILD_ONLY%" == "1" goto end
@@ -121,6 +125,14 @@ copy "%~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi" "%~dp0"
 @echo [INFO] copy 64 bit msi installer
 copy "%~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_64.msi" "%~dp0"
 
+@call "%~dp0..\..\installers\eid-mw\Windows\build_msi_eidmwarm64.cmd"
+@if %ERRORLEVEL%==1 goto end_resetpath_with_error
+@echo [INFO] sign arm 64 bit msi installer
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /a /n "ZetesTestCert" /v "%~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_arm64.msi"
+@if %ERRORLEVEL%==1 goto signtool_failed
+@echo [INFO] copy 64 bit msi installer
+copy "%~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_arm64.msi" "%~dp0"
+
 @cd "%OUR_CURRENT_PATH%"
 
 @cd "%~dp0..\..\installers\eid-viewer\Windows"
@@ -145,10 +157,10 @@ copy "%~dp0..\..\installers\eid-viewer\Windows\bin\x64\BeidViewer64.msi" "%~dp0"
 
 :: create the NSIS plugins
 :: =========================
-@echo [INFO] Building "%~dp0..\..\installers\quickinstaller\NSIS_Plugins\VS_2019\beidplugins.sln"
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:clean /property:Configuration=Release /Property:Platform=x86 "%~dp0..\..\installers\quickinstaller\NSIS_Plugins\VS_2019\beidplugins.sln"
+@echo [INFO] Building "%~dp0..\..\installers\quickinstaller\NSIS_Plugins\VS_2022\beidplugins.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:clean /property:Configuration=Release /Property:Platform=x86 "%~dp0..\..\installers\quickinstaller\NSIS_Plugins\VS_2022\beidplugins.sln"
 @if "%ERRORLEVEL%" == "1" goto msbuild_failed
-@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:build /property:Configuration=Release /Property:Platform=x86 "%~dp0..\..\installers\quickinstaller\NSIS_Plugins\VS_2019\beidplugins.sln"
+@"%BEID_DIR_MSBUILD%\MSBuild.exe" /target:build /property:Configuration=Release /Property:Platform=x86 "%~dp0..\..\installers\quickinstaller\NSIS_Plugins\VS_2022\beidplugins.sln"
 
 :: copy the NSIS plugins to NSIS default plugin folder
 :: nsis installer is updated to look into the build folder
