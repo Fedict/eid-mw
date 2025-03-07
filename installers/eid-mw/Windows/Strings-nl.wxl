@@ -1,26 +1,25 @@
-<?xml version="1.0" encoding="utf-8"?>
-<WixLocalization Culture="nl-nl" xmlns="http://schemas.microsoft.com/wix/2006/localization" Codepage="1252">
-  <String Id="Lang" Overridable="yes">1043</String>
-  <String Id="Langpref" Overridable="yes">nl</String>
+﻿<WixLocalization Culture="nl-nl" xmlns="http://wixtoolset.org/schemas/v4/wxl" Codepage="1252">
+  <String Id="Lang" Overridable="yes" Value="1043" />
+  <String Id="Langpref" Overridable="yes" Value="nl" />
   <String Id="LicenseFile" Overridable="yes"></String>
-  <String Id="StartApp" Overridable="yes">Start de Eid Viewer toepassing</String>
-  <String Id="MinOs" Overridable="yes">Windows XP of hoger is vereist</String>
-  <String Id="BeidRuntime" Overridable="yes">Belgium EID</String>
-  <String Id="BeidRuntimeDesc" Overridable="yes">Deze modules zijn noodzakelijk voor het gebruik van de eID kaart.</String>
-  <String Id="BeidGui" Overridable="yes">eID Viewer</String>
-  <String Id="BeidGuiDescr" Overridable="yes">Uitlezen van de e-ID kaart</String>
-  <String Id="Crypto" Overridable="yes">Cryptografische Modules</String>
-  <String Id="CryptoDescr" Overridable="yes">Deze modules zijn noodzakelijk voor het gebruik van de eID kaart als elektronisch identiteitsbewijs in Internet Explorer, Firefox, etc. of voor het maken van digitale handtekeningen in Microsoft Office, OpenOffice.org, Microsoft Outlook, Thunderbird, etc.</String>
-  <String Id="XSign" Overridable="yes">Xsign</String>
-  <String Id="XSignDescr" Overridable="yes">XSign Toepassing</String>
-  <String Id="OutlooksncTitle" Overridable="yes">MS Outlook configuratie voor de eID kaart</String>
-  <String Id="Office2010XAdESDescr" Overridable="yes">MS Office 2010: XAdES XL en TSA configuratie voor handtekeningen</String>
-  <String Id="OutlooksncDescr" Overridable="yes">Zorgt ervoor dat MS Outlook ook certificaten aanvaard die geen e-mail adres bevatten, zoals dat bij de Belgische identiteitskaartcertificaten het geval is.</String>
-  <String Id="UtilsTitle" Overridable="yes">Nuttige hulpmiddelen voor gebruik van de eID kaart</String>
-  <String Id="UtilsDesc" Overridable="yes">Deze hulpmiddelen kunnen gebruikt worden voor de automatische configuratie van bestaande applicaties die van de eID kaart gebruik maken.</String>
-  <String Id="msierrSecureObjectsFailedCreateSD" Overridable="yes">Kan de security descriptor voor [3]\[4] niet aanmaken, systeemfout: [2]</String>
-  <String Id="msierrSecureObjectsFailedSet" Overridable="yes">Kan de security descriptor niet zetten op object [3], systeemfout: [2]</String>
-  <String Id="msierrSecureObjectsUnknownType" Overridable="yes">Onbekend Object Type [3], systeemfout: [2]</String>
-  <String Id="AdminNeeded" Overridable="yes">U moet een administrator zijn voor de installatie van dit product</String>
-  <String Id="NoDowngrade" Overridable="yes">Er is reeds een nieuwere versie geïnstalleerd.</String>
+  <String Id="StartApp" Overridable="yes" Value="Start de Eid Viewer toepassing" />
+  <String Id="MinOs" Overridable="yes" Value="Windows XP of hoger is vereist" />
+  <String Id="BeidRuntime" Overridable="yes" Value="Belgium EID" />
+  <String Id="BeidRuntimeDesc" Overridable="yes" Value="Deze modules zijn noodzakelijk voor het gebruik van de eID kaart." />
+  <String Id="BeidGui" Overridable="yes" Value="eID Viewer" />
+  <String Id="BeidGuiDescr" Overridable="yes" Value="Uitlezen van de e-ID kaart" />
+  <String Id="Crypto" Overridable="yes" Value="Cryptografische Modules" />
+  <String Id="CryptoDescr" Overridable="yes" Value="Deze modules zijn noodzakelijk voor het gebruik van de eID kaart als elektronisch identiteitsbewijs in Internet Explorer, Firefox, etc. of voor het maken van digitale handtekeningen in Microsoft Office, OpenOffice.org, Microsoft Outlook, Thunderbird, etc." />
+  <String Id="XSign" Overridable="yes" Value="Xsign" />
+  <String Id="XSignDescr" Overridable="yes" Value="XSign Toepassing" />
+  <String Id="OutlooksncTitle" Overridable="yes" Value="MS Outlook configuratie voor de eID kaart" />
+  <String Id="Office2010XAdESDescr" Overridable="yes" Value="MS Office 2010: XAdES XL en TSA configuratie voor handtekeningen" />
+  <String Id="OutlooksncDescr" Overridable="yes" Value="Zorgt ervoor dat MS Outlook ook certificaten aanvaard die geen e-mail adres bevatten, zoals dat bij de Belgische identiteitskaartcertificaten het geval is." />
+  <String Id="UtilsTitle" Overridable="yes" Value="Nuttige hulpmiddelen voor gebruik van de eID kaart" />
+  <String Id="UtilsDesc" Overridable="yes" Value="Deze hulpmiddelen kunnen gebruikt worden voor de automatische configuratie van bestaande applicaties die van de eID kaart gebruik maken." />
+  <String Id="msierrSecureObjectsFailedCreateSD" Overridable="yes" Value="Kan de security descriptor voor [3]\[4] niet aanmaken, systeemfout: [2]" />
+  <String Id="msierrSecureObjectsFailedSet" Overridable="yes" Value="Kan de security descriptor niet zetten op object [3], systeemfout: [2]" />
+  <String Id="msierrSecureObjectsUnknownType" Overridable="yes" Value="Onbekend Object Type [3], systeemfout: [2]" />
+  <String Id="AdminNeeded" Overridable="yes" Value="U moet een administrator zijn voor de installatie van dit product" />
+  <String Id="NoDowngrade" Overridable="yes" Value="Er is reeds een nieuwere versie geïnstalleerd." />
 </WixLocalization>

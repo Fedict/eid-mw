@@ -14,33 +14,25 @@
 
 @echo [INFO] Making the nl-nl version
 
-"%BEID_DIR_WIX%\candle.exe" -v -dLang=nl -out obj\Eidviewer.wixobj -arch x86 -ext "%BEID_DIR_WIX%\WixUtilExtension.dll" -ext "%BEID_DIR_WIX%\WixUIExtension.dll" Eidviewer.wxs
-@if NOT "%ERRORLEVEL%" == "0" goto msi_failed
-"%BEID_DIR_WIX%\Light.exe" -v -cultures:nl-nl -ext "%BEID_DIR_WIX%\WixUtilExtension.dll" -ext "%BEID_DIR_WIX%\WixUIExtension.dll" -loc Strings-nl.wxl -out bin\nl-nl\BeidViewer-Basic-nl.msi -pdbout bin\nl-nl\BeidViewer-Basic-nl.wixpdb obj\Eidviewer.wixobj
+wix build -arch x86 -culture nl-nl -d Lang=nl -loc "%~dp0\Strings-nl.wxl" -out bin\nl-nl\BeidViewer-Basic-nl.msi -pdb bin\nl-nl\BeidViewer-Basic-nl.wixpdb "%~dp0\Eidviewer.wxs"
 @if NOT "%ERRORLEVEL%" == "0" goto msi_failed
 
 
 @echo [INFO] Making the fr-fr version
 
-"%BEID_DIR_WIX%\candle.exe" -v -dLang=fr -out obj\Eidviewer.wixobj -arch x86 -ext "%BEID_DIR_WIX%\WixUtilExtension.dll" -ext "%BEID_DIR_WIX%\WixUIExtension.dll" Eidviewer.wxs
-@if NOT "%ERRORLEVEL%" == "0" goto msi_failed
-"%BEID_DIR_WIX%\Light.exe" -v -cultures:fr-fr -ext "%BEID_DIR_WIX%\WixUtilExtension.dll" -ext "%BEID_DIR_WIX%\WixUIExtension.dll" -loc Strings-fr.wxl -out bin\fr-fr\BeidViewer-Basic-fr.msi -pdbout bin\fr-fr\BeidViewer-Basic-fr.wixpdb obj\Eidviewer.wixobj
+wix build -arch x86 -culture fr-fr -d Lang=fr -loc "%~dp0\Strings-fr.wxl" -out bin\fr-fr\BeidViewer-Basic-fr.msi -pdb bin\fr-fr\BeidViewer-Basic-fr.wixpdb "%~dp0\Eidviewer.wxs"
 @if NOT "%ERRORLEVEL%" == "0" goto msi_failed
 
 
 @echo [INFO] Making the de-de version
 
-"%BEID_DIR_WIX%\candle.exe" -v -dLang=de -out obj\Eidviewer.wixobj -arch x86 -ext "%BEID_DIR_WIX%\WixUtilExtension.dll" -ext "%BEID_DIR_WIX%\WixUIExtension.dll" Eidviewer.wxs
-@if NOT "%ERRORLEVEL%" == "0" goto msi_failed
-"%BEID_DIR_WIX%\Light.exe" -v -cultures:de-de -ext "%BEID_DIR_WIX%\WixUtilExtension.dll" -ext "%BEID_DIR_WIX%\WixUIExtension.dll" -loc Strings-de.wxl -out bin\de-de\BeidViewer-Basic-de.msi -pdbout bin\de-de\BeidViewer-Basic-de.wixpdb obj\Eidviewer.wixobj
+wix build -arch x86 -culture de-de -d Lang=de -loc "%~dp0\Strings-de.wxl" -out bin\de-de\BeidViewer-Basic-de.msi -pdb bin\de-de\BeidViewer-Basic-de.wixpdb "%~dp0\Eidviewer.wxs"
 @if NOT "%ERRORLEVEL%" == "0" goto msi_failed
 
 
 @echo [INFO] Making the en-us version
 
-"%BEID_DIR_WIX%\candle.exe" -v -dLang=en -out obj\Eidviewer.wixobj -arch x86 -ext "%BEID_DIR_WIX%\WixUtilExtension.dll" -ext "%BEID_DIR_WIX%\WixUIExtension.dll" Eidviewer.wxs
-@if NOT "%ERRORLEVEL%" == "0" goto msi_failed
-"%BEID_DIR_WIX%\Light.exe" -v -cultures:en-us -ext "%BEID_DIR_WIX%\WixUtilExtension.dll" -ext "%BEID_DIR_WIX%\WixUIExtension.dll" -loc Strings-en.wxl -out bin\en-us\BeidViewer-Basic-en.msi -pdbout bin\en-us\BeidViewer-Basic-en.wixpdb obj\Eidviewer.wixobj
+wix build -arch x86 -culture en-us -d Lang=en -loc "%~dp0\Strings-en.wxl" -out bin\en-us\BeidViewer-Basic-en.msi -pdb bin\en-us\BeidViewer-Basic-en.wixpdb "%~dp0\Eidviewer.wxs"
 @if NOT "%ERRORLEVEL%" == "0" goto msi_failed
 
 :: join the language specific msi's together

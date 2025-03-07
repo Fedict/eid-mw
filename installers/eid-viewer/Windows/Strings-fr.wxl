@@ -1,17 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?>
-<WixLocalization Culture="fr-fr" xmlns="http://schemas.microsoft.com/wix/2006/localization">
-  <String Id="Lang" Overridable="yes">1036</String>
-  <String Id="Langpref" Overridable="yes">fr</String>
-  <String Id="StartApp" Overridable="yes">Démarrez l'application Eid Viewer</String>
-  <String Id="MinOs" Overridable="yes">Cette installation a besoin de Windows 2000 au mimimum</String>
-  <String Id="BeidRuntime" Overridable="yes">Belgium EID Runtime 4.0</String>
-  <String Id="BeidRuntimeDesc" Overridable="yes">Ce module est nécessaire pour l'usage de la carte eID comme carte d'identité électronique.</String>
-  <String Id="BeidGui" Overridable="yes">Management Tool</String>
-  <String Id="BeidGuiDescr" Overridable="yes">Lire le contenu de la carte e-ID</String>
-  <String Id="Users" Overridable="yes">Utilisateurs</String>
-  <String Id="msierrSecureObjectsFailedCreateSD" Overridable="yes">Impossible de créer le security descriptor [3]\[4], erreur: [2]</String>
-  <String Id="msierrSecureObjectsFailedSet" Overridable="yes">Impossible d'appliquer le security descriptor de l'objet [3], erreur: [2]</String>
-  <String Id="msierrSecureObjectsUnknownType" Overridable="yes">Type d'objet [3] inconnu, erreur: [2]</String>
-  <String Id="AdminNeeded" Overridable="yes">Vous devez être administrateur pour installer ce produit</String>
-  <String Id="NoDowngrade" Overridable="yes">Une version plus récente est déjà installée.</String>
+﻿<WixLocalization Culture="fr-fr" xmlns="http://wixtoolset.org/schemas/v4/wxl">
+  <String Id="Lang" Overridable="yes" Value="1036" />
+  <String Id="Langpref" Overridable="yes" Value="fr" />
+  <String Id="StartApp" Overridable="yes" Value="Démarrez l'application Eid Viewer" />
+  <String Id="MinOs" Overridable="yes" Value="Cette installation a besoin de Windows 2000 au mimimum" />
+  <String Id="BeidRuntime" Overridable="yes" Value="Belgium EID Runtime 4.0" />
+  <String Id="BeidRuntimeDesc" Overridable="yes" Value="Ce module est nécessaire pour l'usage de la carte eID comme carte d'identité électronique." />
+  <String Id="BeidGui" Overridable="yes" Value="Management Tool" />
+  <String Id="BeidGuiDescr" Overridable="yes" Value="Lire le contenu de la carte e-ID" />
+  <String Id="Users" Overridable="yes" Value="Utilisateurs" />
+  <String Id="msierrSecureObjectsFailedCreateSD" Overridable="yes" Value="Impossible de créer le security descriptor [3]\[4], erreur: [2]" />
+  <String Id="msierrSecureObjectsFailedSet" Overridable="yes" Value="Impossible d'appliquer le security descriptor de l'objet [3], erreur: [2]" />
+  <String Id="msierrSecureObjectsUnknownType" Overridable="yes" Value="Type d'objet [3] inconnu, erreur: [2]" />
+  <String Id="AdminNeeded" Overridable="yes" Value="Vous devez être administrateur pour installer ce produit" />
+  <String Id="NoDowngrade" Overridable="yes" Value="Une version plus récente est déjà installée." />
 </WixLocalization>

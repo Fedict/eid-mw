@@ -1,26 +1,25 @@
-<?xml version="1.0" encoding="utf-8"?>
-<WixLocalization Culture="en-us" xmlns="http://schemas.microsoft.com/wix/2006/localization">
-  <String Id="Lang" Overridable="yes">1033</String>
-  <String Id="Langpref" Overridable="yes">en</String>
-  <String Id="StartApp" Overridable="yes">Start Eid Viewer</String>
-  <String Id="MinOs" Overridable="yes">This setup need at least Windows XP</String>
-  <String Id="BeidRuntime" Overridable="yes">Belgium EID 4</String>
-  <String Id="BeidRuntimeDesc" Overridable="yes">This module is needed to use electronic Identity card.</String>
-  <String Id="BeidGui" Overridable="yes">Eid Viewer</String>
-  <String Id="BeidGuiDescr" Overridable="yes">Read the content of an e-ID card</String>
-  <String Id="Crypto" Overridable="yes">Cryptographic Modules</String>
-  <String Id="CryptoDescr" Overridable="yes">This module is required for using the eID card as an electronic identity card in Internet Explorer, Firefox, etc. or for creating digital signatures in Microsoft Office, OpenOffice.org, Microsoft Outlook, Thunderbird, etc.</String>
-  <String Id="XSign" Overridable="yes">Xsign</String>
-  <String Id="XSignDescr" Overridable="yes">Application XSign</String>
-  <String Id="OutlooksncTitle" Overridable="yes">Configure MS Outlook for eID card</String>
-  <String Id="Office2010XAdESDescr" Overridable="yes">MS Office 2010: XAdES XL configuration for signatures</String>
-  <String Id="OutlooksncDescr" Overridable="yes">Ensure that MS Outlook also accepts certificates that do not contain e-mail addresses, such as is the case with the Belgian identity card certificates.</String>
-  <String Id="UtilsTitle" Overridable="yes">Useful tools for use of the eID card</String>
-  <String Id="UtilsDesc" Overridable="yes">These tools can be used for the automatic configuration of existing applications that use the eID card.</String>
-  <String Id="Users" Overridable="yes">Users</String>
-  <String Id="msierrSecureObjectsFailedCreateSD" Overridable="yes">Could not create security descriptor [3]\[4], error: [2]</String>
-  <String Id="msierrSecureObjectsFailedSet" Overridable="yes">Could not apply object security descriptor [3], error: [2]</String>
-  <String Id="msierrSecureObjectsUnknownType" Overridable="yes">Unknown object type [3], error: [2]</String>
-  <String Id="AdminNeeded" Overridable="yes">You must be an admin to install this product</String>
-  <String Id="NoDowngrade" Overridable="yes">Newer version already installed.</String>
+﻿<WixLocalization Culture="en-us" xmlns="http://wixtoolset.org/schemas/v4/wxl">
+  <String Id="Lang" Overridable="yes" Value="1033" />
+  <String Id="Langpref" Overridable="yes" Value="en" />
+  <String Id="StartApp" Overridable="yes" Value="Start Eid Viewer" />
+  <String Id="MinOs" Overridable="yes" Value="This setup need at least Windows XP" />
+  <String Id="BeidRuntime" Overridable="yes" Value="Belgium EID 4" />
+  <String Id="BeidRuntimeDesc" Overridable="yes" Value="This module is needed to use electronic Identity card." />
+  <String Id="BeidGui" Overridable="yes" Value="Eid Viewer" />
+  <String Id="BeidGuiDescr" Overridable="yes" Value="Read the content of an e-ID card" />
+  <String Id="Crypto" Overridable="yes" Value="Cryptographic Modules" />
+  <String Id="CryptoDescr" Overridable="yes" Value="This module is required for using the eID card as an electronic identity card in Internet Explorer, Firefox, etc. or for creating digital signatures in Microsoft Office, OpenOffice.org, Microsoft Outlook, Thunderbird, etc." />
+  <String Id="XSign" Overridable="yes" Value="Xsign" />
+  <String Id="XSignDescr" Overridable="yes" Value="Application XSign" />
+  <String Id="OutlooksncTitle" Overridable="yes" Value="Configure MS Outlook for eID card" />
+  <String Id="Office2010XAdESDescr" Overridable="yes" Value="MS Office 2010: XAdES XL configuration for signatures" />
+  <String Id="OutlooksncDescr" Overridable="yes" Value="Ensure that MS Outlook also accepts certificates that do not contain e-mail addresses, such as is the case with the Belgian identity card certificates." />
+  <String Id="UtilsTitle" Overridable="yes" Value="Useful tools for use of the eID card" />
+  <String Id="UtilsDesc" Overridable="yes" Value="These tools can be used for the automatic configuration of existing applications that use the eID card." />
+  <String Id="Users" Overridable="yes" Value="Users" />
+  <String Id="msierrSecureObjectsFailedCreateSD" Overridable="yes" Value="Could not create security descriptor [3]\[4], error: [2]" />
+  <String Id="msierrSecureObjectsFailedSet" Overridable="yes" Value="Could not apply object security descriptor [3], error: [2]" />
+  <String Id="msierrSecureObjectsUnknownType" Overridable="yes" Value="Unknown object type [3], error: [2]" />
+  <String Id="AdminNeeded" Overridable="yes" Value="You must be an admin to install this product" />
+  <String Id="NoDowngrade" Overridable="yes" Value="Newer version already installed." />
 </WixLocalization>

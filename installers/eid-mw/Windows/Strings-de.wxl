@@ -1,26 +1,25 @@
-<?xml version="1.0" encoding="utf-8"?>
-<WixLocalization Culture="de-de" xmlns="http://schemas.microsoft.com/wix/2006/localization">
-  <String Id="Lang" Overridable="yes">1031</String>
-  <String Id="Langpref" Overridable="yes">de</String>
-  <String Id="StartApp" Overridable="yes">Start Eid Viewer</String>
-  <String Id="MinOs" Overridable="yes"> Dieser Aufbau muss mindestens Windows XP</String>
-  <String Id="BeidRuntime" Overridable="yes">Belgium Eid</String>
-  <String Id="BeidRuntimeDesc" Overridable="yes">Dieses Modul ist notwendig, um elektronische Personalausweis.</String>
-  <String Id="BeidGui" Overridable="yes">Eid Viewer</String>
-  <String Id="BeidGuiDescr" Overridable="yes">Lesen Sie den Inhalt einer e-ID Karte</String>
-  <String Id="Crypto" Overridable="yes">Kryptografische Module</String>
-  <String Id="CryptoDescr" Overridable="yes">Diese Module sind für die Benutzung der eID-Karte als elektronischen Personalausweis in Internet Explorer, Firefox, usw. oder zum Erstellen von digitalen Unterschriften in Microsoft Office, OpenOffice.org, Microsoft Outlook, Thunderbird usw. notwendig.</String>
-  <String Id="XSign" Overridable="yes">Xsign</String>
-  <String Id="XSignDescr" Overridable="yes">Application XSign</String>
-  <String Id="OutlooksncTitle" Overridable="yes">Konfigurieren von MS Outlook für eID-Karte</String>
-  <String Id="Office2010XAdESDescr" Overridable="yes">XAdES XL- und TSA-Konfiguration für Unterschriften</String>
-  <String Id="OutlooksncDescr" Overridable="yes">Sorgt dafür, dass MS Outlook auch Bescheinigungen ohne E-Mail-Adresse akzeptiert, wie dies bei den belgischen Personalausweisbescheinigungen der Fall ist.</String>
-  <String Id="UtilsTitle" Overridable="yes">Nützliche Hilfsmittel für die Nutzung der eID-Karte</String>
-  <String Id="UtilsDesc" Overridable="yes">Diese Hilfsmittel können für die automatische Konfiguration bestehender Anwendungen verwendet werden, die die eID-Karte nutzen.</String>
-  <String Id="Users" Overridable="yes">Users</String>
-  <String Id="msierrSecureObjectsFailedCreateSD" Overridable="yes">Could not create security descriptor [3]\[4], error: [2]</String>
-  <String Id="msierrSecureObjectsFailedSet" Overridable="yes">Could not apply object security descriptor [3], error: [2]</String>
-  <String Id="msierrSecureObjectsUnknownType" Overridable="yes">Unknown object type [3], error: [2]</String>
-  <String Id="AdminNeeded" Overridable="yes">Sie müssen Administrator sein, um dieses Produkt zu installieren</String>
-  <String Id="NoDowngrade" Overridable="yes">Neuere Version bereits installiert ist.</String>
+﻿<WixLocalization Culture="de-de" xmlns="http://wixtoolset.org/schemas/v4/wxl">
+  <String Id="Lang" Overridable="yes" Value="1031" />
+  <String Id="Langpref" Overridable="yes" Value="de" />
+  <String Id="StartApp" Overridable="yes" Value="Start Eid Viewer" />
+  <String Id="MinOs" Overridable="yes" Value="Dieser Aufbau muss mindestens Windows XP" />
+  <String Id="BeidRuntime" Overridable="yes" Value="Belgium Eid" />
+  <String Id="BeidRuntimeDesc" Overridable="yes" Value="Dieses Modul ist notwendig, um elektronische Personalausweis." />
+  <String Id="BeidGui" Overridable="yes" Value="Eid Viewer" />
+  <String Id="BeidGuiDescr" Overridable="yes" Value="Lesen Sie den Inhalt einer e-ID Karte" />
+  <String Id="Crypto" Overridable="yes" Value="Kryptografische Module" />
+  <String Id="CryptoDescr" Overridable="yes" Value="Diese Module sind für die Benutzung der eID-Karte als elektronischen Personalausweis in Internet Explorer, Firefox, usw. oder zum Erstellen von digitalen Unterschriften in Microsoft Office, OpenOffice.org, Microsoft Outlook, Thunderbird usw. notwendig." />
+  <String Id="XSign" Overridable="yes" Value="Xsign" />
+  <String Id="XSignDescr" Overridable="yes" Value="Application XSign" />
+  <String Id="OutlooksncTitle" Overridable="yes" Value="Konfigurieren von MS Outlook für eID-Karte" />
+  <String Id="Office2010XAdESDescr" Overridable="yes" Value="XAdES XL- und TSA-Konfiguration für Unterschriften" />
+  <String Id="OutlooksncDescr" Overridable="yes" Value="Sorgt dafür, dass MS Outlook auch Bescheinigungen ohne E-Mail-Adresse akzeptiert, wie dies bei den belgischen Personalausweisbescheinigungen der Fall ist." />
+  <String Id="UtilsTitle" Overridable="yes" Value="Nützliche Hilfsmittel für die Nutzung der eID-Karte" />
+  <String Id="UtilsDesc" Overridable="yes" Value="Diese Hilfsmittel können für die automatische Konfiguration bestehender Anwendungen verwendet werden, die die eID-Karte nutzen." />
+  <String Id="Users" Overridable="yes" Value="Users" />
+  <String Id="msierrSecureObjectsFailedCreateSD" Overridable="yes" Value="Could not create security descriptor [3]\[4], error: [2]" />
+  <String Id="msierrSecureObjectsFailedSet" Overridable="yes" Value="Could not apply object security descriptor [3], error: [2]" />
+  <String Id="msierrSecureObjectsUnknownType" Overridable="yes" Value="Unknown object type [3], error: [2]" />
+  <String Id="AdminNeeded" Overridable="yes" Value="Sie müssen Administrator sein, um dieses Produkt zu installieren" />
+  <String Id="NoDowngrade" Overridable="yes" Value="Neuere Version bereits installiert ist." />
 </WixLocalization>
