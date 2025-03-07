@@ -1,0 +1,16 @@
+﻿<WixLocalization Culture="nl-nl" xmlns="http://wixtoolset.org/schemas/v4/wxl" Codepage="1252">
+  <String Id="Lang" Overridable="yes" Value="1043" />
+  <String Id="Langpref" Overridable="yes" Value="nl" />
+  <String Id="LicenseFile" Overridable="yes"></String>
+  <String Id="StartApp" Overridable="yes" Value="Start de Eid Viewer toepassing" />
+  <String Id="MinOs" Overridable="yes" Value="Windows XP of hoger is vereist" />
+  <String Id="BeidRuntime" Overridable="yes" Value="Belgium EID Runtime 4.0" />
+  <String Id="BeidRuntimeDesc" Overridable="yes" Value="Deze modules zijn noodzakelijk voor het gebruik van de eID kaart." />
+  <String Id="BeidGui" Overridable="yes" Value="eID beheersinstrument" />
+  <String Id="BeidGuiDescr" Overridable="yes" Value="Uitlezen van de e-ID" />
+  <String Id="msierrSecureObjectsFailedCreateSD" Overridable="yes" Value="Kan de security descriptor voor [3]\[4] niet aanmaken, systeemfout: [2]" />
+  <String Id="msierrSecureObjectsFailedSet" Overridable="yes" Value="Kan de security descriptor niet zetten op object [3], systeemfout: [2]" />
+  <String Id="msierrSecureObjectsUnknownType" Overridable="yes" Value="Onbekend Object Type [3], systeemfout: [2]" />
+  <String Id="AdminNeeded" Overridable="yes" Value="U moet een administrator zijn voor de installatie van dit product" />
+  <String Id="NoDowngrade" Overridable="yes" Value="Er is reeds een nieuwere versie geïnstalleerd." />
+</WixLocalization>

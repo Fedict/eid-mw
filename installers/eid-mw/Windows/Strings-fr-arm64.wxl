@@ -1,0 +1,25 @@
+﻿<WixLocalization Culture="fr-fr" xmlns="http://wixtoolset.org/schemas/v4/wxl">
+  <String Id="Lang" Overridable="yes" Value="1036" />
+  <String Id="Langpref" Overridable="yes" Value="fr" />
+  <String Id="StartApp" Overridable="yes" Value="Démarrez l'application Eid Viewer" />
+  <String Id="MinOs" Overridable="yes" Value="Cette installation a besoin de Windows XP au mimimum" />
+  <String Id="BeidRuntime" Overridable="yes" Value="Belgium EID" />
+  <String Id="BeidRuntimeDesc" Overridable="yes" Value="Ce module est nécessaire pour l'usage de la carte eID comme carte d'identité électronique." />
+  <String Id="BeidGui" Overridable="yes" Value="Eid Viewer" />
+  <String Id="BeidGuiDescr" Overridable="yes" Value="Lire le contenu de la carte e-ID" />
+  <String Id="Crypto" Overridable="yes" Value="Modules cryptographiques" />
+  <String Id="CryptoDescr" Overridable="yes" Value="Ces modules permettent d'utiliser la carte eID comme preuve d'identité dans Internet Explorer, Firefox, etc. ou pour créer des signatures numériques dans Microsoft Office, OpenOffice.org, Microsoft Outlook, Thunderbird, etc." />
+  <String Id="XSign" Overridable="yes" Value="Xsign" />
+  <String Id="XSignDescr" Overridable="yes" Value="Application XSign" />
+  <String Id="OutlooksncTitle" Overridable="yes" Value="Configuration de MS Outlook pour la carte eID" />
+  <String Id="Office2010XAdESDescr" Overridable="yes" Value="configuration XAdES XL et TSA pour signatures" />
+  <String Id="OutlooksncDescr" Overridable="yes" Value="Veille à ce que MS Outlook accepte également les certificats qui ne comprennent pas d’adresse e-mail, comme c’est le cas pour les certificats de la carte d’identité belge." />
+  <String Id="UtilsTitle" Overridable="yes" Value="Ressources utiles à l’utilisation de la carte eID" />
+  <String Id="UtilsDesc" Overridable="yes" Value="Ces ressources peuvent être utilisées pour la configuration automatique d’applications existantes faisant appel à la carte eID." />
+  <String Id="Users" Overridable="yes" Value="Utilisateurs" />
+  <String Id="msierrSecureObjectsFailedCreateSD" Overridable="yes" Value="Impossible de créer le security descriptor [3]\[4], erreur: [2]" />
+  <String Id="msierrSecureObjectsFailedSet" Overridable="yes" Value="Impossible d'appliquer le security descriptor de l'objet [3], erreur: [2]" />
+  <String Id="msierrSecureObjectsUnknownType" Overridable="yes" Value="Type d'objet [3] inconnu, erreur: [2]" />
+  <String Id="AdminNeeded" Overridable="yes" Value="Vous devez être administrateur pour installer ce produit" />
+  <String Id="NoDowngrade" Overridable="yes" Value="Une version plus récente est déjà installée." />
+</WixLocalization>
