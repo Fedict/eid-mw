@@ -363,7 +363,7 @@ ${EnableX64FSRedirection}
   
   	ClearErrors
 	StrCpy $FileToCopy "$INSTDIR\CertClean.exe"
-	File "..\..\plugins_tools\CertClean\Release\CertClean.exe"
+	File "..\..\plugins_tools\CertClean\x64\Release\CertClean.exe"
 	IfErrors 0 +2
 		Call ErrorHandler_file
 	ClearErrors
