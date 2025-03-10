@@ -94,8 +94,8 @@ Run the buildscript located at eid-mw\scripts\windows\build_all.bat
 This script will generate some version dependant files that are used in the Visual Studio projects
 It will also build the middleware and viewer, as well as their installers
 
-The eID Middleware Visual Studio solution (2017) is located in eid-mw\VS_2017
-The eID Viewer Visual Studio solution (2017) is located in eid-mw\plugins_tools\eid-viewer\Windows\VS_2017
+The eID Middleware Visual Studio solution (2022) is located in eid-mw\VS_2022
+The eID Viewer Visual Studio solution (2022) is located in eid-mw\plugins_tools\eid-viewer\Windows\VS_2022
 
 
 #### Firefox ####

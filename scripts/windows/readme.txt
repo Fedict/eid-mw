@@ -19,7 +19,7 @@ For the creation of the MSI installers
 http://wixtoolset.org/releases/
 This one currently still need .NET 3.5 installed
 To install .NET 3.5: press the windows keys and type "Windows Features",
-then select .NET 3.5 from te WIndows Features dialog box
+then select .NET 3.5 from the Windows Features dialog box
 
 5) Git can be installed as part of Visual Studio installation
 (or added later by updating the Visual Studio installation through add/remove applications)
