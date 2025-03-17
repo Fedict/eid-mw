@@ -12,24 +12,24 @@
 @echo build_msi_eidmwarm64.cmd
 @echo [INFO] Making the nl-nl version
 
-wix build -arch arm64 -culture nl-nl -d Lang=nl -ext "%BEID_DIR_WIX%\WixToolset.UI.wixext.dll" -ext "%BEID_DIR_WIX%\WixToolset.Util.wixext.dll" -loc "%~dp0\Strings-nl-arm64.wxl" -loc WixUI_nl-nl_arm64.wxl -out bin\nl-nl\BeidMWarm64-Basic-nl.msi -pdb bin\nl-nl\BeidMWarm64-Basic-nl.wixpdb "%~dp0\Productarm64.wxs"
+wix build -arch arm64 -culture nl-nl -d Lang=nl -ext "%BEID_DIR_WIX_EXT%\WixToolset.UI.wixext\5.0.2\wixext5\WixToolset.UI.wixext.dll" -ext "%BEID_DIR_WIX_EXT%\WixToolset.Util.wixext\5.0.2\wixext5\WixToolset.Util.wixext.dll" -loc "%~dp0\Strings-nl-arm64.wxl" -loc WixUI_nl-nl_arm64.wxl -out bin\nl-nl\BeidMWarm64-Basic-nl.msi -pdb bin\nl-nl\BeidMWarm64-Basic-nl.wixpdb "%~dp0\Productarm64.wxs"
 @if NOT "%ERRORLEVEL%" == "0" goto msi_failed
 
 @echo [INFO] Making the fr-fr version
 
-wix build -arch arm64 -culture fr-fr -d Lang=fr -ext "%BEID_DIR_WIX%\WixToolset.UI.wixext.dll" -ext "%BEID_DIR_WIX%\WixToolset.Util.wixext.dll" -loc "%~dp0\Strings-fr-arm64.wxl" -out bin\fr-fr\BeidMWarm64-Basic-fr.msi -pdb bin\fr-fr\BeidMWarm64-Basic-fr.wixpdb "%~dp0\Productarm64.wxs"
+wix build -arch arm64 -culture fr-fr -d Lang=fr -ext "%BEID_DIR_WIX_EXT%\WixToolset.UI.wixext\5.0.2\wixext5\WixToolset.UI.wixext.dll" -ext "%BEID_DIR_WIX_EXT%\WixToolset.Util.wixext\5.0.2\wixext5\WixToolset.Util.wixext.dll" -loc "%~dp0\Strings-fr-arm64.wxl" -out bin\fr-fr\BeidMWarm64-Basic-fr.msi -pdb bin\fr-fr\BeidMWarm64-Basic-fr.wixpdb "%~dp0\Productarm64.wxs"
 @if NOT "%ERRORLEVEL%" == "0" goto msi_failed
 
 
 @echo [INFO] Making the de-de version
 
-wix build -arch arm64 -culture de-de -d Lang=de -ext "%BEID_DIR_WIX%\WixToolset.UI.wixext.dll" -ext "%BEID_DIR_WIX%\WixToolset.Util.wixext.dll" -loc "%~dp0\Strings-de-arm64.wxl" -out bin\de-de\BeidMWarm64-Basic-de.msi -pdb bin\de-de\BeidMWarm64-Basic-de.wixpdb "%~dp0\Productarm64.wxs"
+wix build -arch arm64 -culture de-de -d Lang=de -ext "%BEID_DIR_WIX_EXT%\WixToolset.UI.wixext\5.0.2\wixext5\WixToolset.UI.wixext.dll" -ext "%BEID_DIR_WIX_EXT%\WixToolset.Util.wixext\5.0.2\wixext5\WixToolset.Util.wixext.dll" -loc "%~dp0\Strings-de-arm64.wxl" -out bin\de-de\BeidMWarm64-Basic-de.msi -pdb bin\de-de\BeidMWarm64-Basic-de.wixpdb "%~dp0\Productarm64.wxs"
 @if NOT "%ERRORLEVEL%" == "0" goto msi_failed
 
 
 @echo [INFO] Making the en-us version
 
-wix build -arch arm64 -culture en-us -d Lang=en -ext "%BEID_DIR_WIX%\WixToolset.UI.wixext.dll" -ext "%BEID_DIR_WIX%\WixToolset.Util.wixext.dll" -loc "%~dp0\Strings-en-arm64.wxl" -out bin\en-us\BeidMWarm64-Basic-en.msi -pdb bin\en-us\BeidMWarm64-Basic-en.wixpdb "%~dp0\Productarm64.wxs"
+wix build -arch arm64 -culture en-us -d Lang=en -ext "%BEID_DIR_WIX_EXT%\WixToolset.UI.wixext\5.0.2\wixext5\WixToolset.UI.wixext.dll" -ext "%BEID_DIR_WIX_EXT%\WixToolset.Util.wixext\5.0.2\wixext5\WixToolset.Util.wixext.dll" -loc "%~dp0\Strings-en-arm64.wxl" -out bin\en-us\BeidMWarm64-Basic-en.msi -pdb bin\en-us\BeidMWarm64-Basic-en.wixpdb "%~dp0\Productarm64.wxs"
 @if NOT "%ERRORLEVEL%" == "0" goto msi_failed
 
 
