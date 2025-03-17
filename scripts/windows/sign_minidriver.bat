@@ -18,7 +18,7 @@ set MDRVCERTPATH=%~dp0..\..\cardcomm\minidriver\makemsi
 :: Create catalog for win10 attestation signature
 :: ==============================================
 @del "%MDRVINSTALLPATH%\beidmdrv\beidmdrv.cat"
-"%INF2CAT_PATH%\inf2cat.exe" /driver:%MDRVINSTALLPATH%\beidmdrv\ /os:XP_X86,XP_X64,Vista_X86,Vista_X64,7_X86,7_X64
+"%INF2CAT_PATH%\inf2cat.exe" /driver:%MDRVINSTALLPATH%\beidmdrv\ /os:XP_X86,XP_X64,Vista_X86,Vista_X64,7_X86,7_X64,Server10_ARM64,10_RS3_ARM64,10_RS4_ARM64,ServerRS5_ARM64,10_RS5_ARM64,10_19H1_ARM64,10_VB_ARM64,ServerFE_ARM64,10_CO_ARM64,10_NI_ARM64
 @if "%ERRORLEVEL%" == "1" goto inf2cat_failed
 
 :: sign minidriver dll's
@@ -30,6 +30,10 @@ set MDRVCERTPATH=%~dp0..\..\cardcomm\minidriver\makemsi
 
 @echo [INFO] Sign the minidriver 64bit dll
 "%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "e20634d42e8bc522c6341dce24badd103f5f4312" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%MDRVINSTALLPATH%\beidmdrv\beidmdrv64.dll"
+@if "%ERRORLEVEL%" == "1" goto signtool_failed
+
+@echo [INFO] Sign the minidriver 64bit for arm dll
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "e20634d42e8bc522c6341dce24badd103f5f4312" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%MDRVINSTALLPATH%\beidmdrv\beidmdrv_arm64.dll"
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
 
 :: Sign catalog

@@ -32,13 +32,17 @@ copy %~dp0..\..\plugins_tools\CertClean\Release\CertClean.exe %~dp0
 :: sign pkcs11
 :: ===========
 @echo [INFO] Sign the pkcs11 dll, 32bit
-"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "e20634d42e8bc522c6341dce24badd103f5f4312" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\cardcomm\pkcs11\VS_2019\Binaries\Win32_Release\beidpkcs11.dll"
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "e20634d42e8bc522c6341dce24badd103f5f4312" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\cardcomm\pkcs11\VS_2022\Binaries\Win32_Release\beidpkcs11.dll"
 @echo [INFO] Sign the pkcs11_ff dll, 32bit
-"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "e20634d42e8bc522c6341dce24badd103f5f4312" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\cardcomm\pkcs11\VS_2019\Binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll"
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "e20634d42e8bc522c6341dce24badd103f5f4312" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\cardcomm\pkcs11\VS_2022\Binaries\Win32_PKCS11_FF_Release\beid_ff_pkcs11.dll"
 @echo [INFO] Sign the pkcs11 dll, 64bit
-"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "e20634d42e8bc522c6341dce24badd103f5f4312" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\cardcomm\pkcs11\VS_2019\Binaries\x64_Release\beidpkcs11.dll"
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "e20634d42e8bc522c6341dce24badd103f5f4312" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\cardcomm\pkcs11\VS_2022\Binaries\x64_Release\beidpkcs11.dll"
 @echo [INFO] Sign the pkcs11_ff dll, 64bit
-"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "e20634d42e8bc522c6341dce24badd103f5f4312" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\cardcomm\pkcs11\VS_2019\Binaries\x64_PKCS11_FF_Release\beid_ff_pkcs11.dll"
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "e20634d42e8bc522c6341dce24badd103f5f4312" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\cardcomm\pkcs11\VS_2022\Binaries\x64_PKCS11_FF_Release\beid_ff_pkcs11.dll"
+@echo [INFO] Sign the pkcs11 dll, 64bit for arm
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "e20634d42e8bc522c6341dce24badd103f5f4312" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\cardcomm\pkcs11\VS_2022\Binaries\ARM64EC_Release\beidpkcs11.dll"
+@echo [INFO] Sign the pkcs11_ff dll, 64bit for arm
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "e20634d42e8bc522c6341dce24badd103f5f4312" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\cardcomm\pkcs11\VS_2022\Binaries\ARM64_PKCS11_FF_Release\beid_ff_pkcs11.dll"
 
 
 :: create the MSI installers
@@ -72,6 +76,18 @@ copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_32.msi %~dp0\BeidMW_32_%BAS
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
 @echo [INFO] copy 64 bit msi installer
 copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_64.msi %~dp0\BeidMW_64_%BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.msi
+
+@call "%~dp0..\..\installers\eid-mw\Windows\build_msi_eidmwarm64.cmd"
+@if %ERRORLEVEL%==1 goto signtool_failed
+::sign the 64bit msi
+@echo [INFO] sign 64 bit for arm msi installer
+::signtool fails at dual-signing msi's at the moment
+::"%SIGNTOOL_PATH%\signtool" sign /n "Zetes SA" /sha1 "e20634d42e8bc522c6341dce24badd103f5f4312" /t http://timestamp.verisign.com/scripts/timestamp.dll /v "%~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_64.msi"
+:: /as
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "e20634d42e8bc522c6341dce24badd103f5f4312" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_arm64.msi"
+@if "%ERRORLEVEL%" == "1" goto signtool_failed
+@echo [INFO] copy 64 bit for arm msi installer
+copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_arm64.msi %~dp0\BeidMW_arm64_%BASE_VERSION1%.%BASE_VERSION2%.%BASE_VERSION3%.%EIDMW_REVISION%.msi
 
 
 @cd "%OUR_CURRENT_PATH%"
