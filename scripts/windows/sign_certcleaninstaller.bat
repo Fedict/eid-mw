@@ -10,7 +10,7 @@ call "%~dp0.\set_eidmw_version.cmd"
 :: sign the 32bit version of the CertClean tool
 :: ============================================
 ::@echo [INFO] sign the CertClean tool x86
-::"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "e20634d42e8bc522c6341dce24badd103f5f4312" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\plugins_tools\CertClean\Release\CertClean.exe"
+::"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "3f85e2a3538669c2a04aaeeb318497c780101872" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\plugins_tools\CertClean\Release\CertClean.exe"
 ::
 ::@if "%ERRORLEVEL%" == "1" goto signtool_failed
 ::@echo [INFO] copy the signed CertClean tool
@@ -31,7 +31,7 @@ set OUR_CURRENT_PATH="%cd%"
 ::sign the 32bit msi
 @echo [INFO] sign 32bit certclean msi installer
 
-"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "e20634d42e8bc522c6341dce24badd103f5f4312" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\installers\eid-mw\Windows\bin\certclean.msi"
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "3f85e2a3538669c2a04aaeeb318497c780101872" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\installers\eid-mw\Windows\bin\certclean.msi"
 @if "%ERRORLEVEL%" == "1" goto signtool_failed
 @echo [INFO] copy 32 bit certclean msi installer
 copy %~dp0..\..\installers\eid-mw\Windows\bin\certclean.msi %~dp0
