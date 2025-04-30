@@ -1,0 +1,61 @@
+publiccodeYmlVersion: "0.4"
+
+name: eID Middleware
+url: "https://github.com/Fedict/eid-mw"
+softwareType: "standalone/desktop"
+releaseDate: "2024-10-24"
+platforms:
+  - windows
+  - linux
+  - macos
+categories:
+  - authentication
+  - identity-management
+  - security
+description:
+  en:
+    shortDescription: "Middleware for interacting with the Belgian electronic ID card (eID) for authentication, data reading, and digital signatures."
+    longDescription: >
+     "The eID Middleware is a software suite that enables applications to interact with the Belgian electronic ID card (eID), an ISO 7816-compliant contact smart card.
+     It supports reading identity data, authenticating users, and digitally signing documents. 
+     The middleware includes a PKCS#11 module for cryptographic operations, a native eID Viewer for data visualization, and an SDK for custom application development.
+     It is designed for use in secure government and public services, such as CSAM authentication, and supports multiple platforms including Windows, Linux, and macOS."
+    features:
+      - Read identity data from Belgian eID cards
+      - Authenticate users via eID
+      - Digitally sign documents
+      - PKCS11 cryptographic API integration
+      - eID Viewer for data visualization and storage
+      - Cross-platform support (Windows, Linux, macOS)
+      - Firefox extension for browser integration
+developmentStatus: stable
+softwareVersion: "5.1.21"
+license: "LGPL-3.0-or-later"
+maintained: true
+intendedAudience:
+  scope:
+    - government
+  countries:
+    - BE
+legal:
+  repoOwner: "FPS BOSA DG Digital Transformation"
+  authorsFile: "AUTHORS"
+maintenance:
+  type: "contract"
+  contractors:
+    - name: "Zetes"
+      until: "2026-12-31"
+  contacts:
+    - name: "Frederikus"
+      email: "info@bosa.fgov.be"
+    - name: "Wouter"
+      email: "info@bosa.fgov.be"
+localisation:
+  localisationReady: true
+  availableLanguages:
+    - en
+    - nl
+    - fr
+    - de
+usedBy:
+  - "CSAM (Belgian federal authentication service)"
