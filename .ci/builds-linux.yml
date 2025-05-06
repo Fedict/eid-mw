@@ -293,7 +293,7 @@
   - if [ ! -z "$TARGET" ]; then dist="$TARGET-$CODE"; else dist=$CODE; fi
   - ../products/source/deb-cl.pl debian/changelog "$COMMITDATE" "$VER"
   script:
-  - sbuild -n $DASHA -d $dist -c $CODE-$ARCH-sbuild --arch=$ARCH
+  - sbuild -n $DASHA -d $dist -c $CODE-$ARCH-sbuild --arch=$ARCH --chroot-setup-commands="dpkg-buildpackage -T clean"
   after_script:
   - mkdir -p products/deb/
   - dcmd cp eid-mw_*.changes products/deb/
