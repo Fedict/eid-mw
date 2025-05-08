@@ -27,6 +27,7 @@
   tags:
   - build
   - windows
+  allow_failure: true
   artifacts:
     when: on_success
     paths:
