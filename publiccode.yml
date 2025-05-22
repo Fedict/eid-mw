@@ -46,9 +46,7 @@ maintenance:
     - name: "Zetes"
       until: "2026-12-31"
   contacts:
-    - name: "Frederikus"
-      email: "info@bosa.fgov.be"
-    - name: "Wouter"
+    - name: "BOSA helpdesk"
       email: "info@bosa.fgov.be"
 localisation:
   localisationReady: true
