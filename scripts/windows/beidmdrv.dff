@@ -20,4 +20,5 @@
 "..\..\installers\quickinstaller\Drivers\WINALL\beidmdrv\beidmdrv.inf"
 "..\..\installers\quickinstaller\Drivers\WINALL\beidmdrv\beidmdrv32.dll"
 "..\..\installers\quickinstaller\Drivers\WINALL\beidmdrv\beidmdrv64.dll"
+"..\..\installers\quickinstaller\Drivers\WINALL\beidmdrv\beidmdrv_arm64.dll"
 "..\..\installers\quickinstaller\Drivers\WINALL\beidmdrv\beidmdrv.cat"
