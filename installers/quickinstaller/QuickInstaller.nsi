@@ -1,3 +1,5 @@
+unicode False
+
 ;--------------------------------
 ;Include nsdialogs and 64bit checks
 
@@ -927,7 +929,8 @@ Function nsdCardData
 		Pop $firstname
 	
 		;all went well, show a succes message on this final page
-		${NSD_CreateLabel} 0 40% 100% 36u "$(ls_testcomplete_pre) $firstname $(ls_testcomplete_post)"
+		;temporary removed "$(ls_testcomplete_pre) $firstname"
+		${NSD_CreateLabel} 0 40% 100% 36u "$(ls_testcomplete_post)"
 		Pop $Label
 		SetCtlColors $Label 0x008080 transparent
 		${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
@@ -955,21 +958,21 @@ Function nsdCardData
 		${buttonVisible} "Cancel" 0	
 	${Else} 
 
-		${NSD_CreateLabel} 0 40% 100% 20u "$(ls_errorreadingcard)"
+		${NSD_CreateLabel} 0 40% 100% 40u "$(ls_errorreadingcard)"
 		Pop $Label
 		SetCtlColors $Label 0x008080 transparent
 		${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
 		CreateFont $Font_Title "Arial" "18" "700" ;/UNDERLINE
 		SendMessage $Label ${WM_SETFont} $Font_Title 1
 		
-		${NSD_CreateLabel} 0 60% 100% 16u "$(ls_error) R$retval"
+		${NSD_CreateLabel} 0 70% 100% 16u "$(ls_error) R$retval"
 		Pop $Label
 		${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
 		CreateFont $Font_Info "Arial" "9" "500" ;/UNDERLINE
 		SendMessage $Label ${WM_SETFont} $Font_Info 1
 		SetCtlColors $Label 0x008080 transparent
 		
-		${NSD_CreateLabel} 0 70% 100% 36u "$(ls_test_failed_info)"
+		${NSD_CreateLabel} 0 80% 100% 36u "$(ls_test_failed_info)"
 		Pop $Label
 		${NSD_AddStyle} $Label ${SS_CENTER} ;center the text
 		CreateFont $Font_Info "Arial" "9" "500" ;/UNDERLINE

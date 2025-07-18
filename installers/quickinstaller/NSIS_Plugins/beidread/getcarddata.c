@@ -73,10 +73,10 @@ CK_RV ReadTheCardData(void) {
 						{
 							if ((retval = FindAndStore(functions, session_handle, "firstnames",&g_firstNames)) == CKR_OK)
 							{
-								ConvertUtf8toAscii(&g_firstNames); //don't mind the return value, if it failed, we'll return the utf8 string
+								//ConvertUtf8toAscii(&g_firstNames); //disabled - handled in main.c pushstring_safe()
 								if ((retval = FindAndStore(functions, session_handle, "first_letter_of_third_given_name",&g_firstLetterThirdName)) == CKR_OK)
 								{
-									ConvertUtf8toAscii(&g_firstLetterThirdName); //don't mind the return value, if it failed, we'll return the utf8 string
+									//ConvertUtf8toAscii(&g_firstLetterThirdName); //disabled - handled in main.c pushstring_safe()
 									if ((retval = FindAndStore(functions, session_handle, "surname",&g_surName)) == CKR_OK)
 									{
 //										ConvertUtf8toAscii(&g_surName); //don't mind the return value, if it failed, we'll return the utf8 string
