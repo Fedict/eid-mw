@@ -37,10 +37,23 @@ AC_CHECK_HEADERS([fcntl.h float.h limits.h netinet/in.h stdlib.h string.h sys/fi
 
 AM_GNU_GETTEXT([external])
 
+###### pcsc-lite ##########
+PKG_CHECK_MODULES([PCSC],[libpcsclite >= 1.4.4],
+[
+CPPFLAGS="$PCSC_CFLAGS $CPPFLAGS"
+LDFLAGS="$PCSC_LIBS $LDFLAGS"
+])
+
 AC_ARG_ENABLE([pinentry],AS_HELP_STRING([--disable-pinentry],[When enabled, uses pinentry for dialogs, rather than home-grown dialog boxes (requires libassuan)]),[assuan=$enableval],[assuan=detect])
 if test x"$assuan" != x"no"
 then
-	AM_PATH_LIBASSUAN(2,[ASSUAN=y],[ASSUAN=n])
+        PKG_CHECK_MODULES([ASSUAN], libassuan gpg-error,
+        [
+         ASSUAN=y
+         CPPFLAGS="$ASSUAN_CFLAGS $CPPFLAGS"
+         LDFLAGS="$ASSUAN_LIBS $LDFLAGS"
+        ],
+        [ASSUAN=n])
 fi
 
 if test x"$assuan" = x"yes" -a x$ASSUAN = x"n"
@@ -49,13 +62,6 @@ then
 fi
 
 AM_CONDITIONAL(ASSUAN,[test x"$ASSUAN" = x"y"])
-
-###### pcsc-lite ##########
-PKG_CHECK_MODULES([PCSC],[libpcsclite >= 1.4.4],
-[
-CPPFLAGS="$PCSC_CFLAGS $CPPFLAGS"
-LDFLAGS="$PCSC_LIBS $LDFLAGS"
-])
 
 AC_ARG_ENABLE([test-fuzzer],AS_HELP_STRING([--enable-test-fuzzer],[Build a version of eid-mw instrumented for fuzzing (not meant for production use!)]),[fuzzer=$enableval],[fuzzer=no])
 AC_MSG_CHECKING([whether to build for fuzzing])
