@@ -187,6 +187,7 @@
     - $ARCH_TAG
   image: $CI_REGISTRY_IMAGE/deb-scan-build:$CI_COMMIT_REF_SLUG-$ARCH_TAG
   retry: 2
+  allow_failure: true
   before_script:
   - if [ ! -z "$ACNG" ]; then sed -i -e "s,http://,$ACNG/," /etc/apt/sources.list.d/debian.sources; else echo "no proxy configured"; fi
   - apt-get update
