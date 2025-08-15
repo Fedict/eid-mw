@@ -53,7 +53,9 @@ then
          CPPFLAGS="$ASSUAN_CFLAGS $CPPFLAGS"
          LDFLAGS="$ASSUAN_LIBS $LDFLAGS"
         ],
-        [ASSUAN=n])
+        [
+         AM_PATH_LIBASSUAN(2, [ASSUAN=y], [ASSUAN=n])
+        ])
 fi
 
 if test x"$assuan" = x"yes" -a x$ASSUAN = x"n"
