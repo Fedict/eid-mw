@@ -24,7 +24,7 @@ RUN set -ex; \
 	apt-get -y -t experimental install debootstrap; \
 	rm -rf /var/lib/apt/lists/*
 
-RUN echo -e 'root:100000:65536' > /etc/subuid; echo -e 'root:100000:65536' > /etc/subgid
+RUN echo 'root:100000:65536' > /etc/subuid; echo 'root:100000:65536' > /etc/subgid
 
 WORKDIR /tmp
 
