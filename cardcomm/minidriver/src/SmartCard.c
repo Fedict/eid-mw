@@ -1348,9 +1348,13 @@ DWORD BeidSignData(PCARD_DATA  pCardData, unsigned int HashAlgo, DWORD cbToBeSig
 	pVendorSpec = pCardData->pvVendorSpecific;
 	if (pVendorSpec->bBEIDCardType == BEID_ECC_CARD)
 	{
-		if ((recvlen - 2) == 0x60)
+		if ((recvlen - 2) == 0x40)
 		{
-			*pcbSignature = 0x60; //48d * 2
+			*pcbSignature = 0x40; // EC256 signature size (32 bytes r + 32 bytes s)
+		}
+		else if ((recvlen - 2) == 0x60)
+		{
+			*pcbSignature = 0x60; // EC384 signature size (48 bytes r + 48 bytes s)
 		}
 		else //not supported
 		{

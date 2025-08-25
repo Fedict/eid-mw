@@ -37,9 +37,10 @@ DWORD BeidGetPubKey(PCARD_DATA  pCardData, DWORD cbCertif, PBYTE pbCertif, DWORD
 	LPCSTR			lpszStructType = NULL;
 
 	BCRYPT_ECCKEY_BLOB ECCHeader;
+	BYTE bECDSA_P256[] = { 0x06,0x08,0x2A,0x86,0x48,0xCE,0x3D,0x03,0x01,0x07 }; //1.2.840.10045.3.1.7 ECDSA_P256
 	BYTE bECDSA_P384[] = { 0x06,0x05,0x2B,0x81,0x04,0x00,0x22 }; //1.3.132.0.34 ECDSA_P384
 	//06:		OID identifier
-	//05:		length
+	//05/08:	length
 	//2B:		1.3.
 	//81 04:	132.
 	//00:		0.
@@ -81,22 +82,25 @@ DWORD BeidGetPubKey(PCARD_DATA  pCardData, DWORD cbCertif, PBYTE pbCertif, DWORD
 		//szOID_ECC_PUBLIC_KEY: The unrestricted algorithm identifier: 1.2.840.10045.2.1
 		if (strcmp(((*((*pCertContext).pCertInfo)).SubjectPublicKeyInfo).Algorithm.pszObjId, szOID_ECC_PUBLIC_KEY) == 0)
 		{
-			LogTrace(LOGTYPE_ERROR, WHERE, "Key algoritm %s supported ", ((*((*pCertContext).pCertInfo)).SubjectPublicKeyInfo).Algorithm.pszObjId);
-			if (((*((*pCertContext).pCertInfo)).SubjectPublicKeyInfo).Algorithm.Parameters.cbData != sizeof(bECDSA_P384))
+			LogTrace(LOGTYPE_INFO, WHERE, "Key algoritm %s supported ", ((*((*pCertContext).pCertInfo)).SubjectPublicKeyInfo).Algorithm.pszObjId);
+			
+			if (((*((*pCertContext).pCertInfo)).SubjectPublicKeyInfo).Algorithm.Parameters.cbData == sizeof(bECDSA_P256) &&
+				memcmp(((*((*pCertContext).pCertInfo)).SubjectPublicKeyInfo).Algorithm.Parameters.pbData, bECDSA_P256, sizeof(bECDSA_P256)) == 0)
 			{
-				LogTrace(LOGTYPE_ERROR, WHERE, "Key algoritm length of %d not supported ", ((*((*pCertContext).pCertInfo)).SubjectPublicKeyInfo).Algorithm.Parameters.cbData);
-				CLEANUP(SCARD_E_UNEXPECTED);
+				ECCHeader.dwMagic = BCRYPT_ECDSA_PUBLIC_P256_MAGIC;
+				LogTrace(LOGTYPE_INFO, WHERE, "EC256 key algorithm supported, Algorithm.Parameters.pbData :");
+				LogDump((((*((*pCertContext).pCertInfo)).SubjectPublicKeyInfo).Algorithm.Parameters.cbData), (((*((*pCertContext).pCertInfo)).SubjectPublicKeyInfo).Algorithm.Parameters.pbData));
 			}
-			else if (memcmp(((*((*pCertContext).pCertInfo)).SubjectPublicKeyInfo).Algorithm.Parameters.pbData, bECDSA_P384, sizeof(bECDSA_P384)) == 0)
+			else if (((*((*pCertContext).pCertInfo)).SubjectPublicKeyInfo).Algorithm.Parameters.cbData == sizeof(bECDSA_P384) &&
+				memcmp(((*((*pCertContext).pCertInfo)).SubjectPublicKeyInfo).Algorithm.Parameters.pbData, bECDSA_P384, sizeof(bECDSA_P384)) == 0)
 			{
 				ECCHeader.dwMagic = BCRYPT_ECDSA_PUBLIC_P384_MAGIC;
-				LogTrace(LOGTYPE_INFO, WHERE, "Key algoritm supported, Algorithm.Parameters.pbData :");
+				LogTrace(LOGTYPE_INFO, WHERE, "EC384 key algorithm supported, Algorithm.Parameters.pbData :");
 				LogDump((((*((*pCertContext).pCertInfo)).SubjectPublicKeyInfo).Algorithm.Parameters.cbData), (((*((*pCertContext).pCertInfo)).SubjectPublicKeyInfo).Algorithm.Parameters.pbData));
-
 			}
 			else
 			{
-				LogTrace(LOGTYPE_ERROR, WHERE, "Key algoritm not supported, Algorithm.pszObjId = %s", ((*((*pCertContext).pCertInfo)).SubjectPublicKeyInfo).Algorithm.pszObjId);
+				LogTrace(LOGTYPE_ERROR, WHERE, "Key algorithm not supported, Algorithm.pszObjId = %s", ((*((*pCertContext).pCertInfo)).SubjectPublicKeyInfo).Algorithm.pszObjId);
 				LogTrace(LOGTYPE_ERROR, WHERE, "Key algoritm not supported, Algorithm parameter :");
 				LogDump((((*((*pCertContext).pCertInfo)).SubjectPublicKeyInfo).Algorithm.Parameters.cbData), (((*((*pCertContext).pCertInfo)).SubjectPublicKeyInfo).Algorithm.Parameters.pbData));
 				CLEANUP(SCARD_E_UNEXPECTED);

@@ -237,7 +237,7 @@ DWORD WINAPI   CardSignData
 		//bAlgoRef = BELPIC_SIGN_ALGO_ECDSA_SHA2_256;
 		if ((pInfo->dwKeySpec == AT_ECDSA_P256) || (pInfo->dwKeySpec == AT_ECDSA_P384) || (pInfo->dwKeySpec == AT_ECDSA_P521))
 		{
-			if (pInfo->dwKeySpec != AT_ECDSA_P384)
+			if ((pInfo->dwKeySpec != AT_ECDSA_P256) && (pInfo->dwKeySpec != AT_ECDSA_P384))
 			{
 				LogTrace(LOGTYPE_ERROR, WHERE, "Invalid parameter [pInfo->dwKeySpec]");
 				CLEANUP(SCARD_E_INVALID_PARAMETER);
@@ -269,7 +269,14 @@ DWORD WINAPI   CardSignData
 		LogTrace(LOGTYPE_INFO, WHERE, "pInfo->dwSigningFlags: CARD_BUFFER_SIZE_ONLY");
 		if (pVendorSpec->bBEIDCardType == BEID_ECC_CARD)
 		{
-			pInfo->cbSignedData = 96;
+			if (pInfo->dwKeySpec == AT_ECDSA_P256)
+			{
+				pInfo->cbSignedData = 64;  // EC256 signature size
+			}
+			else
+			{
+				pInfo->cbSignedData = 96;  // EC384 signature size
+			}
 		}
 		else
 		{
@@ -526,13 +533,18 @@ DWORD WINAPI   CardQueryKeySizes
 
 	switch(dwKeySpec)
 	{
-	case AT_ECDHE_P256 :
 	case AT_ECDHE_P521 :
-	case AT_ECDSA_P256 :
 	case AT_ECDSA_P521 :
 		iUnSupported++;
 		break;
 	//supported EC keys
+	case AT_ECDHE_P256:
+	case AT_ECDSA_P256:
+		pKeySizes->dwMinimumBitlen = 256;
+		pKeySizes->dwDefaultBitlen = 256;
+		pKeySizes->dwMaximumBitlen = 256;
+		pKeySizes->dwIncrementalBitlen = 1;
+		break;
 	case AT_ECDHE_P384:
 	case AT_ECDSA_P384:
 		pKeySizes->dwMinimumBitlen = 384;

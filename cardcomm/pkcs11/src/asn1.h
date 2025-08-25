@@ -139,6 +139,7 @@ extern "C"
 #define OID_EC_PUBLIC_KEY	"\x2A\x86\x48\xCE\x3D\x02\x01"
 #define ASNPATH_FIRST           "\x01"
 
+#define OID_SECP256R1		"\x2A\x86\x48\xCE\x3D\x03\x01\x07"
 #define OID_SECP384R1		"\x2B\x81\x04\x00\x22"
 #define OID_SECP521R1		"\x2B\x81\x04\x00\x23"
 #define OID_BRAINPOOLP512R1	"\x2B\x24\x03\x03\x02\x08\x01\x01\x0D"
