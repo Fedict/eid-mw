@@ -115,8 +115,18 @@ char* eid_vwr_describe_cert(const char* label, X509* cert) {
 bool verify_once(EVP_PKEY *pubkey, const EVP_MD *md, const unsigned char *data, size_t datalen, const unsigned char *sig, size_t siglen) {
 	EVP_MD_CTX *mdctx = EVP_MD_CTX_new();
 	EVP_PKEY_CTX *pctx;
-	int key_base_id = EVP_PKEY_base_id(pubkey);
+	int key_base_id;
 	bool rv = false;
+
+	if(mdctx == NULL) {
+		be_log(EID_VWR_LOG_COARSE, "Could not verify card validity: failed to allocate verification context");
+		return false;
+	}
+	if(pubkey == NULL) {
+		be_log(EID_VWR_LOG_COARSE, "Could not verify card validity: missing public key");
+		goto exit;
+	}
+	key_base_id = EVP_PKEY_base_id(pubkey);
 
 	if(key_base_id != EVP_PKEY_RSA && key_base_id != EVP_PKEY_EC) {
 		be_log(EID_VWR_LOG_COARSE, "Could not verify card validity: wrong key type (expecting RSA or EC, got %d)", key_base_id);
@@ -125,6 +135,10 @@ bool verify_once(EVP_PKEY *pubkey, const EVP_MD *md, const unsigned char *data, 
 	if(key_base_id == EVP_PKEY_EC) {
 		md = EVP_get_digestbyname("sha384");
 		//check if the signature length is correct
+		if(siglen < 2) {
+			be_log(EID_VWR_LOG_COARSE, "Signature too short to be valid ASN.1");
+			goto exit;
+		}
 		size_t asnsiglen = (*(sig+1))+2; //length value of asn.1 data is in second byte, add 2 for the 2 initial bytes: 0x30 and len
 		if (*sig != 0x30)
 		{
@@ -162,9 +176,9 @@ int eid_vwr_check_data_validity(const void* photo, int plen,
 		const void* addrfile, int addfilelen,
 		const void* addrsig, int addsiglen,
 		const void* cert, int certlen) {
-	BIO *bio;
-	X509 *rrncert;
-	EVP_PKEY *pubkey;
+	BIO *bio = NULL;
+	X509 *rrncert = NULL;
+	EVP_PKEY *pubkey = NULL;
 	const EVP_MD *md;
 	unsigned char*(*hash)(const unsigned char*, size_t, unsigned char*);
 	unsigned char digest[SHA384_DIGEST_LENGTH];
@@ -177,9 +191,14 @@ int eid_vwr_check_data_validity(const void* photo, int plen,
 			&& cert != NULL && certlen != 0);
 
 	bio = BIO_new_mem_buf((char*)cert, certlen);
+	if(bio == NULL) {
+		be_log(EID_VWR_LOG_COARSE, "Could not verify data validity: failed to allocate BIO for RRN certificate");
+		return 0;
+	}
 	rrncert = d2i_X509_bio(bio, NULL);
 	if(rrncert == NULL) {
 		be_log(EID_VWR_LOG_COARSE, "Could not verify data validity: RRN certificate could not be parsed");
+		BIO_free(bio);
 		return 0;
 	}
 
@@ -205,9 +224,17 @@ int eid_vwr_check_data_validity(const void* photo, int plen,
 	hash(photo, plen, digest);
 	if(memcmp(digest, photohash, hashlen)) {
 		be_log(EID_VWR_LOG_COARSE, "Could not verify data validity: photo hash invalid");
+		X509_free(rrncert);
+		BIO_free(bio);
 		return 0;
 	}
 	pubkey = X509_get_pubkey(rrncert);
+	if(pubkey == NULL) {
+		be_log(EID_VWR_LOG_COARSE, "Could not verify data validity: RRN certificate does not contain a public key");
+		X509_free(rrncert);
+		BIO_free(bio);
+		return 0;
+	}
 	if(!verify_once(pubkey, md, datafile, datfilelen, datasig, datsiglen)) {
 		/* Some CA4 cards are re-signed CA3 ones where the photo hash
 		 * is still SHA1, but everything else is SHA256. Try if this is
@@ -217,10 +244,16 @@ int eid_vwr_check_data_validity(const void* photo, int plen,
 			md = EVP_get_digestbyname("sha256");
 			if(!verify_once(pubkey, md, datafile, datfilelen, datasig, datsiglen)) {
 				be_log(EID_VWR_LOG_COARSE, "Data signature fails validation!");
+				EVP_PKEY_free(pubkey);
+				X509_free(rrncert);
+				BIO_free(bio);
 				return 0;
 			}
 		} else {
 			be_log(EID_VWR_LOG_COARSE, "Data signature fails validation!");
+			EVP_PKEY_free(pubkey);
+			X509_free(rrncert);
+			BIO_free(bio);
 			return 0;
 		}
 	}
@@ -241,9 +274,15 @@ int eid_vwr_check_data_validity(const void* photo, int plen,
 	if(!verify_once(pubkey, md, address_data, (ptr - address_data) + datsiglen, addrsig, addsiglen)) {
 		be_log(EID_VWR_LOG_COARSE, "Could not verify data validity: address signature invalid!");
 		free(address_data);
+		EVP_PKEY_free(pubkey);
+		X509_free(rrncert);
+		BIO_free(bio);
 		return 0;
 	}
 	free(address_data);
+	EVP_PKEY_free(pubkey);
+	X509_free(rrncert);
+	BIO_free(bio);
 
 	return 1;
 }
