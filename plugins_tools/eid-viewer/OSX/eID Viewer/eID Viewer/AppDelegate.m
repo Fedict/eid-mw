@@ -11,6 +11,7 @@
 #import "photohandler.h"
 #import "PrintOperation.h"
 #import "ReaderMenuItem.h"
+#include <eid-viewer/certhelpers.h>
 
 #include <eid-util/utftranslate.h>
 #include <eid-util/labels.h>
@@ -36,6 +37,7 @@
 - (IBAction)showPreferences:(id)sender;
 - (IBAction)changeUpdatePref:(id)sender;
 - (IBAction)checkUpdatesNow:(id)sender;
+- (IBAction)toggleSimulateMissingPubKey:(id)sender;
 
 @property CertificateStore *certstore;
 @property NSDictionary *bindict;
@@ -78,12 +80,20 @@
 @property (weak) IBOutlet NSPopUpButton *selectedReader;
 @property (weak) IBOutlet NSSegmentedControl *currentLanguage;
 @property (weak) IBOutlet NSButton *updateCheck;
+@property (weak) IBOutlet NSMenuItem *debugSimulateMissingPubKey;
 
 @end
 
 @implementation AppDelegate
 -(BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender {
 	return YES;
+}
+- (IBAction)toggleSimulateMissingPubKey:(id)sender {
+	NSMenuItem *item = (NSMenuItem *)sender;
+	int newVal = (item.state == NSOnState) ? 0 : 1;
+	eid_vwr_set_force_null_pubkey(newVal);
+	[item setState:(newVal ? NSOnState : NSOffState)];
+	[self log:(newVal ? @"Debug: Simulating missing public key is ON" : @"Debug: Simulating missing public key is OFF") withLevel:eIDLogLevelDetail];
 }
 
 - (IBAction)basicKeyCheck:(id)sender {
@@ -420,6 +430,17 @@
 	[_logLevel selectItemAtIndex:level];
 	[eIDOSLayerBackend setLang:langcode];
 	[eIDOSLayerBackend setUi:self];
+
+	// Add a Debug menu item programmatically to toggle simulating missing pubkey (no setup required)
+	NSMenu *mainMenu = [NSApp mainMenu];
+	NSMenuItem *debugMenuItem = [[NSMenuItem alloc] initWithTitle:@"Debug" action:nil keyEquivalent:@""];
+	NSMenu *debugMenu = [[NSMenu alloc] initWithTitle:@"Debug"];
+	NSMenuItem *toggleItem = [[NSMenuItem alloc] initWithTitle:@"Simulate missing RRN public key" action:@selector(toggleSimulateMissingPubKey:) keyEquivalent:@""];
+	[toggleItem setTarget:self];
+	[toggleItem setState:(eid_vwr_get_force_null_pubkey() ? NSOnState : NSOffState)];
+	[debugMenu addItem:toggleItem];
+	[debugMenuItem setSubmenu:debugMenu];
+	[mainMenu addItem:debugMenuItem];
 }
 - (void)setLanguage:(NSSegmentedControl *)sender {
         NSUInteger sel = [sender selectedSegment];

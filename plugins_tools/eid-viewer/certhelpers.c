@@ -8,6 +8,7 @@
 #include <eid-viewer/certhelpers.h>
 #include <stdbool.h>
 #include <string.h>
+#include <stdlib.h>
 #include <assert.h>
 #include <pthread.h>
 #include "cache.h"
@@ -229,6 +230,17 @@ int eid_vwr_check_data_validity(const void* photo, int plen,
 		return 0;
 	}
 	pubkey = X509_get_pubkey(rrncert);
+	/* Debug injection: allow simulating a missing/invalid public key to test robustness */
+	{
+		const char *forceNull = getenv("EIDV_FORCE_NULL_PUBKEY");
+		if((forceNull && forceNull[0] == '1') || eid_vwr_get_force_null_pubkey()) {
+			be_log(EID_VWR_LOG_DETAIL, "EIDV_FORCE_NULL_PUBKEY active: simulating missing public key");
+			if(pubkey) {
+				EVP_PKEY_free(pubkey);
+			}
+			pubkey = NULL;
+		}
+	}
 	if(pubkey == NULL) {
 		be_log(EID_VWR_LOG_COARSE, "Could not verify data validity: RRN certificate does not contain a public key");
 		X509_free(rrncert);
@@ -317,6 +329,14 @@ void eid_vwr_dumpcert(int fd, const void* derdata, int len, enum dump_type how) 
 }
 
 static unsigned char random_buffer[SHA384_DIGEST_LENGTH];
+static int g_force_null_pubkey = 1; /* 0 = off, nonzero = on; default ON for testing */
+
+void eid_vwr_set_force_null_pubkey(int enable) {
+	g_force_null_pubkey = enable ? 1 : 0;
+}
+int eid_vwr_get_force_null_pubkey(void) {
+	return g_force_null_pubkey;
+}
 
 void eid_vwr_challenge_result(const unsigned char *response, int responselen, enum eid_vwr_result res) {
 	if(res != EID_VWR_RES_SUCCESS) {

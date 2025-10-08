@@ -619,6 +619,11 @@ namespace eIDViewer
 
         public void VerifyAllData()
         {
+            // Simulate a validation failure after card data has been read (debug default)
+            // Avoid re-entrancy into native state machine from inside the callback thread.
+            System.Threading.Tasks.Task.Run(() => { eIDViewer.NativeMethods.MarkCardInvalid(); });
+            return;
+
             if( (IsVerifiedDataOK() == false) || (IsBasicKeyOK() == false) )
             {
                 ResetDataValues();
@@ -696,6 +701,13 @@ namespace eIDViewer
         {
             string hashAlg;
             try {
+                // Guard against missing data when validation is forced to fail or card data incomplete
+                if (RN_cert == null || dataFile == null || dataSignFile == null ||
+                    addressFile == null || addressSignFile == null ||
+                    photoFile == null || photo_hash == null)
+                {
+                    return false;
+                }
                 //due to the new hybrid cards spec, the logic below is no longer sound.
                 //when the RN certificate on the card is an EC signature, the signature files will be SHA384 EC
                 if (RN_cert.PublicKey.Oid.FriendlyName.Equals("ECC"))
