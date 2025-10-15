@@ -13,7 +13,7 @@ RUN set -ex; \
 	apt-get install -y --no-install-recommends \
 		sbuild schroot zstd \
 		\
-		debian-archive-keyring ubuntu-archive-keyring \
+		debian-archive-keyring \
 		wget ca-certificates \
 		\
 		apt-utils \
