@@ -218,17 +218,6 @@ build:deb_oldstable_32:
   only:
     variables:
     - $DEBIAN_OLDSTABLE_CODE
-build:deb_oldstable_arm32:
-  <<: *build-deb-arm
-  variables:
-    DIST: debian
-    CODE: $DEBIAN_OLDSTABLE_CODE
-    SHORT: deb$DEBIAN_OLDSTABLE_VERSION
-    ARCH: armhf
-    GIT_STRATEGY: none
-  only:
-    variables:
-    - $DEBIAN_OLDSTABLE_CODE
 build:deb_oldstable_64:
   <<: *build-deb-x86
   variables:
@@ -258,17 +247,6 @@ build:deb_stable_32:
     CODE: $DEBIAN_STABLE_CODE
     SHORT: deb$DEBIAN_STABLE_VERSION
     ARCH: i386
-    GIT_STRATEGY: none
-  only:
-    variables:
-    - $DEBIAN_STABLE_CODE
-build:deb_stable_arm32:
-  <<: *build-deb-arm
-  variables:
-    DIST: debian
-    CODE: $DEBIAN_STABLE_CODE
-    SHORT: deb$DEBIAN_STABLE_VERSION
-    ARCH: armhf
     GIT_STRATEGY: none
   only:
     variables:
@@ -304,15 +282,6 @@ build:sid-32:
     ARCH: i386
     GIT_STRATEGY: none
   allow_failure: true
-build:sid-arm32:
-  <<: *build-deb-arm
-  variables:
-    DIST: debian
-    CODE: sid
-    SHORT: sid
-    ARCH: armhf
-    GIT_STRATEGY: none
-  allow_failure: true
 build:sid-64:
   <<: *build-deb-x86
   variables:
@@ -338,17 +307,6 @@ build:ubuntu_oldlts_32:
     CODE: $UBUNTU_OLDLTS_CODE
     SHORT: u$UBUNTU_OLDLTS_VERSION
     ARCH: i386
-    GIT_STRATEGY: none
-  only:
-    variables:
-    - $UBUNTU_OLDLTS_CODE
-build:ubuntu_oldlts_arm32:
-  <<: *build-deb-arm
-  variables:
-    DIST: ubuntu
-    CODE: $UBUNTU_OLDLTS_CODE
-    SHORT: u$UBUNTU_OLDLTS_VERSION
-    ARCH: armhf
     GIT_STRATEGY: none
   only:
     variables:
@@ -386,17 +344,6 @@ build:ubuntu_lts_32:
   only:
     variables:
     - $UBUNTU_LTS_CODE
-build:ubuntu_lts_arm32:
-  <<: *build-deb-arm
-  variables:
-    DIST: ubuntu
-    CODE: $UBUNTU_LTS_CODE
-    SHORT: u$UBUNTU_LTS_VERSION
-    ARCH: armhf
-    GIT_STRATEGY: none
-  only:
-    variables:
-    - $UBUNTU_LTS_CODE
 build:ubuntu_lts_64:
   <<: *build-deb-x86
   variables:
@@ -426,17 +373,6 @@ build:ubuntu_stable_32:
     CODE: $UBUNTU_STABLE_CODE
     SHORT: u$UBUNTU_STABLE_VERSION
     ARCH: i386
-    GIT_STRATEGY: none
-  only:
-    variables:
-    - $UBUNTU_STABLE_CODE
-build:ubuntu_stable_arm32:
-  <<: *build-deb-arm
-  variables:
-    DIST: ubuntu
-    CODE: $UBUNTU_STABLE_CODE
-    SHORT: u$UBUNTU_STABLE_VERSION
-    ARCH: armhf
     GIT_STRATEGY: none
   only:
     variables:
@@ -745,17 +681,11 @@ validate:reports:translation-status:
 repo:inject-debs:
   dependencies:
     - build:deb_oldstable_32
-    - build:deb_oldstable_arm32
     - build:deb_stable_32
-    - build:deb_stable_arm32
     - build:sid-32
-    - build:sid-arm32
     - build:ubuntu_oldlts_32
-    - build:ubuntu_oldlts_arm32
     - build:ubuntu_lts_32
-    - build:ubuntu_lts_arm32
     - build:ubuntu_stable_32
-    - build:ubuntu_stable_arm32
     - build:deb_oldstable_64
     - build:deb_oldstable_arm64
     - build:deb_stable_64
