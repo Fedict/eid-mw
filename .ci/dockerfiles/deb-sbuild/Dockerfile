@@ -17,7 +17,7 @@ RUN set -ex; \
 		wget ca-certificates \
 		\
 		apt-utils \
-		devscripts libwww-perl file \
+		devscripts gpgv libwww-perl file \
 		fakeroot \
 		rsync sudo unzip eatmydata debhelper devscripts \
 	; \
