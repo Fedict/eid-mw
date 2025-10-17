@@ -3,7 +3,7 @@
 # distribution and a few things changed so we get a more recent version of
 # debootstrap.
 
-FROM debian:testing-slim
+FROM debian:stable-slim
 
 RUN echo "deb http://deb.debian.org/debian experimental main" >> /etc/apt/sources.list
 
@@ -11,7 +11,7 @@ RUN set -ex; \
 	apt-get update; \
 	apt-get -y upgrade; \
 	apt-get install -y --no-install-recommends \
-		sbuild sbuild-schroot zstd \
+		sbuild schroot zstd \
 		\
 		debian-archive-keyring ubuntu-archive-keyring \
 		wget ca-certificates \
