@@ -11,7 +11,7 @@ RUN set -ex; \
 	apt-get update; \
 	apt-get -y upgrade; \
 	apt-get install -y --no-install-recommends \
-		sbuild schroot zstd \
+		sbuild sbuild-schroot zstd \
 		\
 		debian-archive-keyring ubuntu-archive-keyring \
 		wget ca-certificates \
