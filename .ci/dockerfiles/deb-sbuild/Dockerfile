@@ -3,7 +3,7 @@
 # distribution and a few things changed so we get a more recent version of
 # debootstrap.
 
-FROM debian:stable-slim
+FROM debian:testing-slim
 
 RUN echo "deb http://deb.debian.org/debian experimental main" >> /etc/apt/sources.list
 
@@ -11,7 +11,7 @@ RUN set -ex; \
 	apt-get update; \
 	apt-get -y upgrade; \
 	apt-get install -y --no-install-recommends \
-		sbuild schroot zstd \
+		sbuild zstd uidmap mmdebstrap\
 		\
 		debian-archive-keyring ubuntu-archive-keyring \
 		wget ca-certificates \
@@ -27,5 +27,3 @@ RUN set -ex; \
 RUN echo 'root:100000:65536' > /etc/subuid; echo 'root:100000:65536' > /etc/subgid
 
 WORKDIR /tmp
-
-COPY setup-chroot.sh /usr/local/bin
