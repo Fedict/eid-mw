@@ -1,4 +1,4 @@
-/* ****************************************************************************
+﻿/* ****************************************************************************
 
  * eID Middleware Project.
  * Copyright (C) 2008-2010 FedICT.
@@ -90,14 +90,14 @@ dlgWndAskPINs::dlgWndAskPINs( DlgPinInfo pinInfo1, DlgPinInfo pinInfo2, std::wst
 
 		HWND hOkButton = CreateWindow(
 			L"BUTTON", GETSTRING_DLG(Ok), WS_CHILD | WS_VISIBLE | WS_TABSTOP, 
-			clientRect.right - 175 * scalingValue, clientRect.bottom - 36 * scalingValue, 
-			72 * scalingValue, 24 * scalingValue, m_hWnd, (HMENU)IDB_OK, m_hInstance, NULL );
+			clientRect.right - 220 * scalingValue, clientRect.bottom - 44 * scalingValue, 
+			100 * scalingValue, 36 * scalingValue, m_hWnd, (HMENU)IDB_OK, m_hInstance, NULL );
 		EnableWindow( hOkButton, false );
 
 		HWND hCancelButton = CreateWindow(
 			L"BUTTON", GETSTRING_DLG(Cancel), WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_DEFPUSHBUTTON, 
-			clientRect.right - 95 * scalingValue, clientRect.bottom - 36 * scalingValue, 
-			85 * scalingValue, 24 * scalingValue, m_hWnd, (HMENU)IDB_CANCEL, m_hInstance, NULL );
+			clientRect.right - 110 * scalingValue, clientRect.bottom - 44 * scalingValue, 
+			100 * scalingValue, 36 * scalingValue, m_hWnd, (HMENU)IDB_CANCEL, m_hInstance, NULL );
 
 		DWORD dwStyle = WS_CHILD | WS_VISIBLE | WS_TABSTOP | WS_BORDER | ES_PASSWORD;
 		if( pinInfo1.ulFlags & PIN_FLAG_DIGITS )
@@ -107,10 +107,10 @@ dlgWndAskPINs::dlgWndAskPINs( DlgPinInfo pinInfo1, DlgPinInfo pinInfo2, std::wst
 		{
 			m_UK_InputField = 0;
 
-			HWND hTextEdit = CreateWindowEx( WS_EX_CLIENTEDGE,
+			HWND hTextEdit = CreateWindowEx(WS_EX_CLIENTEDGE,
 				L"EDIT", L"", dwStyle, 
 				62 * scalingValue, clientRect.top + 20 * scalingValue, 
-				clientRect.right - 94 * scalingValue, 26 * scalingValue,
+				clientRect.right - 94 * scalingValue, 34 * scalingValue, // was 26
 				m_hWnd, (HMENU)IDC_EDIT, m_hInstance, NULL );
 			SendMessage( hTextEdit, EM_LIMITTEXT, m_ulPin1MaxLen, 0 );
 
@@ -128,17 +128,21 @@ dlgWndAskPINs::dlgWndAskPINs( DlgPinInfo pinInfo1, DlgPinInfo pinInfo2, std::wst
 			int vMargin = 12 * scalingValue;
 			int totwidth = right - left;
 			int totheight = bottom - top;
-			int btnwidth = ( totwidth - 2*hMargin ) / 3;
-			int btnheight = ( totheight - 3*vMargin ) /4;
-			if( btnheight < btnwidth )
-			{
+			int btnwidth  = (totwidth  - 2 * hMargin) / 3;
+			int btnheight = (totheight - 3 * vMargin) / 4;
+
+			// Enforce a minimum touch size (≈64px @ 96 DPI)
+			const int minTouch = 56 * scalingValue; // 56–64px works well; 56 keeps more layouts fitting
+			btnwidth  = max(btnwidth,  minTouch);
+			btnheight = max(btnheight, minTouch);
+
+			// Keep them square and re-center margins as needed
+			if (btnheight < btnwidth) {
 				btnwidth = btnheight;
-				hMargin = (totwidth - 3*btnwidth)/2;
-			}
-			else if( btnheight > btnwidth )
-			{
+				hMargin = (totwidth - 3 * btnwidth) / 2;
+			} else if (btnheight > btnwidth) {
 				btnheight = btnwidth;
-				vMargin = (totheight - 3*btnheight)/2;
+				vMargin = (totheight - 3 * btnheight) / 2;
 			}
 			for( int i = 0; i < 4; i++ )
 			{

@@ -46,7 +46,7 @@ dlgWndAskPIN::dlgWndAskPIN( DlgPinInfo pinInfo, DlgPinUsage PinPusage, std::wstr
 	GetMonitorInfo(h_monitor, &mInfo);
 	int pixels_per_inch = GetDeviceCaps(CreateDCW(mInfo.szDevice, NULL, NULL, NULL), LOGPIXELSY);
 	int scalingValue = pixels_per_inch / points_per_inch;
-	int pixels_height = (20 * scalingValue);
+	int pixels_height = (24 * scalingValue); // was 20
 
 	m_UseKeypad = UseKeypad;
 
@@ -85,15 +85,15 @@ dlgWndAskPIN::dlgWndAskPIN( DlgPinInfo pinInfo, DlgPinUsage PinPusage, std::wstr
 		//OK Button
 		HWND hOkButton = CreateWindow(
 			L"BUTTON", GETSTRING_DLG(Ok), WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_DEFPUSHBUTTON, 
-			clientRect.right - 175 * scalingValue, clientRect.bottom - (36 * scalingValue), 
-			72 * scalingValue, 24 * scalingValue, m_hWnd, (HMENU)IDB_OK, m_hInstance, NULL );
+			clientRect.right - 220 * scalingValue, clientRect.bottom - (44 * scalingValue), 
+			100 * scalingValue, 36 * scalingValue, m_hWnd, (HMENU)IDB_OK, m_hInstance, NULL );
 		EnableWindow( hOkButton, false );
 
 		//Cancel Button
 		HWND hCancelButton = CreateWindow(
 			L"BUTTON", GETSTRING_DLG(Cancel), WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_TEXT, 
-			clientRect.right - 95 * scalingValue, clientRect.bottom - 36 * scalingValue, 
-			85 * scalingValue, 24 * scalingValue, m_hWnd, (HMENU)IDB_CANCEL, m_hInstance, NULL );
+			clientRect.right - 110 * scalingValue, clientRect.bottom - 44 * scalingValue, 
+			100 * scalingValue, 36 * scalingValue, m_hWnd, (HMENU)IDB_CANCEL, m_hInstance, NULL );
 
 		m_KeypadHeight=0;
 
@@ -101,13 +101,13 @@ dlgWndAskPIN::dlgWndAskPIN( DlgPinInfo pinInfo, DlgPinUsage PinPusage, std::wstr
 		if( m_UseKeypad )
 		{
 			int top = 60 * scalingValue;
-			int hMargin = 12 * scalingValue;
-			int vMargin = 12 * scalingValue;
-			int btnwidth = 48 * scalingValue;
-			int btnheight = 48 * scalingValue;
-			int totwidth = btnwidth*3 + 2*hMargin;
-			int totheight = btnheight*4 +3*vMargin;
-			int left = (clientRect.right - clientRect.left - totwidth)/2;
+			int hMargin = 16 * scalingValue;
+			int vMargin = 16 * scalingValue;
+			int btnwidth  = 64 * scalingValue;  // was 48
+			int btnheight = 64 * scalingValue;  // was 48
+			int totwidth  = btnwidth * 3 + 2 * hMargin;
+			int totheight = btnheight * 4 + 3 * vMargin;
+			int left = (clientRect.right - clientRect.left - totwidth) / 2;
 			m_KeypadHeight = top + totheight + 8;
 
 			for( int i = 0; i < 4; i++ )
@@ -145,22 +145,22 @@ dlgWndAskPIN::dlgWndAskPIN( DlgPinInfo pinInfo, DlgPinUsage PinPusage, std::wstr
 			dwStyle |= ES_NUMBER;
 
 		LONG pinTop=0;
-		LONG pinLeft=clientRect.right/2 - 100 * scalingValue + 40;
+		LONG pinLeft=clientRect.right/2 - 120 * scalingValue + 40;
 
 		if( m_UseKeypad )
 			pinTop = clientRect.top + 20 * scalingValue;
 		else
-			pinTop = clientRect.bottom - 80 * scalingValue;
+			pinTop = clientRect.bottom - 100 * scalingValue;
 
 		HWND hTextEdit = CreateWindowEx( WS_EX_CLIENTEDGE,
 			L"EDIT", L"", dwStyle, 
-			pinLeft, pinTop, 160 * scalingValue, 26 * scalingValue,
+			pinLeft, pinTop, 220 * scalingValue, 34 * scalingValue, // wider and taller
 			m_hWnd, (HMENU)IDC_EDIT, m_hInstance, NULL );
 		SendMessage( hTextEdit, EM_LIMITTEXT, m_ulPinMaxLen, 0 );
 
 		HWND hStaticText = CreateWindow( 
 			L"STATIC", szPIN, WS_CHILD | WS_VISIBLE | SS_RIGHT, 
-			pinLeft-100 * scalingValue, pinTop +4 , 96 * scalingValue, 22 * scalingValue,
+			pinLeft-110 * scalingValue, pinTop + 4, 106 * scalingValue, 26 * scalingValue, // a bit taller label
 			m_hWnd, (HMENU)IDC_STATIC, m_hInstance, NULL );
 
 		SendMessage( hStaticText, WM_SETFONT, (WPARAM)TextFont, 0 );
@@ -386,13 +386,13 @@ LRESULT dlgWndAskPIN::ProcecEvent
 			}
 
 			GetClientRect( m_hWnd, &rect );
-			rect.left += IMG_SIZE + 16;
-			rect.top = m_KeypadHeight + 8;
-			rect.right -= 8;
-			rect.bottom = rect.bottom - 40;
+			rect.left   += 8;
+			rect.top     = m_KeypadHeight + 8;
+			rect.right  -= 8;
+			rect.bottom  = rect.bottom - 40;
 			SetBkColor( m_hDC, GetSysColor( COLOR_3DFACE ) );
 			SelectObject( m_hDC, TextFont );
-			DrawText( m_hDC, szHeader, -1, &rect, DT_WORDBREAK );
+			DrawText( m_hDC, szHeader, -1, &rect, DT_WORDBREAK | DT_CENTER);
 
 			EndPaint( m_hWnd, &ps );
 
