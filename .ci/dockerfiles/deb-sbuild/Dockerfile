@@ -3,9 +3,7 @@
 # distribution and a few things changed so we get a more recent version of
 # debootstrap.
 
-FROM debian:testing-slim
-
-RUN echo "deb http://deb.debian.org/debian experimental main" >> /etc/apt/sources.list
+FROM ubuntu:rolling
 
 RUN set -ex; \
 	apt-get update; \
@@ -13,7 +11,7 @@ RUN set -ex; \
 	apt-get install -y --no-install-recommends \
 		sbuild zstd uidmap mmdebstrap\
 		\
-		debian-archive-keyring ubuntu-archive-keyring \
+		debian-archive-keyring ubuntu-keyring \
 		wget ca-certificates \
 		\
 		apt-utils \
@@ -21,7 +19,6 @@ RUN set -ex; \
 		fakeroot \
 		rsync sudo unzip eatmydata debhelper devscripts \
 	; \
-	apt-get -y -t experimental install debootstrap; \
 	rm -rf /var/lib/apt/lists/*
 
 RUN echo 'root:100000:65536' > /etc/subuid; echo 'root:100000:65536' > /etc/subgid
