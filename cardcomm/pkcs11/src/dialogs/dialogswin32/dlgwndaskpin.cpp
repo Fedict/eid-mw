@@ -123,20 +123,20 @@ dlgWndAskPIN::dlgWndAskPIN( DlgPinInfo pinInfo, DlgPinUsage PinPusage, std::wstr
 				}
 			}
 
-			ImageKP_BTN[0] = LoadBitmap( m_hInstance, MAKEINTRESOURCE(IDB_KP_0) );
-			ImageKP_BTN[1] = LoadBitmap( m_hInstance, MAKEINTRESOURCE(IDB_KP_1) );
-			ImageKP_BTN[2] = LoadBitmap( m_hInstance, MAKEINTRESOURCE(IDB_KP_2) );
-			ImageKP_BTN[3] = LoadBitmap( m_hInstance, MAKEINTRESOURCE(IDB_KP_3) );
-			ImageKP_BTN[4] = LoadBitmap( m_hInstance, MAKEINTRESOURCE(IDB_KP_4) );
-			ImageKP_BTN[5] = LoadBitmap( m_hInstance, MAKEINTRESOURCE(IDB_KP_5) );
-			ImageKP_BTN[6] = LoadBitmap( m_hInstance, MAKEINTRESOURCE(IDB_KP_6) );
-			ImageKP_BTN[7] = LoadBitmap( m_hInstance, MAKEINTRESOURCE(IDB_KP_7) );
-			ImageKP_BTN[8] = LoadBitmap( m_hInstance, MAKEINTRESOURCE(IDB_KP_8) );
-			ImageKP_BTN[9] = LoadBitmap( m_hInstance, MAKEINTRESOURCE(IDB_KP_9) );
-			ImageKP_BTN[10] = LoadBitmap( m_hInstance, MAKEINTRESOURCE(IDB_KP_CE) );
-			ImageKP_BTN[11] = LoadBitmap( m_hInstance, MAKEINTRESOURCE(IDB_KP_BTN) );
+			ImageKP_BTN[0]  = reinterpret_cast<HBITMAP>(LoadImageW(m_hInstance, MAKEINTRESOURCEW(IDB_KP_0),   IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION));
+			ImageKP_BTN[1]  = reinterpret_cast<HBITMAP>(LoadImageW(m_hInstance, MAKEINTRESOURCEW(IDB_KP_1),   IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION));
+			ImageKP_BTN[2]  = reinterpret_cast<HBITMAP>(LoadImageW(m_hInstance, MAKEINTRESOURCEW(IDB_KP_2),   IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION));
+			ImageKP_BTN[3]  = reinterpret_cast<HBITMAP>(LoadImageW(m_hInstance, MAKEINTRESOURCEW(IDB_KP_3),   IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION));
+			ImageKP_BTN[4]  = reinterpret_cast<HBITMAP>(LoadImageW(m_hInstance, MAKEINTRESOURCEW(IDB_KP_4),   IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION));
+			ImageKP_BTN[5]  = reinterpret_cast<HBITMAP>(LoadImageW(m_hInstance, MAKEINTRESOURCEW(IDB_KP_5),   IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION));
+			ImageKP_BTN[6]  = reinterpret_cast<HBITMAP>(LoadImageW(m_hInstance, MAKEINTRESOURCEW(IDB_KP_6),   IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION));
+			ImageKP_BTN[7]  = reinterpret_cast<HBITMAP>(LoadImageW(m_hInstance, MAKEINTRESOURCEW(IDB_KP_7),   IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION));
+			ImageKP_BTN[8]  = reinterpret_cast<HBITMAP>(LoadImageW(m_hInstance, MAKEINTRESOURCEW(IDB_KP_8),   IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION));
+			ImageKP_BTN[9]  = reinterpret_cast<HBITMAP>(LoadImageW(m_hInstance, MAKEINTRESOURCEW(IDB_KP_9),   IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION));
+			ImageKP_BTN[10] = reinterpret_cast<HBITMAP>(LoadImageW(m_hInstance, MAKEINTRESOURCEW(IDB_KP_CE),  IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION));
+			ImageKP_BTN[11] = reinterpret_cast<HBITMAP>(LoadImageW(m_hInstance, MAKEINTRESOURCEW(IDB_KP_BTN), IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION));
 
-			CreateBitapMask( ImageKP_BTN[11], ImageKP_BTN_Mask );
+			CreateBitapMask(ImageKP_BTN[11], ImageKP_BTN_Mask );
 			//MWLOG(LEV_DEBUG, MOD_DLG, L" dlgWndAskPIN : Virtual pinpad - LoadBitmap");
 		}
 
@@ -180,7 +180,16 @@ dlgWndAskPIN::dlgWndAskPIN( DlgPinInfo pinInfo, DlgPinUsage PinPusage, std::wstr
 
 dlgWndAskPIN::~dlgWndAskPIN()
 {
-	KillWindow( );
+	KillWindow();
+
+	for (int i = 0; i < 12; ++i)
+	{
+		if (ImageKP_BTN[i]) { DeleteObject(ImageKP_BTN[i]); ImageKP_BTN[i] = NULL; }
+	}
+	if (ImageKP_BTN_Mask) { DeleteObject(ImageKP_BTN_Mask); ImageKP_BTN_Mask = NULL; }
+	if (ImagePIN) { DeleteObject(ImagePIN); ImagePIN = NULL; }
+	if (ImagePIN_Mask) { DeleteObject(ImagePIN_Mask); ImagePIN_Mask = NULL; }
+	if (TextFont) { DeleteObject(TextFont); TextFont = NULL; }
 }
 
 void dlgWndAskPIN::GetPinResult()
@@ -264,51 +273,73 @@ LRESULT dlgWndAskPIN::ProcecEvent
 			LPDRAWITEMSTRUCT lpDrawItem = (LPDRAWITEMSTRUCT)lParam;
 			if( lpDrawItem->CtlType & ODT_BUTTON )
 			{
-				//MWLOG(LEV_DEBUG, MOD_DLG, L" dlgWndAskPIN : Virtual pinpad - WM_DRAWITEM lParam=%x, wParam=%ld",lParam,wParam);
-				//MWLOG(LEV_DEBUG, MOD_DLG, L" dlgWndAskPIN : Virtual pinpad - Entering WM_DRAWITEM lpDrawItem->hDC=%ld",lpDrawItem->hDC);
+				HBRUSH hbrFace = GetSysColorBrush(COLOR_3DFACE);
+				FillRect(lpDrawItem->hDC, &lpDrawItem->rcItem, hbrFace);
 
-				FillRect( lpDrawItem->hDC, &lpDrawItem->rcItem, CreateSolidBrush( GetSysColor( COLOR_3DFACE ) ) );
-				//MWLOG(LEV_DEBUG, MOD_DLG, L" dlgWndAskPIN : Virtual pinpad - WM_DRAWITEM top=%ld, bottom=%ld, left=%ld, right=%ld",
-					//lpDrawItem->rcItem.top,lpDrawItem->rcItem.bottom,lpDrawItem->rcItem.left,lpDrawItem->rcItem.right);
+				// Base face image (optional)
+				if (ImageKP_BTN[11] && ImageKP_BTN_Mask)
+				{
+					HDC hdcMem = CreateCompatibleDC(lpDrawItem->hDC);
+					HGDIOBJ hOld = SelectObject(hdcMem, ImageKP_BTN[11]);
+					MaskBlt(lpDrawItem->hDC,
+						(lpDrawItem->rcItem.right  - KP_BTN_SIZE) / 2,
+						(lpDrawItem->rcItem.bottom - KP_BTN_SIZE) / 2,
+						KP_BTN_SIZE, KP_BTN_SIZE,
+						hdcMem, 0, 0,
+						ImageKP_BTN_Mask, 0, 0, MAKEROP4(SRCCOPY, 0x00AA0029));
+					SelectObject(hdcMem, hOld);
+					DeleteDC(hdcMem);
+				}
+				else
+				{
+					RECT r = lpDrawItem->rcItem;
+					DrawEdge(lpDrawItem->hDC, &r, EDGE_RAISED, BF_RECT);
+				}
 
-				HDC hdcMem = CreateCompatibleDC( lpDrawItem->hDC );
-				SelectObject( hdcMem , ImageKP_BTN[11] );
-				MaskBlt( lpDrawItem->hDC, (lpDrawItem->rcItem.right - KP_BTN_SIZE) / 2, (lpDrawItem->rcItem.bottom - KP_BTN_SIZE) / 2,
-					KP_BTN_SIZE, KP_BTN_SIZE, hdcMem, 0, 0,
-					ImageKP_BTN_Mask, 0, 0, MAKEROP4( SRCCOPY, 0x00AA0029 ) );
-
+				// Determine label index and text
 				unsigned int iNum = 0;
-				if( lpDrawItem->CtlID == IDB_KeypadEnd )
+				wchar_t label[3] = L"";
+				if (lpDrawItem->CtlID == IDB_KeypadEnd)         { iNum = 10; wcscpy_s(label, L"CE"); }
+				else if (lpDrawItem->CtlID == IDB_KeypadEnd - 1) { iNum = 0;  wcscpy_s(label, L"0");  }
+				else if (lpDrawItem->CtlID >= IDB_KeypadStart && lpDrawItem->CtlID < IDB_KeypadEnd - 2)
 				{
-					iNum = 10;
+					iNum = (lpDrawItem->CtlID - IDB_KeypadStart) + 1; // 1..9
+					label[0] = L'0' + (wchar_t)iNum; label[1] = L'\0';
 				}
-				else if( lpDrawItem->CtlID >= IDB_KeypadStart && lpDrawItem->CtlID < IDB_KeypadEnd -2 )
-				{
-					iNum = lpDrawItem->CtlID - IDB_KeypadStart +1;
-				}
-				//MWLOG(LEV_DEBUG, MOD_DLG, L" dlgWndAskPIN : Virtual pinpad - WM_DRAWITEM iNum=%ld",iNum);
 
-				SelectObject( hdcMem , ImageKP_BTN[iNum] );
-				BitBlt( lpDrawItem->hDC, (lpDrawItem->rcItem.right - KP_LBL_SIZE) / 2, (lpDrawItem->rcItem.bottom - KP_LBL_SIZE) / 2, 
-						KP_LBL_SIZE, KP_LBL_SIZE, hdcMem, 0, 0, SRCCOPY );
-				DeleteDC(hdcMem);
-
-				if( lpDrawItem->itemState & ODS_SELECTED )
-					DrawEdge( lpDrawItem->hDC, &lpDrawItem->rcItem, EDGE_RAISED, BF_RECT );
-				
-				if( lpDrawItem->itemState & ODS_HOTLIGHT )
-					DrawEdge( lpDrawItem->hDC, &lpDrawItem->rcItem, EDGE_SUNKEN, BF_RECT );
-				
-				if( lpDrawItem->itemState & ODS_FOCUS )
+				// Draw label bitmap if available, else text
+				if (iNum <= 10 && ImageKP_BTN[iNum])
 				{
-					GetClientRect( lpDrawItem->hwndItem, &rect );
-					rect.left += 2;
-					rect.right -= 2;
-					rect.top += 2;
-					rect.bottom -= 2;
-					DrawFocusRect( lpDrawItem->hDC, &rect );
+					HDC hdcMem = CreateCompatibleDC(lpDrawItem->hDC);
+					HGDIOBJ hOld = SelectObject(hdcMem, ImageKP_BTN[iNum]);
+					BitBlt(lpDrawItem->hDC,
+						(lpDrawItem->rcItem.right  - KP_LBL_SIZE) / 2,
+						(lpDrawItem->rcItem.bottom - KP_LBL_SIZE) / 2,
+						KP_LBL_SIZE, KP_LBL_SIZE, hdcMem, 0, 0, SRCCOPY);
+					SelectObject(hdcMem, hOld);
+					DeleteDC(hdcMem);
 				}
-				//MWLOG(LEV_DEBUG, MOD_DLG, L" dlgWndAskPIN : Virtual pinpad - Leaving WM_DRAWITEM lpDrawItem->hDC=%ld",lpDrawItem->hDC);
+				else
+				{
+					SetBkMode(lpDrawItem->hDC, TRANSPARENT);
+					SetTextColor(lpDrawItem->hDC, GetSysColor(COLOR_BTNTEXT));
+					HFONT hOldFont = (HFONT)SelectObject(lpDrawItem->hDC, TextFont);
+					RECT tr = lpDrawItem->rcItem;
+					tr.left += 2; tr.right -= 2; tr.top += 2; tr.bottom -= 2;
+					DrawText(lpDrawItem->hDC, label, -1, &tr, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+					SelectObject(lpDrawItem->hDC, hOldFont);
+				}
+
+				if (lpDrawItem->itemState & ODS_SELECTED)
+					DrawEdge(lpDrawItem->hDC, &lpDrawItem->rcItem, EDGE_RAISED, BF_RECT);
+				if (lpDrawItem->itemState & ODS_HOTLIGHT)
+					DrawEdge(lpDrawItem->hDC, &lpDrawItem->rcItem, EDGE_SUNKEN, BF_RECT);
+				if (lpDrawItem->itemState & ODS_FOCUS)
+				{
+					RECT r; GetClientRect(lpDrawItem->hwndItem, &r);
+					r.left += 2; r.right -= 2; r.top += 2; r.bottom -= 2;
+					DrawFocusRect(lpDrawItem->hDC, &r);
+				}
 				return TRUE;
 			}
 			break;
