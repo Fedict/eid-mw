@@ -18,7 +18,7 @@ RUN set -ex; \
 		devscripts gpgv libwww-perl file \
 		fakeroot \
 		rsync sudo unzip eatmydata debhelper devscripts \
-                debootstrap
+                debootstrap \
 	; \
 	rm -rf /var/lib/apt/lists/*
 
