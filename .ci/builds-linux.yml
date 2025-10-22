@@ -284,6 +284,7 @@
   - COMMITDATE=$(cat products/source/date)
   - mkdir -p build
   - cd build && tar xvf ../products/source/eid-mw-${VER}.tar.gz --strip-components=1
+  - setup-chroot.sh $CODE $ARCH $DIST
   - if [ $CANDIDATEBRANCH = $CI_COMMIT_REF_NAME ]; then TARGET=candidate; fi
   - if [ ! -z "$CI_COMMIT_TAG" ]; then TARGET=proposed; fi
   - if [ -z "$TARGET" ]; then TARGET=continuous; fi
@@ -292,9 +293,7 @@
   - export DASHA
   - ../products/source/deb-cl.pl debian/changelog "$COMMITDATE" "$VER"
   script:
-  - env
-  - ls -lh /dev
-  - sbuild --chroot-mode=unshare --enable-network --no-clean-source -n $DASHA -d $CODE --arch=$ARCH
+  - sbuild --chroot-mode=schroot --no-clean-source -n $DASHA -d $dist -c $CODE-$ARCH-sbuild --arch=$ARCH
   after_script:
   - mkdir -p products/deb/
   - dcmd cp eid-mw_*.changes products/deb/
