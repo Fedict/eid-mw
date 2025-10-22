@@ -291,6 +291,7 @@
   - export TARGET
   - if [ $ARCH = "i386" ]; then DASHA="-A -s"; else DASHA="--no-arch-all --no-source --no-run-lintian"; fi
   - export DASHA
+  - if [ ! -z "$TARGET" ]; then dist="$TARGET-$CODE"; else dist="$CODE"; fi
   - ../products/source/deb-cl.pl debian/changelog "$COMMITDATE" "$VER"
   script:
   - sbuild --chroot-mode=schroot --no-clean-source -n $DASHA -d $dist -c $CODE-$ARCH-sbuild --arch=$ARCH
