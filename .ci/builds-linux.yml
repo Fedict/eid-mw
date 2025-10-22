@@ -292,6 +292,8 @@
   - export DASHA
   - ../products/source/deb-cl.pl debian/changelog "$COMMITDATE" "$VER"
   script:
+  - env
+  - ls -lh /dev
   - sbuild --chroot-mode=unshare --enable-network --no-clean-source -n $DASHA -d $CODE --arch=$ARCH
   after_script:
   - mkdir -p products/deb/
