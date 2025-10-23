@@ -3,7 +3,7 @@
 # distribution and a few things changed so we get a more recent version of
 # debootstrap.
 
-FROM debian:stable-slim
+FROM debian:testing-slim
 
 RUN set -ex; \
 	apt-get update; \
@@ -23,6 +23,7 @@ RUN set -ex; \
 	rm -rf /var/lib/apt/lists/*
 
 RUN echo 'root:100000:65536' > /etc/subuid; echo 'root:100000:65536' > /etc/subgid
+COPY setup-chroot.sh /usr/local/bin
 
 WORKDIR /tmp
 

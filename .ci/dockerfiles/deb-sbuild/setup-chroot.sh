@@ -5,41 +5,45 @@ set -x
 
 if [ -z "$CODE" ] && [ ! -z "$1" ]
 then
-	CODE=$1
+        CODE=$1
+        shift
 fi
-shift
 if [ -z "$ARCH" ] && [ ! -z "$1" ]
 then
-	ARCH=$1
+        ARCH=$1
+        shift
 fi
-shift
 if [ -z "$DIST" ] && [ ! -z "$1" ]
 then
-	DIST=$1
+        DIST=$1
+        shift
 fi
-shift
 mkdir -p /srv/chroot
 if [ -z $ACNG ]
 then
-	ACNG=http://
+        ACNG=http://
 fi
+mkdir -p /root/.cache/sbuild
 case $DIST in
-	debian)
-		sbuild-createchroot --arch=$ARCH $CODE /srv/chroot/$CODE ${ACNG}deb.debian.org/debian
-	;;
-	ubuntu)
-		if [ "$ARCH" == "armhf" ] || [ "$ARCH" == "arm64" ]
-		then
-			sbuild-createchroot --include=debhelper --components=main,universe --arch=$ARCH $CODE /srv/chroot/$CODE ${ACNG}ports.ubuntu.com /usr/share/debootstrap/scripts/gutsy
-		else
-			sbuild-createchroot --include=debhelper --components=main,universe --arch=$ARCH $CODE /srv/chroot/$CODE ${ACNG}archive.ubuntu.com/ubuntu /usr/share/debootstrap/scripts/gutsy
-		fi
-		# Revert the "default to xz compression" option in recent
-		# Ubuntu distributions
-		sed -i -e "s/my @dpkg_options;/my @dpkg_options = ('-Zxz');/" /srv/chroot/$CODE/usr/bin/dh_builddeb
-	;;
-	*)
-		echo "E: unknown dist: $DIST" >&2
-		exit 1
-	;;
+        debian)
+                mirror=${ACNG}deb.debian.org/debian
+                components=main
+                keyring=/usr/share/keyrings/debian-archive-keyring.gpg
+        ;;
+        ubuntu)
+                components=main,universe
+                keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg
+                if [ "$ARCH" == "armhf" ] || [ "$ARCH" == "arm64" ]
+                then
+                        mirror=${ACNG}ports.ubuntu.com/
+                else
+                        mirror=${ACNG}archive.ubuntu.com/ubuntu
+                fi
+        ;;
+        *)
+                echo "E: unknown dist: $DIST" >&2
+                exit 1
+        ;;
 esac
+
+mmdebstrap --variant=buildd --arch=$ARCH --skip=output/mknod --format=tar --components=$components --keyring=$keyring $CODE /root/.cache/sbuild/$CODE-$ARCH.tar $mirror
