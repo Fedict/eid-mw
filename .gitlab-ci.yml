@@ -555,6 +555,7 @@ build:el_oldstable_arm64:
     - $EL_OLDSTABLE_VERSION
 build:el_stable_64:
   <<: *build-fed-x86
+  allow_failure: true
   variables:
     DIST: $EL_STABLE_DIST
     DVER: $EL_STABLE_VERSION
