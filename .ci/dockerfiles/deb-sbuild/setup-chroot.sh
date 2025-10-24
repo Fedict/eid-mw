@@ -23,6 +23,13 @@ if [ -z $ACNG ]
 then
         ACNG=http://
 fi
+if [ ! -z "$TARGET" ]
+then
+        fulldist=$TARGET-$CODE
+else
+        fulldist=$CODE
+fi
+
 mkdir -p /root/.cache/sbuild
 case $DIST in
         debian)
@@ -46,4 +53,4 @@ case $DIST in
         ;;
 esac
 
-mmdebstrap --variant=buildd --arch=$ARCH --skip=output/mknod --format=tar --components=$components --keyring=$keyring $CODE /root/.cache/sbuild/$CODE-$ARCH.tar $mirror
+mmdebstrap --variant=buildd --arch=$ARCH --skip=output/mknod --format=tar --components=$components --keyring=$keyring $CODE /root/.cache/sbuild/$fulldist-$ARCH.tar $mirror
