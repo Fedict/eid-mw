@@ -23,6 +23,11 @@ if [ -z $ACNG ]
 then
         ACNG=http://
 fi
+if [ -z "$TARGET" && ! -z "$1" ]
+then
+        TARGET=$1
+        shift
+fi
 if [ ! -z "$TARGET" ]
 then
         fulldist=$TARGET-$CODE
