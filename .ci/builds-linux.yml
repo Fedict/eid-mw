@@ -284,11 +284,11 @@
   - COMMITDATE=$(cat products/source/date)
   - mkdir -p build
   - cd build && tar xvf ../products/source/eid-mw-${VER}.tar.gz --strip-components=1
-  - setup-chroot.sh $CODE $ARCH $DIST $TARGET
   - if [ $CANDIDATEBRANCH = $CI_COMMIT_REF_NAME ]; then TARGET=candidate; fi
   - if [ ! -z "$CI_COMMIT_TAG" ]; then TARGET=proposed; fi
   - if [ -z "$TARGET" ]; then TARGET=continuous; fi
   - export TARGET
+  - setup-chroot.sh $CODE $ARCH $DIST $TARGET
   - if [ $ARCH = "i386" ]; then DASHA="-A -s"; else DASHA="--no-arch-all --no-source --no-run-lintian"; fi
   - export DASHA
   - if [ ! -z "$TARGET" ]; then dist="$TARGET-$CODE"; else dist="$CODE"; fi
