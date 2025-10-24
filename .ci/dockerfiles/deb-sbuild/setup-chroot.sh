@@ -23,7 +23,7 @@ if [ -z $ACNG ]
 then
         ACNG=http://
 fi
-if [ -z "$TARGET" && ! -z "$1" ]
+if [ -z "$TARGET" ] && [ ! -z "$1" ]
 then
         TARGET=$1
         shift
