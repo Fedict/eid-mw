@@ -58,4 +58,11 @@ case $DIST in
         ;;
 esac
 
-mmdebstrap --variant=buildd --arch=$ARCH --skip=output/mknod --format=tar --components=$components --keyring=$keyring $CODE /root/.cache/sbuild/$fulldist-$ARCH.tar $mirror
+mmdebstrap --include=debhelper --variant=buildd --arch=$ARCH --skip=output/mknod --components=$components --keyring=$keyring $CODE /srv/chroot $mirror
+sed -i -e "s/my @dpkg_options;/my @dpkg_options = ('-Zxz');/" /srv/chroot/usr/bin/dh_builddeb
+sbuild-createchroot --setup-only --arch=$ARCH $CODE-$ARCH-sbuild /srv/chroot || true
+cat > /srv/chroot/etc/apt/sources.list <<EOF
+deb $mirror $code $components
+deb-src $mirror $code $components
+EOF
+sed -i -e "s/,/ /g" /srv/chroot/etc/apt/sources.list
