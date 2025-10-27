@@ -60,9 +60,18 @@ esac
 
 mmdebstrap --include=debhelper --variant=buildd --arch=$ARCH --skip=output/mknod --components=$components --keyring=$keyring $CODE /srv/chroot $mirror
 sed -i -e "s/my @dpkg_options;/my @dpkg_options = ('-Zxz');/" /srv/chroot/usr/bin/dh_builddeb
-sbuild-createchroot --setup-only --arch=$ARCH $CODE /srv/chroot || true
-cat > /srv/chroot/etc/apt/sources.list <<EOF
-deb $mirror $code $components
-deb-src $mirror $code $components
+cat <<EOF | tee /etc/schroot/chroot.d/chroot-$fulldist
+[$CODE-$ARCH-sbuild]
+description=Temporary build chroot
+groups=root,sbuild
+root-groups=root,sbuild
+profile=sbuild
+type=directory
+directory=/srv/chroot
+union-type=none
+EOF
+cat <<EOF | tee /srv/chroot/etc/apt/sources.list
+deb $mirror $CODE $components
+deb-src $mirror $CODE $components
 EOF
 sed -i -e "s/,/ /g" /srv/chroot/etc/apt/sources.list
