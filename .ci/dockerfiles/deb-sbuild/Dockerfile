@@ -9,7 +9,7 @@ RUN set -ex; \
 	apt-get update; \
 	apt-get -y upgrade; \
 	apt-get install -y --no-install-recommends \
-		sbuild schroot zstd arch-test \
+		sbuild sbuild-schroot zstd arch-test \
 		\
 		debian-archive-keyring ubuntu-keyring \
 		wget ca-certificates \
