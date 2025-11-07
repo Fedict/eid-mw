@@ -230,6 +230,9 @@ DWORD WINAPI   CardAcquireContext
 	VENDOR_SPECIFIC* pVendorSpec = pCardData->pvVendorSpecific;
 	pVendorSpec->bBEIDCardType = bBEIDCARD_TYPE;
 
+	/* Initialize ECC key size code - will be set later when certificates are read */
+	pVendorSpec->bECCKeySize = ECC_KEY_SIZE_UNKNOWN;
+
 cleanup:
 
    LogTrace(LOGTYPE_INFO, WHERE, "Exit API...");

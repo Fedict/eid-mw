@@ -337,8 +337,15 @@ DWORD CardGetKeysizes(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD p
    switch(dwFlags)
    {
    case AT_ECDHE_P256 :
-   case AT_ECDHE_P521 :
    case AT_ECDSA_P256 :
+      KeySizes.dwVersion = CARD_KEY_SIZES_CURRENT_VERSION;
+      KeySizes.dwMinimumBitlen = 256;
+      KeySizes.dwDefaultBitlen = 256;
+      KeySizes.dwMaximumBitlen = 256;
+      KeySizes.dwIncrementalBitlen = 1;
+      LogTrace(LOGTYPE_INFO, WHERE, "CP_CARD_KEYSIZES: returning ECC P-256 sizes (%d)", KeySizes.dwDefaultBitlen);
+      break;
+   case AT_ECDHE_P521 :
    case AT_ECDSA_P521 :
       iUnSupported++;
       break;
@@ -349,6 +356,7 @@ DWORD CardGetKeysizes(PCARD_DATA pCardData, PBYTE pbData, DWORD cbData, PDWORD p
 	  KeySizes.dwDefaultBitlen = 384;
 	  KeySizes.dwMaximumBitlen = 384;
 	  KeySizes.dwIncrementalBitlen = 1;
+      LogTrace(LOGTYPE_INFO, WHERE, "CP_CARD_KEYSIZES: returning ECC P-384 sizes (%d)", KeySizes.dwDefaultBitlen);
 	  break;
    case AT_KEYEXCHANGE:
    case AT_SIGNATURE  :

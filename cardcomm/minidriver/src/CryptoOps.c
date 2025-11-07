@@ -22,6 +22,7 @@
 #include "globmdrv.h"
 
 #include "log.h"
+#include "util.h"
 #include "smartcard.h"
 
 /****************************************************************************************************/
@@ -188,6 +189,9 @@ DWORD WINAPI   CardSignData
 	BYTE	bAlgoRef = BELPIC_SIGN_ALGO_RSASSA_PKCS1;
 
 	VENDOR_SPECIFIC* pVendorSpec;
+	DWORD cbToSignLocal = 0;
+	PBYTE pbToSignLocal = NULL;
+	PBYTE pbToFreeAfter = NULL;
 
 	LogTrace(LOGTYPE_INFO, WHERE, "Enter API...");
 	/********************/
@@ -232,9 +236,113 @@ DWORD WINAPI   CardSignData
 	}
 
 	pVendorSpec = pCardData->pvVendorSpecific;
+	cbToSignLocal = pInfo->cbData;
+	pbToSignLocal = pInfo->pbData;
 	if (pVendorSpec->bBEIDCardType == BEID_ECC_CARD)
 	{
-		//bAlgoRef = BELPIC_SIGN_ALGO_ECDSA_SHA2_256;
+		/* If ECC key size not yet detected (e.g., no prior cmapfile read), detect now */
+		if (pVendorSpec->bECCKeySize == 0)
+		{
+			DWORD cbCert = 0;
+			PBYTE pbCert = NULL;
+			DWORD cbPub = 0; PBYTE pbPub = NULL;
+			DWORD dwTmp = 0;
+
+			/* Read CERT_NONREP and derive pubkey magic */
+			dwTmp = BeidReadCert(pCardData, CERT_NONREP, &cbCert, &pbCert);
+			if (pbCert && cbCert > 4)
+			{
+				PBYTE pbUse = pbCert;
+				DWORD cbUse = cbCert;
+				LogTrace(LOGTYPE_INFO, WHERE, "ECC signing: using CERT_NONREP certificate (size=%u)", cbUse);
+
+				dwTmp = BeidGetPubKey(pCardData, cbUse, pbUse, &cbPub, &pbPub);
+				if (dwTmp == SCARD_S_SUCCESS && pbPub != NULL && cbPub >= sizeof(BCRYPT_ECCKEY_BLOB))
+				{
+					BCRYPT_ECCKEY_BLOB *pBlob = (BCRYPT_ECCKEY_BLOB*)pbPub;
+					LogTrace(LOGTYPE_INFO, WHERE, "ECC signing: public key blob magic=0x%08X, cbKey=%u", (unsigned)pBlob->dwMagic, (unsigned)pBlob->cbKey);
+					if (pBlob->dwMagic == BCRYPT_ECDSA_PUBLIC_P256_MAGIC)
+					{
+						pVendorSpec->bECCKeySize = ECC_KEY_SIZE_P256;
+						LogTrace(LOGTYPE_INFO, WHERE, "ECC signing: detected P-256 during sign path");
+					}
+					else if (pBlob->dwMagic == BCRYPT_ECDSA_PUBLIC_P384_MAGIC)
+					{
+						pVendorSpec->bECCKeySize = ECC_KEY_SIZE_P384;
+						LogTrace(LOGTYPE_INFO, WHERE, "ECC signing: detected P-384 during sign path");
+					}
+				}
+				else
+				{
+					LogTrace(LOGTYPE_INFO, WHERE, "ECC signing: BeidGetPubKey failed (0x%08X) or invalid blob", dwTmp);
+				}
+
+				if (pbPub) { pCardData->pfnCspFree(pbPub); pbPub = NULL; }
+			}
+			else
+			{
+				LogTrace(LOGTYPE_INFO, WHERE, "ECC signing: no certificate available for detection");
+			}
+
+			if (pbCert) { pCardData->pfnCspFree(pbCert); pbCert = NULL; }
+		}
+
+		/* Set the correct ECC signing algorithm based on detected key size */
+		if (pVendorSpec->bECCKeySize == ECC_KEY_SIZE_P256)
+		{
+			bAlgoRef = BELPIC_SIGN_ALGO_ECDSA_SHA2_256;
+			LogTrace(LOGTYPE_INFO, WHERE, "ECC signing: using P-256 algorithm (0x%02X)", bAlgoRef);
+			/* Enforce 32-byte DTBS for P-256 */
+			if (cbToSignLocal > 32)
+			{
+				pbToFreeAfter = (PBYTE)pCardData->pfnCspAlloc(32);
+				if (pbToFreeAfter == NULL)
+				{
+					LogTrace(LOGTYPE_ERROR, WHERE, "Allocation failed for digest truncation buffer");
+					CLEANUP(SCARD_E_NO_MEMORY);
+				}
+				memcpy(pbToFreeAfter, pbToSignLocal, 32);
+				pbToSignLocal = pbToFreeAfter;
+				cbToSignLocal = 32;
+				LogTrace(LOGTYPE_INFO, WHERE, "ECC signing: truncating digest from %u to %u bytes for P-256", (unsigned)pInfo->cbData, 32u);
+			}
+			else if (cbToSignLocal < 32)
+			{
+				LogTrace(LOGTYPE_ERROR, WHERE, "ECC signing: digest too short (%u), expected 32 for P-256", (unsigned)cbToSignLocal);
+				CLEANUP(SCARD_E_INVALID_PARAMETER);
+			}
+		}
+		else if (pVendorSpec->bECCKeySize == ECC_KEY_SIZE_P384)
+		{
+			bAlgoRef = BELPIC_SIGN_ALGO_ECDSA_SHA2_384;
+			LogTrace(LOGTYPE_INFO, WHERE, "ECC signing: using P-384 algorithm (0x%02X)", bAlgoRef);
+			/* Enforce 48-byte DTBS for P-384 */
+			if (cbToSignLocal > 48)
+			{
+				pbToFreeAfter = (PBYTE)pCardData->pfnCspAlloc(48);
+				if (pbToFreeAfter == NULL)
+				{
+					LogTrace(LOGTYPE_ERROR, WHERE, "Allocation failed for digest truncation buffer");
+					CLEANUP(SCARD_E_NO_MEMORY);
+				}
+				memcpy(pbToFreeAfter, pbToSignLocal, 48);
+				pbToSignLocal = pbToFreeAfter;
+				cbToSignLocal = 48;
+				LogTrace(LOGTYPE_INFO, WHERE, "ECC signing: truncating digest from %u to %u bytes for P-384", (unsigned)pInfo->cbData, 48u);
+			}
+			else if (cbToSignLocal < 48)
+			{
+				LogTrace(LOGTYPE_ERROR, WHERE, "ECC signing: digest too short (%u), expected 48 for P-384", (unsigned)cbToSignLocal);
+				CLEANUP(SCARD_E_INVALID_PARAMETER);
+			}
+		}
+		else
+		{
+			/* Fallback to generic ECC algorithm if key size not detected */
+			bAlgoRef = BELPIC_SIGN_ALGO_ECDSA;
+			LogTrace(LOGTYPE_INFO, WHERE, "ECC signing: key size not detected, using generic algorithm (0x%02X)", bAlgoRef);
+		}
+		
 		if ((pInfo->dwKeySpec == AT_ECDSA_P256) || (pInfo->dwKeySpec == AT_ECDSA_P384) || (pInfo->dwKeySpec == AT_ECDSA_P521))
 		{
 			if ((pInfo->dwKeySpec != AT_ECDSA_P256) && (pInfo->dwKeySpec != AT_ECDSA_P384))
@@ -449,22 +557,22 @@ DWORD WINAPI   CardSignData
 	LogTrace(LOGTYPE_INFO, WHERE, "BeidMSE [key=0x%.2x, Hashalgo=0x%.2x]", bKeyNr, uiHashAlgo);
 #endif
 
-	//dwReturn = BeidMSE(pCardData,bKeyNr,bAlgoRef);
-	//if ( dwReturn != 0 )
-	//{
-	//	LogTrace(LOGTYPE_ERROR, WHERE, "BeidMSE() returned [0x%X]", dwReturn);
-	//	CLEANUP(dwReturn);
-	//}
+	dwReturn = BeidMSE(pCardData,bKeyNr,bAlgoRef);
+	if ( dwReturn != 0 )
+	{
+		LogTrace(LOGTYPE_ERROR, WHERE, "BeidMSE() returned [0x%X]", dwReturn);
+		CLEANUP(dwReturn);
+	}
 
 #ifdef _DEBUG
-	LogTrace(LOGTYPE_INFO, WHERE, "Data to be Signed...[%d]", pInfo->cbData);
-	LogDump (pInfo->cbData, (char *)pInfo->pbData);
+	LogTrace(LOGTYPE_INFO, WHERE, "Data to be Signed...[%d]", cbToSignLocal);
+	LogDump (cbToSignLocal, (char *)pbToSignLocal);
 #endif
 
 	dwReturn = BeidSignData(pCardData, 
 		uiHashAlgo,
-		pInfo->cbData, 
-		pInfo->pbData, 
+		cbToSignLocal, 
+		pbToSignLocal, 
 		&(pInfo->cbSignedData), 
 		&(pInfo->pbSignedData));
 	if ( dwReturn != 0 )
@@ -478,7 +586,13 @@ DWORD WINAPI   CardSignData
 	LogDump (pInfo->cbSignedData, (char *)pInfo->pbSignedData);
 #endif
 
+
 cleanup:
+	if (pbToFreeAfter)
+	{
+		pCardData->pfnCspFree(pbToFreeAfter);
+		pbToFreeAfter = NULL;
+	}
 	LogTrace(LOGTYPE_INFO, WHERE, "Exit API...");
 	return(dwReturn);
 }

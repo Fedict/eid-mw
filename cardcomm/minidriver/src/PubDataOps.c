@@ -22,6 +22,7 @@
 #include "log.h"
 #include "util.h"
 #include "smartcard.h"
+#include <bcrypt.h>
 
 /****************************************************************************************************/
 
@@ -276,11 +277,68 @@ DWORD WINAPI   CardReadFile
 				if (pVendorSpec->bBEIDCardType == BEID_RSA_CARD)
 				{
 					keySize = 2048;
+					LogTrace(LOGTYPE_INFO, WHERE, "Using RSA key size: %d", keySize);
 
 				}
 				else
 				{
+					/* Default to 384, but detect actual ECC curve by extracting public key blob */
+					DWORD cbCert = 0, cbCert2 = 0;
+					PBYTE pbCert = NULL, pbCert2 = NULL;
+					DWORD cbPub = 0; PBYTE pbPub = NULL;
+
 					keySize = 384;
+
+					dwReturn = BeidReadCert(pCardData, CERT_NONREP, &cbCert, &pbCert);
+					if (dwReturn != SCARD_S_SUCCESS || pbCert == NULL || cbCert <= 4)
+					{
+						LogTrace(LOGTYPE_INFO, WHERE, "ECC detection: CERT_NONREP not available (dwReturn=0x%08X), using fallback %d", dwReturn, keySize);
+					}
+
+					if (pbCert && cbCert > 4)
+					{
+						PBYTE pbUse = pbCert;
+						DWORD cbUse = cbCert;
+						LogTrace(LOGTYPE_INFO, WHERE, "ECC detection: using CERT_NONREP certificate (size=%u)", cbUse);
+
+						dwReturn = BeidGetPubKey(pCardData, cbUse, pbUse, &cbPub, &pbPub);
+						if (dwReturn == SCARD_S_SUCCESS && pbPub != NULL && cbPub >= sizeof(BCRYPT_ECCKEY_BLOB))
+						{
+							BCRYPT_ECCKEY_BLOB *pBlob = (BCRYPT_ECCKEY_BLOB*)pbPub;
+							LogTrace(LOGTYPE_INFO, WHERE, "ECC detection: public key blob magic=0x%08X, cbKey=%u", (unsigned)pBlob->dwMagic, (unsigned)pBlob->cbKey);
+							if (pBlob->dwMagic == BCRYPT_ECDSA_PUBLIC_P256_MAGIC)
+							{
+								keySize = 256;
+								pVendorSpec->bECCKeySize = ECC_KEY_SIZE_P256;
+								LogTrace(LOGTYPE_INFO, WHERE, "ECC detection: detected P-256 curve, key size: %d", keySize);
+							}
+							else if (pBlob->dwMagic == BCRYPT_ECDSA_PUBLIC_P384_MAGIC)
+							{
+								keySize = 384;
+								pVendorSpec->bECCKeySize = ECC_KEY_SIZE_P384;
+								LogTrace(LOGTYPE_INFO, WHERE, "ECC detection: detected P-384 curve, key size: %d", keySize);
+							}
+							else
+							{
+								LogTrace(LOGTYPE_INFO, WHERE, "ECC detection: unexpected blob magic 0x%08X, using fallback %d", (unsigned)pBlob->dwMagic, keySize);
+								pVendorSpec->bECCKeySize = (keySize == 256) ? ECC_KEY_SIZE_P256 : ECC_KEY_SIZE_P384;
+							}
+						}
+						else
+						{
+							LogTrace(LOGTYPE_INFO, WHERE, "ECC detection: BeidGetPubKey failed (0x%08X) or invalid blob, using fallback %d", dwReturn, keySize);
+						}
+
+						if (pbPub) { pCardData->pfnCspFree(pbPub); pbPub = NULL; }
+					}
+					else
+					{
+						LogTrace(LOGTYPE_INFO, WHERE, "ECC detection: no certificate available, using fallback %d", keySize);
+						pVendorSpec->bECCKeySize = (keySize == 256) ? ECC_KEY_SIZE_P256 : ECC_KEY_SIZE_P384;
+					}
+
+					if (pbCert) { pCardData->pfnCspFree(pbCert); pbCert = NULL; }
+					if (pbCert2) { pCardData->pfnCspFree(pbCert2); pbCert2 = NULL; }
 				}
 
 				*pcbData = sizeof(cmr);
@@ -292,8 +350,8 @@ DWORD WINAPI   CardReadFile
 					CLEANUP(SCARD_E_NO_MEMORY);
 				}
 
-				//LogTrace(LOGTYPE_INFO, WHERE, "CardGetProperty for [CP_CARD_KEYSIZES]: length = %d", cbSerialNumber);
-				//LogDump (cbSerialNumber, (BYTE *)pbSerialNumber);
+				LogTrace(LOGTYPE_INFO, WHERE, "CardGetProperty for [CP_CARD_KEYSIZES]: length = %d", cbSerialNumber);
+				LogDump (cbSerialNumber, (BYTE *)pbSerialNumber);
 
 				cmr[0].bFlags                     = CONTAINER_MAP_VALID_CONTAINER|CONTAINER_MAP_DEFAULT_CONTAINER;
 				cmr[0].bReserved                  = 0;
@@ -318,6 +376,7 @@ DWORD WINAPI   CardReadFile
 				cmr[1].bReserved                  = 0;
 				cmr[1].wSigKeySizeBits            = keySize;
 				cmr[1].wKeyExchangeKeySizeBits    = 0;
+				LogTrace(LOGTYPE_INFO, WHERE, "cmapfile: final ECC/RSA key size set to %d bits", keySize);
 				memcpy (*ppbData, &cmr, *pcbData);
 			}
 			if ( _stricmp("ksc00", pszFileName) == 0)					   /* /mscp/ksc00 */

@@ -46,6 +46,10 @@
 
 #define BEID_RSA_CARD	1
 #define BEID_ECC_CARD	2
+/* ECC key size codes for VENDOR_SPECIFIC.bECCKeySize */
+#define ECC_KEY_SIZE_UNKNOWN  0
+#define ECC_KEY_SIZE_P256     1
+#define ECC_KEY_SIZE_P384     2
 /*
 typedef enum
 {
@@ -86,6 +90,7 @@ typedef struct _VENDOR_SPECIFIC
 	BYTE bSerialNumberSet;
 	BYTE szSerialNumber[16];
 	BYTE bBEIDCardType;
+	BYTE bECCKeySize;  // ECC_KEY_SIZE_* code; 0 when unknown or RSA
 } VENDOR_SPECIFIC;
 
 /************************************************************************************************************************/
