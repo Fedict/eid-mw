@@ -180,7 +180,7 @@ DWORD WINAPI   CardSignData
 	DWORD                      dwReturn       = 0;
 
 	BCRYPT_PKCS1_PADDING_INFO  *PkcsPadInfo = NULL;
-	//BCRYPT_PSS_PADDING_INFO    *PssPadInfo  = NULL;
+	BCRYPT_PSS_PADDING_INFO    *PssPadInfo  = NULL;
 
 	unsigned int               uiHashAlgo   = HASH_ALGO_NONE;
 
@@ -355,24 +355,27 @@ DWORD WINAPI   CardSignData
 				//first need to create workaround for incompatible card and minidriver architecture
 				//(beidcard does not allow setting algo between pinpvalidation and signature,
 				//and base csp doesn't show the padding algo before pin validation )
-				/*PssPadInfo = (BCRYPT_PSS_PADDING_INFO *) pInfo->pPaddingInfo;
-				if ( wcscmp(PkcsPadInfo->pszAlgId, L"SHA1") == 0 )
+				if (bKeyNr == BELPIC_KEY_AUTH)
 				{
-					uiHashAlgo = HASH_ALGO_NONE;
-					bAlgoRef = BELPIC_SIGN_ALGO_RSASSA_PSS_SHA1;
-				}
-				else if ( wcscmp(PkcsPadInfo->pszAlgId, L"SHA256") == 0 )
-				{
-					uiHashAlgo = HASH_ALGO_NONE;
-					bAlgoRef = BELPIC_SIGN_ALGO_RSASSA_PSS_SHA256;
+					PssPadInfo = (BCRYPT_PSS_PADDING_INFO*)pInfo->pPaddingInfo;
+					if (wcscmp(PssPadInfo->pszAlgId, L"SHA1") == 0)
+					{
+						uiHashAlgo = HASH_ALGO_NONE;
+						bAlgoRef = BELPIC_SIGN_ALGO_RSASSA_PSS_SHA1;
+					}
+					else if (wcscmp(PssPadInfo->pszAlgId, L"SHA256") == 0)
+					{
+						uiHashAlgo = HASH_ALGO_NONE;
+						bAlgoRef = BELPIC_SIGN_ALGO_RSASSA_PSS_SHA256;
+					}
 				}
 				else
-				{*/
-				LogTrace(LOGTYPE_ERROR, WHERE, "CARD_PADDING_PSS unsupported...");
-				CLEANUP(SCARD_E_UNSUPPORTED_FEATURE);
-				//}
-				//LogTrace(LOGTYPE_INFO, WHERE, "pInfo->dwPaddingType: CARD_PADDING_PSS");
-				////memcpy (&PssPadInfo, pInfo->pPaddingInfo, sizeof(PssPadInfo));
+				{
+					LogTrace(LOGTYPE_ERROR, WHERE, "CARD_PADDING_PSS unsupported...");
+					CLEANUP(SCARD_E_UNSUPPORTED_FEATURE);
+				}
+				LogTrace(LOGTYPE_INFO, WHERE, "pInfo->dwPaddingType: CARD_PADDING_PSS");
+				//memcpy (&PssPadInfo, pInfo->pPaddingInfo, sizeof(PssPadInfo));
 				break;
 			case CARD_PADDING_NONE:
 				LogTrace(LOGTYPE_INFO, WHERE, "pInfo->dwPaddingType: CARD_PADDING_NONE");
@@ -449,12 +452,15 @@ DWORD WINAPI   CardSignData
 	LogTrace(LOGTYPE_INFO, WHERE, "BeidMSE [key=0x%.2x, Hashalgo=0x%.2x]", bKeyNr, uiHashAlgo);
 #endif
 
-	//dwReturn = BeidMSE(pCardData,bKeyNr,bAlgoRef);
-	//if ( dwReturn != 0 )
-	//{
-	//	LogTrace(LOGTYPE_ERROR, WHERE, "BeidMSE() returned [0x%X]", dwReturn);
-	//	CLEANUP(dwReturn);
-	//}
+	if (bKeyNr == BELPIC_KEY_AUTH && pVendorSpec->bBEIDCardType == BEID_RSA_CARD) //only for AUTH key in RSA cards
+	{
+		dwReturn = BeidMSE(pCardData,bKeyNr,bAlgoRef);
+		if ( dwReturn != 0 )
+		{
+			LogTrace(LOGTYPE_ERROR, WHERE, "BeidMSE() returned [0x%X]", dwReturn);
+			CLEANUP(dwReturn);
+		}
+	}
 
 #ifdef _DEBUG
 	LogTrace(LOGTYPE_INFO, WHERE, "Data to be Signed...[%d]", pInfo->cbData);
