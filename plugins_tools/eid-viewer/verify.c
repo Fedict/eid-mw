@@ -368,7 +368,7 @@ enum eid_vwr_result eid_vwr_verify_rrncert(const void* certificate, size_t certl
 	EVP_PKEY *cert_key = X509_get0_pubkey(root_i);
 	X509 *store_cert = X509_OBJECT_get0_X509(root_object);
 	EVP_PKEY *trusted_key = X509_get0_pubkey(store_cert);
-	if(EVP_PKEY_cmp(trusted_key, cert_key) != 1) {
+	if(EVP_PKEY_eq(trusted_key, cert_key) != 1) {
 		be_log(EID_VWR_LOG_COARSE, "RRN certificate verification failed: root certificate on card is not RRN certificate issuer");
 		ret = EID_VWR_RES_WARNING;
 		goto exit;
@@ -431,7 +431,7 @@ enum eid_vwr_result eid_vwr_verify_root_cert(const void *certificate, size_t cer
 	EVP_PKEY *cert_key = X509_get0_pubkey(cert_i);
 	X509 *store_cert = X509_OBJECT_get0_X509(store_key);
 	EVP_PKEY *trusted_key = X509_get0_pubkey(store_cert);
-	if(EVP_PKEY_cmp(cert_key, trusted_key) != 1) {
+	if(EVP_PKEY_eq(cert_key, trusted_key) != 1) {
 		be_log(EID_VWR_LOG_COARSE, "Root certificate verification failed: public key of root certificate does not match public key of certificate from truststore");
 		ret = EID_VWR_RES_FAILED;
 		goto out;
