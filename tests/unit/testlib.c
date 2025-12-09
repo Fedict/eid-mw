@@ -800,6 +800,9 @@ void report_skip(const char *eid_testlib_funcname, const char * test, const char
 
 void write_xml_report(void) {
 	FILE * report = fopen("junit.xml", "a");
+        if(report == NULL) {
+                return; // couldn't open file
+        }
 	struct element * ptr = root_element;
 	const char * funcname = NULL;
 
