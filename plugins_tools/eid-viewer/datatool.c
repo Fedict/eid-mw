@@ -19,10 +19,27 @@ struct option longopt[] = {
 
 void read_file(void** filedata, int* filelen, char *filename) {
 	FILE *fp = fopen(filename, "rb");
+        if(!fp) {
+                perror("fopen");
+                exit(EXIT_FAILURE);
+        }
 	fseek(fp, 0, SEEK_END);
 	*filelen = ftell(fp);
+        errno=0;
 	rewind(fp);
-	*filedata = malloc(*filelen);
+        if(errno != 0) {
+                perror("rewind");
+                exit(EXIT_FAILURE);
+        }
+        if(filelen == 0) {
+                fprintf(stderr, "file %s is empty\n", filename);
+                exit(EXIT_FAILURE);
+        }
+	*filedata = realloc(*filelen);
+        if(filedata == NULL) {
+                perror("realloc");
+                exit(EXIT_FAILURE);
+        }
 	fread(*filedata, (size_t)(*filelen), 1, fp);
 	fclose(fp);
 }
