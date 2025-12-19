@@ -6,6 +6,7 @@
 #include <string.h>
 #include "dataverify.h"
 #include <eid-viewer/oslayer.h>
+#include <errno.h>
 
 struct option longopt[] = {
 	{"identity",		required_argument, NULL, 'i'},
@@ -31,11 +32,11 @@ void read_file(void** filedata, int* filelen, char *filename) {
                 perror("rewind");
                 exit(EXIT_FAILURE);
         }
-        if(filelen == 0) {
+        if(*filelen == 0) {
                 fprintf(stderr, "file %s is empty\n", filename);
                 exit(EXIT_FAILURE);
         }
-	*filedata = realloc(*filelen);
+	*filedata = realloc(filedata, *filelen);
         if(filedata == NULL) {
                 perror("realloc");
                 exit(EXIT_FAILURE);
