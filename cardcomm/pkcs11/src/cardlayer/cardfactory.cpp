@@ -23,9 +23,11 @@
 #include "cardfactory.h"
 #include "thread.h"
 #include "common/log.h"
+#include "common/util.h"
 #include "card.h"
 
 #include <string>
+#include <algorithm>
 
 
 namespace eIDMW
@@ -38,8 +40,16 @@ namespace eIDMW
 	CCard *CardConnect(const std::string & csReader, CPCSC * poPCSC, CPinpad * poPinpad)
 	{
 		CCard *poCard = NULL;
-		long lErrCode = EIDMW_ERR_CHECK;	// should never be returned
 		const char *strReader = NULL;
+
+		// Skip virtual Windows Hello for Business readers to avoid hammering
+		std::string readerLower = csReader;
+		std::transform(readerLower.begin(), readerLower.end(), readerLower.begin(), ::tolower);
+		if (readerLower.find("windows hello for business") != std::string::npos)
+		{
+			MWLOG(LEV_INFO, MOD_CAL, L"    Skipping virtual reader %ls", utilStringWiden(csReader).c_str());
+			return poCard;
+		}
 
 		if (poPCSC->m_ulConnectionDelay != 0)
 		{
@@ -52,53 +62,35 @@ namespace eIDMW
 			hCard = poPCSC->Connect(csReader);
 			if (hCard == 0)
 			{
-				goto done;
+				return poCard;
 			}
 		}
 		catch(CMWException & e)
 		{
 			MWLOG(LEV_INFO, MOD_CAL, L"    CardConnect threw error: [0x%08X]", e.GetError());
-			if (e.GetError() == (long)EIDMW_ERR_NO_CARD)
-			{
-				goto done;
-			}
-			if (e.GetError() != (long)EIDMW_ERR_CANT_CONNECT && e.GetError() != (long)EIDMW_ERR_CARD_COMM)
+			if (e.GetError() != (long)EIDMW_ERR_CANT_CONNECT && e.GetError() != (long)EIDMW_ERR_CARD_COMM && e.GetError() != (long)EIDMW_ERR_NO_CARD)
 			{
 				throw;
-			}				
-			lErrCode = e.GetError();
-			hCard = 0;
+			}
+			return poCard;
 		}
-
-		strReader = csReader.c_str();
 
 		if (hCard != 0)
 		{
+			strReader = csReader.c_str();
 			// 1. A card is present and we could connect to it via a normal SCardConnect()
 			if (poCard == NULL)
 			{
 				poCard = BeidCardGetInstance(strReader, hCard, poPCSC, poPinpad);
 			}
-		}
 
-		if (hCard == 0)
-		{
-			// 2. A card is present, but connecting to it is reader-specific (e.g. synchron. cards)
-
+			// 2. Card is not recognized as BE eID, fall back to unknown card handling
 			if (poCard == NULL)
 			{
 				poCard = UnknownCardGetInstance(strReader, hCard, poPCSC, poPinpad);
 			}
-
-			// If the card is still not recognized here, then it may as well
-			// be an badly inserted card, so we'll throw the exception that we
-			// caught in the beginning of this function
-			if (poCard == NULL)
-			{
-				throw CMWEXCEPTION(lErrCode);
-			}
 		}
-done:
+
 		return poCard;
 	}
 }
