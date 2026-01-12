@@ -2,7 +2,7 @@
 .docker-base:
   retry: 1
   stage: docker
-  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:latest
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:28
   services:
   - name: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:28-dind
     alias: docker
