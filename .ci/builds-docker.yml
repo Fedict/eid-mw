@@ -2,9 +2,9 @@
 .docker-base:
   retry: 1
   stage: docker
-  image: docker:latest
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:latest
   services:
-  - name: docker:28-dind
+  - name: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:28-dind
     alias: docker
   variables:
     IMAGE_TAG: $CI_REGISTRY_IMAGE/$IMAGE_NAME:$CI_COMMIT_REF_SLUG-$ARCH_TAG
@@ -17,6 +17,7 @@
   - OLDDIR=$(pwd)
   - cd $DOCKER_BASEDIR/.ci/dockerfiles/$IMAGE_NAME
   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  - docker login -u $CI_DEPENDENCY_PROXY_USER -p $CI_DEPENDENCY_PROXY_PASSWORD $CI_DEPENDENCY_PROXY_SERVER
   - docker pull $(grep '^FROM' Dockerfile | cut -d ' ' -f 2)
   - docker pull $IMAGE_TAG || true
   - cd $OLDDIR
@@ -26,6 +27,7 @@
   - IMAGE_NAME_SAFE=$(echo $IMAGE_NAME|sed "s/-/_/g")
   - USE_ACNG=$(eval echo "\$USE_ACNG_$IMAGE_NAME_SAFE")
   - if [ ! -z "$USE_ACNG" ]; then proxy_args="--build-arg=http_proxy=$ACNG --build-arg=https_proxy=$ACNG"; else proxy_args=""; fi
+  - proxy_args="proxy_args --build-arg=$PROXY=$CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX"
   - echo "$proxy_args"
   - docker build --pull --cache-from $IMAGE_TAG $proxy_args -t $IMAGE_TAG .
   - docker push $IMAGE_TAG
