@@ -30,7 +30,7 @@
   - IMAGE_NAME_SAFE=$(echo $IMAGE_NAME|sed "s/-/_/g")
   - USE_ACNG=$(eval echo "\$USE_ACNG_$IMAGE_NAME_SAFE")
   - if [ ! -z "$USE_ACNG" ]; then proxy_args="--build-arg=http_proxy=$ACNG --build-arg=https_proxy=$ACNG"; else proxy_args=""; fi
-  - proxy_args="$proxy_args --build-arg=$CI_DEPENDENCY_PROXY_IMAGE_PREFIX=$CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX"
+  - proxy_args="$proxy_args --build-arg=$CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX=$CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX"
   - echo "$proxy_args"
   - docker build --pull --cache-from $IMAGE_TAG $proxy_args -t $IMAGE_TAG .
   - docker push $IMAGE_TAG
