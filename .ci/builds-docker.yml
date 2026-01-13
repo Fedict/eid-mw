@@ -20,6 +20,7 @@
   - docker login -u $CI_DEPENDENCY_PROXY_USER -p $CI_DEPENDENCY_PROXY_PASSWORD $CI_DEPENDENCY_PROXY_SERVER
   - SOURCE_IMAGE=$(grep '^FROM' Dockerfile | cut -d' ' -f 2)
   - eval SOURCE_IMAGE=$(eval echo "$SOURCE_IMAGE")
+  - echo $SOURCE_IMAGE
   - docker pull $SOURCE_IMAGE
   - docker pull $IMAGE_TAG || true
   - cd $OLDDIR
