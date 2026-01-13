@@ -3,8 +3,8 @@
 # distribution and a few things changed so we get a more recent version of
 # debootstrap.
 
-ARG PROXY
-FROM $PROXY/debian:testing-slim
+ARG CI_DEPENDENCY_PROXY_IMAGE_PREFIX
+FROM $CI_DEPENDENCY_PROXY_IMAGE_PREFIX/debian:testing-slim
 
 RUN set -ex; \
 	apt-get update; \
