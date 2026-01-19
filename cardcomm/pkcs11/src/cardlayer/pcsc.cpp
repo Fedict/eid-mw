@@ -35,9 +35,6 @@
 
 namespace eIDMW
 {
-	static SCARD_IO_REQUEST m_ioSendPci;
-	static SCARD_IO_REQUEST m_ioRecvPci;
-
 	CPCSC::CPCSC()
 	{
 		CConfig config;
@@ -46,6 +43,7 @@ namespace eIDMW
 		m_ulCardTxDelay = config.GetLong(CConfig::EIDMW_CONFIG_PARAM_GENERAL_CARDTXDELAY);
 		m_hContext = 0;
 		m_iTimeoutCount = 0;
+		m_ulProtocol = 0;
 	}
 
 	CPCSC::~CPCSC(void)
@@ -149,10 +147,7 @@ namespace eIDMW
 
 		else
 		{
-			m_ioSendPci.dwProtocol = dwProtocol;
-			m_ioSendPci.cbPciLength = sizeof(SCARD_IO_REQUEST);
-			m_ioRecvPci.dwProtocol = dwProtocol;
-			m_ioRecvPci.cbPciLength = sizeof(SCARD_IO_REQUEST);
+			m_ulProtocol = dwProtocol;
 
 			// If you do an SCardTransmit() too fast after an SCardConnect(),
 			// some cards/readers will return an error (e.g. 0x801002f)
@@ -222,6 +217,8 @@ namespace eIDMW
 	CByteArray CPCSC::Transmit(SCARDHANDLE hCard, const CByteArray & oCmdAPDU, long *plRetVal, void *pSendPci, void *pRecvPci)
 	{
 		unsigned char tucRecv[APDU_BUF_LEN];
+		SCARD_IO_REQUEST ioSendPci;
+		SCARD_IO_REQUEST ioRecvPci;
 
 		memset(tucRecv, 0, sizeof(tucRecv));
 		DWORD dwRecvLen = sizeof(tucRecv);
@@ -229,8 +226,13 @@ namespace eIDMW
 		unsigned char ucINS = oCmdAPDU.Size() >= 4 ? oCmdAPDU.GetByte(1) : 0;
 		unsigned long ulLen = ucINS == 0xA4 || ucINS == 0x22 ? 0xFFFFFFFF : 5;
 
-		SCARD_IO_REQUEST *pioSendPci = (pSendPci != NULL) ? (SCARD_IO_REQUEST *) pSendPci : &m_ioSendPci;
-		SCARD_IO_REQUEST *pioRecvPci = (pRecvPci != NULL) ? (SCARD_IO_REQUEST *) pRecvPci : &m_ioRecvPci;
+		SCARD_IO_REQUEST *pioSendPci = (pSendPci != NULL) ? (SCARD_IO_REQUEST *) pSendPci : &ioSendPci;
+		SCARD_IO_REQUEST *pioRecvPci = (pRecvPci != NULL) ? (SCARD_IO_REQUEST *) pRecvPci : &ioRecvPci;
+
+		ioSendPci.dwProtocol = m_ulProtocol;
+		ioSendPci.cbPciLength = sizeof(SCARD_IO_REQUEST);
+		ioRecvPci.dwProtocol = m_ulProtocol;
+		ioRecvPci.cbPciLength = sizeof(SCARD_IO_REQUEST);
 
 		MWLOG(LEV_DEBUG, MOD_CAL, L"      SCardTransmit(%ls)", oCmdAPDU.ToWString(true, true, 0, ulLen).c_str());
 		//MWLOG(LEV_DEBUG, MOD_CAL, L"      SCardTransmit pioSendPci (dwProtocol = 0X%x, cbPciLength = 0x%x)", pioSendPci->dwProtocol, pioSendPci->cbPciLength);
