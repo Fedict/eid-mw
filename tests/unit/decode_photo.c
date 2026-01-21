@@ -124,7 +124,7 @@ int jpegdump(char* data, CK_ULONG length) {
 
 	printf("Read %u scanlines\n", size);
 
-	for(i=0; i<cinfo.output_height; i+=2) {
+	for(i=0; i<cinfo.output_height-1; i+=2) {
 		for(j=0; j<rlen; j+=2) {
 			int p[4]; // pixel
 			int d[4], dt; // duty
