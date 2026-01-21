@@ -1,17 +1,18 @@
-publiccodeYmlVersion: "0.4"
+publiccodeYmlVersion: "0"
 
 name: eID Middleware
 url: "https://github.com/Fedict/eid-mw"
 softwareType: "standalone/desktop"
-releaseDate: "2024-10-24"
+releaseDate: "2026-01-21"
 platforms:
   - windows
   - linux
   - macos
 categories:
-  - authentication
+  - e-signature
+  - digital-citizenship
   - identity-management
-  - security
+  - it-security
 description:
   en:
     shortDescription: "Middleware for interacting with the Belgian electronic ID card (eID) for authentication, data reading, and digital signatures."
@@ -29,17 +30,16 @@ description:
       - Cross-platform support (Windows, Linux, macOS)
       - Firefox extension for browser integration
 developmentStatus: stable
-softwareVersion: "5.1.21"
-license: "LGPL-3.0-or-later"
-maintained: true
+softwareVersion: "5.1.28"
+organisation:
+  uri: https://eid.belgium.be/
 intendedAudience:
   scope:
     - government
   countries:
     - BE
 legal:
-  repoOwner: "FPS BOSA DG Digital Transformation"
-  authorsFile: "AUTHORS"
+  license: "LGPL-3.0-or-later"
 maintenance:
   type: "contract"
   contractors:
