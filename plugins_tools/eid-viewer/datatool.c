@@ -36,7 +36,7 @@ void read_file(void** filedata, int* filelen, char *filename) {
                 fprintf(stderr, "file %s is empty\n", filename);
                 exit(EXIT_FAILURE);
         }
-	*filedata = realloc(filedata, *filelen);
+	*filedata = realloc(*filedata, *filelen);
         if(filedata == NULL) {
                 perror("realloc");
                 exit(EXIT_FAILURE);
