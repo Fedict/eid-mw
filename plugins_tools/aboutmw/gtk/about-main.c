@@ -385,6 +385,10 @@ void do_distro(GtkWidget* top G_GNUC_UNUSED, GtkListStore* data) {
 		free(dat);
 		dat=NULL;
 	}
+	if(dat != NULL) {
+		free(dat);
+		dat=NULL;
+	}
 	fclose(f);
 	perror("getline");
 }
