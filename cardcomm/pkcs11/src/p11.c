@@ -450,6 +450,19 @@ CK_RV p11_add_slot_object(P11_SLOT *pSlot, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG 
 
 	*phObject = 0;
 
+/*
+ * The GCC analyzer produces a false positive for a NULL pointer dereference on
+ * the below code.
+ *
+ * p11_new_slot_object creates an object that is within the limits which
+ * p11_get_slot_object tests for. If the test fails, we get a NULL pointer
+ * back, which is dereferenced in the assignment to its pAttr member, but it
+ * can't fail because of how the code flows.
+ *
+ * Disable that diagnostic here for that reason.
+ */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wanalyzer-null-dereference"
 	ret = p11_new_slot_object(pSlot, phObject);
 	if ((ret != 0) || (*phObject == 0))
 	{
@@ -461,6 +474,7 @@ CK_RV p11_add_slot_object(P11_SLOT *pSlot, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG 
 
 	//add room for attributes as in template
 	pObject->pAttr = (CK_ATTRIBUTE_PTR) malloc(ulCount * sizeof(CK_ATTRIBUTE));
+#pragma GCC diagnostic pop
 	if (pObject->pAttr == NULL)
 	{
 		log_trace(WHERE, "E: alloc error for attribute");
@@ -532,6 +546,19 @@ CK_RV p11_add_slot_ID_object(P11_SLOT *pSlot, CK_ATTRIBUTE_PTR pTemplate, CK_ULO
 
 	*phObject = 0;
 
+/*
+ * The GCC analyzer produces a false positive for a NULL pointer dereference on
+ * the below code.
+ *
+ * p11_new_slot_object creates an object that is within the limits which
+ * p11_get_slot_object tests for. If the test fails, we get a NULL pointer
+ * back, which is dereferenced in the assignment to its pAttr member, but it
+ * can't fail because of how the code flows.
+ *
+ * Disable that diagnostic here for that reason.
+ */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wanalyzer-null-dereference"
 	ret = p11_new_slot_object(pSlot, phObject);
 	if ((ret != CKR_OK) || (*phObject == 0))
 	{
@@ -543,6 +570,7 @@ CK_RV p11_add_slot_ID_object(P11_SLOT *pSlot, CK_ATTRIBUTE_PTR pTemplate, CK_ULO
 
 	//add room for attributes as in template
 	pObject->pAttr = (CK_ATTRIBUTE_PTR) malloc(ulCount * sizeof(CK_ATTRIBUTE));
+#pragma GCC diagnostic pop
 	if (pObject->pAttr == NULL)
 	{
 		log_trace(WHERE, "E: alloc error for attribute");
