@@ -132,6 +132,7 @@ void check_update() {
 	if(info->have_upgrade) {
 		g_main_context_invoke(NULL, (GSourceFunc)show_upgrade_message, (void*)info);
 	}
+	g_strfreev(version_and_rest);
 }
 
 /* Handle "state changed" elements */
