@@ -495,7 +495,7 @@ static int eid_vwr_p11_do_challenge_real(struct eid_vwr_challenge_responsedata *
 		// eid_vwr_challenge_responsedata, but doing so changes
 		// the ABI of libeidviewer. Let's try to avoid that for
 		// now.
-		CK_ULONG resplen = 0;
+		CK_ULONG resplen = (CK_ULONG)p->responselen;
 		check_rv(C_Sign(session, p->challenge, (CK_ULONG)p->challengelen, p->response, &(resplen)));
 		p->responselen = (size_t)resplen;
 
