@@ -96,9 +96,9 @@ namespace eIDMW
 		0x04, 0x14
 	};
 
-	CCard::CCard(SCARDHANDLE hCard, CPCSC * poPCSC, CPinpad * poPinpad, tSelectAppletMode selectAppletMode, tCardType cardType)
+	CCard::CCard(SCARDHANDLE hCard, CPCSC * poPCSC, CPinpad * poPinpad, tSelectAppletMode selectAppletMode, tCardType cardType, bool virt)
 	  : m_hCard(hCard), m_poPCSC(poPCSC), m_poPinpad(poPinpad), m_cardType(cardType), m_ulLockCount(0),
-	    m_bSerialNrString(false), m_selectAppletMode(selectAppletMode), m_ucAppletVersion(0), m_ul6CDelay(0), m_oPKCS15()
+	    m_bSerialNrString(false), m_selectAppletMode(selectAppletMode), m_ucAppletVersion(0), m_ul6CDelay(0), m_oPKCS15(), m_virt(virt)
 	{
 		try
 		{
@@ -719,7 +719,7 @@ namespace eIDMW
 	CCard * UnknownCardGetInstance(const char *csReader,
 		SCARDHANDLE hCard, CPCSC * poPCSC, CPinpad * poPinpad)
 	{
-		CCard *poCard = new CCard(hCard, poPCSC, poPinpad, DONT_SELECT_APPLET, CARD_UNKNOWN);
+		CCard *poCard = new CCard(hCard, poPCSC, poPinpad, DONT_SELECT_APPLET, CARD_UNKNOWN, false);
 
 		return poCard;
 	}
@@ -736,7 +736,18 @@ namespace eIDMW
 					if (bIsBeidCard)
 					{
 						UnlockReader();
-						poCard = new CCard(hCard, poPCSC, poPinpad, TRY_SELECT_APPLET, CARD_BEID);
+#ifdef WIN32						
+						if ((strstr(csReader, "BeIDX") != NULL))
+						{
+							poCard = new CCard(hCard, poPCSC, poPinpad, TRY_SELECT_APPLET, CARD_BEID, true);
+						}
+						else
+						{
+#endif
+							poCard = new CCard(hCard, poPCSC, poPinpad, TRY_SELECT_APPLET, CARD_BEID, false);
+#ifdef WIN32	
+						}
+#endif
 					}
 					else
 					{
@@ -749,7 +760,7 @@ namespace eIDMW
 						{
 							LockReader(csReader);
 						}
-						poCard = new CCard(hCard, poPCSC, poPinpad, DONT_SELECT_APPLET, CARD_UNKNOWN);
+						poCard = new CCard(hCard, poPCSC, poPinpad, DONT_SELECT_APPLET, CARD_UNKNOWN, false);
 					}
 				}
 			}
@@ -770,6 +781,18 @@ namespace eIDMW
 	{
 		return m_oCardData;
 	}
+
+
+	void CCard::SetVirtual()
+	{
+		m_virt = true;
+	}
+
+	bool CCard::IsVirtual()
+	{
+		return m_virt;
+	}
+	
 
 	std::string CCard::GetPinpadPrefix()
 	{

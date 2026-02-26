@@ -39,6 +39,9 @@ namespace eIDMW
 										{true, "Signature",      1, 3, 512, 131, 48,  EC},				//the "Signature" string is hardcoded here, but could also be fetched from the CDF
 										{true, BEID_LABEL_KEY_CARD,   0, CARD_KEY_ID, 2, 129, 48,  EC} };	//this key object is only meant to be used by the pkcs#11 SDK (for a card challenge),
 																											//it is not really part of the card PKI and cannot be fetched from the CDF
+	static tPrivKey KeysBeidV18_virt[1] = { {true, "Signature",      1, 3, 512, 131, 32,  EC} };	//the "Signature" string is hardcoded here, but could also be fetched from the CDF
+											 
+	//it is not really part of the card PKI and cannot be fetched from the CDF
 
 	const std::string AODFPath = "3F00DF005034";
 	const std::string PrKDFPath = "3F00DF005035";
@@ -98,8 +101,15 @@ namespace eIDMW
 				m_ulKeyCount = 2;
 				break;
 			case 0x18:
-				m_poKeysBeid = KeysBeidV18;
-				m_ulKeyCount = 3;
+				if (m_poCard->IsVirtual() == true)
+				{
+					m_poKeysBeid = KeysBeidV18_virt;
+					m_ulKeyCount = 1;
+				}
+				else {
+					m_poKeysBeid = KeysBeidV18;
+					m_ulKeyCount = 3;
+				}
 				break;
 			default:
 				m_poKeysBeid = NULL;

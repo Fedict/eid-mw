@@ -58,7 +58,7 @@ namespace eIDMW
 	public:
 
 		CCard(SCARDHANDLE hCard, CPCSC * poPCSC, CPinpad * poPinpad,
-			tSelectAppletMode selectAppletMode, tCardType cardType);
+			tSelectAppletMode selectAppletMode, tCardType cardType, bool virt);
 		~CCard(void);
 
 		/** Disconnect from the card, optionally resetting it */
@@ -72,6 +72,9 @@ namespace eIDMW
 
 		/** Return true if we can use our current cardhandle (m_poCard) with the card, false otherwise */
 		bool Status();
+
+		/** Return true if the card reader has a PIN pad */
+		bool IsVirtualPinpadReader();
 
 		/** Return true if the card reader has a PIN pad */
 		bool IsPinpadReader();
@@ -174,6 +177,8 @@ namespace eIDMW
 		 *   - the appletversion (1 byte): 0x10, 0x11, 0x20
 		 *   - the global OS version (2 bytes) */
 		CByteArray GetInfo();
+		void SetVirtual();
+		bool IsVirtual();
 
 		bool LogOff();
 
@@ -235,6 +240,7 @@ namespace eIDMW
 		CByteArray m_oSerialNr;
 		unsigned char m_ucAppletVersion;
 		unsigned long m_ul6CDelay;
+		bool m_virt=false;
 
 #ifdef WIN32
 #pragma warning(push)
