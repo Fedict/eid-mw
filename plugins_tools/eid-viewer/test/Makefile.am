@@ -1,4 +1,4 @@
-TESTS = cardevent deserialize serialize init pinop states states_null_safety gender validation
+TESTS = cardevent deserialize serialize init pinop states states_null_safety gender validation signature_parsing
 check_PROGRAMS = $(TESTS)
 CLEANFILES = junit.xml
 
@@ -37,5 +37,8 @@ gender_LDADD = $(COMMON_LIB)
 
 validation_SOURCES = validation.c $(COMMON_SRCS)
 validation_LDADD = $(COMMON_LIB)
+
+signature_parsing_SOURCES = signature_parsing.c $(COMMON_SRCS)
+signature_parsing_LDADD = $(COMMON_LIB) -lcrypto
 
 EXTRA_DIST = 67.06.30-296.59.eid

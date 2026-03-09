@@ -124,15 +124,40 @@ bool verify_once(EVP_PKEY *pubkey, const EVP_MD *md, const unsigned char *data, 
 	}
 	if(key_base_id == EVP_PKEY_EC) {
 		md = EVP_get_digestbyname("sha384");
-		//check if the signature length is correct
-		size_t asnsiglen = (*(sig+1))+2; //length value of asn.1 data is in second byte, add 2 for the 2 initial bytes: 0x30 and len
+		// Properly parse ASN.1 DER signature length with bounds checking
 		if (*sig != 0x30)
 		{
 			be_log(EID_VWR_LOG_COARSE, "Signature not in asn.1 encoding");
 		}
-		else if( asnsiglen != siglen)
-		{
-			siglen = asnsiglen;
+		else if(siglen < 2) {
+			be_log(EID_VWR_LOG_COARSE, "Signature too short for ASN.1 encoding");
+		}
+		else {
+			// Parse DER length properly (handles both short and long form)
+			size_t asnsiglen = 0;
+			if(sig[1] < 0x80) {
+				// Short form: length is in the second byte
+				asnsiglen = sig[1] + 2;
+			} else {
+				// Long form: first byte indicates number of length bytes
+				int len_bytes = sig[1] & 0x7f;
+				if(len_bytes == 0 || len_bytes > 4 || siglen < 2 + len_bytes) {
+					be_log(EID_VWR_LOG_COARSE, "Invalid ASN.1 length encoding");
+					goto exit;
+				}
+				// Calculate length from subsequent bytes
+				for(int i = 0; i < len_bytes; i++) {
+					asnsiglen = (asnsiglen << 8) | sig[2 + i];
+				}
+				asnsiglen += 2 + len_bytes;
+			}
+			
+			// Only update siglen if the parsed length is reasonable and within bounds
+			if(asnsiglen <= siglen && asnsiglen > 0) {
+				siglen = asnsiglen;
+			} else {
+				be_log(EID_VWR_LOG_COARSE, "ASN.1 signature length out of bounds");
+			}
 		}
 	}
 	if(EVP_DigestVerifyInit(mdctx, &pctx, md, NULL, pubkey) != 1) {
