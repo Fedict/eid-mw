@@ -1,4 +1,4 @@
-TESTS = cardevent deserialize serialize init pinop states gender validation
+TESTS = cardevent deserialize serialize init pinop states states_null_safety gender validation
 check_PROGRAMS = $(TESTS)
 CLEANFILES = junit.xml
 
@@ -27,6 +27,9 @@ pinop_LDADD = $(COMMON_LIB)
 states_SOURCES = states.c $(COMMON_SRCS)
 states_CPPFLAGS = -DSRCDIR='"$(srcdir)"'
 states_LDADD = $(COMMON_LIB)
+
+states_null_safety_SOURCES = states_null_safety.c $(COMMON_SRCS)
+states_null_safety_LDADD = $(COMMON_LIB)
 
 gender_SOURCES = gender.c $(COMMON_SRCS)
 gender_CPPFLAGS = -DSRCDIR='"$(srcdir)"'

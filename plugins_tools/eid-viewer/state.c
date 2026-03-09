@@ -256,6 +256,12 @@ static void parent_enter_recursive(struct state* start, struct state* end, enum 
 void sm_handle_event_onthread(enum eid_vwr_state_event e, void* data) {
 	struct state *thistree, *targettree, *cmnanc, *hold, *target;
 
+	/* Check if state machine is initialized to prevent NULL pointer dereference */
+	if(curstate == NULL) {
+		be_log(EID_VWR_LOG_ERROR, TEXT("State machine not initialized"));
+		return;
+	}
+
 	/* We want to be able to detect when a state transition has happened recursively... */
 	hold = curstate;
 

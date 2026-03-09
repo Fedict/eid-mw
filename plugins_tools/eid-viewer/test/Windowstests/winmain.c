@@ -53,7 +53,8 @@ typedef	struct {
 int	_tmain(int argc, _TCHAR* argv[]){
 
 	eIDTest eIDTests[] = {
-		{0,true, "states", &states }
+		{0,true, "states", &states },
+		{0,true, "states_null_safety", &states_null_safety }
 	};
 	
 	return gmain(argc, argv, eIDTests);
