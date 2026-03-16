@@ -39,6 +39,13 @@
 extern CK_FUNCTION_LIST pkcs11_function_list;
 //extern void *logmutex;
 
+#ifdef PKCS11_SA_RELEASE
+static int should_hide_slot(const P11_SLOT *pSlot)
+{
+	return pSlot != NULL && strstr(pSlot->name, "BOSA BeIDX") != NULL;
+}
+#endif
+
 //static int g_final = 0; /* Belpic */
 
 //  CMutex gMutex;
@@ -261,6 +268,14 @@ CK_RV C_GetSlotList(CK_BBOOL       tokenPresent,  /* only slots with token prese
 
 		if (l < LOG_MAX_REC) 
 			log_trace(WHERE, "I: slot[%d]: %s", h, pSlot->name);
+
+#ifdef PKCS11_SA_RELEASE
+		if (should_hide_slot(pSlot))
+		{
+			log_trace(WHERE, "I: skip slot[%d]: %s", h, pSlot->name);
+			continue;
+		}
+#endif
 
 		if (tokenPresent == CK_TRUE)
 		{

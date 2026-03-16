@@ -624,7 +624,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <AdditionalIncludeDirectories>..\src;..\src\common;..\src\common\libtomcrypt;..\src\cardlayer\cardpluginbeid;..\src\cardlayer;..\src\dialogs\dialogswin32;..\src\dialogs;..\..\..\doc\sdk\include\v240;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;BEID_OLD_PINPAD;NO_DIALOGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;BEID_OLD_PINPAD;NO_DIALOGS;PKCS11_SA_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
@@ -849,7 +849,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <AdditionalIncludeDirectories>..\src;..\src\common;..\src\common\libtomcrypt;..\src\cardlayer\cardpluginbeid;..\src\cardlayer;..\src\dialogs\dialogswin32;..\src\dialogs;..\..\..\doc\sdk\include\v240;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;BEID_OLD_PINPAD;NO_DIALOGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;BEID_OLD_PINPAD;NO_DIALOGS;PKCS11_SA_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
