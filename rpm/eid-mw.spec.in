@@ -189,8 +189,8 @@ fi
 if [ -x /usr/bin/glib-compile-schemas ]; then
         echo "Compiling all glib schemas on the system..."
         echo "If you see any warnings for schemas *other* than"
-        echo "be.eid.eid-viewer, please report those to the relevant application,"
-        echo "*not* to the eID Middleware developers."
+        echo "be.belgium.eid.eid-viewer, please report those to the relevant"
+        echo "application, *not* to the eID Middleware developers."
         /usr/bin/glib-compile-schemas /usr/share/glib-2.0/schemas
 fi
 
