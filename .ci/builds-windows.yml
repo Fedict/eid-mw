@@ -13,10 +13,15 @@
   allow_failure: true
 
 .build-windows:
+  image: $WINDOWS_BUILD_IMAGE
   dependencies: []
   before_script:
   - del $Env:WINDOWS_BASEDIR\scripts\windows\*.exe
   script:
+  - dotnet package add Microsoft.Windows.SDK.CPP --version 10.0.28000.1-RTM
+  - dotnet package add Microsoft.Windows.WDK.x64 --version 10.0.28000.1-RTM
+  - dotnet package add Microsoft.Windows.WDK.ARM64 --version 10.0.28000.1-RTM
+  - dotnet package add Microsoft.Windows.WDK.x86 --version 10.0.28000.1-RTM
   - cd $Env:WINDOWS_BASEDIR\scripts\windows
   - ./build_minidriver.bat
   - ./build_all.bat
@@ -25,8 +30,8 @@
   - xcopy $Env:WINDOWS_BASEDIR\scripts\windows\*.exe products\windows
   - xcopy $Env:WINDOWS_BASEDIR\scripts\windows\*.msi products\windows
   tags:
-  - build
   - windows
+  - windows-docker
   allow_failure: true
   artifacts:
     when: on_success
