@@ -18,7 +18,7 @@
 
 
 @set SEARCH_WIX_PATH=%USERPROFILE%\.dotnet\tools\.store\wix\6.0.2\wix\6.0.2\tools\net6.0\any
-@set SEARCH_WIX_PATH_2=C:\Program Files (x86)\WiX Toolset v3.11\bin
+@set SEARCH_WIX_PATH_2=C:\Program Files\WiX Toolset v6.0\bin
 @set SEARCH_NSIS_PATH=C:\Program Files (x86)\NSIS
 @set SEARCH_NSIS_PATH_2=C:\Program Files\NSIS
 
