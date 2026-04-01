@@ -166,6 +166,12 @@
 @if "%FILE_NOT_FOUND%"=="" goto found_wix
 @echo        Not found in "%BEID_DIR_WIX_EXT%"
 
+@set BEID_DIR_WIX_EXT="%SEARCH_WIX_PATH_2%\.wix\extensions"
+@set FILE_NOT_FOUND=
+@for %%i in (%FILE_TO_FIND%) do @if not exist "%BEID_DIR_WIX_EXT%\%%~i" set FILE_NOT_FOUND=%%~i
+@if "%FILE_NOT_FOUND%"=="" goto found_wix
+@echo        Not found in "%BEID_DIR_WIX_EXT%"
+
 
 @echo [ERROR] WiX could not be found
 @echo         Please install Wix v5
