@@ -4,7 +4,7 @@
 @set SEARCH_BEID_DIR_MSBUILD_3=C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\Bin
 
 ::@set SEARCH_SIGNTOOL_PATH=C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Bin
-@set SEARCH_SIGNTOOL_PATH=C:\Program Files (x86)\Windows Kits\10\bin\10.0.22621.0\x64
+@set SEARCH_SIGNTOOL_PATH=C:\Program Files (x86)\Windows Kits\10\bin\10.0.26100.0\x64
 @set SEARCH_SIGNTOOL_PATH_2=C:\Program Files (x86)\Windows Kits\8.1\bin\x64
 @set SEARCH_SIGNTOOL_PATH_3=C:\WinDDK\7600.16385.1\bin\x86
 @set SEARCH_INF2CAT_PATH=C:\Program Files (x86)\Windows Kits\10\bin\10.0.26100.0\x86
