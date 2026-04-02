@@ -17,9 +17,10 @@
   dependencies: []
   before_script:
   - del $Env:WINDOWS_BASEDIR\scripts\windows\*.exe
-  - '[System.IO.File]::WriteAllBytes(".\certificate.pfx", [Convert]::FromBase64String((Get-Content $Env:WINDOWS_SIGNING_CERT_B64 -Raw)))'
+  - '$pfxFilename = (Get-Location | Select-Object -expandProperty path) + "\certificate.pfx"'
+  - '[System.IO.File]::WriteAllBytes($pfxFilename, [Convert]::FromBase64String((Get-Content $Env:WINDOWS_SIGNING_CERT_B64 -Raw)))'
   - '$secureString = convertto-securestring $Env:WINDOWS_SIGNING_CERT_PWD -asplaintext -force'
-  - 'Import-PfxCertificate -Password $secureString -FilePath ".\certificate.pfx" -CertStoreLocation "cert:\CurrentUser\My"'
+  - 'Import-PfxCertificate -Password $secureString -FilePath $pfxFilename -CertStoreLocation "cert:\CurrentUser\My"'
   script:
   - cd $Env:WINDOWS_BASEDIR\scripts\windows
   - ./build_minidriver.bat
