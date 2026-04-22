@@ -1340,6 +1340,10 @@ DWORD BeidSignData(PCARD_DATA  pCardData, unsigned int HashAlgo, DWORD cbToBeSig
 		{
 			CLEANUP(SCARD_W_SECURITY_VIOLATION);
 		}
+		if (SW1 == 0x64 && SW2 == 0x01)
+		{
+			CLEANUP(SCARD_W_CANCELLED_BY_USER);
+		}
 		else
 		{
 			CLEANUP(SCARD_E_UNEXPECTED);
