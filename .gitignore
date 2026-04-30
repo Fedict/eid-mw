@@ -127,3 +127,13 @@ scripts/windows/beidmdrv_all_5.1.8.6024.zip
 /VS_2022/PKCS11_SA_Release
 /cardcomm/pkcs11/VS_2022/pkcs11/PKCS11_SA_Release
 /cardcomm/pkcs11/VS_2022/pkcs11/x64/PKCS11_SA_Release
+/cardcomm/pkcs11/VS_2022/x64/PKCS11_SA_DEBUG
+/installers/quickinstaller/Drivers/WIN7_WIN81/beidmdrv
+/installers/quickinstaller/Drivers/XP-WIN8/beidmdrv
+/scripts/windows/beidmdr*/*.dll
+/scripts/windows/beidmdr*/*.cat
+/scripts/windows/beidmdr*/*.inf
+/scripts/windows/beidmdr*/*/*.dll
+/scripts/windows/beidmdr*/*/*.cat
+/scripts/windows/beidmdr*/*/*.inf
+/scripts/windows/*.zip
