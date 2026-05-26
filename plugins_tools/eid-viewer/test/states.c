@@ -231,6 +231,10 @@ static void newstate(enum eid_vwr_states s) {
 	case STATE_TOKEN_CHALLENGE:
 		printf("performing a challenge");
 		break;
+	case STATE_TOKEN_EXPORT_PHOTO:
+	case STATE_FILE_EXPORT_PHOTO:
+		printf("exporting photo to a file\n");
+		break;
 	case STATE_TOKEN_ERROR:
 		printf("error occured with card\n");
 		break;	

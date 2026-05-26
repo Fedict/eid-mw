@@ -6,6 +6,7 @@
 
 void file_open(GtkWidget * open, gpointer user_data);
 void file_save(GtkWidget * open, gpointer format);
+void file_export_photo(GtkWidget * item, gpointer user_data);
 void file_close(GtkWidget * close, gpointer user_data);
 void file_print(GtkWidget * print, gpointer user_data);
 void translate(GtkWidget * langitem, gpointer to_lang);

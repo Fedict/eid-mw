@@ -113,6 +113,11 @@ void eid_vwr_be_serialize(const EID_CHAR* target_file) {
 	sm_handle_event(EVENT_SERIALIZE, copy, free, NULL);
 }
 
+void eid_vwr_be_export_photo(const EID_CHAR* target_file) {
+	EID_CHAR* copy = EID_STRDUP(target_file);
+	sm_handle_event(EVENT_EXPORT_PHOTO, copy, free, NULL);
+}
+
 void eid_vwr_be_deserialize(const EID_CHAR* source_file) {
 	EID_CHAR* copy = EID_STRDUP(source_file);
 	sm_handle_event(EVENT_OPEN_FILE, copy, free, NULL);

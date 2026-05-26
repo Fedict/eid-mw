@@ -214,10 +214,10 @@
       "fr" : "Exporter la chaine vers fichier PEM...",
       "nl" : "Ketting exporteren naar PEM bestand..."
    },
-   "Export photo to JPG file..." : {
-      "de" : "Foto exportieren zu JPG Datei...",
-      "fr" : "Exporter la photo vers fichier JPG...",
-      "nl" : "Foto Exporteren naar JPG bestand..."
+   "Export photo" : {
+      "de" : "Foto exportieren",
+      "fr" : "Exporter la photo",
+      "nl" : "Foto exporteren"
    },
    "Export to DER file..." : {
       "de" : "Exportieren zu DER Datei...",

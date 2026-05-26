@@ -161,6 +161,14 @@ msgstr ""
 msgid "Export chain to PEM file..."
 msgstr ""
 
+#: plugins_tools/eid-viewer/gtk/gtkui.c:190
+msgid "Export photo"
+msgstr ""
+
+#: plugins_tools/eid-viewer/gtk/gtkui.c:207
+msgid "JPEG files"
+msgstr ""
+
 #: plugins_tools/eid-viewer/gtk/viewer.glade:68
 msgid "_File"
 msgstr ""

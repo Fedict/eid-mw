@@ -2,6 +2,7 @@
 #include "p11.h"
 #include "backend.h"
 #include "xml.h"
+#include "photo_export.h"
 #include "dataverify.h"
 #include "cache.h"
 #include <stdlib.h>
@@ -32,6 +33,8 @@ static const EID_CHAR* state_to_name(enum eid_vwr_states state) {
 	STATE_NAME(NO_READER);
 	STATE_NAME(NO_TOKEN);
 	STATE_NAME(TOKEN_CHALLENGE);
+	STATE_NAME(TOKEN_EXPORT_PHOTO);
+	STATE_NAME(FILE_EXPORT_PHOTO);
 
 #undef STATE_NAME
 	default:
@@ -60,6 +63,8 @@ static const EID_CHAR* event_to_name(enum eid_vwr_state_event event) {
 	EVENT_NAME(READER_LOST);
 	EVENT_NAME(DO_CHALLENGE);
 	EVENT_NAME(CHALLENGE_READY);
+	EVENT_NAME(EXPORT_PHOTO);
+	EVENT_NAME(EXPORT_PHOTO_READY);
 
 #undef EVENT_NAME
 	default:
@@ -186,6 +191,7 @@ void sm_init() {
 	states[STATE_TOKEN_WAIT].out[EVENT_DO_PINOP] = &(states[STATE_TOKEN_PINOP]);
 	states[STATE_TOKEN_WAIT].out[EVENT_SERIALIZE] = &(states[STATE_TOKEN_SERIALIZE]);
 	states[STATE_TOKEN_WAIT].out[EVENT_DO_CHALLENGE] = &(states[STATE_TOKEN_CHALLENGE]);
+	states[STATE_TOKEN_WAIT].out[EVENT_EXPORT_PHOTO] = &(states[STATE_TOKEN_EXPORT_PHOTO]);
 
 	states[STATE_TOKEN_IDLE].parent = &(states[STATE_TOKEN_WAIT]);
 
@@ -204,6 +210,11 @@ void sm_init() {
 	states[STATE_TOKEN_CHALLENGE].enter = eid_vwr_p11_do_challenge;
 	states[STATE_TOKEN_CHALLENGE].out[EVENT_CHALLENGE_READY] = &(states[STATE_TOKEN_IDLE]);
 	states[STATE_TOKEN_CHALLENGE].out[EVENT_STATE_ERROR] = &(states[STATE_TOKEN_IDLE]);
+
+	states[STATE_TOKEN_EXPORT_PHOTO].parent = &(states[STATE_TOKEN_WAIT]);
+	states[STATE_TOKEN_EXPORT_PHOTO].enter = eid_vwr_export_photo;
+	states[STATE_TOKEN_EXPORT_PHOTO].out[EVENT_EXPORT_PHOTO_READY] = &(states[STATE_TOKEN_IDLE]);
+	states[STATE_TOKEN_EXPORT_PHOTO].out[EVENT_STATE_ERROR] = &(states[STATE_TOKEN_IDLE]);
 
 	states[STATE_NO_TOKEN].parent = &(states[STATE_CALLBACKS]);
 	states[STATE_NO_TOKEN].enter = source_none;
@@ -226,6 +237,12 @@ void sm_init() {
 
 	states[STATE_FILE_WAIT].parent = &(states[STATE_FILE]);
 	states[STATE_FILE_WAIT].enter = enter_file_wait;
+	states[STATE_FILE_WAIT].out[EVENT_EXPORT_PHOTO] = &(states[STATE_FILE_EXPORT_PHOTO]);
+
+	states[STATE_FILE_EXPORT_PHOTO].parent = &(states[STATE_FILE]);
+	states[STATE_FILE_EXPORT_PHOTO].enter = eid_vwr_export_photo;
+	states[STATE_FILE_EXPORT_PHOTO].out[EVENT_EXPORT_PHOTO_READY] = &(states[STATE_FILE_WAIT]);
+	states[STATE_FILE_EXPORT_PHOTO].out[EVENT_STATE_ERROR] = &(states[STATE_FILE_WAIT]);
 
 	curstate = &(states[STATE_LIBOPEN]);
 
@@ -275,11 +292,12 @@ void sm_handle_event_onthread(enum eid_vwr_state_event e, void* data) {
 			thistree = thistree->parent;
 		}
 		if(!thistree) {
-			if (e == EVENT_SERIALIZE)
-			{
+			if (e == EVENT_SERIALIZE) {
 				//UI asked us to write the data to file, but our state has changed so we're no longer
 				//able to do so. Report this to the UI
 				be_log(EID_VWR_LOG_ERROR, TEXT("failed writing card data, current state is %s"), state_to_name(curstate->me));
+			} else if (e == EVENT_EXPORT_PHOTO) {
+				be_log(EID_VWR_LOG_ERROR, TEXT("failed exporting photo, current state is %s"), state_to_name(curstate->me));
 			}
 			return; // event is irrelevant for this state
 		}

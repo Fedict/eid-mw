@@ -92,6 +92,9 @@ namespace eIDViewer
         private static extern int eid_vwr_be_serialize([MarshalAs(UnmanagedType.LPWStr)] string dest_file);
 
         [DllImport("eIDViewerBackend.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        private static extern void eid_vwr_be_export_photo([MarshalAs(UnmanagedType.LPWStr)] string dest_file);
+
+        [DllImport("eIDViewerBackend.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         private static extern int eid_vwr_convert_set_lang(eid_vwr_langs lang);
 
         [DllImport("eIDViewerBackend.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
@@ -517,6 +520,19 @@ namespace eIDViewer
             {
                 MessageBox.Show("eid_vwr_be_serialize " + e.ToString() + "\n", "eID Viewer Backend Error");
                 theData.WriteLog("eid_vwr_be_serialize " + e.ToString() + "\n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
+            }
+        }
+
+        public static void ExportPhoto(string destFile)
+        {
+            try
+            {
+                eid_vwr_be_export_photo(destFile);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("eid_vwr_be_export_photo " + e.ToString() + "\n", "eID Viewer Backend Error");
+                theData.WriteLog("eid_vwr_be_export_photo " + e.ToString() + "\n", eid_vwr_loglevel.EID_VWR_LOG_ERROR);
             }
         }
 

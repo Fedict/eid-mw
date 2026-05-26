@@ -111,6 +111,8 @@ libeidviewer_la_SOURCES = \
 	state-posix.c \
 	p11.h \
 	p11.c \
+	photo_export.c \
+	photo_export.h \
 	preview.c \
 	xml.h \
 	xml.c \

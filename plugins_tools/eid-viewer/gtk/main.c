@@ -137,10 +137,11 @@ void check_update() {
 
 /* Handle "state changed" elements */
 static void newstate(enum eid_vwr_states s) {
-	GObject *open, *save, *print, *close, *pintest, *pinchg, *validate;
+	GObject *open, *save, *export_photo, *print, *close, *pintest, *pinchg, *validate;
 #define want_verify (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "validate_always"))))
 	open = gtk_builder_get_object(builder, "mi_file_open");
 	save = gtk_builder_get_object(builder, "mi_file_saveas");
+	export_photo = gtk_builder_get_object(builder, "mi_file_export_photo");
 	print = gtk_builder_get_object(builder, "mi_file_print");
 	close = gtk_builder_get_object(builder, "mi_file_close");
 	pintest = gtk_builder_get_object(builder, "pintestbut");
@@ -151,6 +152,7 @@ static void newstate(enum eid_vwr_states s) {
 	g_object_set_threaded(close, "sensitive", (void*)FALSE, NULL);
 	g_object_set_threaded(print, "sensitive", (void*)FALSE, NULL);
 	g_object_set_threaded(save, "sensitive", (void*)FALSE, NULL);
+	g_object_set_threaded(export_photo, "sensitive", (void*)FALSE, NULL);
 	g_object_set_threaded(pintest, "sensitive", (void*)FALSE, NULL);
 	g_object_set_threaded(pinchg, "sensitive", (void*)FALSE, NULL);
 	g_object_set_threaded(validate, "sensitive", (void*)FALSE, NULL);
@@ -178,6 +180,7 @@ static void newstate(enum eid_vwr_states s) {
 			uistatus(FALSE, "");
 			g_object_set_threaded(print, "sensitive", (void*)TRUE, NULL);
 			g_object_set_threaded(save, "sensitive", (void*)TRUE, NULL);
+			g_object_set_threaded(export_photo, "sensitive", (void*)TRUE, NULL);
 			g_object_set_threaded(pintest, "sensitive", (void*)TRUE, NULL);
 			g_object_set_threaded(pinchg, "sensitive", (void*)TRUE, NULL);
 			g_object_set_data_threaded(validate, "want_active", (void*)TRUE, NULL);
@@ -203,6 +206,7 @@ static void newstate(enum eid_vwr_states s) {
 		case STATE_FILE_WAIT:
 			uistatus(FALSE, "");
 			g_object_set_threaded(print, "sensitive", (void*)TRUE, NULL);
+			g_object_set_threaded(export_photo, "sensitive", (void*)TRUE, NULL);
 			g_object_set_threaded(close, "sensitive", (void*)TRUE, NULL);
 			g_object_set_data_threaded(validate, "want_active", (void*)TRUE, NULL);
 			if(want_verify) {
@@ -334,6 +338,8 @@ static void connect_signals(GtkWidget* window) {
 	g_signal_connect(signaltmp, "activate", G_CALLBACK(file_open), NULL);
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_file_saveas"));
 	g_signal_connect(signaltmp, "activate", G_CALLBACK(file_save), NULL);
+	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_file_export_photo"));
+	g_signal_connect(signaltmp, "activate", G_CALLBACK(file_export_photo), NULL);
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "reader_auto"));
 	g_signal_connect(signaltmp, "toggled", G_CALLBACK(auto_reader), NULL);
 	signaltmp = G_OBJECT(gtk_builder_get_object(builder, "mi_file_close"));

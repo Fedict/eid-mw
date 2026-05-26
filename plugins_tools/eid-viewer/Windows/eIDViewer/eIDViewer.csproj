@@ -239,7 +239,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\MenuItemStringResources.de.resx" />
     <EmbeddedResource Include="Resources\MenuItemStringResources.fr.resx" />
-    <EmbeddedResource Include="Resources\MenuItemStringResources.nl.resx" />
+    <EmbeddedResource Include="Resources\MenuItemStringResources.nl.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\MenuItemStringResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>MenuItemStringResources.Designer.cs</LastGenOutput>

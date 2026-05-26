@@ -91,6 +91,15 @@
                       </object>
                     </child>
                     <child>
+                      <object class="GtkMenuItem" id="mi_file_export_photo">
+                        <property name="visible">True</property>
+                        <property name="sensitive">False</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Export photo</property>
+                        <property name="use-underline">True</property>
+                      </object>
+                    </child>
+                    <child>
                       <object class="GtkImageMenuItem" id="mi_file_close">
                         <property name="label">gtk-close</property>
                         <property name="visible">True</property>

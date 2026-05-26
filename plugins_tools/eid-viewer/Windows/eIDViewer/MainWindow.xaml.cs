@@ -424,6 +424,33 @@ namespace eIDViewer
             }
         }
 
+        private void MenuItemExportPhoto_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                SaveFileDialog mySaveFileDialog = new SaveFileDialog();
+
+                mySaveFileDialog.Filter = "JPEG files (*.jpg;*.jpeg)|*.jpg;*.jpeg|All files (*.*)|*.*";
+                mySaveFileDialog.FilterIndex = 1;
+                mySaveFileDialog.DefaultExt = ".jpg";
+                mySaveFileDialog.AddExtension = true;
+                mySaveFileDialog.FileName = "My_eid_photo.jpg";
+
+                if (mySaveFileDialog.ShowDialog() == true)
+                {
+                    string filename = mySaveFileDialog.FileName;
+                    if (!String.IsNullOrEmpty(filename))
+                    {
+                        eIDViewer.NativeMethods.ExportPhoto(filename);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: Could not export photo to disk. Error message: " + ex.Message);
+            }
+        }
+
 
         private void MenuItemClose_Click(object sender, RoutedEventArgs e)
         {

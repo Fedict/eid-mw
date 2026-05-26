@@ -161,6 +161,9 @@ static void osl_objc_challenge_result(const unsigned char *response, int respons
 +(void)serialize:(NSURL*)target {
 	eid_vwr_be_serialize(target.fileSystemRepresentation);
 }
++(void)exportPhoto:(NSURL*)target {
+	eid_vwr_be_export_photo(target.fileSystemRepresentation);
+}
 +(void)setLang:(eIDLanguage)language {
 	enum eid_vwr_langs l = (enum eid_vwr_langs) language;
 	eid_vwr_convert_set_lang(l);

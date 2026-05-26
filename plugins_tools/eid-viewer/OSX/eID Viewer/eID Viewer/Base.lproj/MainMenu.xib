@@ -33,6 +33,7 @@
                 <outlet property="lowestItem" destination="RXd-5L-wZ4" id="1Un-Hc-bXT"/>
                 <outlet property="memberOfFamilyState" destination="zc6-dI-2GF" id="47h-Po-hbL"/>
                 <outlet property="menu_file_close" destination="DVo-aG-piG" id="eD3-6j-eIp"/>
+                <outlet property="menu_file_export_photo" destination="F7p-xP-PhE" id="vPs-Ma-93R"/>
                 <outlet property="menu_file_open" destination="IAo-SY-fd9" id="J3t-ga-LHA"/>
                 <outlet property="menu_file_print" destination="aTl-1u-JFS" id="UOj-yd-qT7"/>
                 <outlet property="menu_file_save" destination="pxx-59-PXV" id="1k4-5U-aOo"/>
@@ -149,6 +150,12 @@
                             <menuItem title="Save…" keyEquivalent="s" id="pxx-59-PXV">
                                 <connections>
                                     <action selector="saveDocument:" target="-1" id="teZ-XB-qJY"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Export photo" id="F7p-xP-PhE">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="exportPhoto:" target="Voe-Tx-rLC" id="a9B-2d-XqK"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="aJh-i4-bef"/>

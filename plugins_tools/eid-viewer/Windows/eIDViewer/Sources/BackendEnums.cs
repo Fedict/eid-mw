@@ -92,6 +92,8 @@ namespace eIDViewer
         STATE_NO_READER, ///< We don't have a reader (yet?)
         STATE_TOKEN_IDLE, /// < done reading identity data and certificates
         STATE_TOKEN_CHALLENGE, ///< Performing a challenge operation
+        STATE_TOKEN_EXPORT_PHOTO, ///< Exporting the photo from card data
+        STATE_FILE_EXPORT_PHOTO, ///< Exporting the photo from file data
 
         STATE_COUNT,
     };

@@ -79,7 +79,7 @@ namespace eIDViewer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Export photo to JPG file....
+        ///   Looks up a localized string similar to Export photo.
         /// </summary>
         public static string fileMenuExportFoto {
             get {

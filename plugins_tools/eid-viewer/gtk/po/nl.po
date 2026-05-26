@@ -164,6 +164,14 @@ msgstr "Exporteren naar DER bestand..."
 msgid "Export chain to PEM file..."
 msgstr "Ketting exporteren naar PEM bestand..."
 
+#: plugins_tools/eid-viewer/gtk/gtkui.c:190
+msgid "Export photo"
+msgstr "Foto exporteren"
+
+#: plugins_tools/eid-viewer/gtk/gtkui.c:207
+msgid "JPEG files"
+msgstr "JPEG-bestanden"
+
 #: plugins_tools/eid-viewer/gtk/viewer.glade:68
 msgid "_File"
 msgstr "_Bestand"

@@ -185,6 +185,44 @@ void file_save(GtkWidget* item G_GNUC_UNUSED, gpointer user_data G_GNUC_UNUSED) 
 	g_free(filename_sugg);
 }
 
+/* Show a "save file" dialog, and export the original JPEG photo data there if the user accepted the selection */
+void file_export_photo(GtkWidget* item G_GNUC_UNUSED, gpointer user_data G_GNUC_UNUSED) {
+	GtkWindow* window = GTK_WINDOW(gtk_builder_get_object(builder, "mainwin"));
+	GtkWidget* dialog = gtk_file_chooser_dialog_new(
+			_("Export photo"), window, GTK_FILE_CHOOSER_ACTION_SAVE,
+			_("_Cancel"), GTK_RESPONSE_CANCEL,
+			_("_Save"), GTK_RESPONSE_ACCEPT,
+			NULL);
+	gchar* filename;
+	gchar* filename_sugg;
+	gint res;
+	GtkFileFilter* filter;
+
+	filter = gtk_file_filter_new();
+	gtk_file_filter_add_pattern(filter, "*");
+	gtk_file_filter_set_name(filter, _("All files"));
+	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filter);
+
+	filter = gtk_file_filter_new();
+	gtk_file_filter_add_pattern(filter, "*.jpg");
+	gtk_file_filter_add_pattern(filter, "*.jpeg");
+	gtk_file_filter_set_name(filter, _("JPEG files"));
+	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filter);
+	gtk_file_chooser_set_filter(GTK_FILE_CHOOSER(dialog), filter);
+
+	filename_sugg = g_strdup("My_eid_photo.jpg");
+	gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog), filename_sugg);
+
+	res = gtk_dialog_run(GTK_DIALOG(dialog));
+	if(res == GTK_RESPONSE_ACCEPT) {
+		filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
+		eid_vwr_be_export_photo(filename);
+		g_free(filename);
+	}
+	gtk_widget_destroy(dialog);
+	g_free(filename_sugg);
+}
+
 /* Close the currently-open file */
 void file_close(GtkWidget* item G_GNUC_UNUSED, gpointer user_data G_GNUC_UNUSED) {
 	eid_vwr_close_file();

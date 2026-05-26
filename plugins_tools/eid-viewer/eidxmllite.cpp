@@ -330,11 +330,12 @@ HRESULT StoreTextElement(const WCHAR * pwszValue, WCHAR * wcsNodeName)
 					base64_init_decodestate(&state_in);
 					decodedLength = base64_decode_block(utf8Char_out, length, binData, &state_in);
 
-					cache_add(desc->label, val, len);
+					cache_add_bin(desc->label, (BYTE *)binData, decodedLength);
 					eid_vwr_p11_to_ui((const EID_CHAR *) (desc->label), (const void *)binData, decodedLength);
 					be_log(EID_VWR_LOG_DETAIL, TEXT("found data for label %s"), desc->label);
 					free(binData);
 				}
+				SAFE_FREE(val);
 				if (utf8Char_out != NULL)
 				{
 					free(utf8Char_out);

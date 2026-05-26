@@ -51,6 +51,8 @@ typedef NS_ENUM(NSInteger, eIDState)
 	eIDStateCardInvalid = STATE_CARD_INVALID,
 	eIDStateNoToken = STATE_NO_TOKEN,
 	eIDStateNoReader = STATE_NO_READER,
+	eIDStateTokenExportPhoto = STATE_TOKEN_EXPORT_PHOTO,
+	eIDStateFileExportPhoto = STATE_FILE_EXPORT_PHOTO,
 };
 
 typedef NS_ENUM(NSInteger, eIDLanguage)
@@ -108,6 +110,7 @@ typedef NS_ENUM(NSInteger, eIDResult)
 +(void) mainloop;								///< calls eid_vwr_be_mainloop(), which does not return
 +(void) deserialize:(NSURL *) from;						///< calls eid_vwr_be_deserialize()
 +(void) serialize:(NSURL *) to;							///< calls eid_vwr_be_serialize()
++(void) exportPhoto:(NSURL *) to;						///< calls eid_vwr_be_export_photo()
 +(NSData *) xmlform;								///< calls eid_vwr_be_get_xmlform(), and converts the result to an NSData*
 +(void) closeFile;								///< calls eid_vwr_close_file()
 +(void) setInvalid;								///< calls eid_vwr_be_set_invalid()

@@ -18,6 +18,7 @@
 @interface AppDelegate ()
 - (IBAction)file_open:(id)sender;
 - (IBAction)file_close:(id)sender;
+- (IBAction)exportPhoto:(id)sender;
 - (IBAction)do_pinop:(NSSegmentedControl *)sender;
 - (IBAction)setLanguage:(NSSegmentedControl *)sender;
 - (IBAction)log_buttonaction:(NSSegmentedControl *)sender;
@@ -62,6 +63,7 @@
 @property (weak) IBOutlet NSMenuItem *menu_file_open;
 @property (weak) IBOutlet NSMenuItem *menu_file_close;
 @property (weak) IBOutlet NSMenuItem *menu_file_save;
+@property (weak) IBOutlet NSMenuItem *menu_file_export_photo;
 @property (weak) IBOutlet NSMenuItem *menu_file_print;
 @property (weak) IBOutlet NSMenuItem *auto_reader;
 @property (weak) IBOutlet NSSegmentedControl *pinop_ctrl;
@@ -142,6 +144,17 @@
 	[panel beginWithCompletionHandler:^(NSInteger result) {
 		if(result == NSFileHandlingPanelOKButton) {
 			[eIDOSLayerBackend serialize:[panel URL]];
+		}
+	}];
+}
+- (IBAction)exportPhoto:(id)sender {
+	NSSavePanel *panel = [NSSavePanel savePanel];
+	panel.title = NSLocalizedStringWithDefaultValue(@"ExportPhotoTitle", nil, [NSBundle mainBundle], @"Export photo", "");
+	[panel setAllowedFileTypes:[NSArray arrayWithObjects: @"jpg", @"jpeg", nil]];
+	[panel setNameFieldStringValue:@"My_eid_photo.jpg"];
+	[panel beginWithCompletionHandler:^(NSInteger result) {
+		if(result == NSFileHandlingPanelOKButton) {
+			[eIDOSLayerBackend exportPhoto:[panel URL]];
 		}
 	}];
 }
@@ -244,6 +257,7 @@
 		[self.menu_file_open setEnabled:fileOpen];
 		[self.menu_file_close setEnabled:fileClose];
 		[self.menu_file_save setEnabled: fileSave];
+		[self.menu_file_export_photo setEnabled:filePrint];
 		[self.pinop_ctrl setEnabled:pinops];
 		[self.alwaysValidate setEnabled:validate];
 		[self.validateNow setEnabled:validate];

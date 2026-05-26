@@ -548,6 +548,9 @@
 /* Class = "NSMenuItem"; title = "Save…"; ObjectID = "pxx-59-PXV"; */
 "pxx-59-PXV.title" = "Save…";
 
+/* Class = "NSMenuItem"; title = "Export photo"; ObjectID = "F7p-xP-PhE"; */
+"F7p-xP-PhE.title" = "Export photo";
+
 /* Class = "NSTextFieldCell"; placeholderString = "-"; ObjectID = "q8V-A2-wIs"; */
 "q8V-A2-wIs.placeholderString" = "-";
 

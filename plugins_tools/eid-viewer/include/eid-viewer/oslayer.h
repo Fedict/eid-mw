@@ -91,6 +91,8 @@ enum eid_vwr_states
 	STATE_NO_READER,     ///< We don't have a reader (yet?)
 	STATE_TOKEN_IDLE,	 ///<not performing any action in the taoken_wait state
 	STATE_TOKEN_CHALLENGE, ///< Performing a challenge operation
+	STATE_TOKEN_EXPORT_PHOTO, ///< Exporting the photo from card data
+	STATE_FILE_EXPORT_PHOTO, ///< Exporting the photo from file data
 
 	STATE_COUNT,
 };
@@ -388,6 +390,18 @@ void* eid_vwr_be_mainloop(void* val) NORETURN;
   * \see eid_vwr_ui_callbacks::newstate()
   */
 DllExport void eid_vwr_be_serialize(const EID_CHAR * target_file);
+
+/**
+  * \brief Export the photo from eid card as a JPEG file.
+  *
+  * The exported file contains the original bytes from the PHOTO_FILE object.
+  * The data is not decoded or re-encoded by the viewer.
+  *
+  * \param target_file the name of the file in which to save the JPEG photo.
+  * Returns before the export operation has finished. The state machine
+  * will switch to a photo export state while the file is being saved.
+  */
+DllExport void eid_vwr_be_export_photo(const EID_CHAR * target_file);
 
 /**
   * \brief Open a file.
