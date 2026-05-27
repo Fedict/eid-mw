@@ -496,6 +496,14 @@
 	string[length * 2] = '\0';
 	[ui newstringdata:[NSString stringWithCString:string encoding:NSUTF8StringEncoding] withLabel:label];
 }
+-(void)setCertificateDateColor:(NSData *)data forLabel:(NSString *)label {
+	BOOL isValid = YES;
+	if([data length] >= sizeof(isValid)) {
+		[data getBytes:&isValid length:sizeof(isValid)];
+	}
+	NSTextField *tf = (NSTextField*)[self searchObjectById:label ofClass:[NSTextField class] forUpdate:YES];
+	[tf setTextColor:(isValid == YES ? [NSColor labelColor] : [NSColor redColor])];
+}
 -(void)show_card_eu_start_date:(Boolean)isEU {
     NSView *vEU = (NSView*)[self searchObjectById:[NSString stringWithFormat:@"cardEU_start_date"] ofClass:[NSView class] forUpdate:NO];
     [vEU setHidden:FALSE];
@@ -588,16 +596,10 @@
                 }
         }
         else if([label isEqualToString:@"certvaltilval:future"]) {
-                NSTextField *tf = (NSTextField*)[self searchObjectById:@"certvaltilval" ofClass:[NSTextField class] forUpdate:YES];
-                BOOL *b = (BOOL*)data.bytes;
-                NSColor *c = *b == YES ? [NSColor labelColor] : [NSColor redColor];
-                [tf setTextColor:c];
+                [self setCertificateDateColor:data forLabel:@"certvaltilval"];
         }
         else if([label isEqualToString:@"certvalfromval:past"]) {
-                NSTextField *tf = (NSTextField*)[self searchObjectById:@"certvalfromval" ofClass:[NSTextField class] forUpdate:YES];
-                BOOL *b = (BOOL*)data.bytes;
-                NSColor *c = *b == YES ? [NSColor labelColor] : [NSColor redColor];
-                [tf setTextColor:c];
+                [self setCertificateDateColor:data forLabel:@"certvalfromval"];
         }
 }
 -(void)changeLogLevel:(NSPopUpButton *)logLevel {
