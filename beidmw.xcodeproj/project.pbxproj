@@ -35,6 +35,7 @@
 		65270A381FE976BE004F326D /* xml.c in Sources */ = {isa = PBXBuildFile; fileRef = 65270A201FE976BC004F326D /* xml.c */; };
 		65270A391FE976BE004F326D /* p11.c in Sources */ = {isa = PBXBuildFile; fileRef = 65270A251FE976BD004F326D /* p11.c */; };
 		65270A3A1FE976BE004F326D /* dataroot-osx.m in Sources */ = {isa = PBXBuildFile; fileRef = 65270A2A1FE976BE004F326D /* dataroot-osx.m */; };
+		6CE1D0012C066F0000C0DE01 /* photo_export.c in Sources */ = {isa = PBXBuildFile; fileRef = 6CE1D0002C066F0000C0DE01 /* photo_export.c */; };
 		65270A3B1FE97991004F326D /* utftranslate.h in Headers */ = {isa = PBXBuildFile; fileRef = 65EABAEF1C621F3D00034337 /* utftranslate.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		65270A3C1FE97991004F326D /* oslayer-objc.h in Headers */ = {isa = PBXBuildFile; fileRef = 65270A191FE976BA004F326D /* oslayer-objc.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		65270A3D1FE97991004F326D /* certhelpers.h in Headers */ = {isa = PBXBuildFile; fileRef = 65270A0F1FE976B7004F326D /* certhelpers.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -351,6 +352,8 @@
 		65270A231FE976BC004F326D /* base64dec.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = base64dec.c; path = ../../../b64/base64dec.c; sourceTree = "<group>"; };
 		65270A241FE976BD004F326D /* oslayer.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = oslayer.c; path = ../../../oslayer.c; sourceTree = "<group>"; };
 		65270A251FE976BD004F326D /* p11.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = p11.c; path = ../../../p11.c; sourceTree = "<group>"; };
+		6CE1D0002C066F0000C0DE01 /* photo_export.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = photo_export.c; path = ../../../photo_export.c; sourceTree = "<group>"; };
+		6CE1D0022C066F0000C0DE01 /* photo_export.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = photo_export.h; path = ../../../photo_export.h; sourceTree = "<group>"; };
 		65270A261FE976BD004F326D /* xmlmap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = xmlmap.h; path = ../../../xmlmap.h; sourceTree = "<group>"; };
 		65270A271FE976BD004F326D /* verify_cert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = verify_cert.h; path = "../../../include/eid-viewer/verify_cert.h"; sourceTree = "<group>"; };
 		65270A281FE976BE004F326D /* p11.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = p11.h; path = ../../../p11.h; sourceTree = "<group>"; };
@@ -715,6 +718,8 @@
 				65270A241FE976BD004F326D /* oslayer.c */,
 				65270A251FE976BD004F326D /* p11.c */,
 				65270A281FE976BE004F326D /* p11.h */,
+				6CE1D0002C066F0000C0DE01 /* photo_export.c */,
+				6CE1D0022C066F0000C0DE01 /* photo_export.h */,
 				65270A151FE976B9004F326D /* state-posix.c */,
 				65270A171FE976B9004F326D /* state.c */,
 				65270A0D1FE976B7004F326D /* state.h */,
@@ -1388,6 +1393,7 @@
 				65270A641FE97A2B004F326D /* specconv.cpp in Sources */,
 				65270A711FE97A2B004F326D /* xmlspecconv.cpp in Sources */,
 				65270A6E1FE97A2B004F326D /* doctypeconv.cpp in Sources */,
+				6CE1D0012C066F0000C0DE01 /* photo_export.c in Sources */,
 				65270A331FE976BE004F326D /* state.c in Sources */,
 				65270A6A1FE97A2B004F326D /* hexnumconv.cpp in Sources */,
 				65270A751FE97A2B004F326D /* hexdecode.cpp in Sources */,
