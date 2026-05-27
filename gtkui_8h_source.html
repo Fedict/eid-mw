@@ -90,36 +90,37 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keywordtype">void</span> file_open(GtkWidget * open, gpointer user_data);</div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keywordtype">void</span> file_save(GtkWidget * open, gpointer format);</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keywordtype">void</span> file_close(GtkWidget * close, gpointer user_data);</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keywordtype">void</span> file_print(GtkWidget * print, gpointer user_data);</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keywordtype">void</span> translate(GtkWidget * langitem, gpointer to_lang);</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keywordtype">void</span> showabout(GtkWidget * about, gpointer user_data);</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keywordtype">void</span> showurl(GtkWidget * item, gpointer which);</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keywordtype">void</span> showlog(GtkWidget * item, gpointer user_data);</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keywordtype">void</span> pinop(GtkWidget * item, gpointer which);</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keywordtype">void</span> pinop_result(<span class="keyword">enum</span> <a class="code hl_enumeration" href="group___c___a_p_i.html#gad19893db2805ad8851ad127820a1450f">eid_vwr_pinops</a> which, <span class="keyword">enum</span> <a class="code hl_enumeration" href="group___c___a_p_i.html#ga77019cfe7dce20ab31a5b2c9da3ebfc6">eid_vwr_result</a> r);</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keywordtype">void</span> readers_changed(<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> nreaders, <a class="code hl_struct" href="struct__slotdesc.html">slotdesc</a> * slots);</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keyword">enum</span> <a class="code hl_enumeration" href="group___c___a_p_i.html#gae129708ef54955f53e55d2167a91ba36">eid_vwr_langs</a> get_curlang();</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keywordtype">void</span> show_cert_image(<span class="keyword">const</span> <span class="keywordtype">char</span> *name, <span class="keywordtype">void</span> *data, <span class="keywordtype">int</span> len);</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="keywordtype">void</span> setup_dnd(<span class="keywordtype">void</span>);</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="keywordtype">void</span> disable_dnd(<span class="keywordtype">void</span>);</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#if GTK_CHECK_VERSION(4, 0, 0)</span></div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>GdkContentProvider * drag_data_get(GtkDragSource *dragsrc, <span class="keywordtype">double</span> x, <span class="keywordtype">double</span> y, gpointer user_data);</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#else</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="keywordtype">void</span> drag_data_get(GtkWidget * widget, GdkDragContext * ctx,</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>           GtkSelectionData * data, guint info, guint time,</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>           gpointer user_data);</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="keywordtype">void</span> validate_toggle(gpointer event_source, gpointer user_data);</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="keywordtype">void</span> auto_reader(GtkWidget * mi, gpointer user_data);</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="keywordtype">void</span> show_card_eu_start_date(<span class="keywordtype">char</span>* doctype);</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="keywordtype">void</span> update_doctype(<span class="keywordtype">char</span>* label, <span class="keywordtype">void</span>* data, <span class="keywordtype">int</span> length);</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="keyword">extern</span> gboolean is_foreigner;</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keywordtype">void</span> file_export_photo(GtkWidget * item, gpointer user_data);</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keywordtype">void</span> file_close(GtkWidget * close, gpointer user_data);</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keywordtype">void</span> file_print(GtkWidget * print, gpointer user_data);</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keywordtype">void</span> translate(GtkWidget * langitem, gpointer to_lang);</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keywordtype">void</span> showabout(GtkWidget * about, gpointer user_data);</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keywordtype">void</span> showurl(GtkWidget * item, gpointer which);</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keywordtype">void</span> showlog(GtkWidget * item, gpointer user_data);</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keywordtype">void</span> pinop(GtkWidget * item, gpointer which);</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keywordtype">void</span> pinop_result(<span class="keyword">enum</span> <a class="code hl_enumeration" href="group___c___a_p_i.html#gad19893db2805ad8851ad127820a1450f">eid_vwr_pinops</a> which, <span class="keyword">enum</span> <a class="code hl_enumeration" href="group___c___a_p_i.html#ga77019cfe7dce20ab31a5b2c9da3ebfc6">eid_vwr_result</a> r);</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keywordtype">void</span> readers_changed(<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> nreaders, <a class="code hl_struct" href="struct__slotdesc.html">slotdesc</a> * slots);</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keyword">enum</span> <a class="code hl_enumeration" href="group___c___a_p_i.html#gae129708ef54955f53e55d2167a91ba36">eid_vwr_langs</a> get_curlang();</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="keywordtype">void</span> show_cert_image(<span class="keyword">const</span> <span class="keywordtype">char</span> *name, <span class="keywordtype">void</span> *data, <span class="keywordtype">int</span> len);</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="keywordtype">void</span> setup_dnd(<span class="keywordtype">void</span>);</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="keywordtype">void</span> disable_dnd(<span class="keywordtype">void</span>);</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#if GTK_CHECK_VERSION(4, 0, 0)</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>GdkContentProvider * drag_data_get(GtkDragSource *dragsrc, <span class="keywordtype">double</span> x, <span class="keywordtype">double</span> y, gpointer user_data);</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="keywordtype">void</span> drag_data_get(GtkWidget * widget, GdkDragContext * ctx,</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>           GtkSelectionData * data, guint info, guint time,</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>           gpointer user_data);</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="keywordtype">void</span> validate_toggle(gpointer event_source, gpointer user_data);</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="keywordtype">void</span> auto_reader(GtkWidget * mi, gpointer user_data);</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="keywordtype">void</span> show_card_eu_start_date(<span class="keywordtype">char</span>* doctype);</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="keywordtype">void</span> update_doctype(<span class="keywordtype">char</span>* label, <span class="keywordtype">void</span>* data, <span class="keywordtype">int</span> length);</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="keyword">extern</span> gboolean is_foreigner;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="agroup___c___a_p_i_html_ga77019cfe7dce20ab31a5b2c9da3ebfc6"><div class="ttname"><a href="group___c___a_p_i.html#ga77019cfe7dce20ab31a5b2c9da3ebfc6">eid_vwr_result</a></div><div class="ttdeci">eid_vwr_result</div><div class="ttdef"><b>Definition</b> oslayer.h:63</div></div>
 <div class="ttc" id="agroup___c___a_p_i_html_gad19893db2805ad8851ad127820a1450f"><div class="ttname"><a href="group___c___a_p_i.html#gad19893db2805ad8851ad127820a1450f">eid_vwr_pinops</a></div><div class="ttdeci">eid_vwr_pinops</div><div class="ttdef"><b>Definition</b> oslayer.h:56</div></div>
-<div class="ttc" id="agroup___c___a_p_i_html_gae129708ef54955f53e55d2167a91ba36"><div class="ttname"><a href="group___c___a_p_i.html#gae129708ef54955f53e55d2167a91ba36">eid_vwr_langs</a></div><div class="ttdeci">eid_vwr_langs</div><div class="ttdef"><b>Definition</b> oslayer.h:100</div></div>
+<div class="ttc" id="agroup___c___a_p_i_html_gae129708ef54955f53e55d2167a91ba36"><div class="ttname"><a href="group___c___a_p_i.html#gae129708ef54955f53e55d2167a91ba36">eid_vwr_langs</a></div><div class="ttdeci">eid_vwr_langs</div><div class="ttdef"><b>Definition</b> oslayer.h:102</div></div>
 <div class="ttc" id="aoslayer_8h_html"><div class="ttname"><a href="oslayer_8h.html">oslayer.h</a></div><div class="ttdoc">contains the functions, enums and structures that need to be known by the ui</div></div>
 <div class="ttc" id="astruct__slotdesc_html"><div class="ttname"><a href="struct__slotdesc.html">_slotdesc</a></div><div class="ttdef"><b>Definition</b> oslayer.h:24</div></div>
 </div><!-- fragment --></div><!-- contents -->

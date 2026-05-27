@@ -148,7 +148,10 @@ Enumerations</h2></td></tr>
 , <br />
 &#160;&#160;<a class="el" href="group___c___a_p_i.html#gga32abb45fcb0a67a1482290d7ab12839ea12b3f4849becdabdc8b0b0e0f27ddb65">STATE_TOKEN_IDLE</a>
 , <a class="el" href="group___c___a_p_i.html#gga32abb45fcb0a67a1482290d7ab12839ea527fddf3c02824f6954eabdf66819412">STATE_TOKEN_CHALLENGE</a>
-, <b>STATE_COUNT</b>
+, <a class="el" href="group___c___a_p_i.html#gga32abb45fcb0a67a1482290d7ab12839ea5f9e411d4c09d0c60ebf578dc7db8441">STATE_TOKEN_EXPORT_PHOTO</a>
+, <a class="el" href="group___c___a_p_i.html#gga32abb45fcb0a67a1482290d7ab12839ea29bf211ac56855c1298593dd009ff222">STATE_FILE_EXPORT_PHOTO</a>
+, <br />
+&#160;&#160;<b>STATE_COUNT</b>
 <br />
  }</td></tr>
 <tr class="memdesc:ga32abb45fcb0a67a1482290d7ab12839e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Possible states.  <a href="group___c___a_p_i.html#ga32abb45fcb0a67a1482290d7ab12839e">More...</a><br /></td></tr>
@@ -197,6 +200,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gaaa938eea9b13d86a06d89702657673c4" id="r_gaaa938eea9b13d86a06d89702657673c4"><td class="memItemLeft" align="right" valign="top">DllExport void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c___a_p_i.html#gaaa938eea9b13d86a06d89702657673c4">eid_vwr_be_serialize</a> (const EID_CHAR *target_file)</td></tr>
 <tr class="memdesc:gaaa938eea9b13d86a06d89702657673c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Save the currently-open data.  <br /></td></tr>
 <tr class="separator:gaaa938eea9b13d86a06d89702657673c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9861e60b36a19121b992d2f8efd2cd07" id="r_ga9861e60b36a19121b992d2f8efd2cd07"><td class="memItemLeft" align="right" valign="top">DllExport void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c___a_p_i.html#ga9861e60b36a19121b992d2f8efd2cd07">eid_vwr_be_export_photo</a> (const EID_CHAR *target_file)</td></tr>
+<tr class="memdesc:ga9861e60b36a19121b992d2f8efd2cd07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Export the photo from eid card as a JPEG file.  <br /></td></tr>
+<tr class="separator:ga9861e60b36a19121b992d2f8efd2cd07"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga531c5034ac1650943a295aaf99378af8" id="r_ga531c5034ac1650943a295aaf99378af8"><td class="memItemLeft" align="right" valign="top">DllExport void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___c___a_p_i.html#ga531c5034ac1650943a295aaf99378af8">eid_vwr_be_deserialize</a> (const EID_CHAR *source_file)</td></tr>
 <tr class="memdesc:ga531c5034ac1650943a295aaf99378af8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Open a file.  <br /></td></tr>
 <tr class="separator:ga531c5034ac1650943a295aaf99378af8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -420,6 +426,10 @@ Functions</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="gga32abb45fcb0a67a1482290d7ab12839ea527fddf3c02824f6954eabdf66819412" name="gga32abb45fcb0a67a1482290d7ab12839ea527fddf3c02824f6954eabdf66819412"></a>STATE_TOKEN_CHALLENGE&#160;</td><td class="fielddoc"><p>Performing a challenge operation. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="gga32abb45fcb0a67a1482290d7ab12839ea5f9e411d4c09d0c60ebf578dc7db8441" name="gga32abb45fcb0a67a1482290d7ab12839ea5f9e411d4c09d0c60ebf578dc7db8441"></a>STATE_TOKEN_EXPORT_PHOTO&#160;</td><td class="fielddoc"><p>Exporting the photo from card data. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga32abb45fcb0a67a1482290d7ab12839ea29bf211ac56855c1298593dd009ff222" name="gga32abb45fcb0a67a1482290d7ab12839ea29bf211ac56855c1298593dd009ff222"></a>STATE_FILE_EXPORT_PHOTO&#160;</td><td class="fielddoc"><p>Exporting the photo from file data. </p>
+</td></tr>
 </table>
 
 </div>
@@ -446,6 +456,33 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">source_file</td><td>the file to read </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga9861e60b36a19121b992d2f8efd2cd07" name="ga9861e60b36a19121b992d2f8efd2cd07"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9861e60b36a19121b992d2f8efd2cd07">&#9670;&#160;</a></span>eid_vwr_be_export_photo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">DllExport void eid_vwr_be_export_photo </td>
+          <td>(</td>
+          <td class="paramtype">const EID_CHAR *&#160;</td>
+          <td class="paramname"><em>target_file</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Export the photo from eid card as a JPEG file. </p>
+<p>The exported file contains the original bytes from the PHOTO_FILE object. The data is not decoded or re-encoded by the viewer.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">target_file</td><td>the name of the file in which to save the JPEG photo. Returns before the export operation has finished. The state machine will switch to a photo export state while the file is being saved. </td></tr>
   </table>
   </dd>
 </dl>
