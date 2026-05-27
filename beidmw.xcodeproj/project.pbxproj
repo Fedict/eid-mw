@@ -35,7 +35,6 @@
 		65270A381FE976BE004F326D /* xml.c in Sources */ = {isa = PBXBuildFile; fileRef = 65270A201FE976BC004F326D /* xml.c */; };
 		65270A391FE976BE004F326D /* p11.c in Sources */ = {isa = PBXBuildFile; fileRef = 65270A251FE976BD004F326D /* p11.c */; };
 		65270A3A1FE976BE004F326D /* dataroot-osx.m in Sources */ = {isa = PBXBuildFile; fileRef = 65270A2A1FE976BE004F326D /* dataroot-osx.m */; };
-		6CE1D0012C066F0000C0DE01 /* photo_export.c in Sources */ = {isa = PBXBuildFile; fileRef = 6CE1D0002C066F0000C0DE01 /* photo_export.c */; };
 		65270A3B1FE97991004F326D /* utftranslate.h in Headers */ = {isa = PBXBuildFile; fileRef = 65EABAEF1C621F3D00034337 /* utftranslate.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		65270A3C1FE97991004F326D /* oslayer-objc.h in Headers */ = {isa = PBXBuildFile; fileRef = 65270A191FE976BA004F326D /* oslayer-objc.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		65270A3D1FE97991004F326D /* certhelpers.h in Headers */ = {isa = PBXBuildFile; fileRef = 65270A0F1FE976B7004F326D /* certhelpers.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -60,12 +59,12 @@
 		65270A7A1FE97A2B004F326D /* genderconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65270A591FE97A29004F326D /* genderconv.cpp */; };
 		65270A7C1FE97A2B004F326D /* natnumconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65270A5B1FE97A2A004F326D /* natnumconv.cpp */; };
 		65270A821FE97A2B004F326D /* convert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65270A611FE97A2A004F326D /* convert.cpp */; };
-		65270A881FE97E7D004F326D /* libbeidpkcs11.5.1.30.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.5.1.30.dylib */; };
+		65270A881FE97E7D004F326D /* libbeidpkcs11.5.1.31.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.5.1.31.dylib */; };
 		65270A8A1FE97E97004F326D /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65270A891FE97E97004F326D /* libcrypto.a */; };
 		65270A8C1FE97EBD004F326D /* libxml2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65270A8B1FE97EBD004F326D /* libxml2.a */; };
 		65314FBC2080E9E10079D0B0 /* workpermitconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65314FB72080E9E10079D0B0 /* workpermitconv.cpp */; };
 		65314FBD2080E9E20079D0B0 /* workpermitconv.h in Headers */ = {isa = PBXBuildFile; fileRef = 65314FBB2080E9E10079D0B0 /* workpermitconv.h */; };
-		653490F01FEA75FE000F7787 /* libbeidpkcs11.5.1.30.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.5.1.30.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		653490F01FEA75FE000F7787 /* libbeidpkcs11.5.1.31.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.5.1.31.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		6536232519A7E92B00D46ECB /* decode_photo.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536230D19A7E92B00D46ECB /* decode_photo.c */; };
 		6536232619A7E92B00D46ECB /* digest.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536230E19A7E92B00D46ECB /* digest.c */; };
 		6536232719A7E92B00D46ECB /* double_init.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536230F19A7E92B00D46ECB /* double_init.c */; };
@@ -90,7 +89,7 @@
 		6536233A19A7E92B00D46ECB /* threads.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536232319A7E92B00D46ECB /* threads.c */; };
 		6536233B19A7E92B00D46ECB /* tkinfo.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536232419A7E92B00D46ECB /* tkinfo.c */; };
 		6536233D19A7E93A00D46ECB /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 6536233C19A7E93A00D46ECB /* main.c */; };
-		65388A341A94A7F3007EBD2D /* libbeidpkcs11.5.1.30.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.5.1.30.dylib */; };
+		65388A341A94A7F3007EBD2D /* libbeidpkcs11.5.1.31.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.5.1.31.dylib */; };
 		6578015620D1364A002B826A /* xmlfileversconv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6578015320D135F4002B826A /* xmlfileversconv.cpp */; };
 		659FD5851FEA867600E4AF83 /* BeidView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 652709FA1FE975A1004F326D /* BeidView.framework */; };
 		659FD5861FEA867600E4AF83 /* BeidView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 652709FA1FE975A1004F326D /* BeidView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -125,6 +124,7 @@
 		6CD6661C26D006D2007DE98D /* cardAment1conv.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CD6661826D006D2007DE98D /* cardAment1conv.h */; };
 		6CD6661D26D006D2007DE98D /* cardAment1conv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6CD6661926D006D2007DE98D /* cardAment1conv.cpp */; };
 		6CDC504222085AFB0078C7E2 /* readdata_limited.c in Sources */ = {isa = PBXBuildFile; fileRef = 6CDC503C220858980078C7E2 /* readdata_limited.c */; };
+		6CE1D0012C066F0000C0DE01 /* photo_export.c in Sources */ = {isa = PBXBuildFile; fileRef = 6CE1D0002C066F0000C0DE01 /* photo_export.c */; };
 		6CF096A62563E914007501AA /* dataverify.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CF096A42563E914007501AA /* dataverify.h */; };
 		86C0E75821C2586E00602028 /* tlvbuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C0E72721C2586E00602028 /* tlvbuffer.h */; };
 		86C0E75921C2586E00602028 /* eiderrors.h in Headers */ = {isa = PBXBuildFile; fileRef = 86C0E72821C2586E00602028 /* eiderrors.h */; };
@@ -263,7 +263,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				653490F01FEA75FE000F7787 /* libbeidpkcs11.5.1.30.dylib in CopyFiles */,
+				653490F01FEA75FE000F7787 /* libbeidpkcs11.5.1.31.dylib in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -352,8 +352,6 @@
 		65270A231FE976BC004F326D /* base64dec.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = base64dec.c; path = ../../../b64/base64dec.c; sourceTree = "<group>"; };
 		65270A241FE976BD004F326D /* oslayer.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = oslayer.c; path = ../../../oslayer.c; sourceTree = "<group>"; };
 		65270A251FE976BD004F326D /* p11.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = p11.c; path = ../../../p11.c; sourceTree = "<group>"; };
-		6CE1D0002C066F0000C0DE01 /* photo_export.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = photo_export.c; path = ../../../photo_export.c; sourceTree = "<group>"; };
-		6CE1D0022C066F0000C0DE01 /* photo_export.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = photo_export.h; path = ../../../photo_export.h; sourceTree = "<group>"; };
 		65270A261FE976BD004F326D /* xmlmap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = xmlmap.h; path = ../../../xmlmap.h; sourceTree = "<group>"; };
 		65270A271FE976BD004F326D /* verify_cert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = verify_cert.h; path = "../../../include/eid-viewer/verify_cert.h"; sourceTree = "<group>"; };
 		65270A281FE976BE004F326D /* p11.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = p11.h; path = ../../../p11.h; sourceTree = "<group>"; };
@@ -467,6 +465,8 @@
 		6CD6661826D006D2007DE98D /* cardAment1conv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cardAment1conv.h; sourceTree = "<group>"; };
 		6CD6661926D006D2007DE98D /* cardAment1conv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cardAment1conv.cpp; sourceTree = "<group>"; };
 		6CDC503C220858980078C7E2 /* readdata_limited.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = readdata_limited.c; path = tests/unit/readdata_limited.c; sourceTree = "<group>"; };
+		6CE1D0002C066F0000C0DE01 /* photo_export.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = photo_export.c; path = ../../../photo_export.c; sourceTree = "<group>"; };
+		6CE1D0022C066F0000C0DE01 /* photo_export.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = photo_export.h; path = ../../../photo_export.h; sourceTree = "<group>"; };
 		6CF096A42563E914007501AA /* dataverify.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dataverify.h; path = "plugins_tools/eid-viewer/dataverify.h"; sourceTree = SOURCE_ROOT; };
 		7F22A3D60F84D6B0001AD228 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		7F22A4110F84D948001AD228 /* PCSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PCSC.framework; path = System/Library/Frameworks/PCSC.framework; sourceTree = SDKROOT; };
@@ -474,7 +474,7 @@
 		7F9011190F8502F8004A5FCC /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = /usr/lib/libcrypto.dylib; sourceTree = "<absolute>"; };
 		7F90111C0F850342004A5FCC /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = /usr/lib/libssl.dylib; sourceTree = "<absolute>"; };
 		7F90112C0F850450004A5FCC /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.5.1.30.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeidpkcs11.5.1.30.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.5.1.31.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libbeidpkcs11.5.1.31.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		86BC84C01A037C19009E374E /* test_dialogs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = test_dialogs.xcodeproj; path = tests/dialogs/test_dialogs.xcodeproj; sourceTree = "<group>"; };
 		86C0E72721C2586E00602028 /* tlvbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tlvbuffer.h; sourceTree = "<group>"; };
 		86C0E72821C2586E00602028 /* eiderrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = eiderrors.h; sourceTree = "<group>"; };
@@ -591,7 +591,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				65270A881FE97E7D004F326D /* libbeidpkcs11.5.1.30.dylib in Frameworks */,
+				65270A881FE97E7D004F326D /* libbeidpkcs11.5.1.31.dylib in Frameworks */,
 				65270A8A1FE97E97004F326D /* libcrypto.a in Frameworks */,
 				65270A8C1FE97EBD004F326D /* libxml2.a in Frameworks */,
 			);
@@ -601,7 +601,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				65388A341A94A7F3007EBD2D /* libbeidpkcs11.5.1.30.dylib in Frameworks */,
+				65388A341A94A7F3007EBD2D /* libbeidpkcs11.5.1.31.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -620,7 +620,7 @@
 		034768DDFF38A45A11DB9C8B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.5.1.30.dylib */,
+				7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.5.1.31.dylib */,
 				6536230219A7E8E600D46ECB /* testsuite */,
 				652709FA1FE975A1004F326D /* BeidView.framework */,
 				651DDF291FEA843C00C4961E /* eID Viewer.app */,
@@ -1214,7 +1214,7 @@
 			);
 			name = beidpkcs11;
 			productName = beidpkcs11;
-			productReference = 7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.5.1.30.dylib */;
+			productReference = 7FA1A9F70F85F36E000D9EE1 /* libbeidpkcs11.5.1.31.dylib */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 /* End PBXNativeTarget section */
@@ -1342,7 +1342,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Change the fixed dependency path of our pkcs11 module in BeidView to a runpath\n\ncd \"${CONFIGURATION_BUILD_DIR}\"/\"${CONTENTS_FOLDER_PATH}\"\ninstall_name_tool -change /usr/local/lib/libbeidpkcs11.5.1.6.dylib \"@rpath/libbeidpkcs11.5.1.6.dylib\" \"BeidView\"\n";
+			shellScript = "# Change the fixed dependency path of our pkcs11 module in BeidView to a runpath\n\ncd \"${CONFIGURATION_BUILD_DIR}\"/\"${CONTENTS_FOLDER_PATH}\"\ninstall_name_tool -change /usr/local/lib/libbeidpkcs11.5.1.31.dylib \"@rpath/libbeidpkcs11.5.1.31.dylib\" \"BeidView\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1568,7 +1568,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 5.1.6;
+				CURRENT_PROJECT_VERSION = 5.1.31;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = EU27N85PBZ;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1600,7 +1600,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_EXPAND_BUILD_SETTINGS = NO;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = dynamic;
@@ -1634,7 +1634,7 @@
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
-				CURRENT_PROJECT_VERSION = 5.1.6;
+				CURRENT_PROJECT_VERSION = 5.1.31;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = EU27N85PBZ;
@@ -1666,7 +1666,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_EXPAND_BUILD_SETTINGS = NO;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = macosx;
 				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = dynamic;
@@ -1707,7 +1707,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 5.1.30;
+				CURRENT_PROJECT_VERSION = 5.1.31;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = EU27N85PBZ;
 				ENABLE_HARDENED_RUNTIME = NO;
@@ -1741,7 +1741,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 5.1.30;
+				MARKETING_VERSION = 5.1.31;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "be.fedict.eID-Viewer";
@@ -1785,7 +1785,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 5.1.30;
+				CURRENT_PROJECT_VERSION = 5.1.31;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = EU27N85PBZ;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1814,7 +1814,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 5.1.30;
+				MARKETING_VERSION = 5.1.31;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
 				PRODUCT_BUNDLE_IDENTIFIER = "be.fedict.eID-Viewer";
@@ -2028,7 +2028,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 5.1.30;
+				CURRENT_PROJECT_VERSION = 5.1.31;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = EU27N85PBZ;
 				DYLIB_COMPATIBILITY_VERSION = "";
@@ -2078,7 +2078,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 5.1.30;
+				CURRENT_PROJECT_VERSION = 5.1.31;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = EU27N85PBZ;
 				DYLIB_COMPATIBILITY_VERSION = "";
