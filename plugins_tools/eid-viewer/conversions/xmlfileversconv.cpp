@@ -1,4 +1,4 @@
-﻿#include "xmlfileversconv.h"
+#include "xmlfileversconv.h"
 #include "backend.h"
 
 std::map<eid_vwr_langs, const EID_CHAR*> XmlFileversConvertor::msgs_;
@@ -15,7 +15,7 @@ XmlFileversConvertor::XmlFileversConvertor() {
 EID_STRING XmlFileversConvertor::convert(const void *original) {
 	EID_STRING orig((const EID_CHAR*)original);
 
-	if(orig.compare(TEXT("4.4")) > 0) {
+	if(orig.compare(TEXT("4.5")) > 0) {
 		be_log(EID_VWR_LOG_ERROR, msgs_[target_]);
 	}
 	return orig;
