@@ -66,9 +66,25 @@ caption $(ls_caption)
 	Var firstLine
 	Var MsiResponse
 	Var InstallFailed
+	Var InstallStatus
+	Var InstallStatusLogFile
 	Var ReaderFailed
 	Var FindCardFailed
 	Var FAQ_url
+
+!macro TrackInstallStatus
+	${If} $MsiResponse == 3010
+	${AndIf} $InstallStatus == ""
+		StrCpy $InstallStatus $MsiResponse
+		StrCpy $InstallStatusLogFile $LogFile
+	${ElseIf} $MsiResponse <> 0
+		${If} $InstallStatus == ""
+		${OrIf} $InstallStatus == 3010
+			StrCpy $InstallStatus $MsiResponse
+			StrCpy $InstallStatusLogFile $LogFile
+		${EndIf}
+	${EndIf}
+!macroend
 
 ;--------------------------------
 	;Interface Settings
@@ -132,11 +148,18 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 	${WinVerGetMinor} $versionMinor
 	
 	StrCpy $FAQ_url "https://eid.belgium.be/"
+	StrCpy $InstallStatus ""
+	StrCpy $InstallStatusLogFile ""
 	
 	${If} ${IsNativeARM64}
 		ClearErrors
 		StrCpy $FileToCopy "$INSTDIR\BeidMW_arm64.msi"
 		File "..\eid-mw\Windows\bin\BeidMW_arm64.msi"
+		IfErrors 0 +2
+			Call ErrorHandler_file
+		ClearErrors
+		StrCpy $FileToCopy "$INSTDIR\BeIDSignApp.msi"
+		File "..\..\..\BeIDSignApp\installer\bin\BeIDSignApp.msi"
 		IfErrors 0 +2
 			Call ErrorHandler_file
 		ClearErrors
@@ -191,15 +214,47 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 				DetailPrint "MsiResponse = $MsiResponse"
 			${Break}				
 		${EndSwitch}
+		!insertmacro TrackInstallStatus
 		;IfErrors 0 +2
 		;	Call ErrorHandler_msiexec
+
+		StrCpy $LogFile "$INSTDIR\log\install_beidsignapp_arm64_log.txt"
+		StrCpy $TempFile "$INSTDIR\log\1612_count.txt"
+		ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeIDSignApp.msi"' $MsiResponse
+		${Switch} $MsiResponse
+			${Case} 1603
+				ExecWait 'cmd.exe /C FIND "1612" "$LogFile" | FIND /C "error code 1612" > "$TempFile"' $retval
+				!insertmacro GetFirstLineOfFile $TempFile $firstLine
+				DetailPrint "MSI error 1612, count = $firstLine"
+				StrCmp "$firstLine" "" +2 0	
+				StrCmp "$firstLine" "0" 0 MSI_1612_Error_BeIDSignApp_arm64
+			${Break}
+			${Case} 1612
+			MSI_1612_Error_BeIDSignApp_arm64:
+				DetailPrint "$(ls_errorinstallmsi_1612) $\r$\n $(ls_error) = $MsiResponse"
+				StrCpy $FAQ_url "$(ls_errorinstallmsi_1612_FAQurl)"
+			${Break}
+			${Case} 1622
+				ExecWait 'msiexec /quiet /norestart /i "$INSTDIR\BeIDSignApp.msi"' $MsiResponse
+			${Break}
+			${Default}	
+				DetailPrint "MsiResponse = $MsiResponse"
+			${Break}				
+		${EndSwitch}
+		!insertmacro TrackInstallStatus
 		
 		;WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto64" 0x1
 		Delete "$INSTDIR\BeidMW_arm64.msi"
+		Delete "$INSTDIR\BeIDSignApp.msi"
 	${elseif} ${RunningX64}
 		ClearErrors
 		StrCpy $FileToCopy "$INSTDIR\BeidMW_64.msi"
 		File "..\eid-mw\Windows\bin\BeidMW_64.msi"
+		IfErrors 0 +2
+			Call ErrorHandler_file
+		ClearErrors
+		StrCpy $FileToCopy "$INSTDIR\BeIDSignApp.msi"
+		File "..\..\..\BeIDSignApp\installer\bin\BeIDSignApp.msi"
 		IfErrors 0 +2
 			Call ErrorHandler_file
 		ClearErrors
@@ -240,11 +295,38 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 				DetailPrint "MsiResponse = $MsiResponse"
 			${Break}				
 		${EndSwitch}
+		!insertmacro TrackInstallStatus
 		;IfErrors 0 +2
 		;	Call ErrorHandler_msiexec
+
+		StrCpy $LogFile "$INSTDIR\log\install_beidsignapp_64_log.txt"
+		StrCpy $TempFile "$INSTDIR\log\1612_count.txt"
+		ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeIDSignApp.msi"' $MsiResponse
+		${Switch} $MsiResponse
+			${Case} 1603
+				ExecWait 'cmd.exe /C FIND "1612" "$LogFile" | FIND /C "error code 1612" > "$TempFile"' $retval
+				!insertmacro GetFirstLineOfFile $TempFile $firstLine
+				DetailPrint "MSI error 1612, count = $firstLine"
+				StrCmp "$firstLine" "" +2 0	
+				StrCmp "$firstLine" "0" 0 MSI_1612_Error_BeIDSignApp_64
+			${Break}
+			${Case} 1612
+			MSI_1612_Error_BeIDSignApp_64:
+				DetailPrint "$(ls_errorinstallmsi_1612) $\r$\n $(ls_error) = $MsiResponse"
+				StrCpy $FAQ_url "$(ls_errorinstallmsi_1612_FAQurl)"
+			${Break}
+			${Case} 1622
+				ExecWait 'msiexec /quiet /norestart /i "$INSTDIR\BeIDSignApp.msi"' $MsiResponse
+			${Break}
+			${Default}	
+				DetailPrint "MsiResponse = $MsiResponse"
+			${Break}				
+		${EndSwitch}
+		!insertmacro TrackInstallStatus
 		
 		;WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto64" 0x1
 		Delete "$INSTDIR\BeidMW_64.msi"
+		Delete "$INSTDIR\BeIDSignApp.msi"
 	${Else}	
 		ClearErrors
 		StrCpy $FileToCopy "$INSTDIR\BeidMW_32.msi"
@@ -252,9 +334,15 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 		IfErrors 0 +2
 			Call ErrorHandler_file
 		ClearErrors
+		StrCpy $FileToCopy "$INSTDIR\BeIDSignApp32.msi"
+		File "..\..\..\BeIDSignApp\installer\bin\BeIDSignApp32.msi"
+		IfErrors 0 +2
+			Call ErrorHandler_file
+		ClearErrors
 		;delete previous log
 		StrCpy $LogFile "$INSTDIR\log\install_eidmw32_log.txt"
 		;Delete "$LogFile"
+		
 		ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeidMW_32.msi"' $MsiResponse
 		
 		;try to recover from some errors
@@ -284,10 +372,43 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 				DetailPrint "MsiResponse = $MsiResponse"
 			${Break}	
 		${EndSwitch}
+		!insertmacro TrackInstallStatus
 		;IfErrors 0 +2
 		;	Call ErrorHandler_msiexec
 		;WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto32" 0x1
+		
+		StrCpy $LogFile "$INSTDIR\log\install_beidsignapp_32_log.txt"
+		StrCpy $TempFile "$INSTDIR\log\1612_count.txt"
+		ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeIDSignApp32.msi"' $MsiResponse
+		${Switch} $MsiResponse
+			${Case} 1603
+				ExecWait 'cmd.exe /C FIND "1612" "$LogFile" | FIND /C "error code 1612" > "$TempFile"' $retval
+				!insertmacro GetFirstLineOfFile $TempFile $firstLine
+				DetailPrint "MSI error 1612, count = $firstLine"
+				StrCmp "$firstLine" "" +2 0	
+				StrCmp "$firstLine" "0" 0 MSI_1612_Error_BeIDSignApp_32
+			${Break}
+			${Case} 1612
+			MSI_1612_Error_BeIDSignApp_32:
+				DetailPrint "$(ls_errorinstallmsi_1612) $\r$\n $(ls_error) = $MsiResponse"
+				StrCpy $FAQ_url "$(ls_errorinstallmsi_1612_FAQurl)"
+			${Break}
+			${Case} 1622
+				ExecWait 'msiexec /quiet /norestart /i "$INSTDIR\BeIDSignApp32.msi"' $MsiResponse
+			${Break}
+			${Default}	
+				DetailPrint "MsiResponse = $MsiResponse"
+			${Break}				
+		${EndSwitch}
+		!insertmacro TrackInstallStatus
+		
 		Delete "$INSTDIR\BeidMW_32.msi"
+		Delete "$INSTDIR\BeIDSignApp32.msi"
+	${EndIf}
+
+	${If} $InstallStatus != ""
+		StrCpy $MsiResponse $InstallStatus
+		StrCpy $LogFile $InstallStatusLogFile
 	${EndIf}
 	
 	;check if msi install went ok (initially or after correction)
