@@ -158,8 +158,8 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 		IfErrors 0 +2
 			Call ErrorHandler_file
 		ClearErrors
-		StrCpy $FileToCopy "$INSTDIR\BeIDSignApp.msi"
-		File "..\..\..\BeIDSignApp\installer\bin\BeIDSignApp.msi"
+		StrCpy $FileToCopy "$INSTDIR\BeIDApp.msi"
+		File "..\..\..\BeIDSignApp\installer\bin\BeIDApp.msi"
 		IfErrors 0 +2
 			Call ErrorHandler_file
 		ClearErrors
@@ -220,7 +220,7 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 
 		StrCpy $LogFile "$INSTDIR\log\install_beidsignapp_arm64_log.txt"
 		StrCpy $TempFile "$INSTDIR\log\1612_count.txt"
-		ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeIDSignApp.msi"' $MsiResponse
+		ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeIDApp.msi"' $MsiResponse
 		${Switch} $MsiResponse
 			${Case} 1603
 				ExecWait 'cmd.exe /C FIND "1612" "$LogFile" | FIND /C "error code 1612" > "$TempFile"' $retval
@@ -235,7 +235,7 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 				StrCpy $FAQ_url "$(ls_errorinstallmsi_1612_FAQurl)"
 			${Break}
 			${Case} 1622
-				ExecWait 'msiexec /quiet /norestart /i "$INSTDIR\BeIDSignApp.msi"' $MsiResponse
+				ExecWait 'msiexec /quiet /norestart /i "$INSTDIR\BeIDApp.msi"' $MsiResponse
 			${Break}
 			${Default}	
 				DetailPrint "MsiResponse = $MsiResponse"
@@ -245,7 +245,7 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 		
 		;WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto64" 0x1
 		Delete "$INSTDIR\BeidMW_arm64.msi"
-		Delete "$INSTDIR\BeIDSignApp.msi"
+		Delete "$INSTDIR\BeIDApp.msi"
 	${elseif} ${RunningX64}
 		ClearErrors
 		StrCpy $FileToCopy "$INSTDIR\BeidMW_64.msi"
@@ -253,8 +253,8 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 		IfErrors 0 +2
 			Call ErrorHandler_file
 		ClearErrors
-		StrCpy $FileToCopy "$INSTDIR\BeIDSignApp.msi"
-		File "..\..\..\BeIDSignApp\installer\bin\BeIDSignApp.msi"
+		StrCpy $FileToCopy "$INSTDIR\BeIDApp.msi"
+		File "..\..\..\BeIDSignApp\installer\bin\BeIDApp.msi"
 		IfErrors 0 +2
 			Call ErrorHandler_file
 		ClearErrors
@@ -301,7 +301,7 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 
 		StrCpy $LogFile "$INSTDIR\log\install_beidsignapp_64_log.txt"
 		StrCpy $TempFile "$INSTDIR\log\1612_count.txt"
-		ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeIDSignApp.msi"' $MsiResponse
+		ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeIDApp.msi"' $MsiResponse
 		${Switch} $MsiResponse
 			${Case} 1603
 				ExecWait 'cmd.exe /C FIND "1612" "$LogFile" | FIND /C "error code 1612" > "$TempFile"' $retval
@@ -316,7 +316,7 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 				StrCpy $FAQ_url "$(ls_errorinstallmsi_1612_FAQurl)"
 			${Break}
 			${Case} 1622
-				ExecWait 'msiexec /quiet /norestart /i "$INSTDIR\BeIDSignApp.msi"' $MsiResponse
+				ExecWait 'msiexec /quiet /norestart /i "$INSTDIR\BeIDApp.msi"' $MsiResponse
 			${Break}
 			${Default}	
 				DetailPrint "MsiResponse = $MsiResponse"
@@ -326,7 +326,7 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 		
 		;WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto64" 0x1
 		Delete "$INSTDIR\BeidMW_64.msi"
-		Delete "$INSTDIR\BeIDSignApp.msi"
+		Delete "$INSTDIR\BeIDApp.msi"
 	${Else}	
 		ClearErrors
 		StrCpy $FileToCopy "$INSTDIR\BeidMW_32.msi"
@@ -334,8 +334,8 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 		IfErrors 0 +2
 			Call ErrorHandler_file
 		ClearErrors
-		StrCpy $FileToCopy "$INSTDIR\BeIDSignApp32.msi"
-		File "..\..\..\BeIDSignApp\installer\bin\BeIDSignApp32.msi"
+		StrCpy $FileToCopy "$INSTDIR\BeIDApp32.msi"
+		File "..\..\..\BeIDSignApp\installer\bin\BeIDApp32.msi"
 		IfErrors 0 +2
 			Call ErrorHandler_file
 		ClearErrors
@@ -379,7 +379,7 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 		
 		StrCpy $LogFile "$INSTDIR\log\install_beidsignapp_32_log.txt"
 		StrCpy $TempFile "$INSTDIR\log\1612_count.txt"
-		ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeIDSignApp32.msi"' $MsiResponse
+		ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeIDApp32.msi"' $MsiResponse
 		${Switch} $MsiResponse
 			${Case} 1603
 				ExecWait 'cmd.exe /C FIND "1612" "$LogFile" | FIND /C "error code 1612" > "$TempFile"' $retval
@@ -394,7 +394,7 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 				StrCpy $FAQ_url "$(ls_errorinstallmsi_1612_FAQurl)"
 			${Break}
 			${Case} 1622
-				ExecWait 'msiexec /quiet /norestart /i "$INSTDIR\BeIDSignApp32.msi"' $MsiResponse
+				ExecWait 'msiexec /quiet /norestart /i "$INSTDIR\BeIDApp32.msi"' $MsiResponse
 			${Break}
 			${Default}	
 				DetailPrint "MsiResponse = $MsiResponse"
@@ -403,7 +403,7 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 		!insertmacro TrackInstallStatus
 		
 		Delete "$INSTDIR\BeidMW_32.msi"
-		Delete "$INSTDIR\BeIDSignApp32.msi"
+		Delete "$INSTDIR\BeIDApp32.msi"
 	${EndIf}
 
 	${If} $InstallStatus != ""
