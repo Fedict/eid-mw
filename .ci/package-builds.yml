@@ -160,6 +160,14 @@ repo:inject-source:
     - job: test:distcheck
       artifacts: true
       pipeline: $PARENT_PIPELINE
+  rules:
+    - if: $CI_COMMIT_REF_NAME == 'master'
+      when: on_success
+    - if: $CI_COMMIT_REF_NAME == $CANDIDATEBRANCH
+      when: on_success
+    - if: $CI_COMMIT_TAG
+      when: on_success
+    - when: never
   extends: .inject-source
 
 # repository rsyncs are staggered:
@@ -184,3 +192,11 @@ publish:rsync:
     - rsync -avrLHP --exclude="dists/" --exclude="repomd.xml*" $REPO_LOC $RSYNC_TARGET_FILES
     - rsync -avrLHP $REPO_LOC $RSYNC_TARGET_FILES
     - rsync -avrLHP --delete-before $REPO_LOC $RSYNC_TARGET_FILES
+  rules:
+    - if: $CI_COMMIT_REF_NAME == 'master'
+      when: on_success
+    - if: $CI_COMMIT_REF_NAME == $CANDIDATEBRANCH
+      when: on_success
+    - if: $CI_COMMIT_TAG
+      when: on_success
+    - when: never
