@@ -1,10 +1,9 @@
 .distcheck:
   variables:
-    ARCH_TAG: x86
     GIT_DEPTH: 0
   tags:
   - docker
-  - $ARCH_TAG
+  - x86
   image: $CI_REGISTRY_IMAGE/deb-build:$CI_COMMIT_REF_SLUG
   retry: 2
   before_script:
@@ -41,11 +40,9 @@
     - products/source
 
 .gtk4:
-  variables:
-    ARCH_TAG: x86
   tags:
   - docker
-  - $ARCH_TAG
+  - x86
   image: $CI_REGISTRY_IMAGE/gtk4-build:$CI_COMMIT_REF_SLUG
   retry: 2
   before_script:
@@ -60,11 +57,9 @@
   allow_failure: true
 
 .nogtk:
-  variables:
-    ARCH_TAG: x86
   tags:
   - docker
-  - $ARCH_TAG
+  - x86
   image: $CI_REGISTRY_IMAGE/deb-build:$CI_COMMIT_REF_SLUG
   retry: 2
   before_script:
@@ -77,11 +72,9 @@
   - make check
 
 .nodialogs:
-  variables:
-    ARCH_TAG: x86
   tags:
   - docker
-  - $ARCH_TAG
+  - x86
   image: $CI_REGISTRY_IMAGE/deb-build:$CI_COMMIT_REF_SLUG
   retry: 2
   before_script:
@@ -158,11 +151,9 @@
   - xvfb-run actiona -e -x $CI_PROJECT_DIR/tests/browsertests/Linux/googleTest.ascr
 
 .repro:debian:
-  variables:
-    ARCH_TAG: x86
   tags:
   - docker
-  - $ARCH_TAG
+  - x86
   image: $CI_REGISTRY_IMAGE/deb-repro:$CI_COMMIT_REF_SLUG
   retry: 2
   dependencies: []
@@ -184,11 +175,9 @@
     - configure
 
 .scan-build:
-  variables:
-    ARCH_TAG: x86
   tags:
     - docker
-    - $ARCH_TAG
+    - x86
   image: $CI_REGISTRY_IMAGE/deb-scan-build:$CI_COMMIT_REF_SLUG
   retry: 2
   allow_failure: true
@@ -210,11 +199,9 @@
     - public
 
 .gcc-analyzer:
-  variables:
-    ARCH_TAG: x86
   tags:
     - docker
-    - $ARCH_TAG
+    - x86
   image: $CI_REGISTRY_IMAGE/deb-testing:$CI_COMMIT_REF_SLUG
   retry: 2
   before_script:
@@ -235,10 +222,9 @@
 .srpm:
   variables:
     GIT_STRATEGY: none
-    ARCH_TAG: x86
   tags:
     - docker
-    - $ARCH_TAG
+    - x86
   image: $CI_REGISTRY_IMAGE/fed-build:$CI_COMMIT_REF_SLUG
   before_script:
   - dnf -y install rpm-build git rpmdevtools
@@ -284,6 +270,7 @@
 .build-deb-base:
   image: $CI_REGISTRY_IMAGE/deb-sbuild:$CI_COMMIT_REF_SLUG
   before_script:
+  - if [ -z "$CODE" ]; then echo "nothing to do, bye"; exit 0; fi
   - VER=$(cat products/source/version)
   - VERSHORT=${VER#*-}
   - COMMITDATE=$(cat products/source/date)
@@ -310,21 +297,12 @@
       on_success
   tags:
   - docker
-  - $ARCH_TAG
-
-.build-deb-base-arm:
-  extends: .build-deb-base
-  variables:
-    ARCH_TAG: arm
-
-.build-deb-base-x86:
-  extends: .build-deb-base
-  variables:
-    ARCH_TAG: x86
+  - $ARCH
 
 .build-fed-base:
   retry: 2
   before_script:
+  - if [ -z "$DVER" ]; then echo "nothing to do, bye"; exit 0; fi
   - dnf -y install mock git
   - VER=$(cat products/srpm/version)
   - VERSHORT=${VER#*-}
@@ -338,18 +316,8 @@
       on_success
   tags:
   - docker
-  - $ARCH_TAG
+  - $ARCH
   image: $CI_REGISTRY_IMAGE/fed-build:$CI_COMMIT_REF_SLUG
-
-.build-fed-base-arm:
-  extends: .build-fed-base
-  variables:
-    ARCH_TAG: arm
-
-.build-fed-base-x86:
-  extends: .build-fed-base
-  variables:
-    ARCH_TAG: x86
 
 .build-suse-base:
   dependencies:
@@ -357,6 +325,7 @@
   stage: binary-package
   retry: 2
   before_script:
+    - if [ -z "$DVER" ]; then echo "nothing to do, bye"; exit 0; fi
     - VER=$(cat products/srpm/version)
     - VERSHORT=${VER#*-}
   script:
@@ -371,18 +340,8 @@
       on_success
   tags:
   - docker
-  - $ARCH_TAG
+  - $ARCH
   image: $CI_REGISTRY_IMAGE/suse-build:$CI_COMMIT_REF_SLUG
-
-.build-suse-base-arm:
-  extends: .build-suse-base
-  variables:
-    ARCH_TAG: arm
-
-.build-suse-base-x86:
-  extends: .build-suse-base
-  variables:
-    ARCH_TAG: x86
 
 .inject-debs:
   tags:
@@ -449,11 +408,9 @@
   - popd
 
 .check-translations:
-  variables:
-    ARCH_TAG: x86
   tags:
   - docker
-  - $ARCH_TAG
+  - x86
   image: $CI_REGISTRY_IMAGE/deb-build:$CI_COMMIT_REF_SLUG
   before_script:
   - if [ ! -z "$ACNG" ]; then sed -i -e "s,http://,$ACNG/," /etc/apt/sources.list.d/debian.sources; else echo "no proxy configured"; fi

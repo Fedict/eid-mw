@@ -1,0 +1,186 @@
+stages:
+  - builds
+  - repository
+  - publish
+
+include:
+  - local: .ci/build-configs.yml
+  - local: .ci/builds-linux.yml
+
+build:debs:
+  stage: builds
+  extends: .build-deb-base
+  needs:
+    - job: test:distcheck
+      artifacts: true
+      pipeline: $PARENT_PIPELINE
+  parallel:
+    matrix:
+      - DIST: debian
+        CODE: $DEBIAN_STABLE_CODE
+        SHORT: deb$DEBIAN_STABLE_VERSION
+        ARCH: 
+          - amd64
+          - i386
+          - arm64
+          - armhf
+      - DIST: debian
+        CODE: $DEBIAN_OLDSTABLE_CODE
+        SHORT: deb$DEBIAN_OLDSTABLE_VERSION
+        ARCH: 
+          - amd64
+          - i386
+          - arm64
+          - armhf
+      - DIST: ubuntu
+        CODE: $UBUNTU_STABLE_CODE
+        SHORT: u$UBUNTU_STABLE_VERSION
+        ARCH: 
+          - amd64
+          - i386
+          - arm64
+          - armhf
+      - DIST: ubuntu
+        CODE: $UBUNTU_OLDLTS_CODE
+        SHORT: u$UBUNTU_OLDLTS_VERSION
+        ARCH: 
+          - amd64
+          - i386
+          - arm64
+          - armhf
+      - DIST: ubuntu
+        CODE: $UBUNTU_LTS_CODE
+        SHORT: u$UBUNTU_LTS_VERSION
+        ARCH: 
+          - amd64
+          - i386
+          - arm64
+          - armhf
+
+src:srpm:
+  stage: builds
+  extends: .srpm
+  needs:
+    - job: test:distcheck
+      artifacts: true
+      pipeline: $PARENT_PIPELINE
+
+build:fed:
+  stage: builds
+  extends: .build-fed-base
+  needs:
+    - job: src:srpm
+      artifacts: true
+  parallel:
+    matrix:
+      - DIST: fedora
+        DVER:
+          - $FEDORA_OLDSTABLE_VERSION
+          - $FEDORA_STABLE_VERSION
+        ARCH: 
+          - x86_64
+          - i386
+          - aarch64
+      - DIST: rocky
+        DVER: 
+          - $EL_OLDSTABLE_VERSION
+          - $EL_STABLE_VERSION
+        ARCH: 
+          - x86_64
+          - aarch64
+
+build:suse:
+  stage: builds
+  extends: .build-suse-base
+  needs:
+    - job: src:srpm
+      artifacts: true
+  parallel:
+    matrix:
+      - DIST: opensuse
+        DVER: 
+          - $OPENSUSE_OLDSTABLE_VERSION
+          - $OPENSUSE_STABLE_VERSION
+        ARCH: 
+          - x86_64
+          - aarch64
+
+repo:inject-debs:
+  stage: repository
+  needs:
+    - job: build:deb
+      artifacts: true
+      optional: true
+  extends: .inject-debs
+  rules:
+    - if: $CI_COMMIT_REF_NAME == 'master'
+      when: on_success
+    - if: $CI_COMMIT_REF_NAME == $CANDIDATEBRANCH
+      when: on_success
+    - if: $CI_COMMIT_TAG
+      when: on_success
+    - when: never
+  extends: .inject-debs
+
+repo:inject-fed:
+  stage: repository
+  needs:
+    - job: build:fed
+      artifacts: true
+      optional: true
+  rules:
+    - if: $CI_COMMIT_REF_NAME == 'master'
+      when: on_success
+    - if: $CI_COMMIT_REF_NAME == $CANDIDATEBRANCH
+      when: on_success
+    - if: $CI_COMMIT_TAG
+      when: on_success
+    - when: never
+  extends: .inject-fed
+
+repo:inject-suse:
+  stage: repository
+  needs:
+    - job: build:suse
+      artifacts: true
+      optional: true
+  rules:
+    - if: $CI_COMMIT_REF_NAME == 'master'
+      when: on_success
+    - if: $CI_COMMIT_REF_NAME == $CANDIDATEBRANCH
+      when: on_success
+    - if: $CI_COMMIT_TAG
+      when: on_success
+    - when: never
+  extends: .inject-suse
+
+repo:inject-source:
+  stage: repository
+  needs:
+    - job: test:distcheck
+      artifacts: true
+      pipeline: $PARENT_PIPELINE
+  extends: .inject-source
+
+# repository rsyncs are staggered:
+# - first, rsync without metadata, so that all the new files appear
+# - next, rsync without exclusions, so that the metadata files appear
+# (but the old files still exist)
+# - Finally, rsync with --delete-before, so that the old files are
+# removed.
+# This should keep the repository consistent while files are being
+# updated.
+# (theoretically it should be possible to combine the last two steps
+# into a single rsync with --delete-after, but it's nice to have
+# separate steps for that)
+publish:rsync:
+  stage: publish
+  tags:
+    - repobuilder
+  script:
+    - scripts/build-aux/cleanup.sh
+    - rsync -avr --delete-before $DIST_LOC/continuous/ $RSYNC_TARGET_DIST/continuous
+    - rsync -avr --delete-before $DIST_LOC/releases/ $RSYNC_TARGET_DIST/releases
+    - rsync -avrLHP --exclude="dists/" --exclude="repomd.xml*" $REPO_LOC $RSYNC_TARGET_FILES
+    - rsync -avrLHP $REPO_LOC $RSYNC_TARGET_FILES
+    - rsync -avrLHP --delete-before $REPO_LOC $RSYNC_TARGET_FILES
