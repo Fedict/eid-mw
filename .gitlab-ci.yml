@@ -11,7 +11,13 @@ include:
 - local: .ci/builds-windows.yml
 - local: .ci/builds-macos.yml
 - local: .ci/builds-docker.yml
-- template: Security/SAST.gitlab-ci.yml
+- component: $GITLAB_SAST_COMPONENT_URL
+  inputs:
+    image_prefix: $GITLAB_SAST_IMAGE_PREFIX
+    stage: test
+    search_max_depth: 10
+    run_advanced_sast: true
+    run_advanced_sast_cpp: true
 
 variables:
   LINUX_BASEDIR: .
