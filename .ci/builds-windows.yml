@@ -39,6 +39,7 @@
     - cardcomm\pkcs11\*\Binaries\*\*.lib
     - installers\quickinstaller\NSIS_Plugins\beidread\*\*\*.lib
     - plugins_tools\eid-viewer\Windows\*\eIDViewer\bin\*\*.lib
+    - tests\unit
 
 #.validation:windows:dllinstall:
 #  tags:
