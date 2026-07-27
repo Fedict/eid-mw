@@ -245,8 +245,9 @@ build:linux:
 validate:robot:windows:
   stage: validate
   extends: .robot:windows
-  dependencies:
-  - build:windows
+  needs:
+    - job: build:windows
+      artifacts: true
 
 validate:robot:macos:
   stage: validate

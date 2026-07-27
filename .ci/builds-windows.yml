@@ -4,10 +4,6 @@
   - robot
   - windows
   script:
-  - cd $Env:WINDOWS_BASEDIR\scripts\windows
-  - ./build_testsuite.bat
-  - cd
-  - cd ..\..
   - cd tests\unit\windows\Release
   - .\pkcs11_tests.exe zetes:COM4:COM3 nopin
   allow_failure: true
@@ -27,6 +23,7 @@
   - cd $Env:WINDOWS_BASEDIR\scripts\windows
   - ./build_minidriver.bat
   - ./build_all.bat
+  - ./build_testsuite.bat
   after_script:
   - mkdir products\windows
   - xcopy $Env:WINDOWS_BASEDIR\scripts\windows\*.exe products\windows
