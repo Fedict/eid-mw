@@ -24,6 +24,7 @@ variables:
   DOCKER_BASEDIR: .
   WINDOWS_BASEDIR: .
   MACOS_BASEDIR: .
+  ADDITIONAL_CA_CERT_BUNDLE: "$CI_SERVER_TLS_CA_FILE"
 
 #######################################
 # Stage "docker": build docker images #
