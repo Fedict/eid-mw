@@ -17,40 +17,19 @@ build:debs:
   parallel:
     matrix:
       - DIST: debian
-        CODE: $DEBIAN_STABLE_CODE
-        SHORT: deb$DEBIAN_STABLE_VERSION
-        ARCH: 
-          - amd64
-          - i386
-          - arm64
-          - armhf
-      - DIST: debian
-        CODE: $DEBIAN_OLDSTABLE_CODE
-        SHORT: deb$DEBIAN_OLDSTABLE_VERSION
+        CODE:
+          - $DEBIAN_STABLE_CODE
+          - $DEBIAN_OLDSTABLE_CODE
         ARCH: 
           - amd64
           - i386
           - arm64
           - armhf
       - DIST: ubuntu
-        CODE: $UBUNTU_STABLE_CODE
-        SHORT: u$UBUNTU_STABLE_VERSION
-        ARCH: 
-          - amd64
-          - i386
-          - arm64
-          - armhf
-      - DIST: ubuntu
-        CODE: $UBUNTU_OLDLTS_CODE
-        SHORT: u$UBUNTU_OLDLTS_VERSION
-        ARCH: 
-          - amd64
-          - i386
-          - arm64
-          - armhf
-      - DIST: ubuntu
-        CODE: $UBUNTU_LTS_CODE
-        SHORT: u$UBUNTU_LTS_VERSION
+        CODE:
+          - $UBUNTU_STABLE_CODE
+          - $UBUNTU_OLDLTS_CODE
+          - $UBUNTU_LTS_CODE
         ARCH: 
           - amd64
           - i386

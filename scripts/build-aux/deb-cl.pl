@@ -56,10 +56,26 @@ if(exists($ENV{TARGET}) && length($ENV{TARGET}) > 0) {
 	$released = "r";
 }
 $distribution .= $ENV{CODE};
+$short = $ENV{SHORT}
+my %vermap = (
+        debian => {
+                $ENV{DEBIAN_STABLE_CODE} => "deb" . $ENV{DEBIAN_STABLE_VERSION},
+                $ENV{DEBIAN_OLDSTABLE_CODE} => "deb" . $ENV{DEBIAN_OLDSTABLE_VERSION},
+        },
+        ubuntu => {
+                $ENV{UBUNTU_LTS_CODE} => "u" . $ENV{UBUNTU_LTS_VERSION},
+                $ENV{UBUNTU_OLDLTS_CODE} => "u" . $ENV{UBUNTU_OLDLTS_VERSION},
+        },
+};
+if(exists($ENV{UBUNTU_STABLE_CODE})) {
+        $vermap{$ENV{UBUNTU_STABLE_CODE}} = "u" . $ENV{UBUNTU_STABLE_VERSION};
+}
+if (length($short) == 0) {
+        $short = $vermap{$ENV{DIST}}{$ENV{CODE}};
+}
 $version=~ s/-v/v/;
 
-
-$entry->{header} = "eid-mw ($version-0" . $ENV{SHORT} . "$released-1) $distribution; urgency=low";
+$entry->{header} = "eid-mw ($version-0$short$released-1) $distribution; urgency=low";
 $entry->{changes} = ["  * Snapshot release"];
 $entry->{trailer} = " -- $author  $date";
 $entry->normalize;
