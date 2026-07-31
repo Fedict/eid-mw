@@ -128,6 +128,7 @@ void check_update() {
 	}
 	gchar **version_and_rest = g_strsplit(PACKAGE_VERSION, "-", 2);
 	gchar **version_parts = g_strsplit(version_and_rest[0], ".", 4);
+        uilog(EID_VWR_LOG_COARSE, "eID Viewer version %s", PACKAGE_VERSION);
 	struct upgrade_info *info = eid_vwr_upgrade_info(xml, (size_t)length, "linux", distrel, g_ascii_strtoll(version_parts[0], NULL, 10), g_ascii_strtoll(version_parts[1], NULL, 10), g_ascii_strtoll(version_parts[2], NULL, 10));
 	if(info->have_upgrade) {
 		g_main_context_invoke(NULL, (GSourceFunc)show_upgrade_message, (void*)info);
