@@ -33,7 +33,7 @@ extern "C"
 #define CLEANUP(a)   { ret = (a); goto cleanup; }
 
 
-#define MAX_SLOTS 10
+#define MAX_SLOTS 11
 
 #define MAX_SLOT_NAME			128
 #define MAX_ATR_LENGTH			128
