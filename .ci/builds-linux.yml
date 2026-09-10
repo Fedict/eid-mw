@@ -95,7 +95,7 @@
 
 .robot:linux:
   variables:
-    EID_ROBOT_STYLE: zetes:/dev/TB3-CARD:/dev/TB3-USB
+    EID_ROBOT_STYLE: $EID_ROBOT_STYLE_LINUX
     EID_DIALOGS_STYLE: nopin
     CFLAGS: "-O0 -g -Wall -fprofile-arcs -ftest-coverage"
     CXXFLAGS: "-O0 -g -Wall -fprofile-arcs -ftest-coverage"
