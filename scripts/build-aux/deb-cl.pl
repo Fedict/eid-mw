@@ -56,7 +56,7 @@ if(exists($ENV{TARGET}) && length($ENV{TARGET}) > 0) {
 	$released = "r";
 }
 $distribution .= $ENV{CODE};
-$short = $ENV{SHORT}
+my $short = $ENV{SHORT};
 my %vermap = (
         debian => {
                 $ENV{DEBIAN_STABLE_CODE} => "deb" . $ENV{DEBIAN_STABLE_VERSION},
@@ -66,7 +66,7 @@ my %vermap = (
                 $ENV{UBUNTU_LTS_CODE} => "u" . $ENV{UBUNTU_LTS_VERSION},
                 $ENV{UBUNTU_OLDLTS_CODE} => "u" . $ENV{UBUNTU_OLDLTS_VERSION},
         },
-};
+);
 if(exists($ENV{UBUNTU_STABLE_CODE})) {
         $vermap{$ENV{UBUNTU_STABLE_CODE}} = "u" . $ENV{UBUNTU_STABLE_VERSION};
 }
