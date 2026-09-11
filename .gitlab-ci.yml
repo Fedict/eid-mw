@@ -243,6 +243,8 @@ build:macos:
 # Linux
 build:linux:
   stage: build
+  needs:
+    - test:distcheck
   trigger:
     include:
       - local: .ci/package-builds.yml
