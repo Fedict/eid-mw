@@ -87,7 +87,7 @@ build:suse:
 repo:inject-debs:
   stage: repository
   needs:
-    - job: build:deb
+    - job: build:debs
       artifacts: true
       optional: true
   extends: .inject-debs
