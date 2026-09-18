@@ -662,7 +662,7 @@ ${DisableX64FSRedirection}
 	nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\Drivers\WINALL\APG8201Z\x64\apg8201z.inf"'
 	
 	;install the eid minidriver
-	nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /a "$INSTDIR\Drivers\WINALL\beidmdrv\beidmdrv.inf"'
+	nsExec::ExecToLog '"$SYSDIR\PnPutil.exe" /i /a "$INSTDIR\Drivers\WINALL\beidmdrv\beidmdrv.inf"'
 
 ${EnableX64FSRedirection}
 
