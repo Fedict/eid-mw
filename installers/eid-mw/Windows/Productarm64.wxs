@@ -22,7 +22,7 @@
 	<!-- InstallerVersion="500"(v5.0) Required for arm -->	
     <SummaryInformation Keywords="Belgium e-ID Middleware Installer" Manufacturer="Belgian Government" />
 
-	<MajorUpgrade AllowDowngrades="no" DowngradeErrorMessage="error 1638: Newer version eID Middleware found" />
+	<MajorUpgrade AllowDowngrades="no" IgnoreLanguage="yes" DowngradeErrorMessage="error 1638: Newer version eID Middleware found" />
 
     <?if $(var.Lang) = "nl"?>
     <WixVariable Id="WixUILicenseRtf" Value="..\..\..\doc\licenses\Dutch\License_nl.rtf" />
