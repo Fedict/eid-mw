@@ -9,7 +9,7 @@ ClassGuid={990A2BD7-E738-46c7-B26F-1CF8FB9F1391}
 Provider=%BOSA%
 CatalogFile=beidmdrv.cat
 PnpLockdown=1
-DriverVer=08/05/2026,5.1.35.1 ;w.x.y.z
+DriverVer=09/18/2026,5.1.35.2 ;w.x.y.z
 ;MMDDYYYY
 [Manufacturer]
 %BOSA%=Bosa,NTarm64.10.0...16299,NTamd64.10.0...16299,NTx86.10.0...16299
