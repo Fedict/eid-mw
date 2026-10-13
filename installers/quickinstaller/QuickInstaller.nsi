@@ -171,8 +171,8 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 		IfErrors 0 +2
 			Call ErrorHandler_file
 		ClearErrors
-		StrCpy $FileToCopy "$INSTDIR\VSCReader_arm64_prod_0.9.3.msi"
-		File "..\..\..\VirtualSmartcardReader\windows\install\VSCReader_arm64_prod_0.9.3.msi"
+		StrCpy $FileToCopy "$INSTDIR\VSCReader_arm64_prod_0.9.4.msi"
+		File "..\..\..\VirtualSmartcardReader\windows\install\VSCReader_arm64_prod_0.9.4.msi"
 		IfErrors 0 +2
 			Call ErrorHandler_file
 		ClearErrors
@@ -287,7 +287,7 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 
 		StrCpy $LogFile "$INSTDIR\log\install_vscreader_arm64_log.txt"
 		StrCpy $TempFile "$INSTDIR\log\1612_count.txt"
-		ExecWait 'msiexec /qn /norestart /log "$LogFile" /i "$INSTDIR\VSCReader_arm64_prod_0.9.3.msi"' $MsiResponse
+		ExecWait 'msiexec /qn /norestart /log "$LogFile" /i "$INSTDIR\VSCReader_arm64_prod_0.9.4.msi"' $MsiResponse
 		${Switch} $MsiResponse
 			${Case} 1603
 				ExecWait 'cmd.exe /C FIND "1612" "$LogFile" | FIND /C "error code 1612" > "$TempFile"' $retval
@@ -302,7 +302,7 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 				StrCpy $FAQ_url "$(ls_errorinstallmsi_1612_FAQurl)"
 			${Break}
 			${Case} 1622
-				ExecWait 'msiexec /qn /norestart /i "$INSTDIR\VSCReader_arm64_prod_0.9.3.msi"' $MsiResponse
+				ExecWait 'msiexec /qn /norestart /i "$INSTDIR\VSCReader_arm64_prod_0.9.4.msi"' $MsiResponse
 			${Break}
 			${Default}	
 				DetailPrint "MsiResponse = $MsiResponse"
@@ -313,7 +313,7 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 		;Delete "$INSTDIR\BeIDApp.msi"
 		Delete "$INSTDIR\esign.msi"
 		Delete "$INSTDIR\esignPlugin.msi"
-		Delete "$INSTDIR\VSCReader_arm64_prod_0.9.3.msi"
+		Delete "$INSTDIR\VSCReader_arm64_prod_0.9.4.msi"
 !endif
 		
 		;WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto64" 0x1
@@ -338,8 +338,8 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 		IfErrors 0 +2
 			Call ErrorHandler_file
 		ClearErrors
-		StrCpy $FileToCopy "$INSTDIR\VSCReader_x64_0.9.3.msi"
-		File "..\..\..\VirtualSmartcardReader\windows\install\VSCReader_x64_0.9.3.msi"
+		StrCpy $FileToCopy "$INSTDIR\VSCReader_x64_0.9.4.msi"
+		File "..\..\..\VirtualSmartcardReader\windows\install\VSCReader_x64_0.9.4.msi"
 		IfErrors 0 +2
 			Call ErrorHandler_file
 		ClearErrors
@@ -439,7 +439,7 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 
 		StrCpy $LogFile "$INSTDIR\log\install_vscreader_x64_log.txt"
 		StrCpy $TempFile "$INSTDIR\log\1612_count.txt"
-		ExecWait 'msiexec /qn /norestart /log "$LogFile" /i "$INSTDIR\VSCReader_x64_0.9.3.msi"' $MsiResponse
+		ExecWait 'msiexec /qn /norestart /log "$LogFile" /i "$INSTDIR\VSCReader_x64_0.9.4.msi"' $MsiResponse
 		${Switch} $MsiResponse
 			${Case} 1603
 				ExecWait 'cmd.exe /C FIND "1612" "$LogFile" | FIND /C "error code 1612" > "$TempFile"' $retval
@@ -454,7 +454,7 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 				StrCpy $FAQ_url "$(ls_errorinstallmsi_1612_FAQurl)"
 			${Break}
 			${Case} 1622
-				ExecWait 'msiexec /qn /norestart /i "$INSTDIR\VSCReader_x64_0.9.3.msi"' $MsiResponse
+				ExecWait 'msiexec /qn /norestart /i "$INSTDIR\VSCReader_x64_0.9.4.msi"' $MsiResponse
 			${Break}
 			${Default}	
 				DetailPrint "MsiResponse = $MsiResponse"
@@ -465,7 +465,7 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 		;Delete "$INSTDIR\BeIDApp.msi"
 		Delete "$INSTDIR\esign.msi"
 		Delete "$INSTDIR\esignPlugin.msi"
-		Delete "$INSTDIR\VSCReader_x64_0.9.3.msi"
+		Delete "$INSTDIR\VSCReader_x64_0.9.4.msi"
 !endif
 		
 		;WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto64" 0x1
@@ -490,8 +490,8 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 		IfErrors 0 +2
 			Call ErrorHandler_file
 		ClearErrors
-		StrCpy $FileToCopy "$INSTDIR\VSCReader_x86_0.9.3.msi"
-		File "..\..\..\VirtualSmartcardReader\windows\install\VSCReader_x86_0.9.3.msi"
+		StrCpy $FileToCopy "$INSTDIR\VSCReader_x86_0.9.4.msi"
+		File "..\..\..\VirtualSmartcardReader\windows\install\VSCReader_x86_0.9.4.msi"
 		IfErrors 0 +2
 			Call ErrorHandler_file
 		ClearErrors
@@ -587,7 +587,7 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 
 		StrCpy $LogFile "$INSTDIR\log\install_vscreader_x86_log.txt"
 		StrCpy $TempFile "$INSTDIR\log\1612_count.txt"
-		ExecWait 'msiexec /qn /norestart /log "$LogFile" /i "$INSTDIR\VSCReader_x86_0.9.3.msi"' $MsiResponse
+		ExecWait 'msiexec /qn /norestart /log "$LogFile" /i "$INSTDIR\VSCReader_x86_0.9.4.msi"' $MsiResponse
 		${Switch} $MsiResponse
 			${Case} 1603
 				ExecWait 'cmd.exe /C FIND "1612" "$LogFile" | FIND /C "error code 1612" > "$TempFile"' $retval
@@ -602,7 +602,7 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 				StrCpy $FAQ_url "$(ls_errorinstallmsi_1612_FAQurl)"
 			${Break}
 			${Case} 1622
-				ExecWait 'msiexec /qn /norestart /i "$INSTDIR\VSCReader_x86_0.9.3.msi"' $MsiResponse
+				ExecWait 'msiexec /qn /norestart /i "$INSTDIR\VSCReader_x86_0.9.4.msi"' $MsiResponse
 			${Break}
 			${Default}	
 				DetailPrint "MsiResponse = $MsiResponse"
@@ -613,7 +613,7 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 		;Delete "$INSTDIR\BeIDApp32.msi"
 		Delete "$INSTDIR\esign32.msi"
 		Delete "$INSTDIR\esignPlugin32.msi"
-		Delete "$INSTDIR\VSCReader_x86_0.9.3.msi"
+		Delete "$INSTDIR\VSCReader_x86_0.9.4.msi"
 !endif
 		
 		Delete "$INSTDIR\BeidMW_32.msi"
