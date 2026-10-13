@@ -18,9 +18,9 @@ variables:
   MINT_LTS_CODE: wilma
   MINT_LTS_VERSION: 22
   MINT_LTS_FULL: Linux Mint 22
-  # UBUNTU_STABLE_CODE: questing
-  # UBUNTU_STABLE_VERSION: 2510
-  # UBUNTU_STABLE_FULL: Ubuntu 25.10 "Questing Quokka"
+  UBUNTU_STABLE_CODE: stonking
+  UBUNTU_STABLE_VERSION: 2610
+  UBUNTU_STABLE_FULL: Ubuntu 26.10 "Stonking Stingray"
   FEDORA_OLDSTABLE_VERSION: 43
   FEDORA_STABLE_VERSION: 44
   # Enterprise Linux 9 does not support ECDSA keys for RPM files
