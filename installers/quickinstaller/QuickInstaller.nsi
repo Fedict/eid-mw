@@ -485,16 +485,20 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 		IfErrors 0 +2
 			Call ErrorHandler_file
 		ClearErrors
+		StrCpy $FileToCopy "$INSTDIR\BeIDSignPlugin32.msi"
+		File "..\..\..\adobe-plugin\installer\bin\BeIDSignPlugin32.msi"
+		IfErrors 0 +2
+			Call ErrorHandler_file
+		ClearErrors
 		StrCpy $FileToCopy "$INSTDIR\VSCReader_x86_0.9.3.msi"
 		File "..\..\..\VirtualSmartcardReader\windows\install\VSCReader_x86_0.9.3.msi"
 		IfErrors 0 +2
 			Call ErrorHandler_file
 		ClearErrors
-		;delete previous log
-		StrCpy $LogFile "$INSTDIR\log\install_eidmw32_log.txt"
-		;Delete "$LogFile"
 !endif
 		
+		StrCpy $LogFile "$INSTDIR\log\install_eidmw32_log.txt"
+		StrCpy $TempFile "$INSTDIR\log\1612_count.txt"
 		ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeidMW_32.msi"' $MsiResponse
 		
 		;try to recover from some errors
@@ -556,6 +560,31 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 		${EndSwitch}
 		!insertmacro TrackInstallStatus
 
+		StrCpy $LogFile "$INSTDIR\log\install_beidsignplugin_32_log.txt"
+		StrCpy $TempFile "$INSTDIR\log\1612_count.txt"
+		ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeIDSignPlugin32.msi"' $MsiResponse
+		${Switch} $MsiResponse
+			${Case} 1603
+				ExecWait 'cmd.exe /C FIND "1612" "$LogFile" | FIND /C "error code 1612" > "$TempFile"' $retval
+				!insertmacro GetFirstLineOfFile $TempFile $firstLine
+				DetailPrint "MSI error 1612, count = $firstLine"
+				StrCmp "$firstLine" "" +2 0
+				StrCmp "$firstLine" "0" 0 MSI_1612_Error_BeIDSignPlugin_32
+			${Break}
+			${Case} 1612
+			MSI_1612_Error_BeIDSignPlugin_32:
+				DetailPrint "$(ls_errorinstallmsi_1612) $\r$\n $(ls_error) = $MsiResponse"
+				StrCpy $FAQ_url "$(ls_errorinstallmsi_1612_FAQurl)"
+			${Break}
+			${Case} 1622
+				ExecWait 'msiexec /quiet /norestart /i "$INSTDIR\BeIDSignPlugin32.msi"' $MsiResponse
+			${Break}
+			${Default}
+				DetailPrint "MsiResponse = $MsiResponse"
+			${Break}
+		${EndSwitch}
+		!insertmacro TrackInstallStatus
+
 		StrCpy $LogFile "$INSTDIR\log\install_vscreader_x86_log.txt"
 		StrCpy $TempFile "$INSTDIR\log\1612_count.txt"
 		ExecWait 'msiexec /qn /norestart /log "$LogFile" /i "$INSTDIR\VSCReader_x86_0.9.3.msi"' $MsiResponse
@@ -583,6 +612,7 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 
 		;Delete "$INSTDIR\BeIDApp32.msi"
 		Delete "$INSTDIR\esign32.msi"
+		Delete "$INSTDIR\BeIDSignPlugin32.msi"
 		Delete "$INSTDIR\VSCReader_x86_0.9.3.msi"
 !endif
 		
