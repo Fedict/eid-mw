@@ -27,6 +27,7 @@
 
 #if OPENSSL_VERSION_NUMBER < 0x10100000L || defined(LIBRESSL_VERSION_NUMBER)
 #define X509_get0_extensions(ce) ((ce)->cert_info->extensions)
+#define ASN1_STRING_get0_data ASN1_STRING_data
 
 #define X509_get0_tbs_sigalg(ci) ((ci)->sig_alg)
 #define X509_OBJECT_new() calloc(sizeof(X509_OBJECT), 1)
@@ -105,7 +106,7 @@ enum eid_vwr_result eid_vwr_verify_int_cert(const void *certificate, size_t cert
 		for(j=0; j<sk_GENERAL_NAME_num(point->distpoint->name.fullname); j++) {
 			GENERAL_NAME *name = sk_GENERAL_NAME_value(point->distpoint->name.fullname, j);
 			if(name->type == GEN_URI) {
-				url = (char*)name->d.ia5->data;
+				url = (char*)ASN1_STRING_get0_data(name->d.ia5);
 			}
 		}
 	}
@@ -185,13 +186,13 @@ enum eid_vwr_result eid_vwr_verify_cert_full(const void *certificate, size_t cer
 
 	for(i=0; i<sk_X509_EXTENSION_num(exts); i++) {
 		X509_EXTENSION *ex = sk_X509_EXTENSION_value(exts, i);
-		ASN1_OBJECT *obj = X509_EXTENSION_get_object(ex);
+		const ASN1_OBJECT *obj = X509_EXTENSION_get_object(ex);
 		int nid = OBJ_obj2nid(obj);
 		if(nid == NID_info_access) {
 			const X509V3_EXT_METHOD *method;
 			void *ext_str;
-			ASN1_OCTET_STRING *exval = X509_EXTENSION_get_data(ex);
-			const unsigned char *p = exval->data;
+			const ASN1_OCTET_STRING *exval = X509_EXTENSION_get_data(ex);
+			const unsigned char *p = ASN1_STRING_get0_data(exval);
 			STACK_OF(CONF_VALUE) *nval = NULL;
 
 			if(!(method = X509V3_EXT_get(ex)) || !(method->i2v)) {
@@ -200,9 +201,9 @@ enum eid_vwr_result eid_vwr_verify_cert_full(const void *certificate, size_t cer
 				goto exit;
 			}
 			if(method->it) {
-				ext_str = ASN1_item_d2i(NULL, &p, exval->length, ASN1_ITEM_ptr(method->it));
+				ext_str = ASN1_item_d2i(NULL, &p, ASN1_STRING_length(exval), ASN1_ITEM_ptr(method->it));
 			} else {
-				ext_str = method->d2i(NULL, &p, exval->length);
+				ext_str = method->d2i(NULL, &p, ASN1_STRING_length(exval));
 			}
 			if(!(nval = method->i2v(method, ext_str, NULL))) {
 				log_ssl_error("Could not read OCSP URL from certificate");
