@@ -86,7 +86,7 @@ echo ...
 ::------------------------------------
 :: add all available LCIDs
 ::------------------------------------
-"%BEID_DIR_PLATFORMSDK%\MsiInfo.Exe" "%OUT_PATH%\%MSI_FILE_OUT%.msi" /p x64;1033,2067,2060,1031
+"%BEID_DIR_PLATFORMSDK%\MsiInfo.Exe" "%OUT_PATH%\%MSI_FILE_OUT%.msi" /p x64;1033,2067,2060,1031,1043,1036
 @if NOT "%ERRORLEVEL%" == "0" goto comb_msi_failed
 
 goto END
