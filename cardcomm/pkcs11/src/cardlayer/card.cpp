@@ -476,9 +476,8 @@ namespace eIDMW
 					throw CMWEXCEPTION(m_poPCSC->SW12ToErr(ulSW12));
 				}
 			}
-			// If the driver/reader itself did the 6CXX handling,
-			// we assume we're at the EOF
-			if (oResp.Size() < MAX_APDU_READ_LEN)
+			// A short payload marks EOF; the response also contains two status bytes.
+			if (oResp.Size() - 2 < ulLen)
 			{
 				bEOF = true;
 			}
@@ -522,7 +521,13 @@ namespace eIDMW
 
 	CByteArray CCard::SendAPDU(const CByteArray & oCmdAPDU)
 	{
+		return SendAPDU(oCmdAPDU, 0);
+	}
+
+	CByteArray CCard::SendAPDU(const CByteArray & oCmdAPDU, unsigned long ulRetryCount)
+	{
 		CAutoLock oAutoLock(this);
+		const unsigned long MAX_APDU_RETRIES = 3;
 		long lRetVal = 0;
 		unsigned long ulSize = 0;
 
@@ -573,6 +578,11 @@ namespace eIDMW
 			if (oResp.GetByte(0) == 0x6c)
 			{
 				unsigned long ulCmdLen = oCmdAPDU.Size();
+				if (ulCmdLen < 4 || ulRetryCount >= MAX_APDU_RETRIES)
+				{
+					MWLOG(LEV_ERROR, MOD_CAL, L"Card repeatedly returned an invalid response length");
+					throw CMWEXCEPTION(EIDMW_ERR_CARD_COMM);
+				}
 				const unsigned char *pucCmd = oCmdAPDU.GetBytes();
 				CByteArray oNewCmdAPDU(ulCmdLen);
 
@@ -589,7 +599,7 @@ namespace eIDMW
 				{
 					CThread::SleepMillisecs(ulDelay);
 				}
-				return SendAPDU(oNewCmdAPDU);
+				return SendAPDU(oNewCmdAPDU, ulRetryCount + 1);
 			}
 		}
 		else if (ulSize == 258)

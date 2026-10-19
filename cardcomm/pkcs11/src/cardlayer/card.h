@@ -256,6 +256,8 @@ namespace eIDMW
 		CCard(const CCard & oCard);
 		CCard & operator =(const CCard & oCard);
 
+		CByteArray SendAPDU(const CByteArray & oCmdAPDU, unsigned long ulRetryCount);
+
 		CPKCS15 m_oPKCS15;
 
 	};
