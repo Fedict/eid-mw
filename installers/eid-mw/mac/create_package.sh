@@ -280,8 +280,8 @@ then
   #staple the notarization package to the DMG.
   /usr/bin/xcrun stapler staple -v "$DMG_NAME"
 
-  #copy the stapled disk image to the Mac scripts folder
-  cp -R "$DMG_NAME" "$(pwd)/../../../../../scripts/mac/"
+  #Keep the public Quickinstaller filename available for the combined middleware/esign DMG.
+  cp -R "$DMG_NAME" "$(pwd)/../../../../../scripts/mac/${REL_NAME}-${REL_VERSION}-middleware-only.dmg"
 
 else
   EIDMW_CODESIGN_IDENTITY_APP="${EIDMW_CODESIGN_IDENTITY_APP:-Developer ID Application}"

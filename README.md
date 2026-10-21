@@ -87,6 +87,35 @@ To build the eID Viewer and its installer: run the buildscript located at eid-mw
 The xcode project for the CTKToken is located in eid-mw\cardcomm\ctkToken
 The xcode project for pkcs#11 and the eID Viewer is located in the top directory eid-mw
 
+##### Combined middleware and esign installer #####
+
+Build the system-wide esign installer and uninstaller in the sibling repository:
+
+```sh
+make -C ../esign-be-app-macos packages
+./scripts/mac/make-combined-dmg.sh
+```
+
+The Quickinstaller contains one native install PKG with three components:
+PKCS#11 middleware, BEIDToken, and esign. All components install on the running
+system volume with administrator authorization; esign is placed in
+`/Applications/esign.app`.
+
+The resulting files are saved in this repository:
+
+- `scripts/mac/eID-Quickinstaller-<middleware-version>.pkg`
+- `scripts/mac/eID-Quickinstaller-<middleware-version>.dmg`
+
+The DMG contains `eID-Quickinstaller.pkg`, `esign-uninstall.pkg`, and instructions.
+The esign uninstaller removes the shared app and Acrobat plug-in while leaving
+middleware installed. 
+
+By default, the product archive and DMG are signed, the outer DMG is notarized, 
+and tickets are stapled to the DMG and sibling standalone PKG. 
+Use `--keychain-profile`, `--installer-identity`, or` --sign-identity` to select credentials; 
+use `--skip-notarization` or `--unsigned`for local inspection. 
+Outputs are never overwritten. Run `--help` for all options.
+
 
 #### Windows ####
 
