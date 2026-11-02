@@ -37,5 +37,5 @@
     </choice>
 
     <pkg-ref id="eid.belgium.be" onConclusion="none">beidbuild.pkg</pkg-ref>
-    <pkg-ref id="beidtoken" onConclusion="none">BEIDToken.pkg</pkg-ref>
+    <pkg-ref id="beidtoken" onConclusion="RequireRestart">BEIDToken.pkg</pkg-ref>
 </installer-gui-script>

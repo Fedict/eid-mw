@@ -19,6 +19,6 @@
     <choice id="beidtoken" visible="false"><pkg-ref id="be.eid.BEIDtoken.app"/></choice>
     <choice id="esign" visible="false"><pkg-ref id="com.zetes.bosa-pc-signing-macos"/></choice>
     <pkg-ref id="be.eid.middleware" onConclusion="none">beidbuild.pkg</pkg-ref>
-    <pkg-ref id="be.eid.BEIDtoken.app" onConclusion="none">BEIDToken.pkg</pkg-ref>
+    <pkg-ref id="be.eid.BEIDtoken.app" onConclusion="RequireRestart">BEIDToken.pkg</pkg-ref>
     <pkg-ref id="com.zetes.bosa-pc-signing-macos" onConclusion="none">BeIDSignComponent.pkg</pkg-ref>
 </installer-gui-script>
