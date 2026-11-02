@@ -182,7 +182,12 @@ cat > "$RESOURCES/CombinedReadMe.html" <<README
 <p>Adobe signing preferences and timestamp settings must be configured separately.</p>
 <p>Installation and uninstallation preserve esign account data, preferences, caches, logs and protected containers in local user accounts, along with Adobe user preferences and signed documents. These packages do not provide a user-data reset; resetting protected data requires separate handling in esign's own user session.</p>
 <p>The esign uninstaller removes only the shared esign application and its Acrobat plug-in. The eID middleware remains installed.</p>
-<p>Requires macOS $MIN_OS or later.</p></body></html>
+<p>Requires macOS $MIN_OS or later.</p>
+<h2>Firefox addon</h2>
+<p>For Firefox we created an addon that creates an automatic link between Firefox and the eID Middleware. Click below to install this addon:<br>
+<a href="https://addons.mozilla.org/en/firefox/addon/belgium-eid/">https://addons.mozilla.org/en/firefox/addon/belgium-eid/</a></p>
+<p><i>The information in this readme file may be useful after the installation of this software. We recommend you make a copy of this text for future reference by using the print or save button on the lower edge of this window.</i></p>
+</body></html>
 README
 
 STAGING="$WORK_DIR/image"
@@ -225,6 +230,12 @@ esign-uninstall.pkg removes only the shared esign application and its Acrobat pl
 It requires administrator authorization and leaves the eID middleware installed.
 
 Requires macOS $MIN_OS or later.
+
+Firefox addon
+
+For Firefox we created an addon that creates an automatic link between Firefox
+and the eID Middleware. Click below to install this addon:
+https://addons.mozilla.org/en/firefox/addon/belgium-eid/
 README
 /usr/bin/hdiutil create -fs HFS+ -format UDZO -volname 'eID Quickinstaller' \
     -srcfolder "$STAGING" "$WORK_DIR/combined.dmg"
