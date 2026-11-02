@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['the_20eid_20viewer_20library_0',['The eid-viewer library',['../index.html',1,'']]],
-  ['the_20xsd_20format_1',['Versions of the XSD format',['../md_xml_2versions.html',1,'']]],
-  ['this_20directory_2',['About this directory',['../md_certs_2_r_e_a_d_m_e.html',1,'']]]
+  ['about_20this_20directory_0',['About this directory',['../dir_00d1a00b8a0a3293f5b014aa7fc9f726.html#autotoc_md0',1,'']]],
+  ['allowlist_1',['Disabling the allowlist',['../dir_00d1a00b8a0a3293f5b014aa7fc9f726.html#autotoc_md3',1,'']]]
 ];
