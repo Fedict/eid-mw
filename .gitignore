@@ -71,6 +71,10 @@ beidpkcs11.sdf
 /scripts/windows/beidmdrvb.zip
 /installers/eid-mw/mac/release_BEIDToken
 /installers/eid-mw/mac/release_TokenD
+/installers/eid-mw/mac/exports/
+/export/
+/build/
+/cardcomm/ctkToken/build/
 /cardcomm/minidriver/VS_2017/beidmdrv.vcxproj.user
 /VS_2017/.vs/beid/v15
 .vs/
@@ -125,6 +129,10 @@ scripts/windows/beidmdrv_all_5.1.8.6024.zip
 /VS_2022/x64/PKCS11_SA_Release
 /scripts/mac/eID-Quickinstaller-*.dmg
 /scripts/mac/eID-Quickinstaller-*.pkg
+/scripts/mac/eID Viewer-*.dmg
+/scripts/mac/eID Middleware-*.dmg
+/scripts/mac/tmp-eidviewer.dmg
+/scripts/mac/tmp-eidmiddleware.dmg
 /cardcomm/pkcs11/VS_2022/PKCS11_SA_Release
 /VS_2022/PKCS11_SA_Release
 /cardcomm/pkcs11/VS_2022/pkcs11/PKCS11_SA_Release
