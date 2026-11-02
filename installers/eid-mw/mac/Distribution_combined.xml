@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <installer-gui-script minSpecVersion="2">
-    <title>Belgian eID and esign</title>
+    <title>eID middleware and esign</title>
     <options customize="never" require-scripts="false" hostArchitectures="x86_64,arm64" rootVolumeOnly="true"/>
     <domains enable_localSystem="true" enable_anywhere="false" enable_currentUserHome="false"/>
     <volume-check>
@@ -8,8 +8,9 @@
             <os-version min="@MIN_OS@"/>
         </allowed-os-versions>
     </volume-check>
-    <readme file="CombinedReadMe.html"/>
-    <license file="CombinedLicense.html"/>
+    <readme file="CombinedReadMe.rtf"/>
+    <license file="CombinedLicense.rtf"/>
+    <background file="eid.png" scaling="proportional" alignment="bottomleft" mime-type="image/png"/>
     <choices-outline>
         <line choice="middleware"/>
         <line choice="beidtoken"/>

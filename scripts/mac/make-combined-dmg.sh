@@ -162,33 +162,23 @@ RESOURCES="$WORK_DIR/resources"
 /usr/bin/ditto "$WORK_DIR/middleware/Resources" "$RESOURCES"
 ESIGN_LICENSE="$WORK_DIR/esign/Resources/LICENSE.html"
 [[ -f "$ESIGN_LICENSE" ]] || fail "The esign product must include LICENSE.html; rebuild its packages"
-/usr/bin/textutil -convert txt -stdout "$ESIGN_LICENSE" > "$WORK_DIR/esign-license.txt"
+# Preserve the middleware's localized text, formatting and Firefox links, then
+# append esign's own documents. The separator keeps adjacent paragraphs apart.
+printf '\n\n' > "$WORK_DIR/document-separator.txt"
 for language in en de fr nl; do
+    esign_readme="$WORK_DIR/esign/Resources/$language.lproj/README.html"
+    readme="$RESOURCES/$language.lproj/ReadMe.rtf"
     license="$RESOURCES/$language.lproj/license.rtf"
+    [[ -f "$esign_readme" ]] || fail "The esign product must include $language.lproj/README.html; rebuild its packages"
+    [[ -f "$readme" ]] || fail "Middleware readme is missing: $language"
     [[ -f "$license" ]] || fail "Middleware license is missing: $language"
-    {
-        printf '<html><meta charset="utf-8"><body><h1>eID middleware</h1><pre style="white-space:pre-wrap">'
-        /usr/bin/textutil -convert txt -stdout "$license" | /usr/bin/sed 's/\&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g'
-        printf '</pre><h1>esign</h1><pre style="white-space:pre-wrap">'
-        /usr/bin/sed 's/\&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g' "$WORK_DIR/esign-license.txt"
-        printf '</pre></body></html>\n'
-    } > "$RESOURCES/$language.lproj/CombinedLicense.html"
+    /usr/bin/textutil -cat rtf -inputencoding UTF-8 "$readme" "$WORK_DIR/document-separator.txt" "$esign_readme" \
+        -output "$RESOURCES/$language.lproj/CombinedReadMe.rtf"
+    /usr/bin/textutil -cat rtf -inputencoding UTF-8 "$license" "$WORK_DIR/document-separator.txt" "$ESIGN_LICENSE" \
+        -output "$RESOURCES/$language.lproj/CombinedLicense.rtf"
 done
+# Keep these documents localized: root copies override every language selection.
 /usr/bin/sed "s/@MIN_OS@/$MIN_OS/g" "$REPO_ROOT/installers/eid-mw/mac/Distribution_combined.xml" > "$WORK_DIR/Distribution.xml"
-cat > "$RESOURCES/CombinedReadMe.html" <<README
-<html><body><h1>Belgian eID middleware and esign</h1>
-<p>This installer installs eID middleware $MIDDLEWARE_VERSION, BEIDToken and esign $ESIGN_VERSION for all users of this Mac. Administrator authorization is required.</p>
-<p>After installation, esign opens automatically for the active desktop user when their graphical session is available. If it does not open, launch it from Applications. Other users launch esign from Applications in their own sessions. Each user completes their own setup and enables its background service when requested.</p>
-<p>Adobe signing preferences and timestamp settings must be configured separately.</p>
-<p>Installation and uninstallation preserve esign account data, preferences, caches, logs and protected containers in local user accounts, along with Adobe user preferences and signed documents. These packages do not provide a user-data reset; resetting protected data requires separate handling in esign's own user session.</p>
-<p>The esign uninstaller removes only the shared esign application and its Acrobat plug-in. The eID middleware remains installed.</p>
-<p>Requires macOS $MIN_OS or later.</p>
-<h2>Firefox addon</h2>
-<p>For Firefox we created an addon that creates an automatic link between Firefox and the eID Middleware. Click below to install this addon:<br>
-<a href="https://addons.mozilla.org/en/firefox/addon/belgium-eid/">https://addons.mozilla.org/en/firefox/addon/belgium-eid/</a></p>
-<p><i>The information in this readme file may be useful after the installation of this software. We recommend you make a copy of this text for future reference by using the print or save button on the lower edge of this window.</i></p>
-</body></html>
-README
 
 STAGING="$WORK_DIR/image"
 mkdir "$STAGING"
@@ -209,18 +199,9 @@ Open eID-Quickinstaller.pkg to install eID middleware $MIDDLEWARE_VERSION,
 BEIDToken and esign $ESIGN_VERSION in one installation for all users of this Mac.
 Administrator authorization is required. esign is installed in /Applications.
 
-After installation, esign opens automatically for the active desktop user when
-their graphical session is available. If it does not open, launch it from
-Applications. Other users launch esign from Applications in their own sessions.
-Each user completes their own setup and enables its background service when
-requested. Adobe signing preferences and timestamp settings must be configured
-separately.
-
-Installation and uninstallation preserve esign account data, preferences,
-caches, logs and protected containers in local user accounts, along with Adobe
-user preferences and signed documents. These packages do not provide a user-data
-reset; resetting protected data requires separate handling in esign's own user
-session.
+README
+/usr/bin/textutil -convert txt -stdout "$RESOURCES/en.lproj/CombinedReadMe.rtf" >> "$STAGING/README.txt"
+cat >> "$STAGING/README.txt" <<README
 
 When upgrading from a per-user esign installation, retire the old
 ~/Applications/esign.app copy and check background-service registration in that
@@ -230,12 +211,6 @@ esign-uninstall.pkg removes only the shared esign application and its Acrobat pl
 It requires administrator authorization and leaves the eID middleware installed.
 
 Requires macOS $MIN_OS or later.
-
-Firefox addon
-
-For Firefox we created an addon that creates an automatic link between Firefox
-and the eID Middleware. Click below to install this addon:
-https://addons.mozilla.org/en/firefox/addon/belgium-eid/
 README
 /usr/bin/hdiutil create -fs HFS+ -format UDZO -volname 'eID Quickinstaller' \
     -srcfolder "$STAGING" "$WORK_DIR/combined.dmg"
