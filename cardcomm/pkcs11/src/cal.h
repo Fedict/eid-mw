@@ -197,6 +197,9 @@ extern "C"
 	CK_RV cal_change_pin(CK_SLOT_ID hSlot, CK_ULONG pinref, CK_ULONG l_oldpin,
 			     CK_CHAR_PTR oldpin, CK_ULONG l_newpin,
 			     CK_CHAR_PTR newpin);
+#ifdef PKCS11_SA
+	CK_ULONG cal_get_pin_status(CK_SLOT_ID hSlot);
+#endif
 	CK_RV cal_get_card_data(CK_SLOT_ID hSlot);
 	CK_RV cal_read_and_store_record(P11_SLOT* pSlot, CK_ULONG ulDataType, CK_BYTE bRecordID, CK_UTF8CHAR* plabel, CK_ULONG ulLabelLen);
 	CK_RV cal_read_ID_files(CK_SLOT_ID hSlot, CK_ULONG dataType);

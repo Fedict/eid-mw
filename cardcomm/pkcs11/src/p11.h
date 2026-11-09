@@ -193,6 +193,9 @@ extern "C"
 		int state;
 //int               nObjects;
 //P11_OBJECT        **ppObjects;
+#ifdef PKCS11_SA
+		CK_ULONG ulDeviceError;
+#endif
 		P11_OPERATION Operation[P11_NUM_OPERATIONS];
 //		CK_BYTE bReadDataAllowed;
 	} P11_SESSION;

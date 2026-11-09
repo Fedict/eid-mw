@@ -1243,6 +1243,10 @@ namespace eIDMW
 		unsigned long &ulRemaining,
 		const tPrivKey * pKey)
 	{
+#ifdef PKCS11_SA
+		m_ulPinStatusWord = 0;
+#endif
+
 		// No standard for Logoff, so each card has to implement
 		// it's own command here.
 		// it doesn't use the PIN, so we call it directly
@@ -1303,6 +1307,10 @@ namespace eIDMW
 		}
 
 		unsigned long ulSW12 = getSW12(oResp);
+
+#ifdef PKCS11_SA
+		m_ulPinStatusWord = (ulSW12 == 0x6983 || ulSW12 / 16 == 0x63C) ? ulSW12 : 0;
+#endif
 
 		if (ulSW12 == 0x9000)
 			bRet = true;

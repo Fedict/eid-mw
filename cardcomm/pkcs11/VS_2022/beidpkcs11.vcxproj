@@ -1301,6 +1301,11 @@
     <Image Include="..\src\dialogs\dialogswin32\images\KeyPadButton9.bmp" />
     <Image Include="..\src\dialogs\dialogswin32\images\KeyPadButtonCE.bmp" />
   </ItemGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='PKCS11_SA_Release' Or '$(Configuration)'=='PKCS11_SA_DEBUG'">
+    <ClCompile>
+      <PreprocessorDefinitions>PKCS11_SA;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

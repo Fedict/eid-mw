@@ -953,6 +953,24 @@ CK_RV cal_init_objects(P11_SLOT * pSlot)
 
 
 
+#ifdef PKCS11_SA
+CK_ULONG cal_get_pin_status(CK_SLOT_ID hSlot)
+{
+	P11_SLOT *pSlot = p11_get_slot(hSlot);
+	if (pSlot == NULL)
+		return 0;
+	try
+	{
+		CReader &oReader = oCardLayer->getReader(pSlot->name);
+		return oReader.GetCard()->GetPinStatusWord();
+	}
+	catch (...)
+	{
+		return 0;
+	}
+}
+#endif
+
 #define WHERE "cal_logon()"
 CK_RV cal_logon(CK_SLOT_ID hSlot, size_t l_pin, CK_CHAR_PTR pin,
 		int sec_messaging)

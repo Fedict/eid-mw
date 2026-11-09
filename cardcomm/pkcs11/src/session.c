@@ -104,6 +104,9 @@ CK_RV C_OpenSession(CK_SLOT_ID            slotID,        /* the slot's ID */
 	pSession->flags = flags;
 	pSession->pdNotify = pApplication;
 	pSession->pfNotify = Notify;
+#ifdef PKCS11_SA
+	pSession->ulDeviceError = 0;
+#endif
 	//initial state 
 	pSession->state = P11_CARD_STILL_PRESENT;
 //	pSession->bReadDataAllowed = P11_READDATA_ASK;
@@ -232,7 +235,11 @@ CK_RV C_GetSessionInfo(CK_SESSION_HANDLE hSession,  /* the session's handle */
 
 	pInfo->slotID = pSession->hslot;
 	pInfo->flags = pSession->flags;
+#ifdef PKCS11_SA
+	pInfo->ulDeviceError = pSession->ulDeviceError;
+#else
 	pInfo->ulDeviceError = 0;
+#endif
 
 	pSlot = p11_get_slot(pSession->hslot);
 	if (pSlot == NULL)
@@ -337,6 +344,10 @@ CK_RV C_Login(CK_SESSION_HANDLE hSession,  /* the session's handle */
 		goto cleanup;
 	}
 
+#ifdef PKCS11_SA
+	pSession->ulDeviceError = 0;
+#endif
+
 	pSlot = p11_get_slot(pSession->hslot);
 	if (pSlot == NULL)
 	{
@@ -366,6 +377,10 @@ CK_RV C_Login(CK_SESSION_HANDLE hSession,  /* the session's handle */
 	}*/
 
 	ret = cal_logon(pSession->hslot, ulPinLen, pPin, 0);
+#ifdef PKCS11_SA
+	if (ret == CKR_PIN_INCORRECT || ret == CKR_PIN_LOCKED)
+		pSession->ulDeviceError = cal_get_pin_status(pSession->hslot);
+#endif
 	if (ret == CKR_OK)
 	{
 		pSlot->login_type = userType;
@@ -475,7 +490,14 @@ CK_RV C_SetPIN(CK_SESSION_HANDLE hSession,
 		goto cleanup;
 	}
 
+#ifdef PKCS11_SA
+	pSession->ulDeviceError = 0;
+#endif
 	ret = cal_change_pin(pSession->hslot, BEID_PIN_AUTH, ulOldLen, pOldPin, ulNewLen, pNewPin);
+#ifdef PKCS11_SA
+	if (ret == CKR_PIN_INCORRECT || ret == CKR_PIN_LOCKED)
+		pSession->ulDeviceError = cal_get_pin_status(pSession->hslot);
+#endif
 cleanup:
 	p11_unlock();
 	log_trace(WHERE, "I: leave, ret = %lu",ret);

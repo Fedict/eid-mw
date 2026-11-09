@@ -111,6 +111,9 @@ namespace eIDMW
 		unsigned long PinStatus(const tPin & Pin);
 		bool PinCmd(tPinOperation operation, const tPin & Pin, const std::string & csPin1,
 			const std::string & csPin2, unsigned long &ulRemaining, const tPrivKey * pKey = NULL);
+#ifdef PKCS11_SA
+		unsigned long GetPinStatusWord() const { return m_ulPinStatusWord; }
+#endif
 
 		DlgPinUsage PinUsage2Dlg(const tPin & Pin, const tPrivKey * pKey);
 
@@ -236,6 +239,9 @@ namespace eIDMW
 		bool m_bSerialNrString;
 		tSelectAppletMode m_selectAppletMode;
 		unsigned long m_ulRemaining;
+#ifdef PKCS11_SA
+		unsigned long m_ulPinStatusWord = 0;
+#endif
 		CByteArray m_oCardData;
 		CByteArray m_oSerialNr;
 		unsigned char m_ucAppletVersion;

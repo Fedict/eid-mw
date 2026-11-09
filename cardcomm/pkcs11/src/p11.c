@@ -205,6 +205,9 @@ CK_RV p11_close_session(P11_SLOT* pSlot, P11_SESSION* pSession)
 		pSession->Operation[P11_OPERATION_SIGN].active = 0;
 	}
 	pSession->state = 0;
+#ifdef PKCS11_SA
+	pSession->ulDeviceError = 0;
+#endif
 	pSession->inuse = 0;
 	pSession->flags = 0;
 	pSession->hslot = 0;
