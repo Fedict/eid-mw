@@ -233,33 +233,8 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 		;IfErrors 0 +2
 		;	Call ErrorHandler_msiexec
 
-		StrCpy $LogFile "$INSTDIR\log\install_esign_arm64_log.txt"
-		StrCpy $TempFile "$INSTDIR\log\1612_count.txt"
 !if "$%CI%" != "true"
-		;ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeIDApp.msi"' $MsiResponse
-		ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\esign.msi"' $MsiResponse
-		${Switch} $MsiResponse
-			${Case} 1603
-				ExecWait 'cmd.exe /C FIND "1612" "$LogFile" | FIND /C "error code 1612" > "$TempFile"' $retval
-				!insertmacro GetFirstLineOfFile $TempFile $firstLine
-				DetailPrint "MSI error 1612, count = $firstLine"
-				StrCmp "$firstLine" "" +2 0	
-				StrCmp "$firstLine" "0" 0 MSI_1612_Error_esign_arm64
-			${Break}
-			${Case} 1612
-			MSI_1612_Error_esign_arm64:
-				DetailPrint "$(ls_errorinstallmsi_1612) $\r$\n $(ls_error) = $MsiResponse"
-				StrCpy $FAQ_url "$(ls_errorinstallmsi_1612_FAQurl)"
-			${Break}
-			${Case} 1622
-				ExecWait 'msiexec /quiet /norestart /i "$INSTDIR\esign.msi"' $MsiResponse
-			${Break}
-			${Default}	
-				DetailPrint "MsiResponse = $MsiResponse"
-			${Break}				
-		${EndSwitch}
-		!insertmacro TrackInstallStatus
-
+		; Install the plugin before esign restarts and reads AdobePluginInstallationId.
 		StrCpy $LogFile "$INSTDIR\log\install_beidsignplugin_arm64_log.txt"
 		StrCpy $TempFile "$INSTDIR\log\1612_count.txt"
 		ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\esignPlugin.msi"' $MsiResponse
@@ -278,6 +253,32 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 			${Break}
 			${Case} 1622
 				ExecWait 'msiexec /quiet /norestart /i "$INSTDIR\esignPlugin.msi"' $MsiResponse
+			${Break}
+			${Default}	
+				DetailPrint "MsiResponse = $MsiResponse"
+			${Break}				
+		${EndSwitch}
+		!insertmacro TrackInstallStatus
+
+		StrCpy $LogFile "$INSTDIR\log\install_esign_arm64_log.txt"
+		StrCpy $TempFile "$INSTDIR\log\1612_count.txt"
+		;ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeIDApp.msi"' $MsiResponse
+		ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\esign.msi"' $MsiResponse
+		${Switch} $MsiResponse
+			${Case} 1603
+				ExecWait 'cmd.exe /C FIND "1612" "$LogFile" | FIND /C "error code 1612" > "$TempFile"' $retval
+				!insertmacro GetFirstLineOfFile $TempFile $firstLine
+				DetailPrint "MSI error 1612, count = $firstLine"
+				StrCmp "$firstLine" "" +2 0	
+				StrCmp "$firstLine" "0" 0 MSI_1612_Error_esign_arm64
+			${Break}
+			${Case} 1612
+			MSI_1612_Error_esign_arm64:
+				DetailPrint "$(ls_errorinstallmsi_1612) $\r$\n $(ls_error) = $MsiResponse"
+				StrCpy $FAQ_url "$(ls_errorinstallmsi_1612_FAQurl)"
+			${Break}
+			${Case} 1622
+				ExecWait 'msiexec /quiet /norestart /i "$INSTDIR\esign.msi"' $MsiResponse
 			${Break}
 			${Default}	
 				DetailPrint "MsiResponse = $MsiResponse"
@@ -385,33 +386,8 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 		;IfErrors 0 +2
 		;	Call ErrorHandler_msiexec
 
-		StrCpy $LogFile "$INSTDIR\log\install_esign_64_log.txt"
-		StrCpy $TempFile "$INSTDIR\log\1612_count.txt"
 !if "$%CI%" != "true"
-		;ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeIDApp.msi"' $MsiResponse
-		ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\esign.msi"' $MsiResponse
-		${Switch} $MsiResponse
-			${Case} 1603
-				ExecWait 'cmd.exe /C FIND "1612" "$LogFile" | FIND /C "error code 1612" > "$TempFile"' $retval
-				!insertmacro GetFirstLineOfFile $TempFile $firstLine
-				DetailPrint "MSI error 1612, count = $firstLine"
-				StrCmp "$firstLine" "" +2 0	
-				StrCmp "$firstLine" "0" 0 MSI_1612_Error_esign_64
-			${Break}
-			${Case} 1612
-			MSI_1612_Error_esign_64:
-				DetailPrint "$(ls_errorinstallmsi_1612) $\r$\n $(ls_error) = $MsiResponse"
-				StrCpy $FAQ_url "$(ls_errorinstallmsi_1612_FAQurl)"
-			${Break}
-			${Case} 1622
-				ExecWait 'msiexec /quiet /norestart /i "$INSTDIR\esign.msi"' $MsiResponse
-			${Break}
-			${Default}	
-				DetailPrint "MsiResponse = $MsiResponse"
-			${Break}				
-		${EndSwitch}
-		!insertmacro TrackInstallStatus
-
+		; Install the plugin before esign restarts and reads AdobePluginInstallationId.
 		StrCpy $LogFile "$INSTDIR\log\install_beidsignplugin_64_log.txt"
 		StrCpy $TempFile "$INSTDIR\log\1612_count.txt"
 		ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\esignPlugin.msi"' $MsiResponse
@@ -430,6 +406,32 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 			${Break}
 			${Case} 1622
 				ExecWait 'msiexec /quiet /norestart /i "$INSTDIR\esignPlugin.msi"' $MsiResponse
+			${Break}
+			${Default}	
+				DetailPrint "MsiResponse = $MsiResponse"
+			${Break}				
+		${EndSwitch}
+		!insertmacro TrackInstallStatus
+
+		StrCpy $LogFile "$INSTDIR\log\install_esign_64_log.txt"
+		StrCpy $TempFile "$INSTDIR\log\1612_count.txt"
+		;ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeIDApp.msi"' $MsiResponse
+		ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\esign.msi"' $MsiResponse
+		${Switch} $MsiResponse
+			${Case} 1603
+				ExecWait 'cmd.exe /C FIND "1612" "$LogFile" | FIND /C "error code 1612" > "$TempFile"' $retval
+				!insertmacro GetFirstLineOfFile $TempFile $firstLine
+				DetailPrint "MSI error 1612, count = $firstLine"
+				StrCmp "$firstLine" "" +2 0	
+				StrCmp "$firstLine" "0" 0 MSI_1612_Error_esign_64
+			${Break}
+			${Case} 1612
+			MSI_1612_Error_esign_64:
+				DetailPrint "$(ls_errorinstallmsi_1612) $\r$\n $(ls_error) = $MsiResponse"
+				StrCpy $FAQ_url "$(ls_errorinstallmsi_1612_FAQurl)"
+			${Break}
+			${Case} 1622
+				ExecWait 'msiexec /quiet /norestart /i "$INSTDIR\esign.msi"' $MsiResponse
 			${Break}
 			${Default}	
 				DetailPrint "MsiResponse = $MsiResponse"
@@ -533,33 +535,8 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 		;	Call ErrorHandler_msiexec
 		;WriteRegDWORD HKCU "Software\BEID\Installer\Components" "BeidCrypto32" 0x1
 		
-		StrCpy $LogFile "$INSTDIR\log\install_esign_32_log.txt"
-		StrCpy $TempFile "$INSTDIR\log\1612_count.txt"
 !if "$%CI%" != "true"
-		;ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeIDApp32.msi"' $MsiResponse
-		ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\esign32.msi"' $MsiResponse
-		${Switch} $MsiResponse
-			${Case} 1603
-				ExecWait 'cmd.exe /C FIND "1612" "$LogFile" | FIND /C "error code 1612" > "$TempFile"' $retval
-				!insertmacro GetFirstLineOfFile $TempFile $firstLine
-				DetailPrint "MSI error 1612, count = $firstLine"
-				StrCmp "$firstLine" "" +2 0	
-				StrCmp "$firstLine" "0" 0 MSI_1612_Error_esign_32
-			${Break}
-			${Case} 1612
-			MSI_1612_Error_esign_32:
-				DetailPrint "$(ls_errorinstallmsi_1612) $\r$\n $(ls_error) = $MsiResponse"
-				StrCpy $FAQ_url "$(ls_errorinstallmsi_1612_FAQurl)"
-			${Break}
-			${Case} 1622
-				ExecWait 'msiexec /quiet /norestart /i "$INSTDIR\esign32.msi"' $MsiResponse
-			${Break}
-			${Default}	
-				DetailPrint "MsiResponse = $MsiResponse"
-			${Break}				
-		${EndSwitch}
-		!insertmacro TrackInstallStatus
-
+		; Install the plugin before esign restarts and reads AdobePluginInstallationId.
 		StrCpy $LogFile "$INSTDIR\log\install_beidsignplugin_32_log.txt"
 		StrCpy $TempFile "$INSTDIR\log\1612_count.txt"
 		ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\esignPlugin32.msi"' $MsiResponse
@@ -578,6 +555,32 @@ Section "Belgium Eid Crypto Modules" BeidCrypto
 			${Break}
 			${Case} 1622
 				ExecWait 'msiexec /quiet /norestart /i "$INSTDIR\esignPlugin32.msi"' $MsiResponse
+			${Break}
+			${Default}
+				DetailPrint "MsiResponse = $MsiResponse"
+			${Break}
+		${EndSwitch}
+		!insertmacro TrackInstallStatus
+
+		StrCpy $LogFile "$INSTDIR\log\install_esign_32_log.txt"
+		StrCpy $TempFile "$INSTDIR\log\1612_count.txt"
+		;ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\BeIDApp32.msi"' $MsiResponse
+		ExecWait 'msiexec /quiet /norestart /log "$LogFile" /i "$INSTDIR\esign32.msi"' $MsiResponse
+		${Switch} $MsiResponse
+			${Case} 1603
+				ExecWait 'cmd.exe /C FIND "1612" "$LogFile" | FIND /C "error code 1612" > "$TempFile"' $retval
+				!insertmacro GetFirstLineOfFile $TempFile $firstLine
+				DetailPrint "MSI error 1612, count = $firstLine"
+				StrCmp "$firstLine" "" +2 0
+				StrCmp "$firstLine" "0" 0 MSI_1612_Error_esign_32
+			${Break}
+			${Case} 1612
+			MSI_1612_Error_esign_32:
+				DetailPrint "$(ls_errorinstallmsi_1612) $\r$\n $(ls_error) = $MsiResponse"
+				StrCpy $FAQ_url "$(ls_errorinstallmsi_1612_FAQurl)"
+			${Break}
+			${Case} 1622
+				ExecWait 'msiexec /quiet /norestart /i "$INSTDIR\esign32.msi"' $MsiResponse
 			${Break}
 			${Default}
 				DetailPrint "MsiResponse = $MsiResponse"
