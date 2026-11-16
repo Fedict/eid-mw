@@ -92,6 +92,14 @@ copy %~dp0..\..\installers\eid-mw\Windows\bin\BeidMW_arm64.msi %~dp0\BeidMW_arm6
 
 @cd "%OUR_CURRENT_PATH%"
 
+:: sign the NSIS eID reader plugin
+:: ==============================
+@echo [INFO] Sign the NSIS eID reader plugin
+"%SIGNTOOL_PATH%\signtool" sign /fd SHA256 /s MY /n "Zetes SA" /sha1 "3f85e2a3538669c2a04aaeeb318497c780101872" /tr http://rfc3161timestamp.globalsign.com/advanced /td SHA256 /v "%~dp0..\..\installers\quickinstaller\NSIS_Plugins\beidread\Release\beid.dll"
+@if ERRORLEVEL 1 goto signtool_failed
+"%SIGNTOOL_PATH%\signtool" verify /pa /all /tw /v "%~dp0..\..\installers\quickinstaller\NSIS_Plugins\beidread\Release\beid.dll"
+@if ERRORLEVEL 1 goto signtool_failed
+
 :: create the NSIS installer
 :: =========================
 @echo [INFO] Make nsis installer
